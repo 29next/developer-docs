@@ -1,0 +1,14 @@
+After the customer has completed their payment, they will be redirected to your application with a POST request containing data in the `response` key comprising all of the order information as a string. See examples below.
+
+:::caution
+Order data structure follows Admin Order API and is application/x-www-form-urlencoded in  a variable called response. If the order data is an empty dictionary {}, it means payment collection was unsuccessful and the order was not created.
+:::
+
+```python title="Example Parsing of Order Data"
+import json
+
+def order_receiver_view(request):
+    data = json.loads(request.POST.get("response"))
+    ...
+    return HttpResponse(status=201)
+```

@@ -1,0 +1,100 @@
+---
+---
+
+Use the URL and Template Path reference below when building your theme to ensure that your templates load for the correct storefront URL paths.
+
+
+!!! important
+
+    Ensure your template paths match with expected template paths for built-in storefront views. Use the base theme as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
+
+--8<-- "snippets/admonitions/view-intro-theme.md"
+
+### Account & Login
+
+| URL Name | URL Path & Arguments | Template Path |
+| --- | --- | --- |
+| customer:login | /accounts/login/ | templates/accounts/login.html |
+| customer:register | /accounts/register/ | templates/accounts/registration.html |
+| password-reset | /accounts/register/ | templates/accounts/registration.html |
+| customer:logout | /accounts/logout/ | N/A |
+| customer:profile-view | /accounts/profile/ | templates/accounts/profile/form.html |
+| customer:order-list | /accounts/orders/ | templates/accounts/orders/index.html |
+| customer:order | accounts/orders/:order_number | templates/accounts/orders/order.html |
+| customer:order-status | /accounts/order-status/:order_number:order_hash | templates/accounts/orders/status.html |
+| customer:address-list | /accounts/addresses/ | templates/accounts/address/index.html |
+| customer:address-create | /accounts/addresses/add/ | templates/accounts/address/form.html |
+| customer:subscription-list | /accounts/subscriptions/ | templates/accounts/subscriptions/index.html |
+| customer:subscription-detail | /accounts/subscriptions/:id | templates/accounts/subscriptions/subscription.html |
+| customer:subscription-shipping-address | /accounts/subscriptions/:id/shipping-address/ | templates/accounts/subscriptions/address.html |
+| customer:subscription-payment-method | /accounts/subscriptions/:id/payment-method/  | templates/accounts/subscriptions/payment_method.html |
+| customer:support-ticket-list | /accounts/support/ | templates/accounts/tickets/index.html |
+| customer:support-ticket-create | /accounts/support/tickets/create/ | templates/accounts/tickets/form.html |
+| customer:support-ticket-detail | /accounts/support/tickets/:id | templates/accounts/tickets/ticket.html |
+
+
+### Blog
+
+| URL Name | URL Path & Arguments | Template Path |
+| --- | --- | --- |
+| blog:blog-list | /blog/ | templates/blog/index.html |
+| blog:blog-detail | /blog/detail/:post_slug/ | templates/blog/post.html |
+
+### Cart
+
+| URL Name | URL Path | Template Path |
+| --- | --- | --- |
+| basket:summary | /basket/ | templates/cart.html |
+
+### Catalogue
+
+| URL Name | URL Path & Arguments | Template Path |
+| --- | --- | --- |
+| catalogue:index | /catalogue/ | templates/catalogue/index.html |
+| catalogue:category | /catalogue/category/:category_slug/ | templates/catalogue/category.html |
+| catalogue:detail | /catalogue/:product_slug/ | templates/catalogue/product.html |
+
+
+
+### Checkout
+
+| URL Name | URL Path & Arguments | Template Path |
+| --- | --- | --- |
+| checkout:shipping-address | checkout/* | checkout/checkout.html |
+
+### Pages
+
+| URL Name | URL Path & Arguments | Template Path |
+| --- | --- | --- |
+| N/A | /:page_slug | templates/pages/page.html |
+
+
+### Reviews
+| URL Name | URL Path & Arguments | Template Path |
+| --- | --- | --- |
+| catalogue:reviews-list | /catalogue/:product_slug/reviews/ | templates/reviews/index.html |
+| catalogue:reviews-detail | /catalogue/:product_slug/reviews/:id/ | templates/reviews/review.html |
+| catalogue:reviews-add | /catalogue/:product_slug/reviews/add/ | templates/reviews/form.html |
+
+### Search
+
+| URL Name | URL Path | Template Path |
+| --- | --- | --- |
+| search:search | /search/ | templates/search.html |
+
+### Support
+
+| URL Name | URL Path | Template Path |
+| --- | --- | --- |
+| support:cateogry-list | /support/categories/ | templates/support/index.html |
+| support:article-list | /support/categories/:category_slug/ | templates/support/category.html |
+| support:article-detail | /support/articles/:article_slug/ | templates/support/article.html |
+
+### Error Pages
+
+| URL Name | URL Path | Template Path |
+| --- | --- | --- |
+| N/A | /:any-403-error | templates/403.html |
+| N/A | /:any-404-error | templates/404.html |
+| N/A | /:any-500-error | templates/500.html |
+

@@ -1,0 +1,208 @@
+---
+title: 'Tag Reference'
+---
+
+### if, elif, & else
+Use the if tag to evaluate if a variable is "true" and control the contents displayed.
+
+```html
+{% if products_list > 2 %}
+    <p>Number of products: {{ products_list|length }}</p>
+{% elif products_list %}
+    <p>We only have a single product now.</p>
+{% else %}
+    <p>Sorry, there are no products.</p>
+{% endif %}
+```
+
+
+### Boolean Operators
+If tags may be used in combination with boolean operators for conditional control flow.
+
+| Operator     | Description                          |
+| ----------- | ------------------------------------ |
+| `and`       | multiple conditions are true  |
+| `or`        | either condition is true |
+| `not`       | a condition is not true |
+| `in`       | contained within |
+| `not in`       | a condition is not true |
+| `is`       | two values are the same|
+| `is not`       | two values are not the same |
+| `==`       | equality |
+| `!=`       | inequality |
+| `<`       | less than |
+| `>`       | greater than |
+| `<=`       | less than or equal to |
+| `>=`       | greater than or equal to |
+
+
+### for
+
+Loops over each item in array, making the item available in a context variable. For example, to display a list of products provided in the `{{ products }}` variable.
+
+```html
+<ul>
+    {% for each in products %}
+    <li>{{ each.get_title }} - Rating {{ each.rating }} stars</li>
+    {% endfor %}
+</ul>
+```
+
+### extends & block
+
+Extends and block tags allow you to define blocks of content in a base template that can be overridden by templates that extend from it.
+
+=== "Parent Template"
+    ```html title="layouts/base.html"
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="{{ 'assets/style.css'|asset_url }}">
+        <title>{% block title %}My amazing store{% endblock %}</title>
+    </head>
+
+    <body>
+        <div id="sidebar">
+            {% block sidebar %}
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog/">Blog</a></li>
+            </ul>
+            {% endblock %}
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+    </html>
+    ```
+=== "Child Template"
+    ```html title="templates/blog.html"
+    {% extends "layouts/base.html" %}
+    {% block title %}My Blog Post Title{% endblock %}
+    {% block sidebar %}
+        <div class="sidebar">
+            <h4>Custom Sidebar</h4>
+        </div>
+    {% endblock %}
+    {% block content %}
+        <h4>My Blog Post Title...</h4>
+    {% endblock %}
+    ```
+
+
+### include
+
+Loads a template and renders it with the current context. This is a way of including other templates within a template.
+
+```html
+<html lang="en">
+<body>
+    {% include "partials/footer.html" %}
+</body>
+</html>
+```
+
+!!! warning
+    A word of caution, multi-level inclusion inside of iterative loops can create performance penalties while rendering a page html for site visitors. Use includes sparingly when working inside iterative loops.
+
+### url
+
+Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
+
+```html
+<a href="{% url 'blog:blog-list' %}">Blog</a>
+```
+
+### csrf_token
+
+This tag is used for CSRF protection and required on any template with a form that sends a POST request to the back end.
+
+```html
+<form>
+    {% csrf_token %}
+    <input type="text" id="example" name="Example Input">
+    <input type="submit" value="Submit">
+</form>
+```
+
+### comment
+
+Ignores everything between {% comment %} and {% endcomment %}. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
+
+```html
+<p>Rendered text with {{ pub_date|date:"c" }}</p>
+{% comment "Optional note" %}
+    <p>Commented out text with {{ create_date|date:"c" }}</p>
+{% endcomment %}
+```
+
+### image_thumbnail
+The `image_thumbnail` tag is used to resize images dynamically in templates. The tag accepts arguments that control how the image is resized.
+
+
+```html
+{% with image=line.product.primary_image %}
+      {% image_thumbnail image.original "200x200" upscale=False as thumb %}
+      <a href="{{ line.product.get_absolute_url }}">
+         <img class="thumbnail" src="{{ thumb.url }}" alt="{{ product.get_title }}">
+      </a>
+{% endwith %}
+
+```
+
+| Arguemnt | Description |
+| --- | --- |
+| size | Example, 100x100 (widthxheight), sets the desired image size in pixels. If width and height are given the image is rescaled to maximum values of height and width given. Aspect ratio preserved. |
+| crop | This option is only used if both width and height is given. Crop behaves much like css background-position. The image is first rescaled to minimum values of height and width given, this will be equivalent to the padding box in the above text.  |
+| upscale | Upscale is a boolean and controls if the image can be upscaled or not. For example if your source is 100x100 and you request a thumbnail of size 200x200 and upscale is False this will return a thumbnail of size 100x100. If upscale was True this would result in a thumbnail size 200x200 (upscaled). The default value is `True`. |
+| quality | Quality is a value between 0-100 and controls the thumbnail write quality. Default value is `95`. |
+| progressive |This controls whether to save jpeg thumbnails as progressive jpegs. Default value is `True`.|
+| orientation |This controls whether to orientate the resulting thumbnail with respect to the source EXIF tags for orientation. Default value is `True`.|
+|format|This controls the write format and thumbnail extension. Formats supported by the shipped engines are 'JPEG' and 'PNG'. Default value is `JPEG`.|
+|padding|Padding is a boolean and controls if the image should be padded to fit the specified geometry.|
+
+### now
+
+Displays the current date and/or time, using a format according to the given string. [See available date reference for format options](https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date).
+
+
+### t
+
+The `t` (translation) tag is used to display localized content from a theme's translations files. The t tag accepts a key and additional replacement variable arguments to access the theme translations and return the language appropriate string for display to the user.
+
+```html
+{% t 'customer.orders.order_count' with count=orders.count %}
+```
+
+
+### seo
+The `seo` tag generates SEO meta data for products in standardized format for consumption by 3rd party systems.
+
+```html
+{% seo %}
+```
+The tag is expected to be added to the top of product details template to generate necessary SEO meta data.
+
+### app_asset_url
+
+The `app_asset_url` tag is used to reference asset files included in app snippets.
+
+```html
+
+<script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
+
+```
+
+### app_hook
+
+The `app_hook` tag specifies a theme storefront location Apps can inject snippets into to extend storefront templates from Apps. Theme developers should ensure their templates include all available `app_hooks` to ensure compatability with all Apps.
+
+```html
+{% app_hook 'global_header' %}
+```
+
+**Available `app_hook` locations include:**
+
+--8<-- "snippets/app-hook-locations.md"

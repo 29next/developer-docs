@@ -1,0 +1,3 @@
+!!! tip "See Intro Themes for Full Examples"
+
+    Intro ([View Intro Theme](https://github.com/29next/intro/)) & Intro Bootstrap ([View Intro Bootstrap Theme](https://github.com/29next/intro-bootstrap)) are publicly available starter themes for the 29 Next platform available on Github that can be used as a starting point and guide with store themeing. 

@@ -1,0 +1,8 @@
+| App Hook Location | Description |
+| ------- | ------- |
+| `global_header` | Used for adding javascript and styles globally to the header of a theme.<br/>Should be loaded globally in the header, most likely in `layout/base.html`.   |
+| `global_footer` | Used for adding javascript globally to the footer of a theme. <br/>Should be loaded globally in the footer, most likely in `layout/base.html`.  |
+| `view_product`| Used for tracking `product_view` type javascript events. <br/>Should be placed just before the closing `</body>` tag on the `catalogue/product.html` template. Used |
+| `add_to_cart` | Used for tracking `add_to_cart` type javascript events. <br/>Should be placed just before the closing `</body>` tag on the `catalogue/product.html` template |
+| `start_checkout` | Used for tracking `started_checkout` type javascript events. <br/>Should be placed on the `checkout/checkout.html` template |
+| `complete_checkout` | Used for tracking `conversion` type javascript events. Should be placed on the `checkout/checkout.html` template |

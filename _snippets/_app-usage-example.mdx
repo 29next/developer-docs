@@ -1,0 +1,39 @@
+In the example below, our app uses `my-app.js` to add custom funcationality on the storefront that should be loaded on every page of the store.
+
+
+```title="Example App Structure"
+your-app
+ ├── assets
+ │   └──  my-app.js
+ ├── snippets
+ │   └──  global-footer.html
+ └── manifest.json
+```
+
+In order to add `my-app.js` to every page of the store, we'll add it to a snippet that uses the `app_asset_url` tag to reference the file source in a script tag.
+
+
+```html title="Example Asset Usage in Snippet"
+
+<script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
+
+```
+:::caution
+
+All assets are loaded from a CDN which does not support local file imports from another file. It's a best practice to compile and minify your assets into self contained single files.
+::::
+
+
+In order to configure the snippet to load into a theme `app_hook` we'll add it to the app manifest `locations:storefront` configured with the desired location.
+
+```json title="Example Manifest.json"
+{
+  "locations": {
+    "storefront": {
+      "global_footer": "snippets/global-footer.html",
+    }
+  }
+}
+```
+
+Once you've done this, you should now see that `my-app.js` is being loaded on every page on the storefront globally in the footer. :clap:
