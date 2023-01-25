@@ -60,7 +60,7 @@ const config = {
                 specs: [
                     {
                         spec: 'openapi/swagger.json',
-                        route: '/api/admin/reference/',
+                        route: '/docs/api/admin/reference/',
                     },
                 ],
                 theme: {
@@ -79,10 +79,6 @@ const config = {
             /** @type {import('@docusaurus/plugin-client-redirects').Options} */
             ({
                 redirects: [
-                    {
-                        from: '/docs/api/admin/reference/',
-                        to: '/api/admin/reference/',
-                    },
                     {
                         from: '/api/',
                         to: '/docs/api',
@@ -117,7 +113,23 @@ const config = {
                     src: 'img/logo.png',
                 },
                 items: [
-                    { to: '/docs/api/', label: 'APIs', position: 'left' },
+                    {
+                        type: 'dropdown',
+                        label: 'APIs',
+                        position: 'left',
+                        items: [
+                            {
+                                label: 'Docs',
+                                to: '/docs/api/',
+                            },
+                            {
+                                label: 'Admin API Reference',
+                                href: '/docs/api/admin/reference/',
+                            },
+
+                        ],
+                    },
+                    // { to: '/docs/api/', label: 'APIs', position: 'left' },
                     { to: '/docs/themes/', label: 'Themes', position: 'left' },
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
