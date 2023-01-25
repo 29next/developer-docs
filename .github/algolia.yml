@@ -5,9 +5,8 @@ on:
     branches:
       - main
 
-- uses: actions/checkout@v2
-
 - name: Get the content of algolia.json as config
+  uses: actions/checkout@v2
   id: algolia_config
   run: echo "::set-output name=config::$(cat algolia.json | jq -r tostring)"
 
