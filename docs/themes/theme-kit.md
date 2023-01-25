@@ -1,3 +1,7 @@
+---
+sidebar_label: Theme Kit
+sidebar_position: 4
+---
 # Theme Kit
 
 [Theme Kit](https://github.com/29next/theme-kit) is a command line tool for developers to build an maintain storefront themes programmatically, allowing theme developers to:
@@ -6,7 +10,7 @@
 - Use git version control to work on a theme collectively with many theme collaborators.
 - Use a pipeline to manage deployments of theme updates.
 
-[See Full Instructions on Github](https://github.com/29next/theme-kit){ .md-button .md-button--primary } [Install Theme Kit from PyPi](https://pypi.org/project/next-theme-kit/){ .md-button }
+[See Full Instructions on Github](https://github.com/29next/theme-kit) or [Install Theme Kit from PyPi](https://pypi.org/project/next-theme-kit/)
 
 
 ### Installation
@@ -23,16 +27,14 @@ pip install next-theme-kit
 See how to install `python` and `pip` with [HomeBrew](https://docs.brew.sh/Homebrew-and-Python#python-3x). Once you have completed this step you can install using the `pip` instructions above.
 
 #### Windows Requirements
-<!---See how to install `python` and `pip` with [Chocolatey](https://python-docs.readthedocs.io/en/latest/starting/install3/win.html). Once you have completed this step you can install using the `pip` instructions above.--->
 
 * **Option 1 (Recommended)** - Windows 10 and above feature WSL (Windows Subsystem for Linux) which provides a native Linux environment, see how to [Install WSL with Ubuntu](https://docs.microsoft.com/en-us/windows/wsl/install). Once you have installed WSL, follow the [best practice guides to configure and use with VS Code](https://docs.microsoft.com/en-us/windows/wsl/setup/environment) and then follow the `pip` instructions above to install Theme Kit.
 
 * **Option 2** - Installing `python` in Windows natively can be done with through the [Windows App Store](https://apps.microsoft.com/store/detail/python-39/9P7QFQMJRFP7?hl=en-us&gl=us). Recommend using [Windows Powershell](https://apps.microsoft.com/store/detail/powershell/9MZ1SNWT0N5D?hl=en-us&gl=us). This route is a little more tricky and some knowledge on how to manage python in windows will be required.
 
-!!! note
-
-    **Use Python Virtual Environments** - For Mac, Windows, and Linux, it's a best practice to use a Python Virtual Environment to isolate python packages and dependecies to reduce potential conflicts or errors, [more on creating a Python Virutal Environment](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/).
-
+:::tip
+**Use Python Virtual Environments** - For Mac, Windows, and Linux, it's a best practice to use a Python Virtual Environment to isolate python packages and dependecies to reduce potential conflicts or errors, [more on creating a Python Virutal Environment](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/).
+:::
 
 ### Generate an API Key
 Store authentication uses [Oauth](https://auth0.com/intro-to-iam/what-is-oauth-2/) and requires creating a store Oauth App with `theme:read` and `theme:write` permissions.
@@ -45,10 +47,9 @@ Store authentication uses [Oauth](https://auth0.com/intro-to-iam/what-is-oauth-2
 ### Usage
 With the package installed, you can now use the commands inside your theme directory and work on a storefront theme.
 
-!!! tip "Important"
-
-    You must pass the `apikey` and `store` parameters for all commands **if** there is not an existing `config.yml` file in your current directory.
-
+:::tip
+You must pass the `apikey` and `store` parameters for all commands **if** there is not an existing `config.yml` file in your current directory.
+:::
 
 | Command      | Description                          |
 | ----------- | ------------------------------------ |
@@ -64,9 +65,9 @@ With the package installed, you can now use the commands inside your theme direc
 ### Sass Processing
 Theme kit includes support for Sass processing via [Python Libsass](https://sass.github.io/libsass-python/). Sass processing includes support for variables, imports, nesting, mixins, inheritance, custom functions, and more.
 
-!!! tip "Important"
-
-    Sass processing is only supported on local, files in the `sass` directory are uploaded to your store for storage but cannot be edited in the store theme editor.
+:::caution
+Sass processing is only supported on local, files in the `sass` directory are uploaded to your store for storage but cannot be edited in the store theme editor.
+:::
 
 **How it works**
 

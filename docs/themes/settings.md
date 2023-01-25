@@ -1,4 +1,6 @@
 ---
+sidebar_label: Settings
+sidebar_position: 3
 ---
 # Theme Settings
 
@@ -24,50 +26,66 @@ configs
 
 Settings are passed to templates settings context variable allowing you to access settings values by their name. See example below of changing the layout by conditionally adding a class based on a radio setting.
 
-=== "Settings Schema"
 
-    ```json
-    {
-        "General": {
-            "Settings": [
-                {
-                    "name": "store_name",
-                    "label": "Store Name",
-                    "help_text": "Public name of your store.",
-                    "type": "text",
-                    "max_length": 250,
-                    "required": 1,
-                    "default": "Store Name"
-                },
-                {
-                    "name": "layout",
-                    "label": "Layout Style",
-                    "help_text": "Control the layout style.",
-                    "type": "radio",
-                    "options": [
-                        {
-                            "name": "Boxed",
-                            "value": "boxed"
-                        },
-                        {
-                            "name": "Full Width",
-                            "value": "full"
-                        }
-                    ],
-                    "default": "boxed"
-                }
-            ]
-        }
+
+
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
+<Tabs>
+<TabItem value="settings" label="Settings Schema">
+
+```json
+{
+    "General": {
+        "Settings": [
+            {
+                "name": "store_name",
+                "label": "Store Name",
+                "help_text": "Public name of your store.",
+                "type": "text",
+                "max_length": 250,
+                "required": 1,
+                "default": "Store Name"
+            },
+            {
+                "name": "layout",
+                "label": "Layout Style",
+                "help_text": "Control the layout style.",
+                "type": "radio",
+                "options": [
+                    {
+                        "name": "Boxed",
+                        "value": "boxed"
+                    },
+                    {
+                        "name": "Full Width",
+                        "value": "full"
+                    }
+                ],
+                "default": "boxed"
+            }
+        ]
     }
-    ```
-=== "Template"
-    ```html
-    <div class="{% if settings.layout == 'boxed' %}container{% endif %}">
-        <h1>Welcome to {{ settings.store_name }}!</h1>
-        <div>Contionally boxed or full width content</div>
-    </div>
-    ```
+}
+```
 
+</TabItem>
+<TabItem value="template" label="Template">
+
+```html
+<div class="{% if settings.layout == 'boxed' %}container{% endif %}">
+    <h1>Welcome to {{ settings.store_name }}!</h1>
+    <div>Contionally boxed or full width content</div>
+</div>
+```
+
+</TabItem>
+</Tabs>
+
+### Attribute Reference
 
 | Attribute       | Required         | Description               |
 | -----------| --------------------|---------------- |
@@ -83,11 +101,11 @@ Settings are passed to templates settings context variable allowing you to acces
 |`min_value`| No | Applicable to number field types to set a min value. |
 
 
-### Schema Input Types
+## Schema Input Types
 
 Schema input types map to input fields that will be rendered in the theme settings form in the dashboard.
 
-#### text
+### text
 
 ```json
 {
@@ -101,8 +119,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-
-#### textarea
+### textarea
 
 ```json
 {
@@ -114,7 +131,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### checkbox
+### checkbox
 
 ```json
 {
@@ -125,7 +142,7 @@ Schema input types map to input fields that will be rendered in the theme settin
     "default": true
 }
 ```
-#### number
+### number
 ```json
 {
     "type": "number",
@@ -139,7 +156,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 ```
 
 
-#### email
+### email
 
 ```json
 {
@@ -151,7 +168,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### radio
+### radio
 
 ```json
 {
@@ -173,7 +190,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### select
+### select
 ```json
 {
     "type": "select",
@@ -198,7 +215,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### multi-select
+### multi-select
 ```json
 {
     "type": "select",
@@ -235,7 +252,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### file
+### file
 ```json
 {
     "type": "file",
@@ -246,7 +263,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### url
+### url
 ```json
 {
     "type": "url",
@@ -257,7 +274,7 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-#### color
+### color
 ```json
 {
     "type": "color",

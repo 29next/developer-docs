@@ -8,7 +8,13 @@ sidebar_title: Themes
 We highly recommend using Theme Kit to manage your store theme for the best developer experience from your favorite IDE. [Install Theme Kit](https://github.com/29next/theme-kit)
 :::
 
---8<-- "snippets/admonitions/view-intro-theme.md"
+```mdx-code-block
+
+import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
+
+<IntroTheme />
+
+```
 
 ### Layout & Structure
 The Storefront theme framework has a set guideline for the base directories of your theme for your assets, html, and settings.
@@ -27,7 +33,7 @@ theme
 
 
 ### Assets
-The assets directory is used to upload static asset files used in the theme such as images, stylesheets, web fonts, and javascript files. The assets directory works in conjunction with the [`asset_url` template filter](templates/filters.md#asset_url) to render the full path on your storefront.
+The assets directory is used to upload static asset files used in the theme such as images, stylesheets, web fonts, and javascript files. The assets directory works in conjunction with the [`asset_url` template filter](/themes/templates/filters.md#asset_url) to render the full path on your storefront.
 
 
 ### Checkout
@@ -37,7 +43,7 @@ The checkout is used to add a customized `checkout.html` template to override th
 checkout
   └── checkout.html
 ```
-[See Checkout Customization Guide](/guides/checkout/){ .md-button }
+[See Checkout Customization Guide](/themes/guides/checkout.md)
 
 ### Configs
 The configs directory is used to store your theme settings options and also the settings data as they should be configured with the theme.
@@ -50,13 +56,13 @@ configs
  ├── settings_data.json
  └── settings_schema.json
 ```
-[See Theme Settings Guide](settings.md){ .md-button }
+[See Theme Settings Guide](themes/settings.md)
 
 ### Locales
 
 The `locales` directory is used to for storefront theme translation json files. The translation files are used in conjunction with the translation template tag to support multiple languages for your storefront.
 
-Translation files should be named according to the ISO 639-1 2 letter language code standard. The default or fallback language should be denoted with a .default in the file name as shown below. See the [Translations guide](translations.md) for more examples on how to localize your theme content.
+Translation files should be named according to the ISO 639-1 2 letter language code standard. The default or fallback language should be denoted with a .default in the file name as shown below. See the [Translations guide](themes/translations.md) for more examples on how to localize your theme content.
 
 ```title="Locale files example"
 locales
@@ -66,10 +72,10 @@ locales
  ├── it.json
  └── fr.json
 ```
-[See Translations Guide](translations.md){ .md-button }
+[See Translations Guide](themes/translations.md)
 
 ### Layouts
-The `layouts` directory is used to store base templates that are then extended from in view specific templates, see extends and block template tags for more on template inheritance. See the [`extends` template tag](templates/tags.md#extends-block) for more on template inheritance.
+The `layouts` directory is used to store base templates that are then extended from in view specific templates, see extends and block template tags for more on template inheritance. See the [`extends` template tag](themes/templates/tags.md#extends-block) for more on template inheritance.
 
 ```title="Layouts directory example"
 layouts
@@ -87,7 +93,7 @@ partials
 ```
 
 ### Templates
-The templates directory is used to store all templates for a theme, see [URLs and Template Paths](templates/urls-and-template-paths.md) for reference.
+The templates directory is used to store all templates for a theme, see [URLs and Template Paths](themes/templates/urls-and-template-paths.md) for reference.
 
 ```title="Templates directory example"
 
@@ -139,12 +145,13 @@ The templates directory is used to store all templates for a theme, see [URLs an
     └── index.html
 ```
 
-### SASS
+### Sass
 
 The sass directory accepts scss files for use in in a theme. See Theme Kit for more details on local sass compiling.
 
-!!! warning
-    Sass files are not automatically compiled in the platform and must be compiled to css files locally for use in templates from the assets directory.
+:::caution
+Sass files are not automatically compiled in the platform and must be compiled to css files locally for use in templates from the assets directory.
+:::
 
 ### Theme Kit
 
@@ -155,6 +162,7 @@ The sass directory accepts scss files for use in in a theme. See Theme Kit for m
 - Use a pipeline to manage deployments of theme updates.
 
 
-!!! tip "Download"
+:::tip
 
-    See Theme Kit installation instructions on [Github](https://github.com/29next/theme-kit).
+See Theme Kit installation instructions on [Github](https://github.com/29next/theme-kit).
+:::

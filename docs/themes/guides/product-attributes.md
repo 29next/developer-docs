@@ -1,4 +1,5 @@
 ---
+sidebar_label: Product Attributes
 ---
 
 # Product Attributes
@@ -10,7 +11,7 @@ Product attributes let you set additional data for a product through a [Product 
 
 Product Attributes have a `code` field which in turn becomes available as a variable in templates for rendering.
 
-```html
+```django
 {{ product.attr.<code> }}
 ```
 
@@ -20,20 +21,20 @@ Values set on the product for the given product attribute will render in the pro
 
 Let's look at an example of adding support for a **Product Tagline** to a product template that can be set on an individual product basis in the dashboard.
 
-1. **Create Tagline Product Attribute**
+**Create Tagline Product Attribute**
 
-    On your Product Class, add a new Text attribute with the code `tagline`.
+On your Product Class, add a new Text attribute with the code `tagline`.
 
-2. **Add Tagline Attribute Variable to Product Template**
+**Add Tagline Attribute Variable to Product Template**
 
-    In your theme's product template, add render the tagline by accessing it with a template variable.
+In your theme's product template, add render the tagline by accessing it with a template variable.
 
-    ```html
-    {{ product.attr.tagline }}
-    ```
+```django
+{{ product.attr.tagline }}
+```
 
-3. **Add Tagline Value to Product**
+**Add Tagline Value to Product**
 
-    In your product, set a value for the Tagline attribute to render the Tagline in your store. :clap:
+In your product, set a value for the Tagline attribute to render the Tagline in your store. :clap:
 
 

@@ -1,6 +1,7 @@
 ---
+sidebar_label: Funnel Customization
 ---
-# Funnel Customization Guide
+# Funnel Customization
 
 Theme developers can customize create and manage customizable and engaging Funnels for marketing campaigns.
 
@@ -18,7 +19,7 @@ funnels
 ### Example Funnel Base Template
 
 
-```html title="Example Funnel Template"
+```django title="Example Funnel Template"
 <!DOCTYPE html>
 <html lang='{{ LANGUAGE_CODE|default:"en" }}'>
 
@@ -71,7 +72,7 @@ funnels
 ### Example Funnel Template with Offers
 
 
-```html title="Example Funnel Template with Offers"
+```django title="Example Funnel Template with Offers"
 <!DOCTYPE html>
 <html lang='{{ LANGUAGE_CODE|default:"en" }}'>
 
@@ -237,6 +238,6 @@ funnels
 </html>
 ```
 
-!!! note
-
-    Replace `<enter checkout link>` with your desired  [checkout link](/api/checkout-links/)
+:::note
+Replace `<enter checkout link>` with your desired  [checkout link](/api/checkout-links/)
+:::

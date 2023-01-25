@@ -39,11 +39,11 @@ print(token)
 Tokens include details of the store and the store user (id & email) making the request. A valid token can be trusted as a verified request from a store with your app installed.
 
 
-#### Token Expiration
+### Token Expiration
 
 Tokens are shortlived with an expiration of 30 seconds, meaning they quickly expire and cannot be reused. It is recommended that you authenticate the users into your App with every request.
 
-#### Session Token Flow
+### Session Token Flow
 
 Session tokens are generated from the store dashboard and can be used by your App to verify request authenticity before authenticating the user to your app.
 

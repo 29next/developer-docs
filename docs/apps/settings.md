@@ -53,9 +53,9 @@ console.log({{ app.settings.custom_app_id }});
 
 ```
 
-!!! tip "App Settings have an Admin API"
-    For Sever to Server Apps with access to the Admin API, you can update the app settings values stored in the database on the Admin API allowing you to configure the app from your external application.
-
+:::info
+For Sever to Server Apps with access to the Admin API, you can update the app settings values stored in the database on the Admin API allowing you to configure the app from your external application.
+:::
 
 ### Reference
 

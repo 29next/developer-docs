@@ -4,7 +4,7 @@ sidebar_position: 3
 ---
 # App Manifest Reference
 
-### Manifest Reference
+## Manifest Reference
 The manifest.json file is used to configure your app.
 
 ```json title="Example manifest.json"
@@ -43,9 +43,9 @@ The manifest.json file is used to configure your app.
 
 ```
 
-### Manifest Properties
+## Manifest Properties
 
-#### oauth
+### oauth
 
 If your app uses OAuth to make API requests to a third-party product, you must specify the details using this property and add a parameter of type "oauth".
 
@@ -66,7 +66,7 @@ If this property is specified, users will go through the OAuth authentication fl
   }
 ```
 
-#### locations
+### locations
 
 Specifies and maps App Snippets that extend Storefront theme templates. See Theme [app_hook reference](/themes/templates/tags#app_hook) for a full list of supported Storefront Theme locations.
 
@@ -81,7 +81,7 @@ Specifies and maps App Snippets that extend Storefront theme templates. See Them
 ```
 
 
-#### settings_schema
+### settings_schema
 
 Specifies the settings schema used for storing local settings data within the app that can be referenced in snippets. The settings schema will generate a form available to store admins to add settings for their store. Server side apps also will have access to an App Settings API that can be used to push settings values directly to stores.
 

@@ -1,11 +1,17 @@
 ---
-title: 'Tag Reference'
+title: Tag Reference
+sidebar_label: Tag Reference
+sidebar_position: 1
 ---
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
 
 ### if, elif, & else
 Use the if tag to evaluate if a variable is "true" and control the contents displayed.
 
-```html
+```django
 {% if products_list > 2 %}
     <p>Number of products: {{ products_list|length }}</p>
 {% elif products_list %}
@@ -40,7 +46,7 @@ If tags may be used in combination with boolean operators for conditional contro
 
 Loops over each item in array, making the item available in a context variable. For example, to display a list of products provided in the `{{ products }}` variable.
 
-```html
+```django
 <ul>
     {% for each in products %}
     <li>{{ each.get_title }} - Rating {{ each.rating }} stars</li>
@@ -52,51 +58,59 @@ Loops over each item in array, making the item available in a context variable. 
 
 Extends and block tags allow you to define blocks of content in a base template that can be overridden by templates that extend from it.
 
-=== "Parent Template"
-    ```html title="layouts/base.html"
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <link rel="stylesheet" href="{{ 'assets/style.css'|asset_url }}">
-        <title>{% block title %}My amazing store{% endblock %}</title>
-    </head>
+<Tabs>
+<TabItem value="parent" label="Parent Template">
 
-    <body>
-        <div id="sidebar">
-            {% block sidebar %}
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/blog/">Blog</a></li>
-            </ul>
-            {% endblock %}
-        </div>
+```django title="layouts/base.html"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ 'assets/style.css'|asset_url }}">
+    <title>{% block title %}My amazing store{% endblock %}</title>
+</head>
 
-        <div id="content">
-            {% block content %}{% endblock %}
-        </div>
-    </body>
-    </html>
-    ```
-=== "Child Template"
-    ```html title="templates/blog.html"
-    {% extends "layouts/base.html" %}
-    {% block title %}My Blog Post Title{% endblock %}
-    {% block sidebar %}
-        <div class="sidebar">
-            <h4>Custom Sidebar</h4>
-        </div>
-    {% endblock %}
-    {% block content %}
-        <h4>My Blog Post Title...</h4>
-    {% endblock %}
-    ```
+<body>
+    <div id="sidebar">
+        {% block sidebar %}
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+```
+
+</TabItem>
+<TabItem value="child" label="Child Template">
+
+```django title="templates/blog.html"
+{% extends "layouts/base.html" %}
+{% block title %}My Blog Post Title{% endblock %}
+{% block sidebar %}
+    <div class="sidebar">
+        <h4>Custom Sidebar</h4>
+    </div>
+{% endblock %}
+{% block content %}
+    <h4>My Blog Post Title...</h4>
+{% endblock %}
+```
+
+</TabItem>
+</Tabs>
 
 
 ### include
 
 Loads a template and renders it with the current context. This is a way of including other templates within a template.
 
-```html
+```django
 <html lang="en">
 <body>
     {% include "partials/footer.html" %}
@@ -104,14 +118,15 @@ Loads a template and renders it with the current context. This is a way of inclu
 </html>
 ```
 
-!!! warning
-    A word of caution, multi-level inclusion inside of iterative loops can create performance penalties while rendering a page html for site visitors. Use includes sparingly when working inside iterative loops.
+:::caution
+A word of caution, multi-level inclusion inside of iterative loops can create performance penalties while rendering a page html for site visitors. Use **includes** sparingly when working inside iterative loops.
+:::
 
 ### url
 
 Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
 
-```html
+```django
 <a href="{% url 'blog:blog-list' %}">Blog</a>
 ```
 
@@ -119,7 +134,7 @@ Returns an absolute url path reference matching a given view with parameters. Se
 
 This tag is used for CSRF protection and required on any template with a form that sends a POST request to the back end.
 
-```html
+```django
 <form>
     {% csrf_token %}
     <input type="text" id="example" name="Example Input">
@@ -131,7 +146,7 @@ This tag is used for CSRF protection and required on any template with a form th
 
 Ignores everything between {% comment %} and {% endcomment %}. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
 
-```html
+```django
 <p>Rendered text with {{ pub_date|date:"c" }}</p>
 {% comment "Optional note" %}
     <p>Commented out text with {{ create_date|date:"c" }}</p>
@@ -141,15 +156,13 @@ Ignores everything between {% comment %} and {% endcomment %}. An optional note 
 ### image_thumbnail
 The `image_thumbnail` tag is used to resize images dynamically in templates. The tag accepts arguments that control how the image is resized.
 
-
-```html
+```django
 {% with image=line.product.primary_image %}
       {% image_thumbnail image.original "200x200" upscale=False as thumb %}
       <a href="{{ line.product.get_absolute_url }}">
          <img class="thumbnail" src="{{ thumb.url }}" alt="{{ product.get_title }}">
       </a>
 {% endwith %}
-
 ```
 
 | Arguemnt | Description |
@@ -172,7 +185,7 @@ Displays the current date and/or time, using a format according to the given str
 
 The `t` (translation) tag is used to display localized content from a theme's translations files. The t tag accepts a key and additional replacement variable arguments to access the theme translations and return the language appropriate string for display to the user.
 
-```html
+```django
 {% t 'customer.orders.order_count' with count=orders.count %}
 ```
 
@@ -180,7 +193,7 @@ The `t` (translation) tag is used to display localized content from a theme's tr
 ### seo
 The `seo` tag generates SEO meta data for products in standardized format for consumption by 3rd party systems.
 
-```html
+```django
 {% seo %}
 ```
 The tag is expected to be added to the top of product details template to generate necessary SEO meta data.
@@ -189,7 +202,7 @@ The tag is expected to be added to the top of product details template to genera
 
 The `app_asset_url` tag is used to reference asset files included in app snippets.
 
-```html
+```django
 
 <script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
 
@@ -199,10 +212,16 @@ The `app_asset_url` tag is used to reference asset files included in app snippet
 
 The `app_hook` tag specifies a theme storefront location Apps can inject snippets into to extend storefront templates from Apps. Theme developers should ensure their templates include all available `app_hooks` to ensure compatability with all Apps.
 
-```html
+```django
 {% app_hook 'global_header' %}
 ```
 
 **Available `app_hook` locations include:**
 
---8<-- "snippets/app-hook-locations.md"
+```mdx-code-block
+
+import AppHookLocations from '@site/_snippets/_app-hook-locations.mdx';
+
+<AppHookLocations />
+
+```

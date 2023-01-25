@@ -1,7 +1,8 @@
 ---
+sidebar_label: Checkout Customization
 sidebar_position: 1
 ---
-# Checkout Customization Guide
+# Checkout Customization
 
 Theme developers can customize the store checkout flow using the `checkout.html` template which provides several methods to override and customize the user experience.
 
@@ -17,7 +18,7 @@ checkout
 ### Base Template
 
 
-```html title="Checkout Base Template"
+```django title="Checkout Base Template"
 <html lang="{{ LANGUAGE_CODE|default:'en' }}" class="has-banner {% block html_class %}{% endblock %}">
 <head>
     <title>{% block title %}{% endblock %}</title>
@@ -91,8 +92,6 @@ checkout
 ```
 
 ### Steps
-
-
 
 | Step           | Description                          |
 | -----------    | ------------------------------------ |

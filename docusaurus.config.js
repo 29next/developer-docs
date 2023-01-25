@@ -78,7 +78,7 @@ const config = {
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
                     // { to: '/blog/', label: 'Blog', position: 'left' },
-                    { to: '/docs/api/admin/reference/', label: 'Admin API Reference', position: 'right' },
+                    // { to: '/docs/api/admin/reference/', label: 'Admin API Reference', position: 'right' },
                 ],
             },
             footer: {
@@ -90,6 +90,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+                additionalLanguages: ['django'],
             },
             mermaid: {
                 theme: { light: 'neutral', dark: 'dark' },

@@ -1,14 +1,21 @@
 ---
+sidebar_label: URLs & Template Paths
+title: URLs & Template Paths
 ---
 
 Use the URL and Template Path reference below when building your theme to ensure that your templates load for the correct storefront URL paths.
 
+```mdx-code-block
 
-!!! important
+import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
 
-    Ensure your template paths match with expected template paths for built-in storefront views. Use the base theme as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
+<IntroTheme />
 
---8<-- "snippets/admonitions/view-intro-theme.md"
+```
+
+:::caution
+Ensure your template paths match with expected template paths for built-in storefront views. Use the public themes on [Github](https://github.com/29next/) as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
+:::
 
 ### Account & Login
 
