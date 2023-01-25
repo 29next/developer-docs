@@ -73,7 +73,28 @@ const config = {
         mermaid: true,
     },
     themes: ['@docusaurus/theme-mermaid'],
-
+    plugins: [
+        [
+            'client-redirects',
+            /** @type {import('@docusaurus/plugin-client-redirects').Options} */
+            ({
+                fromExtensions: ['html'],
+                createRedirects(routePath) {
+                    // Redirect to /docs from /docs/introduction (now docs root doc)
+                    if (routePath === '/docs' || routePath === '/docs/') {
+                        return [`${routePath}/introduction`];
+                    }
+                    return [];
+                },
+                redirects: [
+                    {
+                        from: ['/api/admin'],
+                        to: '/docs/api/admin',
+                    },
+                ],
+            }),
+        ]
+    ],
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
@@ -88,8 +109,7 @@ const config = {
                     { to: '/docs/themes/', label: 'Themes', position: 'left' },
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
-                    // { to: '/blog/', label: 'Blog', position: 'left' },
-                    // { to: '/docs/api/admin/reference/', label: 'Admin API Reference', position: 'right' },
+                    { href: 'https://github.com/29next/', position: 'right', className: 'header-github-link' },
                 ],
             },
             footer: {
@@ -107,15 +127,9 @@ const config = {
                 theme: { light: 'neutral', dark: 'dark' },
             },
             algolia: {
-                // The application ID provided by Algolia
-                appId: 'YOUR_APP_ID',
-
-                // Public API key: it is safe to commit it
-                apiKey: 'YOUR_SEARCH_API_KEY',
-
-                indexName: 'YOUR_INDEX_NAME',
-
-                // Optional: Algolia search parameters
+                appId: 'GNSJUJD786',
+                apiKey: '384f2da9c9bcc8dad6907d70da1894e9',
+                indexName: 'docs',
                 searchParameters: {},
                 searchPagePath: 'search',
             },

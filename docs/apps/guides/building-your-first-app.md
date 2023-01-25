@@ -24,7 +24,13 @@ In this guide, we'll show you how to create your first app to get you up and run
 
 3. Add your development store to the "Development Stores" section. This will ensure that your app is automatically pushed to your development store for review and testing.
 
---8<-- "snippets/admonitions/offer-development-store.md"
+```mdx-code-block
+
+import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
+
+<DevelopmentStore name="Development Store Offer" />
+
+```
 
 ### Configure App on Local
 
