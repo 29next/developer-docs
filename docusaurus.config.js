@@ -13,7 +13,7 @@ const config = {
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/logo.png',
-
+    trailingSlash: true,
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
     organizationName: '29next', // Usually your GitHub org/user name.
@@ -24,7 +24,6 @@ const config = {
     // to replace "en" with "zh-Hans".
     i18n: {
         defaultLocale: 'en',
-        locales: ['en'],
     },
 
     presets: [
@@ -94,6 +93,19 @@ const config = {
             },
             mermaid: {
                 theme: { light: 'neutral', dark: 'dark' },
+            },
+            algolia: {
+                // The application ID provided by Algolia
+                appId: 'YOUR_APP_ID',
+
+                // Public API key: it is safe to commit it
+                apiKey: 'YOUR_SEARCH_API_KEY',
+
+                indexName: 'YOUR_INDEX_NAME',
+
+                // Optional: Algolia search parameters
+                searchParameters: {},
+                searchPagePath: 'search',
             },
         }),
 };

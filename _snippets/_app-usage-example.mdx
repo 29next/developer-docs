@@ -13,10 +13,8 @@ your-app
 In order to add `my-app.js` to every page of the store, we'll add it to a snippet that uses the `app_asset_url` tag to reference the file source in a script tag.
 
 
-```html title="Example Asset Usage in Snippet"
-
+```django title="Example Asset Usage in Snippet"
 <script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
-
 ```
 :::caution
 

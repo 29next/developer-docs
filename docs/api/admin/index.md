@@ -6,9 +6,9 @@ sidebar_position: 1
 
 ### Getting Started
 
-At the core of 29 Next is the Admin API. It provides RESTful access to products, customers, orders, transactions, support tickets, and more all in JSON format.
+At the core of 29 Next is the Admin API.
 
-### [See Full Admin API Reference](/docs/api/admin/reference/)
+### [See Admin API Reference](/docs/api/admin/reference/)
 
 ``` curl title="Admin API Path"
 https://<store>.29next.store/api/admin/

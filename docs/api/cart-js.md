@@ -3,7 +3,7 @@ Leverage the integrated JS API to add turn-key functionality to buttons in your 
 
 The 29 Next Cart JS API allows you to create HTML buttons that carry a variety of functionalities, with no extra code required.  See below for examples and methods of implementation.
 
-#### Button Actions
+### Button Actions
 
 To add products to a cart, there are data attributes that can be used on an HTML <button></button> to integrate it with the storefront cart.
 
@@ -22,7 +22,7 @@ To add products to a cart, there are data attributes that can be used on an HTML
 | data-product-remove-interval-count="6, one-time" | No | Subscription interval count of product to remove from the basket, follows same logic as when adding. |
 | data-clear-cart=true | No | Clear the existing products in the cart before adding more products. Helps with situations where you want to clear existing products for an upsell. |
 
-#### Example Add to Cart Buttons
+### Example Add to Cart Buttons
 
 ```html title="Add multiple one time products"
 
@@ -46,7 +46,7 @@ To add products to a cart, there are data attributes that can be used on an HTML
 
 ```
 
-#### Apply Voucher Form
+### Apply Voucher Form
 This form gives the ability for a customer to apply a voucher (coupon) to their basket from within the page body, instead of via the UI in the sidecart.  This can also be combined with the `applyVoucherToBasket` callback event to customize the success display.
 ``` html title="Apply Voucher Form"
 <div data-form="voucher-form" class="input-group mb-3">
@@ -57,7 +57,7 @@ This form gives the ability for a customer to apply a voucher (coupon) to their 
    </button>
 </div>
 ```
-#### Show the Cart
+### Show the Cart
 
 To show the contents of the cart to the user, 29 Next has a built in cart template that can show the current cart count, and trigger the cart modal with HTML attributes.  See example below.
 
