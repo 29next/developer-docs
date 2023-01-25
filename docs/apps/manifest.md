@@ -86,14 +86,14 @@ Specifies and maps App Snippets that extend Storefront theme templates. See Them
 Specifies the settings schema used for storing local settings data within the app that can be referenced in snippets. The settings schema will generate a form available to store admins to add settings for their store. Server side apps also will have access to an App Settings API that can be used to push settings values directly to stores.
 
 ```json title="Example settings_schema"
-  "settings_schema": [
-     {
+"settings_schema": [
+    {
         "name": "enable_app",
         "type": "checkbox",
         "label": "Enable Custom App",
         "help_text": "",
         "default": false
-     },
+    },
     {
         "name": "example_setting",
         "type": "text",
@@ -103,5 +103,5 @@ Specifies the settings schema used for storing local settings data within the ap
         "help_text": "",
         "max_length": 250
     }
-  ],
+],
 ```
