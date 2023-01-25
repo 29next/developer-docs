@@ -60,7 +60,7 @@ const config = {
                 specs: [
                     {
                         spec: 'openapi/swagger.json',
-                        route: '/docs/api/admin/reference/',
+                        route: '/api/admin/reference/',
                     },
                 ],
                 theme: {
@@ -75,21 +75,33 @@ const config = {
     themes: ['@docusaurus/theme-mermaid'],
     plugins: [
         [
-            'client-redirects',
+            '@docusaurus/plugin-client-redirects',
             /** @type {import('@docusaurus/plugin-client-redirects').Options} */
             ({
-                fromExtensions: ['html'],
-                createRedirects(routePath) {
-                    // Redirect to /docs from /docs/introduction (now docs root doc)
-                    if (routePath === '/docs' || routePath === '/docs/') {
-                        return [`${routePath}/introduction`];
-                    }
-                    return [];
-                },
                 redirects: [
                     {
-                        from: ['/api/admin'],
+                        from: '/docs/api/admin/reference/',
+                        to: '/api/admin/reference/',
+                    },
+                    {
+                        from: '/api/',
+                        to: '/docs/api',
+                    },
+                    {
+                        from: '/api/admin',
                         to: '/docs/api/admin',
+                    },
+                    {
+                        from: '/api/checkout-links',
+                        to: '/docs/api/checkout-links',
+                    },
+                    {
+                        from: '/themes',
+                        to: '/docs/themes',
+                    },
+                    {
+                        from: '/webhooks',
+                        to: '/docs/webhooks',
                     },
                 ],
             }),
@@ -122,6 +134,11 @@ const config = {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
                 additionalLanguages: ['django'],
+            },
+            colorMode: {
+                defaultMode: 'dark',
+                disableSwitch: false,
+                respectPrefersColorScheme: true,
             },
             mermaid: {
                 theme: { light: 'neutral', dark: 'dark' },
