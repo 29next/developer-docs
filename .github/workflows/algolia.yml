@@ -7,11 +7,11 @@ on:
 
 jobs:
   algolia:
-    runs-on: "ubuntu-latest"
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Get algolia as config
-        uses: actions/checkout@v2
         id: algolia_config
         run: echo "::set-output name=config::$(cat algolia.json | jq -r tostring)"
 
