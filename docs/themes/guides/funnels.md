@@ -239,5 +239,5 @@ funnels
 ```
 
 :::note
-Replace `<enter checkout link>` with your desired  [checkout link](/api/checkout-links/)
+Replace `<enter checkout link>` with your desired  [checkout link](/api/checkout-links.md)
 :::

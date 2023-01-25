@@ -34,6 +34,17 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
+                    include: ['**/*.md', '**/*.mdx'],
+                    exclude: [
+                        'node_modules/**/*.md*',
+                        '**/node_modules/**/*.md*',
+                        '**/build/**/*.md*',
+                        '**/dist/**/*.md*',
+                        '**/__tests__/**/*.md*',
+                        '**/pages/**/*.md*',
+                        '**/*.ts*',
+                        'README.md*',
+                    ],
                 },
                 blog: {
                     showReadingTime: true,

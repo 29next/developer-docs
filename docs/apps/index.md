@@ -14,15 +14,15 @@ Apps allow you to extend built-in functionality of the 29 Next platform to solve
 **Apps Allow you to:**
 
 * **Extend Storefront Themes** - use [App Snippets](#app-snippets) with storefront locations to inject HTML/CSS/JS into themes.
-* **Extend Core Functionality** - use [Webhooks](/webhooks/) to subscribe to events and the [Admin API](/api/admin/) to add new logic and integrations.
+* **Extend Core Functionality** - use [Webhooks](/webhooks.md) to subscribe to events and the [Admin API](/api/admin/index.md) to add new logic and integrations.
 
 
 ### Example Apps
 
 | Example Apps | Description | Link |
 | ------ | ------ | ----- |
-| Example S2S App | Server to Server demonstration of [OAuth Flow](/apps/oauth/), [Session Tokens](/apps/oauth/session-auth/), [Remote Settings](/apps/settings/), [Webhook Setup](/webhooks/) and [Verification](/webhooks/#verifying-webhook-requests) | [View](https://github.com/29next/example-app) |
-| Google Tag Manager | Demonstrates [App Snippets](/apps/snippets/) and [Theme App Hooks](/apps/snippets/#locations) to add custom javascript events to storefronts. | [View](https://github.com/29next/google-tag-manager) |
+| Example S2S App | Server to Server demonstration of [OAuth Flow](/apps/oauth/index.md), [Session Tokens](/apps/oauth/session-auth.md), [Remote Settings](/apps/settings.md), [Webhook Setup](/webhooks.md) and [Verification](/webhooks.md#verifying-webhook-requests) | [View](https://github.com/29next/example-app) |
+| Google Tag Manager | Demonstrates [App Snippets](/apps/snippets.md) and [Theme App Hooks](/apps/snippets.md#locations) to add custom javascript events to storefronts. | [View](https://github.com/29next/google-tag-manager) |
 
 
 ### Getting Started
