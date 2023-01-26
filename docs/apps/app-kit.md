@@ -1,6 +1,8 @@
 ---
 sidebar_label: App Kit
 sidebar_position: 7
+tags:
+ - Tools
 ---
 # App Kit
 

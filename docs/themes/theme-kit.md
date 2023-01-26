@@ -1,6 +1,8 @@
 ---
 sidebar_label: Theme Kit
 sidebar_position: 4
+tags:
+ - Tools
 ---
 # Theme Kit
 

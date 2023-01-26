@@ -17,8 +17,8 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-                to="/docs/apps/">
-            Docusaurus Tutorial - 5min ⏱️
+                to="/docs/">
+                    Get Started Building
           </Link>
         </div>
       </div>
@@ -39,3 +39,6 @@ export default function Home() {
     </Layout>
   );
 }
+
+// temp disable homepage while waiting for design.
+window.location = '/docs/'
