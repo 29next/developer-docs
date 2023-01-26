@@ -87,8 +87,8 @@
 }
 
 .card>h2 {
-    color: var(--ifm-heading-color);
+    color: var(--docsearch-text-color);
 }
 .card>p {
-    color: var(--ifm-link-color);
+    color: var(--docsearch-text-color);
 }
