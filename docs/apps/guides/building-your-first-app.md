@@ -1,6 +1,8 @@
 ---
 title: Building Your First App
 sidebar_position: 10
+tags:
+ - Guide
 ---
 
 # Building Your First App
