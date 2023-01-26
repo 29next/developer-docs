@@ -147,11 +147,6 @@ const config = {
                 darkTheme: darkCodeTheme,
                 additionalLanguages: ['django'],
             },
-            colorMode: {
-                defaultMode: 'dark',
-                disableSwitch: false,
-                respectPrefersColorScheme: true,
-            },
             mermaid: {
                 theme: { light: 'neutral', dark: 'dark' },
             },
