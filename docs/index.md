@@ -18,32 +18,13 @@ sidebar_position: 0
 
 ### Getting Started
 
-<section class="row">
-    <article class="col col--6 margin-bottom--lg">
-        <a class="card padding--lg cardContainer_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" href="/docs/api/admin/">
-        <h2 class="text--truncate cardTitle_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" title="Admin API">⚡️ Admin API</h2>
-        <p class="text--truncate cardDescription_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module">Use our APIs to create new sales channels and extend core functionality with custom business logic.</p>
-        </a>
-    </article>
-    <article class="col col--6 margin-bottom--lg">
-        <a class="card padding--lg cardContainer_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" href="/docs/themes/">
-        <h2 class="text--truncate cardTitle_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" title="Admin API">🎯 Themes</h2>
-        <p class="text--truncate cardDescription_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module">Create unique brand experiences for customers with our theme framework.</p>
-        </a>
-    </article>
-    <article class="col col--6 margin-bottom--lg">
-        <a class="card padding--lg cardContainer_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" href="/docs/apps/">
-        <h2 class="text--truncate cardTitle_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" title="Admin API">🚀 Apps</h2>
-        <p class="text--truncate cardDescription_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module">Build Apps to bundle your integration into an installable App that can be easily installed on many stores.</p>
-        </a>
-    </article>
-    <article class="col col--6 margin-bottom--lg">
-        <a class="card padding--lg cardContainer_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" href="/docs/webhooks/">
-        <h2 class="text--truncate cardTitle_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module" title="Admin API">🔗 Webhooks</h2>
-        <p class="text--truncate cardDescription_node_modules-@docusaurus-theme-classic-lib-theme-DocCard-styles-module">Use webhooks to create event subscriptions to notify external applications.</p>
-        </a>
-    </article>
-</section>
 
+```mdx-code-block
+
+import IntroCards from '@site/src/components/IntroCards';
+
+<IntroCards />
+
+```
 
 💪 We can't wait to see what you build!
