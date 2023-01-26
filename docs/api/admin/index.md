@@ -8,23 +8,29 @@ sidebar_position: 1
 
 At the core of 29 Next is the Admin API.
 
-### [See Admin API Reference](/docs/api/admin/reference/)
+```mdx-code-block
 
-``` curl title="Admin API Path"
-https://<store>.29next.store/api/admin/
+import Link from '@docusaurus/Link';
+
+<Link
+    className="button button--primary button--lg"
+    to="/docs/api/admin/reference/">
+    See Admin API Reference
+</Link>
+
 ```
 
-:::tip
-
-Access the API explorer on your store at `https://<store>.29next.store/api/admin/` to explore the API methods available.
-
-:::
-
 ### Authentication
+
 
 The Admin API uses Oauth 2 authorization protocol to manage access to your store's resources. Oauth Apps (and associated access tokens) can be tailored with object-level permission to ensure that each integrated service only has access to necessary objects.
 
 Before using the Admin API, you'll need to create a store and create an OAuth App necessary for API access. To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permissions](permissions.md) to retrieve your **Access Token**.  It is recommended to create unique Oauth Apps per external system so that you can revoke as needed.
+
+```curl title="Admin API Path"
+https://<store>.29next.store/api/admin/
+```
+
 
 **Use your Oauth App Access Token in the request headers to access the API.**
 
@@ -34,6 +40,10 @@ curl -X GET "https://<store>.29next.store/api/admin/" -H "Authorization: Bearer 
 
 :::caution
 Legacy API Tokens are now deprecated in favor of Oauth App Tokens. If you are currently using Legacy API Tokens, it's recommended to update your integration as they will be removed at a future date.
+:::
+
+:::info
+Access the API explorer on your store at `https://<store>.29next.store/api/docs/admin/` to explore the API interactively with Swagger.
 :::
 
 ## Examples
