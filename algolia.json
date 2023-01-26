@@ -7,7 +7,10 @@
         "https://euphonious-cassata-c433db.netlify.app/sitemap.xml"
     ],
     "stop_urls": [
-        "/search"
+        "/search",
+        "/docs/api/admin/guides/",
+        "/docs/apps/guides/",
+        "/docs/themes/guides/"
     ],
     "sitemap_alternate_links": true,
     "selectors": {
