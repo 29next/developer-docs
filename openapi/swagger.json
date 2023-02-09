@@ -3,9 +3,9 @@
     "info": {
         "title": "Admin API",
         "description": "",
-        "version": "v1"
+        "version": ""
     },
-    "host": "{store-subdomain}.29next.com",
+    "host": "{store-subdomain}.29next.store",
     "schemes": [
         "https"
     ],
@@ -18,6 +18,128 @@
     ],
     "securityDefinitions": {},
     "paths": {
+        "/apps/{client_id}/settings/": {
+            "get": {
+                "operationId": "apps_settings_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "apps"
+                ]
+            },
+            "put": {
+                "operationId": "apps_settings_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "apps"
+                ]
+            },
+            "patch": {
+                "operationId": "apps_settings_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "apps"
+                ]
+            },
+            "delete": {
+                "operationId": "apps_settings_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "apps"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "client_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
         "/carts/": {
             "get": {
                 "operationId": "carts_list",
@@ -4232,11 +4354,6 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "USD",
-                                                    "SEK",
-                                                    "NOK",
-                                                    "EUR",
-                                                    "GBP",
-                                                    "THB",
                                                     "CAD"
                                                 ],
                                                 "x-nullable": true
@@ -4354,11 +4471,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -4464,11 +4576,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -4585,11 +4692,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -4704,11 +4806,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -4814,11 +4911,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -4933,11 +5025,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -5043,11 +5130,6 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
                                         "CAD"
                                     ],
                                     "x-nullable": true
@@ -6454,10 +6536,9 @@
                                         "card_token",
                                         "saved_card",
                                         "apple_pay",
-                                        "bank_transfer",
                                         "paypal",
-                                        "cash_on_delivery",
-                                        "klarna"
+                                        "klarna",
+                                        "ideal"
                                     ],
                                     "x-nullable": true
                                 },
@@ -6479,7 +6560,8 @@
                                         },
                                         "card_cvv": {
                                             "title": "Card cvv",
-                                            "type": "integer",
+                                            "type": "string",
+                                            "minLength": 1,
                                             "x-nullable": true
                                         },
                                         "card_expiry_month": {
@@ -7083,10 +7165,9 @@
                                         "card_token",
                                         "saved_card",
                                         "apple_pay",
-                                        "bank_transfer",
                                         "paypal",
-                                        "cash_on_delivery",
-                                        "klarna"
+                                        "klarna",
+                                        "ideal"
                                     ],
                                     "x-nullable": true
                                 },
@@ -7108,7 +7189,8 @@
                                         },
                                         "card_cvv": {
                                             "title": "Card cvv",
-                                            "type": "integer",
+                                            "type": "string",
+                                            "minLength": 1,
                                             "x-nullable": true
                                         },
                                         "card_expiry_month": {
@@ -15245,42 +15327,10 @@
                                     "title": "Event type",
                                     "type": "string",
                                     "enum": [
-                                        "back_ordered",
-                                        "cancel.failed",
                                         "cancel.initiated",
                                         "cancel.succeeded",
-                                        "customs.cleared",
-                                        "customs.onhold",
-                                        "delivery.succeeded",
-                                        "in_transit",
-                                        "line_item.added",
                                         "line_item.changed",
-                                        "notification.order_canceled",
-                                        "notification.order_shipped",
-                                        "onhold",
-                                        "out_for_delivery",
-                                        "out_of_delivery",
-                                        "packed",
-                                        "paypal.tracking_uploaded",
-                                        "picking",
-                                        "pick_up",
-                                        "pickup.failed",
-                                        "preparing_delivery",
-                                        "processing",
-                                        "quantity_changed",
-                                        "ready_to_pick",
-                                        "ready_to_ship",
-                                        "return",
-                                        "return.approved",
-                                        "return.complete",
-                                        "return.failed",
-                                        "sent",
-                                        "sent_to_shipper",
-                                        "shipped",
-                                        "shipped_email_sent",
-                                        "tracking_code_sent",
-                                        "transit",
-                                        "verified"
+                                        "notification.order_shipped"
                                     ]
                                 },
                                 "detail": {
@@ -16178,9 +16228,6 @@
                                                 "enum": [
                                                     "",
                                                     "manual",
-                                                    "boxme",
-                                                    "rapid",
-                                                    "shiphero",
                                                     "shipstation"
                                                 ]
                                             },
@@ -16275,9 +16322,6 @@
                                     "enum": [
                                         "",
                                         "manual",
-                                        "boxme",
-                                        "rapid",
-                                        "shiphero",
                                         "shipstation"
                                     ]
                                 },
@@ -16360,9 +16404,6 @@
                                     "enum": [
                                         "",
                                         "manual",
-                                        "boxme",
-                                        "rapid",
-                                        "shiphero",
                                         "shipstation"
                                     ]
                                 },
@@ -16456,9 +16497,6 @@
                                     "enum": [
                                         "",
                                         "manual",
-                                        "boxme",
-                                        "rapid",
-                                        "shiphero",
                                         "shipstation"
                                     ]
                                 },
@@ -16550,9 +16588,6 @@
                                     "enum": [
                                         "",
                                         "manual",
-                                        "boxme",
-                                        "rapid",
-                                        "shiphero",
                                         "shipstation"
                                     ]
                                 },
@@ -16635,9 +16670,6 @@
                                     "enum": [
                                         "",
                                         "manual",
-                                        "boxme",
-                                        "rapid",
-                                        "shiphero",
                                         "shipstation"
                                     ]
                                 },
@@ -24729,12 +24761,8 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
-                                        "CAD"
+                                        "CAD",
+                                        "EUR"
                                     ]
                                 },
                                 "partner_sku": {
@@ -24848,12 +24876,8 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
-                                        "CAD"
+                                        "CAD",
+                                        "EUR"
                                     ]
                                 },
                                 "partner_sku": {
@@ -25136,12 +25160,8 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
-                                        "CAD"
+                                        "CAD",
+                                        "EUR"
                                     ]
                                 },
                                 "partner_sku": {
@@ -25255,12 +25275,8 @@
                                     "type": "string",
                                     "enum": [
                                         "USD",
-                                        "SEK",
-                                        "NOK",
-                                        "EUR",
-                                        "GBP",
-                                        "THB",
-                                        "CAD"
+                                        "CAD",
+                                        "EUR"
                                     ]
                                 },
                                 "partner_sku": {
@@ -27785,11 +27801,7 @@
                                     "title": "Shipping code",
                                     "type": "string",
                                     "enum": [
-                                        "default-shipping-th",
-                                        "Priority",
-                                        "free-shipping",
-                                        "default-shipping",
-                                        "m-shipping",
+                                        "default",
                                         "no-shipping-required"
                                     ]
                                 },
@@ -32456,6 +32468,9 @@
                     "200": {
                         "description": "response description",
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -32467,7 +32482,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -32680,6 +32695,9 @@
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -32691,7 +32709,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -32895,6 +32913,9 @@
                     "201": {
                         "description": "",
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -32906,7 +32927,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -33121,6 +33142,9 @@
                     "200": {
                         "description": "",
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -33132,7 +33156,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -33345,6 +33369,9 @@
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -33356,7 +33383,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -33561,6 +33588,9 @@
                     "200": {
                         "description": "",
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -33572,7 +33602,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -33786,6 +33816,9 @@
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -33797,7 +33830,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
@@ -34002,6 +34035,9 @@
                     "200": {
                         "description": "",
                         "schema": {
+                            "required": [
+                                "email"
+                            ],
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -34013,7 +34049,7 @@
                                     "title": "Email",
                                     "type": "string",
                                     "format": "email",
-                                    "x-nullable": true
+                                    "minLength": 1
                                 },
                                 "first_name": {
                                     "title": "First name",
