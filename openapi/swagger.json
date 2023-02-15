@@ -3,7 +3,7 @@
     "info": {
         "title": "Admin API",
         "description": "",
-        "version": ""
+        "version": "v1"
     },
     "host": "{store-subdomain}.29next.store",
     "schemes": [
@@ -16823,47 +16823,6 @@
                                                     }
                                                 }
                                             },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "code",
-                                                        "name"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
-                                                            "readOnly": true
-                                                        },
-                                                        "code": {
-                                                            "title": "Code",
-                                                            "type": "string",
-                                                            "format": "slug",
-                                                            "pattern": "^[-a-zA-Z0-9_]+$",
-                                                            "minLength": 1
-                                                        },
-                                                        "name": {
-                                                            "title": "Name",
-                                                            "type": "string",
-                                                            "maxLength": 128,
-                                                            "minLength": 1
-                                                        },
-                                                        "type": {
-                                                            "title": "Type",
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "text",
-                                                                "integer",
-                                                                "boolean",
-                                                                "float",
-                                                                "date"
-                                                            ]
-                                                        }
-                                                    }
-                                                }
-                                            },
                                             "name": {
                                                 "title": "Name",
                                                 "type": "string",
@@ -16995,47 +16954,6 @@
                                         }
                                     }
                                 },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
                                 "name": {
                                     "title": "Name",
                                     "type": "string",
@@ -17151,47 +17069,6 @@
                                             "required": {
                                                 "title": "Required",
                                                 "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
                                             }
                                         }
                                     }
@@ -17326,47 +17203,6 @@
                                         }
                                     }
                                 },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
                                 "name": {
                                     "title": "Name",
                                     "type": "string",
@@ -17495,47 +17331,6 @@
                                         }
                                     }
                                 },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
                                 "name": {
                                     "title": "Name",
                                     "type": "string",
@@ -17651,47 +17446,6 @@
                                             "required": {
                                                 "title": "Required",
                                                 "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
                                             }
                                         }
                                     }
@@ -17824,47 +17578,6 @@
                                         }
                                     }
                                 },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
                                 "name": {
                                     "title": "Name",
                                     "type": "string",
@@ -17984,47 +17697,6 @@
                                         }
                                     }
                                 },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
                                 "name": {
                                     "title": "Name",
                                     "type": "string",
@@ -18086,7 +17758,7 @@
         "/products/": {
             "get": {
                 "operationId": "products_list",
-                "description": "Api for retrieving products.",
+                "description": "Retrieve a list of all products.",
                 "parameters": [
                     {
                         "name": "title",
@@ -18328,8 +18000,8 @@
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "id": {
-                                                                        "title": "ID",
-                                                                        "type": "integer",
+                                                                        "title": "Id",
+                                                                        "type": "string",
                                                                         "readOnly": true
                                                                     },
                                                                     "name": {
@@ -18347,10 +18019,6 @@
                                                                         "type": "string",
                                                                         "readOnly": true,
                                                                         "minLength": 1
-                                                                    },
-                                                                    "product": {
-                                                                        "title": "Product",
-                                                                        "type": "integer"
                                                                     }
                                                                 }
                                                             }
@@ -18696,7 +18364,7 @@
             },
             "post": {
                 "operationId": "products_create",
-                "description": "Api for retrieving products.",
+                "description": "Create a new product.",
                 "parameters": [
                     {
                         "name": "data",
@@ -18798,8 +18466,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -18817,10 +18485,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -19076,8 +18740,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -19095,10 +18759,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -19106,122 +18766,10 @@
                                 "variant_attributes": {
                                     "type": "array",
                                     "items": {
-                                        "required": [
-                                            "name",
-                                            "code"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "option_group": {
-                                                "title": "Option group",
-                                                "required": [
-                                                    "options",
-                                                    "name"
-                                                ],
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "title": "ID",
-                                                        "type": "integer",
-                                                        "readOnly": true
-                                                    },
-                                                    "options": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string"
-                                                        },
-                                                        "uniqueItems": true
-                                                    },
-                                                    "name": {
-                                                        "title": "Name",
-                                                        "type": "string",
-                                                        "maxLength": 128,
-                                                        "minLength": 1
-                                                    }
-                                                }
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "richtext",
-                                                    "date",
-                                                    "datetime",
-                                                    "option",
-                                                    "multi_option",
-                                                    "file",
-                                                    "image"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
+                                        "type": "string",
+                                        "format": "slug"
+                                    },
+                                    "uniqueItems": true
                                 },
                                 "structure": {
                                     "title": "Product structure",
@@ -19596,8 +19144,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -19615,10 +19163,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -19720,9 +19264,33 @@
                                 "categories": {
                                     "type": "array",
                                     "items": {
-                                        "type": "integer"
+                                        "required": [
+                                            "slug"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "slug": {
+                                                "title": "Slug",
+                                                "type": "string",
+                                                "format": "slug",
+                                                "pattern": "^[-a-zA-Z0-9_]+$",
+                                                "maxLength": 255,
+                                                "minLength": 1
+                                            }
+                                        }
                                     },
-                                    "uniqueItems": true
+                                    "readOnly": true
                                 },
                                 "recommended_products": {
                                     "type": "array",
@@ -19874,8 +19442,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -19893,10 +19461,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -19970,52 +19534,6 @@
                                             },
                                             "required": {
                                                 "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
                                                 "type": "boolean"
                                             }
                                         }
@@ -20301,10 +19819,876 @@
             },
             "parameters": []
         },
+        "/products/children/{id}/": {
+            "get": {
+                "operationId": "products_children_read",
+                "description": "Retrieve a child product detail.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "product_id"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "product_id": {
+                                    "title": "Product id",
+                                    "type": "integer"
+                                },
+                                "title": {
+                                    "title": "Title",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "structure": {
+                                    "title": "Product structure",
+                                    "type": "string",
+                                    "enum": [
+                                        "standalone",
+                                        "parent",
+                                        "child"
+                                    ]
+                                },
+                                "images": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "product"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "original": {
+                                                "title": "Original",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "format": "uri"
+                                            },
+                                            "caption": {
+                                                "title": "Caption",
+                                                "type": "string",
+                                                "maxLength": 200
+                                            },
+                                            "display_order": {
+                                                "title": "Display order",
+                                                "description": "An image with a display order of zero will be the primary image for a product",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0
+                                            },
+                                            "product": {
+                                                "title": "Product",
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "products"
+                ]
+            },
+            "put": {
+                "operationId": "products_children_update",
+                "description": "Update an existing child product.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "required": [
+                                "variant_attribute_values"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "image": {
+                                    "title": "Image",
+                                    "type": "integer",
+                                    "x-nullable": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "product_id"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "product_id": {
+                                    "title": "Product id",
+                                    "type": "integer"
+                                },
+                                "title": {
+                                    "title": "Title",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "structure": {
+                                    "title": "Product structure",
+                                    "type": "string",
+                                    "enum": [
+                                        "standalone",
+                                        "parent",
+                                        "child"
+                                    ]
+                                },
+                                "images": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "product"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "original": {
+                                                "title": "Original",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "format": "uri"
+                                            },
+                                            "caption": {
+                                                "title": "Caption",
+                                                "type": "string",
+                                                "maxLength": 200
+                                            },
+                                            "display_order": {
+                                                "title": "Display order",
+                                                "description": "An image with a display order of zero will be the primary image for a product",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0
+                                            },
+                                            "product": {
+                                                "title": "Product",
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "products"
+                ]
+            },
+            "patch": {
+                "operationId": "products_children_partial_update",
+                "description": "Partially update an existing child product.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "required": [
+                                "variant_attribute_values"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "image": {
+                                    "title": "Image",
+                                    "type": "integer",
+                                    "x-nullable": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "variant_attribute_values"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "image": {
+                                    "title": "Image",
+                                    "type": "integer",
+                                    "x-nullable": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "products"
+                ]
+            },
+            "delete": {
+                "operationId": "products_children_delete",
+                "description": "Delete an existing child product.",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this Product.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
         "/products/{id}/": {
             "get": {
                 "operationId": "products_read",
-                "description": "Api for retrieving products.",
+                "description": "Retrieve a product detail.",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -20405,8 +20789,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -20424,10 +20808,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -20707,8 +21087,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -20726,10 +21106,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -20803,52 +21179,6 @@
                                             },
                                             "required": {
                                                 "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
                                                 "type": "boolean"
                                             }
                                         }
@@ -21134,7 +21464,7 @@
             },
             "put": {
                 "operationId": "products_update",
-                "description": "Api for retrieving products.",
+                "description": "Update an existing product.",
                 "parameters": [
                     {
                         "name": "data",
@@ -21236,8 +21566,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -21255,10 +21585,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -21514,8 +21840,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -21533,10 +21859,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -21544,122 +21866,10 @@
                                 "variant_attributes": {
                                     "type": "array",
                                     "items": {
-                                        "required": [
-                                            "name",
-                                            "code"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "option_group": {
-                                                "title": "Option group",
-                                                "required": [
-                                                    "options",
-                                                    "name"
-                                                ],
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "title": "ID",
-                                                        "type": "integer",
-                                                        "readOnly": true
-                                                    },
-                                                    "options": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string"
-                                                        },
-                                                        "uniqueItems": true
-                                                    },
-                                                    "name": {
-                                                        "title": "Name",
-                                                        "type": "string",
-                                                        "maxLength": 128,
-                                                        "minLength": 1
-                                                    }
-                                                }
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "richtext",
-                                                    "date",
-                                                    "datetime",
-                                                    "option",
-                                                    "multi_option",
-                                                    "file",
-                                                    "image"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
+                                        "type": "string",
+                                        "format": "slug"
+                                    },
+                                    "uniqueItems": true
                                 },
                                 "structure": {
                                     "title": "Product structure",
@@ -22034,8 +22244,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -22053,10 +22263,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -22158,9 +22364,33 @@
                                 "categories": {
                                     "type": "array",
                                     "items": {
-                                        "type": "integer"
+                                        "required": [
+                                            "slug"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "slug": {
+                                                "title": "Slug",
+                                                "type": "string",
+                                                "format": "slug",
+                                                "pattern": "^[-a-zA-Z0-9_]+$",
+                                                "maxLength": 255,
+                                                "minLength": 1
+                                            }
+                                        }
                                     },
-                                    "uniqueItems": true
+                                    "readOnly": true
                                 },
                                 "recommended_products": {
                                     "type": "array",
@@ -22312,8 +22542,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -22331,10 +22561,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -22408,52 +22634,6 @@
                                             },
                                             "required": {
                                                 "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
                                                 "type": "boolean"
                                             }
                                         }
@@ -22739,7 +22919,7 @@
             },
             "patch": {
                 "operationId": "products_partial_update",
-                "description": "Api for retrieving products.",
+                "description": "Partially update an existing product.",
                 "parameters": [
                     {
                         "name": "data",
@@ -22841,8 +23021,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -22860,10 +23040,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -22965,33 +23141,9 @@
                                 "categories": {
                                     "type": "array",
                                     "items": {
-                                        "required": [
-                                            "slug"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "readOnly": true,
-                                                "minLength": 1
-                                            },
-                                            "slug": {
-                                                "title": "Slug",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "maxLength": 255,
-                                                "minLength": 1
-                                            }
-                                        }
+                                        "type": "integer"
                                     },
-                                    "readOnly": true
+                                    "uniqueItems": true
                                 },
                                 "recommended_products": {
                                     "type": "array",
@@ -23143,8 +23295,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -23162,10 +23314,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -23173,122 +23321,10 @@
                                 "variant_attributes": {
                                     "type": "array",
                                     "items": {
-                                        "required": [
-                                            "name",
-                                            "code"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "option_group": {
-                                                "title": "Option group",
-                                                "required": [
-                                                    "options",
-                                                    "name"
-                                                ],
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "title": "ID",
-                                                        "type": "integer",
-                                                        "readOnly": true
-                                                    },
-                                                    "options": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string"
-                                                        },
-                                                        "uniqueItems": true
-                                                    },
-                                                    "name": {
-                                                        "title": "Name",
-                                                        "type": "string",
-                                                        "maxLength": 128,
-                                                        "minLength": 1
-                                                    }
-                                                }
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "richtext",
-                                                    "date",
-                                                    "datetime",
-                                                    "option",
-                                                    "multi_option",
-                                                    "file",
-                                                    "image"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
+                                        "type": "string",
+                                        "format": "slug"
+                                    },
+                                    "uniqueItems": true
                                 },
                                 "structure": {
                                     "title": "Product structure",
@@ -23663,8 +23699,8 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "id": {
-                                                            "title": "ID",
-                                                            "type": "integer",
+                                                            "title": "Id",
+                                                            "type": "string",
                                                             "readOnly": true
                                                         },
                                                         "name": {
@@ -23682,10 +23718,6 @@
                                                             "type": "string",
                                                             "readOnly": true,
                                                             "minLength": 1
-                                                        },
-                                                        "product": {
-                                                            "title": "Product",
-                                                            "type": "integer"
                                                         }
                                                     }
                                                 }
@@ -23787,33 +23819,9 @@
                                 "categories": {
                                     "type": "array",
                                     "items": {
-                                        "required": [
-                                            "slug"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "title": "ID",
-                                                "type": "integer",
-                                                "readOnly": true
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "readOnly": true,
-                                                "minLength": 1
-                                            },
-                                            "slug": {
-                                                "title": "Slug",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "maxLength": 255,
-                                                "minLength": 1
-                                            }
-                                        }
+                                        "type": "integer"
                                     },
-                                    "readOnly": true
+                                    "uniqueItems": true
                                 },
                                 "recommended_products": {
                                     "type": "array",
@@ -23965,8 +23973,8 @@
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "title": "ID",
-                                                "type": "integer",
+                                                "title": "Id",
+                                                "type": "string",
                                                 "readOnly": true
                                             },
                                             "name": {
@@ -23984,10 +23992,6 @@
                                                 "type": "string",
                                                 "readOnly": true,
                                                 "minLength": 1
-                                            },
-                                            "product": {
-                                                "title": "Product",
-                                                "type": "integer"
                                             }
                                         }
                                     }
@@ -23995,122 +23999,10 @@
                                 "variant_attributes": {
                                     "type": "array",
                                     "items": {
-                                        "required": [
-                                            "name",
-                                            "code"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "option_group": {
-                                                "title": "Option group",
-                                                "required": [
-                                                    "options",
-                                                    "name"
-                                                ],
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "title": "ID",
-                                                        "type": "integer",
-                                                        "readOnly": true
-                                                    },
-                                                    "options": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "string"
-                                                        },
-                                                        "uniqueItems": true
-                                                    },
-                                                    "name": {
-                                                        "title": "Name",
-                                                        "type": "string",
-                                                        "maxLength": 128,
-                                                        "minLength": 1
-                                                    }
-                                                }
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "richtext",
-                                                    "date",
-                                                    "datetime",
-                                                    "option",
-                                                    "multi_option",
-                                                    "file",
-                                                    "image"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Required",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
-                                },
-                                "options": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "code",
-                                            "name"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "url": {
-                                                "title": "Url",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "readOnly": true
-                                            },
-                                            "code": {
-                                                "title": "Code",
-                                                "type": "string",
-                                                "format": "slug",
-                                                "pattern": "^[-a-zA-Z0-9_]+$",
-                                                "minLength": 1
-                                            },
-                                            "name": {
-                                                "title": "Name",
-                                                "type": "string",
-                                                "maxLength": 128,
-                                                "minLength": 1
-                                            },
-                                            "type": {
-                                                "title": "Type",
-                                                "type": "string",
-                                                "enum": [
-                                                    "text",
-                                                    "integer",
-                                                    "boolean",
-                                                    "float",
-                                                    "date"
-                                                ]
-                                            },
-                                            "required": {
-                                                "title": "Is this option required?",
-                                                "type": "boolean"
-                                            }
-                                        }
-                                    }
+                                        "type": "string",
+                                        "format": "slug"
+                                    },
+                                    "uniqueItems": true
                                 },
                                 "structure": {
                                     "title": "Product structure",
@@ -24392,11 +24284,575 @@
             },
             "delete": {
                 "operationId": "products_delete",
-                "description": "Api for retrieving products.",
+                "description": "Delete an existing product.",
                 "parameters": [],
                 "responses": {
                     "204": {
                         "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this Product.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/products/{id}/children/": {
+            "get": {
+                "operationId": "products_children_read",
+                "description": "Api for retrieving and creating child products in an existing product.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "product_id"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "product_id": {
+                                    "title": "Product id",
+                                    "type": "integer"
+                                },
+                                "title": {
+                                    "title": "Title",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "structure": {
+                                    "title": "Product structure",
+                                    "type": "string",
+                                    "enum": [
+                                        "standalone",
+                                        "parent",
+                                        "child"
+                                    ]
+                                },
+                                "images": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "product"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "original": {
+                                                "title": "Original",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "format": "uri"
+                                            },
+                                            "caption": {
+                                                "title": "Caption",
+                                                "type": "string",
+                                                "maxLength": 200
+                                            },
+                                            "display_order": {
+                                                "title": "Display order",
+                                                "description": "An image with a display order of zero will be the primary image for a product",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0
+                                            },
+                                            "product": {
+                                                "title": "Product",
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "products"
+                ]
+            },
+            "post": {
+                "operationId": "products_children_create",
+                "description": "Api for retrieving and creating child products in an existing product.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "required": [
+                                "variant_attribute_values"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "image": {
+                                    "title": "Image",
+                                    "type": "integer",
+                                    "x-nullable": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "product_id"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "product_id": {
+                                    "title": "Product id",
+                                    "type": "integer"
+                                },
+                                "title": {
+                                    "title": "Title",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "structure": {
+                                    "title": "Product structure",
+                                    "type": "string",
+                                    "enum": [
+                                        "standalone",
+                                        "parent",
+                                        "child"
+                                    ]
+                                },
+                                "images": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "product"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "original": {
+                                                "title": "Original",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "format": "uri"
+                                            },
+                                            "caption": {
+                                                "title": "Caption",
+                                                "type": "string",
+                                                "maxLength": 200
+                                            },
+                                            "display_order": {
+                                                "title": "Display order",
+                                                "description": "An image with a display order of zero will be the primary image for a product",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0
+                                            },
+                                            "product": {
+                                                "title": "Product",
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "variant_attribute_values": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "title": "Name",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "value": {
+                                                "title": "Value",
+                                                "type": "string"
+                                            },
+                                            "code": {
+                                                "title": "Code",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "stockrecords": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "partner_sku"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "partner_sku": {
+                                                "title": "Partner SKU",
+                                                "type": "string",
+                                                "maxLength": 128,
+                                                "minLength": 1
+                                            },
+                                            "price_currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price": {
+                                                "title": "Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_price": {
+                                                "title": "Subscription Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_max_price": {
+                                                "title": "Subscription Max Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_min_price": {
+                                                "title": "Subscription Min Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "subscription_suggested_downsell_price": {
+                                                "title": "Subscription Suggested Downsell Price",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "price_retail": {
+                                                "title": "Price (retail)",
+                                                "type": "string",
+                                                "format": "decimal",
+                                                "x-nullable": true
+                                            },
+                                            "num_in_stock": {
+                                                "title": "Number in stock",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "num_allocated": {
+                                                "title": "Number allocated",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": -2147483648,
+                                                "x-nullable": true
+                                            },
+                                            "low_stock_threshold": {
+                                                "title": "Low Stock Threshold",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0,
+                                                "x-nullable": true
+                                            },
+                                            "partner": {
+                                                "title": "Partner",
+                                                "type": "integer",
+                                                "x-nullable": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
