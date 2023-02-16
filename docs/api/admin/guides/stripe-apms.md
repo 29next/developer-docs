@@ -37,7 +37,7 @@ import RedirectPaymentFlow from '@site/_snippets/_redirect-payment-flow.mdx';
 
 ### Create Order on Admin API
 
-When creating a new order using a Stripe APM, you’ll need to specify the `payment_method=<apm code>` as well as provide a `payment_return_url`. The `payment_return_url` is your endpoint that will receive a POST request containing the final order data (in Step 3).
+When creating a new order using a Stripe APM, you’ll need to specify the `payment_method=<apm code>` as well as provide a `payment_return_url`. The `payment_return_url` is your endpoint that will receive a POST request containing the final order data.
 
 ```json title="Payment Details for Order with Stripe APMs"
 {
