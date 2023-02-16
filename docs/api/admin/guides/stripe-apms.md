@@ -15,7 +15,7 @@ Your store must have a Stripe Gateway enabled with the appropriate Stripe APM to
 Stripe APMs redirect flow follows the same principles as [Apple Pay](/api/admin/guides/apple-pay.md), [3DS2](/api/admin/guides/3ds2.md) and [PayPal](/api/admin/guides/paypal.md), implementing payment redirect flow is recommended to easily cover many payment methods.
 :::
 
-### Supported APMs
+### Supported Stripe Alternative Payment Methods
 
 | Payment Method | Payment Method Code | Stripe Docs |
 | ---- | ---- | ---- |
