@@ -1,0 +1,13 @@
+
+
+Below is a high-level overview of the user flow when creating orders on the Admin API that utilize the payment method redirect flow.
+
+``` mermaid
+sequenceDiagram
+  autonumber
+  User->>External Checkout: User initiates payment
+  External Checkout->>Store: Create order and redirect to "payment_complete_url"
+  User->>Store: User completes payment
+  Store->>External Checkout: POST order data to "payment_return_url"
+  External Checkout->>User: Process data and show order confirmation
+```

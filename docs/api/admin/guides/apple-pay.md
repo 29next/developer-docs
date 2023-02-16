@@ -12,21 +12,32 @@ For custom checkouts using the Admin API, there are two flows available -- the s
 Your store must have a Apple Pay setup and enabled with a gateway to use the Apple Pay payment method. The user device must also be an Apple Device with Touch ID enabled. See more on [displaying Apple Pay buttons](https://developer.apple.com/documentation/apple_pay_on_the_web/displaying_apple_pay_buttons_using_css) or the [Apple Pay Demo](https://applepaydemo.apple.com/).
 :::
 
-### Step 1 - Create Order
+### API Payment Redirect Flow
 
-When creating a new order using Apple Pay, you’ll need to specify the `payment_method=apple_pay` as well as provide a `payment_return_url`. The payment_return_url is your endpoint that will receive a POST request containing the final order data (in Step 3).
+```mdx-code-block
+
+import RedirectPaymentFlow from '@site/_snippets/_redirect-payment-flow.mdx';
+
+<RedirectPaymentFlow />
+```
+
+### Create Order on Admin API
+
+When creating a new order using Apple Pay, you’ll need to specify the `payment_method=apple_pay` as well as provide a `payment_return_url`. The `payment_return_url` is your endpoint that will receive a POST request containing the final order data.
 
 ```json title="Payment Details for Order with Apple Pay"
 {
     "payment_method": "apple_pay",
     "payment_details": {
-        "payment_return_url": "<YOUR APPLICATION ENDPOINT>"
+        "payment_return_url": "<external checkout url>",
+        "payment_gateway": "<gateway id>", // optional
+        "payment_gateway_group": "<gateway group id>" // optional
     }
 }
 ```
 
-### Step 2 - Redirect Customer to Payment Complete URL
-The response from Step 1 will provide a payment_complete_url. Your application should redirect the customer to this URL for completing the payment on the store's Apple Pay Checkout page.
+### Redirect Customer to Payment Complete URL
+The response when creating the order will provide a payment_complete_url. Your application should redirect the customer to this URL for completing the payment on the store's Apple Pay Checkout page.
 
 ```json title="Response with Payment Complete URL"
 {
@@ -35,7 +46,7 @@ The response from Step 1 will provide a payment_complete_url. Your application s
 }
 ```
 
-### Step 3 - Receive Order Data
+### Receiving Order Data
 
 ```mdx-code-block
 
