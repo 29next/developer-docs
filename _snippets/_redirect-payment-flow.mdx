@@ -6,8 +6,9 @@ Below is a high-level overview of the user flow when creating orders on the Admi
 sequenceDiagram
   autonumber
   User->>External Checkout: User initiates payment
-  External Checkout->>Store: Create order and redirect to "payment_complete_url"
-  User->>Store: User completes payment
-  Store->>External Checkout: POST order data to "payment_return_url"
-  External Checkout->>User: Process data and show order confirmation
+  External Checkout->>Store: Create order/redirect to "payment_complete_url"
+  Store->>Payment Provider: User completes payment
+  Payment Provider->>Store: Store processes payment
+  Store->>External Checkout: Store POSTs order data to "payment_return_url"
+  External Checkout->>User: Receive data/show order details
 ```
