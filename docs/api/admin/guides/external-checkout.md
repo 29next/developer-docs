@@ -219,7 +219,7 @@ The order `payment_method` and `payment_details` objects work in tandom to speci
 },
 ```
 
-### Order Attribution
+### Order attribution
 The order `attribution` object sets the [marketing attribution](https://docs.29next.com/features/marketing-attribution) on the order for tracking the source of your orders and order reporting. You can also pass in [metadata](https://docs.29next.com/start-here/technical-settings/metadata-fields) fields that are configured on the store to track custom attribution parameters and integrate external tracking platforms.
 
 ```json

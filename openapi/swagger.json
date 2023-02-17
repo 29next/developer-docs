@@ -770,25 +770,6 @@
                                                 "type": "integer",
                                                 "minimum": 1
                                             },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "option"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "option": {
-                                                            "title": "Option",
-                                                            "type": "integer"
-                                                        },
-                                                        "value": {
-                                                            "title": "Value",
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
-                                            },
                                             "subscription": {
                                                 "title": "Subscription",
                                                 "required": [
@@ -1065,25 +1046,6 @@
                                                 "title": "Quantity",
                                                 "type": "integer",
                                                 "minimum": 1
-                                            },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "option"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "option": {
-                                                            "title": "Option",
-                                                            "type": "integer"
-                                                        },
-                                                        "value": {
-                                                            "title": "Value",
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
                                             },
                                             "subscription": {
                                                 "title": "Subscription",
@@ -1832,25 +1794,6 @@
                                                 "title": "Quantity",
                                                 "type": "integer",
                                                 "minimum": 1
-                                            },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "option"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "option": {
-                                                            "title": "Option",
-                                                            "type": "integer"
-                                                        },
-                                                        "value": {
-                                                            "title": "Value",
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
                                             },
                                             "subscription": {
                                                 "title": "Subscription",
@@ -6123,7 +6066,7 @@
             },
             "post": {
                 "operationId": "orders_create",
-                "description": "Orders can be created on the API for existing customers or for new customers\n    within the same API request. Payment Information is optional when creating new orders allowing\n    you to create orders with any status giving you flexibility for how you create orders within your\n    store.",
+                "description": "Orders can be created on the API for existing customers or for new customers within the same API request.",
                 "parameters": [
                     {
                         "name": "data",
@@ -6171,25 +6114,6 @@
                                                 "title": "Quantity",
                                                 "type": "integer",
                                                 "minimum": 1
-                                            },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "option"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "option": {
-                                                            "title": "Option",
-                                                            "type": "integer"
-                                                        },
-                                                        "value": {
-                                                            "title": "Value",
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
                                             },
                                             "subscription": {
                                                 "title": "Subscription",
@@ -6800,25 +6724,6 @@
                                                 "title": "Quantity",
                                                 "type": "integer",
                                                 "minimum": 1
-                                            },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "option"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "option": {
-                                                            "title": "Option",
-                                                            "type": "integer"
-                                                        },
-                                                        "value": {
-                                                            "title": "Value",
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
                                             },
                                             "subscription": {
                                                 "title": "Subscription",
@@ -11239,25 +11144,6 @@
                                                 "title": "Quantity",
                                                 "type": "integer",
                                                 "minimum": 1
-                                            },
-                                            "options": {
-                                                "type": "array",
-                                                "items": {
-                                                    "required": [
-                                                        "option"
-                                                    ],
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "option": {
-                                                            "title": "Option",
-                                                            "type": "integer"
-                                                        },
-                                                        "value": {
-                                                            "title": "Value",
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
                                             },
                                             "subscription": {
                                                 "title": "Subscription",
@@ -34714,7 +34600,7 @@
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "A unique integer value identifying this user.",
+                    "description": "A unique integer value identifying this User.",
                     "required": true,
                     "type": "integer"
                 }
@@ -35458,7 +35344,7 @@
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "A unique integer value identifying this user.",
+                    "description": "A unique integer value identifying this User.",
                     "required": true,
                     "type": "integer"
                 }
@@ -36159,7 +36045,7 @@
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "A unique integer value identifying this user.",
+                    "description": "A unique integer value identifying this User.",
                     "required": true,
                     "type": "integer"
                 }
