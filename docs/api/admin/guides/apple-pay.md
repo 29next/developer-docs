@@ -1,6 +1,6 @@
 ---
 sidebar_label: Apple Pay
-sidebar_position: 1
+sidebar_position: 3
 ---
 # Apple Pay Admin API Guide
 
