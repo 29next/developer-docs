@@ -4,7 +4,7 @@ sidebar_position: 1
 ---
 # External Checkout Flow
 
-In this guide, we'll cover the best practices when building an external checkout flow in the context of our Admin API to give your the most data and functionality within the platform and external integrations.
+In this guide we'll cover the best practices when building an external checkout flow using the 29 Next Admin API. Using the API gives you the most flexibility of data and functionality across the platform and external integrations.
 
 
 ### Single Page Checkout + Upsell Flow
@@ -27,7 +27,7 @@ import TabItem from '@theme/TabItem';
 
 #### Creating the Order
 
-Below is an example `orders_create` request to create an order on the Admin API that we'll use as the example to break down the details for each data point.
+Below is an example `orders_create` request to create an order on the Admin API. We'll use this example to break down the details for each data point.
 
 ``` json title="Request"
 POST https://<store>.29next.store/api/admin/orders/ -H "Authorization: Bearer <API ACCESS TOKEN>"
@@ -90,7 +90,7 @@ POST https://<store>.29next.store/api/admin/orders/ -H "Authorization: Bearer <A
 ```
 
 ### Order lines
-Order line items represent the products the customer is purchasing, at the core, order line items represent a stock record. Products have multiple stock records which are combination of `SKU + Currency + Price` to support multiple currency pricing and regional fulfillment partners.
+Order line items represent the products the customer is purchasing. At the core, order line items represent an order of a stock record, which are the physical (or virtual) items being purchased. Products can have multiple stock records, which are a combination of `SKU + Currency + Price` - this enables support for multi-currency pricing and the use of different regional fulfillment partners for the product.
 
 **Acceptable Line Combinations for a Product**
 
@@ -135,7 +135,7 @@ Order line items represent the products the customer is purchasing, at the core,
 </TabItem>
 </Tabs>
 
-Lines also accept an optional `subscription` object to specify the subscription that will be automatically created after the initial order is successfully created.
+Lines also accept an optional `subscription` object to specify a subscription that will be automatically created after the initial order is successfully created.
 
 ```json
 
@@ -155,10 +155,10 @@ Lines also accept an optional `subscription` object to specify the subscription 
 
 ### Order user
 
-The `user` object on the order represents the **customer** which includes their contact details.  Below are the recommended fields to pass for the user for ease of use and supporting external integrations that may rely on the data, ie `user_agent`.
+The `user` object on the order represents the **customer** which includes their contact details.  Below are the recommended fields to pass for the user for ease of use and support of external integrations that may rely on the data, i.e. `user_agent`.
 
 :::info
-Users are first checked for an existing user by `email` before creating a new user. Successive `order_create` calls with the same user details will reference the same user.
+Users are first checked for an existing user by `email` before creating a new user. Successive `orders_create` calls with the same user details will reference the same user.
 :::
 
 ```json
@@ -173,16 +173,16 @@ Users are first checked for an existing user by `email` before creating a new us
 }
 ```
 :::caution
-**It is not recommended to pass `phone_number` directly to the user when creating an order, we recommend passing a local phone number in the `shipping_address` instead.** Address fields have country context which allows local phone numbers passed and converted to [E.164 format](https://en.wikipedia.org/wiki/E.164) before being saved. A `phone_number` passed to the `user` object directly must be in E.164 format.
+**It is not recommended to pass `phone_number` directly on the user when creating an order, we recommend passing a local phone number in the `shipping_address` instead.** Address fields have country context, which allows local phone numbers to be passed and converted to [E.164 format](https://en.wikipedia.org/wiki/E.164) before being saved. A `phone_number` passed to the `user` object directly must be in E.164 format.
 :::
 
 
 
 ### Order shipping_address & billing_address
-The `shipping_address` object on the order represents the address where the order will be shipped and similarly for the `billing_address`. The first `shipping_address` and `billing_address` create for a user is automatically set as their default shipping and billing address, [see API Reference](/docs/api/admin/reference/#tag/orders/operation/orders_create).
+The `shipping_address` object on the order represents the address where the order will be shipped, and similarly for the `billing_address`. The first `shipping_address` and `billing_address` created for a user is automatically set as their default shipping and billing address, [see API Reference](/docs/api/admin/reference/#tag/orders/operation/orders_create).
 
 :::tip
-You can use the `billing_same_as_shipping_address` to forgoe passing a full duplicate address for `billing_address`.
+Use `billing_same_as_shipping_address` to forego having to pass a full duplicate address for `billing_address`.
 :::
 
 ```json
@@ -199,13 +199,13 @@ You can use the `billing_same_as_shipping_address` to forgoe passing a full dupl
 "billing_same_as_shipping_address": true,
 ```
 :::info
-User phone_number is automatically saved from their first address if they do not have an existing `phone_number`.
+User `phone_number` is automatically saved from the user's first address if they do not have an existing `phone_number`.
 :::
 
 
 ### Order payment_method & payment_details
 
-The order `payment_method` and `payment_details` objects work in tandom to specify the payment method for the order and provide any additional info required per payment method. The example below uses a [Test Card](https://docs.29next.com/features/orders/test-orders) to create a **Test Order**. See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow: [PayPal](/docs/api/admin/guides/paypal.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [Stripe APMs](/docs/api/admin/guides/stripe-apms.md), and [3DS2](/docs/api/admin/guides/3ds2.md).
+The order `payment_method` and `payment_details` objects work in tandem to specify the payment method for the order and provide any additional data that may be required per payment method. The example below uses a [Test Card](https://docs.29next.com/features/orders/test-orders) to create a **Test Order**. See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow: [PayPal](/docs/api/admin/guides/paypal.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [Stripe APMs](/docs/api/admin/guides/stripe-apms.md), and [3DS2](/docs/api/admin/guides/3ds2.md).
 
 ```json
 "payment_method": "bankcard",
@@ -219,8 +219,8 @@ The order `payment_method` and `payment_details` objects work in tandom to speci
 },
 ```
 
-### Order attribution
-The order `attribution` object sets the [marketing attribution](https://docs.29next.com/features/marketing-attribution) on the order for tracking the source of your orders and order reporting. You can also pass in [metadata](https://docs.29next.com/start-here/technical-settings/metadata-fields) fields that are configured on the store to track custom attribution parameters and integrate external tracking platforms.
+### Order Attribution
+The order `attribution` object sets the [marketing attribution](https://docs.29next.com/features/marketing-attribution) on the order for tracking the source of orders and use in orders reporting. You can also pass in [metadata](https://docs.29next.com/start-here/technical-settings/metadata-fields) fields that are configured on the store to track custom attribution parameters and integrate external tracking platforms.
 
 ```json
 "attribution": {
@@ -233,7 +233,7 @@ The order `attribution` object sets the [marketing attribution](https://docs.29n
 
 ### Adding Upsells
 
-Additional products (line items) can be added to the original order through the [order_add_line_items](/docs/api/admin/reference/#tag/orders/operation/orders_add_line_items) API. Adding items to the order will automatically re-use the order's initial payment method to collect payment for the additional products.
+Add additional products (line items) to the original order through the [order_add_line_items](/docs/api/admin/reference/#tag/orders/operation/orders_add_line_items) API. Adding items to the order will automatically re-use the order's initial payment method to collect payment for the additional products.
 
 
 ``` json title="Request"
@@ -250,5 +250,5 @@ POST https://<store>.29next.store/api/admin/orders/<NUMBER>/add-line-items/ -H "
 }
 ```
 :::caution
-The `order_add_line_items` API requires the order initial **payment method** support merchant initiated charges. Current supported payment methods are `bankcard` and `paypal` (with Reference Transactions enabled).
+The `order_add_line_items` API requires that the order initial **payment method** supports merchant initiated charges. Current supported payment methods are `bankcard` and `paypal` (with Reference Transactions enabled).
 :::
