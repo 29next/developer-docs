@@ -92,6 +92,10 @@ const config = {
                         to: '/docs/api/checkout-links',
                     },
                     {
+                        from: '/apps',
+                        to: '/docs/apps',
+                    },
+                    {
                         from: '/themes',
                         to: '/docs/themes',
                     },
