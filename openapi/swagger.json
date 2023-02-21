@@ -6462,7 +6462,8 @@
                                         "apple_pay",
                                         "paypal",
                                         "klarna",
-                                        "ideal"
+                                        "ideal",
+                                        "bancontact"
                                     ],
                                     "x-nullable": true
                                 },
@@ -7072,7 +7073,8 @@
                                         "apple_pay",
                                         "paypal",
                                         "klarna",
-                                        "ideal"
+                                        "ideal",
+                                        "bancontact"
                                     ],
                                     "x-nullable": true
                                 },

@@ -17,15 +17,6 @@ In this guide, we'll show you how to create your first app to get you up and run
 
 3. Make sure you have access to a store you plan to use for development - you will use this in later steps.
 
-
-### Create Your App
-
-1. Inside your Partner Account, navigate to Apps and then Create App. Follow the form to create your first app, don't worry about the App name and details, you can change this later.
-
-2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` as it will be used to connect your local machine to the app on 29 Next.
-
-3. Add your development store to the "Development Stores" section. This will ensure that your app is automatically pushed to your development store for review and testing.
-
 ```mdx-code-block
 
 import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
@@ -34,15 +25,41 @@ import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 
 ```
 
+### Create Your App
+
+1. Inside your Partner Account, navigate to Apps and then Create App. Follow the form to create your first app, don't worry about the App name and details, you can change this later.
+
+2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` as it will be used to connect your app files to the app on 29 Next with [App Kit](/apps/app-kit.md).
+
 ### Configure App on Local
 
 Now it's time to configure your local machine to connect to your app on 29 Next.
 
 1. In your local terminal, navigate to your app directory.
 
-2. Run `nak setup` and follow the prompts to configure your local app directory to push your app code to 29 Next.
+2. Run `nak setup` and follow the prompts to configure your local app directory to push your app code to 29 Next. The prompts will ask for three items:
+   - **App Client ID** - Your App **Client ID** you just created.
+   - **accounts.29next.com Email** - Your user email for accounts.29next.com
+   - **accounts.29next.com Password** -
 
-3. Add your app `snippets`, `assets`, and `manifest.json` to your current directory.
+
+### Add App Files
+
+1. Add this to a new file in your app directory called `manifest.json`.
+
+```json title="Example manifest.json"
+{
+    "oauth": {
+        "app_url": "https://oauthdebugger.com/debug",
+        "redirect_uris": [
+            "https://oauthdebugger.com/debug"
+        ]
+    }
+}
+```
+:::info
+For demo purposes, below is an example `manifest.json` for a Server-to-Server app that will follow the OAuth flow to get and Admin API Access Token.
+:::
 
 
 ### Build & Push App Bundle
@@ -56,4 +73,6 @@ After you've added all of your app files, you're ready push your app bundle to 2
 
 ### Test App On Development Store
 
-Your app should now be installed and ready to test on your development store. :raised_hands:
+1. Add your development store to the "Development Stores" section. This will ensure that your app is automatically pushed to your development store for review and testing.
+
+Your app should now be installed and ready to testing and further development on your development store. :raised_hands:
