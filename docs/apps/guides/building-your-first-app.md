@@ -40,12 +40,12 @@ Now it's time to configure your local machine to connect to your app on 29 Next.
 2. Run `nak setup` and follow the prompts to configure your local app directory to push your app code to 29 Next. The prompts will ask for three items:
    - **App Client ID** - Your App **Client ID** you just created.
    - **accounts.29next.com Email** - Your user email for accounts.29next.com
-   - **accounts.29next.com Password** -
+   - **accounts.29next.com Password** - Your password used for accounts.29next.com
 
 
 ### Add App Files
 
-1. Add this to a new file in your app directory called `manifest.json`.
+1. Add the json below to a new file in your app directory called `manifest.json`.
 
 ```json title="Example manifest.json"
 {
@@ -58,7 +58,7 @@ Now it's time to configure your local machine to connect to your app on 29 Next.
 }
 ```
 :::info
-For demo purposes, below is an example `manifest.json` for a Server-to-Server app that will follow the OAuth flow to get and Admin API Access Token.
+For demo purposes, below is an example `manifest.json` for a Server-to-Server app that will follow the [OAuth flow](/apps/oauth/index.md) to get and Admin API Access Token.
 :::
 
 
