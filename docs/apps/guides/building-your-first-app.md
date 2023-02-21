@@ -73,6 +73,6 @@ After you've added all of your app files, you're ready push your app bundle to 2
 
 ### Test App On Development Store
 
-1. Add your development store to the "Development Stores" section. This will ensure that your app is automatically pushed to your development store for review and testing.
+1. Add your development store to the "Development Stores" section. This will ensure that your app is automatically pushed to your development store for review and testing, see [app development flow](/apps/app-development-flow.md).
 
 Your app should now be installed and ready to testing and further development on your development store. :raised_hands:
