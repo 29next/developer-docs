@@ -31,7 +31,7 @@ import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 
 2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` as it will be used to connect your app files to the app on 29 Next with [App Kit](/apps/app-kit.md).
 
-### Configure App on Local
+### Configure App Kit on Local
 
 Now it's time to configure your local machine to connect to your app on 29 Next.
 
