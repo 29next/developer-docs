@@ -1,6 +1,8 @@
 ---
 sidebar_label: PayPal
 sidebar_position: 3
+tags:
+ - Guide
 ---
 
 # PayPal Admin API Guide

@@ -2,6 +2,8 @@
 title: iFrame Payment Form
 sidebar_label: iFrame Payment Form
 sidebar_position: 2
+tags:
+ - Guide
 ---
 
 Custom off-site checkouts can reduce their PCI compliance scope by leveraging our iFrame payment form to tokenize credit cards before submitting them on the Admin API.

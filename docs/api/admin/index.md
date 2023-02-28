@@ -34,8 +34,10 @@ https://<store>.29next.store/api/admin/
 
 **Use your Oauth App Access Token in the request headers to access the API.**
 
-```curl title="Request"
-curl -X GET "https://<store>.29next.store/api/admin/" -H "Authorization: Bearer <API ACCESS TOKEN>"
+```curl title="Example Request"
+curl -X GET "https://<store>.29next.store/api/admin/" \
+-H "Authorization: Bearer <api access token>" \
+-H "X-29Next-Api-Version: 2023-02-10"
 ```
 
 :::caution
@@ -46,6 +48,42 @@ Legacy API Tokens are now deprecated in favor of Oauth App Tokens. If you are cu
 Access the API explorer on your store at `https://<store>.29next.store/api/docs/admin/` to explore the API interactively with Swagger.
 :::
 
+### Versioning
+
+API versioning allows 29 Next to continuously evolve the platform while maintaining predictable behavior for existing APIs with a path for upgrades and deprecations.
+
+**Admin API Versions**
+
+| Version | Status |
+| ---- | ---- |
+| `2023-02-10` | Stable for production use. |
+| `unstable` | Unstable and for testing only. |
+
+
+**Specify an API Version**
+
+To specify a version, pass the `X-29Next-Api-Version` header with your desired API version.
+
+:::warning
+It is **highly recommended** to specify your version on your API requests to ensure consistency for your integration.
+:::
+
+
+### Rate Limits
+
+Admin APIs are rate-limited to maintain the stability and equity of our platform for all users. We employ a number of methods to enforce rate limits.
+
+| API | Rate Limit Method | Limit |
+| ---- | ---- | ---- |
+| Admin API | Request-based | 4 requests/second |
+
+:::info
+Once you reach API rate limits you'll then receive a 429 Too Many Requests response, and a message that a throttle has been applied.
+:::
+
+
+We recommend API users to appropriately limit calls, cache results, and retry requests using strategies that are considered industry best practices,to avoid hitting getting rate limit errors
+
 ## Examples
 
 ### Create Customer
@@ -54,7 +92,8 @@ Create a new customer in your store.
 
 
 ```json title="Request"
-POST https://<store>.29next.store/api/admin/users/ -H "Authorization: Bearer <API ACCESS TOKEN>"
+// POST https://<store>.29next.store/api/admin/users/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "first_name": "John",
     "last_name": "Doe",
@@ -70,7 +109,8 @@ POST https://<store>.29next.store/api/admin/users/ -H "Authorization: Bearer <AP
 Create a new customer with an open cart.
 
 ```json title="Request"
-POST https://<store>.29next.store/api/admin/carts/ -H "Authorization: Bearer <API ACCESS TOKEN>"
+// POST https://<store>.29next.store/api/admin/carts/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "lines": [
         {
@@ -110,7 +150,8 @@ Create a new test order.
 
 
 ``` json title="Request"
-POST https://<store>.29next.store/api/admin/orders/ -H "Authorization: Bearer <API ACCESS TOKEN>"
+// POST https://<store>.29next.store/api/admin/orders/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "lines": [
         {
@@ -165,7 +206,8 @@ Create an order with PayPal One-click flow.
 PayPal supports a "One-click" flow wherein all customer and and shipping information is collected in PayPal and therefore is not required when setting up the order.
 
 ```json title="Request"
-POST https://<store>.29next.store/api/admin/orders/ -H "Authorization: Bearer <API ACCESS TOKEN>"
+// POST https://<store>.29next.store/api/admin/orders/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "lines": [
         {

@@ -1,5 +1,7 @@
 ---
 sidebar_label: Product Variants
+tags:
+ - Guide
 ---
 # Product Variants Guide
 

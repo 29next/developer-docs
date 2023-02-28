@@ -1,5 +1,7 @@
 ---
 sidebar_label: Custom Page Templates
+tags:
+ - Guide
 ---
 # Custom Page Templates
 

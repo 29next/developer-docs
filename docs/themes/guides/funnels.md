@@ -1,5 +1,7 @@
 ---
 sidebar_label: Funnel Customization
+tags:
+ - Guide
 ---
 # Funnel Customization
 

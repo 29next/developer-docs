@@ -1,6 +1,8 @@
 ---
 sidebar_label: Checkout Customization
 sidebar_position: 1
+tags:
+ - Guide
 ---
 # Checkout Customization
 

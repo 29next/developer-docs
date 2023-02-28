@@ -11,9 +11,9 @@ sidebar_position: 0
 
 🚀 Apps combine the power of our [Admin APIs](/api/admin/index.md), [Webhooks](/webhooks.md), and theme [App Hooks](/apps/snippets.md#locations) giving developers the tools they need to add new integrations and solve complex problems with an installable app flow.
 
-### Create Unique Branded Experience with Themes
+### Create Unique Brand Experiences with Themes
 
-🎯 Use Django template language to build custom themes that offer amazing brand experiences for customers. Get started with our [Intro](https://github.com/29next/intro) or [Intro Bootstrap](https://github.com/29next/intro-bootstrap) themes to get up and running quickly.
+🎯 Use [Theme Kit](/docs/themes/theme-kit.md) to build custom themes that offer amazing brand experiences for customers. Get started with our [Intro](https://github.com/29next/intro) or [Intro Bootstrap](https://github.com/29next/intro-bootstrap) themes to get up and running quickly.
 
 
 ### Getting Started
@@ -27,4 +27,4 @@ import IntroCards from '@site/src/components/IntroCards';
 
 ```
 
-💪 We can't wait to see what you build!
+We can't wait to see what you build! 💪

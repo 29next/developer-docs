@@ -1,5 +1,7 @@
 ---
 sidebar_label: Product Attributes
+tags:
+ - Guide
 ---
 
 # Product Attributes

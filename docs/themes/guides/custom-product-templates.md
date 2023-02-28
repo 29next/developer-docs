@@ -1,5 +1,7 @@
 ---
 sidebar_label: Custom Product Templates
+tags:
+ - Guide
 ---
 # Custom Product Templates
 

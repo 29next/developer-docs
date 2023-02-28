@@ -1,6 +1,8 @@
 ---
 sidebar_label: Stripe APMs
 sidebar_position: 4
+tags:
+ - Guide
 ---
 # Stripe APMs Admin API Guide
 

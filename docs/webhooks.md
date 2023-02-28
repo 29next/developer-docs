@@ -12,6 +12,8 @@ You can register new Webhooks through **Settings > Webhooks** or on the Admin AP
 Webhook target endpoints must accept JSON data and respond with a 200 response code. If we do not receive a 200 response, we will retry up to 10 times over a several day period on an exponential back off schedule. Failing webhooks will trigger email notifications to all store admins and will be eventually deactivated.
 :::
 
+### Webhook Events
+
 | Event                     | Description                          |
 | -----------               | ------------------------------------ |
 | `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*|
@@ -34,11 +36,12 @@ Webhook data structure follows our Admin API data structures (serializers) makin
 
 ```json title="Webhook Event Payload Structure"
 {
-    "object": "<OBJECT TYPE>",
-    "data": "<OBJECT DATA>",
-    "event_id": "<UNIQUE EVENT ID>",
-    "event_type": "<EVENT TYPE>",
-    "webhook": "<WEBHOOK INFO>"
+    "object": "<object>",
+    "data": "<object data>",
+    "event_id": "<unique event id>",
+    "event_type": "<event type>",
+    "webhook": "<webhook info>",
+    "api_version": "<webhook api version"
 }
 
 ```
@@ -46,8 +49,8 @@ Webhook data structure follows our Admin API data structures (serializers) makin
 Below is a full example of a webhook payload for a `customer.created` event to demonstrate
 
 ```json title="Example Webhook Event Data"
-
 {
+    "api_version": "2023-02-10",
     "data": {
         "accepts_marketing": true,
         "addresses": [],
@@ -79,6 +82,15 @@ Below is a full example of a webhook payload for a `customer.created` event to d
     }
 }
 ```
+
+### Webhook API Versions
+
+Webhook object data structure follows the [Admin API](/docs/api/admin/index.md) and Admin API versioning to ensure predictable data structure for existing webhook receiver endpoints with a path for upgrades.
+
+**Handling Webhook API Versions**
+
+Your app can add handling logic using the `api_version` key when receiving and processing data to handle multiple webhook data structures while upgrading to a newer webhook api version.
+
 
 ### Verifying Webhook Requests
 

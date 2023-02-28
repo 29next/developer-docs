@@ -1,6 +1,8 @@
 ---
 sidebar_label: External Checkout Flow
 sidebar_position: 1
+tags:
+ - Guide
 ---
 # External Checkout Flow
 
