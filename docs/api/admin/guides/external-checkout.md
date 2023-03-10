@@ -32,7 +32,8 @@ import TabItem from '@theme/TabItem';
 Below is an example `orders_create` request to create an order on the Admin API. We'll use this example to break down the details for each data point.
 
 ``` json title="Request"
-POST https://<store>.29next.store/api/admin/orders/ -H "Authorization: Bearer <API ACCESS TOKEN>"
+// POST https://<store>.29next.store/api/admin/orders/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "lines": [
         {
@@ -239,7 +240,8 @@ Add additional products (line items) to the original order through the [order_ad
 
 
 ``` json title="Request"
-POST https://<store>.29next.store/api/admin/orders/<NUMBER>/add-line-items/ -H "Authorization: Bearer <API ACCESS TOKEN>"
+// POST https://<store>.29next.store/api/admin/orders/<NUMBER>/add-line-items/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
   "lines": [
     {
