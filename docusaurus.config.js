@@ -96,6 +96,10 @@ const config = {
                         to: '/docs/apps/oauth',
                     },
                     {
+                        from: '/apps/app-development-flow',
+                        to: '/docs/apps/app-development-flow'
+                    },
+                    {
                         from: '/apps',
                         to: '/docs/apps',
                     },
