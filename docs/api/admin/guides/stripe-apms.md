@@ -24,7 +24,7 @@ Stripe APMs redirect flow follows the same principles as [Apple Pay](/api/admin/
 | Klarna Payments | `klarna` | [Stripe Docs](https://stripe.com/docs/payments/klarna) |
 | iDEAL | `ideal` | [Stripe Docs](https://stripe.com/docs/payments/ideal) |
 | Bancontact | `bancontact` | [Stripe Docs](https://stripe.com/docs/payments/bancontact) |
-
+| giropay | `giropay` | [Stripe Docs](https://stripe.com/docs/payments/giropay) |
 
 ### API Payment Redirect Flow
 
