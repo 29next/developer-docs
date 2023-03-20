@@ -4446,8 +4446,7 @@
                                                 "title": "Currency",
                                                 "type": "string",
                                                 "enum": [
-                                                    "USD",
-                                                    "CAD"
+                                                    "USD"
                                                 ],
                                                 "x-nullable": true
                                             },
@@ -4563,8 +4562,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -4668,8 +4666,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -4784,8 +4781,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -4898,8 +4894,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -5003,8 +4998,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -5117,8 +5111,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -5222,8 +5215,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD"
+                                        "USD"
                                     ],
                                     "x-nullable": true
                                 },
@@ -6613,7 +6605,8 @@
                                         "paypal",
                                         "klarna",
                                         "ideal",
-                                        "bancontact"
+                                        "bancontact",
+                                        "giropay"
                                     ],
                                     "x-nullable": true
                                 },
@@ -7224,7 +7217,8 @@
                                         "paypal",
                                         "klarna",
                                         "ideal",
-                                        "bancontact"
+                                        "bancontact",
+                                        "giropay"
                                     ],
                                     "x-nullable": true
                                 },
@@ -9756,9 +9750,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "required": [
-                                "attribution"
-                            ],
                             "type": "object",
                             "properties": {
                                 "number": {
@@ -10223,44 +10214,11 @@
                                 },
                                 "attribution": {
                                     "title": "Attribution",
-                                    "required": [
-                                        "agent"
-                                    ],
                                     "type": "object",
                                     "properties": {
-                                        "agent": {
-                                            "title": "Agent",
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "title": "ID",
-                                                    "type": "integer",
-                                                    "readOnly": true
-                                                },
-                                                "email": {
-                                                    "title": "Email address",
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "maxLength": 254,
-                                                    "minLength": 1,
-                                                    "x-nullable": true
-                                                },
-                                                "first_name": {
-                                                    "title": "First name",
-                                                    "type": "string",
-                                                    "maxLength": 255
-                                                },
-                                                "last_name": {
-                                                    "title": "Last name",
-                                                    "type": "string",
-                                                    "maxLength": 255
-                                                }
-                                            }
-                                        },
                                         "funnel": {
                                             "title": "Funnel",
                                             "type": "string",
-                                            "minLength": 1,
                                             "x-nullable": true
                                         },
                                         "utm_source": {
@@ -10337,6 +10295,11 @@
                                             "title": "Subaffiliate5",
                                             "type": "string",
                                             "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "agent": {
+                                            "title": "Agent",
+                                            "type": "integer",
                                             "x-nullable": true
                                         }
                                     }
@@ -10527,9 +10490,6 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "required": [
-                                "attribution"
-                            ],
                             "type": "object",
                             "properties": {
                                 "number": {
@@ -10994,44 +10954,11 @@
                                 },
                                 "attribution": {
                                     "title": "Attribution",
-                                    "required": [
-                                        "agent"
-                                    ],
                                     "type": "object",
                                     "properties": {
-                                        "agent": {
-                                            "title": "Agent",
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "title": "ID",
-                                                    "type": "integer",
-                                                    "readOnly": true
-                                                },
-                                                "email": {
-                                                    "title": "Email address",
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "maxLength": 254,
-                                                    "minLength": 1,
-                                                    "x-nullable": true
-                                                },
-                                                "first_name": {
-                                                    "title": "First name",
-                                                    "type": "string",
-                                                    "maxLength": 255
-                                                },
-                                                "last_name": {
-                                                    "title": "Last name",
-                                                    "type": "string",
-                                                    "maxLength": 255
-                                                }
-                                            }
-                                        },
                                         "funnel": {
                                             "title": "Funnel",
                                             "type": "string",
-                                            "minLength": 1,
                                             "x-nullable": true
                                         },
                                         "utm_source": {
@@ -11108,6 +11035,11 @@
                                             "title": "Subaffiliate5",
                                             "type": "string",
                                             "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "agent": {
+                                            "title": "Agent",
+                                            "type": "integer",
                                             "x-nullable": true
                                         }
                                     }
@@ -14707,6 +14639,857 @@
                 }
             ]
         },
+        "/orders/{number}/notes/": {
+            "get": {
+                "operationId": "orders_notes_read",
+                "description": "Retrieve a list of all order notes in an existing order.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "attribution"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "number": {
+                                    "title": "Order number",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "status": {
+                                    "title": "Status",
+                                    "type": "string",
+                                    "maxLength": 100
+                                },
+                                "fulfillment_status": {
+                                    "title": "Fulfillment Status",
+                                    "type": "string",
+                                    "enum": [
+                                        "not_required",
+                                        "unfulfilled",
+                                        "processing",
+                                        "fulfilled",
+                                        "delivered"
+                                    ]
+                                },
+                                "payment_status": {
+                                    "title": "Payment Status",
+                                    "type": "string",
+                                    "enum": [
+                                        "pending",
+                                        "authorized",
+                                        "expiring",
+                                        "expired",
+                                        "paid",
+                                        "voided",
+                                        "refunded",
+                                        "partially_paid",
+                                        "partially_refunded",
+                                        "partially_voided"
+                                    ],
+                                    "readOnly": true
+                                },
+                                "is_test": {
+                                    "title": "Is test",
+                                    "type": "boolean",
+                                    "readOnly": true
+                                },
+                                "lines": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "stockrecord",
+                                            "price_currency",
+                                            "price_excl_tax",
+                                            "price_incl_tax",
+                                            "price_incl_tax_excl_discounts",
+                                            "price_excl_tax_excl_discounts"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "product": {
+                                                "title": "Product",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "stockrecord": {
+                                                "title": "Stockrecord",
+                                                "required": [
+                                                    "partner_sku"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "title": "ID",
+                                                        "type": "integer",
+                                                        "readOnly": true
+                                                    },
+                                                    "partner_sku": {
+                                                        "title": "Partner SKU",
+                                                        "type": "string",
+                                                        "maxLength": 128,
+                                                        "minLength": 1
+                                                    },
+                                                    "price_currency": {
+                                                        "title": "Currency",
+                                                        "type": "string",
+                                                        "maxLength": 12,
+                                                        "minLength": 1
+                                                    },
+                                                    "price_retail": {
+                                                        "title": "Price (retail)",
+                                                        "type": "string",
+                                                        "format": "decimal",
+                                                        "x-nullable": true
+                                                    },
+                                                    "price": {
+                                                        "title": "Price",
+                                                        "type": "string",
+                                                        "format": "decimal",
+                                                        "x-nullable": true
+                                                    },
+                                                    "num_in_stock": {
+                                                        "title": "Number in stock",
+                                                        "type": "integer",
+                                                        "maximum": 2147483647,
+                                                        "minimum": 0,
+                                                        "x-nullable": true
+                                                    },
+                                                    "num_allocated": {
+                                                        "title": "Number allocated",
+                                                        "type": "integer",
+                                                        "maximum": 2147483647,
+                                                        "minimum": -2147483648,
+                                                        "x-nullable": true
+                                                    },
+                                                    "low_stock_threshold": {
+                                                        "title": "Low Stock Threshold",
+                                                        "type": "integer",
+                                                        "maximum": 2147483647,
+                                                        "minimum": 0,
+                                                        "x-nullable": true
+                                                    }
+                                                }
+                                            },
+                                            "quantity": {
+                                                "title": "Quantity",
+                                                "type": "integer",
+                                                "maximum": 2147483647,
+                                                "minimum": 0
+                                            },
+                                            "price_currency": {
+                                                "title": "Price currency",
+                                                "type": "string",
+                                                "maxLength": 12,
+                                                "minLength": 1
+                                            },
+                                            "price_excl_tax": {
+                                                "title": "Price excl tax",
+                                                "type": "string",
+                                                "format": "decimal"
+                                            },
+                                            "price_incl_tax": {
+                                                "title": "Price incl tax",
+                                                "type": "string",
+                                                "format": "decimal"
+                                            },
+                                            "price_incl_tax_excl_discounts": {
+                                                "title": "Price incl tax excl discounts",
+                                                "type": "string",
+                                                "format": "decimal"
+                                            },
+                                            "price_excl_tax_excl_discounts": {
+                                                "title": "Price excl tax excl discounts",
+                                                "type": "string",
+                                                "format": "decimal"
+                                            },
+                                            "is_upsell": {
+                                                "title": "Is upsell",
+                                                "type": "boolean"
+                                            },
+                                            "fulfillment_status": {
+                                                "title": "Fulfillment Status",
+                                                "type": "string",
+                                                "enum": [
+                                                    "not_required",
+                                                    "unfulfilled",
+                                                    "processing",
+                                                    "fulfilled",
+                                                    "delivered"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "shipping_incl_tax": {
+                                    "title": "Shipping charge (inc. tax)",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true
+                                },
+                                "shipping_method": {
+                                    "title": "Shipping method",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "shipping_code": {
+                                    "title": "Shipping code",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "total_incl_tax": {
+                                    "title": "Order total (inc. tax)",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true
+                                },
+                                "currency": {
+                                    "title": "Currency",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "total_excl_tax": {
+                                    "title": "Order total (excl. tax)",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true
+                                },
+                                "shipping_excl_tax": {
+                                    "title": "Shipping charge (excl. tax)",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true
+                                },
+                                "user": {
+                                    "title": "User",
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "title": "ID",
+                                            "type": "integer",
+                                            "readOnly": true
+                                        },
+                                        "email": {
+                                            "title": "Email address",
+                                            "type": "string",
+                                            "format": "email",
+                                            "maxLength": 254,
+                                            "minLength": 1,
+                                            "x-nullable": true
+                                        },
+                                        "ip": {
+                                            "title": "Ip address",
+                                            "type": "string",
+                                            "x-nullable": true
+                                        },
+                                        "first_name": {
+                                            "title": "First name",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        },
+                                        "last_name": {
+                                            "title": "Last name",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        },
+                                        "phone_number": {
+                                            "title": "Phone number",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "accepts_marketing": {
+                                            "title": "Subscribe to Marketing Emails",
+                                            "type": "boolean"
+                                        },
+                                        "language": {
+                                            "title": "Preferred language",
+                                            "type": "string",
+                                            "maxLength": 10,
+                                            "x-nullable": true
+                                        },
+                                        "user_agent": {
+                                            "title": "User agent",
+                                            "type": "string",
+                                            "x-nullable": true
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "shipping_address": {
+                                    "title": "Shipping address",
+                                    "required": [
+                                        "country",
+                                        "line1",
+                                        "first_name",
+                                        "last_name",
+                                        "line4"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "title": "ID",
+                                            "type": "integer",
+                                            "readOnly": true
+                                        },
+                                        "country": {
+                                            "title": "Country",
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "title": "Title",
+                                            "type": "string",
+                                            "enum": [
+                                                "Mr",
+                                                "Miss",
+                                                "Mrs",
+                                                "Ms",
+                                                "Dr"
+                                            ]
+                                        },
+                                        "line1": {
+                                            "title": "First line of address",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "line2": {
+                                            "title": "Second line of address",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        },
+                                        "line3": {
+                                            "title": "Third line of address",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        },
+                                        "postcode": {
+                                            "title": "Post/Zip-code",
+                                            "type": "string",
+                                            "maxLength": 64
+                                        },
+                                        "phone_number": {
+                                            "title": "Phone number",
+                                            "type": "string",
+                                            "maxLength": 128
+                                        },
+                                        "notes": {
+                                            "title": "Instructions",
+                                            "description": "Tell us anything we should know when delivering your order.",
+                                            "type": "string"
+                                        },
+                                        "first_name": {
+                                            "title": "First name",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "last_name": {
+                                            "title": "Last name",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "line4": {
+                                            "title": "City",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "state": {
+                                            "title": "State/Province",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        }
+                                    }
+                                },
+                                "billing_address": {
+                                    "title": "Billing address",
+                                    "required": [
+                                        "country",
+                                        "line1",
+                                        "first_name",
+                                        "last_name",
+                                        "line4"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "title": "ID",
+                                            "type": "integer",
+                                            "readOnly": true
+                                        },
+                                        "country": {
+                                            "title": "Country",
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "title": "Title",
+                                            "type": "string",
+                                            "enum": [
+                                                "Mr",
+                                                "Miss",
+                                                "Mrs",
+                                                "Ms",
+                                                "Dr"
+                                            ]
+                                        },
+                                        "line1": {
+                                            "title": "First line of address",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "line2": {
+                                            "title": "Second line of address",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        },
+                                        "line3": {
+                                            "title": "Third line of address",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        },
+                                        "postcode": {
+                                            "title": "Post/Zip-code",
+                                            "type": "string",
+                                            "maxLength": 64
+                                        },
+                                        "phone_number": {
+                                            "title": "Phone number",
+                                            "type": "string",
+                                            "maxLength": 128
+                                        },
+                                        "first_name": {
+                                            "title": "First name",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "last_name": {
+                                            "title": "Last name",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "line4": {
+                                            "title": "City",
+                                            "type": "string",
+                                            "maxLength": 255,
+                                            "minLength": 1
+                                        },
+                                        "state": {
+                                            "title": "State/Province",
+                                            "type": "string",
+                                            "maxLength": 255
+                                        }
+                                    }
+                                },
+                                "date_placed": {
+                                    "title": "Date placed",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "readOnly": true
+                                },
+                                "offer_discounts": {
+                                    "title": "Offer discounts",
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "voucher_discounts": {
+                                    "title": "Voucher discounts",
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "attribution": {
+                                    "title": "Attribution",
+                                    "required": [
+                                        "agent"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "agent": {
+                                            "title": "Agent",
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "title": "ID",
+                                                    "type": "integer",
+                                                    "readOnly": true
+                                                },
+                                                "email": {
+                                                    "title": "Email address",
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "maxLength": 254,
+                                                    "minLength": 1,
+                                                    "x-nullable": true
+                                                },
+                                                "first_name": {
+                                                    "title": "First name",
+                                                    "type": "string",
+                                                    "maxLength": 255
+                                                },
+                                                "last_name": {
+                                                    "title": "Last name",
+                                                    "type": "string",
+                                                    "maxLength": 255
+                                                }
+                                            }
+                                        },
+                                        "funnel": {
+                                            "title": "Funnel",
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "x-nullable": true
+                                        },
+                                        "utm_source": {
+                                            "title": "Utm source",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "utm_medium": {
+                                            "title": "Utm medium",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "utm_campaign": {
+                                            "title": "Utm campaign",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "utm_term": {
+                                            "title": "Utm term",
+                                            "type": "string",
+                                            "maxLength": 256,
+                                            "x-nullable": true
+                                        },
+                                        "utm_content": {
+                                            "title": "Utm content",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "gclid": {
+                                            "title": "Gclid",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "metadata": {
+                                            "title": "Metadata",
+                                            "type": "string"
+                                        },
+                                        "affiliate": {
+                                            "title": "Affiliate",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "subaffiliate1": {
+                                            "title": "Subaffiliate1",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "subaffiliate2": {
+                                            "title": "Subaffiliate2",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "subaffiliate3": {
+                                            "title": "Subaffiliate3",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "subaffiliate4": {
+                                            "title": "Subaffiliate4",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        },
+                                        "subaffiliate5": {
+                                            "title": "Subaffiliate5",
+                                            "type": "string",
+                                            "maxLength": 128,
+                                            "x-nullable": true
+                                        }
+                                    }
+                                },
+                                "tags": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "x-nullable": true
+                                    },
+                                    "uniqueItems": true
+                                },
+                                "subscriptions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "Id",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "billing_cycle": {
+                                                "title": "Billing Cycle",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "subscription_lifecycle": {
+                                    "title": "Subscription lifecycle",
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "metadata": {
+                                    "title": "Metadata",
+                                    "type": "string",
+                                    "x-nullable": true
+                                },
+                                "transactions": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "type",
+                                            "amount",
+                                            "response_code"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "type": {
+                                                "title": "Type",
+                                                "type": "string",
+                                                "minLength": 1
+                                            },
+                                            "amount": {
+                                                "title": "Amount",
+                                                "type": "string",
+                                                "format": "decimal"
+                                            },
+                                            "currency": {
+                                                "title": "Currency",
+                                                "type": "string",
+                                                "maxLength": 6,
+                                                "x-nullable": true
+                                            },
+                                            "status": {
+                                                "title": "Status",
+                                                "type": "string",
+                                                "enum": [
+                                                    "succeeded",
+                                                    "failed",
+                                                    "pending",
+                                                    "canceled",
+                                                    "expired",
+                                                    "refunded"
+                                                ]
+                                            },
+                                            "date_created": {
+                                                "title": "Date Created",
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "readOnly": true
+                                            },
+                                            "payment_method": {
+                                                "title": "Payment Method",
+                                                "type": "string",
+                                                "maxLength": 255,
+                                                "x-nullable": true
+                                            },
+                                            "payment_details": {
+                                                "title": "Payment details",
+                                                "type": "string",
+                                                "readOnly": true
+                                            },
+                                            "response_code": {
+                                                "title": "Response code",
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "fulfillments": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "carrier": {
+                                                "title": "Carrier",
+                                                "type": "string",
+                                                "maxLength": 256,
+                                                "x-nullable": true
+                                            },
+                                            "tracking_code": {
+                                                "title": "Tracking Code",
+                                                "type": "string",
+                                                "maxLength": 256,
+                                                "x-nullable": true
+                                            },
+                                            "tracking_link": {
+                                                "title": "Tracking link",
+                                                "type": "string",
+                                                "minLength": 1
+                                            },
+                                            "lines": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "readOnly": true,
+                                                "uniqueItems": true
+                                            },
+                                            "date_created": {
+                                                "title": "Date Created",
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "readOnly": true
+                                            },
+                                            "reference": {
+                                                "title": "Reference",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "readOnly": true
+                                },
+                                "total_tax": {
+                                    "title": "Total tax",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true
+                                },
+                                "shipping_tax": {
+                                    "title": "Shipping tax",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true
+                                },
+                                "display_taxes": {
+                                    "title": "Display taxes",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                },
+                                "order_status_url": {
+                                    "title": "Order status url",
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "source": {
+                                    "title": "Source",
+                                    "type": "string",
+                                    "readOnly": true,
+                                    "minLength": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "orders"
+                ]
+            },
+            "post": {
+                "operationId": "orders_notes_create",
+                "description": "Create an order note in an existing order.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "required": [
+                                "message"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "title": "Message",
+                                    "type": "string",
+                                    "minLength": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "message"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "message": {
+                                    "title": "Message",
+                                    "type": "string",
+                                    "minLength": 1
+                                },
+                                "date_created": {
+                                    "title": "Date Created",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "readOnly": true
+                                },
+                                "date_updated": {
+                                    "title": "Date Updated",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "readOnly": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "orders"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "number",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
         "/orders/{number}/refund/": {
             "post": {
                 "operationId": "orders_refund",
@@ -15539,10 +16322,17 @@
                                     "title": "Event type",
                                     "type": "string",
                                     "enum": [
+                                        "cancel.failed",
                                         "cancel.initiated",
                                         "cancel.succeeded",
+                                        "line_item.added",
                                         "line_item.changed",
-                                        "notification.order_shipped"
+                                        "notification.order_canceled",
+                                        "notification.order_shipped",
+                                        "paypal.tracking_uploaded",
+                                        "quantity_changed",
+                                        "sent",
+                                        "shipped"
                                     ]
                                 },
                                 "detail": {
@@ -25428,9 +26218,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD",
-                                        "EUR"
+                                        "USD"
                                     ]
                                 },
                                 "partner_sku": {
@@ -25543,9 +26331,7 @@
                                     "title": "Currency",
                                     "type": "string",
                                     "enum": [
-                                        "USD",
-                                        "CAD",
-                                        "EUR"
+                                        "USD"
                                     ]
                                 },
                                 "partner_sku": {
@@ -28336,6 +29122,7 @@
                                     "title": "Shipping code",
                                     "type": "string",
                                     "enum": [
+                                        "standard",
                                         "default",
                                         "no-shipping-required"
                                     ]
@@ -28992,6 +29779,7 @@
                                     "title": "Shipping code",
                                     "type": "string",
                                     "enum": [
+                                        "standard",
                                         "default",
                                         "no-shipping-required"
                                     ]
@@ -34754,6 +35542,305 @@
                                     "type": "string",
                                     "maxLength": 500,
                                     "x-nullable": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this User.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/users/{id}/notes/": {
+            "get": {
+                "operationId": "users_notes_read",
+                "description": "Retrieve a list of all user notes in an existing user.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "email"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "email": {
+                                    "title": "Email",
+                                    "type": "string",
+                                    "format": "email",
+                                    "minLength": 1
+                                },
+                                "first_name": {
+                                    "title": "First name",
+                                    "type": "string",
+                                    "maxLength": 255
+                                },
+                                "last_name": {
+                                    "title": "Last name",
+                                    "type": "string",
+                                    "maxLength": 255
+                                },
+                                "ip": {
+                                    "title": "Ip address",
+                                    "type": "string",
+                                    "x-nullable": true
+                                },
+                                "phone_number": {
+                                    "title": "Phone number",
+                                    "type": "string",
+                                    "maxLength": 128,
+                                    "x-nullable": true
+                                },
+                                "date_joined": {
+                                    "title": "Date joined",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "readOnly": true
+                                },
+                                "language": {
+                                    "title": "Language",
+                                    "description": "required : E164",
+                                    "type": "string",
+                                    "enum": [
+                                        "en",
+                                        "fr",
+                                        "th",
+                                        "de",
+                                        "sv",
+                                        "no",
+                                        "it",
+                                        "es"
+                                    ],
+                                    "default": "en"
+                                },
+                                "is_blocked": {
+                                    "title": "Is blocked",
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "addresses": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "line1",
+                                            "line4",
+                                            "country"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "title": "ID",
+                                                "type": "integer",
+                                                "readOnly": true
+                                            },
+                                            "title": {
+                                                "title": "Title",
+                                                "type": "string",
+                                                "enum": [
+                                                    "Mr",
+                                                    "Miss",
+                                                    "Mrs",
+                                                    "Ms",
+                                                    "Dr"
+                                                ]
+                                            },
+                                            "first_name": {
+                                                "title": "First name",
+                                                "type": "string",
+                                                "maxLength": 255
+                                            },
+                                            "last_name": {
+                                                "title": "Last name",
+                                                "type": "string",
+                                                "maxLength": 255
+                                            },
+                                            "line1": {
+                                                "title": "First line of address",
+                                                "type": "string",
+                                                "maxLength": 255,
+                                                "minLength": 1
+                                            },
+                                            "line2": {
+                                                "title": "Second line of address",
+                                                "type": "string",
+                                                "maxLength": 255
+                                            },
+                                            "line3": {
+                                                "title": "Third line of address",
+                                                "type": "string",
+                                                "maxLength": 255
+                                            },
+                                            "line4": {
+                                                "title": "City",
+                                                "type": "string",
+                                                "maxLength": 255,
+                                                "minLength": 1
+                                            },
+                                            "state": {
+                                                "title": "State/Province",
+                                                "type": "string",
+                                                "maxLength": 255
+                                            },
+                                            "postcode": {
+                                                "title": "Post/Zip-code",
+                                                "type": "string",
+                                                "maxLength": 64
+                                            },
+                                            "search_text": {
+                                                "title": "Search text - used only for searching addresses",
+                                                "type": "string",
+                                                "readOnly": true,
+                                                "minLength": 1
+                                            },
+                                            "phone_number": {
+                                                "title": "Phone number",
+                                                "type": "string",
+                                                "maxLength": 128
+                                            },
+                                            "notes": {
+                                                "title": "Instructions",
+                                                "description": "Tell us anything we should know when delivering your order.",
+                                                "type": "string"
+                                            },
+                                            "is_default_for_shipping": {
+                                                "title": "Default shipping address?",
+                                                "type": "boolean"
+                                            },
+                                            "is_default_for_billing": {
+                                                "title": "Default billing address?",
+                                                "type": "boolean"
+                                            },
+                                            "country": {
+                                                "title": "Country",
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "orders_count": {
+                                    "title": "Orders count",
+                                    "type": "integer",
+                                    "readOnly": true,
+                                    "default": 0
+                                },
+                                "subscriptions_count": {
+                                    "title": "Subscriptions count",
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "total_spent": {
+                                    "title": "Total spent",
+                                    "type": "string",
+                                    "format": "decimal",
+                                    "readOnly": true,
+                                    "default": "0.00"
+                                },
+                                "user_type": {
+                                    "title": "User type",
+                                    "description": "Available values : customer, lead, dashboard",
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "tags": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "x-nullable": true
+                                    },
+                                    "uniqueItems": true
+                                },
+                                "accepts_marketing": {
+                                    "title": "Subscribe to Marketing Emails",
+                                    "type": "boolean"
+                                },
+                                "metadata": {
+                                    "title": "Metadata",
+                                    "type": "string",
+                                    "x-nullable": true
+                                },
+                                "user_agent": {
+                                    "title": "User agent",
+                                    "type": "string",
+                                    "maxLength": 500,
+                                    "x-nullable": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "post": {
+                "operationId": "users_notes_create",
+                "description": "Create an user note in an existing user.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "required": [
+                                "message"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "title": "Message",
+                                    "type": "string",
+                                    "minLength": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "required": [
+                                "message"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "ID",
+                                    "type": "integer",
+                                    "readOnly": true
+                                },
+                                "created_at": {
+                                    "title": "Created at",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "readOnly": true
+                                },
+                                "updated_at": {
+                                    "title": "Updated at",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "readOnly": true
+                                },
+                                "message": {
+                                    "title": "Message",
+                                    "type": "string",
+                                    "minLength": 1
                                 }
                             }
                         }
