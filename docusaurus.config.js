@@ -59,7 +59,7 @@ const config = {
             {
                 specs: [
                     {
-                        spec: 'openapi/swagger.json',
+                        spec: 'openapi/2023-02-10.yaml',
                         route: '/docs/api/admin/reference/',
                     },
                 ],
