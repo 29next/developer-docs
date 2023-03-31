@@ -80,7 +80,10 @@ checkout
         {% if checkout.step == 'information' %}
             {% app_hook 'start_checkout' %}
         {% endif %}
-
+        
+        {% if checkout.step == 'payment' %}
+        {% endif %}
+        
         {% if checkout.step == 'confirmation' %}
             {% app_hook 'complete_checkout' %}
         {% endif %}
