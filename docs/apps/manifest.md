@@ -4,17 +4,15 @@ sidebar_position: 3
 ---
 # App Manifest Reference
 
+
+App manifest.json is used for apps extending the storefront to configure HTML snippets that can be injected into storefront themes through [app_hooks](/themes/templates/tags.md#app_hook). You can also add settings that can generate a settings page in the store dashboard to configure your app in the case your app only extends the storefront and doesn't have a server side integration.
+
+
 ## Manifest Reference
 The manifest.json file is used to configure your app.
 
 ```json title="Example manifest.json"
 {
-  "oauth": {
-    "app_url": "https://oauthdebugger.com/debug",
-    "redirect_uris": [
-      "https://oauthdebugger.com/debug"
-    ]
-  },
   "locations": {
     "storefront": {
       "global_header": "snippets/global-header.html",
@@ -44,27 +42,6 @@ The manifest.json file is used to configure your app.
 ```
 
 ## Manifest Properties
-
-### oauth
-
-If your app uses OAuth to make API requests to a third-party product, you must specify the details using this property and add a parameter of type "oauth".
-
-If this property is specified, users will go through the OAuth authentication flow during installation of the app where you'll receieve an OAuth Access Token to access the installing store's Admin API.
-
-**See [OAuth Overview](/apps/oauth/index.md) for full setup flow details**
-
-
-* `app_url` - Your app OAuth setup url, [see app permissions setup](/apps/oauth/getting-started.md#step-2-app-permissions-setup), required.
-* `redirect_uris` - a list of urls that are allowed to during setup flow, required.
-
-```json title="Example oauth"
-"oauth": {
-    "app_url": "https://oauthdebugger.com/debug",
-    "redirect_uris": [
-      "https://oauthdebugger.com/debug"
-    ]
-  }
-```
 
 ### locations
 

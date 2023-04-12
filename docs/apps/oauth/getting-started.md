@@ -17,6 +17,10 @@ During the App installation flow, Apps that have `oauth` configured will be redi
 Your app should redirect the user back to the store authorization view configured with the scope permissions your app requires.
 :::
 
+:::info
+At every stage in the Oauth flow you'll receive a querystring variable `store` with the network domain of the store that is installing the app. **You should use this in your app logic as the unique identifier for the store.
+:::
+
 ``` title="Authorization Link Format"
 https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scopes}
 ```
