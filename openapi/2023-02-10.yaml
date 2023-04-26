@@ -6,6 +6,7 @@ paths:
   /api/admin/apps/{clientId}/settings/:
     get:
       operationId: appsSettingsRetrieve
+      description: Retrieve a object of all app settings.
       parameters:
       - in: path
         name: clientId
@@ -34,6 +35,7 @@ paths:
           description: ''
     put:
       operationId: appsSettingsUpdate
+      description: Update an existing app settings.
       parameters:
       - in: path
         name: clientId
@@ -76,6 +78,7 @@ paths:
           description: ''
     patch:
       operationId: appsSettingsPartialUpdate
+      description: Partially update an existing app settings.
       parameters:
       - in: path
         name: clientId
@@ -118,6 +121,7 @@ paths:
           description: ''
     delete:
       operationId: appsSettingsDestroy
+      description: Delete an existing app settings.
       parameters:
       - in: path
         name: clientId
@@ -142,10 +146,7 @@ paths:
   /api/admin/carts/:
     get:
       operationId: cartsList
-      description: |-
-        list: Retrieve a list of all open carts. Query can be filtered by cart attributes for a more specific        list of carts.
-
-        read: Retrieve a specific carts details.
+      description: Retrieve a list of all open carts.
       parameters:
       - in: query
         name: product
@@ -265,10 +266,7 @@ paths:
           description: ''
     post:
       operationId: cartsCreate
-      description: |-
-        list: Retrieve a list of all open carts. Query can be filtered by cart attributes for a more specific        list of carts.
-
-        read: Retrieve a specific carts details.
+      description: Create a new cart.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -304,10 +302,7 @@ paths:
   /api/admin/carts/{id}/:
     get:
       operationId: cartsRetrieve
-      description: |-
-        list: Retrieve a list of all open carts. Query can be filtered by cart attributes for a more specific        list of carts.
-
-        read: Retrieve a specific carts details.
+      description: Retrieve a cart.
       parameters:
       - in: path
         name: id
@@ -336,10 +331,7 @@ paths:
           description: ''
     put:
       operationId: cartsUpdate
-      description: |-
-        list: Retrieve a list of all open carts. Query can be filtered by cart attributes for a more specific        list of carts.
-
-        read: Retrieve a specific carts details.
+      description: Update an existing cart.
       parameters:
       - in: path
         name: id
@@ -380,10 +372,7 @@ paths:
           description: ''
     delete:
       operationId: cartsDestroy
-      description: |-
-        list: Retrieve a list of all open carts. Query can be filtered by cart attributes for a more specific        list of carts.
-
-        read: Retrieve a specific carts details.
+      description: Delete an existing cart.
       parameters:
       - in: path
         name: id
@@ -409,16 +398,7 @@ paths:
   /api/admin/categories/:
     get:
       operationId: categoriesList
-      description: |-
-        Api for retrieving and creating product categories.
-
-        list: Retrieve a list of categories.
-
-        read: Retrieve a category detail.
-
-        create: Create a new category.
-
-        update: Update an existing category.
+      description: Retrieve a list of categories.
       parameters:
       - name: page
         required: false
@@ -435,7 +415,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - categories
+      - products
       security:
       - tokenAuth: []
       responses:
@@ -447,16 +427,7 @@ paths:
           description: ''
     post:
       operationId: categoriesCreate
-      description: |-
-        Api for retrieving and creating product categories.
-
-        list: Retrieve a list of categories.
-
-        read: Retrieve a category detail.
-
-        create: Create a new category.
-
-        update: Update an existing category.
+      description: Create a new category.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -467,7 +438,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - categories
+      - products
       requestBody:
         content:
           application/json:
@@ -492,16 +463,7 @@ paths:
   /api/admin/categories/{id}/:
     get:
       operationId: categoriesRetrieve
-      description: |-
-        Api for retrieving and creating product categories.
-
-        list: Retrieve a list of categories.
-
-        read: Retrieve a category detail.
-
-        create: Create a new category.
-
-        update: Update an existing category.
+      description: Retrieve a category.
       parameters:
       - in: path
         name: id
@@ -518,7 +480,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - categories
+      - products
       security:
       - tokenAuth: []
       responses:
@@ -530,16 +492,7 @@ paths:
           description: ''
     put:
       operationId: categoriesUpdate
-      description: |-
-        Api for retrieving and creating product categories.
-
-        list: Retrieve a list of categories.
-
-        read: Retrieve a category detail.
-
-        create: Create a new category.
-
-        update: Update an existing category.
+      description: Update an existing category.
       parameters:
       - in: path
         name: id
@@ -556,7 +509,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - categories
+      - products
       requestBody:
         content:
           application/json:
@@ -581,6 +534,7 @@ paths:
   /api/admin/disputes/:
     get:
       operationId: disputesList
+      description: Retrieve a list of disputes.
       parameters:
       - in: query
         name: id
@@ -684,7 +638,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - disputes
+      - payments
       security:
       - tokenAuth: []
       responses:
@@ -696,6 +650,7 @@ paths:
           description: ''
     post:
       operationId: disputesCreate
+      description: Create a new dispute.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -706,7 +661,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - disputes
+      - payments
       requestBody:
         content:
           application/json:
@@ -730,6 +685,7 @@ paths:
   /api/admin/disputes/{id}/:
     get:
       operationId: disputesRetrieve
+      description: Retrieve a dispute.
       parameters:
       - in: path
         name: id
@@ -746,7 +702,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - disputes
+      - payments
       security:
       - tokenAuth: []
       responses:
@@ -758,6 +714,7 @@ paths:
           description: ''
     put:
       operationId: disputesUpdate
+      description: Update an existing dispute.
       parameters:
       - in: path
         name: id
@@ -774,7 +731,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - disputes
+      - payments
       requestBody:
         content:
           application/json:
@@ -797,6 +754,7 @@ paths:
           description: ''
     patch:
       operationId: disputesPartialUpdate
+      description: Partial update an existing dispute.
       parameters:
       - in: path
         name: id
@@ -813,7 +771,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - disputes
+      - payments
       requestBody:
         content:
           application/json:
@@ -836,6 +794,7 @@ paths:
           description: ''
     delete:
       operationId: disputesDestroy
+      description: Delete an existing dispute.
       parameters:
       - in: path
         name: id
@@ -852,7 +811,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - disputes
+      - payments
       security:
       - tokenAuth: []
       responses:
@@ -861,12 +820,7 @@ paths:
   /api/admin/orders/:
     get:
       operationId: ordersList
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Retrieve a list of orders.
       parameters:
       - in: query
         name: search_text
@@ -1129,12 +1083,7 @@ paths:
           description: ''
     post:
       operationId: ordersCreate
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Create a new order.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -1170,12 +1119,7 @@ paths:
   /api/admin/orders/{number}/:
     get:
       operationId: ordersRetrieve
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Retrieve a order.
       parameters:
       - in: path
         name: number
@@ -1204,12 +1148,7 @@ paths:
           description: ''
     put:
       operationId: ordersUpdate
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Update an existing order.
       parameters:
       - in: path
         name: number
@@ -1249,12 +1188,7 @@ paths:
           description: ''
     patch:
       operationId: ordersPartialUpdate
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Partial update an existing order.
       parameters:
       - in: path
         name: number
@@ -1296,7 +1230,7 @@ paths:
     post:
       operationId: ordersAddLineItemsCreate
       description: Add additional items to the order and charge the initial order
-        payment method
+        payment method.
       parameters:
       - in: path
         name: number
@@ -1338,12 +1272,7 @@ paths:
   /api/admin/orders/{number}/cancel/:
     post:
       operationId: ordersCancelCreate
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Cancel an existing order.
       parameters:
       - in: path
         name: number
@@ -1416,7 +1345,7 @@ paths:
   /api/admin/orders/{number}/fulfillments/:
     get:
       operationId: ordersFulfillmentsRetrieve
-      description: Add shipment order for separate line
+      description: Retrieve order fulfillments.
       parameters:
       - in: path
         name: number
@@ -1445,12 +1374,7 @@ paths:
           description: ''
     post:
       operationId: ordersFulfillmentsCreate
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Add shipment order for separate line.
       parameters:
       - in: path
         name: number
@@ -1562,12 +1486,7 @@ paths:
   /api/admin/orders/{number}/refund/:
     post:
       operationId: ordersRefundCreate
-      description: |-
-        list: Retrieve a list of all orders. Query can be filtered by query parameters for more specific queries.
-
-        create: Orders can be created on the API for existing customers or for new customers within the same API request.
-
-        read: Retrieve a specific order details by Order Number.
+      description: Refund an existing order.
       parameters:
       - in: path
         name: number
@@ -1609,12 +1528,7 @@ paths:
   /api/admin/partners/:
     get:
       operationId: partnersList
-      description: |-
-        list: Retrieve a list of all configured fulfillment partners.
-
-        create: Create a new fulfillment partner.
-
-        update: Update an existing fulfillment partner.
+      description: Retrieve a list of all configured fulfillment partners.
       parameters:
       - name: page
         required: false
@@ -1631,7 +1545,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - partners
+      - fulfillment
       security:
       - tokenAuth: []
       responses:
@@ -1643,12 +1557,7 @@ paths:
           description: ''
     post:
       operationId: partnersCreate
-      description: |-
-        list: Retrieve a list of all configured fulfillment partners.
-
-        create: Create a new fulfillment partner.
-
-        update: Update an existing fulfillment partner.
+      description: Create a new fulfillment partner.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -1659,7 +1568,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - partners
+      - fulfillment
       requestBody:
         content:
           application/json:
@@ -1684,12 +1593,7 @@ paths:
   /api/admin/partners/{id}/:
     get:
       operationId: partnersRetrieve
-      description: |-
-        list: Retrieve a list of all configured fulfillment partners.
-
-        create: Create a new fulfillment partner.
-
-        update: Update an existing fulfillment partner.
+      description: Retrieve an existing fulfillment partner.
       parameters:
       - in: path
         name: id
@@ -1706,7 +1610,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - partners
+      - fulfillment
       security:
       - tokenAuth: []
       responses:
@@ -1718,12 +1622,7 @@ paths:
           description: ''
     put:
       operationId: partnersUpdate
-      description: |-
-        list: Retrieve a list of all configured fulfillment partners.
-
-        create: Create a new fulfillment partner.
-
-        update: Update an existing fulfillment partner.
+      description: Update an existing fulfillment partner.
       parameters:
       - in: path
         name: id
@@ -1740,7 +1639,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - partners
+      - fulfillment
       requestBody:
         content:
           application/json:
@@ -1765,20 +1664,7 @@ paths:
   /api/admin/products/:
     get:
       operationId: productsList
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Retrieve a list of all products.
       parameters:
       - in: query
         name: title
@@ -1834,20 +1720,7 @@ paths:
           description: ''
     post:
       operationId: productsCreate
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Create a new product.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -1883,20 +1756,7 @@ paths:
   /api/admin/products/{id}/:
     get:
       operationId: productsRetrieve
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Retrieve a product.
       parameters:
       - in: path
         name: id
@@ -1925,20 +1785,7 @@ paths:
           description: ''
     put:
       operationId: productsUpdate
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Update an existing product.
       parameters:
       - in: path
         name: id
@@ -1979,20 +1826,7 @@ paths:
           description: ''
     patch:
       operationId: productsPartialUpdate
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Partially update an existing product.
       parameters:
       - in: path
         name: id
@@ -2032,20 +1866,7 @@ paths:
           description: ''
     delete:
       operationId: productsDestroy
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Delete an existing product.
       parameters:
       - in: path
         name: id
@@ -2071,7 +1892,7 @@ paths:
   /api/admin/products/{id}/children/:
     get:
       operationId: productsChildrenRetrieve2
-      description: Api for retrieving and creating child products in an existing product.
+      description: Retrieve child products in an existing product.
       parameters:
       - in: path
         name: id
@@ -2100,20 +1921,7 @@ paths:
           description: ''
     post:
       operationId: productsChildrenCreate
-      description: |-
-        Api for retrieving and creating products.
-
-        list: Retrieve a list of all products.
-
-        read: Retrieve a product detail.
-
-        create: Create a new product.
-
-        update: Update an existing product.
-
-        partial_update: Partially update an existing product.
-
-        delete: Delete an existing product.
+      description: Create a child product in an existing product.
       parameters:
       - in: path
         name: id
@@ -2155,10 +1963,7 @@ paths:
   /api/admin/products/{id}/images/:
     post:
       operationId: productsImagesCreate
-      description: |-
-        Create images for product by ID.
-        @param: images is list of image file
-        @return: list of product image
+      description: Create images in an existing product.
       parameters:
       - in: path
         name: id
@@ -2200,18 +2005,7 @@ paths:
   /api/admin/products/children/{id}/:
     get:
       operationId: productsChildrenRetrieve
-      description: |-
-        Api for retrieving and creating child products.
-
-        list: Retrieve a list of all child products.
-
-        read: Retrieve a child product detail.
-
-        update: Update an existing child product.
-
-        partial_update: Partially update an existing child product.
-
-        delete: Delete an existing child product.
+      description: Retrieve a child product.
       parameters:
       - in: path
         name: id
@@ -2240,18 +2034,7 @@ paths:
           description: ''
     put:
       operationId: productsChildrenUpdate
-      description: |-
-        Api for retrieving and creating child products.
-
-        list: Retrieve a list of all child products.
-
-        read: Retrieve a child product detail.
-
-        update: Update an existing child product.
-
-        partial_update: Partially update an existing child product.
-
-        delete: Delete an existing child product.
+      description: Update an existing child product.
       parameters:
       - in: path
         name: id
@@ -2292,18 +2075,7 @@ paths:
           description: ''
     patch:
       operationId: productsChildrenPartialUpdate
-      description: |-
-        Api for retrieving and creating child products.
-
-        list: Retrieve a list of all child products.
-
-        read: Retrieve a child product detail.
-
-        update: Update an existing child product.
-
-        partial_update: Partially update an existing child product.
-
-        delete: Delete an existing child product.
+      description: Partially update an existing child product.
       parameters:
       - in: path
         name: id
@@ -2343,18 +2115,7 @@ paths:
           description: ''
     delete:
       operationId: productsChildrenDestroy
-      description: |-
-        Api for retrieving and creating child products.
-
-        list: Retrieve a list of all child products.
-
-        read: Retrieve a child product detail.
-
-        update: Update an existing child product.
-
-        partial_update: Partially update an existing child product.
-
-        delete: Delete an existing child product.
+      description: Delete an existing child product.
       parameters:
       - in: path
         name: id
@@ -2380,14 +2141,7 @@ paths:
   /api/admin/stockrecords/:
     get:
       operationId: stockrecordsList
-      description: |-
-        list: Retrieve a list of stock records.
-
-        create: Create a stock record.
-
-        update: Update an existing stock record.
-
-        delete: Delete a stock record.
+      description: Retrieve a list of stockrecords.
       parameters:
       - in: query
         name: search_text
@@ -2429,7 +2183,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - stockrecords
+      - products
       security:
       - tokenAuth: []
       responses:
@@ -2441,14 +2195,7 @@ paths:
           description: ''
     post:
       operationId: stockrecordsCreate
-      description: |-
-        list: Retrieve a list of stock records.
-
-        create: Create a stock record.
-
-        update: Update an existing stock record.
-
-        delete: Delete a stock record.
+      description: Create a new stockrecord.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -2459,7 +2206,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - stockrecords
+      - products
       requestBody:
         content:
           application/json:
@@ -2484,14 +2231,7 @@ paths:
   /api/admin/stockrecords/{id}/:
     get:
       operationId: stockrecordsRetrieve
-      description: |-
-        list: Retrieve a list of stock records.
-
-        create: Create a stock record.
-
-        update: Update an existing stock record.
-
-        delete: Delete a stock record.
+      description: Retrieve a stockrecord.
       parameters:
       - in: path
         name: id
@@ -2508,7 +2248,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - stockrecords
+      - products
       security:
       - tokenAuth: []
       responses:
@@ -2520,14 +2260,7 @@ paths:
           description: ''
     patch:
       operationId: stockrecordsPartialUpdate
-      description: |-
-        list: Retrieve a list of stock records.
-
-        create: Create a stock record.
-
-        update: Update an existing stock record.
-
-        delete: Delete a stock record.
+      description: Partial update an existing stockrecord.
       parameters:
       - in: path
         name: id
@@ -2544,7 +2277,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - stockrecords
+      - products
       requestBody:
         content:
           application/json:
@@ -2567,14 +2300,7 @@ paths:
           description: ''
     delete:
       operationId: stockrecordsDestroy
-      description: |-
-        list: Retrieve a list of stock records.
-
-        create: Create a stock record.
-
-        update: Update an existing stock record.
-
-        delete: Delete a stock record.
+      description: Delete an existing stockrecord.
       parameters:
       - in: path
         name: id
@@ -2591,7 +2317,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - stockrecords
+      - products
       security:
       - tokenAuth: []
       responses:
@@ -2600,6 +2326,7 @@ paths:
   /api/admin/subscriptions/:
     get:
       operationId: subscriptionsList
+      description: Retrieve a list of subscriptions.
       parameters:
       - in: query
         name: search_text
@@ -2806,6 +2533,7 @@ paths:
           description: ''
     post:
       operationId: subscriptionsCreate
+      description: Create a new subscription.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -2841,6 +2569,7 @@ paths:
   /api/admin/subscriptions/{id}/:
     get:
       operationId: subscriptionsRetrieve
+      description: Retrieve a subscription.
       parameters:
       - in: path
         name: id
@@ -2869,6 +2598,7 @@ paths:
           description: ''
     patch:
       operationId: subscriptionsPartialUpdate
+      description: Partial update an existing subscription.
       parameters:
       - in: path
         name: id
@@ -2906,9 +2636,226 @@ paths:
               schema:
                 $ref: '#/components/schemas/Subscription'
           description: ''
+  /api/admin/themes/:
+    get:
+      operationId: themesList
+      description: Retrieve a list of themes.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedThemeList'
+          description: ''
+    post:
+      operationId: themesCreate
+      description: Create a new theme.
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Theme'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Theme'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Theme'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theme'
+          description: ''
+  /api/admin/themes/{id}/:
+    get:
+      operationId: themesRetrieve
+      description: Retrieve a theme.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this theme.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theme'
+          description: ''
+    delete:
+      operationId: themesDestroy
+      description: Delete an existing theme.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this theme.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/admin/themes/{id}/templates/:
+    get:
+      operationId: themesTemplatesRetrieve
+      description: Retrieve a list of templates in an existing theme.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this theme.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+    post:
+      operationId: themesTemplatesCreate
+      description: Create a new template in an existing theme.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this theme.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+    delete:
+      operationId: themesTemplatesDestroy
+      description: Delete an existing template in an existing theme.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this theme.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - storefront
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/admin/tickets/:
     get:
       operationId: ticketsList
+      description: Retrieve a list of tickets.
       parameters:
       - in: query
         name: filter_text
@@ -3018,7 +2965,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       security:
       - tokenAuth: []
       responses:
@@ -3030,6 +2977,7 @@ paths:
           description: ''
     post:
       operationId: ticketsCreate
+      description: Create a new ticket.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -3040,7 +2988,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       requestBody:
         content:
           application/json:
@@ -3064,6 +3012,7 @@ paths:
   /api/admin/tickets/{id}/:
     get:
       operationId: ticketsRetrieve
+      description: Retrieve a ticket.
       parameters:
       - in: path
         name: id
@@ -3080,7 +3029,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       security:
       - tokenAuth: []
       responses:
@@ -3092,6 +3041,7 @@ paths:
           description: ''
     put:
       operationId: ticketsUpdate
+      description: Update an existing ticket.
       parameters:
       - in: path
         name: id
@@ -3108,7 +3058,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       requestBody:
         content:
           application/json:
@@ -3131,6 +3081,7 @@ paths:
           description: ''
     patch:
       operationId: ticketsPartialUpdate
+      description: Partial update an existing ticket.
       parameters:
       - in: path
         name: id
@@ -3147,7 +3098,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       requestBody:
         content:
           application/json:
@@ -3171,6 +3122,7 @@ paths:
   /api/admin/tickets/{id}/comments/:
     get:
       operationId: ticketsCommentsRetrieve
+      description: Retrieve a list of comments in an existing ticket.
       parameters:
       - in: path
         name: id
@@ -3187,7 +3139,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       security:
       - tokenAuth: []
       responses:
@@ -3199,6 +3151,7 @@ paths:
           description: ''
     post:
       operationId: ticketsCommentsCreate
+      description: Create a new comment in an existing ticket.
       parameters:
       - in: path
         name: id
@@ -3215,7 +3168,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       requestBody:
         content:
           application/json:
@@ -3239,6 +3192,7 @@ paths:
   /api/admin/tickets/attachments/:
     post:
       operationId: ticketsAttachmentsCreate
+      description: Attach new files in an existing ticket.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -3249,7 +3203,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       requestBody:
         content:
           multipart/form-data:
@@ -3271,6 +3225,7 @@ paths:
   /api/admin/tickettypes/:
     get:
       operationId: tickettypesList
+      description: Retrieve a list of ticket types.
       parameters:
       - in: query
         name: name
@@ -3291,7 +3246,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       security:
       - tokenAuth: []
       responses:
@@ -3304,6 +3259,7 @@ paths:
   /api/admin/tickettypes/{id}/:
     get:
       operationId: tickettypesRetrieve
+      description: Retrieve a ticket type.
       parameters:
       - in: path
         name: id
@@ -3320,7 +3276,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - supports
+      - support
       security:
       - tokenAuth: []
       responses:
@@ -3333,10 +3289,7 @@ paths:
   /api/admin/transactions/:
     get:
       operationId: transactionsList
-      description: |-
-        list: Retrieve a list of all transactions. Query can be filtered for a more specific list of transactions.
-
-        read: Retrieve a specific transaction details.
+      description: Retrieve a list of transactions.
       parameters:
       - in: query
         name: date_created_from
@@ -3527,7 +3480,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - transactions
+      - payments
       security:
       - tokenAuth: []
       responses:
@@ -3540,10 +3493,7 @@ paths:
   /api/admin/transactions/{id}/:
     get:
       operationId: transactionsRetrieve
-      description: |-
-        list: Retrieve a list of all transactions. Query can be filtered for a more specific list of transactions.
-
-        read: Retrieve a specific transaction details.
+      description: Retrieve a transaction.
       parameters:
       - in: path
         name: id
@@ -3560,7 +3510,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - transactions
+      - payments
       security:
       - tokenAuth: []
       responses:
@@ -3573,7 +3523,7 @@ paths:
   /api/admin/transactions/{id}/capture/:
     post:
       operationId: transactionsCaptureCreate
-      description: Captures the previously authorized funds for this transaction.
+      description: Capture an existing transaction.
       parameters:
       - in: path
         name: id
@@ -3590,7 +3540,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - transactions
+      - payments
       requestBody:
         content:
           application/json:
@@ -3614,10 +3564,7 @@ paths:
   /api/admin/transactions/{id}/refund/:
     post:
       operationId: transactionsRefundCreate
-      description: |-
-        list: Retrieve a list of all transactions. Query can be filtered for a more specific list of transactions.
-
-        read: Retrieve a specific transaction details.
+      description: Refund an existing transaction.
       parameters:
       - in: path
         name: id
@@ -3634,7 +3581,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - transactions
+      - payments
       requestBody:
         content:
           application/json:
@@ -3659,14 +3606,7 @@ paths:
   /api/admin/users/:
     get:
       operationId: usersList
-      description: |-
-        list: Retrieve a list of all users of the store.
-
-        create: Create a new user to give them access to the store.
-
-        read: Retrieve the full details of a specific user by ID.
-
-        update: Update an existing user.
+      description: Retrieve a list of customers.
       parameters:
       - in: query
         name: email
@@ -3730,7 +3670,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       security:
       - tokenAuth: []
       responses:
@@ -3742,14 +3682,7 @@ paths:
           description: ''
     post:
       operationId: usersCreate
-      description: |-
-        list: Retrieve a list of all users of the store.
-
-        create: Create a new user to give them access to the store.
-
-        read: Retrieve the full details of a specific user by ID.
-
-        update: Update an existing user.
+      description: Create a new customer.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -3760,7 +3693,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       requestBody:
         content:
           application/json:
@@ -3785,14 +3718,7 @@ paths:
   /api/admin/users/{id}/:
     get:
       operationId: usersRetrieve
-      description: |-
-        list: Retrieve a list of all users of the store.
-
-        create: Create a new user to give them access to the store.
-
-        read: Retrieve the full details of a specific user by ID.
-
-        update: Update an existing user.
+      description: Retrieve a customer.
       parameters:
       - in: path
         name: id
@@ -3809,7 +3735,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       security:
       - tokenAuth: []
       responses:
@@ -3821,14 +3747,7 @@ paths:
           description: ''
     put:
       operationId: usersUpdate
-      description: |-
-        list: Retrieve a list of all users of the store.
-
-        create: Create a new user to give them access to the store.
-
-        read: Retrieve the full details of a specific user by ID.
-
-        update: Update an existing user.
+      description: Update an existing customer.
       parameters:
       - in: path
         name: id
@@ -3845,7 +3764,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       requestBody:
         content:
           application/json:
@@ -3869,14 +3788,7 @@ paths:
           description: ''
     patch:
       operationId: usersPartialUpdate
-      description: |-
-        list: Retrieve a list of all users of the store.
-
-        create: Create a new user to give them access to the store.
-
-        read: Retrieve the full details of a specific user by ID.
-
-        update: Update an existing user.
+      description: Partial update an existing customer.
       parameters:
       - in: path
         name: id
@@ -3893,7 +3805,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       requestBody:
         content:
           application/json:
@@ -3917,7 +3829,7 @@ paths:
   /api/admin/users/{id}/notes/:
     get:
       operationId: usersNotesRetrieve
-      description: Retrieve a list of all user notes in an existing user.
+      description: Retrieve a list of notes in an existing customer.
       parameters:
       - in: path
         name: id
@@ -3934,7 +3846,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       security:
       - tokenAuth: []
       responses:
@@ -3946,7 +3858,7 @@ paths:
           description: ''
     post:
       operationId: usersNotesCreate
-      description: Create an user note in an existing user.
+      description: Create a new note in an existing customer.
       parameters:
       - in: path
         name: id
@@ -3963,7 +3875,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       requestBody:
         content:
           application/json:
@@ -3988,7 +3900,7 @@ paths:
   /api/admin/users/{id}/orders/:
     get:
       operationId: usersOrdersRetrieve
-      description: Retrieve a list of all orders for a user by ID.
+      description: Retrieve a list of orders in an existing customer.
       parameters:
       - in: path
         name: id
@@ -4005,7 +3917,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       security:
       - tokenAuth: []
       responses:
@@ -4018,7 +3930,7 @@ paths:
   /api/admin/users/{id}/subscriptions/:
     get:
       operationId: usersSubscriptionsRetrieve
-      description: Retrieve a list of all subscriptions for a user by ID.
+      description: Retrieve a list of subscriptions in an existing customer.
       parameters:
       - in: path
         name: id
@@ -4035,7 +3947,7 @@ paths:
           default: '2023-02-10'
         required: true
       tags:
-      - users
+      - customers
       security:
       - tokenAuth: []
       responses:
@@ -4048,16 +3960,7 @@ paths:
   /api/admin/webhooks/:
     get:
       operationId: webhooksList
-      description: |-
-        list: Retrieve a list of all configured webhooks.
-
-        create: Create a new webhook to subscribe your endpoint receive event data.
-
-        update: Update an existing webhook.
-
-        partial_update: Partially update an existing webhook.
-
-        destroy: Delete an existing webhook.
+      description: Retrieve a list of webhooks.
       parameters:
       - in: query
         name: name
@@ -4104,16 +4007,7 @@ paths:
           description: ''
     post:
       operationId: webhooksCreate
-      description: |-
-        list: Retrieve a list of all configured webhooks.
-
-        create: Create a new webhook to subscribe your endpoint receive event data.
-
-        update: Update an existing webhook.
-
-        partial_update: Partially update an existing webhook.
-
-        destroy: Delete an existing webhook.
+      description: Create a new webhook.
       parameters:
       - in: header
         name: X-29next-API-Version
@@ -4149,16 +4043,7 @@ paths:
   /api/admin/webhooks/{id}/:
     get:
       operationId: webhooksRetrieve
-      description: |-
-        list: Retrieve a list of all configured webhooks.
-
-        create: Create a new webhook to subscribe your endpoint receive event data.
-
-        update: Update an existing webhook.
-
-        partial_update: Partially update an existing webhook.
-
-        destroy: Delete an existing webhook.
+      description: Retrieve a webhook.
       parameters:
       - in: path
         name: id
@@ -4187,16 +4072,7 @@ paths:
           description: ''
     put:
       operationId: webhooksUpdate
-      description: |-
-        list: Retrieve a list of all configured webhooks.
-
-        create: Create a new webhook to subscribe your endpoint receive event data.
-
-        update: Update an existing webhook.
-
-        partial_update: Partially update an existing webhook.
-
-        destroy: Delete an existing webhook.
+      description: Update an existing webhook.
       parameters:
       - in: path
         name: id
@@ -4237,16 +4113,7 @@ paths:
           description: ''
     patch:
       operationId: webhooksPartialUpdate
-      description: |-
-        list: Retrieve a list of all configured webhooks.
-
-        create: Create a new webhook to subscribe your endpoint receive event data.
-
-        update: Update an existing webhook.
-
-        partial_update: Partially update an existing webhook.
-
-        destroy: Delete an existing webhook.
+      description: Partial update an existing webhook.
       parameters:
       - in: path
         name: id
@@ -4286,16 +4153,7 @@ paths:
           description: ''
     delete:
       operationId: webhooksDestroy
-      description: |-
-        list: Retrieve a list of all configured webhooks.
-
-        create: Create a new webhook to subscribe your endpoint receive event data.
-
-        update: Update an existing webhook.
-
-        partial_update: Partially update an existing webhook.
-
-        destroy: Delete an existing webhook.
+      description: Delete an existing webhook.
       parameters:
       - in: path
         name: id
@@ -4404,21 +4262,12 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
-        subscription_max_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_min_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
         subscription_suggested_downsell_price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
+          title: Suggested Downsell Price
         price_retail:
           type: string
           format: decimal
@@ -4445,6 +4294,9 @@ components:
         partner:
           type: integer
           nullable: true
+        track_stock:
+          type: boolean
+          title: Track stock levels?
       required:
       - id
       - partner_sku
@@ -4835,6 +4687,16 @@ components:
           nullable: true
           title: Name [es]
           maxLength: 255
+        name_nl:
+          type: string
+          nullable: true
+          title: Name [nl]
+          maxLength: 255
+        name_pt:
+          type: string
+          nullable: true
+          title: Name [pt]
+          maxLength: 255
         description_en:
           type: string
           nullable: true
@@ -4867,6 +4729,14 @@ components:
           type: string
           nullable: true
           title: Description [es]
+        description_nl:
+          type: string
+          nullable: true
+          title: Description [nl]
+        description_pt:
+          type: string
+          nullable: true
+          title: Description [pt]
         meta_title_en:
           type: string
           nullable: true
@@ -4907,6 +4777,16 @@ components:
           nullable: true
           title: Meta title [es]
           maxLength: 255
+        meta_title_nl:
+          type: string
+          nullable: true
+          title: Meta title [nl]
+          maxLength: 255
+        meta_title_pt:
+          type: string
+          nullable: true
+          title: Meta title [pt]
+          maxLength: 255
         meta_description_en:
           type: string
           nullable: true
@@ -4939,6 +4819,14 @@ components:
           type: string
           nullable: true
           title: Meta description [es]
+        meta_description_nl:
+          type: string
+          nullable: true
+          title: Meta description [nl]
+        meta_description_pt:
+          type: string
+          nullable: true
+          title: Meta description [pt]
       required:
       - description
       - id
@@ -5006,6 +4894,8 @@ components:
           - 'no'
           - it
           - es
+          - nl
+          - pt
           - null
           type: string
           nullable: true
@@ -5271,6 +5161,8 @@ components:
           - 'no'
           - it
           - es
+          - nl
+          - pt
           - null
           type: string
           nullable: true
@@ -5383,6 +5275,9 @@ components:
           description: Tax code to be used with external tax systems such as Avalara,
             TaxJar.
           maxLength: 64
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
         template:
           type: string
           nullable: true
@@ -5454,6 +5349,16 @@ components:
           nullable: true
           title: Title [es]
           maxLength: 255
+        title_nl:
+          type: string
+          nullable: true
+          title: Title [nl]
+          maxLength: 255
+        title_pt:
+          type: string
+          nullable: true
+          title: Title [pt]
+          maxLength: 255
         description:
           type: string
         description_en:
@@ -5488,6 +5393,14 @@ components:
           type: string
           nullable: true
           title: Description [es]
+        description_nl:
+          type: string
+          nullable: true
+          title: Description [nl]
+        description_pt:
+          type: string
+          nullable: true
+          title: Description [pt]
         meta_title:
           type: string
           nullable: true
@@ -5532,6 +5445,16 @@ components:
           nullable: true
           title: Meta title [es]
           maxLength: 255
+        meta_title_nl:
+          type: string
+          nullable: true
+          title: Meta title [nl]
+          maxLength: 255
+        meta_title_pt:
+          type: string
+          nullable: true
+          title: Meta title [pt]
+          maxLength: 255
         meta_description:
           type: string
           nullable: true
@@ -5567,6 +5490,14 @@ components:
           type: string
           nullable: true
           title: Meta description [es]
+        meta_description_nl:
+          type: string
+          nullable: true
+          title: Meta description [nl]
+        meta_description_pt:
+          type: string
+          nullable: true
+          title: Meta description [pt]
       required:
       - children
       - date_created
@@ -5726,21 +5657,12 @@ components:
           type: string
           format: date-time
           readOnly: true
-        subscription_max_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_min_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
         subscription_suggested_downsell_price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
+          title: Suggested Downsell Price
         subscription_price:
           type: string
           format: decimal
@@ -5763,9 +5685,9 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        sync_stock:
+        track_stock:
           type: boolean
-          description: Sync stock with fulfillment center.
+          title: Track stock levels?
       required:
       - date_created
       - date_updated
@@ -6699,6 +6621,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Subscription'
+    PaginatedThemeList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Theme'
     PaginatedTicketList:
       type: object
       properties:
@@ -7007,21 +6945,12 @@ components:
           type: string
           format: date-time
           readOnly: true
-        subscription_max_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_min_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
         subscription_suggested_downsell_price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
+          title: Suggested Downsell Price
         subscription_price:
           type: string
           format: decimal
@@ -7053,9 +6982,9 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        sync_stock:
+        track_stock:
           type: boolean
-          description: Sync stock with fulfillment center.
+          title: Track stock levels?
     PatchedUpdateOrder:
       type: object
       description: Correctly map oscar fields to serializer fields.
@@ -7298,6 +7227,9 @@ components:
           description: Tax code to be used with external tax systems such as Avalara,
             TaxJar.
           maxLength: 64
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
         template:
           type: string
           nullable: true
@@ -7369,6 +7301,16 @@ components:
           nullable: true
           title: Title [es]
           maxLength: 255
+        title_nl:
+          type: string
+          nullable: true
+          title: Title [nl]
+          maxLength: 255
+        title_pt:
+          type: string
+          nullable: true
+          title: Title [pt]
+          maxLength: 255
         description:
           type: string
         description_en:
@@ -7403,6 +7345,14 @@ components:
           type: string
           nullable: true
           title: Description [es]
+        description_nl:
+          type: string
+          nullable: true
+          title: Description [nl]
+        description_pt:
+          type: string
+          nullable: true
+          title: Description [pt]
         meta_title:
           type: string
           nullable: true
@@ -7447,6 +7397,16 @@ components:
           nullable: true
           title: Meta title [es]
           maxLength: 255
+        meta_title_nl:
+          type: string
+          nullable: true
+          title: Meta title [nl]
+          maxLength: 255
+        meta_title_pt:
+          type: string
+          nullable: true
+          title: Meta title [pt]
+          maxLength: 255
         meta_description:
           type: string
           nullable: true
@@ -7482,6 +7442,14 @@ components:
           type: string
           nullable: true
           title: Meta description [es]
+        meta_description_nl:
+          type: string
+          nullable: true
+          title: Meta description [nl]
+        meta_description_pt:
+          type: string
+          nullable: true
+          title: Meta description [pt]
     PatchedUpdateProductVariant:
       type: object
       description: Correctly map oscar fields to serializer fields.
@@ -7630,6 +7598,8 @@ components:
           - 'no'
           - it
           - es
+          - nl
+          - pt
           type: string
           default: en
           description: 'required : E164'
@@ -7868,6 +7838,9 @@ components:
           description: Tax code to be used with external tax systems such as Avalara,
             TaxJar.
           maxLength: 64
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
         template:
           type: string
           nullable: true
@@ -7939,6 +7912,16 @@ components:
           nullable: true
           title: Title [es]
           maxLength: 255
+        title_nl:
+          type: string
+          nullable: true
+          title: Title [nl]
+          maxLength: 255
+        title_pt:
+          type: string
+          nullable: true
+          title: Title [pt]
+          maxLength: 255
         description:
           type: string
         description_en:
@@ -7973,6 +7956,14 @@ components:
           type: string
           nullable: true
           title: Description [es]
+        description_nl:
+          type: string
+          nullable: true
+          title: Description [nl]
+        description_pt:
+          type: string
+          nullable: true
+          title: Description [pt]
         meta_title:
           type: string
           nullable: true
@@ -8017,6 +8008,16 @@ components:
           nullable: true
           title: Meta title [es]
           maxLength: 255
+        meta_title_nl:
+          type: string
+          nullable: true
+          title: Meta title [nl]
+          maxLength: 255
+        meta_title_pt:
+          type: string
+          nullable: true
+          title: Meta title [pt]
+          maxLength: 255
         meta_description:
           type: string
           nullable: true
@@ -8052,6 +8053,14 @@ components:
           type: string
           nullable: true
           title: Meta description [es]
+        meta_description_nl:
+          type: string
+          nullable: true
+          title: Meta description [nl]
+        meta_description_pt:
+          type: string
+          nullable: true
+          title: Meta description [pt]
       required:
       - categories
       - children
@@ -8279,6 +8288,9 @@ components:
           description: Tax code to be used with external tax systems such as Avalara,
             TaxJar.
           maxLength: 64
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
         variant_attributes:
           type: array
           items:
@@ -8478,21 +8490,12 @@ components:
           type: string
           format: date-time
           readOnly: true
-        subscription_max_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_min_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
         subscription_suggested_downsell_price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
+          title: Suggested Downsell Price
         subscription_price:
           type: string
           format: decimal
@@ -8524,9 +8527,9 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        sync_stock:
+        track_stock:
           type: boolean
-          description: Sync stock with fulfillment center.
+          title: Track stock levels?
       required:
       - date_created
       - date_updated
@@ -8767,6 +8770,39 @@ components:
         recache_card_cvv:
           type: integer
           nullable: true
+    Template:
+      type: object
+      properties:
+        theme:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          description: 'Example: ''flatpages/default.html'''
+          maxLength: 255
+        content:
+          type: string
+        file:
+          type: string
+          format: uri
+          title: Upload File
+      required:
+      - name
+      - theme
+    Theme:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        active:
+          type: boolean
+      required:
+      - id
+      - name
     Ticket:
       type: object
       description: Correctly map oscar fields to serializer fields.
@@ -9017,6 +9053,7 @@ components:
           type: array
           items:
             type: string
+          writeOnly: true
           nullable: true
         metadata:
           type: object
@@ -9292,6 +9329,9 @@ components:
           description: Tax code to be used with external tax systems such as Avalara,
             TaxJar.
           maxLength: 64
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
         template:
           type: string
           nullable: true
@@ -9363,6 +9403,16 @@ components:
           nullable: true
           title: Title [es]
           maxLength: 255
+        title_nl:
+          type: string
+          nullable: true
+          title: Title [nl]
+          maxLength: 255
+        title_pt:
+          type: string
+          nullable: true
+          title: Title [pt]
+          maxLength: 255
         description:
           type: string
         description_en:
@@ -9397,6 +9447,14 @@ components:
           type: string
           nullable: true
           title: Description [es]
+        description_nl:
+          type: string
+          nullable: true
+          title: Description [nl]
+        description_pt:
+          type: string
+          nullable: true
+          title: Description [pt]
         meta_title:
           type: string
           nullable: true
@@ -9441,6 +9499,16 @@ components:
           nullable: true
           title: Meta title [es]
           maxLength: 255
+        meta_title_nl:
+          type: string
+          nullable: true
+          title: Meta title [nl]
+          maxLength: 255
+        meta_title_pt:
+          type: string
+          nullable: true
+          title: Meta title [pt]
+          maxLength: 255
         meta_description:
           type: string
           nullable: true
@@ -9476,6 +9544,14 @@ components:
           type: string
           nullable: true
           title: Meta description [es]
+        meta_description_nl:
+          type: string
+          nullable: true
+          title: Meta description [nl]
+        meta_description_pt:
+          type: string
+          nullable: true
+          title: Meta description [pt]
       required:
       - children
       - date_created
@@ -9541,6 +9617,8 @@ components:
           - 'no'
           - it
           - es
+          - nl
+          - pt
           type: string
           default: en
           description: 'required : E164'
@@ -9826,5 +9904,15 @@ components:
       - target
       - updated_at
       - warning_count
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
+externalDocs:
+  description: See API Introduction Documentation
+  url: https://developers.29next.com/api/admin/
+
 servers:
   - url: https://{store}.29next.store
