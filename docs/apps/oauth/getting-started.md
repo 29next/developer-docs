@@ -27,7 +27,7 @@ https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_
 
 |Parameter|Description|
 |-----|-----|
-|`network_domain`| The store network domain that is installing the app. Can be referenced from the `store` url parameter sent to your `oauth:app_url`.  |
+|`network_domain`| The store network domain that is installing the app. Can be referenced from the `store` url parameter sent to your App Oauth App URL.  |
 |`response_type`| Must be `code`, which only authorization flow supported at this time. |
 |`client_id`| Your app `client_id` found in in your partner account.|
 |`redirect_uri`|The url you want to receive the Authorization Code in your app. **Must be listed in your app Redirect URLs setting**. |
