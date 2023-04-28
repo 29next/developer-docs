@@ -30,7 +30,7 @@ https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_
 |`network_domain`| The store network domain that is installing the app. Can be referenced from the `store` url parameter sent to your `oauth:app_url`.  |
 |`response_type`| Must be `code`, which only authorization flow supported at this time. |
 |`client_id`| Your app `client_id` found in in your partner account.|
-|`redirect_uri`|The url you want to receive the Authorization Code in your app. **Must be listed in your manifest's oauth:redirect_uris**. |
+|`redirect_uri`|The url you want to receive the Authorization Code in your app. **Must be listed in your app Redirect URLs setting**. |
 |`scope`| A space separated list of scopes such as `orders:read orders:write users:read users:write`. [See list of all available scopes](/api/admin/permissions.md). |
 
 
