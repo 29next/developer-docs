@@ -10,7 +10,7 @@ To get started, make sure that you have your Apps' `client_id` and `client_secre
 
 ### Step 2: App Permissions Setup
 
-During the App installation flow, Apps that have `oauth` configured will be redirected to the configured `oauth:app_url`.
+During the App installation flow, Apps that have `oauth` configured will be redirected to the Oauth App URL from thee App Settings.
 
 :::caution
 
@@ -44,7 +44,7 @@ https://yourapp.com/setup/authorize/?store={network_domain}&code={authorization_
 
 |Parameter|Description|
 |-----|-----|
-|`network_domain`| The store network domain that is installing the app. Can be referenced from the `store` url parameter sent to your `oauth:redirect_uri`.  |
+|`network_domain`| The store network domain that is installing the app. Can be referenced from the `store` url parameter sent to your app Oauth Redirect URL.  |
 |`authorization_code`| The authorization code used to retrieve the Access Token in the next step.  |
 
 ### Step 4: Retrieve Access Token
