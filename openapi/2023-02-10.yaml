@@ -1671,11 +1671,6 @@ paths:
         schema:
           type: string
       - in: query
-        name: product_class
-        schema:
-          type: integer
-        description: Product class
-      - in: query
         name: category
         schema:
           type: array
@@ -1718,41 +1713,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedProductListList'
           description: ''
-    post:
-      operationId: productsCreate
-      description: Create a new product.
-      parameters:
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateProduct'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CreateProduct'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreateProduct'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-          description: ''
   /api/admin/products/{id}/:
     get:
       operationId: productsRetrieve
@@ -1783,115 +1743,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
-    put:
-      operationId: productsUpdate
-      description: Update an existing product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateProduct'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateProduct'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateProduct'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-          description: ''
-    patch:
-      operationId: productsPartialUpdate
-      description: Partially update an existing product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateProduct'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateProduct'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateProduct'
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-          description: ''
-    delete:
-      operationId: productsDestroy
-      description: Delete an existing product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/admin/products/{id}/children/:
     get:
-      operationId: productsChildrenRetrieve2
+      operationId: productsChildrenList
       description: Retrieve child products in an existing product.
       parameters:
       - in: path
@@ -1918,89 +1772,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductVariant'
-          description: ''
-    post:
-      operationId: productsChildrenCreate
-      description: Create a child product in an existing product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateProductVariant'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CreateProductVariant'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreateProductVariant'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductVariant'
-          description: ''
-  /api/admin/products/{id}/images/:
-    post:
-      operationId: productsImagesCreate
-      description: Create images in an existing product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductImage'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ProductImage'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ProductImage'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductImage'
           description: ''
   /api/admin/products/children/{id}/:
     get:
@@ -2032,112 +1803,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductVariant'
           description: ''
-    put:
-      operationId: productsChildrenUpdate
-      description: Update an existing child product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateProductVariant'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateProductVariant'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateProductVariant'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductVariant'
-          description: ''
-    patch:
-      operationId: productsChildrenPartialUpdate
-      description: Partially update an existing child product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateProductVariant'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateProductVariant'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateProductVariant'
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductVariant'
-          description: ''
-    delete:
-      operationId: productsChildrenDestroy
-      description: Delete an existing child product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/admin/stockrecords/:
     get:
       operationId: stockrecordsList
@@ -3715,6 +3380,196 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
+  /api/admin/users/{id}/addresses/:
+    get:
+      operationId: usersAddressesList
+      description: Retrieve a list of addresses in an existing customer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - customers
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserAddressList'
+          description: ''
+    post:
+      operationId: usersAddressesCreate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateUserAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateUserAddress'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserAddress'
+          description: ''
+  /api/admin/users/{id}/addresses/{addressId}/:
+    get:
+      operationId: usersAddressesRetrieve
+      description: Retrieve an address of an existing customer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: path
+        name: addressId
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - customers
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAddress'
+          description: ''
+    put:
+      operationId: usersAddressesUpdate
+      description: Update an address in an existing customer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: path
+        name: addressId
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAddress'
+          description: ''
+    delete:
+      operationId: usersAddressesDestroy
+      description: Delete an address in an existing customer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: path
+        name: addressId
+        schema:
+          type: integer
+        description: A unique integer value identifying this User address.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - customers
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/admin/users/{id}/:
     get:
       operationId: usersRetrieve
@@ -3769,13 +3624,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UpdateUser'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UpdateUser'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UpdateUser'
         required: true
       security:
       - tokenAuth: []
@@ -3810,13 +3665,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: '#/components/schemas/PatchedUpdateUser'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: '#/components/schemas/PatchedUpdateUser'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: '#/components/schemas/PatchedUpdateUser'
       security:
       - tokenAuth: []
       responses:
@@ -5182,349 +5037,6 @@ components:
           type: string
           nullable: true
           maxLength: 500
-    CreateProduct:
-      type: object
-      description: Base class shared by admin and public serializer
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
-        categories:
-          type: array
-          items:
-            type: integer
-        recommended_products:
-          type: array
-          items:
-            type: integer
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
-        product_class:
-          type: integer
-          nullable: true
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductImage'
-          readOnly: true
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        variant_attributes:
-          type: array
-          items:
-            type: string
-        structure:
-          enum:
-          - standalone
-          - parent
-          - child
-          type: string
-          title: Product structure
-        is_public:
-          type: boolean
-          description: Show this product in search results and catalogue listings.
-        slug:
-          type: string
-          maxLength: 255
-          pattern: ^[-a-zA-Z0-9_]+$
-        rating:
-          type: number
-          format: double
-          readOnly: true
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        is_discountable:
-          type: boolean
-          title: Is discountable?
-          description: This flag indicates if this product can be used in an offer
-            or not
-        upc:
-          type: string
-          nullable: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
-          maxLength: 64
-        ranking:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: The highest ranking are shown first
-        external_tax_code:
-          type: string
-          nullable: true
-          title: Tax Code
-          description: Tax code to be used with external tax systems such as Avalara,
-            TaxJar.
-          maxLength: 64
-        requires_shipping:
-          type: boolean
-          title: Requires shipping?
-        template:
-          type: string
-          nullable: true
-          title: Theme Template
-          description: Use a custom template from your theme to customize the product
-            display.
-          maxLength: 256
-        enable_subscription:
-          type: boolean
-        interval:
-          enum:
-          - day
-          - month
-          - ''
-          - null
-          type: string
-          nullable: true
-          title: Subscription Interval
-        interval_counts:
-          type: array
-          items:
-            type: integer
-            maximum: 2147483647
-            minimum: -2147483648
-            nullable: true
-          nullable: true
-          title: Interval Count Options
-          description: Choose a predefined value or type to enter custom value(s).
-        title:
-          type: string
-          readOnly: true
-        title_en:
-          type: string
-          nullable: true
-          title: Title [en]
-          maxLength: 255
-        title_fr:
-          type: string
-          nullable: true
-          title: Title [fr]
-          maxLength: 255
-        title_th:
-          type: string
-          nullable: true
-          title: Title [th]
-          maxLength: 255
-        title_de:
-          type: string
-          nullable: true
-          title: Title [de]
-          maxLength: 255
-        title_sv:
-          type: string
-          nullable: true
-          title: Title [sv]
-          maxLength: 255
-        title_no:
-          type: string
-          nullable: true
-          title: Title [no]
-          maxLength: 255
-        title_it:
-          type: string
-          nullable: true
-          title: Title [it]
-          maxLength: 255
-        title_es:
-          type: string
-          nullable: true
-          title: Title [es]
-          maxLength: 255
-        title_nl:
-          type: string
-          nullable: true
-          title: Title [nl]
-          maxLength: 255
-        title_pt:
-          type: string
-          nullable: true
-          title: Title [pt]
-          maxLength: 255
-        description:
-          type: string
-        description_en:
-          type: string
-          nullable: true
-          title: Description [en]
-        description_fr:
-          type: string
-          nullable: true
-          title: Description [fr]
-        description_th:
-          type: string
-          nullable: true
-          title: Description [th]
-        description_de:
-          type: string
-          nullable: true
-          title: Description [de]
-        description_sv:
-          type: string
-          nullable: true
-          title: Description [sv]
-        description_no:
-          type: string
-          nullable: true
-          title: Description [no]
-        description_it:
-          type: string
-          nullable: true
-          title: Description [it]
-        description_es:
-          type: string
-          nullable: true
-          title: Description [es]
-        description_nl:
-          type: string
-          nullable: true
-          title: Description [nl]
-        description_pt:
-          type: string
-          nullable: true
-          title: Description [pt]
-        meta_title:
-          type: string
-          nullable: true
-          maxLength: 255
-        meta_title_en:
-          type: string
-          nullable: true
-          title: Meta title [en]
-          maxLength: 255
-        meta_title_fr:
-          type: string
-          nullable: true
-          title: Meta title [fr]
-          maxLength: 255
-        meta_title_th:
-          type: string
-          nullable: true
-          title: Meta title [th]
-          maxLength: 255
-        meta_title_de:
-          type: string
-          nullable: true
-          title: Meta title [de]
-          maxLength: 255
-        meta_title_sv:
-          type: string
-          nullable: true
-          title: Meta title [sv]
-          maxLength: 255
-        meta_title_no:
-          type: string
-          nullable: true
-          title: Meta title [no]
-          maxLength: 255
-        meta_title_it:
-          type: string
-          nullable: true
-          title: Meta title [it]
-          maxLength: 255
-        meta_title_es:
-          type: string
-          nullable: true
-          title: Meta title [es]
-          maxLength: 255
-        meta_title_nl:
-          type: string
-          nullable: true
-          title: Meta title [nl]
-          maxLength: 255
-        meta_title_pt:
-          type: string
-          nullable: true
-          title: Meta title [pt]
-          maxLength: 255
-        meta_description:
-          type: string
-          nullable: true
-        meta_description_en:
-          type: string
-          nullable: true
-          title: Meta description [en]
-        meta_description_fr:
-          type: string
-          nullable: true
-          title: Meta description [fr]
-        meta_description_th:
-          type: string
-          nullable: true
-          title: Meta description [th]
-        meta_description_de:
-          type: string
-          nullable: true
-          title: Meta description [de]
-        meta_description_sv:
-          type: string
-          nullable: true
-          title: Meta description [sv]
-        meta_description_no:
-          type: string
-          nullable: true
-          title: Meta description [no]
-        meta_description_it:
-          type: string
-          nullable: true
-          title: Meta description [it]
-        meta_description_es:
-          type: string
-          nullable: true
-          title: Meta description [es]
-        meta_description_nl:
-          type: string
-          nullable: true
-          title: Meta description [nl]
-        meta_description_pt:
-          type: string
-          nullable: true
-          title: Meta description [pt]
-      required:
-      - children
-      - date_created
-      - date_updated
-      - id
-      - images
-      - rating
-      - slug
-      - title
-      - url
-    CreateProductVariant:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        image:
-          type: integer
-          nullable: true
-        variant_attribute_values:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
-      required:
-      - variant_attribute_values
     CreateSubscription:
       type: object
       description: |-
@@ -5765,6 +5277,73 @@ components:
       - created_at
       - id
       - updated_at
+    CreateUserAddress:
+      type: object
+      description: Correctly map oscar fields to serializer fields.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          enum:
+          - Mr
+          - Miss
+          - Mrs
+          - Ms
+          - Dr
+          - ''
+          type: string
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        line1:
+          type: string
+          title: First line of address
+          maxLength: 255
+        line2:
+          type: string
+          title: Second line of address
+          maxLength: 255
+        line3:
+          type: string
+          title: Third line of address
+          maxLength: 255
+        line4:
+          type: string
+          title: City
+          maxLength: 255
+        state:
+          type: string
+          title: State/Province
+          maxLength: 255
+        postcode:
+          type: string
+          title: Post/Zip-code
+          maxLength: 64
+        country:
+          type: string
+          title: ISO 3166-1 alpha-2
+        phone_number:
+          type: string
+          maxLength: 128
+        notes:
+          type: string
+          title: Instructions
+          description: Tell us anything we should know when delivering your order.
+        is_default_for_shipping:
+          type: boolean
+          title: Default shipping address?
+        is_default_for_billing:
+          type: boolean
+          title: Default billing address?
+      required:
+      - country
+      - id
+      - line1
+      - line4
     CreateUserNote:
       type: object
       description: Correctly map oscar fields to serializer fields.
@@ -6685,6 +6264,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Transaction'
+    PaginatedUserAddressList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAddress'
     PaginatedUserList:
       type: object
       properties:
@@ -7134,337 +6729,6 @@ components:
         source:
           type: string
           readOnly: true
-    PatchedUpdateProduct:
-      type: object
-      description: Base class shared by admin and public serializer
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
-        categories:
-          type: array
-          items:
-            type: integer
-        recommended_products:
-          type: array
-          items:
-            type: integer
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
-        product_class:
-          type: integer
-          nullable: true
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductImage'
-          readOnly: true
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        variant_attributes:
-          type: array
-          items:
-            type: string
-        structure:
-          enum:
-          - standalone
-          - parent
-          - child
-          type: string
-          title: Product structure
-        is_public:
-          type: boolean
-          description: Show this product in search results and catalogue listings.
-        slug:
-          type: string
-          maxLength: 255
-          pattern: ^[-a-zA-Z0-9_]+$
-        rating:
-          type: number
-          format: double
-          readOnly: true
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        is_discountable:
-          type: boolean
-          title: Is discountable?
-          description: This flag indicates if this product can be used in an offer
-            or not
-        upc:
-          type: string
-          nullable: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
-          maxLength: 64
-        ranking:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: The highest ranking are shown first
-        external_tax_code:
-          type: string
-          nullable: true
-          title: Tax Code
-          description: Tax code to be used with external tax systems such as Avalara,
-            TaxJar.
-          maxLength: 64
-        requires_shipping:
-          type: boolean
-          title: Requires shipping?
-        template:
-          type: string
-          nullable: true
-          title: Theme Template
-          description: Use a custom template from your theme to customize the product
-            display.
-          maxLength: 256
-        enable_subscription:
-          type: boolean
-        interval:
-          enum:
-          - day
-          - month
-          - ''
-          - null
-          type: string
-          nullable: true
-          title: Subscription Interval
-        interval_counts:
-          type: array
-          items:
-            type: integer
-            maximum: 2147483647
-            minimum: -2147483648
-            nullable: true
-          nullable: true
-          title: Interval Count Options
-          description: Choose a predefined value or type to enter custom value(s).
-        title:
-          type: string
-          readOnly: true
-        title_en:
-          type: string
-          nullable: true
-          title: Title [en]
-          maxLength: 255
-        title_fr:
-          type: string
-          nullable: true
-          title: Title [fr]
-          maxLength: 255
-        title_th:
-          type: string
-          nullable: true
-          title: Title [th]
-          maxLength: 255
-        title_de:
-          type: string
-          nullable: true
-          title: Title [de]
-          maxLength: 255
-        title_sv:
-          type: string
-          nullable: true
-          title: Title [sv]
-          maxLength: 255
-        title_no:
-          type: string
-          nullable: true
-          title: Title [no]
-          maxLength: 255
-        title_it:
-          type: string
-          nullable: true
-          title: Title [it]
-          maxLength: 255
-        title_es:
-          type: string
-          nullable: true
-          title: Title [es]
-          maxLength: 255
-        title_nl:
-          type: string
-          nullable: true
-          title: Title [nl]
-          maxLength: 255
-        title_pt:
-          type: string
-          nullable: true
-          title: Title [pt]
-          maxLength: 255
-        description:
-          type: string
-        description_en:
-          type: string
-          nullable: true
-          title: Description [en]
-        description_fr:
-          type: string
-          nullable: true
-          title: Description [fr]
-        description_th:
-          type: string
-          nullable: true
-          title: Description [th]
-        description_de:
-          type: string
-          nullable: true
-          title: Description [de]
-        description_sv:
-          type: string
-          nullable: true
-          title: Description [sv]
-        description_no:
-          type: string
-          nullable: true
-          title: Description [no]
-        description_it:
-          type: string
-          nullable: true
-          title: Description [it]
-        description_es:
-          type: string
-          nullable: true
-          title: Description [es]
-        description_nl:
-          type: string
-          nullable: true
-          title: Description [nl]
-        description_pt:
-          type: string
-          nullable: true
-          title: Description [pt]
-        meta_title:
-          type: string
-          nullable: true
-          maxLength: 255
-        meta_title_en:
-          type: string
-          nullable: true
-          title: Meta title [en]
-          maxLength: 255
-        meta_title_fr:
-          type: string
-          nullable: true
-          title: Meta title [fr]
-          maxLength: 255
-        meta_title_th:
-          type: string
-          nullable: true
-          title: Meta title [th]
-          maxLength: 255
-        meta_title_de:
-          type: string
-          nullable: true
-          title: Meta title [de]
-          maxLength: 255
-        meta_title_sv:
-          type: string
-          nullable: true
-          title: Meta title [sv]
-          maxLength: 255
-        meta_title_no:
-          type: string
-          nullable: true
-          title: Meta title [no]
-          maxLength: 255
-        meta_title_it:
-          type: string
-          nullable: true
-          title: Meta title [it]
-          maxLength: 255
-        meta_title_es:
-          type: string
-          nullable: true
-          title: Meta title [es]
-          maxLength: 255
-        meta_title_nl:
-          type: string
-          nullable: true
-          title: Meta title [nl]
-          maxLength: 255
-        meta_title_pt:
-          type: string
-          nullable: true
-          title: Meta title [pt]
-          maxLength: 255
-        meta_description:
-          type: string
-          nullable: true
-        meta_description_en:
-          type: string
-          nullable: true
-          title: Meta description [en]
-        meta_description_fr:
-          type: string
-          nullable: true
-          title: Meta description [fr]
-        meta_description_th:
-          type: string
-          nullable: true
-          title: Meta description [th]
-        meta_description_de:
-          type: string
-          nullable: true
-          title: Meta description [de]
-        meta_description_sv:
-          type: string
-          nullable: true
-          title: Meta description [sv]
-        meta_description_no:
-          type: string
-          nullable: true
-          title: Meta description [no]
-        meta_description_it:
-          type: string
-          nullable: true
-          title: Meta description [it]
-        meta_description_es:
-          type: string
-          nullable: true
-          title: Meta description [es]
-        meta_description_nl:
-          type: string
-          nullable: true
-          title: Meta description [nl]
-        meta_description_pt:
-          type: string
-          nullable: true
-          title: Meta description [pt]
-    PatchedUpdateProductVariant:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        image:
-          type: integer
-          nullable: true
-        variant_attribute_values:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
     PatchedUpdateSubscription:
       type: object
       properties:
@@ -7560,7 +6824,7 @@ components:
           nullable: true
         attribution:
           $ref: '#/components/schemas/CreateMarketingAttribution'
-    PatchedUser:
+    PatchedUpdateUser:
       type: object
       description: Correctly map oscar fields to serializer fields.
       properties:
@@ -7795,7 +7059,7 @@ components:
           - parent
           - child
           type: string
-          title: Product structure
+          title: Product Structure
         is_public:
           type: boolean
           description: Show this product in search results and catalogue listings.
@@ -8245,7 +7509,7 @@ components:
           - parent
           - child
           type: string
-          title: Product structure
+          title: Product Structure
         is_public:
           type: boolean
           description: Show this product in search results and catalogue listings.
@@ -8352,7 +7616,7 @@ components:
           - parent
           - child
           type: string
-          title: Product structure
+          title: Product Structure
         images:
           type: array
           items:
@@ -9236,349 +8500,103 @@ components:
       - transactions
       - user
       - voucher_discounts
-    UpdateProduct:
+    UpdateUser:
       type: object
-      description: Base class shared by admin and public serializer
+      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
           readOnly: true
-        url:
+        email:
           type: string
-          format: uri
-          readOnly: true
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
-        categories:
-          type: array
-          items:
-            type: integer
-        recommended_products:
-          type: array
-          items:
-            type: integer
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
-        product_class:
-          type: integer
+          format: email
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        ip:
+          type: string
           nullable: true
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductImage'
+          title: Ip address
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 128
+        date_joined:
+          type: string
+          format: date-time
           readOnly: true
-        attributes:
+        language:
+          enum:
+          - en
+          - fr
+          - th
+          - de
+          - sv
+          - 'no'
+          - it
+          - es
+          - nl
+          - pt
+          type: string
+          default: en
+          description: 'required : E164'
+        is_blocked:
+          type: boolean
+          default: false
+        addresses:
           type: array
           items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        variant_attributes:
+            $ref: '#/components/schemas/UserAddress'
+          readOnly: true
+        orders_count:
+          type: integer
+          readOnly: true
+          default: 0
+        subscriptions_count:
+          type: integer
+          readOnly: true
+        total_spent:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          default: '0.00'
+        user_type:
+          type: string
+          enum:
+          - customer
+          - lead
+          - dashboard
+          readOnly: true
+          description: 'Available values : customer, lead, dashboard'
+        tags:
           type: array
           items:
             type: string
-        structure:
-          enum:
-          - standalone
-          - parent
-          - child
-          type: string
-          title: Product structure
-        is_public:
-          type: boolean
-          description: Show this product in search results and catalogue listings.
-        slug:
-          type: string
-          maxLength: 255
-          pattern: ^[-a-zA-Z0-9_]+$
-        rating:
-          type: number
-          format: double
-          readOnly: true
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        is_discountable:
-          type: boolean
-          title: Is discountable?
-          description: This flag indicates if this product can be used in an offer
-            or not
-        upc:
-          type: string
-          nullable: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
-          maxLength: 64
-        ranking:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: The highest ranking are shown first
-        external_tax_code:
-          type: string
-          nullable: true
-          title: Tax Code
-          description: Tax code to be used with external tax systems such as Avalara,
-            TaxJar.
-          maxLength: 64
-        requires_shipping:
-          type: boolean
-          title: Requires shipping?
-        template:
-          type: string
-          nullable: true
-          title: Theme Template
-          description: Use a custom template from your theme to customize the product
-            display.
-          maxLength: 256
-        enable_subscription:
-          type: boolean
-        interval:
-          enum:
-          - day
-          - month
-          - ''
-          - null
-          type: string
-          nullable: true
-          title: Subscription Interval
-        interval_counts:
-          type: array
-          items:
-            type: integer
-            maximum: 2147483647
-            minimum: -2147483648
             nullable: true
+        accepts_marketing:
+          type: boolean
+          title: Subscribe to Marketing Emails
+        metadata:
+          type: object
+          additionalProperties: {}
           nullable: true
-          title: Interval Count Options
-          description: Choose a predefined value or type to enter custom value(s).
-        title:
-          type: string
-          readOnly: true
-        title_en:
-          type: string
-          nullable: true
-          title: Title [en]
-          maxLength: 255
-        title_fr:
+        user_agent:
           type: string
           nullable: true
-          title: Title [fr]
-          maxLength: 255
-        title_th:
-          type: string
-          nullable: true
-          title: Title [th]
-          maxLength: 255
-        title_de:
-          type: string
-          nullable: true
-          title: Title [de]
-          maxLength: 255
-        title_sv:
-          type: string
-          nullable: true
-          title: Title [sv]
-          maxLength: 255
-        title_no:
-          type: string
-          nullable: true
-          title: Title [no]
-          maxLength: 255
-        title_it:
-          type: string
-          nullable: true
-          title: Title [it]
-          maxLength: 255
-        title_es:
-          type: string
-          nullable: true
-          title: Title [es]
-          maxLength: 255
-        title_nl:
-          type: string
-          nullable: true
-          title: Title [nl]
-          maxLength: 255
-        title_pt:
-          type: string
-          nullable: true
-          title: Title [pt]
-          maxLength: 255
-        description:
-          type: string
-        description_en:
-          type: string
-          nullable: true
-          title: Description [en]
-        description_fr:
-          type: string
-          nullable: true
-          title: Description [fr]
-        description_th:
-          type: string
-          nullable: true
-          title: Description [th]
-        description_de:
-          type: string
-          nullable: true
-          title: Description [de]
-        description_sv:
-          type: string
-          nullable: true
-          title: Description [sv]
-        description_no:
-          type: string
-          nullable: true
-          title: Description [no]
-        description_it:
-          type: string
-          nullable: true
-          title: Description [it]
-        description_es:
-          type: string
-          nullable: true
-          title: Description [es]
-        description_nl:
-          type: string
-          nullable: true
-          title: Description [nl]
-        description_pt:
-          type: string
-          nullable: true
-          title: Description [pt]
-        meta_title:
-          type: string
-          nullable: true
-          maxLength: 255
-        meta_title_en:
-          type: string
-          nullable: true
-          title: Meta title [en]
-          maxLength: 255
-        meta_title_fr:
-          type: string
-          nullable: true
-          title: Meta title [fr]
-          maxLength: 255
-        meta_title_th:
-          type: string
-          nullable: true
-          title: Meta title [th]
-          maxLength: 255
-        meta_title_de:
-          type: string
-          nullable: true
-          title: Meta title [de]
-          maxLength: 255
-        meta_title_sv:
-          type: string
-          nullable: true
-          title: Meta title [sv]
-          maxLength: 255
-        meta_title_no:
-          type: string
-          nullable: true
-          title: Meta title [no]
-          maxLength: 255
-        meta_title_it:
-          type: string
-          nullable: true
-          title: Meta title [it]
-          maxLength: 255
-        meta_title_es:
-          type: string
-          nullable: true
-          title: Meta title [es]
-          maxLength: 255
-        meta_title_nl:
-          type: string
-          nullable: true
-          title: Meta title [nl]
-          maxLength: 255
-        meta_title_pt:
-          type: string
-          nullable: true
-          title: Meta title [pt]
-          maxLength: 255
-        meta_description:
-          type: string
-          nullable: true
-        meta_description_en:
-          type: string
-          nullable: true
-          title: Meta description [en]
-        meta_description_fr:
-          type: string
-          nullable: true
-          title: Meta description [fr]
-        meta_description_th:
-          type: string
-          nullable: true
-          title: Meta description [th]
-        meta_description_de:
-          type: string
-          nullable: true
-          title: Meta description [de]
-        meta_description_sv:
-          type: string
-          nullable: true
-          title: Meta description [sv]
-        meta_description_no:
-          type: string
-          nullable: true
-          title: Meta description [no]
-        meta_description_it:
-          type: string
-          nullable: true
-          title: Meta description [it]
-        meta_description_es:
-          type: string
-          nullable: true
-          title: Meta description [es]
-        meta_description_nl:
-          type: string
-          nullable: true
-          title: Meta description [nl]
-        meta_description_pt:
-          type: string
-          nullable: true
-          title: Meta description [pt]
+          maxLength: 500
       required:
-      - children
-      - date_created
-      - date_updated
+      - addresses
+      - date_joined
+      - email
       - id
-      - images
-      - rating
-      - slug
-      - title
-      - url
-    UpdateProductVariant:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        image:
-          type: integer
-          nullable: true
-        variant_attribute_values:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
-      required:
-      - variant_attribute_values
+      - orders_count
+      - subscriptions_count
+      - total_spent
+      - user_type
     User:
       type: object
       description: Correctly map oscar fields to serializer fields.
@@ -9720,10 +8738,9 @@ components:
           type: string
           title: Post/Zip-code
           maxLength: 64
-        search_text:
+        country:
           type: string
-          readOnly: true
-          title: Search text - used only for searching addresses
+          title: ISO 3166-1 alpha-2
         phone_number:
           type: string
           maxLength: 128
@@ -9737,15 +8754,11 @@ components:
         is_default_for_billing:
           type: boolean
           title: Default billing address?
-        country:
-          type: string
-          title: ISO 3166-1 alpha-2
       required:
       - country
       - id
       - line1
       - line4
-      - search_text
     UserInline:
       type: object
       description: Correctly map oscar fields to serializer fields.
@@ -9914,5 +8927,5 @@ externalDocs:
   description: See API Introduction Documentation
   url: https://developers.29next.com/api/admin/
 
-servers:
+  servers:
   - url: https://{store}.29next.store
