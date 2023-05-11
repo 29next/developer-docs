@@ -50,7 +50,7 @@ Carts are the starting point for all orders, carts are essentially draft orders 
     "attribution": {
         "funnel": "Funnel Offer V2",
         "metadata": {
-            "custom_meta_field": "Custom meta data attached to order"
+            "custom_meta_field": "Custom meta data"
         }
     }
 }
@@ -222,7 +222,7 @@ Users are first checked for an existing user by `email` before creating a new us
 }
 ```
 :::caution
-**It is not recommended to pass `phone_number` directly on the user when creating an cart or order, we recommend passing a local phone number in the `shipping_address` instead.** Address fields have country context, which allows local phone numbers to be passed and converted to [E.164 format](https://en.wikipedia.org/wiki/E.164) before being saved. A `phone_number` passed to the `user` object directly must be in E.164 format.
+**It is not recommended to pass `phone_number` directly on the user when creating a cart or order, we recommend passing a local phone number in the `shipping_address` instead.** Address fields have country context, which allows local phone numbers to be passed and converted to [E.164 format](https://en.wikipedia.org/wiki/E.164) before being saved. A `phone_number` passed to the `user` object directly must be in E.164 format.
 :::
 
 ### Cart / Order Attribution Detail
@@ -232,7 +232,7 @@ Cart and Order `attribution` object sets the [marketing attribution](https://doc
 "attribution": {
     "funnel": "Funnel Offer V2",
     "metadata": {
-        "custom_meta_field": "Custom meta data attached to order"
+        "custom_meta_field": "Custom meta data"
     }
 }
 ```
