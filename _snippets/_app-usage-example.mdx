@@ -16,10 +16,10 @@ In order to add `my-app.js` to every page of the store, we'll add it to a snippe
 ```django title="Example Asset Usage in Snippet"
 <script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
 ```
-:::caution
 
+:::caution
 All assets are loaded from a CDN which does not support local file imports from another file. It's a best practice to compile and minify your assets into self contained single files.
-::::
+:::
 
 
 In order to configure the snippet to load into a theme `app_hook` we'll add it to the app manifest `locations:storefront` configured with the desired location.
