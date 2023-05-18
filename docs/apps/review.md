@@ -14,6 +14,7 @@ Congradulations, you've built an app and now it's ready to publish to all 29 Nex
 - Admin API App Requirements:
   - Your app requests appropriate Oauth2 permissions for it's use cases instead of a blanket `admin:read` and `admin:write`.
   - Your app uses webhooks for listening to events instead of polling the Admin APIs.
+  - Your app subscribes to the [`app.uninstalled` webhook event](/docs/webhooks/#webhook-events) for handling uninstall clean up on your end.
 
 
 ### Submit App for Review
