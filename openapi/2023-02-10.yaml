@@ -817,6 +817,126 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/admin/gateway-groups/:
+    get:
+      operationId: gatewayGroupsList
+      description: Retrieve a list of gatway groups.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - payments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGatewayGroupList'
+          description: ''
+  /api/admin/gateway-groups/{id}/:
+    get:
+      operationId: gatewayGroupsRetrieve
+      description: Retrieve a gatway group.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Gateway Group.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - payments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayGroup'
+          description: ''
+  /api/admin/gateways/:
+    get:
+      operationId: gatewaysList
+      description: Retrieve a list of gateways.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - payments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaymentGatewayList'
+          description: ''
+  /api/admin/gateways/{id}/:
+    get:
+      operationId: gatewaysRetrieve
+      description: Retrieve a gateway.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Payment Gateway.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - payments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentGateway'
+          description: ''
   /api/admin/orders/:
     get:
       operationId: ordersList
@@ -1713,6 +1833,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedProductListList'
           description: ''
+    post:
+      operationId: productsCreate
+      description: Create a new product.
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateProduct'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
   /api/admin/products/{id}/:
     get:
       operationId: productsRetrieve
@@ -1743,10 +1898,115 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
+    put:
+      operationId: productsUpdate
+      description: Update an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateProduct'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    patch:
+      operationId: productsPartialUpdate
+      description: Partially update an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProduct'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    delete:
+      operationId: productsDestroy
+      description: Delete an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/admin/products/{id}/children/:
     get:
       operationId: productsChildrenList
-      description: Retrieve child products in an existing product.
+      description: Retrieve a list of child products for a product.
       parameters:
       - in: path
         name: id
@@ -1772,6 +2032,89 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductVariant'
+          description: ''
+    post:
+      operationId: productsChildrenCreate
+      description: Create a child product in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateProductVariant'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVariant'
+          description: ''
+  /api/admin/products/{id}/images/:
+    post:
+      operationId: productsImagesCreate
+      description: Create images in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImage'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
           description: ''
   /api/admin/products/children/{id}/:
     get:
@@ -1802,6 +2145,172 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductVariant'
+          description: ''
+    put:
+      operationId: productsChildrenUpdate
+      description: Update an existing child product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateProductVariant'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVariant'
+          description: ''
+    patch:
+      operationId: productsChildrenPartialUpdate
+      description: Partially update an existing child product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProductVariant'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVariant'
+          description: ''
+    delete:
+      operationId: productsChildrenDestroy
+      description: Delete an existing child product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/admin/shipping-methods/:
+    get:
+      operationId: shippingMethodsList
+      description: Retrieve a list of all configured shipping methods.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedShippingMethodList'
+          description: ''
+  /api/admin/shipping-methods/{id}/:
+    get:
+      operationId: shippingMethodsRetrieve
+      description: Retrieve an existing shipping method.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Order and Item Charge.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingMethod'
           description: ''
   /api/admin/stockrecords/:
     get:
@@ -2023,7 +2532,6 @@ paths:
           - active
           - canceled
           - past_due
-          - pending
           - retrying
         description: Status
       - in: query
@@ -4047,7 +4555,6 @@ components:
       - lines
     AddOrderShipmentTracking:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         carrier:
           enum:
@@ -4093,71 +4600,8 @@ components:
       required:
       - date_created
       - reference
-    AdminStockRecord:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        partner_sku:
-          type: string
-          maxLength: 128
-        price_currency:
-          type: string
-          title: Currency
-          maxLength: 12
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_suggested_downsell_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
-        price_retail:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Price (retail)
-        num_in_stock:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          title: Number in stock
-        num_allocated:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Number allocated
-        low_stock_threshold:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-        partner:
-          type: integer
-          nullable: true
-        track_stock:
-          type: boolean
-          title: Track stock levels?
-      required:
-      - id
-      - partner_sku
     Agent:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -4178,7 +4622,6 @@ components:
       - id
     Attachment:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -4195,7 +4638,6 @@ components:
       - id
     AttributeOptionGroup:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -4427,15 +4869,14 @@ components:
       - user
     CartLine:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
           readOnly: true
         product:
-          $ref: '#/components/schemas/ProductForPresentation'
+          $ref: '#/components/schemas/Product'
         stockrecord:
-          $ref: '#/components/schemas/StockRecordForPresentation'
+          $ref: '#/components/schemas/Stockrecord'
         quantity:
           type: integer
           maximum: 2147483647
@@ -4459,17 +4900,15 @@ components:
       - stockrecord
     Category:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
           readOnly: true
         name:
           type: string
-          readOnly: true
+          maxLength: 255
         description:
           type: string
-          readOnly: true
         meta_title:
           type: string
           nullable: true
@@ -4502,188 +4941,7 @@ components:
           description: Use a custom template from your theme to customize the category
             display.
           maxLength: 256
-        name_en:
-          type: string
-          nullable: true
-          title: Name [en]
-          maxLength: 255
-        name_fr:
-          type: string
-          nullable: true
-          title: Name [fr]
-          maxLength: 255
-        name_th:
-          type: string
-          nullable: true
-          title: Name [th]
-          maxLength: 255
-        name_de:
-          type: string
-          nullable: true
-          title: Name [de]
-          maxLength: 255
-        name_sv:
-          type: string
-          nullable: true
-          title: Name [sv]
-          maxLength: 255
-        name_no:
-          type: string
-          nullable: true
-          title: Name [no]
-          maxLength: 255
-        name_it:
-          type: string
-          nullable: true
-          title: Name [it]
-          maxLength: 255
-        name_es:
-          type: string
-          nullable: true
-          title: Name [es]
-          maxLength: 255
-        name_nl:
-          type: string
-          nullable: true
-          title: Name [nl]
-          maxLength: 255
-        name_pt:
-          type: string
-          nullable: true
-          title: Name [pt]
-          maxLength: 255
-        description_en:
-          type: string
-          nullable: true
-          title: Description [en]
-        description_fr:
-          type: string
-          nullable: true
-          title: Description [fr]
-        description_th:
-          type: string
-          nullable: true
-          title: Description [th]
-        description_de:
-          type: string
-          nullable: true
-          title: Description [de]
-        description_sv:
-          type: string
-          nullable: true
-          title: Description [sv]
-        description_no:
-          type: string
-          nullable: true
-          title: Description [no]
-        description_it:
-          type: string
-          nullable: true
-          title: Description [it]
-        description_es:
-          type: string
-          nullable: true
-          title: Description [es]
-        description_nl:
-          type: string
-          nullable: true
-          title: Description [nl]
-        description_pt:
-          type: string
-          nullable: true
-          title: Description [pt]
-        meta_title_en:
-          type: string
-          nullable: true
-          title: Meta title [en]
-          maxLength: 255
-        meta_title_fr:
-          type: string
-          nullable: true
-          title: Meta title [fr]
-          maxLength: 255
-        meta_title_th:
-          type: string
-          nullable: true
-          title: Meta title [th]
-          maxLength: 255
-        meta_title_de:
-          type: string
-          nullable: true
-          title: Meta title [de]
-          maxLength: 255
-        meta_title_sv:
-          type: string
-          nullable: true
-          title: Meta title [sv]
-          maxLength: 255
-        meta_title_no:
-          type: string
-          nullable: true
-          title: Meta title [no]
-          maxLength: 255
-        meta_title_it:
-          type: string
-          nullable: true
-          title: Meta title [it]
-          maxLength: 255
-        meta_title_es:
-          type: string
-          nullable: true
-          title: Meta title [es]
-          maxLength: 255
-        meta_title_nl:
-          type: string
-          nullable: true
-          title: Meta title [nl]
-          maxLength: 255
-        meta_title_pt:
-          type: string
-          nullable: true
-          title: Meta title [pt]
-          maxLength: 255
-        meta_description_en:
-          type: string
-          nullable: true
-          title: Meta description [en]
-        meta_description_fr:
-          type: string
-          nullable: true
-          title: Meta description [fr]
-        meta_description_th:
-          type: string
-          nullable: true
-          title: Meta description [th]
-        meta_description_de:
-          type: string
-          nullable: true
-          title: Meta description [de]
-        meta_description_sv:
-          type: string
-          nullable: true
-          title: Meta description [sv]
-        meta_description_no:
-          type: string
-          nullable: true
-          title: Meta description [no]
-        meta_description_it:
-          type: string
-          nullable: true
-          title: Meta description [it]
-        meta_description_es:
-          type: string
-          nullable: true
-          title: Meta description [es]
-        meta_description_nl:
-          type: string
-          nullable: true
-          title: Meta description [nl]
-        meta_description_pt:
-          type: string
-          nullable: true
-          title: Meta description [pt]
       required:
-      - description
       - id
       - name
       - slug
@@ -4772,7 +5030,6 @@ components:
           maxLength: 500
     CreateMarketingAttribution:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         funnel:
           type: string
@@ -4947,33 +5204,14 @@ components:
           type: integer
           minimum: 1
         subscription:
-          $ref: '#/components/schemas/CreateOrderLineSubscription'
+          $ref: '#/components/schemas/CreateSubscription'
         is_upsell:
           type: boolean
           default: false
       required:
       - quantity
-    CreateOrderLineSubscription:
-      type: object
-      properties:
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        interval:
-          enum:
-          - day
-          - month
-          type: string
-        interval_count:
-          type: integer
-          minimum: 1
-      required:
-      - interval
-      - interval_count
     CreateOrderNote:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         message:
           type: string
@@ -5037,78 +5275,182 @@ components:
           type: string
           nullable: true
           maxLength: 500
-    CreateSubscription:
+    CreateProduct:
       type: object
-      description: |-
-        Any transaction that be a part of handle_payment,
-            for saving and update status of order
       properties:
-        lines:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        title:
+          type: string
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        structure:
+          enum:
+          - standalone
+          - parent
+          - child
+          type: string
+          title: Product Structure
+        is_discountable:
+          type: boolean
+          title: Is discountable?
+          description: This flag indicates if this product can be used in an offer
+            or not
+        is_public:
+          type: boolean
+          description: Show this product in search results and catalogue listings.
+        ranking:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The highest ranking are shown first
+        categories:
           type: array
           items:
-            $ref: '#/components/schemas/CreateOrderLine'
+            type: integer
+        enable_subscription:
+          type: boolean
         interval:
           enum:
           - day
+          - week
           - month
+          - year
+          - ''
+          - null
+          type: string
+          nullable: true
+          title: Subscription Interval
+        interval_counts:
+          type: array
+          items:
+            type: integer
+            maximum: 2147483647
+            minimum: -2147483648
+            nullable: true
+          nullable: true
+          title: Interval Count Options
+          description: Choose a predefined value or type to enter custom value(s).
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
+        recommended_products:
+          type: array
+          items:
+            type: integer
+        upc:
+          type: string
+          nullable: true
+          description: Universal Product Code (UPC) is an identifier for a product
+            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          maxLength: 64
+        external_tax_code:
+          type: string
+          nullable: true
+          title: Tax Code
+          description: Tax code to be used with external tax systems such as Avalara,
+            TaxJar.
+          maxLength: 64
+        variant_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttribute'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+        template:
+          type: string
+          nullable: true
+          title: Theme Template
+          description: Use a custom template from your theme to customize the product
+            display.
+          maxLength: 256
+        rating:
+          type: number
+          format: double
+          readOnly: true
+        meta_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        meta_description:
+          type: string
+          nullable: true
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - children
+      - date_created
+      - date_updated
+      - id
+      - images
+      - rating
+      - title
+      - url
+    CreateProductVariant:
+      type: object
+      properties:
+        image:
+          type: integer
+          nullable: true
+        variant_attribute_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttributeValue'
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
+      required:
+      - variant_attribute_values
+    CreateSubscription:
+      type: object
+      properties:
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        interval:
+          enum:
+          - day
+          - week
+          - month
+          - year
           type: string
         interval_count:
           type: integer
           minimum: 1
-        user:
-          $ref: '#/components/schemas/CreateOrderUser'
-        next_renewal_date:
-          type: string
-          format: date-time
-          description: 'format: YYYY-MM-DDThh:mm:ss #eg. 2021-12-07T12:04:45'
-        send_welcome_email:
-          type: boolean
-          default: false
-        shipping_code:
-          type: string
-          nullable: true
-          maxLength: 128
-        shipping_address:
-          allOf:
-          - $ref: '#/components/schemas/ShippingAddress'
-          nullable: true
-        shipping_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,7}(?:\.\d{0,2})?$
-        use_default_shipping_address:
-          type: boolean
-          default: false
-        attribution:
-          $ref: '#/components/schemas/CreateMarketingAttribution'
-        payment_method:
-          enum:
-          - card_token
-          type: string
-        payment_details:
-          allOf:
-          - $ref: '#/components/schemas/SubscriptionPaymentDetail'
-          nullable: true
-        use_default_billing_address:
-          type: boolean
-          default: false
-        billing_same_as_shipping_address:
-          type: boolean
-          default: false
-        billing_address:
-          allOf:
-          - $ref: '#/components/schemas/BillingAddress'
-          nullable: true
       required:
       - interval
       - interval_count
-      - lines
-      - next_renewal_date
-      - payment_method
-      - user
     CreateTicketComment:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5136,7 +5478,6 @@ components:
       - id
     CreateUpdateStockRecord:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5211,7 +5552,6 @@ components:
       - product
     CreateUpdateTicket:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5279,7 +5619,6 @@ components:
       - updated_at
     CreateUserAddress:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5346,7 +5685,6 @@ components:
       - line4
     CreateUserNote:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         message:
           type: string
@@ -5433,6 +5771,23 @@ components:
       - report_amount
       - report_currency
       - status
+    GatewayGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        gateways:
+          allOf:
+          - $ref: '#/components/schemas/PaymentGroupGateway'
+          readOnly: true
+      required:
+      - gateways
+      - id
+      - name
     LineAttribute:
       type: object
       properties:
@@ -5447,7 +5802,6 @@ components:
       - value
     MarketingAttribution:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         agent:
           $ref: '#/components/schemas/Agent'
@@ -5509,7 +5863,6 @@ components:
       - agent
     Order:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         number:
           type: string
@@ -5684,17 +6037,16 @@ components:
       - voucher_discounts
     OrderLine:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
           readOnly: true
         product:
           allOf:
-          - $ref: '#/components/schemas/ProductForPresentation'
+          - $ref: '#/components/schemas/Product'
           readOnly: true
         stockrecord:
-          $ref: '#/components/schemas/StockRecordForPresentation'
+          $ref: '#/components/schemas/Stockrecord'
         quantity:
           type: integer
           maximum: 2147483647
@@ -5739,7 +6091,6 @@ components:
       - stockrecord
     OrderNote:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5803,7 +6154,6 @@ components:
       - lines
     OrderSubscription:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5816,7 +6166,6 @@ components:
       - id
     OrderTransaction:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -5904,7 +6253,6 @@ components:
       - name
     OrderWithoutUser:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         number:
           type: string
@@ -6120,6 +6468,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Dispute'
+    PaginatedGatewayGroupList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayGroup'
     PaginatedOrderList:
       type: object
       properties:
@@ -6152,6 +6516,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Partner'
+    PaginatedPaymentGatewayList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentGateway'
     PaginatedProductListList:
       type: object
       properties:
@@ -6168,6 +6548,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductList'
+    PaginatedShippingMethodList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingMethod'
     PaginatedStockRecordList:
       type: object
       properties:
@@ -6314,7 +6710,6 @@ components:
             $ref: '#/components/schemas/Webhook'
     Partner:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -6371,7 +6766,6 @@ components:
       - line1
     PatchedCreateUpdateTicket:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -6509,7 +6903,6 @@ components:
           nullable: true
     PatchedStockRecord:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -6582,7 +6975,6 @@ components:
           title: Track stock levels?
     PatchedUpdateOrder:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         number:
           type: string
@@ -6729,6 +7121,149 @@ components:
         source:
           type: string
           readOnly: true
+    PatchedUpdateProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        title:
+          type: string
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        structure:
+          enum:
+          - standalone
+          - parent
+          - child
+          type: string
+          title: Product Structure
+        is_discountable:
+          type: boolean
+          title: Is discountable?
+          description: This flag indicates if this product can be used in an offer
+            or not
+        is_public:
+          type: boolean
+          description: Show this product in search results and catalogue listings.
+        ranking:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The highest ranking are shown first
+        categories:
+          type: array
+          items:
+            type: integer
+        enable_subscription:
+          type: boolean
+        interval:
+          enum:
+          - day
+          - week
+          - month
+          - year
+          - ''
+          - null
+          type: string
+          nullable: true
+          title: Subscription Interval
+        interval_counts:
+          type: array
+          items:
+            type: integer
+            maximum: 2147483647
+            minimum: -2147483648
+            nullable: true
+          nullable: true
+          title: Interval Count Options
+          description: Choose a predefined value or type to enter custom value(s).
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
+        recommended_products:
+          type: array
+          items:
+            type: integer
+        upc:
+          type: string
+          nullable: true
+          description: Universal Product Code (UPC) is an identifier for a product
+            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          maxLength: 64
+        external_tax_code:
+          type: string
+          nullable: true
+          title: Tax Code
+          description: Tax code to be used with external tax systems such as Avalara,
+            TaxJar.
+          maxLength: 64
+        variant_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttribute'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+        template:
+          type: string
+          nullable: true
+          title: Theme Template
+          description: Use a custom template from your theme to customize the product
+            display.
+          maxLength: 256
+        rating:
+          type: number
+          format: double
+          readOnly: true
+        meta_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        meta_description:
+          type: string
+          nullable: true
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedUpdateProductVariant:
+      type: object
+      properties:
+        image:
+          type: integer
+          nullable: true
+        variant_attribute_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttributeValue'
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
     PatchedUpdateSubscription:
       type: object
       properties:
@@ -6738,16 +7273,16 @@ components:
         interval:
           enum:
           - day
+          - week
           - month
+          - year
           type: string
         interval_count:
           type: integer
-          maximum: 2147483647
-          minimum: 0
+          minimum: 1
         status:
           enum:
           - active
-          - pending
           - past_due
           - canceled
           - retrying
@@ -6826,7 +7361,6 @@ components:
           $ref: '#/components/schemas/CreateMarketingAttribution'
     PatchedUpdateUser:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -7008,9 +7542,98 @@ components:
         paypal_account:
           type: integer
           nullable: true
+    PaymentGateway:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        gateway_type:
+          type: string
+          maxLength: 100
+        gateway_groups:
+          allOf:
+          - $ref: '#/components/schemas/PaymentGroupGateway'
+          readOnly: true
+        active:
+          type: boolean
+          description: Gateway must be active to accept and process transactions.
+        accepted_currencies:
+          type: string
+          readOnly: true
+        accepted_card_types:
+          type: string
+          readOnly: true
+        payment_flow:
+          enum:
+          - charge
+          - auth-capture
+          type: string
+        enable_3ds2:
+          type: boolean
+          title: Enable 3D Secure Transactions
+          description: When enabled, transactions are attempted with 3DS authentication.
+        optimized_3ds:
+          type: boolean
+          title: Enable Optimized 3D Secure Transactions
+          description: When enabled, transactions will be optimized for lowest friction.
+        downgrade_3ds_retry:
+          type: boolean
+          title: Retry Non-3DS Enrolled Cards as Standard Transaction
+          description: When enabled, Non-3DS enrolled cards will be automatically
+            retried as a standard transaction.
+        merchant_profile:
+          type: integer
+          nullable: true
+        auto_capture_on_fulfillment:
+          type: boolean
+          description: When enabled, payments will be automatically captured when
+            orders are fulfilled.
+        delayed_capture_days:
+          type: integer
+          maximum: 7
+          minimum: 1
+          nullable: true
+          description: Payments will be automatically captured up to 7 days after
+            the authorization.
+      required:
+      - accepted_card_types
+      - accepted_currencies
+      - gateway_groups
+      - gateway_type
+      - id
+      - name
+    PaymentGroupGateway:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        weight:
+          type: integer
+        active:
+          type: boolean
+        accepted_currencies:
+          type: array
+          items:
+            type: string
+        accepted_card_types:
+          type: array
+          items:
+            type: string
+      required:
+      - accepted_card_types
+      - accepted_currencies
+      - active
+      - id
+      - name
+      - weight
     Product:
       type: object
-      description: Base class shared by admin and public serializer
       properties:
         id:
           type: integer
@@ -7019,379 +7642,33 @@ components:
           type: string
           format: uri
           readOnly: true
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariant'
+        title:
+          type: string
           readOnly: true
         categories:
           type: array
           items:
             $ref: '#/components/schemas/ProductCategory'
           readOnly: true
-        recommended_products:
-          type: array
-          items:
-            type: integer
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
-        product_class:
-          type: integer
-          nullable: true
         images:
           type: array
           items:
             $ref: '#/components/schemas/ProductImage'
           readOnly: true
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeValue'
-        variant_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttribute'
-        structure:
-          enum:
-          - standalone
-          - parent
-          - child
-          type: string
-          title: Product Structure
-        is_public:
-          type: boolean
-          description: Show this product in search results and catalogue listings.
-        slug:
-          type: string
-          maxLength: 255
-          pattern: ^[-a-zA-Z0-9_]+$
-        rating:
-          type: number
-          format: double
-          readOnly: true
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        is_discountable:
-          type: boolean
-          title: Is discountable?
-          description: This flag indicates if this product can be used in an offer
-            or not
         upc:
           type: string
           nullable: true
           description: Universal Product Code (UPC) is an identifier for a product
             which is not specific to a particular  supplier. Eg an ISBN for a book.
           maxLength: 64
-        ranking:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: The highest ranking are shown first
-        external_tax_code:
-          type: string
-          nullable: true
-          title: Tax Code
-          description: Tax code to be used with external tax systems such as Avalara,
-            TaxJar.
-          maxLength: 64
-        requires_shipping:
-          type: boolean
-          title: Requires shipping?
-        template:
-          type: string
-          nullable: true
-          title: Theme Template
-          description: Use a custom template from your theme to customize the product
-            display.
-          maxLength: 256
-        enable_subscription:
-          type: boolean
-        interval:
-          enum:
-          - day
-          - month
-          - ''
-          - null
-          type: string
-          nullable: true
-          title: Subscription Interval
-        interval_counts:
-          type: array
-          items:
-            type: integer
-            maximum: 2147483647
-            minimum: -2147483648
-            nullable: true
-          nullable: true
-          title: Interval Count Options
-          description: Choose a predefined value or type to enter custom value(s).
-        title:
-          type: string
-          readOnly: true
-        title_en:
-          type: string
-          nullable: true
-          title: Title [en]
-          maxLength: 255
-        title_fr:
-          type: string
-          nullable: true
-          title: Title [fr]
-          maxLength: 255
-        title_th:
-          type: string
-          nullable: true
-          title: Title [th]
-          maxLength: 255
-        title_de:
-          type: string
-          nullable: true
-          title: Title [de]
-          maxLength: 255
-        title_sv:
-          type: string
-          nullable: true
-          title: Title [sv]
-          maxLength: 255
-        title_no:
-          type: string
-          nullable: true
-          title: Title [no]
-          maxLength: 255
-        title_it:
-          type: string
-          nullable: true
-          title: Title [it]
-          maxLength: 255
-        title_es:
-          type: string
-          nullable: true
-          title: Title [es]
-          maxLength: 255
-        title_nl:
-          type: string
-          nullable: true
-          title: Title [nl]
-          maxLength: 255
-        title_pt:
-          type: string
-          nullable: true
-          title: Title [pt]
-          maxLength: 255
-        description:
-          type: string
-        description_en:
-          type: string
-          nullable: true
-          title: Description [en]
-        description_fr:
-          type: string
-          nullable: true
-          title: Description [fr]
-        description_th:
-          type: string
-          nullable: true
-          title: Description [th]
-        description_de:
-          type: string
-          nullable: true
-          title: Description [de]
-        description_sv:
-          type: string
-          nullable: true
-          title: Description [sv]
-        description_no:
-          type: string
-          nullable: true
-          title: Description [no]
-        description_it:
-          type: string
-          nullable: true
-          title: Description [it]
-        description_es:
-          type: string
-          nullable: true
-          title: Description [es]
-        description_nl:
-          type: string
-          nullable: true
-          title: Description [nl]
-        description_pt:
-          type: string
-          nullable: true
-          title: Description [pt]
-        meta_title:
-          type: string
-          nullable: true
-          maxLength: 255
-        meta_title_en:
-          type: string
-          nullable: true
-          title: Meta title [en]
-          maxLength: 255
-        meta_title_fr:
-          type: string
-          nullable: true
-          title: Meta title [fr]
-          maxLength: 255
-        meta_title_th:
-          type: string
-          nullable: true
-          title: Meta title [th]
-          maxLength: 255
-        meta_title_de:
-          type: string
-          nullable: true
-          title: Meta title [de]
-          maxLength: 255
-        meta_title_sv:
-          type: string
-          nullable: true
-          title: Meta title [sv]
-          maxLength: 255
-        meta_title_no:
-          type: string
-          nullable: true
-          title: Meta title [no]
-          maxLength: 255
-        meta_title_it:
-          type: string
-          nullable: true
-          title: Meta title [it]
-          maxLength: 255
-        meta_title_es:
-          type: string
-          nullable: true
-          title: Meta title [es]
-          maxLength: 255
-        meta_title_nl:
-          type: string
-          nullable: true
-          title: Meta title [nl]
-          maxLength: 255
-        meta_title_pt:
-          type: string
-          nullable: true
-          title: Meta title [pt]
-          maxLength: 255
-        meta_description:
-          type: string
-          nullable: true
-        meta_description_en:
-          type: string
-          nullable: true
-          title: Meta description [en]
-        meta_description_fr:
-          type: string
-          nullable: true
-          title: Meta description [fr]
-        meta_description_th:
-          type: string
-          nullable: true
-          title: Meta description [th]
-        meta_description_de:
-          type: string
-          nullable: true
-          title: Meta description [de]
-        meta_description_sv:
-          type: string
-          nullable: true
-          title: Meta description [sv]
-        meta_description_no:
-          type: string
-          nullable: true
-          title: Meta description [no]
-        meta_description_it:
-          type: string
-          nullable: true
-          title: Meta description [it]
-        meta_description_es:
-          type: string
-          nullable: true
-          title: Meta description [es]
-        meta_description_nl:
-          type: string
-          nullable: true
-          title: Meta description [nl]
-        meta_description_pt:
-          type: string
-          nullable: true
-          title: Meta description [pt]
       required:
       - categories
-      - children
-      - date_created
-      - date_updated
       - id
       - images
-      - rating
-      - slug
       - title
       - url
-    ProductAttribute:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        option_group:
-          allOf:
-          - $ref: '#/components/schemas/AttributeOptionGroup'
-          nullable: true
-        name:
-          type: string
-          maxLength: 128
-        code:
-          type: string
-          pattern: ^[-a-zA-Z0-9_]+$
-          maxLength: 128
-        type:
-          enum:
-          - text
-          - integer
-          - boolean
-          - float
-          - richtext
-          - date
-          - datetime
-          - option
-          - multi_option
-          - file
-          - image
-          type: string
-        required:
-          type: boolean
-      required:
-      - code
-      - name
-    ProductAttributeValue:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          readOnly: true
-        value: {}
-        code:
-          type: string
-          readOnly: true
-      required:
-      - code
-      - id
-      - name
-      - value
     ProductCategory:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -7407,48 +7684,8 @@ components:
       - id
       - name
       - slug
-    ProductForPresentation:
-      type: object
-      description: Base class shared by admin and public serializer
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        title:
-          type: string
-          readOnly: true
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductCategory'
-          readOnly: true
-        product_class:
-          type: integer
-          nullable: true
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductImage'
-          readOnly: true
-        upc:
-          type: string
-          nullable: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
-          maxLength: 64
-      required:
-      - categories
-      - id
-      - images
-      - title
-      - url
     ProductImage:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -7473,36 +7710,21 @@ components:
       - product
     ProductList:
       type: object
-      description: Base class shared by admin and public serializer
       properties:
         id:
           type: integer
           readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
         title:
           type: string
           readOnly: true
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductCategory'
-          readOnly: true
-        product_class:
-          type: integer
-          nullable: true
-        recommended_products:
-          type: array
-          items:
-            type: integer
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductImage'
-          readOnly: true
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
         structure:
           enum:
           - standalone
@@ -7510,69 +7732,32 @@ components:
           - child
           type: string
           title: Product Structure
-        is_public:
-          type: boolean
-          description: Show this product in search results and catalogue listings.
-        slug:
-          type: string
-          maxLength: 255
-          pattern: ^[-a-zA-Z0-9_]+$
-        rating:
-          type: number
-          format: double
-          readOnly: true
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
         is_discountable:
           type: boolean
           title: Is discountable?
           description: This flag indicates if this product can be used in an offer
             or not
-        upc:
-          type: string
-          nullable: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
-          maxLength: 64
+        is_public:
+          type: boolean
+          description: Show this product in search results and catalogue listings.
         ranking:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           description: The highest ranking are shown first
-        external_tax_code:
-          type: string
-          nullable: true
-          title: Tax Code
-          description: Tax code to be used with external tax systems such as Avalara,
-            TaxJar.
-          maxLength: 64
-        requires_shipping:
-          type: boolean
-          title: Requires shipping?
-        variant_attributes:
+        categories:
           type: array
           items:
-            $ref: '#/components/schemas/ProductAttribute'
-        url:
-          type: string
-          format: uri
+            $ref: '#/components/schemas/ProductCategory'
           readOnly: true
-        stockrecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminStockRecord'
         enable_subscription:
           type: boolean
         interval:
           enum:
           - day
+          - week
           - month
+          - year
           - ''
           - null
           type: string
@@ -7588,6 +7773,56 @@ components:
           nullable: true
           title: Interval Count Options
           description: Choose a predefined value or type to enter custom value(s).
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
+        recommended_products:
+          type: array
+          items:
+            type: integer
+        upc:
+          type: string
+          nullable: true
+          description: Universal Product Code (UPC) is an identifier for a product
+            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          maxLength: 64
+        external_tax_code:
+          type: string
+          nullable: true
+          title: Tax Code
+          description: Tax code to be used with external tax systems such as Avalara,
+            TaxJar.
+          maxLength: 64
+        variant_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttribute'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+        rating:
+          type: number
+          format: double
+          readOnly: true
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - categories
       - children
@@ -7596,7 +7831,6 @@ components:
       - id
       - images
       - rating
-      - slug
       - title
       - url
     ProductVariant:
@@ -7625,16 +7859,58 @@ components:
         variant_attribute_values:
           type: array
           items:
-            $ref: '#/components/schemas/ProductAttributeValue'
+            $ref: '#/components/schemas/ProductVariantAttributeValue'
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/AdminStockRecord'
+            $ref: '#/components/schemas/Stockrecord'
       required:
       - id
       - images
       - product_id
       - title
+    ProductVariantAttribute:
+      type: object
+      properties:
+        option_group:
+          allOf:
+          - $ref: '#/components/schemas/AttributeOptionGroup'
+          nullable: true
+        name:
+          type: string
+          maxLength: 128
+        code:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+          maxLength: 128
+        type:
+          enum:
+          - option
+          type: string
+          readOnly: true
+      required:
+      - code
+      - name
+      - type
+    ProductVariantAttributeValue:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        value: {}
+        code:
+          type: string
+          readOnly: true
+      required:
+      - code
+      - id
+      - name
+      - value
     RefundOrder:
       type: object
       properties:
@@ -7721,9 +7997,64 @@ components:
       - last_name
       - line1
       - line4
+    ShippingMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        description:
+          type: string
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingMethodPrices'
+          readOnly: true
+        delivery_time:
+          type: string
+          description: Shows in checkout, example value should be "3-5 days".
+          maxLength: 128
+        code:
+          type: string
+          description: If left empty, a code name will be generated based on the name
+            of the shipping method.
+          maxLength: 128
+          pattern: ^[-a-zA-Z0-9_]+$
+        is_public:
+          type: boolean
+          description: Only public shipping methods are shown in the checkout flow.
+      required:
+      - id
+      - name
+      - prices
+    ShippingMethodPrices:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        currency:
+          type: string
+          description: Currency to apply this pricing.
+          maxLength: 5
+        price_per_order:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          description: Shipping fee for the order.
+        price_per_item:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          description: Shipping fee per item in the order.
+      required:
+      - currency
+      - id
     StockRecord:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -7805,9 +8136,34 @@ components:
       - price
       - price_currency
       - product
-    StockRecordForPresentation:
+    StockRecordPartner:
       type: object
-      description: Correctly map oscar fields to serializer fields.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        code:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - code
+      - id
+    StockRecordProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+      required:
+      - id
+    Stockrecord:
+      type: object
       properties:
         id:
           type: integer
@@ -7850,34 +8206,6 @@ components:
       required:
       - id
       - partner_sku
-    StockRecordPartner:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 128
-        code:
-          type: string
-          readOnly: true
-          pattern: ^[-a-zA-Z0-9_]+$
-      required:
-      - code
-      - id
-    StockRecordProduct:
-      type: object
-      description: Correctly map oscar fields to serializer fields.
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-      required:
-      - id
     Subscription:
       type: object
       properties:
@@ -7887,16 +8215,16 @@ components:
         interval:
           enum:
           - day
+          - week
           - month
+          - year
           type: string
         interval_count:
           type: integer
-          maximum: 2147483647
-          minimum: 0
+          minimum: 1
         status:
           enum:
           - active
-          - pending
           - past_due
           - canceled
           - retrying
@@ -7976,7 +8304,6 @@ components:
       - date_created
       - frequency
       - id
-      - interval_count
       - is_tax_known
       - lines
       - num_lines
@@ -7994,9 +8321,9 @@ components:
           type: integer
           readOnly: true
         product:
-          $ref: '#/components/schemas/ProductForPresentation'
+          $ref: '#/components/schemas/Product'
         stockrecord:
-          $ref: '#/components/schemas/StockRecordForPresentation'
+          $ref: '#/components/schemas/Stockrecord'
         quantity:
           type: integer
           maximum: 2147483647
@@ -8069,7 +8396,6 @@ components:
       - name
     Ticket:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8147,7 +8473,6 @@ components:
       - updated_at
     TicketComment:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8179,7 +8504,6 @@ components:
       - id
     TicketType:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8191,7 +8515,6 @@ components:
       - name
     Transaction:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8328,7 +8651,6 @@ components:
       - lines
     UpdateOrder:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         number:
           type: string
@@ -8500,9 +8822,161 @@ components:
       - transactions
       - user
       - voucher_discounts
+    UpdateProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        title:
+          type: string
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        structure:
+          enum:
+          - standalone
+          - parent
+          - child
+          type: string
+          title: Product Structure
+        is_discountable:
+          type: boolean
+          title: Is discountable?
+          description: This flag indicates if this product can be used in an offer
+            or not
+        is_public:
+          type: boolean
+          description: Show this product in search results and catalogue listings.
+        ranking:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The highest ranking are shown first
+        categories:
+          type: array
+          items:
+            type: integer
+        enable_subscription:
+          type: boolean
+        interval:
+          enum:
+          - day
+          - week
+          - month
+          - year
+          - ''
+          - null
+          type: string
+          nullable: true
+          title: Subscription Interval
+        interval_counts:
+          type: array
+          items:
+            type: integer
+            maximum: 2147483647
+            minimum: -2147483648
+            nullable: true
+          nullable: true
+          title: Interval Count Options
+          description: Choose a predefined value or type to enter custom value(s).
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
+        recommended_products:
+          type: array
+          items:
+            type: integer
+        upc:
+          type: string
+          nullable: true
+          description: Universal Product Code (UPC) is an identifier for a product
+            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          maxLength: 64
+        external_tax_code:
+          type: string
+          nullable: true
+          title: Tax Code
+          description: Tax code to be used with external tax systems such as Avalara,
+            TaxJar.
+          maxLength: 64
+        variant_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttribute'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+        template:
+          type: string
+          nullable: true
+          title: Theme Template
+          description: Use a custom template from your theme to customize the product
+            display.
+          maxLength: 256
+        rating:
+          type: number
+          format: double
+          readOnly: true
+        meta_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        meta_description:
+          type: string
+          nullable: true
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - children
+      - date_created
+      - date_updated
+      - id
+      - images
+      - rating
+      - url
+    UpdateProductVariant:
+      type: object
+      properties:
+        image:
+          type: integer
+          nullable: true
+        variant_attribute_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttributeValue'
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord'
+      required:
+      - variant_attribute_values
     UpdateUser:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8599,7 +9073,6 @@ components:
       - user_type
     User:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8694,7 +9167,6 @@ components:
       - user_type
     UserAddress:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8761,7 +9233,6 @@ components:
       - line4
     UserInline:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8801,7 +9272,6 @@ components:
       - id
     UserNote:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         id:
           type: integer
@@ -8823,7 +9293,6 @@ components:
       - updated_at
     Voucher:
       type: object
-      description: Correctly map oscar fields to serializer fields.
       properties:
         name:
           type: string
@@ -8927,5 +9396,5 @@ externalDocs:
   description: See API Introduction Documentation
   url: https://developers.29next.com/api/admin/
 
-  servers:
+servers:
   - url: https://{store}.29next.store
