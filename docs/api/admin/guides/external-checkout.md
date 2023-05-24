@@ -155,6 +155,10 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
 </TabItem>
 <TabItem value="sku" label="sku + currency">
 
+:::caution Deprecation Notice
+Using `sku` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
+:::
+
 ```json
 "lines": [
     {
