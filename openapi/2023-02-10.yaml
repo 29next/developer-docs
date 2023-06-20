@@ -143,6 +143,63 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/admin/assigned-fulfillment-orders/:
+    get:
+      operationId: assignedFulfillmentOrdersList
+      description: Retrieve assigned fulfillment order requests
+      parameters:
+      - in: query
+        name: partner_id
+        schema:
+          type: string
+        description: Partner ID
+      - in: query
+        name: assignment_status
+        schema:
+          type: string
+          enum:
+          - cancellation_requested
+          - fulfillment_accepted
+          - fulfillment_requested
+          - fulfillment_unrequested
+        description: Assignment Status
+      - in: query
+        name: date_created_from
+        schema:
+          type: string
+          format: date
+        description: YYYY-MM-DD
+      - in: query
+        name: date_created_to
+        schema:
+          type: string
+          format: date
+        description: YYYY-MM-DD
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFulfillmentOrderList'
+          description: ''
   /api/admin/carts/:
     get:
       operationId: cartsList
@@ -817,6 +874,206 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/admin/fulfillment-orders/:
+    get:
+      operationId: fulfillmentOrdersList
+      description: Retrieve a list of fulfillment orders.
+      parameters:
+      - in: query
+        name: order_number
+        schema:
+          type: string
+        description: Order Number
+      - in: query
+        name: partner_id
+        schema:
+          type: string
+        description: Partner ID
+      - in: query
+        name: status
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - canceled
+            - closed
+            - incomplete
+            - on_hold
+            - open
+            - processing
+        description: Status
+        explode: true
+        style: form
+      - in: query
+        name: request_status
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - accepted
+            - cancel_accepted
+            - cancel_rejected
+            - cancel_requested
+            - pending
+            - rejected
+            - requested
+        description: Request Status
+        explode: true
+        style: form
+      - in: query
+        name: fulfillment_order_id
+        schema:
+          type: string
+        description: Fulfillment Order  Id
+      - in: query
+        name: shipping_method
+        schema:
+          type: array
+          items:
+            type: string
+        description: Shipping Method
+        explode: true
+        style: form
+      - in: query
+        name: date_created_from
+        schema:
+          type: string
+          format: date
+        description: YYYY-MM-DD
+      - in: query
+        name: date_created_to
+        schema:
+          type: string
+          format: date
+        description: YYYY-MM-DD
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFulfillmentOrderList'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/:
+    get:
+      operationId: fulfillmentOrdersRetrieve
+      description: Retrieve a fulfillment order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/hold/:
+    post:
+      operationId: fulfillmentOrdersHoldCreate
+      description: Hold Fulfillment.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HoldFulfillment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HoldFulfillment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HoldFulfillment'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/release-hold/:
+    post:
+      operationId: fulfillmentOrdersReleaseHoldCreate
+      description: Release On Hold Fulfillment.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
   /api/admin/gateway-groups/:
     get:
       operationId: gatewayGroupsList
@@ -996,10 +1253,9 @@ paths:
           items:
             type: string
             enum:
+            - archived
             - canceled
-            - completed
-            - confirmed
-            - pending
+            - open
         description: Status
         explode: true
         style: form
@@ -1019,11 +1275,12 @@ paths:
           items:
             type: string
             enum:
-            - delivered
             - fulfilled
             - not_required
+            - on_hold
             - partially_fulfilled
             - processing
+            - rejected
             - unfulfilled
         description: Fulfillment Status
         explode: true
@@ -1462,6 +1719,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
+  /api/admin/orders/{number}/fulfillment-orders/:
+    get:
+      operationId: ordersFulfillmentOrdersRetrieve
+      description: Retrieves a list of fulfillment orders for a specific order.
+      parameters:
+      - in: path
+        name: number
+        schema:
+          type: string
+          title: Order number
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - orders
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
   /api/admin/orders/{number}/fulfillments/:
     get:
       operationId: ordersFulfillmentsRetrieve
@@ -1530,7 +1817,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderShipmentTracking'
+                $ref: '#/components/schemas/Fulfillment'
           description: ''
   /api/admin/orders/{number}/notes/:
     get:
@@ -4558,6 +4845,7 @@ components:
       properties:
         carrier:
           enum:
+          - other
           - ups
           - fedex
           - usps
@@ -4570,7 +4858,6 @@ components:
           - dhl_ecommerce
           - myhermes
           - royal_mail
-          - other
           - null
           type: string
           nullable: true
@@ -5152,9 +5439,8 @@ components:
           nullable: true
         status:
           enum:
-          - pending
-          - confirmed
-          - completed
+          - open
+          - archived
           - canceled
           - null
           type: string
@@ -5189,10 +5475,6 @@ components:
       properties:
         product_id:
           type: integer
-        sku:
-          type: string
-        stockrecord_id:
-          type: integer
         price:
           type: string
           format: decimal
@@ -5204,7 +5486,7 @@ components:
           type: integer
           minimum: 1
         subscription:
-          $ref: '#/components/schemas/CreateSubscription'
+          $ref: '#/components/schemas/CreateOrderSubscriptionLine'
         is_upsell:
           type: boolean
           default: false
@@ -5217,6 +5499,26 @@ components:
           type: string
       required:
       - message
+    CreateOrderSubscriptionLine:
+      type: object
+      properties:
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        interval:
+          enum:
+          - day
+          - week
+          - month
+          - year
+          type: string
+        interval_count:
+          type: integer
+          minimum: 1
+      required:
+      - interval
+      - interval_count
     CreateOrderUser:
       type: object
       properties:
@@ -5431,11 +5733,14 @@ components:
       - variant_attribute_values
     CreateSubscription:
       type: object
+      description: |-
+        Any transaction that be a part of handle_payment,
+            for saving and update status of order
       properties:
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateSubscriptionLine'
         interval:
           enum:
           - day
@@ -5446,9 +5751,74 @@ components:
         interval_count:
           type: integer
           minimum: 1
+        user:
+          $ref: '#/components/schemas/CreateOrderUser'
+        next_renewal_date:
+          type: string
+          format: date-time
+          description: 'format: YYYY-MM-DDThh:mm:ss #eg. 2021-12-07T12:04:45'
+        send_welcome_email:
+          type: boolean
+          default: false
+        shipping_code:
+          type: string
+          nullable: true
+          maxLength: 128
+        shipping_address:
+          allOf:
+          - $ref: '#/components/schemas/ShippingAddress'
+          nullable: true
+        shipping_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,7}(?:\.\d{0,2})?$
+        use_default_shipping_address:
+          type: boolean
+          default: false
+        attribution:
+          $ref: '#/components/schemas/CreateMarketingAttribution'
+        payment_method:
+          enum:
+          - card_token
+          type: string
+        payment_details:
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionPaymentDetail'
+          nullable: true
+        use_default_billing_address:
+          type: boolean
+          default: false
+        billing_same_as_shipping_address:
+          type: boolean
+          default: false
+        billing_address:
+          allOf:
+          - $ref: '#/components/schemas/BillingAddress'
+          nullable: true
       required:
       - interval
       - interval_count
+      - lines
+      - next_renewal_date
+      - payment_method
+      - user
+    CreateSubscriptionLine:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        currency:
+          type: string
+          maxLength: 12
+        quantity:
+          type: integer
+          minimum: 1
+      required:
+      - quantity
     CreateTicketComment:
       type: object
       properties:
@@ -5771,6 +6141,246 @@ components:
       - report_amount
       - report_currency
       - status
+    Fulfillment:
+      type: object
+      properties:
+        carrier:
+          type: string
+          readOnly: true
+        tracking_code:
+          type: string
+          readOnly: true
+        tracking_link:
+          type: string
+          readOnly: true
+        lines:
+          type: string
+          readOnly: true
+        date_created:
+          type: string
+          format: date-time
+        reference:
+          type: string
+          maxLength: 512
+      required:
+      - carrier
+      - date_created
+      - lines
+      - tracking_code
+      - tracking_link
+    FulfillmentHold:
+      type: object
+      properties:
+        reason:
+          enum:
+          - address_incorrect
+          - out_of_stock
+          - high_risk
+          - awaiting_payment
+          - other
+          type: string
+        reason_message:
+          type: string
+          nullable: true
+          maxLength: 512
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+    FulfillmentOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          title: Order number
+          readOnly: true
+        request_status:
+          enum:
+          - pending
+          - requested
+          - accepted
+          - rejected
+          - cancel_requested
+          - cancel_accepted
+          - cancel_rejected
+          type: string
+        status:
+          enum:
+          - open
+          - processing
+          - on_hold
+          - incomplete
+          - closed
+          - canceled
+          type: string
+        supported_actions:
+          type: array
+          items: {}
+          nullable: true
+        shipping_address:
+          allOf:
+          - $ref: '#/components/schemas/FulfillmentShippingAddress'
+          nullable: true
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentOrderLine'
+        fulfillment_holds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentHold'
+          nullable: true
+        shipping_method:
+          type: string
+        partner:
+          $ref: '#/components/schemas/FulfillmentPartner'
+        merchant_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/MerchantRequest'
+          nullable: true
+      required:
+      - id
+      - line_items
+      - order_number
+      - partner
+      - shipping_method
+    FulfillmentOrderLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        fulfillment_order_id:
+          type: integer
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        order_line_id:
+          type: integer
+          readOnly: true
+        stockrecord_id:
+          type: integer
+          readOnly: true
+      required:
+      - fulfillment_order_id
+      - id
+      - order_line_id
+      - stockrecord_id
+    FulfillmentPartner:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        address:
+          $ref: '#/components/schemas/FulfillmentPartnerAddress'
+      required:
+      - address
+      - id
+    FulfillmentPartnerAddress:
+      type: object
+      properties:
+        line1:
+          type: string
+          title: First line of address
+          maxLength: 255
+        line2:
+          type: string
+          title: Second line of address
+          maxLength: 255
+        line3:
+          type: string
+          title: Third line of address
+          maxLength: 255
+        line4:
+          type: string
+          title: City
+          maxLength: 255
+        state:
+          type: string
+          title: State/County
+          maxLength: 255
+        postcode:
+          type: string
+          title: Post/Zip-code
+          maxLength: 64
+        country:
+          type: string
+          title: ISO 3166-1 alpha-2
+      required:
+      - country
+      - line1
+    FulfillmentShippingAddress:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        country:
+          type: string
+          title: ISO 3166-1 alpha-2
+        title:
+          enum:
+          - Mr
+          - Miss
+          - Mrs
+          - Ms
+          - Dr
+          - ''
+          type: string
+        line1:
+          type: string
+          title: First line of address
+          maxLength: 255
+        line2:
+          type: string
+          title: Second line of address
+          maxLength: 255
+        line3:
+          type: string
+          title: Third line of address
+          maxLength: 255
+        postcode:
+          type: string
+          title: Post/Zip-code
+          maxLength: 64
+        phone_number:
+          type: string
+          description: In case we need to call you about your order
+          maxLength: 128
+        notes:
+          type: string
+          title: Instructions
+          description: Tell us anything we should know when delivering your order.
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        line4:
+          type: string
+          title: City
+          maxLength: 255
+        state:
+          type: string
+          title: State/Province
+          maxLength: 255
+      required:
+      - country
+      - first_name
+      - id
+      - last_name
+      - line1
+      - line4
     GatewayGroup:
       type: object
       properties:
@@ -5788,6 +6398,22 @@ components:
       - gateways
       - id
       - name
+    HoldFulfillment:
+      type: object
+      description: Serializer for serializing incoming Fulfillment Hold post data
+      properties:
+        reason:
+          enum:
+          - address_incorrect
+          - out_of_stock
+          - high_risk
+          - awaiting_payment
+          - other
+          type: string
+        reason_message:
+          type: string
+          nullable: true
+          maxLength: 512
     LineAttribute:
       type: object
       properties:
@@ -5861,6 +6487,20 @@ components:
           maxLength: 128
       required:
       - agent
+    MerchantRequest:
+      type: object
+      properties:
+        type:
+          enum:
+          - fulfill_request
+          - cancel_request
+          type: string
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+        notify:
+          type: boolean
     Order:
       type: object
       properties:
@@ -5875,9 +6515,10 @@ components:
           enum:
           - not_required
           - unfulfilled
+          - on_hold
+          - rejected
           - processing
           - fulfilled
-          - delivered
           type: string
         payment_status:
           enum:
@@ -5987,7 +6628,7 @@ components:
         fulfillments:
           type: array
           items:
-            $ref: '#/components/schemas/OrderShipmentTracking'
+            $ref: '#/components/schemas/Fulfillment'
           readOnly: true
         total_tax:
           type: string
@@ -6072,14 +6713,6 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
         is_upsell:
           type: boolean
-        fulfillment_status:
-          enum:
-          - not_required
-          - unfulfilled
-          - processing
-          - fulfilled
-          - delivered
-          type: string
       required:
       - id
       - price_currency
@@ -6125,33 +6758,6 @@ components:
       - amount
       - description
       - name
-    OrderShipmentTracking:
-      type: object
-      properties:
-        carrier:
-          type: string
-          nullable: true
-          maxLength: 256
-        tracking_code:
-          type: string
-          nullable: true
-          maxLength: 256
-        tracking_link:
-          type: string
-        lines:
-          type: array
-          items:
-            type: integer
-          readOnly: true
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        reference:
-          type: string
-      required:
-      - date_created
-      - lines
     OrderSubscription:
       type: object
       properties:
@@ -6180,6 +6786,15 @@ components:
           type: string
           nullable: true
           maxLength: 6
+        parent_id:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: "\n    The ID of an associated transaction.\n    - For capture\
+            \ transactions, the parent is the authorization transaction.\n    - For\
+            \ void transactions, the parent is the authorization transaction.\n  \
+            \  - For refund transactions, the parent is the debit transaction.\n \
+            \       "
         status:
           enum:
           - succeeded
@@ -6208,6 +6823,7 @@ components:
       - amount
       - date_created
       - id
+      - parent_id
       - payment_details
       - response_code
       - type
@@ -6265,9 +6881,10 @@ components:
           enum:
           - not_required
           - unfulfilled
+          - on_hold
+          - rejected
           - processing
           - fulfilled
-          - delivered
           type: string
         payment_status:
           enum:
@@ -6373,7 +6990,7 @@ components:
         fulfillments:
           type: array
           items:
-            $ref: '#/components/schemas/OrderShipmentTracking'
+            $ref: '#/components/schemas/Fulfillment'
           readOnly: true
         total_tax:
           type: string
@@ -6468,6 +7085,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Dispute'
+    PaginatedFulfillmentOrderList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentOrder'
     PaginatedGatewayGroupList:
       type: object
       properties:
@@ -6987,9 +7620,10 @@ components:
           enum:
           - not_required
           - unfulfilled
+          - on_hold
+          - rejected
           - processing
           - fulfilled
-          - delivered
           type: string
         payment_status:
           enum:
@@ -7099,7 +7733,7 @@ components:
         fulfillments:
           type: array
           items:
-            $ref: '#/components/schemas/OrderShipmentTracking'
+            $ref: '#/components/schemas/Fulfillment'
           readOnly: true
         total_tax:
           type: string
@@ -8045,11 +8679,6 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           description: Shipping fee for the order.
-        price_per_item:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          description: Shipping fee per item in the order.
       required:
       - currency
       - id
@@ -8529,6 +9158,15 @@ components:
           type: string
           nullable: true
           maxLength: 6
+        parent_id:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: "\n    The ID of an associated transaction.\n    - For capture\
+            \ transactions, the parent is the authorization transaction.\n    - For\
+            \ void transactions, the parent is the authorization transaction.\n  \
+            \  - For refund transactions, the parent is the debit transaction.\n \
+            \       "
         status:
           enum:
           - succeeded
@@ -8575,6 +9213,7 @@ components:
       - id
       - initiator
       - order
+      - parent_id
       - payment_details
       - response_code
       - subscriptions
@@ -8663,9 +9302,10 @@ components:
           enum:
           - not_required
           - unfulfilled
+          - on_hold
+          - rejected
           - processing
           - fulfilled
-          - delivered
           type: string
         payment_status:
           enum:
@@ -8775,7 +9415,7 @@ components:
         fulfillments:
           type: array
           items:
-            $ref: '#/components/schemas/OrderShipmentTracking'
+            $ref: '#/components/schemas/Fulfillment'
           readOnly: true
         total_tax:
           type: string
