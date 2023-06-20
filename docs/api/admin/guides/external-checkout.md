@@ -83,6 +83,8 @@ Creating an order is the core resource in an external checkout flow, see the exa
     "user":{
         "email": "johndoe@gmail.com"
     },
+    "shipping_code": "default",
+    "shipping_price": "5.48",
     "shipping_address": {
         "first_name": "John",
         "last_name": "Doe",
@@ -108,6 +110,7 @@ Creating an order is the core resource in an external checkout flow, see the exa
 :::info Notes
 - Complete User detail is not necessary if the user already exists, you can reference an existing user by `id` or by `email`.
 - Attribution detail are not necessary if you have already added it to the users active cart.
+- `shipping_code` and `shipping_price` are optional parameters you can set to specify the shipping method and shipping price.
 - If you already created an address for the user, pass `use_default_shipping_address` and `use_default_billing_address` as true to use their default address for the order.
 - For additional payment methods, see our guides on [Card Tokenization](/docs/api/admin/guides/iframe-payment-form.md), [3DS2](/docs/api/admin/guides/3ds2.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [PayPal](/docs/api/admin/guides/paypal.md), and [Stripe APMs](/docs/api/admin/guides/stripe-apms.md).
 :::
@@ -241,6 +244,14 @@ Cart and Order `attribution` object sets the [marketing attribution](https://doc
 }
 ```
 
+### Order Shipping Detail
+
+```json
+"shipping_code": "default",
+"shipping_price": "5.48",
+```
+The `shipping_code` is an optional field to specify the Shipping Method to be used for the order, **if not passed, the cheapest Shipping Method will be used**.  `shipping_price` is also optional and provides a way to override the configured price for the Shipping Method of the order allowing you to discount or charge an upsell for shipping on the order.
+
 ### Order Addresses Detail
 The `shipping_address` object on the order represents the address where the order will be shipped, and similarly for the `billing_address`. The first `shipping_address` and `billing_address` created for a user is automatically set as their default shipping and billing address, [see API Reference](/docs/api/admin/reference/#tag/orders/operation/orders_create).
 
@@ -265,7 +276,6 @@ Use `billing_same_as_shipping_address` to forego having to pass a full duplicate
 - User `phone_number` is automatically saved from the user's first address if they do not have an existing `phone_number`.
 - In a "Two Step" flow where the customer address is collected before creating the order, create an address for the user and then pass the `use_default_shipping_address` and `use_default_billing_address` as true on the `orders_create` request.
 :::
-
 
 
 ### Order Payment Detail
