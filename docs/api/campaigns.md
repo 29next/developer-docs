@@ -51,7 +51,6 @@ To get started, create a new campaign with a package mapped to a product in your
 ### Create Cart
 
 ```javascript title="Create a Cart"
-// Example cart payload data
 var payload = {
   "user": {
     "email": "test@email.com",
@@ -67,8 +66,6 @@ var payload = {
     "utm_source": "Example Campaign"
   }
 }
-
-// Use Fetch API
 const response = await fetch('https://campaigns.apps.29next.com/api/v1/carts/', {
     method: 'POST',
     headers: {
@@ -90,7 +87,6 @@ All orders require a `success_url` to handle payments requiring a redirect flow.
 
 
 ```javascript title="Create an Order"
-// Example order payload data
 var payload = {
     "user": {
         "email": "test@email.com",
@@ -127,8 +123,6 @@ var payload = {
         "utm_source": "Example Campaign"
     }
 }
-
-// use Fetch API
 const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/', {
     method: 'POST',
     headers: {
@@ -154,7 +148,7 @@ Bankcard payments require using the [iFrame Payment Form](/docs/api/admin/guides
 To add an upsell to an existing order, first you should check to see if the order payment method `supports_post_purchase_upsells` is `True` in the `orderRetrieve` response.
 
 ```javascript title="Retrieve Order Details"
-const refId = 'c5e85eb93fdd42809ec1fdf90cc94597'
+const refId = '<YOUR ORDER REF ID>'
 const response = await fetch('https://campaigns.apps-staging.29next.com/api/v1/orders/' + refId + '/', {
     method: 'GET',
     headers: {
@@ -168,8 +162,7 @@ console.log(result); // Show result in console
 If the order `supports_post_purchase_upsells`, you can add an upsell to an order can be done using the `orderUpsellCreate` API endpoint.
 
 ```javascript title="Add Upsell to Order"
-// Create upsell on existing order
-const refId = 'c5e85eb93fdd42809ec1fdf90cc94597'
+const refId = '<YOUR ORDER REF ID>'
 var payload = {
     "lines": [
         {
@@ -195,7 +188,7 @@ console.log(result);
 On the order confirmation page, you can retrieve the order details and map the values to your template to show an order summary to the customer.
 
 ```javascript title="Retrieve Order Details"
-const refId = 'c5e85eb93fdd42809ec1fdf90cc94597'
+const refId = '<YOUR ORDER REF ID>'
 const response = await fetch('https://campaigns.apps-staging.29next.com/api/v1/orders/' + refId + '/', {
     method: 'GET',
     headers: {
