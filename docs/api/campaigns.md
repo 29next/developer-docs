@@ -145,7 +145,7 @@ Bankcard payments require using the [iFrame Payment Form](/docs/api/admin/guides
 :::
 
 :::caution You Must Handle the Order Create Response
-- If response data has a `number`, order was successfully created, you can redirect to next page.
+- If response data has a `number`, order was successfully created, you can redirect to the next page.
 - If response data has a `payment_complete_url`, redirect the user to this page. After payment, user will come back to your `success_url`.
 :::
 
