@@ -1,6 +1,8 @@
 # Campaigns API
 
-Campaigns App opens up new possibilities for frontend developers to easily create complex external campaign flows using Javascript, **no backend server-side integration required**. The Campaigns App provides an easy to use CORS enabled API that follows the best practices for integrating to our Admin API for an [External Checkout Flow](/docs/api/admin/guides/external-checkout.md) simplifying reducing the amount of development required and common pitfalls.
+Campaigns App opens up new possibilities for frontend developers to easily create complex external campaign flows using Javascript, **no backend server-side integration required**.
+
+The Campaigns App provides an easy to use CORS enabled API that follows the best practices for integrating to our Admin API for an [External Checkout Flow](/docs/api/admin/guides/external-checkout.md).
 
 ### Campaigns App API
 Campaigns App API is available through the **Campaigns App**. To enable, install the Campaigns App in your store from the Apps view.
@@ -17,9 +19,9 @@ import Link from '@docusaurus/Link';
 
 ```
 
-## Campaign Overview
+## Campaigns Overview
 
-A "campaign" is a defined set of pricing and payment options rules that provide a backend for the HTML/JS webpages of a campaign (or funnel) frontend. You can easily setup multiple campaigns for different product sets, markets, and A/B testing.
+A "campaign" is a defined set of packages and payment rules as a backend for the HTML/JS webpages of a campaign (or funnel) frontend. You can easily setup multiple campaigns for different product offers, markets, and A/B testing.
 
 ### Packages
 Each campaign can have multiple "Packages" configured to set quantity based pricing rules for your products. Typically this results in packages such as:
