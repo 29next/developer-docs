@@ -29,6 +29,7 @@ Each campaign can have multiple "Packages" configured to set quantity based pric
 - Package 1 - 1x Widget at 10.00
 - Package 2 - 3x Widget at 21.00
 - Package 3 - 5x Widget at 30.00
+- Package 4 - 1x Widget at 8.00 Recurring Every 30 Days
 
 :::info
 Package total price needs to be divisible to two digits by the quantity as the total price is sent on a per item level to the store Orders API.
@@ -49,7 +50,7 @@ To get started, create a new campaign with a package mapped to a product in your
 
 ### Create Cart
 
-```javascript
+```javascript title="Create a Cart"
 // Example cart payload data
 var payload = {
   "user": {
@@ -81,8 +82,14 @@ console.log(result); // Show result in console
 ```
 
 ### Create Order
+Creating an order is the core method in an external checkout flow, see the example below to familiarize yourself with the payload data required.
 
-```javascript
+:::info The `success_url` Explained
+All orders require a `success_url` to handle payments requiring a redirect flow. The `success_url` should be the absolute URL of the "Next Page" in your campaign flow. In most cases, this should be your first upsell page, see more below in [Adding Upsells](#adding-upsells) on retrieving order details and handling payment methods that support upsells.
+:::
+
+
+```javascript title="Create an Order"
 // Example order payload data
 var payload = {
     "user": {
@@ -144,7 +151,7 @@ Bankcard payments require using the [iFrame Payment Form](/docs/api/admin/guides
 
 
 ### Adding Upsells
-To add an upsell to an existing order, first you should check to see if the order payment method `supports_post_purchase_upsells` available in the `orderRetrieve` response.
+To add an upsell to an existing order, first you should check to see if the order payment method `supports_post_purchase_upsells` is `True` in the `orderRetrieve` response.
 
 ```javascript title="Retrieve Order Details"
 const refId = 'c5e85eb93fdd42809ec1fdf90cc94597'
@@ -158,7 +165,7 @@ const response = await fetch('https://campaigns.apps-staging.29next.com/api/v1/o
 const result = await response.json();
 console.log(result); // Show result in console
 ```
-Adding an upsell to an order can be done using the `orderUpsellCreate` API endpoint.
+If the order `supports_post_purchase_upsells`, you can add an upsell to an order can be done using the `orderUpsellCreate` API endpoint.
 
 ```javascript title="Add Upsell to Order"
 // Create upsell on existing order
