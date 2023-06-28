@@ -1,4 +1,12 @@
 # Cart JS API
+
+:::warning Deprecated
+Carts JS API is now deprecated and will be removed in the future. You can use the Storefront GraphQL API directly with JS in your theme.
+
+You can find the Storefront GraphQL API at `https://{storedomain}/api/graphql/`
+:::
+
+
 Leverage the integrated JS API to add turn-key functionality to buttons in your storefront and funnels.
 
 The 29 Next Cart JS API allows you to create HTML buttons that carry a variety of functionalities, with no extra code required.  See below for examples and methods of implementation.
