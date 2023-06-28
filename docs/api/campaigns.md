@@ -25,6 +25,7 @@ A "campaign" is a defined set of packages and payment rules as a backend for the
 
 ### Packages
 Each campaign can have multiple "Packages" configured to set quantity based pricing rules for your products. Typically this results in packages such as:
+
 **Example Packages**
 - Package 1 - 1x Widget at 10.00
 - Package 2 - 3x Widget at 21.00
@@ -40,6 +41,7 @@ Package total price needs to be divisible to two digits by the quantity as the t
 Campaigns can have custom shipping prices to optimize shipping fees and methods available on your campaign to override the default pricing configured globally in the store.
 
 **Example Shipping Methods**
+
 - Shipping Method 1 - Default shipping at 7.99
 - Shipping Method 2 - Express shipping at 14.99
 
