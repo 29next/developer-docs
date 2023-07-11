@@ -56,3 +56,8 @@ In addition to populating the cart, you can pass attribution parameters to attri
 | `sub4` | Sub affiliate 4 |
 | `sub5` | Sub affiliate 5 |
 | `attribution_metadata.KEY=VALUE` | Attribution Metadata key/value pair |
+| `clear_attribution=false` | Pass this to only update existing attribution for the cart. |
+
+:::info Last Click Attribution
+Attribution on carts and the subsequent order uses "Last Click" attribution model meaning that each time new attribution is passed it will replace all existing attribution data for the cart. Passing `clear_attribution=false` on the querystring will keep existing attribution and update any new attribution passed.
+:::
