@@ -149,10 +149,10 @@ paths:
       description: Retrieve assigned fulfillment order requests
       parameters:
       - in: query
-        name: partner_id
+        name: location_id
         schema:
           type: string
-        description: Partner ID
+        description: Location ID
       - in: query
         name: assignment_status
         schema:
@@ -885,10 +885,10 @@ paths:
           type: string
         description: Order Number
       - in: query
-        name: partner_id
+        name: location_id
         schema:
           type: string
-        description: Partner ID
+        description: Location ID
       - in: query
         name: status
         schema:
@@ -1003,9 +1003,246 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
+  /api/admin/fulfillment-orders/{id}/fulfillment-request/:
+    post:
+      operationId: fulfillmentRequestCreate
+      description: Sends a fulfillment request to the fulfillment service of a fulfillment
+        order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequest'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/fulfillment-request/accept/:
+    post:
+      operationId: fulfillmentRequestAccept
+      description: Accepts a fulfillment request sent to a fulfillment service for
+        a fulfillment order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestAccept'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestAccept'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestAccept'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/fulfillment-request/cancel/:
+    post:
+      operationId: fulfillmentRequestCancel
+      description: Cancel Requested Fulfillment Order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestCancel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestCancel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestCancel'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/fulfillment-request/reject/:
+    post:
+      operationId: fulfillmentRequestReject
+      description: Rejects a fulfillment request sent to a fulfillment service for
+        a fulfillment order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestReject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestReject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FulfillmentRequestReject'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/fulfillments/:
+    get:
+      operationId: fulfillmentsRetrieve
+      description: Retrieve Fulfillments for a Fulfillment Order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentResponse'
+          description: ''
+    post:
+      operationId: fulfillmentsCreate
+      description: Create Fulfillments for a Fulfillment Order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFulfillment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateFulfillment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateFulfillment'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentResponse'
+          description: ''
   /api/admin/fulfillment-orders/{id}/hold/:
     post:
-      operationId: fulfillmentOrdersHoldCreate
+      operationId: fulfillmentOrdersHold
       description: Hold Fulfillment.
       parameters:
       - in: path
@@ -1046,7 +1283,7 @@ paths:
           description: ''
   /api/admin/fulfillment-orders/{id}/release-hold/:
     post:
-      operationId: fulfillmentOrdersReleaseHoldCreate
+      operationId: fulfillmentOrdersReleaseHold
       description: Release On Hold Fulfillment.
       parameters:
       - in: path
@@ -1194,6 +1431,142 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaymentGateway'
           description: ''
+  /api/admin/locations/:
+    get:
+      operationId: locationsList
+      description: Retrieve a list of all configured fulfillment locations.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLocationList'
+          description: ''
+    post:
+      operationId: locationsCreate
+      description: Create a new fulfillment location.
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /api/admin/locations/{id}/:
+    get:
+      operationId: locationsRetrieve
+      description: Retrieve an existing fulfillment location.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Fulfillment partner.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+    put:
+      operationId: locationsUpdate
+      description: Update an existing fulfillment location.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Fulfillment partner.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
   /api/admin/orders/:
     get:
       operationId: ordersList
@@ -1229,12 +1602,12 @@ paths:
         explode: true
         style: form
       - in: query
-        name: partner
+        name: location_id
         schema:
           type: array
           items:
-            type: string
-        description: Fulfillment Partner
+            type: integer
+        description: Fulfillment Location
         explode: true
         style: form
       - in: query
@@ -1813,11 +2186,11 @@ paths:
       security:
       - tokenAuth: []
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Fulfillment'
+                $ref: '#/components/schemas/FulfillmentResponse'
           description: ''
   /api/admin/orders/{number}/notes/:
     get:
@@ -1931,142 +2304,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
-          description: ''
-  /api/admin/partners/:
-    get:
-      operationId: partnersList
-      description: Retrieve a list of all configured fulfillment partners.
-      parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - fulfillment
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedPartnerList'
-          description: ''
-    post:
-      operationId: partnersCreate
-      description: Create a new fulfillment partner.
-      parameters:
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - fulfillment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Partner'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Partner'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Partner'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Partner'
-          description: ''
-  /api/admin/partners/{id}/:
-    get:
-      operationId: partnersRetrieve
-      description: Retrieve an existing fulfillment partner.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Fulfillment partner.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - fulfillment
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Partner'
-          description: ''
-    put:
-      operationId: partnersUpdate
-      description: Update an existing fulfillment partner.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Fulfillment partner.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - fulfillment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Partner'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Partner'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Partner'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Partner'
           description: ''
   /api/admin/products/:
     get:
@@ -2610,19 +2847,19 @@ paths:
           type: string
         description: Generic search by product name or partner SKU.
       - in: query
-        name: partner
+        name: location_id
         schema:
           type: array
           items:
             type: integer
-        description: Partner
+        description: Location ID
         explode: true
         style: form
       - in: query
         name: sku
         schema:
           type: string
-        description: Partner SKU
+        description: SKU
       - in: query
         name: currency
         schema:
@@ -5315,6 +5552,16 @@ components:
           type: string
           nullable: true
           maxLength: 500
+    CreateFulfillment:
+      type: object
+      properties:
+        notify:
+          type: boolean
+          default: false
+        tracking_info:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingInfo'
     CreateMarketingAttribution:
       type: object
       properties:
@@ -5430,6 +5677,7 @@ components:
           - ideal
           - bancontact
           - giropay
+          - sofort
           - null
           type: string
           nullable: true
@@ -5650,7 +5898,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
         requires_shipping:
           type: boolean
           title: Requires shipping?
@@ -5728,7 +5976,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
       required:
       - variant_attribute_values
     CreateSubscription:
@@ -5854,14 +6102,13 @@ components:
           readOnly: true
         product:
           type: integer
-        partner:
+        location_id:
           type: integer
-        num_in_stock:
-          type: integer
-        price:
+        net_stock_level:
           type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        sku:
+          type: string
         price_currency:
           enum:
           - USD
@@ -5869,34 +6116,29 @@ components:
           - EUR
           type: string
           title: Currency
-        partner_sku:
-          type: string
-          maxLength: 128
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        subscription_suggested_downsell_price:
+        price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
         price_retail:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
           title: Price (retail)
+        subscription_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        subscription_suggested_downsell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
+        num_in_stock:
+          type: integer
         num_allocated:
           type: integer
           maximum: 2147483647
@@ -5911,15 +6153,24 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - date_created
       - date_updated
       - id
-      - partner
-      - partner_sku
+      - location_id
+      - net_stock_level
       - price
       - price_currency
       - product
+      - sku
     CreateUpdateTicket:
       type: object
       properties:
@@ -6189,6 +6440,49 @@ components:
           readOnly: true
       required:
       - created_at
+    FulfillmentLineResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        sku:
+          type: string
+        fulfillment_service:
+          type: string
+        product_id:
+          type: integer
+        requires_shipping:
+          type: boolean
+        fulfillable_quantity:
+          type: integer
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        fulfillment_status:
+          type: string
+      required:
+      - discount
+      - fulfillable_quantity
+      - fulfillment_service
+      - fulfillment_status
+      - id
+      - price
+      - product_id
+      - requires_shipping
+      - sku
+      - title
     FulfillmentOrder:
       type: object
       properties:
@@ -6236,19 +6530,19 @@ components:
             $ref: '#/components/schemas/FulfillmentHold'
           nullable: true
         shipping_method:
-          type: string
-        partner:
-          $ref: '#/components/schemas/FulfillmentPartner'
+          $ref: '#/components/schemas/ShippingMethod'
+        assigned_location:
+          $ref: '#/components/schemas/Location'
         merchant_requests:
           type: array
           items:
             $ref: '#/components/schemas/MerchantRequest'
           nullable: true
       required:
+      - assigned_location
       - id
       - line_items
       - order_number
-      - partner
       - shipping_method
     FulfillmentOrderLine:
       type: object
@@ -6269,55 +6563,99 @@ components:
         stockrecord_id:
           type: integer
           readOnly: true
+        sku:
+          type: string
+          readOnly: true
       required:
       - fulfillment_order_id
       - id
       - order_line_id
+      - sku
       - stockrecord_id
-    FulfillmentPartner:
+    FulfillmentRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+        notify:
+          type: boolean
+    FulfillmentRequestAccept:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+    FulfillmentRequestCancel:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+        notify:
+          type: boolean
+    FulfillmentRequestReject:
+      type: object
+      properties:
+        rejected_reason:
+          enum:
+          - incorrect_address
+          - inventory_out_of_stock
+          - ineligible_product
+          - undeliverable_address
+          - other
+          - ''
+          - null
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+    FulfillmentResponse:
       type: object
       properties:
         id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          title: Order number
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+        shipping_method:
+          type: string
+        location_id:
+          type: integer
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentLineResponse'
+        tracking_code:
           type: string
           readOnly: true
-        address:
-          $ref: '#/components/schemas/FulfillmentPartnerAddress'
+        tracking_link:
+          type: string
+          readOnly: true
+        tracking_codes:
+          readOnly: true
+        tracking_links:
+          readOnly: true
       required:
-      - address
       - id
-    FulfillmentPartnerAddress:
-      type: object
-      properties:
-        line1:
-          type: string
-          title: First line of address
-          maxLength: 255
-        line2:
-          type: string
-          title: Second line of address
-          maxLength: 255
-        line3:
-          type: string
-          title: Third line of address
-          maxLength: 255
-        line4:
-          type: string
-          title: City
-          maxLength: 255
-        state:
-          type: string
-          title: State/County
-          maxLength: 255
-        postcode:
-          type: string
-          title: Post/Zip-code
-          maxLength: 64
-        country:
-          type: string
-          title: ISO 3166-1 alpha-2
-      required:
-      - country
-      - line1
+      - line_items
+      - location_id
+      - order_number
+      - shipping_method
+      - tracking_code
+      - tracking_codes
+      - tracking_link
+      - tracking_links
     FulfillmentShippingAddress:
       type: object
       properties:
@@ -6426,6 +6764,53 @@ components:
       required:
       - option
       - value
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        address:
+          $ref: '#/components/schemas/LocationAddress'
+        name:
+          type: string
+          maxLength: 128
+      required:
+      - address
+      - id
+    LocationAddress:
+      type: object
+      properties:
+        line1:
+          type: string
+          title: First line of address
+          maxLength: 255
+        line2:
+          type: string
+          title: Second line of address
+          maxLength: 255
+        line3:
+          type: string
+          title: Third line of address
+          maxLength: 255
+        line4:
+          type: string
+          title: City
+          maxLength: 255
+        state:
+          type: string
+          title: State/County
+          maxLength: 255
+        postcode:
+          type: string
+          title: Post/Zip-code
+          maxLength: 64
+        country:
+          type: string
+          title: ISO 3166-1 alpha-2
+      required:
+      - country
+      - line1
     MarketingAttribution:
       type: object
       properties:
@@ -6623,7 +7008,7 @@ components:
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/OrderTransaction'
+            $ref: '#/components/schemas/TransactionObject'
           readOnly: true
         fulfillments:
           type: array
@@ -6650,6 +7035,14 @@ components:
         source:
           type: string
           readOnly: true
+        supports_post_purchase_upsells:
+          type: boolean
+          readOnly: true
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+          readOnly: true
       required:
       - attribution
       - currency
@@ -6662,6 +7055,7 @@ components:
       - offer_discounts
       - order_status_url
       - payment_status
+      - refunds
       - shipping_code
       - shipping_excl_tax
       - shipping_incl_tax
@@ -6670,6 +7064,7 @@ components:
       - source
       - subscription_lifecycle
       - subscriptions
+      - supports_post_purchase_upsells
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -6770,63 +7165,6 @@ components:
       required:
       - billing_cycle
       - id
-    OrderTransaction:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        type:
-          type: string
-        amount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        currency:
-          type: string
-          nullable: true
-          maxLength: 6
-        parent_id:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: "\n    The ID of an associated transaction.\n    - For capture\
-            \ transactions, the parent is the authorization transaction.\n    - For\
-            \ void transactions, the parent is the authorization transaction.\n  \
-            \  - For refund transactions, the parent is the debit transaction.\n \
-            \       "
-        status:
-          enum:
-          - succeeded
-          - failed
-          - pending
-          - canceled
-          - expired
-          - refunded
-          - ''
-          type: string
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        payment_method:
-          type: string
-          nullable: true
-          maxLength: 255
-        payment_details:
-          allOf:
-          - $ref: '#/components/schemas/TransactionPaymentDetail'
-          readOnly: true
-        response_code:
-          type: integer
-      required:
-      - amount
-      - date_created
-      - id
-      - parent_id
-      - payment_details
-      - response_code
-      - type
     OrderVoucher:
       type: object
       properties:
@@ -6985,7 +7323,7 @@ components:
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/OrderTransaction'
+            $ref: '#/components/schemas/TransactionObject'
           readOnly: true
         fulfillments:
           type: array
@@ -7012,6 +7350,14 @@ components:
         source:
           type: string
           readOnly: true
+        supports_post_purchase_upsells:
+          type: boolean
+          readOnly: true
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+          readOnly: true
       required:
       - attribution
       - currency
@@ -7024,6 +7370,7 @@ components:
       - offer_discounts
       - order_status_url
       - payment_status
+      - refunds
       - shipping_code
       - shipping_excl_tax
       - shipping_incl_tax
@@ -7032,6 +7379,7 @@ components:
       - source
       - subscription_lifecycle
       - subscriptions
+      - supports_post_purchase_upsells
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -7117,6 +7465,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GatewayGroup'
+    PaginatedLocationList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
     PaginatedOrderList:
       type: object
       properties:
@@ -7133,22 +7497,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Order'
-    PaginatedPartnerList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-        previous:
-          type: string
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Partner'
     PaginatedPaymentGatewayList:
       type: object
       properties:
@@ -7341,62 +7689,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Webhook'
-    Partner:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        address:
-          $ref: '#/components/schemas/PartnerAddress'
-        processing_by:
-          enum:
-          - ''
-          - manual
-          - shipstation
-          type: string
-        name:
-          type: string
-          maxLength: 128
-        enable_cod:
-          type: boolean
-      required:
-      - address
-      - id
-      - processing_by
-    PartnerAddress:
-      type: object
-      properties:
-        line1:
-          type: string
-          title: First line of address
-          maxLength: 255
-        line2:
-          type: string
-          title: Second line of address
-          maxLength: 255
-        line3:
-          type: string
-          title: Third line of address
-          maxLength: 255
-        line4:
-          type: string
-          title: City
-          maxLength: 255
-        state:
-          type: string
-          title: State/County
-          maxLength: 255
-        postcode:
-          type: string
-          title: Post/Zip-code
-          maxLength: 64
-        country:
-          type: string
-          title: ISO 3166-1 alpha-2
-      required:
-      - country
-      - line1
     PatchedCreateUpdateTicket:
       type: object
       properties:
@@ -7544,50 +7836,41 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockRecordProduct'
           readOnly: true
-        partner:
+        location:
           allOf:
-          - $ref: '#/components/schemas/StockRecordPartner'
+          - $ref: '#/components/schemas/Location'
           readOnly: true
         net_stock_level:
           type: integer
           readOnly: true
-        partner_sku:
+        sku:
           type: string
-          maxLength: 128
         price_currency:
           type: string
           readOnly: true
           title: Currency
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        subscription_suggested_downsell_price:
+        price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
+          readOnly: true
         price_retail:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
           title: Price (retail)
-        price:
+        subscription_price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
+          nullable: true
+        subscription_suggested_downsell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
         num_in_stock:
           type: integer
           readOnly: true
@@ -7606,6 +7889,14 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedUpdateOrder:
       type: object
       properties:
@@ -7728,7 +8019,7 @@ components:
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/OrderTransaction'
+            $ref: '#/components/schemas/TransactionObject'
           readOnly: true
         fulfillments:
           type: array
@@ -7754,6 +8045,14 @@ components:
           readOnly: true
         source:
           type: string
+          readOnly: true
+        supports_post_purchase_upsells:
+          type: boolean
+          readOnly: true
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
           readOnly: true
     PatchedUpdateProduct:
       type: object
@@ -7828,7 +8127,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
         requires_shipping:
           type: boolean
           title: Requires shipping?
@@ -7897,7 +8196,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
     PatchedUpdateSubscription:
       type: object
       properties:
@@ -7931,6 +8230,7 @@ components:
         shipping_code:
           enum:
           - default
+          - express
           - no-shipping-required
           type: string
         shipping_address:
@@ -7993,6 +8293,8 @@ components:
           nullable: true
         attribution:
           $ref: '#/components/schemas/CreateMarketingAttribution'
+        is_test:
+          type: boolean
     PatchedUpdateUser:
       type: object
       properties:
@@ -8415,7 +8717,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
         requires_shipping:
           type: boolean
           title: Requires shipping?
@@ -8497,7 +8799,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
       required:
       - id
       - images
@@ -8545,6 +8847,102 @@ components:
       - id
       - name
       - value
+    Refund:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        note:
+          type: string
+          nullable: true
+          maxLength: 512
+        order_number:
+          type: string
+        user_id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+        adjustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefundAdjustment'
+        refund_line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefundLine'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionObject'
+      required:
+      - adjustments
+      - id
+      - order_number
+      - refund_line_items
+      - transactions
+      - user_id
+    RefundAdjustment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        amount_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        amount_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        type:
+          enum:
+          - refund_shipping
+          - refund_discrepancy
+          type: string
+      required:
+      - id
+      - type
+    RefundLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        line_item_id:
+          type: integer
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        location_id:
+          type: integer
+          readOnly: true
+        restock_type:
+          enum:
+          - no_restock
+          - cancel
+          - return
+          type: string
+        amount_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        amount_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+      required:
+      - amount_excl_tax
+      - amount_incl_tax
+      - id
+      - line_item_id
+      - location_id
+      - quantity
     RefundOrder:
       type: object
       properties:
@@ -8634,54 +9032,13 @@ components:
     ShippingMethod:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         name:
           type: string
-          maxLength: 128
-        description:
-          type: string
-        prices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShippingMethodPrices'
-          readOnly: true
-        delivery_time:
-          type: string
-          description: Shows in checkout, example value should be "3-5 days".
-          maxLength: 128
         code:
           type: string
-          description: If left empty, a code name will be generated based on the name
-            of the shipping method.
-          maxLength: 128
-          pattern: ^[-a-zA-Z0-9_]+$
-        is_public:
-          type: boolean
-          description: Only public shipping methods are shown in the checkout flow.
       required:
-      - id
+      - code
       - name
-      - prices
-    ShippingMethodPrices:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        currency:
-          type: string
-          description: Currency to apply this pricing.
-          maxLength: 5
-        price_per_order:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          description: Shipping fee for the order.
-      required:
-      - currency
-      - id
     StockRecord:
       type: object
       properties:
@@ -8692,50 +9049,41 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockRecordProduct'
           readOnly: true
-        partner:
+        location:
           allOf:
-          - $ref: '#/components/schemas/StockRecordPartner'
+          - $ref: '#/components/schemas/Location'
           readOnly: true
         net_stock_level:
           type: integer
           readOnly: true
-        partner_sku:
+        sku:
           type: string
-          maxLength: 128
         price_currency:
           type: string
           readOnly: true
           title: Currency
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        subscription_suggested_downsell_price:
+        price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
+          readOnly: true
         price_retail:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           nullable: true
           title: Price (retail)
-        price:
+        subscription_price:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
+          nullable: true
+        subscription_suggested_downsell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
         num_in_stock:
           type: integer
           readOnly: true
@@ -8754,33 +9102,25 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - date_created
       - date_updated
       - id
+      - location
       - net_stock_level
       - num_in_stock
-      - partner
-      - partner_sku
       - price
       - price_currency
       - product
-    StockRecordPartner:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 128
-        code:
-          type: string
-          readOnly: true
-          pattern: ^[-a-zA-Z0-9_]+$
-      required:
-      - code
-      - id
+      - sku
     StockRecordProduct:
       type: object
       properties:
@@ -8835,6 +9175,67 @@ components:
       required:
       - id
       - partner_sku
+    'Stockrecord ':
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        location_id:
+          type: integer
+          nullable: true
+        sku:
+          type: string
+        price_currency:
+          type: string
+          title: Currency
+          maxLength: 12
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        price_retail:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Price (retail)
+        subscription_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        subscription_suggested_downsell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
+        num_in_stock:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          title: Number in stock
+        num_allocated:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Number allocated
+        low_stock_threshold:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        track_stock:
+          type: boolean
+          title: Track stock levels?
+      required:
+      - id
+      - location_id
+      - sku
     Subscription:
       type: object
       properties:
@@ -8926,6 +9327,8 @@ components:
           nullable: true
         attribution:
           $ref: '#/components/schemas/MarketingAttribution'
+        is_test:
+          type: boolean
       required:
       - attribution
       - cancel_reason
@@ -9142,6 +9545,34 @@ components:
       required:
       - id
       - name
+    TrackingInfo:
+      type: object
+      properties:
+        tracking_code:
+          type: string
+          nullable: true
+          maxLength: 256
+        carrier:
+          enum:
+          - asendia
+          - boxme
+          - deutsche_de
+          - dhl
+          - dhl_ecommerce
+          - fedex
+          - hermesworld_uk
+          - myhermes
+          - other
+          - royal_mail
+          - swiss_post
+          - ups
+          - usps
+          type: string
+        carrier_other_name:
+          type: string
+          maxLength: 256
+      required:
+      - carrier
     Transaction:
       type: object
       properties:
@@ -9219,36 +9650,99 @@ components:
       - subscriptions
       - type
       - user
+    TransactionObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        currency:
+          type: string
+          nullable: true
+          maxLength: 6
+        parent_id:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: "\n    The ID of an associated transaction.\n    - For capture\
+            \ transactions, the parent is the authorization transaction.\n    - For\
+            \ void transactions, the parent is the authorization transaction.\n  \
+            \  - For refund transactions, the parent is the debit transaction.\n \
+            \       "
+        status:
+          enum:
+          - succeeded
+          - failed
+          - pending
+          - canceled
+          - expired
+          - refunded
+          - ''
+          type: string
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        payment_method:
+          type: string
+          nullable: true
+          maxLength: 255
+        payment_details:
+          allOf:
+          - $ref: '#/components/schemas/TransactionPaymentDetail'
+          readOnly: true
+        response_code:
+          type: integer
+      required:
+      - amount
+      - date_created
+      - id
+      - parent_id
+      - payment_details
+      - response_code
+      - type
     TransactionPaymentDetail:
       type: object
       properties:
         gateway:
-          $ref: '#/components/schemas/TransactionPaymentDetailGateway'
+          allOf:
+          - $ref: '#/components/schemas/TransactionPaymentDetailGateway'
+          readOnly: true
         bankcard_first_six:
           type: string
+          nullable: true
+          title: First Six
+          maxLength: 6
         bankcard_last_four:
           type: string
+          nullable: true
+          title: Last four
+          maxLength: 4
         is_3ds:
           type: boolean
         optimized_3ds:
           type: boolean
         downgrade_3ds_retry:
           type: boolean
+          title: Retry Non-3DS Enrolled Cards as Standard Transaction
         sca_flow:
           type: string
         partner_transaction_id:
           type: string
+          nullable: true
+          maxLength: 255
         card_token:
           type: string
+          readOnly: true
       required:
-      - bankcard_first_six
-      - bankcard_last_four
       - card_token
-      - downgrade_3ds_retry
       - gateway
-      - is_3ds
-      - optimized_3ds
-      - partner_transaction_id
       - sca_flow
     TransactionPaymentDetailGateway:
       type: object
@@ -9410,7 +9904,7 @@ components:
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/OrderTransaction'
+            $ref: '#/components/schemas/TransactionObject'
           readOnly: true
         fulfillments:
           type: array
@@ -9437,6 +9931,14 @@ components:
         source:
           type: string
           readOnly: true
+        supports_post_purchase_upsells:
+          type: boolean
+          readOnly: true
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+          readOnly: true
       required:
       - currency
       - date_placed
@@ -9448,6 +9950,7 @@ components:
       - offer_discounts
       - order_status_url
       - payment_status
+      - refunds
       - shipping_code
       - shipping_excl_tax
       - shipping_incl_tax
@@ -9456,6 +9959,7 @@ components:
       - source
       - subscription_lifecycle
       - subscriptions
+      - supports_post_purchase_upsells
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -9535,7 +10039,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
         requires_shipping:
           type: boolean
           title: Requires shipping?
@@ -9612,7 +10116,7 @@ components:
         stockrecords:
           type: array
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/Stockrecord '
       required:
       - variant_attribute_values
     UpdateUser:
