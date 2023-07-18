@@ -6,7 +6,7 @@ tags:
 ---
 # App Kit
 
-App Kit is a command line tool for developers to build and maintain apps.
+App Kit is a command line tool for developers to build and maintain apps that extend storefront themes with [App Snippets](/docs/apps/snippets.md).
 
 :::info
 [See Full Instructions on Github](https://github.com/29next/app-kit) or [Install App Kit from PyPi](https://pypi.org/project/next-app-kit/)
