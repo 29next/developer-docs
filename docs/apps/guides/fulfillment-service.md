@@ -10,11 +10,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
 
-Fulfillment service apps are integrations that manage the fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the 29 Next dashboard.
+Fulfillment service apps are integrations that manage fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the 29 Next dashboard.
 
 ### Fulfillment Flow Overview
 
-Below is a high level overview of the fulfillment flow for Fulfillment Service Apps to accept and process their assigned fulfillment orders.
+Below is a high level overview of the fulfillment flow for fulfillment services to accept and process assigned fulfillment orders.
 
 ``` mermaid
 sequenceDiagram
@@ -32,7 +32,7 @@ sequenceDiagram
 
 #### Step 1 - Customer's initiate the process by creating an order
 
-All orders start when the customer initiating the new order either on the checkout flow, Admin API, or a recurring Subscription. Orders contain multiple **Fulfillment Orders** with the products allocated across the Fulfillment Locations that have the products in stock. A single order often contains multiple fulfillment orders, it's important to keep this in mind for your integration.
+All orders start when the customer initiating the new order either on the checkout flow, Admin API, or a recurring Subscription. Orders contain multiple **Fulfillment Orders** with the products allocated to a [Fulfillment Location](#fulfillment-locations) that has the products in stock. A single order often contains multiple fulfillment orders, it's important to keep this in mind for your integration.
 
 #### Step 2 - Store creates a fulfillment request
 
