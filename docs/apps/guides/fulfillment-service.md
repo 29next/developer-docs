@@ -30,9 +30,9 @@ sequenceDiagram
 
 #### Fulfillment Flow Detail
 
-#### Step 1 - Customer's initiate the process by creating an order
+#### Step 1 - New order created
 
-All orders start when the customer initiating the new order either on the checkout flow, Admin API, or a recurring Subscription. Orders contain multiple **Fulfillment Orders** with the products allocated to a [Fulfillment Location](#fulfillment-locations) that has the products in stock. A single order often contains multiple fulfillment orders, it's important to keep this in mind for your integration.
+All orders start with a customer creating a new order in the Checkout Flow, Admin API, or a recurring Subscription. Orders contain multiple [Fulfillment Orders](#fulfillment-orders), each with the products allocated to the same [Fulfillment Location](#fulfillment-locations) that has the products in stock.
 
 #### Step 2 - Store creates a fulfillment request
 
@@ -57,6 +57,9 @@ Once an order has been fulfilled, the fulfillment service creates a fulfillment 
 #### Step 7 - Customer receives products ordered via the carrier
 The carrier is responsible for delivering the products to the customer in this stage.
 
+### Fulfillment Orders
+
+A Fulfillment Order represents items in an order that are to be fulfilled from the same location. A single order often contains multiple fulfillment orders, it's important to keep this in mind for your integration.
 
 ### Fulfillment Locations
 
