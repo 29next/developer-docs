@@ -19,7 +19,7 @@ Below is a high level overview of the fulfillment flow for fulfillment services 
 ``` mermaid
 sequenceDiagram
   autonumber
-  Customer->>Store: Creates an Order
+  Customer->>Store: New Order Created
   Store->>Fulfillment Service App: Creates a Fulfillment Request
   Fulfillment Service App->>Store: Retrieves Assigned Fulfillment Orders
   Fulfillment Service App->>Store: Accepts Fulfillment Request
@@ -30,31 +30,31 @@ sequenceDiagram
 
 #### Fulfillment Flow Detail
 
-#### Step 1 - New order created
+#### Step 1 - New Order Created
 
 All orders start with a customer creating a new order in the Checkout Flow, Admin API, or a recurring Subscription. Orders contain multiple [Fulfillment Orders](#fulfillment-orders), each with the products allocated to the same [Fulfillment Location](#fulfillment-locations) that has the products in stock.
 
-#### Step 2 - Store creates a fulfillment request
+#### Step 2 - Store Creates a Fulfillment Request
 
-After a delay period (usually several hours), the store will send a fulfillment request to the [Fulfillment Location](#fulfillment-locations) assigned to the order. Fulfillment Requests can be initiated by dashboard users, background automated processes, or via the Admin API. See [Fulfillment Locations](#fulfillment-locations).
+After a delay period (usually several hours), the store will send a fulfillment request to the [Fulfillment Location](#fulfillment-locations) assigned to the order. Fulfillment Requests can be initiated by dashboard users, background processes, or via the Admin API. See [Fulfillment Locations](#fulfillment-locations).
 
-#### Step 3 - Fulfillment Service retrieves their assigned fulfillment order requests
+#### Step 3 - Fulfillment Service Retrieves Assigned Fulfillment Orders
 
 In response to receiving a fulfillment request, the fulfillment service needs to retrieve all of their assigned fulfillment orders from the [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) API endpoint. See [Assigned Fulfillment Orders](#assigned-fulfillment-orders).
 
-#### Step 4 - Fulfillment Service accepts fulfillment order requests
+#### Step 4 - Fulfillment Service Accepts Fulfillment Request
 
 For each assigned fulfillment order request in Step 3, the fulfillment service needs to `Accept` or `Reject` the assignment to notify the store the order is expected to be fulfilled or not. See [Accepting Fulfillment Requests](#accepting-fulfillment-requests).
 
-#### Step 5 - Fulfillment Service processes the fulfillment with a carrier
+#### Step 5 - Fulfillment Service Processes Fulfillment Order with Carrier
 
 Accepted fulfillment orders are processed by the fulfillment service location to prepare shipment to the customer.
 
-#### Step 6 - Fulfillment Service creates a fulfillment
+#### Step 6 - Fulfillment Service Creates a Fulfillment
 
 Once an order has been fulfilled, the fulfillment service creates a fulfillment to upload with shipment carrier tracking information and notify the customer their order has shipped. See [Creating Fulfillments](#creating-fulfillments).
 
-#### Step 7 - Customer receives products ordered via the carrier
+#### Step 7 - Carrier Delivers Ordered Products to Customer
 The carrier is responsible for delivering the products to the customer in this stage.
 
 ### Fulfillment Orders
@@ -68,9 +68,9 @@ Fulfillment Services need to create `Locations` which represent their warehouses
 When new orders are created, the fulfillment orders are assigned to the locations that are expected to have the product `sku` in stock. The Location Address is also used for Tax calculation. See the [Locations Create](/docs/api/admin/reference/#tag/fulfillment/operation/locationsCreate) endpoint to create a location.
 
 #### Location Callback
-The location `callback` is a URL the store will send `Fulfillment Requests` webhooks to notify them of a new fulfillment assigned.
+The location `callback` is a URL the store will send `Fulfillment Request` webhooks to notify them of a new fulfillment assigned. Fulfillment Services need to query their [Assigned Fulfillment Orders](#assigned-fulfillment-orders) to retrieve the fulfillment order details.
 
-Fulfillment assignment request types are:
+**Fulfillment assignment request types are:**
 
 - `fulfillment_requested` - when a new fulfillment order has been requested to be fulfilled.
 - `cancellation_requested`- when an already processing fulfillment order has been requested to cancel fulfillment.
