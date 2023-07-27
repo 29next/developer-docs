@@ -1003,9 +1003,175 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
+  /api/admin/fulfillment-orders/{id}/cancellation-request/:
+    post:
+      operationId: cancellationRequestSend
+      description: Sends a fulfillment cancellation request to the fulfillment service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancellationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancellationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancellationRequest'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/cancellation-request/accept/:
+    post:
+      operationId: cancellationRequestAccept
+      description: Accepts a fulfillment cancellation request sent to a fulfillment
+        service for a fulfillment order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestAccept'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestAccept'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestAccept'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/cancellation-request/cancel/:
+    post:
+      operationId: cancellationRequestCancel
+      description: Cancel a requested fulfillment cancellation request.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestCancel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestCancel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestCancel'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+  /api/admin/fulfillment-orders/{id}/cancellation-request/reject/:
+    post:
+      operationId: cancellationRequestReject
+      description: Rejects a fulfillment cancellation request sent to a fulfillment
+        service for a fulfillment order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this fulfillment order.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - fulfillment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestReject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestReject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancellationRequestReject'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
   /api/admin/fulfillment-orders/{id}/fulfillment-request/:
     post:
-      operationId: fulfillmentRequestCreate
+      operationId: fulfillmentRequestSend
       description: Sends a fulfillment request to the fulfillment service of a fulfillment
         order.
       parameters:
@@ -1043,7 +1209,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FulfillmentOrder'
+                $ref: '#/components/schemas/FulfillmentRequestResponse'
           description: ''
   /api/admin/fulfillment-orders/{id}/fulfillment-request/accept/:
     post:
@@ -5248,6 +5414,34 @@ components:
           default: true
       required:
       - cancel_reason
+    CancellationRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+    CancellationRequestAccept:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+    CancellationRequestCancel:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
+    CancellationRequestReject:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+          maxLength: 255
     CaptureTransaction:
       type: object
       properties:
@@ -6572,6 +6766,17 @@ components:
       - order_line_id
       - sku
       - stockrecord_id
+    FulfillmentOrderLineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+      required:
+      - id
+      - quantity
     FulfillmentRequest:
       type: object
       properties:
@@ -6579,6 +6784,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        fulfillment_order_line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentOrderLineItem'
         notify:
           type: boolean
     FulfillmentRequestAccept:
@@ -6595,8 +6804,6 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        notify:
-          type: boolean
     FulfillmentRequestReject:
       type: object
       properties:
@@ -6615,6 +6822,19 @@ components:
           type: string
           nullable: true
           maxLength: 255
+    FulfillmentRequestResponse:
+      type: object
+      properties:
+        original_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+        requested_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+        unrequested_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+      required:
+      - original_fulfillment_order
+      - requested_fulfillment_order
+      - unrequested_fulfillment_order
     FulfillmentResponse:
       type: object
       properties:
@@ -6775,8 +6995,12 @@ components:
         name:
           type: string
           maxLength: 128
+        callback_url:
+          type: string
+          format: uri
       required:
       - address
+      - callback_url
       - id
     LocationAddress:
       type: object

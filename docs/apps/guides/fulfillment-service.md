@@ -8,9 +8,16 @@ tags:
 ```mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Link from '@docusaurus/Link';
 ```
 
 Fulfillment service apps are integrations that manage fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the 29 Next dashboard.
+
+
+:::info
+View a fully functional [Demo Fulfillment Service App](https://github.com/29next/demo-fulfillment-service-app) to see all of the concepts in action with detailed code examples.
+:::
+
 
 ### Fulfillment Flow Overview
 
@@ -145,11 +152,10 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-
 
 ### Rejecting Fulfillment Requests
 
-Your fulfillment service can `Reject` fulfillment order assignments which will prompt the merchant to take action in their store to amend the order. For address corrections, the Fulfillment Service should verify the order shipping address before accepting and once corrected the merchant can send a new fulfillment request with the updated address. See possible rejection reasons on in the [Fulfillment Request Reject API docs](/docs/api/admin/reference/#tag/fulfillment/operation/fulfillmentRequestReject).
+Your fulfillment service can `Reject` fulfillment order assignments which will prompt the merchant to take action in their store to amend the order. Rejecting fulfillment requests can be for many reasons, such as incorrectly assigned for unavailable products, no stock available, or invalid address. The Fulfillment Service should verify the order details before accepting, by rejecting the fulillment request it will prompt the merchant to correct the order and then send an updated fulfillment request. See possible rejection reasons on in the [Fulfillment Request Reject API docs](/docs/api/admin/reference/#tag/fulfillment/operation/fulfillmentRequestReject).
 
 ```json title="Example Fulfillment Rejection Payload"
 POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/reject/
-
 {
     "rejected_reason": "incorrect_address",
     "message": "Your Message"
@@ -157,6 +163,29 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-
 ```
 
 
+### Accepting Cancellation Requests
+It is common for customers to contact merchants after orders have already been sent to fulfillment service partners for processing. Merchants have the ability to "Request Fulfillment Cancellation" which will send a `cancellation_request` to your [Location Callback](#location-callback). Fulfillment Services are expected to respond to these requests.
+
+To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](http://localhost:3000/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestAccept)
+
+```json title="Example Cancellation Accept Request"
+POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/accept/
+
+```
+
+
+### Rejecting Cancellation Requests
+If an fulfillment order is too far along in fulfillment processing, fulfillment service partners can reject cancellation requests.
+
+To `reject` a cancellation request, send a request to the [Cancellation Request Reject API](http://localhost:3000/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestReject)
+
+```json title="Example Cancellation Reject Request"
+
+POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/reject/
+{
+    "message": "Order already shipped."
+}
+```
 
 ### Creating Fulfillments
 
