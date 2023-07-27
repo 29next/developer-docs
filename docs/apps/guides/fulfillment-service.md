@@ -170,7 +170,7 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-
 ### Accepting Cancellation Requests
 It is common for customers to contact merchants after orders have already been sent to fulfillment service partners for processing. Merchants have the ability to "Request Fulfillment Cancellation" which will send a `cancellation_request` to your [Location Callback](#location-callback). Fulfillment Services are expected to respond to these requests.
 
-To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](http://localhost:3000/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestAccept)
+To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestAccept)
 
 ```json title="Example Cancellation Accept Request"
 POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/accept/
@@ -181,7 +181,7 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation
 ### Rejecting Cancellation Requests
 If an fulfillment order is too far along in fulfillment processing, fulfillment service partners can reject cancellation requests.
 
-To `reject` a cancellation request, send a request to the [Cancellation Request Reject API](http://localhost:3000/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestReject)
+To `reject` a cancellation request, send a request to the [Cancellation Request Reject API](/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestReject). If you include a message, it will show in the order timeline events for the merchant to see.
 
 ```json title="Example Cancellation Reject Request"
 
