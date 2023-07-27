@@ -77,6 +77,10 @@ When new orders are created, the fulfillment orders are assigned to the location
 #### Location Callback
 The location `callback` is a URL the store will send `Fulfillment Request` webhooks to notify them of a new fulfillment assigned. Fulfillment Services need to query their [Assigned Fulfillment Orders](#assigned-fulfillment-orders) to retrieve the fulfillment order details.
 
+:::caution
+Fulfullment Requests are sent to the location `callback` + `/fulfillment-order-notification/`.
+:::
+
 **Fulfillment assignment request types are:**
 
 - `fulfillment_requested` - when a new fulfillment order has been requested to be fulfilled.
