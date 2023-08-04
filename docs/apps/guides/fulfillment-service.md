@@ -116,7 +116,7 @@ The webhook request has a `X-29Next-Store` header that indicates which store the
 The [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) will return a list of all fulfillment orders assigned to your locations. Your app is recommended to call this API in response to receiving a notification to the location callback, and you may also want to poll this endpoint occasionally (ie once per hour) to ensure you've actioned everything requested.
 
 :::info
-Use the appropriate `assignment_status` parameter to filter  the fulfillment orders to those that require action.
+Use the appropriate `assignment_status` parameter to filter the fulfillment orders to those that require action.
 :::
 
 <Tabs>
@@ -179,6 +179,23 @@ sequenceDiagram
   Fulfillment Service App->>Store: Accept/Reject Cancellation Requests
 ```
 
+#### Cancellation Flow Detail
+#### Step 1 - Store Creates Cancellation Request
+
+Merchants will trigger a cancellation request which will send a cancellation request to the [Fulfillment Location](#fulfillment-locations) assigned to the order.
+
+#### Step 2 - Fulfillment Service Retrieves Cancellation Requests
+
+In response to receiving a cancellation request, the fulfillment service needs to retrieve all of its assigned cancellation requests from the [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) API endpoint.
+
+
+```json title="Retrieve all pending Cancellation Requests"
+GET https://{store}.29next.store/api/admin/assigned-fulfillment-orders/?assignment_status=cancellation_requested
+```
+
+#### Step 3 - Fulfillment Service Accepts/Rejects Cancellation Request
+
+At this stage, the Fulfillment Service needs to [Accept](#accepting-cancellation-requests) or [Reject](#rejecting-cancellation-requests) the cancellation request to respond to the merchant's request.
 
 ### Accepting Cancellation Requests
 
