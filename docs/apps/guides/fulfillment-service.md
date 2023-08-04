@@ -21,7 +21,7 @@ View a fully functional [Demo Fulfillment Service App](https://github.com/29next
 
 ### Fulfillment Flow Overview
 
-Below is a high level overview of the fulfillment flow for fulfillment services to accept and process assigned fulfillment orders.
+Below is a high-level overview of the fulfillment flow for fulfillment services to accept and process assigned fulfillment orders.
 
 ``` mermaid
 sequenceDiagram
@@ -167,10 +167,22 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-
 ```
 
 
-### Accepting Cancellation Requests
+### Cancellation Flow Overview
+
 It is common for customers to contact merchants after orders have already been sent to fulfillment service partners for processing. Merchants have the ability to "Request Fulfillment Cancellation" which will send a `cancellation_request` to your [Location Callback](#location-callback). Fulfillment Services are expected to respond to these requests.
 
-To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestAccept)
+``` mermaid
+sequenceDiagram
+  autonumber
+  Store->>Fulfillment Service App: Creates a Cancellation Request
+  Fulfillment Service App->>Store: Retrieves Cancellation Requests
+  Fulfillment Service App->>Store: Accept/Reject Cancellation Requests
+```
+
+
+### Accepting Cancellation Requests
+
+To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestAccept).
 
 ```json title="Example Cancellation Accept Request"
 POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/accept/
