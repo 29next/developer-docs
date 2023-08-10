@@ -16,12 +16,12 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `catalogue:write` | Access to create and update catalogue related objects |
 | `disputes:read` | Access to list and view disputes |
 | `disputes:write` | Access to create and update disputes |
-| `locations:read` | Access to list and view all locations |
-| `locations:write` | Access to create and update locations |
 | `fulfillment_service:read` | Access to list assigned fulfillment orders and own locations |
 | `fulfillment_service:write` | Access to create fulfillment locations and fulfillments |
 | `fulfillment_orders:read` | Access to list fulfillment order fulfillment requests |
 | `fulfillment_orders:write` | Access to update fulfillment order fulfillment requests |
+| `locations:read` | Access to list and view all locations |
+| `locations:write` | Access to create and update locations |
 | `orders:read` | Access to list and view all orders |
 | `orders:write` | Access to create and update orders |
 | `subscriptions:read` | Access to list and view all subscriptions |
