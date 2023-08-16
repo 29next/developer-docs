@@ -1625,7 +1625,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedLocationList'
+                $ref: '#/components/schemas/PaginatedLocation List'
           description: ''
     post:
       operationId: locationsCreate
@@ -1645,13 +1645,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/Location '
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/Location '
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/Location '
         required: true
       security:
       - tokenAuth: []
@@ -1660,7 +1660,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Location'
+                $ref: '#/components/schemas/Location '
           description: ''
   /api/admin/locations/{id}/:
     get:
@@ -1690,7 +1690,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Location'
+                $ref: '#/components/schemas/Location '
           description: ''
     put:
       operationId: locationsUpdate
@@ -1716,13 +1716,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/Location '
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/Location '
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/Location '
         required: true
       security:
       - tokenAuth: []
@@ -1731,7 +1731,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Location'
+                $ref: '#/components/schemas/Location '
           description: ''
   /api/admin/orders/:
     get:
@@ -3011,14 +3011,14 @@ paths:
         name: search_text
         schema:
           type: string
-        description: Generic search by product name or partner SKU.
+        description: Generic search by product name or SKU.
       - in: query
         name: location_id
         schema:
           type: array
           items:
             type: integer
-        description: Location ID
+        description: Location
         explode: true
         style: form
       - in: query
@@ -3090,7 +3090,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateUpdateStockRecord'
+                $ref: '#/components/schemas/StockRecord'
           description: ''
   /api/admin/stockrecords/{id}/:
     get:
@@ -3146,13 +3146,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedStockRecord'
+              $ref: '#/components/schemas/PatchedCreateUpdateStockRecord'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedStockRecord'
+              $ref: '#/components/schemas/PatchedCreateUpdateStockRecord'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedStockRecord'
+              $ref: '#/components/schemas/PatchedCreateUpdateStockRecord'
       security:
       - tokenAuth: []
       responses:
@@ -3239,7 +3239,8 @@ paths:
           type: array
           items:
             type: string
-        description: Partner SKU
+            title: SKU
+        description: SKU
         explode: true
         style: form
       - in: query
@@ -5592,7 +5593,7 @@ components:
           type: integer
           readOnly: true
         product:
-          $ref: '#/components/schemas/Product'
+          $ref: '#/components/schemas/Product '
         stockrecord:
           $ref: '#/components/schemas/Stockrecord'
         quantity:
@@ -5751,11 +5752,15 @@ components:
       properties:
         notify:
           type: boolean
-          default: false
+          default: true
         tracking_info:
           type: array
           items:
             $ref: '#/components/schemas/TrackingInfo'
+        fulfillment_order_line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentOrderLineItem'
     CreateMarketingAttribution:
       type: object
       properties:
@@ -5872,6 +5877,7 @@ components:
           - bancontact
           - giropay
           - sofort
+          - sepa_debit
           - null
           type: string
           nullable: true
@@ -6298,47 +6304,10 @@ components:
           type: integer
         location_id:
           type: integer
-        net_stock_level:
-          type: string
-          readOnly: true
         sku:
           type: string
-        price_currency:
-          enum:
-          - USD
-          - CAD
-          - EUR
-          type: string
-          title: Currency
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        price_retail:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Price (retail)
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_suggested_downsell_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
         num_in_stock:
           type: integer
-        num_allocated:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Number allocated
         low_stock_threshold:
           type: integer
           maximum: 2147483647
@@ -6360,9 +6329,6 @@ components:
       - date_updated
       - id
       - location_id
-      - net_stock_level
-      - price
-      - price_currency
       - product
       - sku
     CreateUpdateTicket:
@@ -6640,43 +6606,82 @@ components:
         id:
           type: integer
           readOnly: true
-        title:
+        order_line_id:
+          type: integer
+          readOnly: true
+        product_id:
+          type: integer
+          readOnly: true
+        product_title:
           type: string
+          readOnly: true
+        product_image:
+          type: string
+          format: uri
+          readOnly: true
         quantity:
           type: integer
           maximum: 2147483647
           minimum: 0
+        fulfilled_quantity:
+          type: string
+          readOnly: true
+        returnable_quantity:
+          type: string
+          readOnly: true
+        returned_quantity:
+          type: string
+          readOnly: true
         sku:
           type: string
+          readOnly: true
         fulfillment_service:
           type: string
-        product_id:
-          type: integer
+          readOnly: true
         requires_shipping:
           type: boolean
-        fulfillable_quantity:
-          type: integer
-        price:
+          readOnly: true
+        price_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        discount:
+          readOnly: true
+        price_incl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        fulfillment_status:
+          readOnly: true
+        price_excl_tax_excl_discounts:
           type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        price_incl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+          maxLength: 12
       required:
-      - discount
-      - fulfillable_quantity
+      - currency
+      - fulfilled_quantity
       - fulfillment_service
-      - fulfillment_status
       - id
-      - price
+      - order_line_id
+      - price_excl_tax
+      - price_excl_tax_excl_discounts
+      - price_incl_tax
+      - price_incl_tax_excl_discounts
       - product_id
+      - product_image
+      - product_title
       - requires_shipping
+      - returnable_quantity
+      - returned_quantity
       - sku
-      - title
     FulfillmentOrder:
       type: object
       properties:
@@ -6726,7 +6731,7 @@ components:
         shipping_method:
           $ref: '#/components/schemas/ShippingMethod'
         assigned_location:
-          $ref: '#/components/schemas/Location'
+          $ref: '#/components/schemas/Location '
         merchant_requests:
           type: array
           items:
@@ -6760,10 +6765,52 @@ components:
         sku:
           type: string
           readOnly: true
+        price_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        price_excl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        price_incl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+          maxLength: 12
+        product_id:
+          type: string
+          readOnly: true
+        product_title:
+          type: string
+          readOnly: true
+        product_image:
+          type: string
+          format: uri
+          readOnly: true
       required:
+      - currency
       - fulfillment_order_id
       - id
       - order_line_id
+      - price_excl_tax
+      - price_excl_tax_excl_discounts
+      - price_incl_tax
+      - price_incl_tax_excl_discounts
+      - product_id
+      - product_image
+      - product_title
       - sku
       - stockrecord_id
     FulfillmentOrderLineItem:
@@ -6990,6 +7037,22 @@ components:
         id:
           type: integer
           readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        code:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - code
+      - id
+    'Location ':
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
         address:
           $ref: '#/components/schemas/LocationAddress'
         name:
@@ -6998,6 +7061,9 @@ components:
         callback_url:
           type: string
           format: uri
+        accept_return:
+          type: boolean
+          title: Accepts Returns
       required:
       - address
       - callback_url
@@ -7032,9 +7098,13 @@ components:
         country:
           type: string
           title: ISO 3166-1 alpha-2
+        phone_number:
+          type: string
+          maxLength: 128
       required:
       - country
       - line1
+      - line4
     MarketingAttribution:
       type: object
       properties:
@@ -7303,7 +7373,7 @@ components:
           readOnly: true
         product:
           allOf:
-          - $ref: '#/components/schemas/Product'
+          - $ref: '#/components/schemas/Product '
           readOnly: true
         stockrecord:
           $ref: '#/components/schemas/Stockrecord'
@@ -7689,7 +7759,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GatewayGroup'
-    PaginatedLocationList:
+    PaginatedLocation List:
       type: object
       properties:
         count:
@@ -7704,7 +7774,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Location'
+            $ref: '#/components/schemas/Location '
     PaginatedOrderList:
       type: object
       properties:
@@ -7913,6 +7983,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Webhook'
+    PatchedCreateUpdateStockRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        location_id:
+          type: integer
+        sku:
+          type: string
+        num_in_stock:
+          type: integer
+        low_stock_threshold:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        track_stock:
+          type: boolean
+          title: Track stock levels?
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedCreateUpdateTicket:
       type: object
       properties:
@@ -8050,77 +8150,6 @@ components:
           - null
           type: string
           nullable: true
-    PatchedStockRecord:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        product:
-          allOf:
-          - $ref: '#/components/schemas/StockRecordProduct'
-          readOnly: true
-        location:
-          allOf:
-          - $ref: '#/components/schemas/Location'
-          readOnly: true
-        net_stock_level:
-          type: integer
-          readOnly: true
-        sku:
-          type: string
-        price_currency:
-          type: string
-          readOnly: true
-          title: Currency
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        price_retail:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Price (retail)
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_suggested_downsell_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
-        num_in_stock:
-          type: integer
-          readOnly: true
-          title: Number in stock
-        num_allocated:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Number allocated
-        low_stock_threshold:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-        track_stock:
-          type: boolean
-          title: Track stock levels?
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
-        date_updated:
-          type: string
-          format: date-time
-          readOnly: true
     PatchedUpdateOrder:
       type: object
       properties:
@@ -8805,6 +8834,147 @@ components:
         title:
           type: string
           readOnly: true
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        structure:
+          enum:
+          - standalone
+          - parent
+          - child
+          type: string
+          title: Product Structure
+        is_discountable:
+          type: boolean
+          title: Is discountable?
+          description: This flag indicates if this product can be used in an offer
+            or not
+        is_public:
+          type: boolean
+          description: Show this product in search results and catalogue listings.
+        ranking:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The highest ranking are shown first
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+          readOnly: true
+        enable_subscription:
+          type: boolean
+        interval:
+          enum:
+          - day
+          - week
+          - month
+          - year
+          - ''
+          - null
+          type: string
+          nullable: true
+          title: Subscription Interval
+        interval_counts:
+          type: array
+          items:
+            type: integer
+            maximum: 2147483647
+            minimum: -2147483648
+            nullable: true
+          nullable: true
+          title: Interval Count Options
+          description: Choose a predefined value or type to enter custom value(s).
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        stockrecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stockrecord '
+        requires_shipping:
+          type: boolean
+          title: Requires shipping?
+        recommended_products:
+          type: array
+          items:
+            type: integer
+        upc:
+          type: string
+          nullable: true
+          description: Universal Product Code (UPC) is an identifier for a product
+            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          maxLength: 64
+        external_tax_code:
+          type: string
+          nullable: true
+          title: Tax Code
+          description: Tax code to be used with external tax systems such as Avalara,
+            TaxJar.
+          maxLength: 64
+        variant_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantAttribute'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+        template:
+          type: string
+          nullable: true
+          title: Theme Template
+          description: Use a custom template from your theme to customize the product
+            display.
+          maxLength: 256
+        rating:
+          type: number
+          format: double
+          readOnly: true
+        meta_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        meta_description:
+          type: string
+          nullable: true
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - categories
+      - children
+      - date_created
+      - date_updated
+      - id
+      - images
+      - rating
+      - title
+      - url
+    'Product ':
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
         categories:
           type: array
           items:
@@ -9282,35 +9452,11 @@ components:
           readOnly: true
         sku:
           type: string
-        price_currency:
-          type: string
-          readOnly: true
-          title: Currency
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        price_retail:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Price (retail)
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_suggested_downsell_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
         num_in_stock:
           type: integer
-          readOnly: true
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
           title: Number in stock
         num_allocated:
           type: integer
@@ -9340,9 +9486,6 @@ components:
       - id
       - location
       - net_stock_level
-      - num_in_stock
-      - price
-      - price_currency
       - product
       - sku
     StockRecordProduct:
@@ -9363,6 +9506,7 @@ components:
           readOnly: true
         partner_sku:
           type: string
+          title: SKU
           maxLength: 128
         price_currency:
           type: string
@@ -9382,7 +9526,7 @@ components:
         num_in_stock:
           type: integer
           maximum: 2147483647
-          minimum: 0
+          minimum: -2147483648
           nullable: true
           title: Number in stock
         num_allocated:
@@ -9410,43 +9554,15 @@ components:
           nullable: true
         sku:
           type: string
-        price_currency:
-          type: string
-          title: Currency
-          maxLength: 12
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        price_retail:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Price (retail)
-        subscription_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        subscription_suggested_downsell_price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Suggested Downsell Price
         num_in_stock:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          title: Number in stock
-        num_allocated:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          title: Number in stock
+        num_allocated:
+          type: integer
+          readOnly: true
           title: Number allocated
         low_stock_threshold:
           type: integer
@@ -9459,6 +9575,7 @@ components:
       required:
       - id
       - location_id
+      - num_allocated
       - sku
     Subscription:
       type: object
@@ -9577,7 +9694,7 @@ components:
           type: integer
           readOnly: true
         product:
-          $ref: '#/components/schemas/Product'
+          $ref: '#/components/schemas/Product '
         stockrecord:
           $ref: '#/components/schemas/Stockrecord'
         quantity:
@@ -9772,6 +9889,11 @@ components:
     TrackingInfo:
       type: object
       properties:
+        tracking_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 256
         tracking_code:
           type: string
           nullable: true
@@ -9794,6 +9916,7 @@ components:
           type: string
         carrier_other_name:
           type: string
+          nullable: true
           maxLength: 256
       required:
       - carrier
@@ -9861,6 +9984,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/Agent'
           readOnly: true
+        is_disputed:
+          type: boolean
       required:
       - amount
       - attribution
@@ -9923,6 +10048,8 @@ components:
           readOnly: true
         response_code:
           type: integer
+        is_disputed:
+          type: boolean
       required:
       - amount
       - date_created
@@ -10760,9 +10887,12 @@ components:
       in: header
       name: Authorization
       description: Token-based authentication with required prefix "Token"
+
+
 externalDocs:
   description: See API Introduction Documentation
   url: https://developers.29next.com/api/admin/
 
-servers:
+
+  servers:
   - url: https://{store}.29next.store
