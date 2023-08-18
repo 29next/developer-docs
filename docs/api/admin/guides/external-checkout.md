@@ -158,7 +158,7 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
 </TabItem>
 <TabItem value="sku" label="sku + currency">
 
-:::caution Deprecation Notice
+:::warning Deprecation Notice
 Using `sku` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
 :::
 
@@ -175,7 +175,7 @@ Using `sku` is deprecated and will be removed in the future, use `product_id` an
 </TabItem>
 <TabItem value="stockrecord_id" label="stockrecord_id">
 
-:::caution Deprecation Notice
+:::warning Deprecation Notice
 Using `stockrecord_id` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
 :::
 
