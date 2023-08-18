@@ -138,7 +138,7 @@ The `ordersAddLineItemsCreate` API requires that the order initial **payment met
 :::
 
 ### Cart / Order / Upsell lines Detail
-Cart, Order, and Upsell line items represent the products the customer is purchasing. At the core, line items represent an order of a stock record, which are the physical (or virtual) items being purchased. Products can have multiple stock records (`Partner + SKU + Currency + Price`) and enables support for multi-currency pricing as well as the use of different regional fulfillment partners for the product.
+Cart, Order, and Upsell line items represent the products the customer is purchasing. When an order is created, the product fulfillment location will be automatically chosen based on product stock records and inventory availability.
 
 **Acceptable Line Combinations for a Product**
 
