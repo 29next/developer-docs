@@ -50,6 +50,8 @@ Transaction `parent_id` will show the related transaction in the following cases
 
 Your app can also subscribe to `order.created` and `order.updated` events to receive more detailed order information such as items purchased, fulfillment tracking numbers, and items that have already been refunded.
 
+Create your webhook after the app is installed using the [webhooksCreate](/docs/api/admin/reference/#tag/webhooks/operation/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
+
 
 #### Step 3 - Dispute service receives transaction dispute
 
