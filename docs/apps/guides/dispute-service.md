@@ -46,7 +46,7 @@ There are several scenarios that create new payment transactions:
 Orders typically have many associated transactions for the payments and refunds.
 
 #### Step 2 - `transaction.created` webhook event
-Dispute service apps should subscribe to the `transaction.created` webhook event to be notified of all payment transaction events on a store so that your app is aware of new payments and refunds, and can handle disputes properly.
+Dispute service apps should subscribe to the `transaction.created` webhook event to be notified of all payment transaction events on a store so that your app is aware of new payments, refunds, and can handle disputes properly.
 
 :::info Use `parent_id` to associate related transactions
 Transaction `parent_id` will show the related transaction in the following cases:
