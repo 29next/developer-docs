@@ -10894,5 +10894,5 @@ externalDocs:
   url: https://developers.29next.com/api/admin/
 
 
-  servers:
+servers:
   - url: https://{store}.29next.store

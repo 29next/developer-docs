@@ -1,6 +1,6 @@
 ---
 title: Server to Server Apps
-sidebar_position: 1
+sidebar_position: 0
 tags:
  - Guide
 ---
