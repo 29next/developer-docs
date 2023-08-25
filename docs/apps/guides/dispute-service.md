@@ -62,11 +62,11 @@ Create your webhook after the app is installed using the [webhooksCreate](/docs/
 
 #### Step 3 - Dispute service receives transaction dispute
 
-At this stage, the dispute service is responsible for receiving disputes from their integration partners. See details below on [Dispute Types](#disputes) to familiarize yourself with our dispute types and their use cases.
+At this stage, the dispute service is responsible for receiving disputes from their integration partners.
 
 #### Step 4 - Dispute service creates dispute (alert or chargeback) in store
 
-When disputes are matched to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/api/admin/reference/#tag/payments/operation/disputesCreate) Admin API.
+When disputes are identified as belonging to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/api/admin/reference/#tag/payments/operation/disputesCreate) Admin API.
 
 
 #### Step 5 - Dispute service matches dispute to transaction
