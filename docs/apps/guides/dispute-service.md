@@ -91,7 +91,7 @@ Once the dispute is resolved, the dispute service should set the dispute resolut
 
 ### Creating Disputes
 
-To create a dispute in the store on the [disputesCreate] Admin API, see example below:
+To create a dispute in the store using the [disputesCreate](/docs/api/admin/reference/#tag/payments/operation/disputesCreate) Admin API, see example below:
 
 ```json title="Create dispute"
 POST https://{store}.29next.store/api/admin/disputes/
