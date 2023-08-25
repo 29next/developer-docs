@@ -76,7 +76,7 @@ Disputes created in the store need to be matched to the transaction in the store
 
 #### Step 6 - Customer is added to block lists
 
-Merchants can configure their store to automatically add customers to block lists when any of their transactions have disputed to mitigate future risk from the customer and associated payment methods. See [Block Lists](https://docs.29next.com/features/payments/block-lists) guide in our user docs.
+Merchants can configure their store to automatically add customers to block lists when any of their transactions have been disputed to mitigate future risk from the customer and associated payment methods. See [Block Lists](https://docs.29next.com/features/payments/block-lists) guide in our user docs.
 
 
 #### Step 7 - Dispute service creates refund
