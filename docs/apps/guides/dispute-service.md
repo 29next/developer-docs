@@ -11,6 +11,13 @@ Dispute service apps are integrations that manage the processing of payment disp
 Dispute Service Apps are [Server to Server Apps](/docs/apps/guides/server-to-server-apps.md) that use the Oauth flow to obtain API Access and then use the [Admin APIs](/api/admin/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
 :::
 
+### Disputes
+
+Disputes are complaints initiated by the customer against the merchant pertaining to their orders and are categorized into two broad groups by type, Alerts and Chargebacks, see below.
+
+- **Alerts** - disputes that are not yet a chargeback, ie TC40, SAFE, and RDR alerts.
+- **Chargeback** - disputes that are registered as a chargeback with the acquiring bank.
+
 ### Dispute Flow Overview
 
 Below is a high-level overview of a typical flow for a dispute service app to handle transaction disputes.
@@ -80,14 +87,6 @@ Depending on the type of dispute, the dispute service may need to create a refun
 #### Step 8 - Dispute service resolves dispute
 
 Once the dispute is resolved, the dispute service should set the dispute resolution using the [disputesUpdate](/docs/api/admin/reference/#tag/payments/operation/disputesUpdate) Admin API. See [Dispute Resolutions](#dispute-resolutions) and [Resolve a Dispute](#resolving-disputes) detail below.
-
-
-### Disputes
-
-Disputes are complaints initiated by the customer against the merchant pertaining to their orders and are categorized into two broad groups by type, Alerts and Chargebacks, see below.
-
-- **Alerts** - disputes that are not yet a chargeback, ie TC40, SAFE, and RDR alerts.
-- **Chargeback** - disputes that are registered as a chargeback with the acquiring bank.
 
 
 ### Creating Disputes
