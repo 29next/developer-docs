@@ -20,10 +20,10 @@ sequenceDiagram
   autonumber
   Customer->>Store: New Transaction Created
   Store->>Dispute Service: transaction.created webhook event
-  Processor-->>Dispute Service: Receives transaction dispute
+  Processor->>Dispute Service: Receives transaction dispute
   Dispute Service->>Store: Creates dispute (alert or chargeback) in store
   Dispute Service->>Store: Matches dispute to store transaction
-  Store->>Customer: Customer is added to block lists
+  Store-->>Customer: Customer is added to block lists
   Dispute Service-->>Store: Creates refund (optional)
   Dispute Service->>Store: Resolve dispute
 ```
