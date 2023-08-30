@@ -4,6 +4,28 @@ Use webhooks to be notified about events that happen in your store.
 
 Stores can send webhooks that notify your application anytime an event happens. This is especially useful for building custom reporting solutions that need to receive data on order or customer activity.
 
+### Why Webhooks
+
+Webhooks are an efficient way to sync data from from a store in near real-time so that your app is up to date with the latest data in the store and are much more efficient than traditional polling. See example below for subscribing to `order.created` events.
+
+``` mermaid
+sequenceDiagram
+  autonumber
+  App->>Store: Subscribes to order.created event
+  Customer->>Store: New order created
+  Store->>App: Sends order.created event payload
+```
+
+### Use Cases
+
+Common use cases include but not limited to:
+
+- Integrating with external marketing platforms
+- Collecting data for external reporting applications
+- Integrating with external fulfillment services
+- Integrating with dispute management services
+
+
 ### Setting Up Webhooks
 
 You can register new Webhooks through **Settings > Webhooks** or on the Admin API to send event data to your application endpoint. For each webhook, you can subscribe to All Events or select specific events to send to your endpoint. See a list of all events and example event data below.

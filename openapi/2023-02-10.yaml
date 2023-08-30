@@ -3030,6 +3030,7 @@ paths:
         name: currency
         schema:
           type: string
+          nullable: true
           title: Currency
         description: Currency
       - name: page
@@ -5728,6 +5729,8 @@ components:
           - es
           - nl
           - pt
+          - da
+          - fi
           - null
           type: string
           nullable: true
@@ -6006,6 +6009,8 @@ components:
           - es
           - nl
           - pt
+          - da
+          - fi
           - null
           type: string
           nullable: true
@@ -6316,6 +6321,13 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        display_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Determines order of the stockrecords. A stockrecord with a
+            lower value will appear and get selected before one with a higher value.
         date_created:
           type: string
           format: date-time
@@ -8005,6 +8017,13 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        display_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Determines order of the stockrecords. A stockrecord with a
+            lower value will appear and get selected before one with a higher value.
         date_created:
           type: string
           format: date-time
@@ -8587,6 +8606,8 @@ components:
           - es
           - nl
           - pt
+          - da
+          - fi
           type: string
           default: en
           description: 'required : E164'
@@ -9472,6 +9493,13 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        display_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Determines order of the stockrecords. A stockrecord with a
+            lower value will appear and get selected before one with a higher value.
         date_created:
           type: string
           format: date-time
@@ -9510,6 +9538,7 @@ components:
           maxLength: 128
         price_currency:
           type: string
+          nullable: true
           title: Currency
           maxLength: 12
         price_retail:
@@ -9572,6 +9601,13 @@ components:
         track_stock:
           type: boolean
           title: Track stock levels?
+        display_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Determines order of the stockrecords. A stockrecord with a
+            lower value will appear and get selected before one with a higher value.
       required:
       - id
       - location_id
@@ -10509,6 +10545,8 @@ components:
           - es
           - nl
           - pt
+          - da
+          - fi
           type: string
           default: en
           description: 'required : E164'
@@ -10605,6 +10643,8 @@ components:
           - es
           - nl
           - pt
+          - da
+          - fi
           type: string
           default: en
           description: 'required : E164'
@@ -10887,8 +10927,6 @@ components:
       in: header
       name: Authorization
       description: Token-based authentication with required prefix "Token"
-
-
 externalDocs:
   description: See API Introduction Documentation
   url: https://developers.29next.com/api/admin/
