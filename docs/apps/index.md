@@ -9,24 +9,24 @@ Apps and supporting tools are in Public Beta, if you have questions or run into 
 
 Apps allow you to extend built-in functionality of the 29 Next platform to solve merchant challenges and create new functionality all wrapped into an easily installed App.
 
-**Apps Allow you to:**
+### Apps Allow You To
 
-* **Extend Storefront Themes** - use [App Snippets](#app-snippets) with storefront locations to inject HTML/CSS/JS into themes.
-* **Extend Core Functionality** - use [Webhooks](/webhooks.md) to subscribe to events and the [Admin API](/api/admin/index.md) to add new logic and integrations.
+#### Extend Core Functionality
 
+Use [Webhooks](/webhooks.md) to subscribe to events and the [Admin API](/api/admin/index.md) to add new logic and integrations, see the [Server to Server Guide](/docs/apps/guides/server-to-server-apps/).
+
+#### Extend Storefront Themes
+Use [App Snippets](#app-snippets) with storefront locations to inject HTML/CSS/JS into themes, see the [Storefront Extension Guide](/docs/apps/guides/storefront-extension/)
 
 ### Example Apps
+
+We have full featured open source example apps that provide full code examples for many of the concepts required for building apps.
 
 | Example Apps | Description | Link |
 | ------ | ------ | ----- |
 | Example S2S App | Server to Server demonstration of [OAuth Flow](/apps/oauth/index.md), [Session Tokens](/apps/oauth/session-auth.md), [Remote Settings](/apps/settings.md), [Webhook Setup](/webhooks.md) and [Verification](/webhooks.md#verifying-webhook-requests) | [View](https://github.com/29next/example-app) |
 | Google Tag Manager | Demonstrates [App Snippets](/apps/snippets.md) and [Theme App Hooks](/apps/snippets.md#locations) to add custom javascript events to storefronts. | [View](https://github.com/29next/google-tag-manager) |
-
-
-### Getting Started
-
-[Building Your First App](/apps/guides/index.md)
-In this guide we'll go over all of the steps to get started building your first app to introduce many of the core app framework concepts and how to use them.
+| Fulfillment Service App | Demonstrates demonstration of [OAuth Flow](/apps/oauth/index.md) and the [Fulfillment Flow](/docs/apps/guides/fulfillment-service/#fulfillment-flow-overview) using the [Fulfillment APIs](/docs/api/admin/reference/#tag/fulfillment). | [View](https://github.com/29next/demo-fulfillment-service-app) |
 
 
 ```mdx-code-block
@@ -36,38 +36,6 @@ import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 <DevelopmentStore name="Development Store Offer" />
 
 ```
-
-### App Layout Overview
-
-Let's take a look at the basic file structure of apps to understand how to get started creating our first app.
-
-```title="Example App Structure"
-your-app
- ├── assets
- │   └──  my-app.js
- ├── snippets
- │   └──  global-header.html
- └── manifest.json
-```
-
-#### Assets
-
-The asset directory is meant to contain any static assets needed for your app, such as images, css, or javascript that is referenced in your app snippets.
-
-[See Assets Guide](/apps/assets.md)
-
-#### Snippets
-
-The snippets directory is meant to contain HTML snippets your app uses to extend storefront themes and add custom functionality. App snippets should follow the same coding practices as [Theme Templates](/themes/templates/index.md).
-
-[See Snippets Guide](/apps/snippets.md)
-
-#### Manifest.json
-
-A manifest.json file specifies the configuration and metadata needed to install and configure your app.
-
-[See Manifest Reference](/apps/manifest.md)
-
 
 ### App Developer Reference Guides
 
