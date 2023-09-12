@@ -1895,6 +1895,15 @@ paths:
         explode: true
         style: form
       - in: query
+        name: countries
+        schema:
+          type: array
+          items:
+            type: string
+        description: Countries
+        explode: true
+        style: form
+      - in: query
         name: funnels
         schema:
           type: array
@@ -2558,6 +2567,187 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
+  /api/admin/products/{id}/prices/:
+    get:
+      operationId: productsPricesList
+      description: Retrieve a list of price products for a product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductPrices'
+          description: ''
+    post:
+      operationId: productsPricesCreate
+      description: Create a product price in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPrices'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductPrices'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductPrices'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductPrices'
+          description: ''
+  /api/admin/products/{id}/prices/{currency}/:
+    get:
+      operationId: productsPricesRetrieve
+      description: Retrieve an price in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Price.
+        required: true
+      - in: path
+        name: currency
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePriceWithCurrency'
+          description: ''
+    patch:
+      operationId: productsPricesPartialUpdate
+      description: Update an price in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Price.
+        required: true
+      - in: path
+        name: currency
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdatePriceWithCurrency'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdatePriceWithCurrency'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdatePriceWithCurrency'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePriceWithCurrency'
+          description: ''
+    delete:
+      operationId: productsPricesDestroy
+      description: Delete an price in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Price.
+        required: true
+      - in: path
+        name: currency
+        schema:
+          type: string
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/admin/products/{id}/:
     get:
       operationId: productsRetrieve
@@ -3240,6 +3430,7 @@ paths:
           type: array
           items:
             type: string
+            nullable: true
             title: SKU
         description: SKU
         explode: true
@@ -4280,6 +4471,10 @@ paths:
         description: Funnels
         explode: true
         style: form
+      - in: query
+        name: is_external
+        schema:
+          type: boolean
       - in: query
         name: utm_source
         schema:
@@ -6048,6 +6243,15 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         description:
           type: string
+        sku:
+          type: string
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         structure:
           enum:
           - standalone
@@ -6100,6 +6304,10 @@ components:
           items:
             $ref: '#/components/schemas/ProductImage'
           readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
         stockrecords:
           type: array
           items:
@@ -6171,6 +6379,18 @@ components:
     CreateProductVariant:
       type: object
       properties:
+        sku:
+          type: string
+          nullable: true
+          description: Stock Keeping Unit.
+          maxLength: 128
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         image:
           type: integer
           nullable: true
@@ -6182,7 +6402,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
       required:
+      - sku
       - variant_attribute_values
     CreateSubscription:
       type: object
@@ -6311,6 +6536,7 @@ components:
           type: integer
         sku:
           type: string
+          readOnly: true
         num_in_stock:
           type: integer
         low_stock_threshold:
@@ -6318,9 +6544,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        track_stock:
-          type: boolean
-          title: Track stock levels?
         display_order:
           type: integer
           maximum: 2147483647
@@ -7233,12 +7456,6 @@ components:
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
-        shipping_incl_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Shipping charge (inc. tax)
         shipping_method:
           type: string
           readOnly: true
@@ -7251,21 +7468,51 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (inc. tax)
-        currency:
-          type: string
-          readOnly: true
         total_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (excl. tax)
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (inc. tax)
         shipping_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Shipping charge (excl. tax)
+        original_total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/OrderReportValues'
+          readOnly: true
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
@@ -7360,8 +7607,13 @@ components:
       - number
       - offer_discounts
       - order_status_url
+      - original_shipping_excl_tax
+      - original_shipping_incl_tax
+      - original_total_excl_tax
+      - original_total_incl_tax
       - payment_status
       - refunds
+      - report_values
       - shipping_code
       - shipping_excl_tax
       - shipping_incl_tax
@@ -7459,6 +7711,62 @@ components:
       - amount
       - description
       - name
+    OrderReportValues:
+      type: object
+      properties:
+        total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+      required:
+      - currency
+      - original_shipping_excl_tax
+      - original_shipping_incl_tax
+      - original_total_excl_tax
+      - original_total_incl_tax
+      - shipping_excl_tax
+      - shipping_incl_tax
+      - total_excl_tax
+      - total_incl_tax
     OrderSubscription:
       type: object
       properties:
@@ -7552,12 +7860,6 @@ components:
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
-        shipping_incl_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Shipping charge (inc. tax)
         shipping_method:
           type: string
           readOnly: true
@@ -7570,21 +7872,51 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (inc. tax)
-        currency:
-          type: string
-          readOnly: true
         total_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (excl. tax)
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (inc. tax)
         shipping_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Shipping charge (excl. tax)
+        original_total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/OrderReportValues'
+          readOnly: true
         shipping_address:
           allOf:
           - $ref: '#/components/schemas/ShippingAddress'
@@ -7675,8 +8007,13 @@ components:
       - number
       - offer_discounts
       - order_status_url
+      - original_shipping_excl_tax
+      - original_shipping_incl_tax
+      - original_total_excl_tax
+      - original_total_incl_tax
       - payment_status
       - refunds
+      - report_values
       - shipping_code
       - shipping_excl_tax
       - shipping_incl_tax
@@ -7947,6 +8284,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Transaction'
+    PaginatedUpdatePriceWithCurrencyList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdatePriceWithCurrency'
     PaginatedUserAddressList:
       type: object
       properties:
@@ -8007,6 +8360,7 @@ components:
           type: integer
         sku:
           type: string
+          readOnly: true
         num_in_stock:
           type: integer
         low_stock_threshold:
@@ -8014,9 +8368,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        track_stock:
-          type: boolean
-          title: Track stock levels?
         display_order:
           type: integer
           maximum: 2147483647
@@ -8210,12 +8561,6 @@ components:
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
-        shipping_incl_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Shipping charge (inc. tax)
         shipping_method:
           type: string
           readOnly: true
@@ -8228,21 +8573,51 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (inc. tax)
-        currency:
-          type: string
-          readOnly: true
         total_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (excl. tax)
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (inc. tax)
         shipping_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Shipping charge (excl. tax)
+        original_total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/OrderReportValues'
+          readOnly: true
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
@@ -8326,6 +8701,31 @@ components:
           items:
             $ref: '#/components/schemas/Refund'
           readOnly: true
+    PatchedUpdatePriceWithCurrency:
+      type: object
+      properties:
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        retail:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Price (retail)
+        subscription:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Subscription Price
+        subscription_suggested_downsell:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
     PatchedUpdateProduct:
       type: object
       properties:
@@ -8344,6 +8744,15 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         description:
           type: string
+        sku:
+          type: string
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         structure:
           enum:
           - standalone
@@ -8396,10 +8805,15 @@ components:
           items:
             $ref: '#/components/schemas/ProductImage'
           readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
         stockrecords:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+          readOnly: true
         requires_shipping:
           type: boolean
           title: Requires shipping?
@@ -8458,6 +8872,18 @@ components:
     PatchedUpdateProductVariant:
       type: object
       properties:
+        sku:
+          type: string
+          nullable: true
+          description: Stock Keeping Unit.
+          maxLength: 128
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         image:
           type: integer
           nullable: true
@@ -8469,6 +8895,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+          readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
     PatchedUpdateSubscription:
       type: object
       properties:
@@ -8861,6 +9292,18 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         description:
           type: string
+        sku:
+          type: string
+          nullable: true
+          description: Stock Keeping Unit.
+          maxLength: 128
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         structure:
           enum:
           - standalone
@@ -8914,6 +9357,10 @@ components:
           items:
             $ref: '#/components/schemas/ProductImage'
           readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
         stockrecords:
           type: array
           items:
@@ -9076,6 +9523,18 @@ components:
           type: string
           maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
+        sku:
+          type: string
+          nullable: true
+          description: Stock Keeping Unit.
+          maxLength: 128
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         structure:
           enum:
           - standalone
@@ -9101,6 +9560,10 @@ components:
           items:
             $ref: '#/components/schemas/ProductCategory'
           readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
         enable_subscription:
           type: boolean
         interval:
@@ -9184,6 +9647,36 @@ components:
       - rating
       - title
       - url
+    ProductPrices:
+      type: object
+      properties:
+        currency:
+          type: string
+          maxLength: 12
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        retail:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Price (retail)
+        subscription:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Subscription Price
+        subscription_suggested_downsell:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
+      required:
+      - price
     ProductVariant:
       type: object
       properties:
@@ -9202,6 +9695,18 @@ components:
           - child
           type: string
           title: Product Structure
+        sku:
+          type: string
+          nullable: true
+          description: Stock Keeping Unit.
+          maxLength: 128
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         images:
           type: array
           items:
@@ -9211,6 +9716,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
         stockrecords:
           type: array
           items:
@@ -9368,6 +9877,9 @@ components:
         send_refund_notification:
           type: boolean
           default: true
+        is_external:
+          type: boolean
+          default: false
       required:
       - amount
     RefundTransaction:
@@ -9380,6 +9892,9 @@ components:
         send_refund_notification:
           type: boolean
           default: true
+        is_external:
+          type: boolean
+          default: false
       required:
       - amount
     ShippingAddress:
@@ -9473,6 +9988,7 @@ components:
           readOnly: true
         sku:
           type: string
+          readOnly: true
         num_in_stock:
           type: integer
           maximum: 2147483647
@@ -9490,9 +10006,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        track_stock:
-          type: boolean
-          title: Track stock levels?
         display_order:
           type: integer
           maximum: 2147483647
@@ -9534,6 +10047,7 @@ components:
           readOnly: true
         partner_sku:
           type: string
+          nullable: true
           title: SKU
           maxLength: 128
         price_currency:
@@ -9571,7 +10085,6 @@ components:
           nullable: true
       required:
       - id
-      - partner_sku
     'Stockrecord ':
       type: object
       properties:
@@ -9583,6 +10096,7 @@ components:
           nullable: true
         sku:
           type: string
+          readOnly: true
         num_in_stock:
           type: integer
           maximum: 2147483647
@@ -9598,9 +10112,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        track_stock:
-          type: boolean
-          title: Track stock levels?
         display_order:
           type: integer
           maximum: 2147483647
@@ -10016,11 +10527,17 @@ components:
           $ref: '#/components/schemas/UserInline'
         subscriptions:
           readOnly: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/TransactionReportValues'
+          readOnly: true
         initiator:
           allOf:
           - $ref: '#/components/schemas/Agent'
           readOnly: true
         is_disputed:
+          type: boolean
+        is_external:
           type: boolean
       required:
       - amount
@@ -10031,6 +10548,7 @@ components:
       - order
       - parent_id
       - payment_details
+      - report_values
       - response_code
       - subscriptions
       - type
@@ -10085,6 +10603,8 @@ components:
         response_code:
           type: integer
         is_disputed:
+          type: boolean
+        is_external:
           type: boolean
       required:
       - amount
@@ -10144,6 +10664,20 @@ components:
       - id
       - name
       - type
+    TransactionReportValues:
+      type: object
+      properties:
+        currency:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+      required:
+      - amount
+      - currency
     UpdateCart:
       type: object
       properties:
@@ -10210,12 +10744,6 @@ components:
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
-        shipping_incl_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Shipping charge (inc. tax)
         shipping_method:
           type: string
           readOnly: true
@@ -10228,21 +10756,51 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (inc. tax)
-        currency:
-          type: string
-          readOnly: true
         total_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (excl. tax)
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (inc. tax)
         shipping_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Shipping charge (excl. tax)
+        original_total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/OrderReportValues'
+          readOnly: true
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
@@ -10336,8 +10894,13 @@ components:
       - number
       - offer_discounts
       - order_status_url
+      - original_shipping_excl_tax
+      - original_shipping_incl_tax
+      - original_total_excl_tax
+      - original_total_incl_tax
       - payment_status
       - refunds
+      - report_values
       - shipping_code
       - shipping_excl_tax
       - shipping_incl_tax
@@ -10353,6 +10916,33 @@ components:
       - transactions
       - user
       - voucher_discounts
+    UpdatePriceWithCurrency:
+      type: object
+      properties:
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        retail:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Price (retail)
+        subscription:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Subscription Price
+        subscription_suggested_downsell:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Suggested Downsell Price
+      required:
+      - price
     UpdateProduct:
       type: object
       properties:
@@ -10371,6 +10961,15 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         description:
           type: string
+        sku:
+          type: string
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         structure:
           enum:
           - standalone
@@ -10423,10 +11022,15 @@ components:
           items:
             $ref: '#/components/schemas/ProductImage'
           readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
         stockrecords:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+          readOnly: true
         requires_shipping:
           type: boolean
           title: Requires shipping?
@@ -10489,10 +11093,23 @@ components:
       - id
       - images
       - rating
+      - stockrecords
       - url
     UpdateProductVariant:
       type: object
       properties:
+        sku:
+          type: string
+          nullable: true
+          description: Stock Keeping Unit.
+          maxLength: 128
+        track_stock:
+          type: boolean
+          title: Track stock levels
+          description: Track inventory quantities at fulfillment locations.
+        allow_backorders:
+          type: boolean
+          description: Continue selling when out of stock.
         image:
           type: integer
           nullable: true
@@ -10504,7 +11121,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+          readOnly: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrices'
       required:
+      - stockrecords
       - variant_attribute_values
     UpdateUser:
       type: object
