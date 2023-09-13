@@ -129,8 +129,6 @@ The templates directory is used to store all templates for a theme, see [URLs an
 │   ├── category.html
 │   ├── index.html
 │   └── product.html
-├── funnels
-│   └── page.html
 ├── index.html
 ├── pages
 │   └── page.html
