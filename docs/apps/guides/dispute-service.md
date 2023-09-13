@@ -136,7 +136,7 @@ Setting `is_external: true` on a refund will create the refund without attemptin
 POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
 {
     "amount": "XX.XX", // refund amount
-    "is_external": true // default is true
+    "is_external": true // set for external refunds
 }
 ```
 
