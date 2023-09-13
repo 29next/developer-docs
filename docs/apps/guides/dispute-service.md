@@ -122,10 +122,24 @@ To create a refund for a transaction as part of the dispute resolution process, 
 ```json title="Create a Refund"
 POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
 {
-"amount": "XX.XX", // refund amount
-"send_refund_notification": true
+    "amount": "XX.XX", // refund amount
 }
 ```
+
+### RDR Alerts
+
+RDR Alerts are automatically refunded with the gateway, dispute services should log an external refund for the transaction using the [transactionsRefundCreate](/docs/api/admin/reference/#tag/payments/operation/transactionsRefundCreate) Admin API.
+
+Setting `is_external: true` on a refund will create the refund without attempting the refund with the gateway.
+
+```json title="Create an External Refund"
+POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
+{
+    "amount": "XX.XX", // refund amount
+    "is_external": true // default is true
+}
+```
+
 
 ### Dispute Resolutions
 
