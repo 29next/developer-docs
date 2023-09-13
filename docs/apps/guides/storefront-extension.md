@@ -43,15 +43,15 @@ your-app
 
 #### Assets
 
-The asset directory is meant to contain any static assets needed for your app, such as images, css, or javascript that is referenced in your app snippets. [See Assets Guide](/apps/assets.md)
+The asset directory is meant to contain any static assets needed for your app, such as images, css, or javascript that is referenced in your app snippets. [See Assets Guide](/docs/apps/assets.md)
 
 #### Snippets
 
-The snippets directory is meant to contain HTML snippets your app uses to extend storefront themes and add custom functionality. App snippets should follow the same coding practices as [Theme Templates](/themes/templates/index.md). [See Snippets Guide](/apps/snippets.md)
+The snippets directory is meant to contain HTML snippets your app uses to extend storefront themes and add custom functionality. App snippets should follow the same coding practices as [Theme Templates](/docs/themes/templates/index.md). [See Snippets Guide](/docs/apps/snippets.md)
 
 #### Manifest.json
 
-A manifest.json file specifies the configuration and metadata needed to install and configure your app. [See Manifest Reference](/apps/manifest.md)
+A manifest.json file specifies the configuration and metadata needed to install and configure your app. [See Manifest Reference](/docs/apps/manifest.md)
 
 
 ### App Kit
