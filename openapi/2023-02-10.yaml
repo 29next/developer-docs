@@ -2004,7 +2004,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedOrderList'
+                $ref: '#/components/schemas/PaginatedOrderListList'
           description: ''
     post:
       operationId: ordersCreate
@@ -3216,13 +3216,6 @@ paths:
         schema:
           type: string
         description: SKU
-      - in: query
-        name: currency
-        schema:
-          type: string
-          nullable: true
-          title: Currency
-        description: Currency
       - name: page
         required: false
         in: query
@@ -4453,6 +4446,10 @@ paths:
           type: boolean
         description: 3DS Downgrade Retry
       - in: query
+        name: is_initial_retry
+        schema:
+          type: boolean
+      - in: query
         name: subscription_life_cycle
         schema:
           type: string
@@ -4548,7 +4545,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedTransactionList'
+                $ref: '#/components/schemas/PaginatedTransactionListList'
           description: ''
   /api/admin/transactions/{id}/:
     get:
@@ -6247,7 +6244,7 @@ components:
           type: string
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -6386,7 +6383,7 @@ components:
           maxLength: 128
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -6544,13 +6541,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        display_order:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          description: Determines order of the stockrecords. A stockrecord with a
-            lower value will appear and get selected before one with a higher value.
         date_created:
           type: string
           format: date-time
@@ -6808,10 +6798,14 @@ components:
         reference:
           type: string
           maxLength: 512
+        status:
+          type: string
+          readOnly: true
       required:
       - carrier
       - date_created
       - lines
+      - status
       - tracking_code
       - tracking_link
     FulfillmentHold:
@@ -7132,6 +7126,9 @@ components:
           format: date-time
         shipping_method:
           type: string
+        status:
+          type: string
+          readOnly: true
         location_id:
           type: integer
         line_items:
@@ -7154,6 +7151,7 @@ components:
       - location_id
       - order_number
       - shipping_method
+      - status
       - tracking_code
       - tracking_codes
       - tracking_link
@@ -7675,6 +7673,193 @@ components:
       - price_incl_tax_excl_discounts
       - product
       - stockrecord
+    OrderList:
+      type: object
+      properties:
+        number:
+          type: string
+          readOnly: true
+          title: Order number
+        status:
+          type: string
+          maxLength: 100
+        fulfillment_status:
+          enum:
+          - not_required
+          - unfulfilled
+          - on_hold
+          - rejected
+          - processing
+          - fulfilled
+          type: string
+        payment_status:
+          enum:
+          - pending
+          - authorized
+          - expiring
+          - expired
+          - paid
+          - voided
+          - refunded
+          - partially_paid
+          - partially_refunded
+          - partially_voided
+          type: string
+          readOnly: true
+        is_test:
+          type: boolean
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLine'
+          readOnly: true
+        shipping_method:
+          type: string
+          readOnly: true
+        shipping_code:
+          type: string
+          readOnly: true
+        total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Order total (inc. tax)
+        total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Order total (excl. tax)
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (inc. tax)
+        shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (excl. tax)
+        original_total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserInline'
+          readOnly: true
+        shipping_address:
+          allOf:
+          - $ref: '#/components/schemas/ShippingAddress'
+          nullable: true
+        billing_address:
+          allOf:
+          - $ref: '#/components/schemas/BillingAddress'
+          nullable: true
+        date_placed:
+          type: string
+          format: date-time
+          readOnly: true
+        offer_discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderOfferDiscount'
+          readOnly: true
+        voucher_discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderOfferDiscount'
+          readOnly: true
+        attribution:
+          $ref: '#/components/schemas/MarketingAttribution'
+        tags:
+          type: array
+          items:
+            type: string
+            nullable: true
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSubscription'
+          readOnly: true
+        subscription_lifecycle:
+          type: string
+          readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        total_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        shipping_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        display_taxes:
+          type: string
+          readOnly: true
+        order_status_url:
+          type: string
+          format: uri
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+      required:
+      - attribution
+      - currency
+      - date_placed
+      - display_taxes
+      - is_test
+      - lines
+      - number
+      - offer_discounts
+      - order_status_url
+      - original_shipping_excl_tax
+      - original_shipping_incl_tax
+      - original_total_excl_tax
+      - original_total_incl_tax
+      - payment_status
+      - shipping_code
+      - shipping_excl_tax
+      - shipping_incl_tax
+      - shipping_method
+      - shipping_tax
+      - source
+      - subscription_lifecycle
+      - subscriptions
+      - total_excl_tax
+      - total_incl_tax
+      - total_tax
+      - user
+      - voucher_discounts
     OrderNote:
       type: object
       properties:
@@ -8124,7 +8309,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Location '
-    PaginatedOrderList:
+    PaginatedOrderListList:
       type: object
       properties:
         count:
@@ -8139,7 +8324,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderList'
     PaginatedPaymentGatewayList:
       type: object
       properties:
@@ -8268,7 +8453,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TicketType'
-    PaginatedTransactionList:
+    PaginatedTransactionListList:
       type: object
       properties:
         count:
@@ -8283,7 +8468,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Transaction'
+            $ref: '#/components/schemas/TransactionList'
     PaginatedUpdatePriceWithCurrencyList:
       type: object
       properties:
@@ -8368,13 +8553,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        display_order:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          description: Determines order of the stockrecords. A stockrecord with a
-            lower value will appear and get selected before one with a higher value.
         date_created:
           type: string
           format: date-time
@@ -8748,7 +8926,7 @@ components:
           type: string
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -8879,7 +9057,7 @@ components:
           maxLength: 128
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -9299,7 +9477,7 @@ components:
           maxLength: 128
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -9530,7 +9708,7 @@ components:
           maxLength: 128
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -9702,7 +9880,7 @@ components:
           maxLength: 128
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -9827,9 +10005,34 @@ components:
           - refund_shipping
           - refund_discrepancy
           type: string
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/RefundAdjustmentReportValue'
+          readOnly: true
       required:
       - id
+      - report_values
       - type
+    RefundAdjustmentReportValue:
+      type: object
+      properties:
+        currency:
+          type: string
+          readOnly: true
+        amount_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        amount_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+      required:
+      - amount_excl_tax
+      - amount_incl_tax
+      - currency
     RefundLine:
       type: object
       properties:
@@ -9860,6 +10063,10 @@ components:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/RefundLineReportValue'
+          readOnly: true
       required:
       - amount_excl_tax
       - amount_incl_tax
@@ -9867,6 +10074,27 @@ components:
       - line_item_id
       - location_id
       - quantity
+      - report_values
+    RefundLineReportValue:
+      type: object
+      properties:
+        currency:
+          type: string
+          readOnly: true
+        amount_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        amount_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+      required:
+      - amount_excl_tax
+      - amount_incl_tax
+      - currency
     RefundOrder:
       type: object
       properties:
@@ -10006,13 +10234,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        display_order:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          description: Determines order of the stockrecords. A stockrecord with a
-            lower value will appear and get selected before one with a higher value.
         date_created:
           type: string
           format: date-time
@@ -10553,6 +10774,87 @@ components:
       - subscriptions
       - type
       - user
+    TransactionList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        currency:
+          type: string
+          nullable: true
+          maxLength: 6
+        parent_id:
+          type: integer
+          readOnly: true
+          nullable: true
+          description: "\n    The ID of an associated transaction.\n    - For capture\
+            \ transactions, the parent is the authorization transaction.\n    - For\
+            \ void transactions, the parent is the authorization transaction.\n  \
+            \  - For refund transactions, the parent is the debit transaction.\n \
+            \       "
+        status:
+          enum:
+          - succeeded
+          - failed
+          - pending
+          - canceled
+          - expired
+          - refunded
+          - ''
+          type: string
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        payment_method:
+          type: string
+          nullable: true
+          maxLength: 255
+        payment_details:
+          allOf:
+          - $ref: '#/components/schemas/TransactionPaymentDetail'
+          readOnly: true
+        response_code:
+          type: integer
+        attribution:
+          allOf:
+          - $ref: '#/components/schemas/MarketingAttribution'
+          readOnly: true
+        order:
+          type: string
+          nullable: true
+        user:
+          $ref: '#/components/schemas/UserInline'
+        subscriptions:
+          readOnly: true
+        initiator:
+          allOf:
+          - $ref: '#/components/schemas/Agent'
+          readOnly: true
+        is_disputed:
+          type: boolean
+        is_external:
+          type: boolean
+      required:
+      - amount
+      - attribution
+      - date_created
+      - id
+      - initiator
+      - order
+      - parent_id
+      - payment_details
+      - response_code
+      - subscriptions
+      - type
+      - user
     TransactionObject:
       type: object
       properties:
@@ -10606,12 +10908,20 @@ components:
           type: boolean
         is_external:
           type: boolean
+        is_initial_retry:
+          type: boolean
+          nullable: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/TransactionReportValues'
+          readOnly: true
       required:
       - amount
       - date_created
       - id
       - parent_id
       - payment_details
+      - report_values
       - response_code
       - type
     TransactionPaymentDetail:
@@ -10965,7 +11275,7 @@ components:
           type: string
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -11105,7 +11415,7 @@ components:
           maxLength: 128
         track_stock:
           type: boolean
-          title: Track stock levels
+          title: Track Stock Levels
           description: Track inventory quantities at fulfillment locations.
         allow_backorders:
           type: boolean
@@ -11553,7 +11863,6 @@ components:
 externalDocs:
   description: See API Introduction Documentation
   url: https://developers.29next.com/api/admin/
-
 
 servers:
   - url: https://{store}.29next.store
