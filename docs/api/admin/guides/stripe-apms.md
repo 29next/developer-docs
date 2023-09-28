@@ -25,6 +25,8 @@ Stripe APMs redirect flow follows the same principles as [Apple Pay](/api/admin/
 | iDEAL | `ideal` | [Stripe Docs](https://stripe.com/docs/payments/ideal) |
 | Bancontact | `bancontact` | [Stripe Docs](https://stripe.com/docs/payments/bancontact) |
 | giropay | `giropay` | [Stripe Docs](https://stripe.com/docs/payments/giropay) |
+| Sofort | `sofort` | [Stripe Docs](https://stripe.com/docs/payments/sofort) |
+| SEPA Direct Debit | `sepa_debit` | [Stripe Docs](https://stripe.com/docs/payments/sepa-debit) |
 
 ### API Payment Redirect Flow
 
