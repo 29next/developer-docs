@@ -3207,7 +3207,7 @@ paths:
         schema:
           type: array
           items:
-            type: integer
+            type: string
         description: Location
         explode: true
         style: form
@@ -3424,7 +3424,6 @@ paths:
           items:
             type: string
             nullable: true
-            title: SKU
         description: SKU
         explode: true
         style: form
@@ -4473,6 +4472,10 @@ paths:
         schema:
           type: boolean
       - in: query
+        name: is_test
+        schema:
+          type: boolean
+      - in: query
         name: utm_source
         schema:
           type: string
@@ -5227,6 +5230,7 @@ paths:
         name: active
         schema:
           type: boolean
+        description: Is Active?
       - name: page
         required: false
         in: query
@@ -6066,6 +6070,7 @@ components:
           - card_token
           - saved_card
           - apple_pay
+          - google_pay
           - paypal
           - klarna
           - ideal
@@ -10760,6 +10765,9 @@ components:
           type: boolean
         is_external:
           type: boolean
+        is_test:
+          type: boolean
+          nullable: true
       required:
       - amount
       - attribution
@@ -10908,6 +10916,9 @@ components:
           type: boolean
         is_external:
           type: boolean
+        is_test:
+          type: boolean
+          nullable: true
         is_initial_retry:
           type: boolean
           nullable: true
