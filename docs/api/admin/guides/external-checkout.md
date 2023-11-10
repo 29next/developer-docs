@@ -73,11 +73,7 @@ Creating an order is the core resource in an external checkout flow, see the exa
             "product_id": 1,
             "currency": "USD",
             "quantity": 1,
-            "price": 33.44, // optional
-            "subscription": {
-                "interval": "month",
-                "interval_count": 3
-            }
+            "price": "5.99" // optional custom price
         }
     ],
     "user":{
@@ -128,7 +124,7 @@ Add additional products (line items) to the original order through the [ordersAd
             "product_id": 2,
             "currency": "USD",
             "quantity": 1,
-            "price": 10.33
+            "price": "10.33" // optional custom price
         }
   ]
 }
@@ -151,7 +147,7 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
         "product_id": 1,
         "currency": "USD",
         "quantity": 1,
-        "price": 33.44 // optional
+        "price": "33.44" // optional custom price
     }
 ]
 ```
@@ -168,7 +164,7 @@ Using `sku` is deprecated and will be removed in the future, use `product_id` an
         "sku": "DEMO-SKU",
         "currency": "USD",
         "quantity": 1,
-        "price": 33.44 // optional
+        "price": "33.44" // optional custom price
     }
 ]
 ```
@@ -191,6 +187,9 @@ Using `stockrecord_id` is deprecated and will be removed in the future, use `pro
 </TabItem>
 </Tabs>
 
+
+#### Subscription Line Items
+
 Lines also accept an optional `subscription` object to specify a subscription that will be automatically created after the initial order is successfully created.
 
 ```json
@@ -200,14 +199,21 @@ Lines also accept an optional `subscription` object to specify a subscription th
         "product_id": 1,
         "currency": "USD",
         "quantity": 1,
-        "price": 33.44,
+        "price": "5.99", // optional custom initial price
         "subscription": {
             "interval": "day", // day, month, year
-            "interval_count": 30  // interval counter, ie 30 days
+            "interval_count": 30,  // interval counter, ie 30 days
+            "price": "24.99" // optional custom recurring price
         }
     }
 ]
 ```
+:::tip
+Subscription line items have two `price` fields available. The order line item level `price` and then the subscription object `price`. Passing price points in these fields enables you to easily achieve an "initial order discount".
+:::
+:::caution
+Orders with Subscription line items **must have an initial payment** (order total > 0.00) to validate and retain the bankcard for future usage.
+:::
 
 ### Cart / Order User Detail
 
@@ -222,6 +228,7 @@ Users are first checked for an existing user by `email` before creating a new us
     "first_name": "John",
     "last_name": "Doe",
     "email": "johndoe@gmail.com",
+    "phone_number": "+18125879988", // optional, E.164 format required
     "language": "en", // used for localized email notifications
     "accepts_marketing": true, // used by external integrations
     "ip": "123.123.123.123", // used by external integrations
