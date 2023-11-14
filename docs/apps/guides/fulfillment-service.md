@@ -252,7 +252,7 @@ flowchart TD
 
 #### Retrieve Stock Records by Location
 
-Fulfillment services can retrieve all stock records from a store to map with the SKUs at their warehouse. You can also search and filter by product name or SKU, see Admin API docs for [stockrecordsRetrieve](/docs/api/admin/reference/#tag/products/operation/stockrecordsRetrieve)
+Fulfillment services can retrieve all stock records from a store to map with the SKUs at their warehouse. You can also search and filter by product name or SKU, see Admin API docs for [stockrecordsRetrieve](/docs/api/admin/reference/#tag/products/operation/stockrecordsRetrieve).
 
 ```json title="Retrieve Stock Records by Location"
 GET https://{store}.29next.store/api/admin/stockrecords/?location_id={id}
