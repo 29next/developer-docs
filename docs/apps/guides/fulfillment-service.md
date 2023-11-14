@@ -263,6 +263,7 @@ With the list of stock records assigned to your location, you can now update the
 
 #### Update Number of Units In Stock
 
+Fulfillment services are recommended to update the number in stock (`num_in_stock`) at regular intervals so that the store inventory is update to date and accurate.
 
 ```json title="Update Number of Units In Stock"
 PATCH https://{store}.29next.store/api/admin/stockrecords/{id}/
