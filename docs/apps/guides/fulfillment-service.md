@@ -240,7 +240,7 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillments
 
 ### Sync Product Inventory
 
-Product's have "stock records" which represent the available stock at a location. Typically, a single product has many locations to optimize the fulfillment with [Fulfillment Routing](https://docs.29next.com/features/fulfillment-guide/location-based-routing).
+Products have "stock records" which represent the available physical stock at a fulfillment location. Often a single product can be stocked at multiple locations, with [Fulfillment Routing](https://docs.29next.com/features/fulfillment-guide/location-based-routing) governing the order fulfillment location assignment.
 
 ``` mermaid
 flowchart TD
@@ -265,7 +265,7 @@ With the list of stock records assigned to your location, you can now update the
 
 
 ```json title="Update Number of Units In Stock"
-PATCH https://{store}.29next.stor/api/admin/stockrecords/{id}/
+PATCH https://{store}.29next.store/api/admin/stockrecords/{id}/
 
 {
   "num_in_stock": 1000
