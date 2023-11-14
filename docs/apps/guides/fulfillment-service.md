@@ -237,3 +237,37 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillments
   ]
 }
 ```
+
+### Sync Product Inventory
+
+Product's have "stock records" which represent the available stock at a location. Typically, a single product has many locations to optimize the fulfillment with [Fulfillment Routing](https://docs.29next.com/features/fulfillment-guide/location-based-routing).
+
+``` mermaid
+flowchart TD
+    B("Product / SKU")
+    B-->C("Location 1")
+    B-->D("Location 2")
+    B-->E("Location 3")
+```
+
+#### Retrieve Stock Records by Location
+
+Fulfillment services can retrieve all stock records from a store to map with the SKUs at their warehouse. You can also search and filter by product name or SKU, see Admin API docs for [stockrecordsRetrieve](/docs/api/admin/reference/#tag/products/operation/stockrecordsRetrieve)
+
+```json title="Retrieve Stock Records by Location"
+GET https://{store}.29next.store/api/admin/stockrecords/?location_id={id}
+```
+
+With the list of stock records assigned to your location, you can now update the `num_in_stock` to reflect the current available units.
+
+
+#### Update Number of Units In Stock
+
+
+```json title="Update Number of Units In Stock"
+PATCH https://{store}.29next.stor/api/admin/stockrecords/{id}/
+
+{
+  "num_in_stock": 1000
+}
+```
