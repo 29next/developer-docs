@@ -4,6 +4,11 @@ Campaigns App opens up new possibilities for frontend developers to easily creat
 
 The Campaigns App provides an easy to use CORS enabled API that follows the best practices for integrating to our Admin API for an [External Checkout Flow](/docs/api/admin/guides/external-checkout.md).
 
+:::info Demo Example Campaign
+View a fully functional [Example Campaign](https://example-campaign.29next.com/) to see all of the concepts in action. The example campaign source code is also available on [Github](https://github.com/29next/example-campaign).
+:::
+
+
 ### Campaigns App API
 Campaigns App API is available through the **Campaigns App**. To enable, install the Campaigns App in your store from the Apps view.
 
