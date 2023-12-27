@@ -659,6 +659,11 @@ paths:
           type: string
         description: Case Number
       - in: query
+        name: gateway_id
+        schema:
+          type: integer
+        description: Gateway ID
+      - in: query
         name: payment_method
         schema:
           type: string
@@ -4565,10 +4570,10 @@ paths:
           type: string
         description: Bankcard Last Four
       - in: query
-        name: gateway
+        name: gateway_id
         schema:
-          type: string
-        description: Gateway
+          type: integer
+        description: Gateway ID
       - in: query
         name: payment_method
         schema:
@@ -6578,6 +6583,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - children
       - date_created
@@ -9342,6 +9351,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
     PatchedUpdateProductVariant:
       type: object
       properties:
@@ -9406,6 +9419,7 @@ components:
         shipping_code:
           enum:
           - standard
+          - default
           - no-shipping-required
           type: string
         shipping_address:
@@ -9897,6 +9911,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - categories
       - children
@@ -10114,6 +10132,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - categories
       - children
@@ -11705,6 +11727,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - children
       - date_created
