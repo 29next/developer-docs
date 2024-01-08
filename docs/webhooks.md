@@ -46,6 +46,8 @@ Webhook target endpoints must accept JSON data and respond with a 200 response c
 | `dispute.updated`         | Triggers when a dispute is updated. |
 | `order.created`           | Triggers when an order is created. |
 | `order.updated`           | Triggers when an existing order is updated. |
+| `product.created`         | Triggers when a product is created. |
+| `product.updated`         | Triggers when an existing product is updated. |
 | `transaction.created`     | Triggers when a payment transaction is created. |
 | `subscription.created`    | Triggers when a new subscription is created. |
 | `subscription.updated`    | Triggers when an existing subscription is updated. |

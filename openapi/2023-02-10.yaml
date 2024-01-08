@@ -6954,6 +6954,8 @@ components:
         currency:
           enum:
           - USD
+          - CAD
+          - GBP
           - ''
           - null
           type: string
@@ -8963,6 +8965,8 @@ components:
         currency:
           enum:
           - USD
+          - CAD
+          - GBP
           - ''
           - null
           type: string
@@ -9418,8 +9422,8 @@ components:
           readOnly: true
         shipping_code:
           enum:
-          - standard
           - default
+          - express
           - no-shipping-required
           type: string
         shipping_address:
@@ -10223,7 +10227,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
       required:
+      - date_created
+      - date_updated
       - id
       - images
       - product_id
@@ -10654,13 +10668,6 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        display_order:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          description: Determines order of the stockrecords. A stockrecord with a
-            lower value will appear and get selected before one with a higher value.
       required:
       - id
       - location_id
