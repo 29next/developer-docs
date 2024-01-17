@@ -659,6 +659,11 @@ paths:
           type: string
         description: Case Number
       - in: query
+        name: gateway_id
+        schema:
+          type: integer
+        description: Gateway ID
+      - in: query
         name: payment_method
         schema:
           type: string
@@ -671,6 +676,7 @@ paths:
           nullable: true
           enum:
           - 3ds_authorized_successfully
+          - accepted
           - could_not_find_order
           - declined_or_canceled_nothing_to_do
           - issued_full_refund
@@ -874,6 +880,83 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/admin/disputes/{id}/notes/:
+    get:
+      operationId: disputesNotesList
+      description: Retrieve a list of all dispute notes in an existing dispute.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Dispute.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - payments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDisputeNoteList'
+          description: ''
+    post:
+      operationId: disputesNotesCreate
+      description: Create an dispute note in an existing dispute.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Dispute.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDisputeNote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateDisputeNote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateDisputeNote'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisputeNote'
+          description: ''
   /api/admin/fulfillment-orders/:
     get:
       operationId: fulfillmentOrdersList
@@ -1438,6 +1521,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/HoldFulfillment'
+        required: true
       security:
       - tokenAuth: []
       responses:
@@ -1915,6 +1999,20 @@ paths:
         explode: true
         style: form
       - in: query
+        name: sources
+        schema:
+          type: array
+          items:
+            type: string
+            nullable: true
+            enum:
+            - admin_api
+            - checkout
+            - subscription
+        description: Source
+        explode: true
+        style: form
+      - in: query
         name: agents
         schema:
           type: array
@@ -1976,6 +2074,16 @@ paths:
         schema:
           type: string
         description: Sub Affiliate5
+      - in: query
+        name: is_disputed
+        schema:
+          type: boolean
+        description: Is Disputed
+      - in: query
+        name: has_outstanding_balance
+        schema:
+          type: boolean
+        description: Has Outstanding Balance
       - in: query
         name: is_test
         schema:
@@ -2367,10 +2475,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentResponse'
           description: ''
-  /api/admin/orders/{number}/notes/:
-    get:
-      operationId: ordersNotesRetrieve
-      description: Retrieve a list of all order notes in an existing order.
+  /api/admin/orders/{number}/mark-as-paid/:
+    post:
+      operationId: ordersMarkAsPaidCreate
+      description: Marks an order as paid. You can only mark an order as paid if it
+        isn't already fully paid.
       parameters:
       - in: path
         name: number
@@ -2388,6 +2497,17 @@ paths:
         required: true
       tags:
       - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAsPaid'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MarkAsPaid'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MarkAsPaid'
       security:
       - tokenAuth: []
       responses:
@@ -2395,7 +2515,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderNote'
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/admin/orders/{number}/notes/:
+    get:
+      operationId: ordersNotesList
+      description: Retrieve a list of all order notes in an existing order.
+      parameters:
+      - in: path
+        name: number
+        schema:
+          type: string
+          title: Order number
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - orders
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedOrderNoteList'
           description: ''
     post:
       operationId: ordersNotesCreate
@@ -2507,6 +2663,15 @@ paths:
         description: Range
         explode: true
         style: form
+      - in: query
+        name: is_public
+        schema:
+          type: boolean
+        description: Is Public
+      - in: query
+        name: sku
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -3371,6 +3536,32 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/admin/store/:
+    get:
+      operationId: storeList
+      description: Retrieve general business information and store settings.
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - '2023-02-10'
+          default: '2023-02-10'
+        required: true
+      tags:
+      - store
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Store'
+          description: ''
   /api/admin/subscriptions/:
     get:
       operationId: subscriptionsList
@@ -4391,10 +4582,10 @@ paths:
           type: string
         description: Bankcard Last Four
       - in: query
-        name: gateway
+        name: gateway_id
         schema:
-          type: string
-        description: Gateway
+          type: integer
+        description: Gateway ID
       - in: query
         name: payment_method
         schema:
@@ -5078,7 +5269,7 @@ paths:
           description: ''
   /api/admin/users/{id}/notes/:
     get:
-      operationId: usersNotesRetrieve
+      operationId: usersNotesList
       description: Retrieve a list of notes in an existing customer.
       parameters:
       - in: path
@@ -5087,6 +5278,12 @@ paths:
           type: integer
         description: A unique integer value identifying this User.
         required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
       - in: header
         name: X-29next-API-Version
         schema:
@@ -5104,7 +5301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserNote'
+                $ref: '#/components/schemas/PaginatedUserNoteList'
           description: ''
     post:
       operationId: usersNotesCreate
@@ -5459,6 +5656,7 @@ components:
           - dhl_ecommerce
           - myhermes
           - royal_mail
+          - yunexpress
           - null
           type: string
           nullable: true
@@ -5541,6 +5739,37 @@ components:
       - id
       - name
       - options
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          nullable: true
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+      required:
+      - id
+    AvaliableLanguages:
+      type: object
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+          readOnly: true
+      required:
+      - code
+      - label
     BillingAddress:
       type: object
       properties:
@@ -5861,6 +6090,38 @@ components:
       - id
       - name
       - slug
+    ContactAddress:
+      type: object
+      properties:
+        company_name:
+          type: string
+          readOnly: true
+        line1:
+          type: string
+          readOnly: true
+        line2:
+          type: string
+          readOnly: true
+        postcode:
+          type: string
+          readOnly: true
+        state:
+          type: string
+          readOnly: true
+        country:
+          type: string
+          readOnly: true
+        phone_number:
+          type: string
+          readOnly: true
+      required:
+      - company_name
+      - country
+      - line1
+      - line2
+      - phone_number
+      - postcode
+      - state
     CreateCart:
       type: object
       properties:
@@ -5946,6 +6207,13 @@ components:
           type: string
           nullable: true
           maxLength: 500
+    CreateDisputeNote:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
     CreateFulfillment:
       type: object
       properties:
@@ -6071,6 +6339,7 @@ components:
           - saved_card
           - apple_pay
           - google_pay
+          - external
           - paypal
           - klarna
           - ideal
@@ -6369,6 +6638,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - children
       - date_created
@@ -6701,6 +6974,19 @@ components:
           type: string
       required:
       - message
+    Currency:
+      type: object
+      properties:
+        code:
+          type: string
+          title: Currency Code
+          maxLength: 5
+        label:
+          type: string
+          readOnly: true
+      required:
+      - code
+      - label
     Dispute:
       type: object
       properties:
@@ -6737,6 +7023,7 @@ components:
           enum:
           - USD
           - CAD
+          - GBP
           - ''
           - null
           type: string
@@ -6770,6 +7057,7 @@ components:
           - unable_to_refund_merchant_account_closed
           - won
           - lost
+          - accepted
           - other
           - ''
           - null
@@ -6782,6 +7070,30 @@ components:
       - report_amount
       - report_currency
       - status
+    DisputeNote:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        author:
+          $ref: '#/components/schemas/Author'
+        message:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - author
+      - created_at
+      - id
+      - message
+      - updated_at
     Fulfillment:
       type: object
       properties:
@@ -7257,6 +7569,8 @@ components:
           type: string
           nullable: true
           maxLength: 512
+      required:
+      - reason
     LineAttribute:
       type: object
       properties:
@@ -7343,6 +7657,12 @@ components:
       - country
       - line1
       - line4
+    MarkAsPaid:
+      type: object
+      properties:
+        external_payment_method:
+          type: string
+          nullable: true
     MarketingAttribution:
       type: object
       properties:
@@ -7871,6 +8191,8 @@ components:
         id:
           type: integer
           readOnly: true
+        author:
+          $ref: '#/components/schemas/Author'
         message:
           type: string
         date_created:
@@ -7882,6 +8204,7 @@ components:
           format: date-time
           readOnly: true
       required:
+      - author
       - date_created
       - date_updated
       - id
@@ -8266,6 +8589,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Dispute'
+    PaginatedDisputeNoteList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisputeNote'
     PaginatedFulfillmentOrderList:
       type: object
       properties:
@@ -8330,6 +8669,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderList'
+    PaginatedOrderNoteList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderNote'
     PaginatedPaymentGatewayList:
       type: object
       properties:
@@ -8522,6 +8877,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
+    PaginatedUserNoteList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserNote'
     PaginatedWebhookList:
       type: object
       properties:
@@ -8665,6 +9036,7 @@ components:
           enum:
           - USD
           - CAD
+          - GBP
           - ''
           - null
           type: string
@@ -8698,6 +9070,7 @@ components:
           - unable_to_refund_merchant_account_closed
           - won
           - lost
+          - accepted
           - other
           - ''
           - null
@@ -9052,6 +9425,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
     PatchedUpdateProductVariant:
       type: object
       properties:
@@ -9317,6 +9694,13 @@ components:
           type: string
           nullable: true
           maxLength: 64
+    Payment:
+      type: object
+      properties:
+        environment_key:
+          type: string
+      required:
+      - environment_key
     PaymentDetail:
       type: object
       properties:
@@ -9366,6 +9750,9 @@ components:
         paypal_account:
           type: integer
           nullable: true
+        external_payment_method:
+          type: string
+          nullable: true
     PaymentGateway:
       type: object
       properties:
@@ -9374,6 +9761,7 @@ components:
           readOnly: true
         name:
           type: string
+          description: Used for reporting and transaction references.
           maxLength: 100
         gateway_type:
           type: string
@@ -9396,19 +9784,20 @@ components:
           - charge
           - auth-capture
           type: string
+          description: Transaction type initiated for new orders.
         enable_3ds2:
           type: boolean
           title: Enable 3D Secure Transactions
-          description: When enabled, transactions are attempted with 3DS authentication.
+          description: Transactions are attempted with 3DS authentication.
         optimized_3ds:
           type: boolean
           title: Enable Optimized 3D Secure Transactions
-          description: When enabled, transactions will be optimized for lowest friction.
+          description: Transactions will be optimized for lowest friction.
         downgrade_3ds_retry:
           type: boolean
           title: Retry Non-3DS Enrolled Cards as Standard Transaction
-          description: When enabled, Non-3DS enrolled cards will be automatically
-            retried as a standard transaction.
+          description: Non-3DS enrolled cards will be automatically retried as a standard
+            transaction.
         merchant_profile:
           type: integer
           nullable: true
@@ -9603,6 +9992,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - categories
       - children
@@ -9820,6 +10213,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - categories
       - children
@@ -9907,7 +10304,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stockrecord '
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+        date_updated:
+          type: string
+          format: date-time
+          readOnly: true
       required:
+      - date_created
+      - date_updated
       - id
       - images
       - product_id
@@ -10338,18 +10745,57 @@ components:
           maximum: 2147483647
           minimum: 0
           nullable: true
-        display_order:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
-          description: Determines order of the stockrecords. A stockrecord with a
-            lower value will appear and get selected before one with a higher value.
       required:
       - id
       - location_id
       - num_allocated
       - sku
+    Store:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+        tagline:
+          type: string
+          readOnly: true
+        timezone:
+          type: string
+          readOnly: true
+        contact_address:
+          allOf:
+          - $ref: '#/components/schemas/ContactAddress'
+          readOnly: true
+        primary_domain:
+          type: string
+          readOnly: true
+        tax_id:
+          type: string
+          readOnly: true
+        avaliable_languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvaliableLanguages'
+          readOnly: true
+        avaliable_currencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
+          readOnly: true
+        payments:
+          allOf:
+          - $ref: '#/components/schemas/Payment'
+          readOnly: true
+      required:
+      - avaliable_currencies
+      - avaliable_languages
+      - contact_address
+      - name
+      - payments
+      - primary_domain
+      - tagline
+      - tax_id
+      - timezone
     Subscription:
       type: object
       properties:
@@ -10506,6 +10952,9 @@ components:
           nullable: true
         recache_card_cvv:
           type: integer
+          nullable: true
+        external_payment_method:
+          type: string
           nullable: true
     Template:
       type: object
@@ -10686,6 +11135,7 @@ components:
           - swiss_post
           - ups
           - usps
+          - yunexpress
           type: string
         carrier_other_name:
           type: string
@@ -11407,6 +11857,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - children
       - date_created
@@ -11755,6 +12209,10 @@ components:
         id:
           type: integer
           readOnly: true
+        author:
+          $ref: '#/components/schemas/Author'
+        message:
+          type: string
         created_at:
           type: string
           format: date-time
@@ -11763,9 +12221,8 @@ components:
           type: string
           format: date-time
           readOnly: true
-        message:
-          type: string
       required:
+      - author
       - created_at
       - id
       - message
