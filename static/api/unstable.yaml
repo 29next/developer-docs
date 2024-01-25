@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Admin API
-  version: '2023-02-10'
+  version: unstable
 paths:
   /api/admin/apps/{clientId}/settings/:
     get:
@@ -18,8 +18,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - apps
@@ -47,8 +47,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - apps
@@ -90,8 +90,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - apps
@@ -133,8 +133,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - apps
@@ -193,8 +193,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -313,8 +313,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - carts
@@ -336,8 +336,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - carts
@@ -378,8 +378,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - carts
@@ -407,8 +407,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - carts
@@ -448,8 +448,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - carts
@@ -474,8 +474,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -497,8 +497,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -539,8 +539,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -568,8 +568,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -735,8 +735,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -758,8 +758,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -799,8 +799,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -828,8 +828,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -868,8 +868,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -908,8 +908,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -940,8 +940,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -969,8 +969,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -1099,8 +1099,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1129,8 +1129,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1159,8 +1159,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1201,8 +1201,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1242,8 +1242,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1284,8 +1284,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1326,8 +1326,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1368,8 +1368,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1409,8 +1409,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1451,8 +1451,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1492,8 +1492,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1521,8 +1521,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1562,8 +1562,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1604,8 +1604,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1634,8 +1634,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -1664,8 +1664,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -1694,8 +1694,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -1724,8 +1724,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -1754,8 +1754,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1777,8 +1777,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1819,8 +1819,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1848,8 +1848,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -1890,8 +1890,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - metadata
@@ -1913,8 +1913,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - metadata
@@ -1955,8 +1955,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - metadata
@@ -1984,8 +1984,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - metadata
@@ -2025,8 +2025,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - metadata
@@ -2065,8 +2065,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - metadata
@@ -2391,8 +2391,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2414,8 +2414,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2456,8 +2456,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2485,8 +2485,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2525,8 +2525,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2567,8 +2567,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2609,8 +2609,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2652,8 +2652,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2682,8 +2682,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2712,8 +2712,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2741,8 +2741,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2783,8 +2783,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2830,8 +2830,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2859,8 +2859,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2901,8 +2901,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - orders
@@ -2972,8 +2972,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -2995,8 +2995,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3037,8 +3037,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3066,8 +3066,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3113,8 +3113,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3147,8 +3147,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3192,8 +3192,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3218,8 +3218,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3247,8 +3247,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3287,8 +3287,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3327,8 +3327,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3337,77 +3337,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/products/{id}/children/:
-    get:
-      operationId: productsChildrenList
-      description: Retrieve a list of child products for a product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      security:
-      - AccessToken: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductVariant'
-          description: ''
-    post:
-      operationId: productsChildrenCreate
-      description: Create a child product in an existing product.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this Product.
-        required: true
-      - in: header
-        name: X-29next-API-Version
-        schema:
-          type: string
-          enum:
-          - '2023-02-10'
-          default: '2023-02-10'
-        required: true
-      tags:
-      - products
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateProductVariant'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CreateProductVariant'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreateProductVariant'
-        required: true
-      security:
-      - AccessToken: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductVariant'
-          description: ''
   /api/admin/products/{id}/images/:
     post:
       operationId: productsImagesCreate
@@ -3424,8 +3353,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3450,10 +3379,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductImage'
           description: ''
-  /api/admin/products/children/{id}/:
+  /api/admin/products/{id}/variants/:
     get:
-      operationId: productsChildrenRetrieve
-      description: Retrieve a list of child products for a product.
+      operationId: productsVariantList
+      description: Retrieve a list of variant products for a product.
       parameters:
       - in: path
         name: id
@@ -3466,8 +3395,78 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
+        required: true
+      tags:
+      - products
+      security:
+      - AccessToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVariant'
+          description: ''
+    post:
+      operationId: productsVariantCreate
+      description: Create a variant product in an existing product.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - unstable
+          default: unstable
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateProductVariant'
+        required: true
+      security:
+      - AccessToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVariant'
+          description: ''
+  /api/admin/products/variants/{id}/:
+    get:
+      operationId: productsVariantsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Product.
+        required: true
+      - in: header
+        name: X-29next-API-Version
+        schema:
+          type: string
+          enum:
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3481,8 +3480,7 @@ paths:
                 $ref: '#/components/schemas/ProductVariant'
           description: ''
     put:
-      operationId: productsChildrenUpdate
-      description: Update an existing child product.
+      operationId: productsVariantsUpdate
       parameters:
       - in: path
         name: id
@@ -3495,8 +3493,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3522,8 +3520,7 @@ paths:
                 $ref: '#/components/schemas/ProductVariant'
           description: ''
     patch:
-      operationId: productsChildrenPartialUpdate
-      description: Partially update an existing child product.
+      operationId: productsVariantsPartialUpdate
       parameters:
       - in: path
         name: id
@@ -3536,8 +3533,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3562,8 +3559,7 @@ paths:
                 $ref: '#/components/schemas/ProductVariant'
           description: ''
     delete:
-      operationId: productsChildrenDestroy
-      description: Delete an existing child product.
+      operationId: productsVariantsDestroy
       parameters:
       - in: path
         name: id
@@ -3576,8 +3572,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3602,8 +3598,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -3632,8 +3628,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - fulfillment
@@ -3681,8 +3677,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3704,8 +3700,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3746,8 +3742,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3775,8 +3771,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3815,8 +3811,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - products
@@ -3835,8 +3831,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - store
@@ -4049,8 +4045,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4072,8 +4068,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4114,8 +4110,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4162,8 +4158,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4209,8 +4205,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4235,8 +4231,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4264,8 +4260,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - subscriptions
@@ -4305,8 +4301,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4328,8 +4324,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4370,8 +4366,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4399,8 +4395,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4425,8 +4421,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4454,8 +4450,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4495,8 +4491,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - storefront
@@ -4632,8 +4628,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4655,8 +4651,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4696,8 +4692,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4725,8 +4721,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4765,8 +4761,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4806,8 +4802,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4835,8 +4831,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4870,8 +4866,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4913,8 +4909,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -4943,8 +4939,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - support
@@ -5189,8 +5185,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -5219,8 +5215,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -5249,8 +5245,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -5290,8 +5286,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - payments
@@ -5377,8 +5373,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5400,8 +5396,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5448,8 +5444,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5476,8 +5472,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5524,8 +5520,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5559,8 +5555,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5606,8 +5602,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5632,8 +5628,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5661,8 +5657,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5702,8 +5698,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5749,8 +5745,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5778,8 +5774,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5820,8 +5816,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5850,8 +5846,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - customers
@@ -5899,8 +5895,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - webhooks
@@ -5922,8 +5918,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - webhooks
@@ -5964,8 +5960,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - webhooks
@@ -5993,8 +5989,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - webhooks
@@ -6034,8 +6030,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - webhooks
@@ -6074,8 +6070,8 @@ paths:
         schema:
           type: string
           enum:
-          - '2023-02-10'
-          default: '2023-02-10'
+          - unstable
+          default: unstable
         required: true
       tags:
       - webhooks
@@ -6388,12 +6384,6 @@ components:
           type: string
           readOnly: true
           description: 'Available values : Open'
-        lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/CartLine'
-          readOnly: true
-          deprecated: true
         abandoned:
           type: boolean
         currency:
@@ -6423,7 +6413,6 @@ components:
       - currency
       - date_created
       - id
-      - lines
       - status
       - user
     CartDetail:
@@ -6451,6 +6440,11 @@ components:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
         currency:
           type: string
           readOnly: true
@@ -6458,25 +6452,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/UserInline'
           readOnly: true
-        is_tax_known:
-          type: boolean
-          readOnly: true
-          deprecated: true
-        total_excl_tax_excl_discounts:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          deprecated: true
-        total_incl_tax_excl_discounts:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          deprecated: true
-        total_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          deprecated: true
         voucher_discounts:
           type: array
           items:
@@ -6489,7 +6464,7 @@ components:
           type: string
           format: uri
           readOnly: true
-        date_created:
+        created_at:
           type: string
           format: date-time
           readOnly: true
@@ -6498,17 +6473,14 @@ components:
       required:
       - attribution
       - checkout_url
+      - created_at
       - currency
-      - date_created
       - id
-      - is_tax_known
       - lines
       - status
+      - total_discount
       - total_excl_tax
-      - total_excl_tax_excl_discounts
       - total_incl_tax
-      - total_incl_tax_excl_discounts
-      - total_tax
       - user
     CartLine:
       type: object
@@ -6516,33 +6488,75 @@ components:
         id:
           type: integer
           readOnly: true
-        product:
-          $ref: '#/components/schemas/Product '
-        stockrecord:
-          allOf:
-          - $ref: '#/components/schemas/Stockrecord'
-          deprecated: true
+        product_id:
+          type: integer
+          readOnly: true
+        sku:
+          type: string
+          readOnly: true
+        product_title:
+          type: string
+          readOnly: true
+        product_image:
+          type: string
+          format: uri
+          readOnly: true
+        product_url:
+          type: string
+          format: uri
+          readOnly: true
+        variant_id:
+          type: integer
+          readOnly: true
+        variant_title:
+          type: string
+          readOnly: true
         quantity:
           type: integer
           maximum: 2147483647
           minimum: 0
-        price_currency:
+        currency:
           type: string
-          title: Currency
-          maxLength: 12
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineAttribute'
+          maxLength: 5
+        price_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
         is_upsell:
           type: boolean
           default: false
+        interval:
+          type: string
+          readOnly: true
+        interval_count:
+          type: integer
+          format: int32
+          readOnly: true
       required:
-      - attributes
       - id
-      - product
-      - stockrecord
+      - interval
+      - interval_count
+      - price_excl_tax
+      - price_incl_tax
+      - product_id
+      - product_image
+      - product_title
+      - product_url
+      - sku
+      - total_discount
+      - variant_id
+      - variant_title
     Category:
       type: object
       properties:
@@ -6647,6 +6661,9 @@ components:
           nullable: true
         metadata:
           nullable: true
+        currency:
+          type: string
+          maxLength: 12
       required:
       - lines
     CreateCartUser:
@@ -6974,6 +6991,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/BillingAddress'
           nullable: true
+        currency:
+          type: string
+          maxLength: 5
       required:
       - lines
     CreateOrderLine:
@@ -6985,9 +7005,6 @@ components:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        currency:
-          type: string
-          maxLength: 12
         quantity:
           type: integer
           minimum: 1
@@ -6997,6 +7014,7 @@ components:
           type: boolean
           default: false
       required:
+      - product_id
       - quantity
     CreateOrderNote:
       type: object
@@ -7311,7 +7329,7 @@ components:
         lines:
           type: array
           items:
-            $ref: '#/components/schemas/CreateSubscriptionLine'
+            $ref: '#/components/schemas/CreateOrderLine'
         interval:
           enum:
           - day
@@ -7374,6 +7392,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/BillingAddress'
           nullable: true
+        currency:
+          type: string
+          maxLength: 12
       required:
       - interval
       - interval_count
@@ -7381,23 +7402,6 @@ components:
       - next_renewal_date
       - payment_method
       - user
-    CreateSubscriptionLine:
-      type: object
-      properties:
-        product_id:
-          type: integer
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        currency:
-          type: string
-          maxLength: 12
-        quantity:
-          type: integer
-          minimum: 1
-      required:
-      - quantity
     CreateTicketComment:
       type: object
       properties:
@@ -8365,18 +8369,6 @@ components:
           maxLength: 512
       required:
       - reason
-    LineAttribute:
-      type: object
-      properties:
-        option:
-          type: string
-          readOnly: true
-        value:
-          type: string
-          maxLength: 255
-      required:
-      - option
-      - value
     Location:
       type: object
       properties:
@@ -8614,6 +8606,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (excl. tax)
+        total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
         shipping_incl_tax:
           type: string
           format: decimal
@@ -8636,12 +8633,35 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
+        original_total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
         original_shipping_incl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
         original_shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        total_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        shipping_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        display_taxes:
+          type: string
+          readOnly: true
+        total_outstanding:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -8706,20 +8726,7 @@ components:
         fulfillments:
           type: array
           items:
-            $ref: '#/components/schemas/Fulfillment'
-          readOnly: true
-        total_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        shipping_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        display_taxes:
-          type: string
+            $ref: '#/components/schemas/FulfillmentResponse'
           readOnly: true
         order_status_url:
           type: string
@@ -8749,6 +8756,7 @@ components:
       - order_status_url
       - original_shipping_excl_tax
       - original_shipping_incl_tax
+      - original_total_discount
       - original_total_excl_tax
       - original_total_incl_tax
       - payment_status
@@ -8763,8 +8771,10 @@ components:
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - total_discount
       - total_excl_tax
       - total_incl_tax
+      - total_outstanding
       - total_tax
       - transactions
       - user
@@ -8775,17 +8785,42 @@ components:
         id:
           type: integer
           readOnly: true
-        product:
-          allOf:
-          - $ref: '#/components/schemas/Product '
+        product_id:
+          type: integer
           readOnly: true
-        stockrecord:
-          $ref: '#/components/schemas/Stockrecord'
+        sku:
+          type: string
+          readOnly: true
+        product_title:
+          type: string
+          readOnly: true
+        product_image:
+          type: string
+          format: uri
+          readOnly: true
+        product_url:
+          type: string
+          format: uri
+          readOnly: true
+        variant_id:
+          type: integer
+          readOnly: true
+        variant_title:
+          type: string
+          readOnly: true
         quantity:
           type: integer
-          maximum: 2147483647
-          minimum: 0
-        price_currency:
+          readOnly: true
+          description: The number of items of this line.
+        current_quantity:
+          type: integer
+          readOnly: true
+          description: Number of line items, minus removed quantity.
+        fulfillable_quantity:
+          type: integer
+          readOnly: true
+          description: The number of items that can be fulfilled from this line.
+        currency:
           type: string
           maxLength: 12
         price_excl_tax:
@@ -8796,25 +8831,101 @@ components:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        price_incl_tax_excl_discounts:
+        total_discount:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-        price_excl_tax_excl_discounts:
+          readOnly: true
+        original_price_excl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/OrderLineReport'
+          readOnly: true
+        requires_shipping:
+          type: boolean
+          readOnly: true
         is_upsell:
           type: boolean
       required:
+      - currency
+      - current_quantity
+      - fulfillable_quantity
       - id
-      - price_currency
+      - original_price_excl_tax
+      - original_price_incl_tax
+      - original_total_discount
       - price_excl_tax
-      - price_excl_tax_excl_discounts
       - price_incl_tax
-      - price_incl_tax_excl_discounts
-      - product
-      - stockrecord
+      - product_id
+      - product_image
+      - product_title
+      - product_url
+      - quantity
+      - report_values
+      - requires_shipping
+      - sku
+      - total_discount
+      - variant_id
+      - variant_title
+    OrderLineReport:
+      type: object
+      properties:
+        currency:
+          type: string
+          readOnly: true
+          maxLength: 3
+        price_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_price_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+      required:
+      - currency
+      - original_price_excl_tax
+      - original_price_incl_tax
+      - original_total_discount
+      - price_excl_tax
+      - price_incl_tax
+      - total_discount
     OrderList:
       type: object
       properties:
@@ -8871,12 +8982,6 @@ components:
         is_test:
           type: boolean
           readOnly: true
-        lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderLine'
-          readOnly: true
-          deprecated: true
         shipping_method:
           type: string
           readOnly: true
@@ -8895,6 +9000,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Order total (excl. tax)
+        total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
         shipping_incl_tax:
           type: string
           format: decimal
@@ -8907,12 +9017,35 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           title: Shipping charge (excl. tax)
+        total_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        shipping_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        display_taxes:
+          type: string
+          readOnly: true
+        total_outstanding:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
         original_total_incl_tax:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
         original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_discount:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -8934,60 +9067,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/UserInline'
           readOnly: true
-        shipping_address:
-          allOf:
-          - $ref: '#/components/schemas/ShippingAddress'
-          nullable: true
-          deprecated: true
-        billing_address:
-          allOf:
-          - $ref: '#/components/schemas/BillingAddress'
-          nullable: true
-          deprecated: true
         date_placed:
           type: string
           format: date-time
           readOnly: true
-        offer_discounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderOfferDiscount'
-          readOnly: true
-        voucher_discounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderOfferDiscount'
-          readOnly: true
-        attribution:
-          $ref: '#/components/schemas/MarketingAttribution'
-        tags:
-          type: array
-          items:
-            type: string
-            nullable: true
-        subscriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderSubscription'
-          readOnly: true
-        subscription_lifecycle:
-          type: string
-          readOnly: true
         metadata:
           nullable: true
-        total_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        shipping_tax:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        display_taxes:
-          type: string
-          readOnly: true
         order_status_url:
           type: string
           format: uri
@@ -8996,17 +9081,15 @@ components:
           type: string
           readOnly: true
       required:
-      - attribution
       - currency
       - date_placed
       - display_taxes
       - is_test
-      - lines
       - number
-      - offer_discounts
       - order_status_url
       - original_shipping_excl_tax
       - original_shipping_incl_tax
+      - original_total_discount
       - original_total_excl_tax
       - original_total_incl_tax
       - payment_status
@@ -9016,13 +9099,12 @@ components:
       - shipping_method
       - shipping_tax
       - source
-      - subscription_lifecycle
-      - subscriptions
+      - total_discount
       - total_excl_tax
       - total_incl_tax
+      - total_outstanding
       - total_tax
       - user
-      - voucher_discounts
     OrderNote:
       type: object
       properties:
@@ -9075,6 +9157,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
+        total_discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
         shipping_incl_tax:
           type: string
           format: decimal
@@ -9091,6 +9178,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
         original_total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        original_total_discount:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -9112,10 +9204,12 @@ components:
       - currency
       - original_shipping_excl_tax
       - original_shipping_incl_tax
+      - original_total_discount
       - original_total_excl_tax
       - original_total_incl_tax
       - shipping_excl_tax
       - shipping_incl_tax
+      - total_discount
       - total_excl_tax
       - total_incl_tax
     OrderSubscription:
@@ -10977,7 +11071,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductVariantAttribute'
-        children:
+        variants:
           type: array
           items:
             $ref: '#/components/schemas/ProductVariant'
@@ -11012,7 +11106,6 @@ components:
           nullable: true
       required:
       - categories
-      - children
       - date_created
       - date_updated
       - id
@@ -11020,43 +11113,7 @@ components:
       - rating
       - title
       - url
-    'Product ':
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        title:
-          type: string
-          readOnly: true
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductCategory'
-          readOnly: true
-          deprecated: true
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductImage'
-          readOnly: true
-        upc:
-          type: string
-          nullable: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
-          maxLength: 64
-          deprecated: true
-      required:
-      - categories
-      - id
-      - images
-      - title
-      - url
+      - variants
     ProductCategory:
       type: object
       properties:
@@ -11225,7 +11282,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductVariantAttribute'
-        children:
+        variants:
           type: array
           items:
             $ref: '#/components/schemas/ProductVariant'
@@ -11246,7 +11303,6 @@ components:
           nullable: true
       required:
       - categories
-      - children
       - date_created
       - date_updated
       - id
@@ -11254,6 +11310,7 @@ components:
       - rating
       - title
       - url
+      - variants
     ProductPrices:
       type: object
       properties:
@@ -11295,18 +11352,6 @@ components:
         title:
           type: string
           readOnly: true
-        structure:
-          enum:
-          - standalone
-          - parent
-          - child
-          type: string
-          description: |-
-            * `standalone` - Stand-alone Product
-            * `parent` - Product with Variants
-            * `child` - Child Product
-          x-spec-enum-id: a1df31d9b9dfd9ac
-          title: Product Structure
         sku:
           type: string
           nullable: true
@@ -11676,10 +11721,6 @@ components:
         net_stock_level:
           type: integer
           readOnly: true
-        sku:
-          type: string
-          readOnly: true
-          deprecated: true
         num_in_stock:
           type: integer
           maximum: 2147483647
@@ -11712,63 +11753,30 @@ components:
       - location
       - net_stock_level
       - product
-      - sku
     StockRecordProduct:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        name:
+        title:
           type: string
-      required:
-      - id
-    Stockrecord:
-      type: object
-      properties:
-        id:
+          readOnly: true
+        variant_id:
           type: integer
           readOnly: true
-        partner_sku:
+        variant_title:
           type: string
-          nullable: true
-          title: SKU
-          maxLength: 128
-        price_currency:
+          readOnly: true
+        sku:
           type: string
-          nullable: true
-          title: Currency
-          maxLength: 12
-        price_retail:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-          title: Price (retail)
-        price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          nullable: true
-        num_in_stock:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Number in stock
-        num_allocated:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Number allocated
-        low_stock_threshold:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
+          readOnly: true
       required:
       - id
+      - sku
+      - title
+      - variant_id
+      - variant_title
     'Stockrecord ':
       type: object
       properties:
@@ -11778,9 +11786,6 @@ components:
         location_id:
           type: integer
           nullable: true
-        sku:
-          type: string
-          readOnly: true
         num_in_stock:
           type: integer
           maximum: 2147483647
@@ -11800,7 +11805,6 @@ components:
       - id
       - location_id
       - num_allocated
-      - sku
     Store:
       type: object
       properties:
@@ -12047,10 +12051,6 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
-        is_tax_known:
-          type: boolean
-          readOnly: true
-          deprecated: true
         payment_method:
           type: string
           readOnly: true
@@ -12083,7 +12083,6 @@ components:
       - date_created
       - frequency
       - id
-      - is_tax_known
       - lines
       - num_lines
       - num_orders
@@ -12099,12 +12098,29 @@ components:
         id:
           type: integer
           readOnly: true
-        product:
-          $ref: '#/components/schemas/Product '
-        stockrecord:
-          allOf:
-          - $ref: '#/components/schemas/Stockrecord'
-          deprecated: true
+        product_id:
+          type: integer
+          readOnly: true
+        sku:
+          type: string
+          readOnly: true
+        product_title:
+          type: string
+          readOnly: true
+        product_image:
+          type: string
+          format: uri
+          readOnly: true
+        product_url:
+          type: string
+          format: uri
+          readOnly: true
+        variant_id:
+          type: integer
+          readOnly: true
+        variant_title:
+          type: string
+          readOnly: true
         quantity:
           type: integer
           maximum: 2147483647
@@ -12116,8 +12132,13 @@ components:
       required:
       - id
       - price
-      - product
-      - stockrecord
+      - product_id
+      - product_image
+      - product_title
+      - product_url
+      - sku
+      - variant_id
+      - variant_title
     SubscriptionOrder:
       type: object
       properties:
@@ -13711,4 +13732,4 @@ externalDocs:
   url: https://developers.29next.com/api/admin/
 
 servers:
-  - url: https://{store}.29next.store
+  - url: https://example.29next.store

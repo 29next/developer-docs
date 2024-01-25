@@ -4,6 +4,55 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
+const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
+const tailwindPlugin  = require('./plugins/tailwind-plugin.cjs');
+
+const plugins = [
+    tailwindPlugin,
+    webpackPlugin,
+    [
+        '@docusaurus/plugin-client-redirects',
+        /** @type {import('@docusaurus/plugin-client-redirects').Options} */
+        ({
+            redirects: [
+                {
+                    from: '/api/',
+                    to: '/docs/api',
+                },
+                {
+                    from: '/api/admin',
+                    to: '/docs/api/admin',
+                },
+                {
+                    from: '/api/checkout-links',
+                    to: '/docs/api/checkout-links',
+                },
+                {
+                    from: '/apps/oauth',
+                    to: '/docs/apps/oauth',
+                },
+                {
+                    from: '/apps/app-development-flow',
+                    to: '/docs/apps/app-development-flow'
+                },
+                {
+                    from: '/apps',
+                    to: '/docs/apps',
+                },
+                {
+                    from: '/themes',
+                    to: '/docs/themes',
+                },
+                {
+                    from: '/webhooks',
+                    to: '/docs/webhooks',
+                },
+            ],
+        }),
+    ]
+]
+
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: '29 Next Developer Docs',
@@ -50,71 +99,19 @@ const config = {
                     showReadingTime: true,
                 },
                 theme: {
-                    customCss: require.resolve('./src/css/custom.css'),
+                    customCss: [
+                        require.resolve('./src/css/custom.css'),
+                        require.resolve('./src/css/api-reference.css')
+                    ]
                 },
             }),
-        ],
-        [
-            'redocusaurus',
-            {
-                specs: [
-                    {
-                        spec: 'openapi/2023-02-10.yaml',
-                        route: '/docs/api/admin/reference/',
-                    },
-                ],
-                theme: {
-                    primaryColor: '#2856ED',
-                },
-            },
         ]
     ],
     markdown: {
         mermaid: true,
     },
-    themes: ['@docusaurus/theme-mermaid'],
-    plugins: [
-        [
-            '@docusaurus/plugin-client-redirects',
-            /** @type {import('@docusaurus/plugin-client-redirects').Options} */
-            ({
-                redirects: [
-                    {
-                        from: '/api/',
-                        to: '/docs/api',
-                    },
-                    {
-                        from: '/api/admin',
-                        to: '/docs/api/admin',
-                    },
-                    {
-                        from: '/api/checkout-links',
-                        to: '/docs/api/checkout-links',
-                    },
-                    {
-                        from: '/apps/oauth',
-                        to: '/docs/apps/oauth',
-                    },
-                    {
-                        from: '/apps/app-development-flow',
-                        to: '/docs/apps/app-development-flow'
-                    },
-                    {
-                        from: '/apps',
-                        to: '/docs/apps',
-                    },
-                    {
-                        from: '/themes',
-                        to: '/docs/themes',
-                    },
-                    {
-                        from: '/webhooks',
-                        to: '/docs/webhooks',
-                    },
-                ],
-            }),
-        ]
-    ],
+    themes: ['@docusaurus/theme-live-codeblock'],
+    plugins: plugins,
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
