@@ -103,6 +103,6 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 }
 
 /* Hide Send Request button due to CORS */
-/* .api-reference .SendButtonHolder {
+.api-reference .SendButtonHolder {
     display: none;
-} */
+}
