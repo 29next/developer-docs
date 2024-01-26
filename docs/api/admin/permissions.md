@@ -22,6 +22,8 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `fulfillment_orders:write` | Access to update fulfillment order fulfillment requests |
 | `locations:read` | Access to list and view all locations |
 | `locations:write` | Access to create and update locations |
+| `metadata:read` | Access to list and view all metadata definitions |
+| `metadata:write` | Access to create and update metadata definitions |
 | `orders:read` | Access to list and view all orders |
 | `orders:write` | Access to create and update orders |
 | `subscriptions:read` | Access to list and view all subscriptions |

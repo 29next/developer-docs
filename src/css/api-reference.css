@@ -110,5 +110,10 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 /* Improve layout column width */
 .api-reference div[data-testid="two-column-right"] {
     max-width: 900px !important;
-    width: 55%;
+    width: 50%;
+}
+
+.elements-container .sl-px-24 {
+    padding-left: 45px;
+    padding-right: 45px;
 }
