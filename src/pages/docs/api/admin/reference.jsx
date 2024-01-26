@@ -40,7 +40,6 @@ export default function Home() {
     );
 
     const currentVersion = url.searchParams.get('v') || '2023-02-10';
-    console.log(currentVersion)
     return (
         <Layout
             title="API Reference"
@@ -55,7 +54,7 @@ export default function Home() {
             </Head>
 
             <div className="header">
-                <h1 className="mb-0 flex items-center gap-2 text-sm font-semibold lg:text-lg">
+                <h1 className="mb-0 flex items-center gap-2 text-sm font-semibold lg:text-lg" id="top">
                     Admin API Reference
                 </h1>
                 <div className="aside">

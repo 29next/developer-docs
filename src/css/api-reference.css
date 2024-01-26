@@ -106,3 +106,8 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 .api-reference .SendButtonHolder {
     display: none;
 }
+
+/* Hide TryItPanel Auth because it doesnt make sense */
+.api-reference .TryItPanel div[data-test="try-it-auth"] {
+    display: none;
+}

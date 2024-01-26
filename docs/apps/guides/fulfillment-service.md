@@ -47,7 +47,7 @@ After a delay period (usually several hours), the store will send a fulfillment 
 
 #### Step 3 - Fulfillment Service Retrieves Assigned Fulfillment Orders
 
-In response to receiving a fulfillment request, the fulfillment service needs to retrieve all of their assigned fulfillment orders from the [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) API endpoint. See [Assigned Fulfillment Orders](#assigned-fulfillment-orders).
+In response to receiving a fulfillment request, the fulfillment service needs to retrieve all of their assigned fulfillment orders from the [Assigned Fulfillment Orders](/docs/api/admin/reference/#/operations/assignedFulfillmentOrdersList) API endpoint. See [Assigned Fulfillment Orders](#assigned-fulfillment-orders).
 
 #### Step 4 - Fulfillment Service Accepts Fulfillment Request
 
@@ -72,7 +72,7 @@ A Fulfillment Order represents items in an order that are to be fulfilled from t
 
 Fulfillment Services need to create `Locations` which represent their warehouses where physical products are stored and fulfilled from. Product `stockrecords` must be associated with a location for fulfillment.
 
-When new orders are created, the fulfillment orders are assigned to the locations that are expected to have the product `sku` in stock. The Location Address is also used for Tax calculation. See the [Locations Create](/docs/api/admin/reference/#tag/fulfillment/operation/locationsCreate) endpoint to create a location.
+When new orders are created, the fulfillment orders are assigned to the locations that are expected to have the product `sku` in stock. The Location Address is also used for Tax calculation. See the [Locations Create](/docs/api/admin/reference/#/operations/locationsCreate) endpoint to create a location.
 
 #### Location Callback
 The location `callback` is a URL the store will send `Fulfillment Request` webhooks to notify them of a new fulfillment assigned. Fulfillment Services need to query their [Assigned Fulfillment Orders](#assigned-fulfillment-orders) to retrieve the fulfillment order details.
@@ -113,7 +113,7 @@ The webhook request has a `X-29Next-Store` header that indicates which store the
 
 
 ### Assigned Fulfillment Orders
-The [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) will return a list of all fulfillment orders assigned to your locations. Your app is recommended to call this API in response to receiving a notification to the location callback, and you may also want to poll this endpoint occasionally (ie once per hour) to ensure you've actioned everything requested.
+The [Assigned Fulfillment Orders](/docs/api/admin/reference/#/operations/assignedFulfillmentOrdersList) will return a list of all fulfillment orders assigned to your locations. Your app is recommended to call this API in response to receiving a notification to the location callback, and you may also want to poll this endpoint occasionally (ie once per hour) to ensure you've actioned everything requested.
 
 :::info
 Use the appropriate `assignment_status` parameter to filter the fulfillment orders to those that require action.
@@ -141,14 +141,14 @@ GET https://{store}.29next.store/api/admin/assigned-fulfillment-orders/?assignme
 </Tabs>
 
 :::tip
-Requests to the location callback indicate the request `type` that should be passed to the [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) API as the `assignment_status` querystring value to filter fulfillment orders to those for the flow.
+Requests to the location callback indicate the request `type` that should be passed to the [Assigned Fulfillment Orders](/docs/api/admin/reference/#/operations/assignedFulfillmentOrdersList) API as the `assignment_status` querystring value to filter fulfillment orders to those for the flow.
 
 For example, to see new fulfillment requests pending acceptance, pass `assignment_status=fulfillment_requested` to the Assigned Fulfillment Orders API, `fulfillment_requested` was passed as `type` to the callback.
 :::
 
 ### Accepting Fulfillment Requests
 
-To `Accept` a Fulfillment Request assignment, send a POST request to the [Fulfillment Request Accept](/docs/api/admin/reference/#tag/fulfillment/operation/fulfillmentRequestAccept) Endpoint. The Fulfillment Order will show as **Accepted** in the dashboard and the Order will transition fulfillment_status to processing.
+To `Accept` a Fulfillment Request assignment, send a POST request to the [Fulfillment Request Accept](/docs/api/admin/reference/#/operations/fulfillmentRequestAccept) Endpoint. The Fulfillment Order will show as **Accepted** in the dashboard and the Order will transition fulfillment_status to processing.
 
 ```json title="Example Fulfillment Accept Request"
 POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/accept/
@@ -156,7 +156,7 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-
 
 ### Rejecting Fulfillment Requests
 
-Your fulfillment service can `Reject` fulfillment order assignments which will prompt the merchant to take action in their store to amend the order. Rejecting fulfillment requests can be for many reasons, such as incorrectly assigned for unavailable products, no stock available, or invalid address. The Fulfillment Service should verify the order details before accepting, by rejecting the fulillment request it will prompt the merchant to correct the order and then send an updated fulfillment request. See possible rejection reasons on in the [Fulfillment Request Reject API docs](/docs/api/admin/reference/#tag/fulfillment/operation/fulfillmentRequestReject).
+Your fulfillment service can `Reject` fulfillment order assignments which will prompt the merchant to take action in their store to amend the order. Rejecting fulfillment requests can be for many reasons, such as incorrectly assigned for unavailable products, no stock available, or invalid address. The Fulfillment Service should verify the order details before accepting, by rejecting the fulillment request it will prompt the merchant to correct the order and then send an updated fulfillment request. See possible rejection reasons on in the [Fulfillment Request Reject API docs](/docs/api/admin/reference/#/operations/fulfillmentRequestReject).
 
 ```json title="Example Fulfillment Rejection Payload"
 POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/reject/
@@ -186,7 +186,7 @@ Merchants will trigger a cancellation request which will send a cancellation req
 
 #### Step 2 - Fulfillment Service Retrieves Cancellation Requests
 
-In response to receiving a cancellation request, the fulfillment service needs to retrieve all of its assigned cancellation requests from the [Assigned Fulfillment Orders](/docs/api/admin/reference/#tag/fulfillment/operation/assignedFulfillmentOrdersList) API endpoint.
+In response to receiving a cancellation request, the fulfillment service needs to retrieve all of its assigned cancellation requests from the [Assigned Fulfillment Orders](/docs/api/admin/reference/#/operations/assignedFulfillmentOrdersList) API endpoint.
 
 
 ```json title="Retrieve all pending Cancellation Requests"
@@ -199,7 +199,7 @@ At this stage, the Fulfillment Service needs to [Accept](#accepting-cancellation
 
 ### Accepting Cancellation Requests
 
-To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestAccept).
+To `accept` the cancellation request, send a request to the [Cancellation Request Accept API](/docs/api/admin/reference/#/operations/cancellationRequestAccept).
 
 ```json title="Example Cancellation Accept Request"
 POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/accept/
@@ -210,7 +210,7 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation
 ### Rejecting Cancellation Requests
 If an fulfillment order is too far along in fulfillment processing, fulfillment service partners can reject cancellation requests.
 
-To `reject` a cancellation request, send a request to the [Cancellation Request Reject API](/docs/api/admin/reference/#tag/fulfillment/operation/cancellationRequestReject). If you include a message, it will show in the order timeline events for the merchant to see.
+To `reject` a cancellation request, send a request to the [Cancellation Request Reject API](/docs/api/admin/reference/#/operations/cancellationRequestReject). If you include a message, it will show in the order timeline events for the merchant to see.
 
 ```json title="Example Cancellation Reject Request"
 
@@ -222,7 +222,7 @@ POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation
 
 ### Creating Fulfillments
 
-Once you have tracking information for your the outgoing shipment to the customer, create a Fulfillment for the fulfillment order on the [Fulfillments Create](/docs/api/admin/reference/#tag/fulfillment/operation/fulfillmentsCreate) API.
+Once you have tracking information for your the outgoing shipment to the customer, create a Fulfillment for the fulfillment order on the [Fulfillments Create](/docs/api/admin/reference/#/operations/fulfillmentsCreate) API.
 
 
 ```json title="Fulfillment Create Payload"
@@ -252,7 +252,7 @@ flowchart TD
 
 #### Retrieve Stock Records by Location
 
-Fulfillment services can retrieve all stock records from a store to map with the SKUs at their warehouse. You can also search and filter by product name or SKU, see Admin API docs for [stockrecordsRetrieve](/docs/api/admin/reference/#tag/products/operation/stockrecordsRetrieve).
+Fulfillment services can retrieve all stock records from a store to map with the SKUs at their warehouse. You can also search and filter by product name or SKU, see Admin API docs for [stockrecordsRetrieve](/docs/api/admin/reference/#/operations/stockrecordsRetrieve).
 
 ```json title="Retrieve Stock Records by Location"
 GET https://{store}.29next.store/api/admin/stockrecords/?location_id={id}
