@@ -57,7 +57,7 @@ Transaction `parent_id` will show the related transaction in the following cases
 
 Your app can also subscribe to `order.created` and `order.updated` events to receive more detailed order information such as items purchased, fulfillment tracking numbers, and items that have already been refunded.
 
-Create your webhook after the app is installed using the [webhooksCreate](/docs/api/admin/reference/#tag/webhooks/operation/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
+Create your webhook after the app is installed using the [webhooksCreate](/docs/api/admin/reference/#/operations/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
 
 
 #### Step 3 - Dispute service receives transaction dispute
@@ -66,12 +66,12 @@ At this stage, the dispute service is responsible for receiving disputes from th
 
 #### Step 4 - Dispute service creates dispute (alert or chargeback) in store
 
-When disputes are identified as belonging to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/api/admin/reference/#tag/payments/operation/disputesCreate) Admin API.
+When disputes are identified as belonging to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/api/admin/reference/#/operations/disputesCreate) Admin API.
 
 
 #### Step 5 - Dispute service matches dispute to transaction
 
-Disputes created in the store need to be matched to the transaction in the store to associate it with the order/customer. Disputes can be matched by passing the `transaction` parameter when creating or with update using the [disputesUpdate](/docs/api/admin/reference/#tag/payments/operation/disputesUpdate) Admin API. See example below in [Match a Dispute](#matching-disputes).
+Disputes created in the store need to be matched to the transaction in the store to associate it with the order/customer. Disputes can be matched by passing the `transaction` parameter when creating or with update using the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) Admin API. See example below in [Match a Dispute](#matching-disputes).
 
 
 #### Step 6 - Customer is added to block lists
@@ -81,17 +81,17 @@ Merchants can configure their store to automatically add customers to block list
 
 #### Step 7 - Dispute service creates refund
 
-Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/api/admin/reference/#tag/payments/operation/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-disputes) detail below.
+Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/api/admin/reference/#/operations/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-disputes) detail below.
 
 
 #### Step 8 - Dispute service resolves dispute
 
-Once the dispute is resolved, the dispute service should set the dispute resolution using the [disputesUpdate](/docs/api/admin/reference/#tag/payments/operation/disputesUpdate) Admin API. See [Dispute Resolutions](#dispute-resolutions) and [Resolve a Dispute](#resolving-disputes) detail below.
+Once the dispute is resolved, the dispute service should set the dispute resolution using the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) Admin API. See [Dispute Resolutions](#dispute-resolutions) and [Resolve a Dispute](#resolving-disputes) detail below.
 
 
 ### Creating Disputes
 
-To create a dispute in the store using the [disputesCreate](/docs/api/admin/reference/#tag/payments/operation/disputesCreate) Admin API, see example below:
+To create a dispute in the store using the [disputesCreate](/docs/api/admin/reference/#/operations/disputesCreate) Admin API, see example below:
 
 ```json title="Create dispute"
 POST https://{store}.29next.store/api/admin/disputes/
@@ -106,7 +106,7 @@ POST https://{store}.29next.store/api/admin/disputes/
 
 ### Matching Disputes
 
-To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/api/admin/reference/#tag/payments/operation/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
+To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
 
 ```json title="Match dispute"
 POST https://{store}.29next.store/api/admin/disputes/{id}/
@@ -117,7 +117,7 @@ POST https://{store}.29next.store/api/admin/disputes/{id}/
 
 ### Creating Refunds
 
-To create a refund for a transaction as part of the dispute resolution process, you can use the [transactionsRefundCreate](/docs/api/admin/reference/#tag/payments/operation/transactionsRefundCreate) Admin API.
+To create a refund for a transaction as part of the dispute resolution process, you can use the [transactionsRefundCreate](/docs/api/admin/reference/#/operations/transactionsRefundCreate) Admin API.
 
 ```json title="Create a Refund"
 POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
@@ -128,7 +128,7 @@ POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
 
 ### RDR Alerts
 
-RDR Alerts are automatically refunded with the gateway, dispute services should log an external refund for the transaction using the [transactionsRefundCreate](/docs/api/admin/reference/#tag/payments/operation/transactionsRefundCreate) Admin API.
+RDR Alerts are automatically refunded with the gateway, dispute services should log an external refund for the transaction using the [transactionsRefundCreate](/docs/api/admin/reference/#/operations/transactionsRefundCreate) Admin API.
 
 Setting `is_external: true` on a refund will create the refund without attempting the refund with the gateway.
 

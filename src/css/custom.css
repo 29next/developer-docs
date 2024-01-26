@@ -89,3 +89,258 @@
 [data-theme='dark'] .header-github-link::before {
     background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E") no-repeat;
 }
+
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 100 900;
+    font-display: block;
+    font-style: normal;
+    font-named-instance: Regular;
+    src: url(/assets/fonts/Inter.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 100 900;
+    font-display: block;
+    font-style: italic;
+    font-named-instance: 'Italic';
+    src: url(/assets/fonts/Inter-italic.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url(/assets/fonts/FiraCode.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+        U+FEFF, U+FFFD;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    body {
+        @apply font-sans antialiased;
+    }
+
+    .no-underline-links {
+        --ifm-link-hover-decoration: none;
+    }
+
+    a {
+        @apply cursor-pointer;
+    }
+
+}
+
+.accordion-content *:last-child {
+    @apply mb-0;
+}
+
+
+/* Fonts */
+
+pre,
+code {
+    font-variant-ligatures: none;
+}
+
+/* UI Kit tokens */
+:root {
+    --docs-color-primary: --ifm-color-primary;
+    /* --docs-color-primary-100: #1a90ff; */
+    --docs-color-primary-tint: rgba(33, 96, 253, 0.16);
+    --docs-color-primary-tint-light: rgba(33 96 253/0.24);
+
+    --docs-color-border: #dadde1;
+
+    --docs-color-text: #000000;
+    --docs-color-text-100: #646464;
+
+    --docs-color-background: #ffffff;
+    --docs-color-background-100: #f8f8f8;
+    --docs-color-background-200: #efefef;
+    --docs-color-background-300: #dcdcdc;
+
+    /* Color from prism themes */
+    --docs-color-code-background: #f6f8fa;
+
+    --docs-color-android: #44db85;
+    --docs-color-apple: var(--docs-color-text) !important;
+}
+
+[data-theme='dark'] {
+    --docs-color-border: #2e2e2e;
+
+    --docs-color-text: #ffffff;
+    --docs-color-text-100: #b4b4b4;
+
+    --docs-color-background: #161616;
+    --docs-color-background-100: #1c1c1c;
+    --docs-color-background-200: #2a2a2a;
+    --docs-color-background-300: #2e2e2e;
+
+    --docs-color-code-background: #1e1e1e;
+}
+
+/* Docusaurus Theming */
+
+:root {
+
+    --ifm-font-family-base: 'Inter', system-ui, -apple-system, Segoe UI, Roboto,
+        Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI',
+        Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol';
+
+    --ifm-font-family-monospace: 'Fira Code', SFMono-Regular, Menlo, Monaco,
+        Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+html[data-theme='dark'] {
+    --ifm-footer-background-color: #1c1c1c;
+    --ifm-background-surface-color: #161616;
+    --ifm-background-color: #161616;
+    --ifm-toc-border-color: #2e2e2e;
+    --ifm-color-content: #e7e7e7;
+    --docusaurus-highlighted-code-line-bg: rgba(105, 105, 105, 0.3);
+}
+
+/* Disables link hover decoration enabled by default in docusaurus v2.0.0-beta.22 */
+.navbar__link,
+.menu__link,
+.table-of-contents__link,
+.pagination-nav,
+.footer {
+    --ifm-link-hover-decoration: none;
+}
+
+.menu__link {
+    /* Background tint only for menu links in sidebar */
+    --ifm-menu-color-background-active: var(--docs-color-primary-tint);
+}
+
+/* SectionsMenu Component Styles */
+.sections-menu-trigger {
+    /* all: unset; */
+    flex: 1;
+    display: inline-flex;
+    background-color: var(--docs-color-background-100);
+    color: var(--docs-color-text);
+    height: 48px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid var(--docs-color-background-200);
+}
+
+.sections-menu-trigger:hover {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sections-menu-trigger,
+.sections-menu-item {
+    padding: 0 15px;
+    padding-left: 10px;
+
+}
+
+.sections-menu-scrollButton {
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    color: var(--docs-color-text);
+    cursor: default;
+}
+
+.sections-menu-item {
+    box-sizing: border-box;
+    min-width: 120px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    outline: none;
+    cursor: pointer;
+}
+
+.sections-menu-item:hover {
+    background-color: var(--docs-color-background-200);
+}
+
+.sections-menu-item[data-disabled] {
+    cursor: not-allowed;
+    background-color: var(--docs-color-border);
+}
+
+.sections-menu-trigger .item-indicator,
+.sections-menu-item .item-indicator {
+    height: 20px;
+    width: 20px;
+    color: theme('colors.primary.100');
+}
+
+.sections-menu-trigger .item-text,
+.sections-menu-item .item-text {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-right: 8px;
+}
+
+.sections-menu-trigger .item-text>svg,
+.sections-menu-item .item-text>svg {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+}
+
+.sections-menu-content {
+    box-sizing: border-box;
+    background-color: var(--docs-color-background-100);
+    border-radius: 6px;
+    padding: 6px 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Overriding Docusaurus styles */
+.collapsibleContent_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
+    border-top: 1px solid var(--code-border-color) !important;
+}
+
+.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module>summary::before {
+    border-color: transparent transparent transparent var(--docs-color-text-100) !important;
+}
+
+.DocSearch-Button-Key {
+    background: theme(colors.secondary.800) !important;
+    top: 0 !important;
+    padding: 0 !important;
+    @apply !border !border-solid !border-text-400/30;
+    @apply !shadow-none;
+    @apply flex items-center;
+}
+
+.DocSearch-Modal {
+    margin-top: 80px !important;
+}
+
+.DocSearch-Button-Placeholder {
+    @apply !text-xs;
+}

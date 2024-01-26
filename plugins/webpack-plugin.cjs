@@ -23,11 +23,15 @@ function webpackPlugin(context, options) {
                 ],
                 resolve: {
                     fallback: {
-                        buffer: require.resolve('buffer'),
-                        stream: false,
-                        path: false,
-                        process: false,
-                    }
+                        stream: require.resolve('stream-browserify'),
+                        path: require.resolve('path-browserify'),
+                        buffer: require.resolve('buffer/'),
+                        url: require.resolve('url'),
+                        crypto: false,
+                    },
+                    alias: {
+                        process: 'process/browser.js',
+                    },
                 },
             };
         },
