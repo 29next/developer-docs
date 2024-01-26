@@ -106,3 +106,9 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 .api-reference .SendButtonHolder {
     display: none;
 }
+
+/* Improve layout column width */
+.api-reference div[data-testid="two-column-right"] {
+    max-width: 700px !important;
+    width: 50%;
+}
