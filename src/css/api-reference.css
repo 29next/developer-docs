@@ -102,12 +102,7 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
     margin: 0;
 }
 
-/* Hide Send Request button due to subdomains */
-.api-reference .SendButtonHolder {
+/* Hide Send Request button due to CORS */
+/* .api-reference .SendButtonHolder {
     display: none;
-}
-
-/* Hide TryItPanel Auth because it doesnt make sense */
-.api-reference .TryItPanel div[data-test="try-it-auth"] {
-    display: none;
-}
+} */
