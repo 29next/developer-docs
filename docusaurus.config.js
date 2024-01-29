@@ -110,7 +110,7 @@ const config = {
     markdown: {
         mermaid: true,
     },
-    themes: ['@docusaurus/theme-live-codeblock'],
+    themes: ['@docusaurus/theme-mermaid'],
     plugins: plugins,
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
