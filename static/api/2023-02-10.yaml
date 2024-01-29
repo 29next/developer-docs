@@ -27840,8 +27840,10 @@ paths:
       - AccessToken: []
       tags:
       - webhooks
+security:
+- AccessToken: []
 servers:
-- description: ''
+- description: Store Domain
   url: https://{store}.29next.store
   variables:
     store:

@@ -55,16 +55,16 @@ def download_file(version):
         f.write(response.content)
     f.close()
 
-def update_spec(version):
+def update_spec_file(version):
     api_file = OUTPUT_PATH + version + '.yaml'
     with open(api_file, 'r+') as f:
         spec = yaml.safe_load(f.read())
         spec['info']['description'] = API_DESCRIPTION
-        servers = {
+        additions = {
             'servers': [
                 {
                     'url': 'https://{store}.29next.store',
-                    'description': '',
+                    'description': 'Store Domain',
                     'variables': {
                         'store': {
                             'default': 'example',
@@ -72,9 +72,14 @@ def update_spec(version):
                         }
                     }
                 }
+            ],
+            'security': [
+                {
+                    'AccessToken': []
+                }
             ]
         }
-        spec.update(servers)
+        spec.update(additions)
         yaml.safe_dump(spec, f)
     f.close()
 
@@ -83,6 +88,6 @@ def update_api_spec():
     for version in API_VERSIONS:
         print('Updating version {}'.format(version))
         download_file(version)
-        update_spec(version)
+        update_spec_file(version)
 
 update_api_spec()
