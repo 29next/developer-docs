@@ -102,11 +102,6 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
     margin: 0;
 }
 
-/* Hide Send Request button due to CORS */
-.api-reference .SendButtonHolder {
-    display: none;
-}
-
 /* Improve layout column width */
 .api-reference div[data-testid="two-column-right"] {
     max-width: 900px !important;
@@ -116,4 +111,9 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 .elements-container .sl-px-24 {
     padding-left: 45px;
     padding-right: 45px;
+}
+
+/* Hide Send Request button due to CORS */
+.admin-api .SendButtonHolder {
+    display: none;
 }

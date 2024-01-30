@@ -135,7 +135,10 @@ const config = {
                                 label: 'Admin API Reference',
                                 href: '/docs/api/admin/reference/',
                             },
-
+                            {
+                                label: 'Campaigns API Reference',
+                                href: '/docs/api/campaigns/reference/',
+                            }
                         ],
                     },
                     // { to: '/docs/api/', label: 'APIs', position: 'left' },

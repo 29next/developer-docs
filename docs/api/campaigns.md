@@ -13,7 +13,7 @@ import Link from '@docusaurus/Link';
 
 <Link
     className="button button--primary button--lg"
-    to="https://campaigns.apps.29next.com/api/docs/">
+    to="/docs/api/campaigns/reference/">
     See Campaigns API Reference
 </Link>
 

@@ -6,7 +6,7 @@ import { useHistory } from '@docusaurus/router';
 import clsx from 'clsx';
 import SectionsMenu from '../../../../components/SectionsMenu'
 
-function APIElement({ layout = 'responsive', currentVersion = '2023-02-10' }) {
+function APIElement({ layout = 'responsive', currentVersion = 'v1' }) {
     return (
         <BrowserOnly fallback={<div className="loading-container">Loading...</div>}>
             {() => {
@@ -17,7 +17,7 @@ function APIElement({ layout = 'responsive', currentVersion = '2023-02-10' }) {
                     <div className={clsx('elements-container', layout)}>
                         <API
                             className="stacked"
-                            apiDescriptionUrl={`/api/admin/${currentVersion}.yaml`}
+                            apiDescriptionUrl={`/api/campaigns/${currentVersion}.yaml`}
                             basePath="/"
                             router="hash"
                             layout={layout}
@@ -39,13 +39,13 @@ export default function Home() {
         `https://developers.29next.com${location.pathname}${location.search}`
     );
 
-    const currentVersion = url.searchParams.get('v') || '2023-02-10';
+    const currentVersion = url.searchParams.get('v') || 'v1';
     return (
         <Layout
             title="API Reference"
-            description="29 Next Admin API Reference"
+            description="29 Next Campaigns API Reference"
             noFooter
-            wrapperClassName="api-reference admin-api"
+            wrapperClassName="api-reference campaigns-api"
         >
             <Head>
                 {/* Load styles for Stoplight Elements */}
@@ -55,15 +55,14 @@ export default function Home() {
 
             <div className="header">
                 <h1 className="mb-0 flex items-center gap-2 text-sm font-semibold lg:text-lg" id="top">
-                    Admin API Reference
+                    Campaigns API Reference
                 </h1>
                 <div className="aside">
                     Version
                     <SectionsMenu
                         defaultValue={currentVersion}
                         values={[
-                            { name: '2023-02-10', docId: '2023-02-10' },
-                            { name: 'unstable', docId: 'unstable' }
+                            { name: 'v1', docId: 'v1' }
                         ]}
                         onValueChange={(version) => {
                             router.push(`/docs/api/admin/reference/?v=${version}`);

@@ -1,0 +1,2026 @@
+openapi: 3.0.3
+info:
+  title: Campaigns API
+  version: v1
+  x-logo:
+    url: https://d1xly3wkgehfot.cloudfront.net/static/images/logo/campaigns-logo.png
+    altText: 29Next Campaigns API Logo
+  description: Documentation of API endpoints of campaigns
+paths:
+  /api/v1/campaigns/:
+    get:
+      operationId: campaignRetrieve
+      description: Retrieve a campaign.
+      tags:
+      - campaigns
+      security:
+      - API Authentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Campaign'
+          description: ''
+  /api/v1/carts/:
+    post:
+      operationId: cartsCreate
+      description: Create a new cart.
+      tags:
+      - carts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartBase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartBase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartBase'
+        required: true
+      security:
+      - API Authentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+  /api/v1/orders/:
+    post:
+      operationId: ordersCreate
+      description: Create a new order.
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+        required: true
+      security:
+      - API Authentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/v1/orders/{ref_id}/:
+    get:
+      operationId: orderRetrieve
+      description: Retrieve order detail.
+      parameters:
+      - in: path
+        name: ref_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - orders
+      security:
+      - API Authentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/v1/orders/{ref_id}/upsells/:
+    post:
+      operationId: ordersUpsellCreate
+      description: Add an upsell to an existing order.
+      parameters:
+      - in: path
+        name: ref_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUpsellLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddUpsellLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddUpsellLine'
+        required: true
+      security:
+      - API Authentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+components:
+  schemas:
+    AddUpsellLine:
+      type: object
+      properties:
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/Line'
+          description: Array of package IDs
+      required:
+      - lines
+    Address:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 64
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        line1:
+          type: string
+          maxLength: 225
+        line2:
+          type: string
+          maxLength: 225
+        line3:
+          type: string
+          maxLength: 225
+        line4:
+          type: string
+          description: City
+          maxLength: 225
+        state:
+          type: string
+          maxLength: 225
+        postcode:
+          type: string
+          maxLength: 64
+        phone_number:
+          type: string
+          maxLength: 225
+        notes:
+          type: string
+          maxLength: 225
+        is_default_for_shipping:
+          type: boolean
+          default: false
+        is_default_for_billing:
+          type: boolean
+          default: false
+        country:
+          type: string
+          maxLength: 225
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
+    AddressCart:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 64
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        line1:
+          type: string
+          maxLength: 225
+        line2:
+          type: string
+          maxLength: 225
+        line3:
+          type: string
+          maxLength: 225
+        line4:
+          type: string
+          description: City
+          maxLength: 225
+        state:
+          type: string
+          maxLength: 225
+        postcode:
+          type: string
+          maxLength: 64
+        phone_number:
+          type: string
+          maxLength: 225
+        notes:
+          type: string
+          maxLength: 225
+        country:
+          type: string
+          maxLength: 225
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
+    Attribution:
+      type: object
+      properties:
+        utm_source:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_medium:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_campaign:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_term:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_content:
+          type: string
+          nullable: true
+          maxLength: 225
+        gclid:
+          type: string
+          nullable: true
+          maxLength: 225
+        funnel:
+          type: string
+          nullable: true
+          maxLength: 225
+        metadata:
+          type: object
+          additionalProperties: {}
+        affiliate:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate1:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate2:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate3:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate4:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate5:
+          type: string
+          nullable: true
+          maxLength: 225
+    BlankEnum:
+      enum:
+      - ''
+    Campaign:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Campaign name used internally for reference.
+          maxLength: 200
+        currency:
+          type: string
+          description: Currency for orders created through this campaign.
+          maxLength: 3
+        language:
+          type: string
+          description: Preferred language for customers of this campaign.
+          maxLength: 3
+        payment_env_key:
+          type: string
+          readOnly: true
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageSerilaizer'
+        shipping_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingOption'
+      required:
+      - currency
+      - language
+      - name
+      - packages
+      - payment_env_key
+      - shipping_methods
+    Cart:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartLine'
+        attribution:
+          $ref: '#/components/schemas/MarketingAttribution'
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Voucher'
+        total_discounts:
+          type: string
+          readOnly: true
+        total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_excl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_incl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        currency:
+          type: string
+          maxLength: 50
+        checkout_url:
+          type: string
+      required:
+      - checkout_url
+      - currency
+      - lines
+      - total_discounts
+      - user
+    CartBase:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserCreateCart'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineWithUpsell'
+          description: Array of package IDs
+        vouchers:
+          type: array
+          items:
+            type: string
+          description: Array of voucher codes
+        attribution:
+          $ref: '#/components/schemas/Attribution'
+        address:
+          allOf:
+          - $ref: '#/components/schemas/AddressCart'
+          description: Set default shipping and billing address for the user.
+      required:
+      - lines
+      - user
+    CartLine:
+      type: object
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: integer
+        product_title:
+          type: string
+          readOnly: true
+        product_sku:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          readOnly: true
+        price_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_excl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_incl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_upsell:
+          type: boolean
+      required:
+      - id
+      - image
+      - product_sku
+      - product_title
+      - quantity
+    CreateOrder:
+      type: object
+      properties:
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          nullable: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineWithUpsell'
+          description: Array of package IDs
+        vouchers:
+          type: array
+          items:
+            type: string
+          description: Array of voucher codes
+        attribution:
+          $ref: '#/components/schemas/Attribution'
+        use_default_shipping_address:
+          type: boolean
+          default: false
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+        use_default_billing_address:
+          type: boolean
+          default: false
+        billing_same_as_shipping_address:
+          type: boolean
+          default: false
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        payment_detail:
+          $ref: '#/components/schemas/Payment'
+        shipping_method:
+          type: integer
+        success_url:
+          type: string
+          description: Fully qualified url that payment redirect flows will redirect
+            to.
+        payment_failed_url:
+          type: string
+          description: Redirect user to this url if payment is unsuccessful.
+      required:
+      - lines
+      - payment_detail
+      - shipping_method
+      - success_url
+    Discount:
+      type: object
+      properties:
+        description:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+    IntervalEnum:
+      enum:
+      - day
+      - month
+      type: string
+      description: |-
+        * `day` - Day
+        * `month` - Month
+    Line:
+      type: object
+      properties:
+        package_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+          description: Package quantity * line quantity = order line quantity
+      required:
+      - package_id
+    LineWithUpsell:
+      type: object
+      properties:
+        package_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+          description: Package quantity * line quantity = order line quantity
+        is_upsell:
+          type: boolean
+      required:
+      - package_id
+    MarketingAttribution:
+      type: object
+      properties:
+        utm_source:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_medium:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_campaign:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_term:
+          type: string
+          nullable: true
+          maxLength: 225
+        utm_content:
+          type: string
+          nullable: true
+          maxLength: 225
+        gclid:
+          type: string
+          nullable: true
+          maxLength: 225
+        funnel:
+          type: string
+          nullable: true
+          maxLength: 225
+        metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        affiliate:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate1:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate2:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate3:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate4:
+          type: string
+          nullable: true
+          maxLength: 225
+        subaffiliate5:
+          type: string
+          nullable: true
+          maxLength: 225
+    NullEnum:
+      enum:
+      - null
+    Order:
+      type: object
+      properties:
+        number:
+          type: string
+          maxLength: 255
+        ref_id:
+          type: string
+          maxLength: 255
+        user:
+          $ref: '#/components/schemas/OrderUser'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLine'
+        attribution:
+          $ref: '#/components/schemas/MarketingAttribution'
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+        shipping_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        shipping_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        total_discounts:
+          type: string
+          readOnly: true
+        total_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        shipping_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        display_taxes:
+          type: string
+          nullable: true
+          maxLength: 225
+        shipping_method:
+          type: string
+          maxLength: 255
+        shipping_code:
+          type: string
+          maxLength: 255
+        currency:
+          type: string
+          maxLength: 50
+        is_test:
+          type: boolean
+        shipping_address:
+          $ref: '#/components/schemas/OrderAddress'
+        billing_address:
+          $ref: '#/components/schemas/OrderAddress'
+        supports_post_purchase_upsells:
+          type: boolean
+          readOnly: true
+        order_status_url:
+          type: string
+          maxLength: 255
+      required:
+      - currency
+      - lines
+      - number
+      - order_status_url
+      - ref_id
+      - supports_post_purchase_upsells
+      - total_discounts
+      - user
+    OrderAddress:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 64
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        line1:
+          type: string
+          maxLength: 225
+        line2:
+          type: string
+          maxLength: 225
+        line3:
+          type: string
+          maxLength: 225
+        line4:
+          type: string
+          description: City
+          maxLength: 225
+        state:
+          type: string
+          maxLength: 225
+        postcode:
+          type: string
+          maxLength: 64
+        phone_number:
+          type: string
+          maxLength: 225
+        notes:
+          type: string
+          maxLength: 225
+        country:
+          type: string
+          maxLength: 225
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
+    OrderLine:
+      type: object
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: integer
+        product_title:
+          type: string
+          readOnly: true
+        product_sku:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          readOnly: true
+        price_excl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_incl_tax:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_excl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_incl_tax_excl_discounts:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_upsell:
+          type: boolean
+      required:
+      - id
+      - image
+      - product_sku
+      - product_title
+      - quantity
+    OrderUser:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          nullable: true
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        phone_number:
+          type: string
+          nullable: true
+        accepts_marketing:
+          type: boolean
+          nullable: true
+          default: true
+        language:
+          type: string
+          default: en
+          maxLength: 10
+        ip:
+          type: string
+          nullable: true
+        user_agent:
+          type: string
+          nullable: true
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+    PackageSerilaizer:
+      type: object
+      properties:
+        ref_id:
+          type: integer
+          title: id
+        name:
+          type: string
+          maxLength: 200
+        external_id:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        qty:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Price per unit
+        price_total:
+          type: string
+        price_retail:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_retail_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_recurring:
+          type: boolean
+        price_recurring:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        price_recurring_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        interval:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/IntervalEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        interval_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        image:
+          type: string
+          readOnly: true
+      required:
+      - external_id
+      - image
+      - name
+      - price
+      - price_total
+      - qty
+      - ref_id
+    Payment:
+      type: object
+      properties:
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodEnum'
+        card_token:
+          type: string
+          nullable: true
+      required:
+      - payment_method
+    PaymentMethodEnum:
+      enum:
+      - apple_pay
+      - card_token
+      - paypal
+      - klarna
+      - ideal
+      - bancontact
+      - giropay
+      - google_pay
+      type: string
+      description: |-
+        * `apple_pay` - Apple Pay
+        * `card_token` - Card Token
+        * `paypal` - Paypal
+        * `klarna` - Klarna
+        * `ideal` - Ideal
+        * `bancontact` - Bancontact
+        * `giropay` - Giropay
+        * `google_pay` - Google Pay
+    ShippingOption:
+      type: object
+      properties:
+        ref_id:
+          type: integer
+        code:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+      required:
+      - ref_id
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          nullable: true
+        first_name:
+          type: string
+          maxLength: 225
+        last_name:
+          type: string
+          maxLength: 225
+        phone_number:
+          type: string
+          nullable: true
+        accepts_marketing:
+          type: boolean
+          nullable: true
+          default: true
+        ip:
+          type: string
+          nullable: true
+        user_agent:
+          type: string
+          nullable: true
+    UserCreateCart:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          nullable: true
+        first_name:
+          type: string
+          maxLength: 225
+        last_name:
+          type: string
+          maxLength: 225
+        phone_number:
+          type: string
+          nullable: true
+        accepts_marketing:
+          type: boolean
+          nullable: true
+          default: true
+    Voucher:
+      type: object
+      properties:
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+  securitySchemes:
+    API Authentication:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Campaign token based authentication.
+components:
+  schemas:
+    AddUpsellLine:
+      properties:
+        lines:
+          description: Array of package IDs
+          items:
+            $ref: '#/components/schemas/Line'
+          type: array
+      required:
+      - lines
+      type: object
+    Address:
+      properties:
+        country:
+          maxLength: 225
+          type: string
+        first_name:
+          maxLength: 255
+          type: string
+        is_default_for_billing:
+          default: false
+          type: boolean
+        is_default_for_shipping:
+          default: false
+          type: boolean
+        last_name:
+          maxLength: 255
+          type: string
+        line1:
+          maxLength: 225
+          type: string
+        line2:
+          maxLength: 225
+          type: string
+        line3:
+          maxLength: 225
+          type: string
+        line4:
+          description: City
+          maxLength: 225
+          type: string
+        notes:
+          maxLength: 225
+          type: string
+        phone_number:
+          maxLength: 225
+          type: string
+        postcode:
+          maxLength: 64
+          type: string
+        state:
+          maxLength: 225
+          type: string
+        title:
+          maxLength: 64
+          type: string
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
+      type: object
+    AddressCart:
+      properties:
+        country:
+          maxLength: 225
+          type: string
+        first_name:
+          maxLength: 255
+          type: string
+        last_name:
+          maxLength: 255
+          type: string
+        line1:
+          maxLength: 225
+          type: string
+        line2:
+          maxLength: 225
+          type: string
+        line3:
+          maxLength: 225
+          type: string
+        line4:
+          description: City
+          maxLength: 225
+          type: string
+        notes:
+          maxLength: 225
+          type: string
+        phone_number:
+          maxLength: 225
+          type: string
+        postcode:
+          maxLength: 64
+          type: string
+        state:
+          maxLength: 225
+          type: string
+        title:
+          maxLength: 64
+          type: string
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
+      type: object
+    Attribution:
+      properties:
+        affiliate:
+          maxLength: 225
+          nullable: true
+          type: string
+        funnel:
+          maxLength: 225
+          nullable: true
+          type: string
+        gclid:
+          maxLength: 225
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: {}
+          type: object
+        subaffiliate1:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate2:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate3:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate4:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate5:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_campaign:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_content:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_medium:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_source:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_term:
+          maxLength: 225
+          nullable: true
+          type: string
+      type: object
+    BlankEnum:
+      enum:
+      - ''
+    Campaign:
+      properties:
+        currency:
+          description: Currency for orders created through this campaign.
+          maxLength: 3
+          type: string
+        language:
+          description: Preferred language for customers of this campaign.
+          maxLength: 3
+          type: string
+        name:
+          description: Campaign name used internally for reference.
+          maxLength: 200
+          type: string
+        packages:
+          items:
+            $ref: '#/components/schemas/PackageSerilaizer'
+          type: array
+        payment_env_key:
+          readOnly: true
+          type: string
+        shipping_methods:
+          items:
+            $ref: '#/components/schemas/ShippingOption'
+          type: array
+      required:
+      - currency
+      - language
+      - name
+      - packages
+      - payment_env_key
+      - shipping_methods
+      type: object
+    Cart:
+      properties:
+        attribution:
+          $ref: '#/components/schemas/MarketingAttribution'
+        checkout_url:
+          type: string
+        currency:
+          maxLength: 50
+          type: string
+        discounts:
+          items:
+            $ref: '#/components/schemas/Voucher'
+          type: array
+        lines:
+          items:
+            $ref: '#/components/schemas/CartLine'
+          type: array
+        total_discounts:
+          readOnly: true
+          type: string
+        total_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_excl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_incl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - checkout_url
+      - currency
+      - lines
+      - total_discounts
+      - user
+      type: object
+    CartBase:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/AddressCart'
+          description: Set default shipping and billing address for the user.
+        attribution:
+          $ref: '#/components/schemas/Attribution'
+        lines:
+          description: Array of package IDs
+          items:
+            $ref: '#/components/schemas/LineWithUpsell'
+          type: array
+        user:
+          $ref: '#/components/schemas/UserCreateCart'
+        vouchers:
+          description: Array of voucher codes
+          items:
+            type: string
+          type: array
+      required:
+      - lines
+      - user
+      type: object
+    CartLine:
+      properties:
+        id:
+          type: integer
+        image:
+          readOnly: true
+          type: string
+        is_upsell:
+          type: boolean
+        price_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_excl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_incl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        product_sku:
+          readOnly: true
+          type: string
+        product_title:
+          readOnly: true
+          type: string
+        quantity:
+          type: integer
+      required:
+      - id
+      - image
+      - product_sku
+      - product_title
+      - quantity
+      type: object
+    CreateOrder:
+      properties:
+        attribution:
+          $ref: '#/components/schemas/Attribution'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        billing_same_as_shipping_address:
+          default: false
+          type: boolean
+        lines:
+          description: Array of package IDs
+          items:
+            $ref: '#/components/schemas/LineWithUpsell'
+          type: array
+        payment_detail:
+          $ref: '#/components/schemas/Payment'
+        payment_failed_url:
+          description: Redirect user to this url if payment is unsuccessful.
+          type: string
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+        shipping_method:
+          type: integer
+        success_url:
+          description: Fully qualified url that payment redirect flows will redirect
+            to.
+          type: string
+        use_default_billing_address:
+          default: false
+          type: boolean
+        use_default_shipping_address:
+          default: false
+          type: boolean
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          nullable: true
+        vouchers:
+          description: Array of voucher codes
+          items:
+            type: string
+          type: array
+      required:
+      - lines
+      - payment_detail
+      - shipping_method
+      - success_url
+      type: object
+    Discount:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        description:
+          maxLength: 255
+          type: string
+        name:
+          maxLength: 255
+          type: string
+      type: object
+    IntervalEnum:
+      description: '* `day` - Day
+
+        * `month` - Month'
+      enum:
+      - day
+      - month
+      type: string
+    Line:
+      properties:
+        package_id:
+          type: integer
+        quantity:
+          description: Package quantity * line quantity = order line quantity
+          minimum: 1
+          type: integer
+      required:
+      - package_id
+      type: object
+    LineWithUpsell:
+      properties:
+        is_upsell:
+          type: boolean
+        package_id:
+          type: integer
+        quantity:
+          description: Package quantity * line quantity = order line quantity
+          minimum: 1
+          type: integer
+      required:
+      - package_id
+      type: object
+    MarketingAttribution:
+      properties:
+        affiliate:
+          maxLength: 225
+          nullable: true
+          type: string
+        funnel:
+          maxLength: 225
+          nullable: true
+          type: string
+        gclid:
+          maxLength: 225
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: {}
+          nullable: true
+          type: object
+        subaffiliate1:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate2:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate3:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate4:
+          maxLength: 225
+          nullable: true
+          type: string
+        subaffiliate5:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_campaign:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_content:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_medium:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_source:
+          maxLength: 225
+          nullable: true
+          type: string
+        utm_term:
+          maxLength: 225
+          nullable: true
+          type: string
+      type: object
+    NullEnum:
+      enum:
+      - null
+    Order:
+      properties:
+        attribution:
+          $ref: '#/components/schemas/MarketingAttribution'
+        billing_address:
+          $ref: '#/components/schemas/OrderAddress'
+        currency:
+          maxLength: 50
+          type: string
+        discounts:
+          items:
+            $ref: '#/components/schemas/Discount'
+          type: array
+        display_taxes:
+          maxLength: 225
+          nullable: true
+          type: string
+        is_test:
+          type: boolean
+        lines:
+          items:
+            $ref: '#/components/schemas/OrderLine'
+          type: array
+        number:
+          maxLength: 255
+          type: string
+        order_status_url:
+          maxLength: 255
+          type: string
+        ref_id:
+          maxLength: 255
+          type: string
+        shipping_address:
+          $ref: '#/components/schemas/OrderAddress'
+        shipping_code:
+          maxLength: 255
+          type: string
+        shipping_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        shipping_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        shipping_method:
+          maxLength: 255
+          type: string
+        shipping_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        supports_post_purchase_upsells:
+          readOnly: true
+          type: boolean
+        total_discounts:
+          readOnly: true
+          type: string
+        total_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        user:
+          $ref: '#/components/schemas/OrderUser'
+      required:
+      - currency
+      - lines
+      - number
+      - order_status_url
+      - ref_id
+      - supports_post_purchase_upsells
+      - total_discounts
+      - user
+      type: object
+    OrderAddress:
+      properties:
+        country:
+          maxLength: 225
+          type: string
+        first_name:
+          maxLength: 255
+          type: string
+        last_name:
+          maxLength: 255
+          type: string
+        line1:
+          maxLength: 225
+          type: string
+        line2:
+          maxLength: 225
+          type: string
+        line3:
+          maxLength: 225
+          type: string
+        line4:
+          description: City
+          maxLength: 225
+          type: string
+        notes:
+          maxLength: 225
+          type: string
+        phone_number:
+          maxLength: 225
+          type: string
+        postcode:
+          maxLength: 64
+          type: string
+        state:
+          maxLength: 225
+          type: string
+        title:
+          maxLength: 64
+          type: string
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
+      type: object
+    OrderLine:
+      properties:
+        id:
+          type: integer
+        image:
+          readOnly: true
+          type: string
+        is_upsell:
+          type: boolean
+        price_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_excl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_incl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        product_sku:
+          readOnly: true
+          type: string
+        product_title:
+          readOnly: true
+          type: string
+        quantity:
+          type: integer
+      required:
+      - id
+      - image
+      - product_sku
+      - product_title
+      - quantity
+      type: object
+    OrderUser:
+      properties:
+        accepts_marketing:
+          default: true
+          nullable: true
+          type: boolean
+        addresses:
+          items:
+            $ref: '#/components/schemas/Address'
+          type: array
+        email:
+          format: email
+          nullable: true
+          type: string
+        first_name:
+          maxLength: 255
+          type: string
+        ip:
+          nullable: true
+          type: string
+        language:
+          default: en
+          maxLength: 10
+          type: string
+        last_name:
+          maxLength: 255
+          type: string
+        phone_number:
+          nullable: true
+          type: string
+        user_agent:
+          nullable: true
+          type: string
+      type: object
+    PackageSerilaizer:
+      properties:
+        external_id:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        image:
+          readOnly: true
+          type: string
+        interval:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/IntervalEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        interval_count:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        is_recurring:
+          type: boolean
+        name:
+          maxLength: 200
+          type: string
+        price:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Price per unit
+          type: string
+        price_recurring:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_recurring_total:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_retail:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_retail_total:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_total:
+          type: string
+        qty:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        ref_id:
+          title: id
+          type: integer
+      required:
+      - external_id
+      - image
+      - name
+      - price
+      - price_total
+      - qty
+      - ref_id
+      type: object
+    Payment:
+      properties:
+        card_token:
+          nullable: true
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodEnum'
+      required:
+      - payment_method
+      type: object
+    PaymentMethodEnum:
+      description: '* `apple_pay` - Apple Pay
+
+        * `card_token` - Card Token
+
+        * `paypal` - Paypal
+
+        * `klarna` - Klarna
+
+        * `ideal` - Ideal
+
+        * `bancontact` - Bancontact
+
+        * `giropay` - Giropay
+
+        * `google_pay` - Google Pay'
+      enum:
+      - apple_pay
+      - card_token
+      - paypal
+      - klarna
+      - ideal
+      - bancontact
+      - giropay
+      - google_pay
+      type: string
+    ShippingOption:
+      properties:
+        code:
+          type: string
+        price:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        ref_id:
+          type: integer
+      required:
+      - ref_id
+      type: object
+    User:
+      properties:
+        accepts_marketing:
+          default: true
+          nullable: true
+          type: boolean
+        email:
+          format: email
+          nullable: true
+          type: string
+        first_name:
+          maxLength: 225
+          type: string
+        ip:
+          nullable: true
+          type: string
+        last_name:
+          maxLength: 225
+          type: string
+        phone_number:
+          nullable: true
+          type: string
+        user_agent:
+          nullable: true
+          type: string
+      type: object
+    UserCreateCart:
+      properties:
+        accepts_marketing:
+          default: true
+          nullable: true
+          type: boolean
+        email:
+          format: email
+          nullable: true
+          type: string
+        first_name:
+          maxLength: 225
+          type: string
+        last_name:
+          maxLength: 225
+          type: string
+        phone_number:
+          nullable: true
+          type: string
+      type: object
+    Voucher:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        description:
+          maxLength: 255
+          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          nullable: true
+          type: string
+      type: object
+  securitySchemes:
+    API Authentication:
+      description: Campaign token based authentication.
+      in: header
+      name: Authorization
+      type: apiKey
+info:
+  description: '
+
+    ## Overview
+
+    Campaigns API is a headless API for campaign developers to easily create complex
+    external campaign flows using Javascript, **no backend server-side integration
+    required**.
+
+
+    Before using the Campaigns API, you''ll need to install the Campaigns App and
+    create a campaign to retrieve your campaign API Key.
+
+
+    ## Authentication
+
+
+    Campaigns API uses uses unique Campaign API Key authentication to access campaign
+    details and execute the checkout flow.
+
+
+    ## Rate Limiting
+
+
+    Campaign APIs are rate-limited to maintain the stability for all users. We employ
+    a number of methods to enforce rate limits including API Keys and IP Address.
+
+
+    | Identifier | Rate Limit Method | Limit |
+
+    | ---- | ---- | ---- |
+
+    | IP Address | Request-based | 4 requests/second |
+
+
+    ### Sample
+
+
+    The following sample shows the API response for the status code 429.
+
+
+    ```http
+
+    HTTP/1.1 429 Too Many Requests
+
+    Retry-After: 1
+
+    ```
+
+
+    ### Why Rate Limits?
+
+
+    Rate limiting is required to prevent the network and application services from
+    becoming overloaded.
+
+
+    Setting a rate limit helps to prevent API abuse and provide overall fairness of
+    use across the platform.
+
+    '
+  title: Campaigns API
+  version: v1
+  x-logo:
+    altText: 29Next Campaigns API Logo
+    url: https://d1xly3wkgehfot.cloudfront.net/static/images/logo/campaigns-logo.png
+openapi: 3.0.3
+paths:
+  /api/v1/campaigns/:
+    get:
+      description: Retrieve a campaign.
+      operationId: campaignRetrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Campaign'
+                type: array
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - campaigns
+  /api/v1/carts/:
+    post:
+      description: Create a new cart.
+      operationId: cartsCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartBase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartBase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartBase'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - carts
+  /api/v1/orders/:
+    post:
+      description: Create a new order.
+      operationId: ordersCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - orders
+  /api/v1/orders/{ref_id}/:
+    get:
+      description: Retrieve order detail.
+      operationId: orderRetrieve
+      parameters:
+      - in: path
+        name: ref_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - orders
+  /api/v1/orders/{ref_id}/upsells/:
+    post:
+      description: Add an upsell to an existing order.
+      operationId: ordersUpsellCreate
+      parameters:
+      - in: path
+        name: ref_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUpsellLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddUpsellLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddUpsellLine'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - orders
+security:
+- API Authentication: []
+servers:
+- description: ''
+  url: https://campaigns.apps.29next.com
