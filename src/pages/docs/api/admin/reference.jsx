@@ -42,8 +42,8 @@ export default function Home() {
     const currentVersion = url.searchParams.get('v') || '2023-02-10';
     return (
         <Layout
-            title="API Reference"
-            description="29 Next Admin API Reference"
+            title="Admin API Reference"
+            description="29 Next Admin API Reference Docs"
             noFooter
             wrapperClassName="api-reference admin-api"
         >

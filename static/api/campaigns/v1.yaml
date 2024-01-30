@@ -1831,20 +1831,19 @@ info:
 
     ## Overview
 
-    Campaigns API is a headless API for campaign developers to easily create complex
-    external campaign flows using Javascript, **no backend server-side integration
-    required**.
+    Campaigns API is a headless API for developers to easily create complex external
+    checkout flows using javascript, **no backend server-side integration required**.
 
 
-    Before using the Campaigns API, you''ll need to install the Campaigns App and
-    create a campaign to retrieve your campaign API Key.
+    Before using the Campaigns API, you''ll need to install the **Campaigns App**
+    on your store and create a campaign to retrieve your API Key.
 
 
     ## Authentication
 
 
-    Campaigns API uses uses unique Campaign API Key authentication to access campaign
-    details and execute the checkout flow.
+    Campaigns API uses uses unique API Keys for authentication to access campaign
+    details and execute the checkout flow with your configured packages.
 
 
     ## Rate Limiting

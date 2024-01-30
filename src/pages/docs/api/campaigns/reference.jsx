@@ -42,8 +42,8 @@ export default function Home() {
     const currentVersion = url.searchParams.get('v') || 'v1';
     return (
         <Layout
-            title="API Reference"
-            description="29 Next Campaigns API Reference"
+            title="Campaigns API Reference"
+            description="29 Next Campaigns API Reference Docs"
             noFooter
             wrapperClassName="api-reference campaigns-api"
         >
@@ -65,7 +65,7 @@ export default function Home() {
                             { name: 'v1', docId: 'v1' }
                         ]}
                         onValueChange={(version) => {
-                            router.push(`/docs/api/admin/reference/?v=${version}`);
+                            router.push(`/docs/api/campaigns/reference/?v=${version}`);
                         }}
                         className=""
                     />
