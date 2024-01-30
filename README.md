@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://29next.com">
-    <img src="https://github.com/29next/developer-docs/blob/main/static/img/29next-logo.png" alt="Logo" width="120">
+    <img src="https://github.com/29next/developer-docs/blob/main/static/img/29next-logo.png" alt="Logo" width="240">
   </a>
   <h2 align="center">29 Next Developer Docs</h3>
 
