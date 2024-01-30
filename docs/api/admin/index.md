@@ -54,10 +54,10 @@ API versioning allows 29 Next to continuously evolve the platform while maintain
 
 **Admin API Versions**
 
-| Version | Status |
-| ---- | ---- |
-| `2023-02-10` | Stable for production use. |
-| `unstable` | Unstable and for testing only. |
+| Version | Status | Docs |
+| ---- | ---- | ---- |
+| `2023-02-10` | Stable for production use. | [View Reference](/docs/api/admin/reference/?v=2023-02-10) |
+| `unstable` | Unstable and for testing only. | [View Reference](/docs/api/admin/reference/?v=unstable) |
 
 
 **Specify an API Version**

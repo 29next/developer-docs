@@ -15,7 +15,7 @@ The Test Gateway behaves exactly as a regular gateway, when orders are created u
 
 | Test Gateway Card |  Use Case |
 | ---- | ---- |
-| 4111111111111111 | Test standard payment failed flow with successful transaction. |
+| 4111111111111111 | Test standard payment flow with successful transaction. |
 | 5555555555554444 | Test 3DS payment flow with successful transaction. |
 | 4012888888881881 | Test standard payment declined flow with failed transaction.  |
 

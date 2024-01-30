@@ -21713,7 +21713,7 @@ info:
 
 
     To create an OAuth App, navigate to **Settings > API Access** and create a new
-    Oauth App with applicable [permissions](https://developers.29next.com/docs/api/admin/permissions/)
+    Oauth App with applicable [permission scopes](https://developers.29next.com/docs/api/admin/permissions/)
     to retrieve your Access Token.
 
 
@@ -21740,11 +21740,11 @@ info:
     API Access Token and IP Address.
 
 
-    | Identifier | Rate Limit Method |Limit |
+    | Identifier | Rate Limit Method | Limit |
 
     | ---- | ---- | ---- |
 
-    | Access Token | | Request-based 4 requests/second |
+    | Access Token | Request-based | 4 requests/second |
 
 
     ### Sample

@@ -17,7 +17,7 @@ function APIElement({ layout = 'responsive', currentVersion = '2023-02-10' }) {
                     <div className={clsx('elements-container', layout)}>
                         <API
                             className="stacked"
-                            apiDescriptionUrl={`/api/${currentVersion}.yaml`}
+                            apiDescriptionUrl={`/api/admin/${currentVersion}.yaml`}
                             basePath="/"
                             router="hash"
                             layout={layout}

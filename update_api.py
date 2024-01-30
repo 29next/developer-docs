@@ -8,7 +8,7 @@ API_VERSIONS = [
 
 API_SPEC_HOST_URL = 'https://sandbox.29next.store/api/schema/admin/'
 
-OUTPUT_PATH = 'static/api/'
+OUTPUT_PATH = 'static/api/admin/'
 
 API_DESCRIPTION = """
 ## Authentication
@@ -16,7 +16,7 @@ The Admin API uses Oauth 2 Bearer Access Tokens to manage access to your store's
 
 Before using the Admin API, you'll need to create a store and create an OAuth App necessary for API access.
 
-To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permissions](https://developers.29next.com/docs/api/admin/permissions/) to retrieve your Access Token.
+To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permission scopes](https://developers.29next.com/docs/api/admin/permissions/) to retrieve your Access Token.
 
 It's recommended to create unique Oauth Apps per external system so that you can revoke as needed.
 
@@ -30,9 +30,9 @@ To specify a version, pass the `X-29Next-Api-Version` header with your desired A
 
 Admin APIs are rate-limited to maintain the stability and equity of our platform for all users. We employ a number of methods to enforce rate limits including API Access Token and IP Address.
 
-| Identifier | Rate Limit Method |Limit |
+| Identifier | Rate Limit Method | Limit |
 | ---- | ---- | ---- |
-| Access Token | | Request-based 4 requests/second |
+| Access Token | Request-based | 4 requests/second |
 
 ### Sample
 
