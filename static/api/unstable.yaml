@@ -3,7 +3,7 @@ info:
   title: Admin API
   version: unstable
 paths:
-  /api/admin/apps/{clientId}/settings/:
+  /apps/{clientId}/settings/:
     get:
       operationId: appsSettingsRetrieve
       description: Retrieve a object of all app settings.
@@ -143,7 +143,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/assigned-fulfillment-orders/:
+  /assigned-fulfillment-orders/:
     get:
       operationId: assignedFulfillmentOrdersList
       description: Retrieve assigned fulfillment order requests
@@ -207,7 +207,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedFulfillmentOrderList'
           description: ''
-  /api/admin/carts/:
+  /carts/:
     get:
       operationId: cartsList
       description: Retrieve a list of all open carts.
@@ -362,7 +362,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CartDetail'
           description: ''
-  /api/admin/carts/{id}/:
+  /carts/{id}/:
     get:
       operationId: cartsRetrieve
       description: Retrieve a cart.
@@ -458,7 +458,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/categories/:
+  /categories/:
     get:
       operationId: categoriesList
       description: Retrieve a list of categories.
@@ -523,7 +523,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Category'
           description: ''
-  /api/admin/categories/{id}/:
+  /categories/{id}/:
     get:
       operationId: categoriesRetrieve
       description: Retrieve a category.
@@ -594,7 +594,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Category'
           description: ''
-  /api/admin/disputes/:
+  /disputes/:
     get:
       operationId: disputesList
       description: Retrieve a list of disputes.
@@ -783,7 +783,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Dispute'
           description: ''
-  /api/admin/disputes/{id}/:
+  /disputes/{id}/:
     get:
       operationId: disputesRetrieve
       description: Retrieve a dispute.
@@ -918,7 +918,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/disputes/{id}/notes/:
+  /disputes/{id}/notes/:
     get:
       operationId: disputesNotesList
       description: Retrieve a list of all dispute notes in an existing dispute.
@@ -995,7 +995,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DisputeNote'
           description: ''
-  /api/admin/fulfillment-orders/:
+  /fulfillment-orders/:
     get:
       operationId: fulfillmentOrdersList
       description: Retrieve a list of fulfillment orders.
@@ -1113,7 +1113,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedFulfillmentOrderList'
           description: ''
-  /api/admin/fulfillment-orders/{id}/:
+  /fulfillment-orders/{id}/:
     get:
       operationId: fulfillmentOrdersRetrieve
       description: Retrieve a fulfillment order.
@@ -1143,7 +1143,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/cancellation-request/:
+  /fulfillment-orders/{id}/cancellation-request/:
     post:
       operationId: cancellationRequestSend
       description: Sends a fulfillment cancellation request to the fulfillment service.
@@ -1184,7 +1184,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/cancellation-request/accept/:
+  /fulfillment-orders/{id}/cancellation-request/accept/:
     post:
       operationId: cancellationRequestAccept
       description: Accepts a fulfillment cancellation request sent to a fulfillment
@@ -1226,7 +1226,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/cancellation-request/cancel/:
+  /fulfillment-orders/{id}/cancellation-request/cancel/:
     post:
       operationId: cancellationRequestCancel
       description: Cancel a requested fulfillment cancellation request.
@@ -1267,7 +1267,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/cancellation-request/reject/:
+  /fulfillment-orders/{id}/cancellation-request/reject/:
     post:
       operationId: cancellationRequestReject
       description: Rejects a fulfillment cancellation request sent to a fulfillment
@@ -1309,7 +1309,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/:
+  /fulfillment-orders/{id}/fulfillment-request/:
     post:
       operationId: fulfillmentRequestSend
       description: Sends a fulfillment request to the fulfillment service of a fulfillment
@@ -1351,7 +1351,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentRequestResponse'
           description: ''
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/accept/:
+  /fulfillment-orders/{id}/fulfillment-request/accept/:
     post:
       operationId: fulfillmentRequestAccept
       description: Accepts a fulfillment request sent to a fulfillment service for
@@ -1393,7 +1393,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/cancel/:
+  /fulfillment-orders/{id}/fulfillment-request/cancel/:
     post:
       operationId: fulfillmentRequestCancel
       description: Cancel Requested Fulfillment Order.
@@ -1434,7 +1434,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/reject/:
+  /fulfillment-orders/{id}/fulfillment-request/reject/:
     post:
       operationId: fulfillmentRequestReject
       description: Rejects a fulfillment request sent to a fulfillment service for
@@ -1476,7 +1476,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/fulfillments/:
+  /fulfillment-orders/{id}/fulfillments/:
     get:
       operationId: fulfillmentsRetrieve
       description: Retrieve Fulfillments for a Fulfillment Order.
@@ -1546,7 +1546,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentResponse'
           description: ''
-  /api/admin/fulfillment-orders/{id}/hold/:
+  /fulfillment-orders/{id}/hold/:
     post:
       operationId: fulfillmentOrdersHold
       description: Hold Fulfillment.
@@ -1588,7 +1588,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/fulfillment-orders/{id}/release-hold/:
+  /fulfillment-orders/{id}/release-hold/:
     post:
       operationId: fulfillmentOrdersReleaseHold
       description: Release On Hold Fulfillment.
@@ -1618,7 +1618,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/gateway-groups/:
+  /gateway-groups/:
     get:
       operationId: gatewayGroupsList
       description: Retrieve a list of gatway groups.
@@ -1648,7 +1648,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedGatewayGroupList'
           description: ''
-  /api/admin/gateway-groups/{id}/:
+  /gateway-groups/{id}/:
     get:
       operationId: gatewayGroupsRetrieve
       description: Retrieve a gatway group.
@@ -1678,7 +1678,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GatewayGroup'
           description: ''
-  /api/admin/gateways/:
+  /gateways/:
     get:
       operationId: gatewaysList
       description: Retrieve a list of gateways.
@@ -1708,7 +1708,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedPaymentGatewayList'
           description: ''
-  /api/admin/gateways/{id}/:
+  /gateways/{id}/:
     get:
       operationId: gatewaysRetrieve
       description: Retrieve a gateway.
@@ -1738,7 +1738,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaymentGateway'
           description: ''
-  /api/admin/locations/:
+  /locations/:
     get:
       operationId: locationsList
       description: Retrieve a list of all configured fulfillment locations.
@@ -1803,7 +1803,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Location '
           description: ''
-  /api/admin/locations/{id}/:
+  /locations/{id}/:
     get:
       operationId: locationsRetrieve
       description: Retrieve an existing fulfillment location.
@@ -1874,7 +1874,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Location '
           description: ''
-  /api/admin/metadata/:
+  /metadata/:
     get:
       operationId: metadataList
       description: Retrieve a list of metadata.
@@ -1939,7 +1939,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Definition'
           description: ''
-  /api/admin/metadata/{id}/:
+  /metadata/{id}/:
     get:
       operationId: metadataRetrieve
       description: Retrieve a metadata.
@@ -2075,7 +2075,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/orders/:
+  /orders/:
     get:
       operationId: ordersList
       description: Retrieve a list of orders.
@@ -2440,7 +2440,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/orders/{number}/:
+  /orders/{number}/:
     get:
       operationId: ordersRetrieve
       description: Retrieve a order.
@@ -2550,7 +2550,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/orders/{number}/add-line-items/:
+  /orders/{number}/add-line-items/:
     post:
       operationId: ordersAddLineItemsCreate
       description: Add additional items to the order and charge the initial order
@@ -2593,7 +2593,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/orders/{number}/cancel/:
+  /orders/{number}/cancel/:
     post:
       operationId: ordersCancelCreate
       description: Cancel an existing order.
@@ -2635,7 +2635,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/orders/{number}/capture/:
+  /orders/{number}/capture/:
     post:
       operationId: ordersCaptureCreate
       description: Captures the total amount of the previously authorized funds for
@@ -2666,7 +2666,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/orders/{number}/fulfillment-orders/:
+  /orders/{number}/fulfillment-orders/:
     get:
       operationId: ordersFulfillmentOrdersRetrieve
       description: Retrieves a list of fulfillment orders for a specific order.
@@ -2696,7 +2696,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentOrder'
           description: ''
-  /api/admin/orders/{number}/fulfillments/:
+  /orders/{number}/fulfillments/:
     get:
       operationId: ordersFulfillmentsRetrieve
       description: Retrieve order fulfillments.
@@ -2766,7 +2766,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FulfillmentResponse'
           description: ''
-  /api/admin/orders/{number}/mark-as-paid/:
+  /orders/{number}/mark-as-paid/:
     post:
       operationId: ordersMarkAsPaidCreate
       description: Marks an order as paid. You can only mark an order as paid if it
@@ -2808,7 +2808,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/orders/{number}/notes/:
+  /orders/{number}/notes/:
     get:
       operationId: ordersNotesList
       description: Retrieve a list of all order notes in an existing order.
@@ -2885,7 +2885,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/OrderNote'
           description: ''
-  /api/admin/orders/{number}/refund/:
+  /orders/{number}/refund/:
     post:
       operationId: ordersRefundCreate
       description: Refund an existing order.
@@ -2927,7 +2927,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
           description: ''
-  /api/admin/products/:
+  /products/:
     get:
       operationId: productsList
       description: Retrieve a list of all products.
@@ -3021,7 +3021,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
-  /api/admin/products/{id}/prices/:
+  /products/{id}/prices/:
     get:
       operationId: productsPricesList
       description: Retrieve a list of price products for a product.
@@ -3092,7 +3092,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductPrices'
           description: ''
-  /api/admin/products/{id}/prices/{currency}/:
+  /products/{id}/prices/{currency}/:
     get:
       operationId: productsPricesRetrieve
       description: Retrieve an price in an existing product.
@@ -3202,7 +3202,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/products/{id}/:
+  /products/{id}/:
     get:
       operationId: productsRetrieve
       description: Retrieve a product.
@@ -3337,7 +3337,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/products/{id}/images/:
+  /products/{id}/images/:
     post:
       operationId: productsImagesCreate
       description: Create images in an existing product.
@@ -3379,7 +3379,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductImage'
           description: ''
-  /api/admin/products/{id}/variants/:
+  /products/{id}/variants/:
     get:
       operationId: productsVariantList
       description: Retrieve a list of variant products for a product.
@@ -3450,7 +3450,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductVariant'
           description: ''
-  /api/admin/products/variants/{id}/:
+  /products/variants/{id}/:
     get:
       operationId: productsVariantsRetrieve
       parameters:
@@ -3582,7 +3582,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/shipping-methods/:
+  /shipping-methods/:
     get:
       operationId: shippingMethodsList
       description: Retrieve a list of all configured shipping methods.
@@ -3612,7 +3612,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedShippingMethodList'
           description: ''
-  /api/admin/shipping-methods/{id}/:
+  /shipping-methods/{id}/:
     get:
       operationId: shippingMethodsRetrieve
       description: Retrieve an existing shipping method.
@@ -3642,7 +3642,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ShippingMethod'
           description: ''
-  /api/admin/stockrecords/:
+  /stockrecords/:
     get:
       operationId: stockrecordsList
       description: Retrieve a list of stockrecords.
@@ -3726,7 +3726,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StockRecord'
           description: ''
-  /api/admin/stockrecords/{id}/:
+  /stockrecords/{id}/:
     get:
       operationId: stockrecordsRetrieve
       description: Retrieve a stockrecord.
@@ -3821,7 +3821,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/store/:
+  /store/:
     get:
       operationId: storeDetail
       description: Retrieve general business information and store settings.
@@ -3847,7 +3847,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Store'
           description: ''
-  /api/admin/subscriptions/:
+  /subscriptions/:
     get:
       operationId: subscriptionsList
       description: Retrieve a list of subscriptions.
@@ -4094,7 +4094,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SubscriptionDetail'
           description: ''
-  /api/admin/subscriptions/{id}/lines/:
+  /subscriptions/{id}/lines/:
     post:
       operationId: subscriptionsLinesCreate
       description: Create a new subscription line.
@@ -4136,7 +4136,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SubscriptionLine'
           description: ''
-  /api/admin/subscriptions/{id}/lines/{lineId}/:
+  /subscriptions/{id}/lines/{lineId}/:
     put:
       operationId: subscriptionsLinesUpdate
       description: Update an existing subscription line.
@@ -4215,7 +4215,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/subscriptions/{id}/:
+  /subscriptions/{id}/:
     get:
       operationId: subscriptionsRetrieve
       description: Retrieve a subscription.
@@ -4285,7 +4285,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SubscriptionDetail'
           description: ''
-  /api/admin/themes/:
+  /themes/:
     get:
       operationId: themesList
       description: Retrieve a list of themes.
@@ -4350,7 +4350,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Theme'
           description: ''
-  /api/admin/themes/{id}/:
+  /themes/{id}/:
     get:
       operationId: themesRetrieve
       description: Retrieve a theme.
@@ -4405,7 +4405,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/themes/{id}/templates/:
+  /themes/{id}/templates/:
     get:
       operationId: themesTemplatesRetrieve
       description: Retrieve a list of templates in an existing theme.
@@ -4501,7 +4501,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/tickets/:
+  /tickets/:
     get:
       operationId: ticketsList
       description: Retrieve a list of tickets.
@@ -4676,7 +4676,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ticket'
           description: ''
-  /api/admin/tickets/{id}/:
+  /tickets/{id}/:
     get:
       operationId: ticketsRetrieve
       description: Retrieve a ticket.
@@ -4786,7 +4786,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ticket'
           description: ''
-  /api/admin/tickets/{id}/comments/:
+  /tickets/{id}/comments/:
     get:
       operationId: ticketsCommentsRetrieve
       description: Retrieve a list of comments in an existing ticket.
@@ -4856,7 +4856,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ticket'
           description: ''
-  /api/admin/tickets/attachments/:
+  /tickets/attachments/:
     post:
       operationId: ticketsAttachmentsCreate
       description: Attach new files in an existing ticket.
@@ -4889,7 +4889,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ticket'
           description: ''
-  /api/admin/tickettypes/:
+  /tickettypes/:
     get:
       operationId: tickettypesList
       description: Retrieve a list of ticket types.
@@ -4923,7 +4923,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedTicketTypeList'
           description: ''
-  /api/admin/tickettypes/{id}/:
+  /tickettypes/{id}/:
     get:
       operationId: tickettypesRetrieve
       description: Retrieve a ticket type.
@@ -4953,7 +4953,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TicketType'
           description: ''
-  /api/admin/transactions/:
+  /transactions/:
     get:
       operationId: transactionsList
       description: Retrieve a list of transactions.
@@ -5199,7 +5199,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedTransactionListList'
           description: ''
-  /api/admin/transactions/{id}/:
+  /transactions/{id}/:
     get:
       operationId: transactionsRetrieve
       description: Retrieve a transaction.
@@ -5229,7 +5229,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Transaction'
           description: ''
-  /api/admin/transactions/{id}/capture/:
+  /transactions/{id}/capture/:
     post:
       operationId: transactionsCaptureCreate
       description: Capture an existing transaction.
@@ -5270,7 +5270,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Transaction'
           description: ''
-  /api/admin/transactions/{id}/refund/:
+  /transactions/{id}/refund/:
     post:
       operationId: transactionsRefundCreate
       description: Refund an existing transaction.
@@ -5312,7 +5312,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Transaction'
           description: ''
-  /api/admin/users/:
+  /users/:
     get:
       operationId: usersList
       description: Retrieve a list of customers.
@@ -5412,7 +5412,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/User'
-        required: true
       security:
       - AccessToken: []
       responses:
@@ -5422,7 +5421,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /api/admin/users/{id}/addresses/:
+  /users/{id}/addresses/:
     get:
       operationId: usersAddressesList
       description: Retrieve a list of addresses in an existing customer.
@@ -5498,7 +5497,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateUserAddress'
           description: ''
-  /api/admin/users/{id}/addresses/{addressId}/:
+  /users/{id}/addresses/{addressId}/:
     get:
       operationId: usersAddressesRetrieve
       description: Retrieve an address of an existing customer.
@@ -5612,7 +5611,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/admin/users/{id}/:
+  /users/{id}/:
     get:
       operationId: usersRetrieve
       description: Retrieve a customer.
@@ -5673,7 +5672,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/UpdateUser'
-        required: true
       security:
       - AccessToken: []
       responses:
@@ -5723,7 +5721,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /api/admin/users/{id}/notes/:
+  /users/{id}/notes/:
     get:
       operationId: usersNotesList
       description: Retrieve a list of notes in an existing customer.
@@ -5800,7 +5798,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserNote'
           description: ''
-  /api/admin/users/{id}/orders/:
+  /users/{id}/orders/:
     get:
       operationId: usersOrdersRetrieve
       description: Retrieve a list of orders in an existing customer.
@@ -5830,7 +5828,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/OrderWithoutUser'
           description: ''
-  /api/admin/users/{id}/subscriptions/:
+  /users/{id}/subscriptions/:
     get:
       operationId: usersSubscriptionsRetrieve
       description: Retrieve a list of subscriptions in an existing customer.
@@ -5860,7 +5858,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Subscription'
           description: ''
-  /api/admin/webhooks/:
+  /webhooks/:
     get:
       operationId: webhooksList
       description: Retrieve a list of webhooks.
@@ -5944,7 +5942,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Webhook'
           description: ''
-  /api/admin/webhooks/{id}/:
+  /webhooks/{id}/:
     get:
       operationId: webhooksRetrieve
       description: Retrieve a webhook.
@@ -6928,6 +6926,7 @@ components:
           - apple_pay
           - google_pay
           - external
+          - paypal
           - klarna
           - ideal
           - bancontact
@@ -6943,13 +6942,14 @@ components:
             * `apple_pay` - Apple Pay
             * `google_pay` - Google Pay
             * `external` - External
+            * `paypal` - Paypal
             * `klarna` - Klarna
             * `ideal` - iDEAL
             * `bancontact` - Bancontact
             * `giropay` - Giropay
             * `sofort` - Sofort
             * `sepa_debit` - SEPA Direct Debit
-          x-spec-enum-id: 4f5f9d5abc56680a
+          x-spec-enum-id: ccc6742cdb4ec926
           nullable: true
         payment_details:
           allOf:
@@ -10563,13 +10563,25 @@ components:
           readOnly: true
         shipping_code:
           enum:
+          - default-shipping-th
+          - Priority
+          - free-shipping
           - default
+          - default-shipping
+          - standard-shipping
+          - m-shipping
           - no-shipping-required
           type: string
           description: |-
+            * `default-shipping-th` - default-shipping-th
+            * `Priority` - Priority
+            * `free-shipping` - free-shipping
             * `default` - default
+            * `default-shipping` - default-shipping
+            * `standard-shipping` - standard-shipping
+            * `m-shipping` - m-shipping
             * `no-shipping-required` - no-shipping-required
-          x-spec-enum-id: ba5dd54af58b1794
+          x-spec-enum-id: 53cc9aa48f4bb348
         shipping_address:
           allOf:
           - $ref: '#/components/schemas/ShippingAddress'
@@ -10642,6 +10654,7 @@ components:
         email:
           type: string
           format: email
+          nullable: true
         first_name:
           type: string
           maxLength: 255
@@ -13304,6 +13317,7 @@ components:
         email:
           type: string
           format: email
+          nullable: true
         first_name:
           type: string
           maxLength: 255
@@ -13400,7 +13414,6 @@ components:
       required:
       - addresses
       - date_joined
-      - email
       - id
       - orders_count
       - subscriptions_count
@@ -13415,6 +13428,7 @@ components:
         email:
           type: string
           format: email
+          nullable: true
         first_name:
           type: string
           maxLength: 255
@@ -13509,7 +13523,6 @@ components:
           maxLength: 500
       required:
       - date_joined
-      - email
       - id
       - orders_count
       - subscriptions_count
@@ -13775,6 +13788,9 @@ components:
       scheme: bearer
       description: Access token from your installed oauth application.
       bearerFormat: JWT
+servers:
+- url: /api/admin
+  description: 29next Admin API
 externalDocs:
   description: See API Introduction Documentation
   url: https://developers.29next.com/api/admin/
@@ -14635,6 +14651,8 @@ components:
 
             * `external` - External
 
+            * `paypal` - Paypal
+
             * `klarna` - Klarna
 
             * `ideal` - iDEAL
@@ -14653,6 +14671,7 @@ components:
           - apple_pay
           - google_pay
           - external
+          - paypal
           - klarna
           - ideal
           - bancontact
@@ -14662,7 +14681,7 @@ components:
           - null
           nullable: true
           type: string
-          x-spec-enum-id: 4f5f9d5abc56680a
+          x-spec-enum-id: ccc6742cdb4ec926
         send_receipt:
           default: true
           type: boolean
@@ -18433,14 +18452,32 @@ components:
           - $ref: '#/components/schemas/ShippingAddress'
           nullable: true
         shipping_code:
-          description: '* `default` - default
+          description: '* `default-shipping-th` - default-shipping-th
+
+            * `Priority` - Priority
+
+            * `free-shipping` - free-shipping
+
+            * `default` - default
+
+            * `default-shipping` - default-shipping
+
+            * `standard-shipping` - standard-shipping
+
+            * `m-shipping` - m-shipping
 
             * `no-shipping-required` - no-shipping-required'
           enum:
+          - default-shipping-th
+          - Priority
+          - free-shipping
           - default
+          - default-shipping
+          - standard-shipping
+          - m-shipping
           - no-shipping-required
           type: string
-          x-spec-enum-id: ba5dd54af58b1794
+          x-spec-enum-id: 53cc9aa48f4bb348
         shipping_price:
           format: decimal
           nullable: true
@@ -18487,6 +18524,7 @@ components:
           type: string
         email:
           format: email
+          nullable: true
           type: string
         first_name:
           maxLength: 255
@@ -21206,6 +21244,7 @@ components:
           type: string
         email:
           format: email
+          nullable: true
           type: string
         first_name:
           maxLength: 255
@@ -21284,7 +21323,6 @@ components:
       required:
       - addresses
       - date_joined
-      - email
       - id
       - orders_count
       - subscriptions_count
@@ -21306,6 +21344,7 @@ components:
           type: string
         email:
           format: email
+          nullable: true
           type: string
         first_name:
           maxLength: 255
@@ -21383,7 +21422,6 @@ components:
           type: string
       required:
       - date_joined
-      - email
       - id
       - orders_count
       - subscriptions_count
@@ -21674,13 +21712,24 @@ info:
     App necessary for API access.
 
 
-    To create an OAuth App, navigate to Settings > API Access and create a new Oauth
-    App with applicable [permissions](https://developers.29next.com/docs/api/admin/permissions/)
+    To create an OAuth App, navigate to **Settings > API Access** and create a new
+    Oauth App with applicable [permissions](https://developers.29next.com/docs/api/admin/permissions/)
     to retrieve your Access Token.
 
 
     It''s recommended to create unique Oauth Apps per external system so that you
     can revoke as needed.
+
+
+    ## Versioning
+
+
+    API versioning allows 29 Next to continuously evolve the platform while maintaining
+    predictable behavior for existing APIs with a path for upgrades and deprecations.
+
+
+    To specify a version, pass the `X-29Next-Api-Version` header with your desired
+    API version.
 
 
     ## Rate Limiting
@@ -21691,11 +21740,11 @@ info:
     API Access Token and IP Address.
 
 
-    | Rate Limit Method | Limit |
+    | Identifier | Rate Limit Method |Limit |
 
-    | ---- | ---- |
+    | ---- | ---- | ---- |
 
-    | Request-based | 4 requests/second |
+    | Access Token | | Request-based 4 requests/second |
 
 
     ### Sample
@@ -21728,7 +21777,7 @@ info:
   version: unstable
 openapi: 3.0.3
 paths:
-  /api/admin/apps/{clientId}/settings/:
+  /apps/{clientId}/settings/:
     delete:
       description: Delete an existing app settings.
       operationId: appsSettingsDestroy
@@ -21868,7 +21917,7 @@ paths:
       - AccessToken: []
       tags:
       - apps
-  /api/admin/assigned-fulfillment-orders/:
+  /assigned-fulfillment-orders/:
     get:
       description: Retrieve assigned fulfillment order requests
       operationId: assignedFulfillmentOrdersList
@@ -21935,7 +21984,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/carts/:
+  /carts/:
     get:
       description: Retrieve a list of all open carts.
       operationId: cartsList
@@ -22090,7 +22139,7 @@ paths:
       - AccessToken: []
       tags:
       - carts
-  /api/admin/carts/{id}/:
+  /carts/{id}/:
     delete:
       description: Delete an existing cart.
       operationId: cartsDestroy
@@ -22186,7 +22235,7 @@ paths:
       - AccessToken: []
       tags:
       - carts
-  /api/admin/categories/:
+  /categories/:
     get:
       description: Retrieve a list of categories.
       operationId: categoriesList
@@ -22251,7 +22300,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/categories/{id}/:
+  /categories/{id}/:
     get:
       description: Retrieve a category.
       operationId: categoriesRetrieve
@@ -22322,7 +22371,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/disputes/:
+  /disputes/:
     get:
       description: Retrieve a list of disputes.
       operationId: disputesList
@@ -22528,7 +22577,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/disputes/{id}/:
+  /disputes/{id}/:
     delete:
       description: Delete an existing dispute.
       operationId: disputesDestroy
@@ -22663,7 +22712,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/disputes/{id}/notes/:
+  /disputes/{id}/notes/:
     get:
       description: Retrieve a list of all dispute notes in an existing dispute.
       operationId: disputesNotesList
@@ -22740,7 +22789,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/fulfillment-orders/:
+  /fulfillment-orders/:
     get:
       description: Retrieve a list of fulfillment orders.
       operationId: fulfillmentOrdersList
@@ -22869,7 +22918,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/:
+  /fulfillment-orders/{id}/:
     get:
       description: Retrieve a fulfillment order.
       operationId: fulfillmentOrdersRetrieve
@@ -22899,7 +22948,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/cancellation-request/:
+  /fulfillment-orders/{id}/cancellation-request/:
     post:
       description: Sends a fulfillment cancellation request to the fulfillment service.
       operationId: cancellationRequestSend
@@ -22940,7 +22989,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/cancellation-request/accept/:
+  /fulfillment-orders/{id}/cancellation-request/accept/:
     post:
       description: Accepts a fulfillment cancellation request sent to a fulfillment
         service for a fulfillment order.
@@ -22982,7 +23031,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/cancellation-request/cancel/:
+  /fulfillment-orders/{id}/cancellation-request/cancel/:
     post:
       description: Cancel a requested fulfillment cancellation request.
       operationId: cancellationRequestCancel
@@ -23023,7 +23072,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/cancellation-request/reject/:
+  /fulfillment-orders/{id}/cancellation-request/reject/:
     post:
       description: Rejects a fulfillment cancellation request sent to a fulfillment
         service for a fulfillment order.
@@ -23065,7 +23114,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/:
+  /fulfillment-orders/{id}/fulfillment-request/:
     post:
       description: Sends a fulfillment request to the fulfillment service of a fulfillment
         order.
@@ -23107,7 +23156,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/accept/:
+  /fulfillment-orders/{id}/fulfillment-request/accept/:
     post:
       description: Accepts a fulfillment request sent to a fulfillment service for
         a fulfillment order.
@@ -23149,7 +23198,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/cancel/:
+  /fulfillment-orders/{id}/fulfillment-request/cancel/:
     post:
       description: Cancel Requested Fulfillment Order.
       operationId: fulfillmentRequestCancel
@@ -23190,7 +23239,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/fulfillment-request/reject/:
+  /fulfillment-orders/{id}/fulfillment-request/reject/:
     post:
       description: Rejects a fulfillment request sent to a fulfillment service for
         a fulfillment order.
@@ -23232,7 +23281,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/fulfillments/:
+  /fulfillment-orders/{id}/fulfillments/:
     get:
       description: Retrieve Fulfillments for a Fulfillment Order.
       operationId: fulfillmentsRetrieve
@@ -23302,7 +23351,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/hold/:
+  /fulfillment-orders/{id}/hold/:
     post:
       description: Hold Fulfillment.
       operationId: fulfillmentOrdersHold
@@ -23344,7 +23393,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/fulfillment-orders/{id}/release-hold/:
+  /fulfillment-orders/{id}/release-hold/:
     post:
       description: Release On Hold Fulfillment.
       operationId: fulfillmentOrdersReleaseHold
@@ -23374,7 +23423,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/gateway-groups/:
+  /gateway-groups/:
     get:
       description: Retrieve a list of gatway groups.
       operationId: gatewayGroupsList
@@ -23404,7 +23453,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/gateway-groups/{id}/:
+  /gateway-groups/{id}/:
     get:
       description: Retrieve a gatway group.
       operationId: gatewayGroupsRetrieve
@@ -23434,7 +23483,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/gateways/:
+  /gateways/:
     get:
       description: Retrieve a list of gateways.
       operationId: gatewaysList
@@ -23464,7 +23513,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/gateways/{id}/:
+  /gateways/{id}/:
     get:
       description: Retrieve a gateway.
       operationId: gatewaysRetrieve
@@ -23494,7 +23543,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/locations/:
+  /locations/:
     get:
       description: Retrieve a list of all configured fulfillment locations.
       operationId: locationsList
@@ -23559,7 +23608,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/locations/{id}/:
+  /locations/{id}/:
     get:
       description: Retrieve an existing fulfillment location.
       operationId: locationsRetrieve
@@ -23630,7 +23679,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/metadata/:
+  /metadata/:
     get:
       description: Retrieve a list of metadata.
       operationId: metadataList
@@ -23695,7 +23744,7 @@ paths:
       - AccessToken: []
       tags:
       - metadata
-  /api/admin/metadata/{id}/:
+  /metadata/{id}/:
     delete:
       description: Delete an existing metadata.
       operationId: metadataDestroy
@@ -23831,7 +23880,7 @@ paths:
       - AccessToken: []
       tags:
       - metadata
-  /api/admin/orders/:
+  /orders/:
     get:
       description: Retrieve a list of orders.
       operationId: ordersList
@@ -24217,7 +24266,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/:
+  /orders/{number}/:
     get:
       description: Retrieve a order.
       operationId: ordersRetrieve
@@ -24327,7 +24376,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/add-line-items/:
+  /orders/{number}/add-line-items/:
     post:
       description: Add additional items to the order and charge the initial order
         payment method.
@@ -24370,7 +24419,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/cancel/:
+  /orders/{number}/cancel/:
     post:
       description: Cancel an existing order.
       operationId: ordersCancelCreate
@@ -24412,7 +24461,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/capture/:
+  /orders/{number}/capture/:
     post:
       description: Captures the total amount of the previously authorized funds for
         this order.
@@ -24443,7 +24492,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/fulfillment-orders/:
+  /orders/{number}/fulfillment-orders/:
     get:
       description: Retrieves a list of fulfillment orders for a specific order.
       operationId: ordersFulfillmentOrdersRetrieve
@@ -24473,7 +24522,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/fulfillments/:
+  /orders/{number}/fulfillments/:
     get:
       description: Retrieve order fulfillments.
       operationId: ordersFulfillmentsRetrieve
@@ -24543,7 +24592,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/mark-as-paid/:
+  /orders/{number}/mark-as-paid/:
     post:
       description: Marks an order as paid. You can only mark an order as paid if it
         isn't already fully paid.
@@ -24585,7 +24634,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/notes/:
+  /orders/{number}/notes/:
     get:
       description: Retrieve a list of all order notes in an existing order.
       operationId: ordersNotesList
@@ -24662,7 +24711,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/orders/{number}/refund/:
+  /orders/{number}/refund/:
     post:
       description: Refund an existing order.
       operationId: ordersRefundCreate
@@ -24704,7 +24753,7 @@ paths:
       - AccessToken: []
       tags:
       - orders
-  /api/admin/products/:
+  /products/:
     get:
       description: Retrieve a list of all products.
       operationId: productsList
@@ -24798,7 +24847,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/products/variants/{id}/:
+  /products/variants/{id}/:
     delete:
       operationId: productsVariantsDestroy
       parameters:
@@ -24930,7 +24979,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/products/{id}/:
+  /products/{id}/:
     delete:
       description: Delete an existing product.
       operationId: productsDestroy
@@ -25065,7 +25114,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/products/{id}/images/:
+  /products/{id}/images/:
     post:
       description: Create images in an existing product.
       operationId: productsImagesCreate
@@ -25107,7 +25156,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/products/{id}/prices/:
+  /products/{id}/prices/:
     get:
       description: Retrieve a list of price products for a product.
       operationId: productsPricesList
@@ -25178,7 +25227,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/products/{id}/prices/{currency}/:
+  /products/{id}/prices/{currency}/:
     delete:
       description: Delete an price in an existing product.
       operationId: productsPricesDestroy
@@ -25288,7 +25337,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/products/{id}/variants/:
+  /products/{id}/variants/:
     get:
       description: Retrieve a list of variant products for a product.
       operationId: productsVariantList
@@ -25359,7 +25408,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/shipping-methods/:
+  /shipping-methods/:
     get:
       description: Retrieve a list of all configured shipping methods.
       operationId: shippingMethodsList
@@ -25389,7 +25438,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/shipping-methods/{id}/:
+  /shipping-methods/{id}/:
     get:
       description: Retrieve an existing shipping method.
       operationId: shippingMethodsRetrieve
@@ -25419,7 +25468,7 @@ paths:
       - AccessToken: []
       tags:
       - fulfillment
-  /api/admin/stockrecords/:
+  /stockrecords/:
     get:
       description: Retrieve a list of stockrecords.
       operationId: stockrecordsList
@@ -25503,7 +25552,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/stockrecords/{id}/:
+  /stockrecords/{id}/:
     delete:
       description: Delete an existing stockrecord.
       operationId: stockrecordsDestroy
@@ -25598,7 +25647,7 @@ paths:
       - AccessToken: []
       tags:
       - products
-  /api/admin/store/:
+  /store/:
     get:
       description: Retrieve general business information and store settings.
       operationId: storeDetail
@@ -25624,7 +25673,7 @@ paths:
       - AccessToken: []
       tags:
       - store
-  /api/admin/subscriptions/:
+  /subscriptions/:
     get:
       description: Retrieve a list of subscriptions.
       operationId: subscriptionsList
@@ -25874,7 +25923,7 @@ paths:
       - AccessToken: []
       tags:
       - subscriptions
-  /api/admin/subscriptions/{id}/:
+  /subscriptions/{id}/:
     get:
       description: Retrieve a subscription.
       operationId: subscriptionsRetrieve
@@ -25944,7 +25993,7 @@ paths:
       - AccessToken: []
       tags:
       - subscriptions
-  /api/admin/subscriptions/{id}/lines/:
+  /subscriptions/{id}/lines/:
     post:
       description: Create a new subscription line.
       operationId: subscriptionsLinesCreate
@@ -25986,7 +26035,7 @@ paths:
       - AccessToken: []
       tags:
       - subscriptions
-  /api/admin/subscriptions/{id}/lines/{lineId}/:
+  /subscriptions/{id}/lines/{lineId}/:
     delete:
       description: Delete a subscription line in an existing subscription line.
       operationId: subscriptionsLinesDestroy
@@ -26065,7 +26114,7 @@ paths:
       - AccessToken: []
       tags:
       - subscriptions
-  /api/admin/themes/:
+  /themes/:
     get:
       description: Retrieve a list of themes.
       operationId: themesList
@@ -26130,7 +26179,7 @@ paths:
       - AccessToken: []
       tags:
       - storefront
-  /api/admin/themes/{id}/:
+  /themes/{id}/:
     delete:
       description: Delete an existing theme.
       operationId: themesDestroy
@@ -26185,7 +26234,7 @@ paths:
       - AccessToken: []
       tags:
       - storefront
-  /api/admin/themes/{id}/templates/:
+  /themes/{id}/templates/:
     delete:
       description: Delete an existing template in an existing theme.
       operationId: themesTemplatesDestroy
@@ -26281,7 +26330,7 @@ paths:
       - AccessToken: []
       tags:
       - storefront
-  /api/admin/tickets/:
+  /tickets/:
     get:
       description: Retrieve a list of tickets.
       operationId: ticketsList
@@ -26462,7 +26511,7 @@ paths:
       - AccessToken: []
       tags:
       - support
-  /api/admin/tickets/attachments/:
+  /tickets/attachments/:
     post:
       description: Attach new files in an existing ticket.
       operationId: ticketsAttachmentsCreate
@@ -26495,7 +26544,7 @@ paths:
       - AccessToken: []
       tags:
       - support
-  /api/admin/tickets/{id}/:
+  /tickets/{id}/:
     get:
       description: Retrieve a ticket.
       operationId: ticketsRetrieve
@@ -26605,7 +26654,7 @@ paths:
       - AccessToken: []
       tags:
       - support
-  /api/admin/tickets/{id}/comments/:
+  /tickets/{id}/comments/:
     get:
       description: Retrieve a list of comments in an existing ticket.
       operationId: ticketsCommentsRetrieve
@@ -26675,7 +26724,7 @@ paths:
       - AccessToken: []
       tags:
       - support
-  /api/admin/tickettypes/:
+  /tickettypes/:
     get:
       description: Retrieve a list of ticket types.
       operationId: tickettypesList
@@ -26709,7 +26758,7 @@ paths:
       - AccessToken: []
       tags:
       - support
-  /api/admin/tickettypes/{id}/:
+  /tickettypes/{id}/:
     get:
       description: Retrieve a ticket type.
       operationId: tickettypesRetrieve
@@ -26739,7 +26788,7 @@ paths:
       - AccessToken: []
       tags:
       - support
-  /api/admin/transactions/:
+  /transactions/:
     get:
       description: Retrieve a list of transactions.
       operationId: transactionsList
@@ -27000,7 +27049,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/transactions/{id}/:
+  /transactions/{id}/:
     get:
       description: Retrieve a transaction.
       operationId: transactionsRetrieve
@@ -27030,7 +27079,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/transactions/{id}/capture/:
+  /transactions/{id}/capture/:
     post:
       description: Capture an existing transaction.
       operationId: transactionsCaptureCreate
@@ -27071,7 +27120,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/transactions/{id}/refund/:
+  /transactions/{id}/refund/:
     post:
       description: Refund an existing transaction.
       operationId: transactionsRefundCreate
@@ -27113,7 +27162,7 @@ paths:
       - AccessToken: []
       tags:
       - payments
-  /api/admin/users/:
+  /users/:
     get:
       description: Retrieve a list of customers.
       operationId: usersList
@@ -27211,7 +27260,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/User'
-        required: true
       responses:
         '201':
           content:
@@ -27223,7 +27271,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/users/{id}/:
+  /users/{id}/:
     get:
       description: Retrieve a customer.
       operationId: usersRetrieve
@@ -27322,7 +27370,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/UpdateUser'
-        required: true
       responses:
         '200':
           content:
@@ -27334,7 +27381,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/users/{id}/addresses/:
+  /users/{id}/addresses/:
     get:
       description: Retrieve a list of addresses in an existing customer.
       operationId: usersAddressesList
@@ -27410,7 +27457,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/users/{id}/addresses/{addressId}/:
+  /users/{id}/addresses/{addressId}/:
     delete:
       description: Delete an address in an existing customer.
       operationId: usersAddressesDestroy
@@ -27524,7 +27571,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/users/{id}/notes/:
+  /users/{id}/notes/:
     get:
       description: Retrieve a list of notes in an existing customer.
       operationId: usersNotesList
@@ -27601,7 +27648,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/users/{id}/orders/:
+  /users/{id}/orders/:
     get:
       description: Retrieve a list of orders in an existing customer.
       operationId: usersOrdersRetrieve
@@ -27631,7 +27678,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/users/{id}/subscriptions/:
+  /users/{id}/subscriptions/:
     get:
       description: Retrieve a list of subscriptions in an existing customer.
       operationId: usersSubscriptionsRetrieve
@@ -27661,7 +27708,7 @@ paths:
       - AccessToken: []
       tags:
       - customers
-  /api/admin/webhooks/:
+  /webhooks/:
     get:
       description: Retrieve a list of webhooks.
       operationId: webhooksList
@@ -27745,7 +27792,7 @@ paths:
       - AccessToken: []
       tags:
       - webhooks
-  /api/admin/webhooks/{id}/:
+  /webhooks/{id}/:
     delete:
       description: Delete an existing webhook.
       operationId: webhooksDestroy
@@ -27884,8 +27931,8 @@ paths:
 security:
 - AccessToken: []
 servers:
-- description: Store Domain
-  url: https://{store}.29next.store
+- description: ''
+  url: https://{store}.29next.store/api/admin/
   variables:
     store:
       default: example
