@@ -1,41 +1,71 @@
-# Website
+<p align="center">
+    <a href="https://29next.com">
+    <img src="https://github.com/29next/developer-docs/blob/main/static/img/29next-logo.png" alt="Logo" width="120">
+  </a>
+  <h2 align="center">29 Next Developer Docs</h3>
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+  <p align="center">
+    29 Next's developer documentation portal, built with Docusaurus and Stoplight.
+    <br />
+    <a href="https://developers.29next.com/docs/"><strong>Explore the Docs »</strong></a>
+  </p>
+</p>
+
+### Built With
+
+- [Docusaurus](https://docusaurus.io/)
+- [Stoplight Elements](https://stoplight.io/open-source/elements)
+- [Algolia](https://www.algolia.com/)
+- [Tailwind](https://tailwindcss.com/)
+
+
+## Getting Started
+
+This section describes how you can get our documentation portal up and running on your machine.
+
+### Prerequisites
+
+- [node](https://nodejs.org/en/)
+- [npm](https://www.npmjs.com/)
 
 ### Installation
 
-```
-$ yarn
-```
+1. Clone the repo
 
-### Local Development
-
-```
-$ yarn start
+```sh
+git clone git@github.com:29next/developer-docs.git
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+2. Install NPM packages
 
-### Build
-
-```
-$ yarn build
+```sh
+npm install
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+3. Run the app
 
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
+```sh
+npm start
 ```
 
-Not using SSH:
+## Update API Docs
 
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
+API Reference docs for [Admin API](https://developers.29next.com/docs/api/admin/reference/) and [Campaigns API](https://developers.29next.com/docs/api/campaigns/reference/#/) use Open API Spec files downloaded from their respective apps.
+
+### Update Script
+
+Included in the docs is a python script to automatically fetch the latest versions of the Open API Spec files and update them for the developer docs portal usage.
+
+**Install Dependenceis**
+
+```sh
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+**Run Update**
+```sh
+cd tools/
+python update_api_docs.py
+```
