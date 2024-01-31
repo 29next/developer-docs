@@ -34,7 +34,7 @@ import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 
 1. Inside your Partner Account, navigate to Apps and then Create App. Follow the form to create your first app, don't worry about the App name and details, you can change this later.
 
-2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` as it will be used to connect your app files to the app on 29 Next with [App Kit](/apps/app-kit.md).
+2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` and `Client Secret` which are used in the [OAuth flow](/apps/oauth/index.md) to retrieve an API Access Token during the [App Install flow](/docs/apps/oauth/getting-started.md).
 
 
 ### Configure App Oauth
