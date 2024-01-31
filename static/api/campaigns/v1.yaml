@@ -1842,8 +1842,8 @@ info:
     ## Authentication
 
 
-    Campaigns API uses uses unique API Keys for authentication to access campaign
-    details and execute the checkout flow with your configured packages.
+    Campaigns API uses unique API Keys for authentication to access campaign details
+    and execute the checkout flow with your configured packages.
 
 
     ## Rate Limiting
