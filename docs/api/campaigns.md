@@ -121,6 +121,7 @@ var payload = {
     },
     "shipping_method": 1,
     "success_url": "https://your-campaign.com/next-page/" // Next Page in Flow
+    "payment_failed_url": "https://your-campaign.com/decline-flow/" // Optional Decline Page
     "attribution": {
         "utm_source": "Example Campaign"
     }
@@ -142,9 +143,14 @@ Bankcard payments require using the [iFrame Payment Form](/docs/api/admin/guides
 
 :::caution You Must Handle the Order Create Response
 - If response data has a `number`, order was successfully created, you can redirect to the next page.
-- If response data has a `payment_complete_url`, redirect the user to this page. After payment, user will come back to your `success_url`.
+- If response data has a `payment_complete_url`, redirect the user to this page. After payment, user will come back to your `success_url` or `payment_failed_url`.
 :::
 
+:::tip Handle APM Redirect Flow Declines
+If an APM redirect flow declines or is canceled, by default the user is redirected back to the HTTP referrer with contexual querystings, ie `?payment_failed=true&payment_method=paypal`.
+
+Pass `payment_failed_url` to more explicitly control the decline handling for APM redirect flows.
+:::
 
 ### Adding Upsells
 To add an upsell to an existing order, first you should check to see if the order payment method `supports_post_purchase_upsells` is `True` in the `orderRetrieve` response.
