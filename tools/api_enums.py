@@ -68,7 +68,7 @@ ADMIN_API_SPEC_ADDITIONS = {
     ],
     'security': [
         {
-            'AccessToken': []
+            'oauth2': []
         }
     ]
 }
