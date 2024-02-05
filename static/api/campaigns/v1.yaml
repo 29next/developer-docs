@@ -450,7 +450,7 @@ components:
       properties:
         user:
           allOf:
-          - $ref: '#/components/schemas/User'
+          - $ref: '#/components/schemas/OrderUser'
           nullable: true
         lines:
           type: array
@@ -790,7 +790,6 @@ components:
           default: true
         language:
           type: string
-          default: en
           maxLength: 10
         ip:
           type: string
@@ -798,10 +797,6 @@ components:
         user_agent:
           type: string
           nullable: true
-        addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/Address'
     PackageSerilaizer:
       type: object
       properties:
@@ -918,10 +913,10 @@ components:
           nullable: true
         first_name:
           type: string
-          maxLength: 225
+          maxLength: 255
         last_name:
           type: string
-          maxLength: 225
+          maxLength: 255
         phone_number:
           type: string
           nullable: true
@@ -929,6 +924,9 @@ components:
           type: boolean
           nullable: true
           default: true
+        language:
+          type: string
+          maxLength: 10
         ip:
           type: string
           nullable: true
@@ -944,10 +942,10 @@ components:
           nullable: true
         first_name:
           type: string
-          maxLength: 225
+          maxLength: 255
         last_name:
           type: string
-          maxLength: 225
+          maxLength: 255
         phone_number:
           type: string
           nullable: true
@@ -955,6 +953,9 @@ components:
           type: boolean
           nullable: true
           default: true
+        language:
+          type: string
+          maxLength: 10
     Voucher:
       type: object
       properties:
@@ -1324,7 +1325,7 @@ components:
           type: boolean
         user:
           allOf:
-          - $ref: '#/components/schemas/User'
+          - $ref: '#/components/schemas/OrderUser'
           nullable: true
         vouchers:
           description: Array of voucher codes
@@ -1618,10 +1619,6 @@ components:
           default: true
           nullable: true
           type: boolean
-        addresses:
-          items:
-            $ref: '#/components/schemas/Address'
-          type: array
         email:
           format: email
           nullable: true
@@ -1633,7 +1630,6 @@ components:
           nullable: true
           type: string
         language:
-          default: en
           maxLength: 10
           type: string
         last_name:
@@ -1770,13 +1766,16 @@ components:
           nullable: true
           type: string
         first_name:
-          maxLength: 225
+          maxLength: 255
           type: string
         ip:
           nullable: true
           type: string
+        language:
+          maxLength: 10
+          type: string
         last_name:
-          maxLength: 225
+          maxLength: 255
           type: string
         phone_number:
           nullable: true
@@ -1796,10 +1795,13 @@ components:
           nullable: true
           type: string
         first_name:
-          maxLength: 225
+          maxLength: 255
+          type: string
+        language:
+          maxLength: 10
           type: string
         last_name:
-          maxLength: 225
+          maxLength: 255
           type: string
         phone_number:
           nullable: true
