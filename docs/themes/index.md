@@ -109,29 +109,30 @@ partials
 The templates directory is used to store all templates for a theme, see [URLs and Template Paths](themes/templates/urls-and-template-paths.md) for reference.
 
 ```shell title="Templates Directory Example"
-├── 403.html
-├── 404.html
-├── 500.html
-├── blog
-│   ├── index.html
-│   └── post.html
-├── cart.html
-├── catalogue
-│   ├── category.html
-│   ├── index.html
-│   └── product.html
-├── index.html
-├── pages
-│   └── page.html
-├── reviews
-│   ├── form.html
-│   ├── index.html
-│   └── review.html
-├── search.html
-└── support
-    ├── article.html
-    ├── category.html
-    └── index.html
+templates
+ ├── 403.html
+ ├── 404.html
+ ├── 500.html
+ ├── blog
+ │   ├── index.html
+ │   └── post.html
+ ├── cart.html
+ ├── catalogue
+ │   ├── category.html
+ │   ├── index.html
+ │   └── product.html
+ ├── index.html
+ ├── pages
+ │   └── page.html
+ ├── reviews
+ │   ├── form.html
+ │   ├── index.html
+ │   └── review.html
+ ├── search.html
+ └── support
+     ├── article.html
+     ├── category.html
+     └── index.html
 ```
 
 ### Sass
