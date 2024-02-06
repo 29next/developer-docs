@@ -17,28 +17,6 @@ import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
 Ensure your template paths match with expected template paths for built-in storefront views. Use the public themes on [Github](https://github.com/29next/) as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
 :::
 
-### Account & Login
-
-| URL Name | URL Path & Arguments | Template Path |
-| --- | --- | --- |
-| customer:login | /accounts/login/ | templates/accounts/login.html |
-| customer:register | /accounts/register/ | templates/accounts/registration.html |
-| password-reset | /accounts/register/ | templates/accounts/registration.html |
-| customer:logout | /accounts/logout/ | N/A |
-| customer:profile-view | /accounts/profile/ | templates/accounts/profile/form.html |
-| customer:order-list | /accounts/orders/ | templates/accounts/orders/index.html |
-| customer:order | accounts/orders/:order_number | templates/accounts/orders/order.html |
-| customer:order-status | /accounts/order-status/:order_number:order_hash | templates/accounts/orders/status.html |
-| customer:address-list | /accounts/addresses/ | templates/accounts/address/index.html |
-| customer:address-create | /accounts/addresses/add/ | templates/accounts/address/form.html |
-| customer:subscription-list | /accounts/subscriptions/ | templates/accounts/subscriptions/index.html |
-| customer:subscription-detail | /accounts/subscriptions/:id | templates/accounts/subscriptions/subscription.html |
-| customer:subscription-shipping-address | /accounts/subscriptions/:id/shipping-address/ | templates/accounts/subscriptions/address.html |
-| customer:subscription-payment-method | /accounts/subscriptions/:id/payment-method/  | templates/accounts/subscriptions/payment_method.html |
-| customer:support-ticket-list | /accounts/support/ | templates/accounts/tickets/index.html |
-| customer:support-ticket-create | /accounts/support/tickets/create/ | templates/accounts/tickets/form.html |
-| customer:support-ticket-detail | /accounts/support/tickets/:id | templates/accounts/tickets/ticket.html |
-
 
 ### Blog
 

@@ -19,7 +19,7 @@ import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
 ### Layout & Structure
 The Storefront theme framework has a set guideline for the base directories of your theme for your assets, html, and settings.
 
-```title="Storefront Theme Structure"
+```shell title="Storefront Theme Structure"
 theme
  ├── assets
  ├── checkout
@@ -35,14 +35,18 @@ theme
 ### Assets
 The assets directory is used to upload static asset files used in the theme such as images, stylesheets, web fonts, and javascript files. The assets directory works in conjunction with the [`asset_url` template filter](/themes/templates/filters.md#asset_url) to render the full path on your storefront.
 
+```django title="Example link in template to /assets/css/style.css"
+{{ 'css/style.css'|asset_url }}
+```
 
 ### Checkout
 The checkout is used to add a customized `checkout.html` template to override the built in checkout template.
 
-```title="Checkout Directory"
+```shell title="Checkout Directory"
 checkout
   └── checkout.html
 ```
+
 [See Checkout Customization Guide](/themes/guides/checkout.md)
 
 ### Configs
@@ -51,7 +55,7 @@ The configs directory is used to store your theme settings options and also the 
 - `settings_schema.json` is used to generate the theme settings form
 - `setting_data.json` is used data storage for the the theme settings
 
-```title="Config Directory"
+```shell title="Config Directory"
 configs
  ├── settings_data.json
  └── settings_schema.json
@@ -64,7 +68,7 @@ The `locales` directory is used to for storefront theme translation json files. 
 
 Translation files should be named according to the ISO 639-1 2 letter language code standard. The default or fallback language should be denoted with a .default in the file name as shown below. See the [Translations guide](themes/translations.md) for more examples on how to localize your theme content.
 
-```title="Locale files example"
+```shell title="Locale Files Example"
 locales
  ├── en.default.json
  ├── de.json
@@ -77,7 +81,7 @@ locales
 ### Layouts
 The `layouts` directory is used to store base templates that are then extended from in view specific templates, see extends and block template tags for more on template inheritance. See the [`extends` template tag](themes/templates/tags.md#extends-block) for more on template inheritance.
 
-```title="Layouts directory example"
+```shell title="Layouts Directory Example"
 layouts
  └── base.html
 ```
@@ -85,42 +89,29 @@ layouts
 ### Partials
 The partials directory is used to store reusable which are reusable snippets of code that can be used in tandem with the include template tag for reuse across many templates. See the includes template tag for more on template inheritance with partials.
 
-```title="Partials directory example"
+```shell title="Partials Directory Example"
 partials
  ├── header.html
  ├── footer.html
  └── pagination.html
 ```
 
+```django title="Example Partial Include Another Template"
+<html lang="en">
+<body>
+    {% include "partials/footer.html" %}
+</body>
+</html>
+```
+
+
 ### Templates
 The templates directory is used to store all templates for a theme, see [URLs and Template Paths](themes/templates/urls-and-template-paths.md) for reference.
 
-```title="Templates directory example"
-
+```shell title="Templates Directory Example"
 ├── 403.html
 ├── 404.html
 ├── 500.html
-├── accounts
-│   ├── login.html
-│   ├── register.html
-│   ├── password_reset.html
-│   ├── addresses
-│   │   ├── form.html
-│   │   └── index.html
-│   ├── orders
-│   │   ├── index.html
-│   │   └── order.html
-│   ├── profile
-│   │   └── form.html
-│   ├── subscriptions
-│   │   ├── address.html
-│   │   ├── index.html
-│   │   ├── payment_method.html
-│   │   └── subscription.html
-│   └── tickets
-│       ├── form.html
-│       ├── index.html
-│       └── ticket.html
 ├── blog
 │   ├── index.html
 │   └── post.html
