@@ -62,8 +62,9 @@ export default function Home() {
                     <SectionsMenu
                         defaultValue={currentVersion}
                         values={[
-                            { name: '2023-02-10', docId: '2023-02-10' },
-                            { name: 'unstable', docId: 'unstable' }
+                            { name: '2023-02-10 (default)', docId: '2023-02-10' },
+                            { name: '2024-04-01 (release candidate)', docId: '2024-04-01' },
+                            { name: 'Unstable', docId: 'unstable' }
                         ]}
                         onValueChange={(version) => {
                             router.push(`/docs/api/admin/reference/?v=${version}`);

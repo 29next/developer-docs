@@ -29,6 +29,13 @@ API_VERSIONS = [
     },
     {
         "type": "admin",
+        "version": "2024-04-01",
+        "source": ADMIN_API_SPEC_SOURCE,
+        "additions": ADMIN_API_SPEC_ADDITIONS,
+        "description": ADMIN_API_DESCRIPTION,
+    },
+    {
+        "type": "admin",
         "version": "unstable",
         "source": ADMIN_API_SPEC_SOURCE,
         "additions": ADMIN_API_SPEC_ADDITIONS,

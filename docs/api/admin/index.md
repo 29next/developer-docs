@@ -37,16 +37,8 @@ https://{store}.29next.store/api/admin/
 ```curl title="Example Request"
 curl -X GET "https://{store}.29next.store/api/admin/" \
 -H "Authorization: Bearer <api access token>" \
--H "X-29Next-Api-Version: 2023-02-10"
+-H "X-29Next-Api-Version: 2024-04-01"
 ```
-
-:::caution
-Legacy API Tokens are now deprecated in favor of Oauth App Tokens. If you are currently using Legacy API Tokens, it's recommended to update your integration as they will be removed at a future date.
-:::
-
-:::info
-Access the API explorer on your store at `https://{store}.29next.store/api/docs/admin/` to explore the API interactively with Swagger.
-:::
 
 ### Versioning
 
@@ -56,8 +48,9 @@ API versioning allows 29 Next to continuously evolve the platform while maintain
 
 | Version | Status | Docs |
 | ---- | ---- | ---- |
-| `2023-02-10` | Stable for production use. | [View Reference](/docs/api/admin/reference/?v=2023-02-10) |
-| `unstable` | Unstable and for testing only. | [View Reference](/docs/api/admin/reference/?v=unstable) |
+| `2023-02-10` | Stable | [View Reference](/docs/api/admin/reference/?v=2023-02-10) |
+| `2024-04-01` | Release Candidate | [View Reference](/docs/api/admin/reference/?v=2024-04-01) |
+| `unstable` | Unstable | [View Reference](/docs/api/admin/reference/?v=unstable) |
 
 
 **Specify an API Version**

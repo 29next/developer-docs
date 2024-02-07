@@ -8165,12 +8165,7 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
-        price_excl_tax_excl_discounts:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        price_incl_tax_excl_discounts:
+        total_discount:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -8186,9 +8181,7 @@ components:
       - id
       - order_line_id
       - price_excl_tax
-      - price_excl_tax_excl_discounts
       - price_incl_tax
-      - price_incl_tax_excl_discounts
       - product_id
       - product_image
       - product_title
@@ -8196,6 +8189,7 @@ components:
       - returnable_quantity
       - returned_quantity
       - sku
+      - total_discount
     FulfillmentOrder:
       type: object
       properties:
@@ -8309,12 +8303,7 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
-        price_excl_tax_excl_discounts:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-        price_incl_tax_excl_discounts:
+        total_discount:
           type: string
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -8339,14 +8328,13 @@ components:
       - id
       - order_line_id
       - price_excl_tax
-      - price_excl_tax_excl_discounts
       - price_incl_tax
-      - price_incl_tax_excl_discounts
       - product_id
       - product_image
       - product_title
       - sku
       - stockrecord_id
+      - total_discount
     FulfillmentOrderLineItem:
       type: object
       properties:
@@ -10819,26 +10807,9 @@ components:
           - $ref: '#/components/schemas/UserInline'
           readOnly: true
         shipping_code:
-          enum:
-          - default-shipping-th
-          - Priority
-          - free-shipping
-          - default
-          - default-shipping
-          - standard-shipping
-          - m-shipping
-          - no-shipping-required
-          type: string
-          description: |-
-            * `default-shipping-th` - default-shipping-th
-            * `Priority` - Priority
-            * `free-shipping` - free-shipping
-            * `default` - default
-            * `default-shipping` - default-shipping
-            * `standard-shipping` - standard-shipping
-            * `m-shipping` - m-shipping
-            * `no-shipping-required` - no-shipping-required
-          x-spec-enum-id: 53cc9aa48f4bb348
+          type:
+          - string
+          - 'null'
         shipping_address:
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
@@ -16130,17 +16101,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
-        price_excl_tax_excl_discounts:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
         price_incl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        price_incl_tax_excl_discounts:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
@@ -16171,6 +16132,11 @@ components:
         sku:
           readOnly: true
           type: string
+        total_discount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
       required:
       - currency
       - fulfilled_quantity
@@ -16178,9 +16144,7 @@ components:
       - id
       - order_line_id
       - price_excl_tax
-      - price_excl_tax_excl_discounts
       - price_incl_tax
-      - price_incl_tax_excl_discounts
       - product_id
       - product_image
       - product_title
@@ -16188,6 +16152,7 @@ components:
       - returnable_quantity
       - returned_quantity
       - sku
+      - total_discount
       type: object
     FulfillmentOrder:
       properties:
@@ -16299,17 +16264,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
-        price_excl_tax_excl_discounts:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
         price_incl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        price_incl_tax_excl_discounts:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
@@ -16334,20 +16289,24 @@ components:
         stockrecord_id:
           readOnly: true
           type: integer
+        total_discount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
       required:
       - currency
       - fulfillment_order_id
       - id
       - order_line_id
       - price_excl_tax
-      - price_excl_tax_excl_discounts
       - price_incl_tax
-      - price_incl_tax_excl_discounts
       - product_id
       - product_image
       - product_title
       - sku
       - stockrecord_id
+      - total_discount
       type: object
     FulfillmentOrderLineItem:
       properties:
@@ -18936,32 +18895,9 @@ components:
           - $ref: '#/components/schemas/ShippingAddress'
           - type: 'null'
         shipping_code:
-          description: '* `default-shipping-th` - default-shipping-th
-
-            * `Priority` - Priority
-
-            * `free-shipping` - free-shipping
-
-            * `default` - default
-
-            * `default-shipping` - default-shipping
-
-            * `standard-shipping` - standard-shipping
-
-            * `m-shipping` - m-shipping
-
-            * `no-shipping-required` - no-shipping-required'
-          enum:
-          - default-shipping-th
-          - Priority
-          - free-shipping
-          - default
-          - default-shipping
-          - standard-shipping
-          - m-shipping
-          - no-shipping-required
-          type: string
-          x-spec-enum-id: 53cc9aa48f4bb348
+          type:
+          - string
+          - 'null'
         shipping_price:
           format: decimal
           pattern: ^-?\d{0,7}(?:\.\d{0,2})?$

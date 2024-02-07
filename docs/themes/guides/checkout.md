@@ -80,10 +80,10 @@ checkout
         {% if checkout.step == 'information' %}
             {% app_hook 'start_checkout' %}
         {% endif %}
-        
+
         {% if checkout.step == 'payment' %}
         {% endif %}
-        
+
         {% if checkout.step == 'confirmation' %}
             {% app_hook 'complete_checkout' %}
         {% endif %}
@@ -168,27 +168,27 @@ It is common to include scripts that track sales conversions on the order status
 
 To prevent your analytics from counting customers more than once, you can add the send_analytics_event property around some or all of your additional scripts. To do this, use a Django if statement, and place any scripts that you only want to run once between `{% if send_analytics_event %}` and `{% endif %}` tags.
 
-```html
+``` django
 
-{% if send_analytics_event %}
-  // Conversion scripts you want to run only once
-{% endif %}
+    {% if send_analytics_event %}
+    // Conversion scripts you want to run only once
+    {% endif %}
 
-// Scripts you want to run on every visit
+    // Scripts you want to run on every visit
 
 ```
 
 For example if you wanted to add a conversion action in Google Ads for tracking purchases (To set up Google Ads conversion tracking, follow the [Google Ads instructions](https://support.google.com/google-ads/answer/6095821){:target="_blank"} for creating a conversion action).
 
-```html
+``` django
 {% if send_analytics_event %}
 
 <!-- Event snippet for Example conversion page -->
 <script>
-gtag('event', 'conversion', {'send_to': 'AW-CONVERSION_ID/AW-CONVERSION_LABEL',
-'value': '{{ order.total_incl_tax }}',
-'currency': '{{ order.currency }}'
-});
+    gtag('event', 'conversion', {'send_to': 'AW-CONVERSION_ID/AW-CONVERSION_LABEL',
+    'value': '{{ order.total_incl_tax }}',
+    'currency': '{{ order.currency }}'
+    });
 </script>
 
 {% endif %}

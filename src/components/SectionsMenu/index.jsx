@@ -5,7 +5,6 @@ import { Check, ChevronDown, ChevronUp } from 'react-feather';
 
 const SectionsMenu = forwardRef(
     ({ defaultValue = '', values = [], children, className, ...props }, ref) => {
-        console.log(values)
         return (
             <Select.Root defaultValue={defaultValue} ref={ref} {...props}>
                 <Select.Trigger
@@ -18,7 +17,7 @@ const SectionsMenu = forwardRef(
                     </Select.Icon>
                 </Select.Trigger>
 
-                <Select.Content className={clsx('sections-menu-content', className)} position="popper" sideOffset={5}>
+                <Select.Content className={clsx('sections-menu-content', className)} position="popper" sideOffset={5} align="end">
                     <Select.ScrollUpButton className="sections-menu-scrollButton">
                         <ChevronUp />
                     </Select.ScrollUpButton>
