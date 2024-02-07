@@ -2,6 +2,7 @@
 
 :root {
     --font-ui: var(--ifm-font-family-base) !important;
+    --font-prose: var(--ifm-font-family) !important;
     --font-mono: var(--ifm-font-family-monospace) !important;
     --color-canvas: var(--ifm-background-color) !important;
     --color-canvas-100: var(--ifm-footer-background-color) !important;
