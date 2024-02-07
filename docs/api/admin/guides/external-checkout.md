@@ -27,7 +27,7 @@ stateDiagram-v2
 Carts are the starting point for all orders, carts are essentially draft orders waiting to be converted into orders. Creating the cart is a vital step in capturing leads and setting up abandoned cart flows.
 
 ```json title="Request"
-// POST https://<store>.29next.store/api/admin/carts/
+// POST https://{store}.29next.store/api/admin/carts/
 // -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "lines": [
@@ -65,7 +65,7 @@ Carts are the starting point for all orders, carts are essentially draft orders 
 Creating an order is the core resource in an external checkout flow, see the example below to familiarize yourself with the [ordersCreate](/docs/api/admin/reference/#/operations/ordersCreate) API endpoint.
 
 ```json title="Request"
-// POST https://<store>.29next.store/api/admin/orders/
+// POST https://{store}.29next.store/api/admin/orders/
 // -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
     "lines": [
@@ -116,7 +116,7 @@ Creating an order is the core resource in an external checkout flow, see the exa
 Add additional products (line items) to the original order through the [ordersAddLineItemsCreate](/docs/api/admin/reference/#/operations/ordersAddLineItemsCreate) API. Adding items to the order will automatically re-use the order's initial payment method to collect payment for the additional products.
 
 ``` json title="Request"
-// POST https://<store>.29next.store/api/admin/orders/<NUMBER>/add-line-items/
+// POST https://{store}.29next.store/api/admin/orders/<NUMBER>/add-line-items/
 // -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
   "lines": [
