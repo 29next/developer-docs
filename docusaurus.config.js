@@ -160,7 +160,18 @@ const config = {
                 additionalLanguages: ['django'],
             },
             mermaid: {
-                theme: { light: 'neutral', dark: 'dark' },
+                theme: {
+                    light: 'neutral',
+                    dark: 'base'
+                },
+                options: {
+                    themeVariables: {
+                        background: '#161616',
+                        primaryColor: '#161616',
+                        primaryBorderColor: '#2f81f7',
+                        primaryTextColor: '#d3d3d3'
+                    }
+                }
             },
             algolia: {
                 appId: 'GNSJUJD786',
