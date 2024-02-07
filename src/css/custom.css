@@ -237,9 +237,9 @@ html[data-theme='dark'] {
     /* all: unset; */
     flex: 1;
     display: inline-flex;
-    background-color: var(--docs-color-background-100);
+    background-color: var(--ifm-navbar-background-color);
     color: var(--docs-color-text);
-    height: 48px;
+    /* height: 48px; */
     border-radius: 6px;
     align-items: center;
     justify-content: space-between;
@@ -257,9 +257,7 @@ html[data-theme='dark'] {
 
 .sections-menu-trigger,
 .sections-menu-item {
-    padding: 0 15px;
-    padding-left: 10px;
-
+    padding: 6px 15px;
 }
 
 .sections-menu-scrollButton {
@@ -276,7 +274,7 @@ html[data-theme='dark'] {
 .sections-menu-item {
     box-sizing: border-box;
     min-width: 120px;
-    height: 48px;
+    padding: 10px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

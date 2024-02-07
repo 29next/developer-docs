@@ -78,7 +78,7 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 .api-reference .header {
     position: sticky;
     top: var(--ifm-navbar-height);
-    background-color: var(--docs-color-background);
+    background-color: var(--ifm-navbar-background-color);
 
     display: flex;
     align-items: center;
@@ -114,6 +114,6 @@ html[data-theme='dark'] .elements-container :is(.token.boolean, .token.number) {
 }
 
 /* Hide Send Request button due to CORS */
-.admin-api .SendButtonHolder {
+/* .admin-api .SendButtonHolder {
     display: none;
-}
+} */
