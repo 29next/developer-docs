@@ -30,19 +30,19 @@ This section describes how you can get our documentation portal up and running o
 
 ### Installation
 
-1. Clone the repo
+**Clone the repo**
 
 ```sh
 git clone git@github.com:29next/developer-docs.git
 ```
 
-2. Install NPM packages
+**Install NPM packages**
 
 ```sh
 npm install
 ```
 
-3. Run the app
+**Run the app**
 
 ```sh
 npm start

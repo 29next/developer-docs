@@ -27,14 +27,14 @@ The Admin API uses Oauth 2 authorization protocol to manage access to your store
 
 Before using the Admin API, you'll need to create a store and create an OAuth App necessary for API access. To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permissions](permissions.md) to retrieve your **Access Token**.  It is recommended to create unique Oauth Apps per external system so that you can revoke as needed.
 
-```curl title="Admin API Path"
+```shell title="Admin API Path"
 https://{store}.29next.store/api/admin/
 ```
 
 
 **Use your Oauth App Access Token in the request headers to access the API.**
 
-```curl title="Example Request"
+```shell title="Example Request"
 curl -X GET "https://{store}.29next.store/api/admin/" \
 -H "Authorization: Bearer <api access token>" \
 -H "X-29Next-Api-Version: 2024-04-01"

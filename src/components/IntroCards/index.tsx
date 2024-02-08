@@ -12,13 +12,19 @@ const IntroCardsData = [
         href: '/docs/api/admin/',
     },
     {
+        icon: '🚀',
+        title: 'Campaigns API',
+        description: 'Headless APIs to integrate your campaign funnels, no server required.',
+        href: '/docs/api/campaigns/',
+    },
+    {
         icon: '🎯',
         title: 'Themes',
         description: 'Create unique brand experiences for customers with our theme framework.',
         href: '/docs/themes/',
     },
     {
-        icon: '🚀',
+        icon: '🧩',
         title: 'Apps',
         description: 'Build Apps to bundle your integration into an installable App that can be easily installed on many stores.',
         href: '/docs/apps/',
