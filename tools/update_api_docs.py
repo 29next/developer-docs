@@ -56,6 +56,7 @@ def download_and_update_spec_file(type, source, version, description, additions)
         spec = yaml.safe_load(f.read())
         spec["info"]["description"] = description
         spec.update(additions)
+        f.seek(0) # find first line to replace content
         yaml.safe_dump(spec, f)
     f.close()
 
