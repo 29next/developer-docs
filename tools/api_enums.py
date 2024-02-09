@@ -1,19 +1,8 @@
-
-
-CAMPAIGNS_API_SPEC_SOURCE = 'https://campaigns.apps.29next.com/api/schema/'
+CAMPAIGNS_API_SPEC_SOURCE = "https://campaigns.apps.29next.com/api/schema/"
 
 CAMPAIGNS_API_SPEC_ADDITIONS = {
-    'servers': [
-        {
-            'url': 'https://campaigns.apps.29next.com',
-            'description': ''
-        }
-    ],
-    'security': [
-        {
-            'API Authentication': []
-        }
-    ]
+    "servers": [{"url": "https://campaigns.apps.29next.com", "description": ""}],
+    "security": [{"API Authentication": []}],
 }
 
 CAMPAIGNS_API_DESCRIPTION = """
@@ -51,26 +40,22 @@ Setting a rate limit helps to prevent API abuse and provide overall fairness of 
 """
 
 
-ADMIN_API_SPEC_SOURCE = 'https://sandbox.29next.store/api/schema/admin/'
+ADMIN_API_SPEC_SOURCE = "https://sandbox.29next.store/api/schema/admin/"
 
 ADMIN_API_SPEC_ADDITIONS = {
-    'servers': [
+    "servers": [
         {
-            'url': 'https://{store}.29next.store/api/admin/',
-            'description': '',
-            'variables': {
-                'store': {
-                    'default': 'example',
-                    'description': 'Store unique subdomain used to identify the store.'
+            "url": "https://{store}.29next.store/api/admin/",
+            "description": "",
+            "variables": {
+                "store": {
+                    "default": "example",
+                    "description": "Store unique subdomain used to identify the store.",
                 }
-            }
+            },
         }
     ],
-    'security': [
-        {
-            'oauth2': []
-        }
-    ]
+    "security": [{"oauth2": []}],
 }
 
 ADMIN_API_DESCRIPTION = """
