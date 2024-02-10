@@ -102,6 +102,11 @@ WEBHOOKS = [
 ]
 
 
+def get_schema(spec, name):
+    schema = copy.deepcopy(spec['components']['schemas'][name])
+    return schema
+
+
 def webhook_data_schema_handler(spec, data_schema):
 
     for key,value in data_schema['properties'].items():
@@ -113,7 +118,7 @@ def webhook_data_schema_handler(spec, data_schema):
         # nested items array
         if type(value) is dict and value.get('items', {}).get('$ref'):
             nested_schema_name = value['items']['$ref'].split('/')[3]
-            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+            nested_schema = get_schema(spec, nested_schema_name)
 
             webhook_data_schema_handler(spec, nested_schema)
 
@@ -124,7 +129,7 @@ def webhook_data_schema_handler(spec, data_schema):
         elif type(value) is dict and value.get('$ref'):
 
             nested_schema_name = value['$ref'].split('/')[3]
-            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+            nested_schema = get_schema(spec, nested_schema_name)
 
             webhook_data_schema_handler(spec, nested_schema)
 
@@ -135,7 +140,7 @@ def webhook_data_schema_handler(spec, data_schema):
         elif type(value) is dict and value.get('allOf', {}):
 
             nested_schema_name = value['allOf'][0]['$ref'].split('/')[3]
-            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+            nested_schema = get_schema(spec, nested_schema_name)
 
             webhook_data_schema_handler(spec, nested_schema)
 
@@ -146,7 +151,7 @@ def webhook_data_schema_handler(spec, data_schema):
         elif type(value) is dict and value.get('oneOf', {}) and value.get('oneOf', {})[0].get('$ref'):
 
             nested_schema_name = value['oneOf'][0]['$ref'].split('/')[3]
-            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+            nested_schema = get_schema(spec, nested_schema_name)
 
             webhook_data_schema_handler(spec, nested_schema)
 
@@ -161,7 +166,7 @@ def webhook_schema_generator(spec):
     version = spec['info']['version']
     webhook_schema = {}
     for each in WEBHOOKS:
-        schema = copy.deepcopy(spec['components']['schemas'][each['source']])
+        schema = get_schema(spec, each['source'])
         cleaned_data_schema = webhook_data_schema_handler(spec, schema)
 
         webhook_schema[each['event']] = {
