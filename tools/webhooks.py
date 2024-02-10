@@ -4,105 +4,106 @@ WEBHOOKS = [
     {
         'event': 'cart.abandoned',
         'object': 'cart',
-        'source': 'CartDetail',
+        'schema_ref': '#/components/schemas/CartDetail',
         'tag': 'carts',
         'description': 'Triggers when a cart is marked as abandoned.',
     },
     {
         'event': 'customer.created',
         'object': 'customer',
-        'source': 'User',
+        'schema_ref': '#/components/schemas/User',
         'tag': 'customers',
         'description': 'Triggers when a new customer is created.',
     },
     {
         'event': 'customer.updated',
         'object': 'customer',
-        'source': 'User',
+        'schema_ref': '#/components/schemas/User',
         'tag': 'customers',
         'description': 'Triggers when a customer is created.',
     },
     {
         'event': 'dispute.created',
         'object': 'dispute',
-        'source': 'Dispute',
+        'schema_ref': '#/components/schemas/Dispute',
         'tag': 'payments',
         'description': 'Triggers when a new dispute is created.',
     },
     {
         'event': 'dispute.updated',
         'object': 'dispute',
-        'source': 'Dispute',
+        'schema_ref': '#/components/schemas/Dispute',
         'tag': 'payments',
         'description': 'Triggers when a dispute is updated.',
     },
     {
         'event': 'order.created',
         'object': 'order',
-        'source': 'Order',
+        'schema_ref': '#/components/schemas/Order',
         'tag': 'orders',
         'description': 'Triggers when an new order is created.',
     },
     {
         'event': 'order.updated',
         'object': 'order',
-        'source': 'Order',
+        'schema_ref': '#/components/schemas/Order',
         'tag': 'orders',
         'description': 'Triggers when an order is updated.'
     },
     {
         'event': 'product.created',
         'object': 'product',
-        'source': 'Product',
+        'schema_ref': '#/components/schemas/Product',
         'tag': 'products',
         'description': 'Triggers when a new product is created.'
     },
     {
         'event': 'product.updated',
         'object': 'product',
-        'source': 'Product',
+        'schema_ref': '#/components/schemas/Product',
         'tag': 'products',
         'description': 'Triggers when a product is updated.'
     },
     {
         'event': 'transaction.created',
         'object': 'transaction',
-        'source': 'Transaction',
+        'schema_ref': '#/components/schemas/Transaction',
         'tag': 'payments',
         'description': 'Triggers when a payment transaction is created.'
     },
     {
         'event': 'subscription.created',
         'object': 'subscription',
-        'source': 'Subscription',
+        'schema_ref': '#/components/schemas/Subscription',
         'tag': 'subscriptions',
         'description': 'Triggers when a new subscription is created.'
     },
     {
         'event': 'subscription.updated',
         'object': 'subscription',
-        'source': 'Subscription',
+        'schema_ref': '#/components/schemas/Subscription',
         'tag': 'subscriptions',
         'description': 'Triggers when a subscription is updated.'
     },
     {
         'event': 'ticket.created',
         'object': 'ticket',
-        'source': 'Ticket',
+        'schema_ref': '#/components/schemas/Ticket',
         'tag': 'support',
         'description': 'Triggers a new support ticket is created.'
     },
     {
         'event': 'ticket.updated',
         'object': 'ticket',
-        'source': 'Ticket',
+        'schema_ref': '#/components/schemas/Ticket',
         'tag': 'support',
         'description': 'Triggers a support ticket is updated.'
     },
 ]
 
 
-def get_schema(spec, name):
+def get_schema(spec, ref):
+    name = ref.split('/')[3]
     schema = copy.deepcopy(spec['components']['schemas'][name])
     return schema
 
@@ -117,44 +118,29 @@ def webhook_data_schema_handler(spec, data_schema):
 
         # nested items array
         if type(value) is dict and value.get('items', {}).get('$ref'):
-            nested_schema_name = value['items']['$ref'].split('/')[3]
-            nested_schema = get_schema(spec, nested_schema_name)
-
+            nested_schema = get_schema(spec,  value['items']['$ref'])
             webhook_data_schema_handler(spec, nested_schema)
-
             value['items'].clear()
             value['items'].update(nested_schema)
 
         # $ref
         elif type(value) is dict and value.get('$ref'):
-
-            nested_schema_name = value['$ref'].split('/')[3]
-            nested_schema = get_schema(spec, nested_schema_name)
-
+            nested_schema = get_schema(spec, value['$ref'])
             webhook_data_schema_handler(spec, nested_schema)
-
             value.clear()
             value.update(nested_schema)
 
         # allOf
         elif type(value) is dict and value.get('allOf', {}):
-
-            nested_schema_name = value['allOf'][0]['$ref'].split('/')[3]
-            nested_schema = get_schema(spec, nested_schema_name)
-
+            nested_schema = get_schema(spec, value['allOf'][0]['$ref'])
             webhook_data_schema_handler(spec, nested_schema)
-
             value.clear()
             value.update(nested_schema)
 
         # oneOf
         elif type(value) is dict and value.get('oneOf', {}) and value.get('oneOf', {})[0].get('$ref'):
-
-            nested_schema_name = value['oneOf'][0]['$ref'].split('/')[3]
-            nested_schema = get_schema(spec, nested_schema_name)
-
+            nested_schema = get_schema(spec, value['oneOf'][0]['$ref'])
             webhook_data_schema_handler(spec, nested_schema)
-
             value.clear()
             value.update(nested_schema)
 
@@ -166,7 +152,7 @@ def webhook_schema_generator(spec):
     version = spec['info']['version']
     webhook_schema = {}
     for each in WEBHOOKS:
-        schema = get_schema(spec, each['source'])
+        schema = get_schema(spec, each['schema_ref'])
         cleaned_data_schema = webhook_data_schema_handler(spec, schema)
 
         webhook_schema[each['event']] = {
@@ -208,7 +194,7 @@ def webhook_schema_generator(spec):
                                                 "description": "The store identifier."
                                             },
                                             "events": {
-                                                "description": "See dashboard for webhooks for available events.",
+                                                "description": "Webhook docs for available events.",
                                                 "items": {"type": ["string", "null"]},
                                                 "type": "array",
                                             },
