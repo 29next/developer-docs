@@ -102,11 +102,66 @@ WEBHOOKS = [
 ]
 
 
-def webhook_data_schema_cleaner(data_schema):
+def webhook_data_schema_handler(spec, data_schema):
+
     for key,value in data_schema['properties'].items():
-            if type(value) is dict:
-                if value.get('readOnly'):
-                    del value['readOnly']
+
+        # remove readOnly from all properties
+        if value.get('readOnly'):
+            del value['readOnly']
+
+        # nested items
+        if type(value) is dict and value.get('items', {}).get('$ref'):
+            nested_schema_name = value['items']['$ref'].split('/')[3]
+            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+
+            webhook_data_schema_handler(spec, nested_schema)
+
+            value['items'].clear()
+            value['items'].update(nested_schema)
+
+        # $ref
+        elif type(value) is dict and value.get('$ref'):
+
+            if value.get('readOnly'):
+                del value['readOnly']
+
+            nested_schema_name = value['$ref'].split('/')[3]
+            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+
+            webhook_data_schema_handler(spec, nested_schema)
+
+            value.clear()
+            value.update(nested_schema)
+
+        # allOf
+        elif type(value) is dict and value.get('allOf', {}):
+
+            if value.get('readOnly'):
+                del value['readOnly']
+
+            nested_schema_name = value['allOf'][0]['$ref'].split('/')[3]
+            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+
+            webhook_data_schema_handler(spec, nested_schema)
+
+            value.clear()
+            value.update(nested_schema)
+
+        # oneOf
+        elif type(value) is dict and value.get('oneOf', {}) and value.get('oneOf', {})[0].get('$ref'):
+
+            if value.get('readOnly'):
+                del value['readOnly']
+
+            nested_schema_name = value['oneOf'][0]['$ref'].split('/')[3]
+            nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
+
+            webhook_data_schema_handler(spec, nested_schema)
+
+            value.clear()
+            value.update(nested_schema)
+
     return data_schema
 
 
@@ -116,8 +171,8 @@ def webhook_schema_generator(spec):
     webhook_schema = {}
     for each in WEBHOOKS:
         schema = copy.deepcopy(spec['components']['schemas'][each['source']])
-        cleaned_data_schema = webhook_data_schema_cleaner(schema)
-        copy_of_data_schema = schema.copy()
+        cleaned_data_schema = webhook_data_schema_handler(spec, schema)
+
         webhook_schema[each['event']] = {
             "post": {
                 "tags": [each['tag']],
@@ -138,7 +193,7 @@ def webhook_schema_generator(spec):
                                         "examples": [each['object']],
                                         "description": "Object data type."
                                     },
-                                    "data": copy_of_data_schema,
+                                    "data": cleaned_data_schema,
                                     "event_id": {
                                         "type": ["string"],
                                         "format": ["uuid"],

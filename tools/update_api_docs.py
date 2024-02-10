@@ -58,8 +58,8 @@ def download_and_update_spec_file(type, source, version, description, additions)
     with open(api_file, "r+") as f:
         spec = yaml.safe_load(f.read())
         spec["info"]["description"] = description
-        # if type == 'admin':
-        #     spec["webhooks"] = webhook_schema_generator(spec)
+        if type == 'admin':
+            spec["webhooks"] = webhook_schema_generator(spec)
         spec.update(additions)
         f.seek(0)  # find first line to replace content
         yaml.safe_dump(spec, f)
