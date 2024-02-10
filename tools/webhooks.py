@@ -110,7 +110,7 @@ def webhook_data_schema_handler(spec, data_schema):
         if value.get('readOnly'):
             del value['readOnly']
 
-        # nested items
+        # nested items array
         if type(value) is dict and value.get('items', {}).get('$ref'):
             nested_schema_name = value['items']['$ref'].split('/')[3]
             nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
@@ -123,9 +123,6 @@ def webhook_data_schema_handler(spec, data_schema):
         # $ref
         elif type(value) is dict and value.get('$ref'):
 
-            if value.get('readOnly'):
-                del value['readOnly']
-
             nested_schema_name = value['$ref'].split('/')[3]
             nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
 
@@ -137,9 +134,6 @@ def webhook_data_schema_handler(spec, data_schema):
         # allOf
         elif type(value) is dict and value.get('allOf', {}):
 
-            if value.get('readOnly'):
-                del value['readOnly']
-
             nested_schema_name = value['allOf'][0]['$ref'].split('/')[3]
             nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
 
@@ -150,9 +144,6 @@ def webhook_data_schema_handler(spec, data_schema):
 
         # oneOf
         elif type(value) is dict and value.get('oneOf', {}) and value.get('oneOf', {})[0].get('$ref'):
-
-            if value.get('readOnly'):
-                del value['readOnly']
 
             nested_schema_name = value['oneOf'][0]['$ref'].split('/')[3]
             nested_schema = copy.deepcopy(spec['components']['schemas'][nested_schema_name])
