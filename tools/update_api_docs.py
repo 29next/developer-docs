@@ -1,49 +1,10 @@
 import requests
 import yaml
 
+from config import API_VERSIONS
 from webhooks import webhook_schema_generator
 
-from api_enums import (
-    CAMPAIGNS_API_SPEC_SOURCE,
-    CAMPAIGNS_API_DESCRIPTION,
-    CAMPAIGNS_API_SPEC_ADDITIONS,
-    ADMIN_API_SPEC_SOURCE,
-    ADMIN_API_DESCRIPTION,
-    ADMIN_API_SPEC_ADDITIONS,
-)
-
 BASE_OUTPUT_PATH = "../static/api/"
-
-API_VERSIONS = [
-    {
-        "type": "campaigns",
-        "version": "v1",
-        "source": CAMPAIGNS_API_SPEC_SOURCE,
-        "additions": CAMPAIGNS_API_SPEC_ADDITIONS,
-        "description": CAMPAIGNS_API_DESCRIPTION,
-    },
-    {
-        "type": "admin",
-        "version": "2023-02-10",
-        "source": ADMIN_API_SPEC_SOURCE,
-        "additions": ADMIN_API_SPEC_ADDITIONS,
-        "description": ADMIN_API_DESCRIPTION,
-    },
-    {
-        "type": "admin",
-        "version": "2024-04-01",
-        "source": ADMIN_API_SPEC_SOURCE,
-        "additions": ADMIN_API_SPEC_ADDITIONS,
-        "description": ADMIN_API_DESCRIPTION,
-    },
-    {
-        "type": "admin",
-        "version": "unstable",
-        "source": ADMIN_API_SPEC_SOURCE,
-        "additions": ADMIN_API_SPEC_ADDITIONS,
-        "description": ADMIN_API_DESCRIPTION,
-    },
-]
 
 
 def download_and_update_spec_file(type, source, version, description, additions):
