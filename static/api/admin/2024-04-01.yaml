@@ -14796,7 +14796,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -15026,7 +15026,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -15256,7 +15256,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -15422,7 +15422,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -15588,7 +15588,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -16894,7 +16894,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -18200,7 +18200,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -18700,7 +18700,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -19200,7 +19200,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -19659,7 +19659,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -20118,7 +20118,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -20318,7 +20318,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -20518,7 +20518,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
@@ -20851,7 +20851,7 @@ webhooks:
                 webhook:
                   properties:
                     events:
-                      description: See dashboard for webhooks for available events.
+                      description: See webhook docs for available events.
                       items:
                         type:
                         - string
