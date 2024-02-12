@@ -333,9 +333,7 @@ html[data-theme='dark'] {
 
 /* Search customization */
 
-.navbar__items--right {
-    flex-direction: row-reverse;
-}
+
 
 .DocSearch-Button-Key {
     background: theme(colors.secondary.800) !important;
@@ -354,8 +352,16 @@ html[data-theme='dark'] {
     @apply !text-xs;
 }
 
-.DocSearch.DocSearch-Button {
-    width: 260px;
-    border-radius: 6px;
-    margin-right: 20px;
+@media screen and (min-width: 768px) {
+    .DocSearch.DocSearch-Button {
+        width: 260px;
+        border-radius: 6px;
+        margin-right: 20px;
+    }
+
+    .navbar__items--right {
+        flex-direction: row-reverse;
+    }
 }
+
+
