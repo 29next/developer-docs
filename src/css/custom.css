@@ -331,6 +331,12 @@ html[data-theme='dark'] {
     border-color: transparent transparent transparent var(--docs-color-text-100) !important;
 }
 
+/* Search customization */
+
+.navbar__items--right {
+    flex-direction: row-reverse;
+}
+
 .DocSearch-Button-Key {
     background: theme(colors.secondary.800) !important;
     top: 0 !important;
@@ -346,4 +352,10 @@ html[data-theme='dark'] {
 
 .DocSearch-Button-Placeholder {
     @apply !text-xs;
+}
+
+.DocSearch.DocSearch-Button {
+    width: 260px;
+    border-radius: 6px;
+    margin-right: 20px;
 }
