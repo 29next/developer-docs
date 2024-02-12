@@ -8,7 +8,7 @@ import SectionsMenu from '../../../../components/SectionsMenu'
 
 function APIElement({ layout = 'responsive', currentVersion = '2023-02-10' }) {
     return (
-        <BrowserOnly fallback={<div className="loading-container">Loading...</div>}>
+        <BrowserOnly fallback={<div className="loading-container"><div className='spinner'></div></div>}>
             {() => {
                 // eslint-disable-next-line no-undef, @typescript-eslint/no-var-requires
                 const { API } = require('@stoplight/elements');
@@ -52,7 +52,6 @@ export default function Home() {
                 <link rel="preload" href="/assets/css/elements.min.css" as="style" />
                 <link rel="stylesheet" href="/assets/css/elements.min.css" />
             </Head>
-
             <div className="header">
                 <h1 className="mb-0 flex items-center gap-2 text-sm font-semibold lg:text-lg" id="top">
                     Admin API Reference
