@@ -36,23 +36,23 @@ Webhook target endpoints must accept JSON data and respond with a 200 response c
 
 ### Webhook Events
 
-| Event                     | Description                          |
-| -----------               | ------------------------------------ |
-| `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*|
-| `cart.abandoned`          | Triggers when a cart is marked as abandoned. |
-| `customer.created`        | Triggers when a new customer is created. |
-| `customer.updated`        | Triggers when an existing customer is updated. |
-| `dispute.created`         | Triggers when a new dispute is created. |
-| `dispute.updated`         | Triggers when a dispute is updated. |
-| `order.created`           | Triggers when an order is created. |
-| `order.updated`           | Triggers when an existing order is updated. |
-| `product.created`         | Triggers when a product is created. |
-| `product.updated`         | Triggers when an existing product is updated. |
-| `transaction.created`     | Triggers when a payment transaction is created. |
-| `subscription.created`    | Triggers when a new subscription is created. |
-| `subscription.updated`    | Triggers when an existing subscription is updated. |
-| `ticket.created`          | Triggers a new support ticket is created. |
-| `ticket.updated`          | Triggers when an existing support ticket is updated. |
+| Event                     | Description                          | Reference |
+| -----------               | ------------------------------------ | ----- |
+| `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*| N/A |
+| `cart.abandoned`          | Triggers when a cart is marked as abandoned. | [View Example](/docs/api/admin/reference/#/webhooks/cart.abandoned/post) |
+| `customer.created`        | Triggers when a new customer is created. | [View Example](/docs/api/admin/reference/#/webhooks/customer.created/post) |
+| `customer.updated`        | Triggers when an existing customer is updated. | [View Example](/docs/api/admin/reference/#/webhooks/customer.updated/post) |
+| `dispute.created`         | Triggers when a new dispute is created. | [View Example](/docs/api/admin/reference/#/webhooks/dispute.created/post) |
+| `dispute.updated`         | Triggers when a dispute is updated. | [View Example](/docs/api/admin/reference/#/webhooks/dispute.updated/post) |
+| `order.created`           | Triggers when an order is created. | [View Example](/docs/api/admin/reference/#/webhooks/order.created/post) |
+| `order.updated`           | Triggers when an existing order is updated. | [View Example](/docs/api/admin/reference/#/webhooks/order.updated/post) |
+| `product.created`         | Triggers when a product is created. | [View Example](/docs/api/admin/reference/#/webhooks/product.created/post) |
+| `product.updated`         | Triggers when an existing product is updated. | [View Example](/docs/api/admin/reference/#/webhooks/product.updated/post) |
+| `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/api/admin/reference/#/webhooks/transactions.created/post) |
+| `subscription.created`    | Triggers when a new subscription is created. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.created/post) |
+| `subscription.updated`    | Triggers when an existing subscription is updated. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.updated/post) |
+| `ticket.created`          | Triggers a new support ticket is created. |  [View Example](/docs/api/admin/reference/#/webhooks/ticket.created/post) |
+| `ticket.updated`          | Triggers when an existing support ticket is updated. | [View Example](/docs/api/admin/reference/#/webhooks/ticket.updated/post) |
 
 ### Webhook Data Structure
 
