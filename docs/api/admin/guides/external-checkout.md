@@ -121,13 +121,13 @@ Add additional products (line items) to the original order through the [ordersAd
 // -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2023-02-10"
 {
   "lines": [
-    {
+        {
             "product_id": 2,
             "currency": "USD",
             "quantity": 1,
             "price": "10.33" // optional custom price
         }
-  ]
+    ]
 }
 ```
 :::caution
@@ -143,14 +143,17 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
 <TabItem value="parent" label="product_id + currency">
 
 ```json
-"lines": [
-    {
-        "product_id": 1,
-        "currency": "USD",
-        "quantity": 1,
-        "price": "33.44" // optional custom price
-    }
+
+{
+    "lines": [
+        {
+            "product_id": 1,
+            "currency": "USD",
+            "quantity": 1,
+            "price": "33.44" // optional custom price
+        }
 ]
+}
 ```
 </TabItem>
 <TabItem value="sku" label="sku + currency">

@@ -365,7 +365,7 @@ html[data-theme='dark'] {
     left: 50%;
     width: 48px;
     height: 48px;
-    border: 4px solid var(--docs-color-text);
+    border: 3px solid var(--docs-color-text);
     border-bottom-color: var(--ifm-color-primary);
     border-radius: 50%;
     display: inline-block;

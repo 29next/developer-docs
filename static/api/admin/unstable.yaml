@@ -177,7 +177,7 @@ components:
       required:
       - id
       type: object
-    AvaliableLanguages:
+    AvailableLanguages:
       properties:
         code:
           type: string
@@ -6035,14 +6035,14 @@ components:
       type: object
     Store:
       properties:
-        avaliable_currencies:
+        available_currencies:
           items:
             $ref: '#/components/schemas/Currency'
           readOnly: true
           type: array
-        avaliable_languages:
+        available_languages:
           items:
-            $ref: '#/components/schemas/AvaliableLanguages'
+            $ref: '#/components/schemas/AvailableLanguages'
           readOnly: true
           type: array
         contact_address:
@@ -6069,8 +6069,8 @@ components:
           readOnly: true
           type: string
       required:
-      - avaliable_currencies
-      - avaliable_languages
+      - available_currencies
+      - available_languages
       - contact_address
       - name
       - payments
