@@ -11,12 +11,12 @@ const REQUESTS = [
     {
         title: 'Create Order',
         link: '/docs/api/campaigns/#create-order',
-        text: 'Capture customer and product interest.',
+        text: 'Create and order with full payment details.',
     },
     {
         title: 'Add Upsell',
         link: '/docs/api/campaigns/#adding-upsells',
-        text: 'Capture customer and product interest.',
+        text: 'Add an upsell to the order.',
     },
 ];
 
