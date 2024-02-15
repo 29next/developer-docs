@@ -149,8 +149,21 @@ const config = {
                 ],
             },
             footer: {
-                style: 'dark',
+                style: 'light',
                 links: [
+                    {
+                        html: `
+                            <iframe
+                            src="https://29next.instatus.com/embed-status/f343a721/dark-sm"
+                            width="230"
+                            height="61"
+                            frameBorder="0"
+                            scrolling="no"
+                            style="border: none;"
+                            >
+                            </iframe>
+                        `,
+                    },
                 ],
                 copyright: `Copyright © ${new Date().getFullYear()} Next Commerce`,
             },

@@ -5,6 +5,10 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
+import Hero from '../components/Homepage/Hero';
+import GuidesExamples from '../components/Homepage/GuidesExamples';
+import RestApiReference from '../components/Homepage/RestApiReference';
+
 import styles from './index.module.css';
 
 function HomepageHeader() {
@@ -26,23 +30,19 @@ function HomepageHeader() {
   );
 }
 
-// export default function Home() {
-//   const {siteConfig} = useDocusaurusContext();
-//   return (
-//     <Layout
-//       title={`Hello from ${siteConfig.title}`}
-//       description="Description will go into a meta tag in <head />">
-//       <HomepageHeader />
-//       <main>
-//         <HomepageFeatures />
-//       </main>
-//     </Layout>
-//   );
-// }
-
-// import React from 'react';
-import { Redirect } from 'react-router-dom';
-
 export default function Home() {
-    return <Redirect to='/docs/' />;
+  const {siteConfig} = useDocusaurusContext();
+  return (
+    <Layout
+      title={`${siteConfig.title} Developer Docs`}
+      description="API Documentation and guides for building on 29 Next platform.">
+        <Hero />
+        <GuidesExamples />
+        <RestApiReference />
+      <main>
+
+      </main>
+    </Layout>
+  );
 }
+

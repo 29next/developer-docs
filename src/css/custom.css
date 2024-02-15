@@ -1,9 +1,3 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
 /* You can override the default Infima variables here. */
 :root {
     --ifm-color-primary: #2856ed;
@@ -12,6 +6,8 @@
     --ifm-color-primary-darkest: #0f35b3;
     --ifm-color-primary-light: #305cee;
     --ifm-color-primary-lighter: #3762ee;
+    --ifm-footer-color: #fff;
+    --ifm-footer-background-color: #000;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -24,15 +20,8 @@
     --ifm-color-primary-lighter: #c7d5ff;
     --ifm-color-primary-lightest: #d9e2ff;
     --ifm-navbar-background-color: #000;
-    --ifm-footer-background-color: #161c2d;
-}
-
-.footer {
-    display: none;
-}
-
-[data-theme='dark'] .navbar {
-    border-bottom: 1px solid var(--ifm-toc-border-color);
+    --ifm-footer-color: #fff;
+    --ifm-footer-background-color: #000;
 }
 
 
@@ -156,12 +145,9 @@ code {
 /* UI Kit tokens */
 :root {
     --docs-color-primary: --ifm-color-primary;
-    /* --docs-color-primary-100: #1a90ff; */
     --docs-color-primary-tint: rgba(33, 96, 253, 0.16);
     --docs-color-primary-tint-light: rgba(33 96 253/0.24);
-
     --docs-color-border: #dadde1;
-
     --docs-color-text: #000000;
     --docs-color-text-100: #646464;
 
@@ -172,22 +158,18 @@ code {
 
     /* Color from prism themes */
     --docs-color-code-background: #f6f8fa;
-
     --docs-color-android: #44db85;
     --docs-color-apple: var(--docs-color-text) !important;
 }
 
 [data-theme='dark'] {
     --docs-color-border: #2e2e2e;
-
     --docs-color-text: #ffffff;
     --docs-color-text-100: #b4b4b4;
-
     --docs-color-background: #161616;
     --docs-color-background-100: #1c1c1c;
     --docs-color-background-200: #2a2a2a;
     --docs-color-background-300: #2e2e2e;
-
     --docs-color-code-background: #1e1e1e;
 }
 
@@ -206,7 +188,6 @@ code {
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 html[data-theme='dark'] {
-    --ifm-footer-background-color: #1c1c1c;
     --ifm-background-surface-color: #161616;
     --ifm-background-color: #161616;
     --ifm-toc-border-color: #2e2e2e;
@@ -227,6 +208,27 @@ html[data-theme='dark'] {
     /* Background tint only for menu links in sidebar */
     --ifm-menu-color-background-active: var(--docs-color-primary-tint);
 }
+
+/* Homepage */
+
+@layer components {
+    .noise-bg {
+        background-image: linear-gradient(transparent, white 98%), url('/static/img/bg-noise-light.svg');
+    }
+
+    html[data-theme='dark'] .noise-bg {
+        background-image: linear-gradient(transparent, var(--ifm-background-color) 98%), url('/static/img/bg-noise-dark.svg');
+    }
+
+}
+
+/* Navbar */
+
+[data-theme='dark'] .navbar {
+    border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+
 
 /* SectionsMenu Component Styles */
 .sections-menu-trigger {

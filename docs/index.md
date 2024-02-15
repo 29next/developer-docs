@@ -3,8 +3,6 @@ title: Getting Started
 sidebar_position: 0
 ---
 
-# Build Amazing Commerce Solutions
-
 ⚡️ Developers have full access to a suite of APIs, Webhooks, and Themes to solve complex commerce problems for merchants and brands.
 
 ### Solve Complex Problems with Apps
