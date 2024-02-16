@@ -18,7 +18,7 @@ const PRODUCTS = [
     },
     {
         title: 'Admin API',
-        link: '/docs/api/admin/guides/external-checkout/',
+        link: '/docs/api/admin/',
         icon: Terminal,
         text: 'REST APIs to create new sales channels and extend core functionality with custom business logic.',
     },

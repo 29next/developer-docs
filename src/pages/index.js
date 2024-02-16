@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
 import Hero from '../components/Homepage/Hero';
@@ -36,9 +37,14 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title} Developer Docs`}
       description="API Documentation and guides for building on 29 Next platform.">
-        <Hero />
-        <GuidesExamples />
-        <RestApiReference />
+          <Head>
+              {/* Preload styles for Stoplight Elements */}
+              <link rel="preload" href="/assets/css/elements.min.css" as="style" />
+          </Head>
+          <Hero />
+          <GuidesExamples />
+          <RestApiReference />
+
       <main>
 
       </main>
