@@ -48,7 +48,7 @@ Webhook target endpoints must accept JSON data and respond with a 200 response c
 | `order.updated`           | Triggers when an existing order is updated. | [View Example](/docs/api/admin/reference/#/webhooks/order.updated/post) |
 | `product.created`         | Triggers when a product is created. | [View Example](/docs/api/admin/reference/#/webhooks/product.created/post) |
 | `product.updated`         | Triggers when an existing product is updated. | [View Example](/docs/api/admin/reference/#/webhooks/product.updated/post) |
-| `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/api/admin/reference/#/webhooks/transactions.created/post) |
+| `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/api/admin/reference/#/webhooks/transaction.created/post) |
 | `subscription.created`    | Triggers when a new subscription is created. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.created/post) |
 | `subscription.updated`    | Triggers when an existing subscription is updated. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.updated/post) |
 | `ticket.created`          | Triggers a new support ticket is created. |  [View Example](/docs/api/admin/reference/#/webhooks/ticket.created/post) |
