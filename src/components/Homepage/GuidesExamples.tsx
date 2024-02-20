@@ -45,7 +45,7 @@ const guides: Guide[] = [
         title: 'Testing Guide',
         icon: CheckSquare,
         text: 'Use test cards to test your external checkout flow.',
-        link: '/docs/api/admin/',
+        link: '/docs/api/admin/guides/testing-guide/',
     },
 ];
 
