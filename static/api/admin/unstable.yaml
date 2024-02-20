@@ -967,6 +967,98 @@ components:
       required:
       - lines
       type: object
+    CreateOrderFulfillmentEvent:
+      properties:
+        city:
+          type: string
+        country:
+          title: ISO 3166-1 alpha-2
+          type:
+          - string
+          - 'null'
+        estimated_delivery_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        latitude:
+          format: double
+          maximum: 90
+          minimum: -90
+          type:
+          - number
+          - 'null'
+        line1:
+          title: First line of address
+          type:
+          - string
+          - 'null'
+        longitude:
+          format: double
+          maximum: 180
+          minimum: -180
+          type:
+          - number
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        postcode:
+          title: Post/Zip-code
+          type:
+          - string
+          - 'null'
+        state:
+          title: State/County
+          type:
+          - string
+          - 'null'
+        status:
+          description: 'Expected statuses.
+
+
+            * `label_printed` - Label Printed
+
+            * `label_purchased` - Label Purchased
+
+            * `confirmed` - Confirmed
+
+            * `ready_for_pickup` - Ready For Pickup
+
+            * `carrier_picked_up` - Carrier Picked Up
+
+            * `picked_up` - Picked Up
+
+            * `in_transit` - In Transit
+
+            * `out_for_delivery` - Out For Delivery
+
+            * `attempted_delivery` - Attempted Delivery
+
+            * `failure` - Failure
+
+            * `delivered` - Delivered
+
+            * `delayed` - Delayed'
+          enum:
+          - label_printed
+          - label_purchased
+          - confirmed
+          - ready_for_pickup
+          - carrier_picked_up
+          - picked_up
+          - in_transit
+          - out_for_delivery
+          - attempted_delivery
+          - failure
+          - delivered
+          - delayed
+          type: string
+          x-spec-enum-id: 99c7bdf85f387700
+      required:
+      - status
+      type: object
     CreateOrderLine:
       properties:
         is_upsell:
@@ -1887,6 +1979,120 @@ components:
       - tracking_code
       - tracking_link
       type: object
+    FulfillmentEvent:
+      properties:
+        city:
+          readOnly: true
+          type: string
+        country:
+          title: ISO 3166-1 alpha-2
+          type:
+          - string
+          - 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        estimated_delivery_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        fulfillment:
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        latitude:
+          format: double
+          maximum: 90
+          minimum: -90
+          type:
+          - number
+          - 'null'
+        line1:
+          title: First line of address
+          type:
+          - string
+          - 'null'
+        longitude:
+          format: double
+          maximum: 180
+          minimum: -180
+          type:
+          - number
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        order:
+          type: string
+        postcode:
+          title: Post/Zip-code
+          type:
+          - string
+          - 'null'
+        state:
+          title: State/County
+          type:
+          - string
+          - 'null'
+        status:
+          description: 'Expected statuses.
+
+
+            * `label_printed` - Label Printed
+
+            * `label_purchased` - Label Purchased
+
+            * `confirmed` - Confirmed
+
+            * `ready_for_pickup` - Ready For Pickup
+
+            * `carrier_picked_up` - Carrier Picked Up
+
+            * `picked_up` - Picked Up
+
+            * `in_transit` - In Transit
+
+            * `out_for_delivery` - Out For Delivery
+
+            * `attempted_delivery` - Attempted Delivery
+
+            * `failure` - Failure
+
+            * `delivered` - Delivered
+
+            * `delayed` - Delayed'
+          enum:
+          - label_printed
+          - label_purchased
+          - confirmed
+          - ready_for_pickup
+          - carrier_picked_up
+          - picked_up
+          - in_transit
+          - out_for_delivery
+          - attempted_delivery
+          - failure
+          - delivered
+          - delayed
+          type: string
+          x-spec-enum-id: 99c7bdf85f387700
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - city
+      - created_at
+      - fulfillment
+      - id
+      - order
+      - status
+      - updated_at
+      type: object
     FulfillmentHold:
       properties:
         created_at:
@@ -2233,6 +2439,9 @@ components:
         created_at:
           format: date-time
           type: string
+        delivery_status:
+          readOnly: true
+          type: string
         id:
           readOnly: true
           type: integer
@@ -2270,6 +2479,7 @@ components:
           readOnly: true
           type: string
       required:
+      - delivery_status
       - id
       - line_items
       - location_id
@@ -6691,11 +6901,10 @@ components:
           - string
           - 'null'
         parent_id:
-          description: "\n    The ID of an associated transaction.\n    - For capture\
-            \ transactions, the parent is the authorization transaction.\n    - For\
-            \ void transactions, the parent is the authorization transaction.\n  \
-            \  - For refund transactions, the parent is the debit transaction.\n \
-            \       "
+          description: "The ID of an associated transaction.\n- For capture transactions,\
+            \ the parent is the authorization transaction. \n- For void transactions,\
+            \ the parent is the authorization transaction. \n- For refund transactions,\
+            \ the parent is the debit transaction. \n"
           readOnly: true
           type:
           - integer
@@ -6791,11 +7000,10 @@ components:
           - string
           - 'null'
         parent_id:
-          description: "\n    The ID of an associated transaction.\n    - For capture\
-            \ transactions, the parent is the authorization transaction.\n    - For\
-            \ void transactions, the parent is the authorization transaction.\n  \
-            \  - For refund transactions, the parent is the debit transaction.\n \
-            \       "
+          description: "The ID of an associated transaction.\n- For capture transactions,\
+            \ the parent is the authorization transaction. \n- For void transactions,\
+            \ the parent is the authorization transaction. \n- For refund transactions,\
+            \ the parent is the debit transaction. \n"
           readOnly: true
           type:
           - integer
@@ -11025,7 +11233,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/FulfillmentResponse'
           description: ''
       security:
       - oauth2:
@@ -11071,6 +11279,166 @@ paths:
       security:
       - oauth2:
         - orders:write
+      tags:
+      - orders
+  /orders/{number}/fulfillments/{fulfillmentId}/events/:
+    get:
+      description: Retrieve a list of fulfillment events of a order fulfillment.
+      operationId: ordersFulfillmentsEventsList
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - description: A unique integer value identifying this fulfillment.
+        in: path
+        name: fulfillmentId
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentEvent'
+          description: ''
+      security:
+      - oauth2:
+        - orders:read
+      tags:
+      - orders
+    post:
+      description: Create a fulfillment event in an existing order fulfillment.
+      operationId: ordersFulfillmentsEventsCreate
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - description: A unique integer value identifying this fulfillment.
+        in: path
+        name: fulfillmentId
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderFulfillmentEvent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateOrderFulfillmentEvent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateOrderFulfillmentEvent'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentEvent'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
+  /orders/{number}/fulfillments/{fulfillmentId}/events/{eventId}/:
+    delete:
+      description: Delete an existing fulfillment event.
+      operationId: ordersFulfillmentsEventsDestroy
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - description: A unique integer value identifying this fulfillment.
+        in: path
+        name: fulfillmentId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: eventId
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
+    get:
+      description: Retrieve a fulfillment event.
+      operationId: ordersFulfillmentsEventsRetrieve
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - description: A unique integer value identifying this fulfillment.
+        in: path
+        name: fulfillmentId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: eventId
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentEvent'
+          description: ''
+      security:
+      - oauth2:
+        - orders:read
       tags:
       - orders
   /orders/{number}/mark-as-paid/:
@@ -15811,6 +16179,8 @@ webhooks:
                           created_at:
                             format: date-time
                             type: string
+                          delivery_status:
+                            type: string
                           id:
                             type: integer
                           line_items:
@@ -15899,6 +16269,7 @@ webhooks:
                             format: uri
                             type: string
                         required:
+                        - delivery_status
                         - id
                         - line_items
                         - location_id
@@ -17117,6 +17488,8 @@ webhooks:
                           created_at:
                             format: date-time
                             type: string
+                          delivery_status:
+                            type: string
                           id:
                             type: integer
                           line_items:
@@ -17205,6 +17578,7 @@ webhooks:
                             format: uri
                             type: string
                         required:
+                        - delivery_status
                         - id
                         - line_items
                         - location_id
@@ -20685,11 +21059,11 @@ webhooks:
                       - string
                       - 'null'
                     parent_id:
-                      description: "\n    The ID of an associated transaction.\n \
-                        \   - For capture transactions, the parent is the authorization\
-                        \ transaction.\n    - For void transactions, the parent is\
-                        \ the authorization transaction.\n    - For refund transactions,\
-                        \ the parent is the debit transaction.\n        "
+                      description: "The ID of an associated transaction.\n- For capture\
+                        \ transactions, the parent is the authorization transaction.\
+                        \ \n- For void transactions, the parent is the authorization\
+                        \ transaction. \n- For refund transactions, the parent is\
+                        \ the debit transaction. \n"
                       type:
                       - integer
                       - 'null'
