@@ -15246,6 +15246,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   customer.created:
     post:
       description: Triggers when a new customer is created.
@@ -15476,6 +15479,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   customer.updated:
     post:
       description: Triggers when a customer is created.
@@ -15706,6 +15712,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   dispute.created:
     post:
       description: Triggers when a new dispute is created.
@@ -15872,6 +15881,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   dispute.updated:
     post:
       description: Triggers when a dispute is updated.
@@ -16038,6 +16050,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   order.created:
     post:
       description: Triggers when an new order is created.
@@ -17274,6 +17289,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   order.updated:
     post:
       description: Triggers when an order is updated.
@@ -18510,6 +18528,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   product.created:
     post:
       description: Triggers when a new product is created.
@@ -19065,6 +19086,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   product.updated:
     post:
       description: Triggers when a product is updated.
@@ -19620,6 +19644,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   subscription.created:
     post:
       description: Triggers when a new subscription is created.
@@ -20175,6 +20202,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   subscription.updated:
     post:
       description: Triggers when a subscription is updated.
@@ -20730,6 +20760,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   ticket.created:
     post:
       description: Triggers a new support ticket is created.
@@ -20930,6 +20963,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   ticket.updated:
     post:
       description: Triggers a support ticket is updated.
@@ -21130,6 +21166,9 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   transaction.created:
     post:
       description: Triggers when a payment transaction is created.
@@ -21463,3 +21502,6 @@ webhooks:
     responses:
       '200':
         description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.

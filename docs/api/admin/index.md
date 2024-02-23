@@ -6,7 +6,11 @@ sidebar_position: 1
 
 ### Getting Started
 
-At the core of 29 Next is the Admin API.
+<!-- At the core of 29 Next is the Admin API, developers can seamless build custom store operations, create orders, and integrate third-party services. Empower your business with streamlined control and endless possibilities, all through our intuitive and powerful API. -->
+
+At the core of 29 Next is the Admin API, developers can manage store resources, integrate third-party services and build seamless external order flows.
+
+
 
 ```mdx-code-block
 

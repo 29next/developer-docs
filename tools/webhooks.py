@@ -121,6 +121,9 @@ def webhook_schema_generator(spec):
             "responses": {
                 "200": {
                     "description": "Return a 200 status to indicate that the data was received successfully."
+                },
+                "410": {
+                    "description": "Indicates the webhook target is no longer available and will be disabled."
                 }
             },
         }
