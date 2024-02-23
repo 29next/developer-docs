@@ -71,16 +71,17 @@ A Fulfillment Order represents items in an order that are to be fulfilled from t
 ```mermaid
 
 graph
-  Order-->FO1[Fulfillment Order Location A]
-  Order-->FO2[Fulfillment Order Location B]
-  Order-->FO3[Fulfillment Order Location C]
+  Order-->FO1[Fulfillment Order 1<br>Location A]
+  Order-->FO2[Fulfillment Order 2<br>Location B]
+  FO1-->P1[Product X Qty 1]
+  FO2-->P2[Product Y Qty 1 <br> Product Z Qty 2]
 ```
 
 ### Fulfillment Locations
 
 Fulfillment Services need to create `Locations` which represent their warehouses where physical products are stored and fulfilled from. Product `stockrecords` must be associated with a location for fulfillment.
 
-When new orders are created, the fulfillment orders are assigned to the locations that are expected to have the product `sku` in stock. The Location Address is also used for Tax calculation. See the [Locations Create](/docs/api/admin/reference/#/operations/locationsCreate) endpoint to create a location.
+When new orders are created, the fulfillment orders are assigned to the locations based on [Fulfillment Routing](https://docs.29next.com/features/fulfillment-guide/location-based-routing). The Location Address is also used for Tax calculation. See the [Locations Create](/docs/api/admin/reference/#/operations/locationsCreate) endpoint to create a location.
 
 #### Location Callback
 The location `callback` is a URL the store will send `Fulfillment Request` webhooks to notify them of a new fulfillment assigned. Fulfillment Services need to query their [Assigned Fulfillment Orders](#assigned-fulfillment-orders) to retrieve the fulfillment order details.
