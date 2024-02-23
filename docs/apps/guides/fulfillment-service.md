@@ -68,6 +68,14 @@ The carrier is responsible for delivering the products to the customer in this s
 
 A Fulfillment Order represents items in an order that are to be fulfilled from the same location. A single order often contains multiple fulfillment orders, it's important to keep this in mind for your integration.
 
+```mermaid
+
+graph
+  Order-->FO1[Fulfillment Order Location A]
+  Order-->FO2[Fulfillment Order Location B]
+  Order-->FO3[Fulfillment Order Location C]
+```
+
 ### Fulfillment Locations
 
 Fulfillment Services need to create `Locations` which represent their warehouses where physical products are stored and fulfilled from. Product `stockrecords` must be associated with a location for fulfillment.
