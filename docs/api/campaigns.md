@@ -48,7 +48,7 @@ Campaigns can have custom shipping prices to optimize shipping fees and methods 
 
 ## Getting Started
 
-To get started, create a new campaign with a package mapped to a product in your account. Use the examples below with your **Campaign API Key** to get started using the Campaigns API.
+To get started, create a new campaign with a package mapped to a product in your store. Use the examples below with your **Campaign API Key** to get started using the Campaigns API.
 
 ### Create Cart
 
