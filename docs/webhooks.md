@@ -42,7 +42,7 @@ Returning a `410` response code indicates the target resource is no longer avail
 
 | Event                     | Description                          | Reference |
 | -----------               | ------------------------------------ | ----- |
-| `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*| N/A |
+| `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*| [View Example](/docs/api/admin/reference/#/webhooks/app.uninstalled/post) |
 | `cart.abandoned`          | Triggers when a cart is marked as abandoned. | [View Example](/docs/api/admin/reference/#/webhooks/cart.abandoned/post) |
 | `customer.created`        | Triggers when a new customer is created. | [View Example](/docs/api/admin/reference/#/webhooks/customer.created/post) |
 | `customer.updated`        | Triggers when an existing customer is updated. | [View Example](/docs/api/admin/reference/#/webhooks/customer.updated/post) |

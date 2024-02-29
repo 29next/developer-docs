@@ -131,6 +131,13 @@ API_VERSIONS = [
 
 WEBHOOKS = [
     {
+        "event": "app.uninstalled",
+        "object": "app",
+        "schema_ref": "#/components/schemas/PublicApp",
+        "tag": "apps",
+        "description": "Triggers when an app is uninstalled.",
+    },
+    {
         "event": "cart.abandoned",
         "object": "cart",
         "schema_ref": "#/components/schemas/CartDetail",

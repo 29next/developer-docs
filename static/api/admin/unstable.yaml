@@ -5800,6 +5800,36 @@ components:
       - name
       - value
       type: object
+    PublicApp:
+      properties:
+        client_id:
+          type:
+          - string
+          - 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
+        settings:
+          oneOf:
+          - {}
+          - type: 'null'
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        version:
+          type:
+          - string
+          - 'null'
+      required:
+      - created_at
+      - name
+      - updated_at
+      type: object
     Refund:
       properties:
         adjustments:
@@ -8364,6 +8394,37 @@ info:
   version: unstable
 openapi: 3.1.0
 paths:
+  /apps/{clientId}/:
+    get:
+      description: Retrieve a object of app.
+      operationId: appsRetrieve
+      parameters:
+      - in: path
+        name: clientId
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicApp'
+          description: ''
+      security:
+      - oauth2: []
+      tags:
+      - apps
   /apps/{clientId}/settings/:
     delete:
       description: Delete an existing app settings.
@@ -14852,6 +14913,95 @@ servers:
       default: example
       description: Store unique subdomain used to identify the store.
 webhooks:
+  app.uninstalled:
+    post:
+      description: Triggers when an app is uninstalled.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - unstable
+                  type:
+                  - string
+                data:
+                  properties:
+                    client_id:
+                      type:
+                      - string
+                      - 'null'
+                    created_at:
+                      format: date-time
+                      type: string
+                    name:
+                      maxLength: 255
+                      type: string
+                    settings:
+                      oneOf:
+                      - {}
+                      - type: 'null'
+                    updated_at:
+                      format: date-time
+                      type: string
+                    version:
+                      type:
+                      - string
+                      - 'null'
+                  required:
+                  - created_at
+                  - name
+                  - updated_at
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - app
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - apps
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   cart.abandoned:
     post:
       description: Triggers when a cart is marked as abandoned.
