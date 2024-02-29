@@ -55,6 +55,7 @@ Returning a `410` response code indicates the target resource is no longer avail
 | `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/api/admin/reference/#/webhooks/transaction.created/post) |
 | `subscription.created`    | Triggers when a new subscription is created. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.created/post) |
 | `subscription.updated`    | Triggers when an existing subscription is updated. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.updated/post) |
+| `store.updated`           | Triggers when store settings are updated. | [View Example](/docs/api/admin/reference/#/webhooks/store.updated/post) |
 | `ticket.created`          | Triggers a new support ticket is created. |  [View Example](/docs/api/admin/reference/#/webhooks/ticket.created/post) |
 | `ticket.updated`          | Triggers when an existing support ticket is updated. | [View Example](/docs/api/admin/reference/#/webhooks/ticket.updated/post) |
 

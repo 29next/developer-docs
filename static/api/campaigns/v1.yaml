@@ -276,7 +276,6 @@ components:
         id:
           type: integer
         image:
-          readOnly: true
           type: string
         is_upsell:
           type: boolean
@@ -297,18 +296,13 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         product_sku:
-          readOnly: true
           type: string
         product_title:
-          readOnly: true
           type: string
         quantity:
           type: integer
       required:
       - id
-      - image
-      - product_sku
-      - product_title
       - quantity
       type: object
     CreateOrder:
@@ -599,7 +593,6 @@ components:
         id:
           type: integer
         image:
-          readOnly: true
           type: string
         is_upsell:
           type: boolean
@@ -620,18 +613,13 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         product_sku:
-          readOnly: true
           type: string
         product_title:
-          readOnly: true
           type: string
         quantity:
           type: integer
       required:
       - id
-      - image
-      - product_sku
-      - product_title
       - quantity
       type: object
     OrderUser:

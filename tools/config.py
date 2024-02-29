@@ -222,6 +222,13 @@ WEBHOOKS = [
         "description": "Triggers when a subscription is updated.",
     },
     {
+        "event": "store.updated",
+        "object": "store",
+        "schema_ref": "#/components/schemas/Store",
+        "tag": "store",
+        "description": "Triggers when store settings are updated.",
+    },
+    {
         "event": "ticket.created",
         "object": "ticket",
         "schema_ref": "#/components/schemas/Ticket",

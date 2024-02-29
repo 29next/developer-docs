@@ -19797,6 +19797,151 @@ webhooks:
       '410':
         description: Indicates the webhook target is no longer available and will
           be disabled.
+  store.updated:
+    post:
+      description: Triggers when store settings are updated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - '2023-02-10'
+                  type:
+                  - string
+                data:
+                  properties:
+                    available_currencies:
+                      items:
+                        properties:
+                          code:
+                            maxLength: 5
+                            title: Currency Code
+                            type: string
+                          label:
+                            type: string
+                        required:
+                        - code
+                        - label
+                        type: object
+                      type: array
+                    available_languages:
+                      items:
+                        properties:
+                          code:
+                            type: string
+                          label:
+                            type: string
+                        required:
+                        - code
+                        - label
+                        type: object
+                      type: array
+                    contact_address:
+                      properties:
+                        city:
+                          type: string
+                        company_name:
+                          type: string
+                        country:
+                          type: string
+                        line1:
+                          type: string
+                        line2:
+                          type: string
+                        phone_number:
+                          type: string
+                        postcode:
+                          type: string
+                        state:
+                          type: string
+                      required:
+                      - city
+                      - company_name
+                      - country
+                      - line1
+                      - line2
+                      - phone_number
+                      - postcode
+                      - state
+                      type: object
+                    name:
+                      type: string
+                    payments:
+                      properties:
+                        environment_key:
+                          type: string
+                      required:
+                      - environment_key
+                      type: object
+                    primary_domain:
+                      type: string
+                    tagline:
+                      type: string
+                    tax_id:
+                      type: string
+                    timezone:
+                      type: string
+                  required:
+                  - available_currencies
+                  - available_languages
+                  - contact_address
+                  - name
+                  - payments
+                  - primary_domain
+                  - tagline
+                  - tax_id
+                  - timezone
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - store
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - store
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   subscription.created:
     post:
       description: Triggers when a new subscription is created.
