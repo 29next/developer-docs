@@ -7,7 +7,43 @@ This documentation is in progress.
 :::
 
 
-### store
+### products `global`
+Returns a list of products, see [product](#products).
+
+### product_categories `global`
+Returns a list of products, see [product_category](#product_category).
+
+### posts `global`
+Returns a list of blog posts, see [post](#post).
+
+
+### terms_and_conditions `global`
+
+Content from store Terms and Conditions.
+
+### privacy_policy `global`
+
+Content from store Privacy Policy.
+
+### subscription_terms_and_conditions `global`
+
+Content from store Subscription Terms and Conditions.
+
+
+### storefront_geos `global`
+
+Returns a list of configured markets, see [geos](#geo)
+
+### languages_active_storefront `global`
+
+Returns a list of active storefront languages.
+
+### currencies `global`
+
+Returns a list of active storefront currencies.
+
+
+### store `global`
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -21,7 +57,6 @@ This documentation is in progress.
 | `get_meta_description` | string |Store phone number. |
 | `address` | object | The store address object see [address](#address). |
 | `branding` | object | The store branding object, see [branding](#branding). |
-
 
 ### address
 
@@ -43,18 +78,18 @@ This documentation is in progress.
 | `primary_color` | string | Store branding primary color. |
 | `accent_color` | string | Store branding accent color. |
 
-### products
+### product
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `id` | string | |
 | `get_title` | string | |
 | `primary_image` | file | |
-| `get_all_images` |  | |
+| `get_all_images` | List | List of product images, see [image](#image) |
 | `get_description` | string | |
 | `sku` | string | |
-| `parent` | Object | Parent product if product is variant (child). |
-| `categories` | List | List of categories, see [product_categories](#product_categories)|
+| `categories` | List | List of product categories, see [product_category](#product_category)|
+| `parent` | Object | Parent product if product is variant (child), see [product](#product). |
 | `is_child` | boolean |  |
 | `get_absolute_url` | string | |
 | `num_approved_reviews` | string | |
@@ -85,7 +120,7 @@ This documentation is in progress.
 | `score` | string | |
 | `user` | string | The customer that created the review, see [user](#user) |
 
-### product_categories
+### product_category
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -120,19 +155,20 @@ This documentation is in progress.
 | `get_meta_title` | string | |
 | `get_meta_description` | string | |
 
-### posts
+### post
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `id` | string | |
 | `featured_image` | string | |
+| `categories` | List | List of related post categories, see [post_category](#post_category )|
 | `get_absolute_url` | string | |
 | `title` | string | |
 | `content` | string | |
 | `get_meta_title` | string | |
 | `get_meta_description` | string | |
 
-### post_categories
+### post_category
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -181,6 +217,7 @@ This documentation is in progress.
 
 
 ### price
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `currency` | string | |
@@ -196,16 +233,13 @@ This documentation is in progress.
 | `path` | string | |
 | `CURRENCY_CODE` | string |
 
-### languages_active_storefront
-
-### terms_and_conditions
-### privacy_policy
-### subscription_terms_and_conditions
 
 
 
-### storefront_geos
-### currencies
+### geo
+
+
+
 
 ### primary_domain
 ### DEFAULT_LANGUAGE
