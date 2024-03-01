@@ -8,21 +8,33 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
 
-### if, elif, & else
-Use the if tag to evaluate if a variable is "true" and control the contents displayed.
+### app_asset_url
+
+The `app_asset_url` tag is used to reference asset files included in app snippets.
 
 ```django
-{% if products_list > 2 %}
-    <p>Number of products: {{ products_list|length }}</p>
-{% elif products_list %}
-    <p>We only have a single product now.</p>
-{% else %}
-    <p>Sorry, there are no products.</p>
-{% endif %}
+<script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
 ```
 
+### app_hook
 
-### Boolean Operators
+The `app_hook` tag specifies a theme storefront location Apps can inject snippets into to extend storefront templates from Apps. Theme developers should ensure their templates include all available `app_hooks` to ensure compatability with all Apps.
+
+```django
+{% app_hook 'global_header' %}
+```
+
+**Available `app_hook` locations include:**
+
+```mdx-code-block
+
+import AppHookLocations from '@site/_snippets/_app-hook-locations.mdx';
+
+<AppHookLocations />
+
+```
+
+### boolean operators
 If tags may be used in combination with boolean operators for conditional control flow.
 
 | Operator     | Description                          |
@@ -42,17 +54,30 @@ If tags may be used in combination with boolean operators for conditional contro
 | `>=`       | greater than or equal to |
 
 
-### for
+### comment
 
-Loops over each item in array, making the item available in a context variable. For example, to display a list of products provided in the `{{ products }}` variable.
+Ignores everything between {% comment %} and {% endcomment %}. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
 
 ```django
-<ul>
-    {% for each in products %}
-    <li>{{ each.get_title }} - Rating {{ each.rating }} stars</li>
-    {% endfor %}
-</ul>
+<p>Rendered text with {{ pub_date|date:"c" }}</p>
+{% comment "Optional note" %}
+    <p>Commented out text with {{ create_date|date:"c" }}</p>
+{% endcomment %}
 ```
+
+### csrf_token
+
+This tag is used for CSRF protection and required on any template with a form that sends a POST request to the back end.
+
+```django
+<form>
+    {% csrf_token %}
+    <input type="text" id="example" name="Example Input">
+    <input type="submit" value="Submit">
+</form>
+```
+
+
 
 ### extends & block
 
@@ -85,7 +110,6 @@ Extends and block tags allow you to define blocks of content in a base template 
 </body>
 </html>
 ```
-
 </TabItem>
 <TabItem value="child" label="Child Template">
 
@@ -105,6 +129,30 @@ Extends and block tags allow you to define blocks of content in a base template 
 </TabItem>
 </Tabs>
 
+### for
+
+Loops over each item in array, making the item available in a context variable. For example, to display a list of products provided in the `{{ products }}` variable.
+
+```django
+<ul>
+    {% for each in products %}
+    <li>{{ each.get_title }} - Rating {{ each.rating }} stars</li>
+    {% endfor %}
+</ul>
+```
+
+### if, elif, & else
+Use the if tag to evaluate if a variable is "true" and control the contents displayed.
+
+```django
+{% if products_list > 2 %}
+    <p>Number of products: {{ products_list|length }}</p>
+{% elif products_list %}
+    <p>We only have a single product now.</p>
+{% else %}
+    <p>Sorry, there are no products.</p>
+{% endif %}
+```
 
 ### include
 
@@ -121,37 +169,6 @@ Loads a template and renders it with the current context. This is a way of inclu
 :::caution
 A word of caution, multi-level inclusion inside of iterative loops can create performance penalties while rendering a page html for site visitors. Use **includes** sparingly when working inside iterative loops.
 :::
-
-### url
-
-Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
-
-```django
-<a href="{% url 'blog:blog-list' %}">Blog</a>
-```
-
-### csrf_token
-
-This tag is used for CSRF protection and required on any template with a form that sends a POST request to the back end.
-
-```django
-<form>
-    {% csrf_token %}
-    <input type="text" id="example" name="Example Input">
-    <input type="submit" value="Submit">
-</form>
-```
-
-### comment
-
-Ignores everything between {% comment %} and {% endcomment %}. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
-
-```django
-<p>Rendered text with {{ pub_date|date:"c" }}</p>
-{% comment "Optional note" %}
-    <p>Commented out text with {{ create_date|date:"c" }}</p>
-{% endcomment %}
-```
 
 ### image_thumbnail
 The `image_thumbnail` tag is used to resize images dynamically in templates. The tag accepts arguments that control how the image is resized.
@@ -176,9 +193,35 @@ The `image_thumbnail` tag is used to resize images dynamically in templates. The
 |format|This controls the write format and thumbnail extension. Formats supported by the shipped engines are 'JPEG' and 'PNG'. Default value is `JPEG`.|
 |padding|Padding is a boolean and controls if the image should be padded to fit the specified geometry.|
 
+
+
+
+
+
+
+### url
+
+Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
+
+```django
+<a href="{% url 'blog:blog-list' %}">Blog</a>
+```
+
+
+
 ### now
 
 Displays the current date and/or time, using a format according to the given string. [See available date reference for format options](https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date).
+
+
+
+### seo
+The `seo` tag generates SEO meta data for products in standardized format for consumption by 3rd party systems.
+
+```django
+{% seo %}
+```
+The tag is expected to be added to the top of product details template to generate necessary SEO meta data.
 
 
 ### t
@@ -190,38 +233,18 @@ The `t` (translation) tag is used to display localized content from a theme's tr
 ```
 
 
-### seo
-The `seo` tag generates SEO meta data for products in standardized format for consumption by 3rd party systems.
+
+### where
+
+Queries and filters store objects to dynamically assign objects to a variable.
 
 ```django
-{% seo %}
-```
-The tag is expected to be added to the top of product details template to generate necessary SEO meta data.
-
-### app_asset_url
-
-The `app_asset_url` tag is used to reference asset files included in app snippets.
-
-```django
-
-<script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
-
+{% where {{ objects }} {{ field_name }} {{ lookup_expr }} as {{ variable }} %}
 ```
 
-### app_hook
-
-The `app_hook` tag specifies a theme storefront location Apps can inject snippets into to extend storefront templates from Apps. Theme developers should ensure their templates include all available `app_hooks` to ensure compatability with all Apps.
-
-```django
-{% app_hook 'global_header' %}
-```
-
-**Available `app_hook` locations include:**
-
-```mdx-code-block
-
-import AppHookLocations from '@site/_snippets/_app-hook-locations.mdx';
-
-<AppHookLocations />
-
-```
+| Arguemnt | Description |
+| --- | --- |
+| objects | The global context object. Supported objects include; `products`, `product_categories`, `posts`, `post_categories`, `currencies`, `storefront_geos`  |
+| field_name | Object field name to perform the lookup on. |
+| lookup_expr | Query lookup expression; `exact` or `contains`. |
+| variable | Assigned template variable name, ie `featured_products`. |

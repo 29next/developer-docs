@@ -15,6 +15,9 @@ Adds the argument to the value.
 For example, if value is 4, then the output will be 6. The filter will try to force both values to integers. If this fails, it’ll attempt to add the values together anyway. If it fails, the result will be an empty string.
 
 ### by_ids
+:::caution Deprecation Notice
+Now deprecated, use the [`where`](/docs/themes/templates/tags/#where) template tag instead.
+:::
 Filters a larger set of objects by id to return only specific objects.
 ```django
 {{ objects|by_ids:'85,84,83' }}

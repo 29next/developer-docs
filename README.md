@@ -7,7 +7,7 @@
   <p align="center">
     29 Next's developer documentation portal, built with Docusaurus and Stoplight.
     <br />
-    <a href="https://developers.29next.com/docs/"><strong>Explore the Docs »</strong></a>
+    <a href="https://developers.29next.com/"><strong>Explore the Docs »</strong></a>
   </p>
 </p>
 
