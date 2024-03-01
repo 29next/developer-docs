@@ -106,7 +106,10 @@ This documentation is in progress.
 | `last_name` | string | |
 | `email` | string | |
 | `phone_number` | string | |
+| `language` | string | |
 | `accepts_marketing` | string | |
+| `ip` | string | |
+| `user_agent` | string | |
 
 ### page
 
@@ -141,7 +144,6 @@ This documentation is in progress.
 | `get_meta_title` | string | |
 | `get_meta_description` | string | |
 
-
 ### order
 
 | Property | Type | Description |
@@ -167,8 +169,7 @@ This documentation is in progress.
 | `quantity` | string |  |
 | `unit_price_incl_tax_incl_discount` | string |  |
 | `unit_price_excl_tax` | string |  |
-| `title` | string |  |
-| `title` | string |  |
+| `unit_price_incl_tax` | string |  |
 
 
 ### voucher
@@ -178,10 +179,6 @@ This documentation is in progress.
 | `title` | string |  |
 
 
-### session
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `price` | string | |
 
 ### price
 | Property | Type | Description |
@@ -194,10 +191,10 @@ This documentation is in progress.
 ### request
 | Property | Type | Description |
 | ----- | ------ | ------ |
+| `user` | Object | The currently authenticated user, see [user](#user). |
 | `get_host` | string | |
 | `path` | string | |
-| `price_retail` | string | |
-
+| `CURRENCY_CODE` | string |
 
 ### languages_active_storefront
 
