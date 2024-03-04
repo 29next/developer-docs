@@ -194,11 +194,6 @@ The `image_thumbnail` tag is used to resize images dynamically in templates. The
 |padding|Padding is a boolean and controls if the image should be padded to fit the specified geometry.|
 
 
-
-
-
-
-
 ### url
 
 Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
@@ -207,12 +202,9 @@ Returns an absolute url path reference matching a given view with parameters. Se
 <a href="{% url 'blog:blog-list' %}">Blog</a>
 ```
 
-
-
 ### now
 
 Displays the current date and/or time, using a format according to the given string. [See available date reference for format options](https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date).
-
 
 
 ### seo

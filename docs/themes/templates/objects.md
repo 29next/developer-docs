@@ -1,5 +1,6 @@
 ---
 title: Object Reference
+draft: true
 ---
 
 :::caution
@@ -7,14 +8,27 @@ This documentation is in progress.
 :::
 
 
+### currencies `global`
+
+Returns a list of active storefront currencies.
+
+### languages_active_storefront `global`
+
+Returns a list of active storefront languages.
+
 ### products `global`
-Returns a list of products, see [product](#products).
+Returns a list of products, see [product](#product).
 
 ### product_categories `global`
 Returns a list of products, see [product_category](#product_category).
 
 ### posts `global`
 Returns a list of blog posts, see [post](#post).
+
+
+### storefront_geos `global`
+
+Returns a list of configured markets, see [geos](#geo)
 
 
 ### terms_and_conditions `global`
@@ -30,18 +44,7 @@ Content from store Privacy Policy.
 Content from store Subscription Terms and Conditions.
 
 
-### storefront_geos `global`
-
-Returns a list of configured markets, see [geos](#geo)
-
-### languages_active_storefront `global`
-
-Returns a list of active storefront languages.
-
-### currencies `global`
-
-Returns a list of active storefront currencies.
-
+### geo
 
 ### store `global`
 
@@ -111,14 +114,12 @@ Returns a list of active storefront currencies.
 | `get_description` | string | |
 
 
-### reviews
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `id` | string | |
-| `title` | string | |
-| `score` | string | |
-| `user` | string | The customer that created the review, see [user](#user) |
+### primary_domain
+### DEFAULT_LANGUAGE
+### paginator
+
+
 
 ### product_category
 
@@ -132,19 +133,7 @@ Returns a list of active storefront currencies.
 | `get_meta_title` | string | |
 | `get_meta_description` | string | |
 
-### user
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `id` | string | |
-| `first_name` | string | |
-| `last_name` | string | |
-| `email` | string | |
-| `phone_number` | string | |
-| `language` | string | |
-| `accepts_marketing` | string | |
-| `ip` | string | |
-| `user_agent` | string | |
 
 ### page
 
@@ -208,11 +197,7 @@ Returns a list of active storefront currencies.
 | `unit_price_incl_tax` | string |  |
 
 
-### voucher
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `voucher` | Object | see [product](#product) |
-| `title` | string |  |
+
 
 
 
@@ -236,11 +221,37 @@ Returns a list of active storefront currencies.
 
 
 
-### geo
 
 
 
 
-### primary_domain
-### DEFAULT_LANGUAGE
-### paginator
+
+### reviews
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `id` | string | |
+| `title` | string | |
+| `score` | string | |
+| `user` | string | The customer that created the review, see [user](#user) |
+
+
+### user
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `id` | string | |
+| `first_name` | string | |
+| `last_name` | string | |
+| `email` | string | |
+| `phone_number` | string | |
+| `language` | string | |
+| `accepts_marketing` | string | |
+| `ip` | string | |
+| `user_agent` | string | |
+
+### voucher
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `voucher` | Object | see [product](#product) |
+| `title` | string |  |
