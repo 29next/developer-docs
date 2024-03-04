@@ -224,8 +224,6 @@ The `t` (translation) tag is used to display localized content from a theme's tr
 {% t 'customer.orders.order_count' with count=orders.count %}
 ```
 
-
-
 ### where
 
 Queries and filters store objects to dynamically assign objects to a variable.
@@ -236,7 +234,7 @@ Queries and filters store objects to dynamically assign objects to a variable.
 
 | Arguemnt | Description |
 | --- | --- |
-| objects | The global context object. Supported objects include; `products`, `product_categories`, `posts`, `post_categories`, `currencies`, `storefront_geos`  |
+| objects | The global context object. Supported objects include; [`products`](/docs/themes/templates/objects.md#products), [`product_categories`](/docs/themes/templates/objects.md#product_categories), [`posts`](/docs/themes/templates/objects.md#posts), [`post_categories`](/docs/themes/templates/objects.md#post_categories), [`currencies`](/docs/themes/templates/objects.md#currencies), [`storefront_geos`](/docs/themes/templates/objects.md#storefront_geos)  |
 | field_name | Object field name to perform the lookup on. |
 | lookup_expr | Query lookup expression; `exact` or `contains`. |
 | variable | Assigned template variable name, ie `featured_products`. |

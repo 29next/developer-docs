@@ -183,6 +183,9 @@ Returns a list of blog posts you can iterate over, see [post](#post).
   </div>
 </details>
 
+### post_categories
+
+Returns a list of post categories you can iterate over, see [post_category](#post_category)
 
 ### privacy_policy
 
