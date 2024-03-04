@@ -208,14 +208,14 @@ Returns the store object with general information about the store and the contac
 | ----- | ------ | ------ |
 | `address` | object | The store address object see [address](#address). |
 | `branding` | object | The store branding object, see [branding](#branding). |
-| `name` | string | General name of the store defined in settings. |
-| `tagline` | string | Store tagline defined in settings. |
-| `legal_name` | string | Legal name of the store. |
-| `phone` | string |Store phone number. |
-| `email` | string |Store email address. |
-| `timezone` | string |Store timezone. |
-| `get_meta_title` | string |Store SEO meta title. |
-| `get_meta_description` | string |Store SEO meta description. |
+| `name` | String | General name of the store defined in settings. |
+| `tagline` | String | Store tagline defined in settings. |
+| `legal_name` | String | Legal name of the store. |
+| `phone` | String |Store phone number. |
+| `email` | String |Store email address. |
+| `timezone` | String |Store timezone. |
+| `get_meta_title` | String |Store SEO meta title. |
+| `get_meta_description` | String |Store SEO meta description. |
 
 ### storefront_geos
 
@@ -239,11 +239,11 @@ Returns a list of configured markets, see [geos](#geo)
             <input name="language" type="hidden" value="" />
             <input name="currency" type="hidden" value="" />
             <input name="next" type="hidden" value="{{ language_neutral_url_path }}">
-            {% for storefront in storefront_geos %}
-                <a class="dropdown-item" href="#" data-country="{{ storefront.country.code }}" data-language="{{ storefront.get_language }}" data-currency="{{ storefront.currency.code }}">
-                    <span class="flag-icon flag-icon-{{ storefront.country.code|lower }}"></span>
+            {% for geo in storefront_geos %}
+                <a class="dropdown-item" href="#" data-country="{{ geo.country.code }}" data-language="{{ geo.language }}" data-currency="{{ geo.currency.code }}">
+                    <span class="flag-icon flag-icon-{{ geo.country.code|lower }}"></span>
                     &nbsp;&nbsp;
-                    <span> {{ storefront.country }}</span>
+                    <span> {{ geo.country }}</span>
                 </a>
             {% endfor %}
         </form>
@@ -294,101 +294,157 @@ Object have many properties that can be accessed in templates.
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `line_1` | string | Address line 1. |
-| `line_2` | string | Address line 2. |
-| `city` | string | Address City. |
-| `state` | string | Address State. |
-| `postcode` | string | Address Postcode. |
-| `country` | string | Address Country. |
+| `line_1` | String | Address line 1. |
+| `line_2` | String | Address line 2. |
+| `city` | String | Address City. |
+| `state` | String | Address State. |
+| `postcode` | String | Address Postcode. |
+| `country` | String | Address Country. |
 
 ### branding
 
+Store branding properties accessed through the [store](#store) object to leverage within templates.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `logo` | file | Store branding logo, use `.url` to access the CDN file link. |
-| `icon` | file | Store branding icon, use `.url` to access the CDN file link. |
-| `primary_color` | string | Store branding primary color, returns a HEX code. |
-| `accent_color` | string | Store branding accent color, returns a HEX code.  |
+| `logo` | File | Store branding logo, use `.url` to access the CDN File link. |
+| `icon` | File | Store branding icon, use `.url` to access the CDN File link. |
+| `primary_color` | String | Store branding primary color, returns a HEX code. |
+| `accent_color` | String | Store branding accent color, returns a HEX code.  |
 
 
 ### currency
 
+Currency object accessed through [currencies](#currencies).
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `name` | string | |
-| `code` | string |  |
-| `symbol` | string |  |
+| `code` | String |  Name of the currency, ie `USD`. |
+| `symbol` | String |  The symbol of the currency, ie `$`. |
 
 ### country
 
+Country object to access properties about a country, see [storefront_geos](#storefront_geos) for example usage.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `name` | string | |
-| `code` | string |  |
+| `code` | String | Two letter [ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) country code. |
+| `name` | String | Full name of the country. |
 
 ### geo
 
+A `geo` is a combination of a language and currency typically associated with a market, see full example in [storefront_geos](#storefront_geos).
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | |
-| `country` | string | |
-| `get_language` | file | |
-| `currency` | object | |
-| `get_description` | string | |
+| `currency` | object | The currency object, see [currency](#currency). |
+| `country` | object | The country object, see [country](#country) |
+| `language` | String | Two letter [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) language code. |
+
 
 ### image
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `id` | string | |
-| `url` | string | The full CDN link to render the image. |
-| `get_title` | string | |
-| `primary_image` | file | |
-| `get_all_images` | object | |
-| `get_description` | string | |
-
-### language
+Product images, see example usage below.
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `name` | string | |
-| `language_code` | string | |
+| `id` | String | The image unique ID. |
+| `url` | String | The full CDN link to render the image. |
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django
+{% with all_images=product.get_all_images %}
+{% for image in all_images %}{% image_thumbnail image.original "100x100" crop="center" as thumb %}
+    <div id="{{ image.id }}">
+        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="img-fluid">
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+```
+
+</div>
+</details>
+
 
 ### order
 
+Full Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `number` | string | |
-| `currency` | string | |
+| `number` | String | |
+| `currency` | String | |
 | `lines` | List | |
 | `user` | Object | The order customer, see [user](#user) |
-| `total_excl_tax` | string | |
-| `total_incl_tax` | string | |
-| `total_tax` | string | |
-| `shipping_incl_tax` | string | |
-| `shipping_excl_tax` | string | |
+| `total_excl_tax` | String | |
+| `total_incl_tax` | String | |
+| `total_tax` | String | |
+| `shipping_incl_tax` | String | |
+| `shipping_excl_tax` | String | |
 | `voucherapplication_set` | List | |
 | `shipping_address` | Object | |
 | `billing_address` | Object | |
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django
+<script>
+    dataLayer.push({ ecommerce: null });
+    dataLayer.push({
+        event: 'purchase',
+         ecommerce: {
+            transaction_id: '{{ order.number|escapejs }}',
+            value: {{ order.total_incl_tax | unlocalize | escapejs }},
+            tax: {{ order.total_tax|unlocalize|escapejs }},
+            shipping: '{{ order.shipping_incl_tax|unlocalize|escapejs }}',
+            currency: '{{ order.currency|escapejs }}',
+            coupon: '{% if order.voucherapplication_set.first.voucher.code %}{{ order.voucherapplication_set.first.voucher.code }}{% endif %}',
+            items: [
+                {% for line in order.lines.all %}
+                {
+                    index: {{ forloop.counter0 }},
+                    item_id: '{{ line.product.id|escapejs }}',
+                    item_name: '{{ line.title|escapejs }}',
+                    affiliation: '{{ store_name|escapejs }}',
+                    category: '{{ line.product.categories.first|default:'Uncategorised'|escapejs }}',
+                    price: '{{ line.unit_price_incl_tax_incl_discount|unlocalize|escapejs }}',
+                    quantity: {{ line.quantity | escapejs }}
+                }{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            ]
+         }
+    });
+</script>
+```
+
+</div>
+</details>
 
 ### order line
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `product` | Object | see [product](#product) |
-| `title` | string |  |
-| `quantity` | string |  |
-| `unit_price_incl_tax_incl_discount` | string |  |
-| `unit_price_excl_tax` | string |  |
-| `unit_price_incl_tax` | string |  |
+| `title` | String |  |
+| `quantity` | String |  |
+| `unit_price_incl_tax_incl_discount` | String |  |
+| `unit_price_excl_tax` | String |  |
+| `unit_price_incl_tax` | String |  |
 
 ### page
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `title` | string | |
-| `content` | string | |
-| `get_meta_title` | string | Page SEO meta title. |
-| `get_meta_description` | string | Page SEO meta description. |
+| `title` | String | |
+| `content` | String | |
+| `get_meta_title` | String | Page SEO meta title. |
+| `get_meta_description` | String | Page SEO meta description. |
 
 ### paginator
 
@@ -396,8 +452,8 @@ The `paginator` object is available on "list views" where the items to display a
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `num_pages` | string | |
-| `page_range` | string | |
+| `num_pages` | String | |
+| `page_range` | String | |
 
 
 ### page_obj
@@ -406,11 +462,11 @@ The `page_obj` object is available on "list views" where the items to display ar
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `number` | string | |
-| `has_next` | string | |
-| `has_previous` | string | |
-| `next_page_number` | string | |
-| `previous_page_number` | string | |
+| `number` | String | |
+| `has_next` | String | |
+| `has_previous` | String | |
+| `next_page_number` | String | |
+| `previous_page_number` | String | |
 
 <details>
   <summary>Example Usage</summary>
@@ -441,86 +497,87 @@ The `page_obj` object is available on "list views" where the items to display ar
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | |
-| `featured_image` | string | |
+| `id` | String | |
+| `featured_image` | String | |
 | `categories` | List | List of related post categories, see [post_category](#post_category )|
-| `get_absolute_url` | string | |
-| `title` | string | |
-| `content` | string | |
-| `get_meta_title` | string | Post SEO meta title. |
-| `get_meta_description` | string | Post SEO meta description.|
+| `get_absolute_url` | String | A full path link to the blog post. |
+| `title` | String | |
+| `content` | String | |
+| `slug` | String | |
+| `get_meta_title` | String | Post SEO meta title. |
+| `get_meta_description` | String | Post SEO meta description.|
 
 ### post_category
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | |
-| `name` | string | |
-| `get_absolute_url` | string | |
-| `title` | string | |
-| `content` | string | |
-| `get_meta_title` | string | |
-| `get_meta_description` | string | |
+| `id` | String | |
+| `name` | String | |
+| `get_absolute_url` | String | |
+| `title` | String | |
+| `content` | String | |
+| `get_meta_title` | String | |
+| `get_meta_description` | String | |
 
 ### product
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | |
-| `get_title` | string | |
+| `id` | String | |
+| `get_title` | String | |
 | `get_all_images` | List | List of product images, see [image](#image) |
-| `get_description` | string | |
-| `sku` | string | |
+| `get_description` | String | |
+| `sku` | String | |
 | `categories` | List | List of product categories, see [product_category](#product_category).|
 | `parent` | Object | Parent product if product is variant (child), see [product](#product). |
-| `primary_image` | file | |
-| `is_child` | boolean |  |
-| `get_absolute_url` | string | |
+| `primary_image` | File | |
+| `is_child` | Boolean |  |
+| `get_absolute_url` | String | |
 | `num_approved_reviews` | int | Count of approved product reviews. |
-| `rating` | string | |
-| `reviews` | string | List of product reviews, see [review](#review) |
-| `get_meta_title` | string | Product SEO meta title. |
-| `get_meta_description` | string | Product SEO meta description. |
+| `rating` | String | |
+| `reviews` | String | List of product reviews, see [review](#review) |
+| `get_meta_title` | String | Product SEO meta title. |
+| `get_meta_description` | String | Product SEO meta description. |
 
 ### product_category
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | |
-| `name` | string | |
-| `description` | string | |
-| `image` | string | |
-| `get_absolute_url` | string | |
-| `get_meta_title` | string | |
-| `get_meta_description` | string | |
+| `id` | String | |
+| `name` | String | |
+| `description` | String | |
+| `image` | String | |
+| `get_absolute_url` | String | |
+| `get_meta_title` | String | |
+| `get_meta_description` | String | |
 
 ### price
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `currency` | string | |
-| `price` | string | |
-| `price_retail` | string | |
+| `currency` | String | |
+| `price` | String | |
+| `price_retail` | String | |
 
 ### request
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `user` | Object | Current authenticated user, see [user](#user). |
-| `get_host` | string | |
-| `path` | string | |
-| `COUNTRY_CODE` | string | |
-| `CURRENCY_CODE` | string | |
-| `LANGUAGE_CODE` | string | |
+| `get_host` | String | |
+| `path` | String | |
+| `COUNTRY_CODE` | String | |
+| `CURRENCY_CODE` | String | |
+| `LANGUAGE_CODE` | String | |
 
 
 ### review
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | |
-| `title` | string | |
-| `score` | string | |
-| `user` | string | The customer that created the review, see [user](#user) |
+| `id` | String | |
+| `title` | String | |
+| `score` | String | |
+| `user` | String | The customer that created the review, see [user](#user) |
 
 
 ### user
@@ -529,18 +586,18 @@ User in storefront context is the same as the "customer".
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | string | Customer's unique id. |
-| `first_name` | string | Customer's first name. |
-| `last_name` | string | Customer's last name. |
-| `email` | string | Customer's email address. |
-| `phone_number` | string | Customer's phone number in e.164 format. |
-| `language` | string |  Customer's preferred communication language. |
-| `accepts_marketing` | string | Wether or not the customer accepts marketing communications. |
-| `ip` | string | Customer's most recently used IP address. |
-| `user_agent` | string | Customer's most recently used user agent string. |
+| `id` | String | Customer's unique id. |
+| `first_name` | String | Customer's first name. |
+| `last_name` | String | Customer's last name. |
+| `email` | String | Customer's email address. |
+| `phone_number` | String | Customer's phone number in e.164 format. |
+| `language` | String |  Customer's preferred communication language. |
+| `accepts_marketing` | String | Wether or not the customer accepts marketing communications. |
+| `ip` | String | Customer's most recently used IP address. |
+| `user_agent` | String | Customer's most recently used user agent String. |
 
 ### voucher
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `voucher` | Object |  |
-| `title` | string |  |
+| `title` | String |  |
