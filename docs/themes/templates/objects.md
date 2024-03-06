@@ -175,6 +175,24 @@ Returns a list of blog posts you can iterate over, see [post](#post).
 
 Returns a list of post categories you can iterate over, see [post_category](#post_category).
 
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django title="Example Storefront Post Categories Query and Loop"
+{% where post_categories 'id' 'exact' 2 as featured_blog_posts %}
+<ul>
+{% for cat in featured_blog_posts %}
+<li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
+{% endfor %}
+</ul>
+```
+
+  </div>
+</details>
+
+
 ### privacy_policy
 
 Content from store Privacy Policy settings, typically used in a "Privacy Policy" page to automatically pull content in from settings.
@@ -197,6 +215,22 @@ Content from store Privacy Policy settings, typically used in a "Privacy Policy"
 
 The current session active request context.
 
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django title="Example Request Object Usage"
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE|default:'en' }}" class="{% block html_class %}{% endblock %}">
+
+<head>
+    <link rel="alternate" hreflang="{{ request.LANGUAGE_CODE }}" href="https://{{ request.get_host }}{{ request.path }}" />
+</head>
+```
+
+  </div>
+</details>
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `user` | Object | Current authenticated user, see [user](#user). |
@@ -205,6 +239,9 @@ The current session active request context.
 | `COUNTRY_CODE` | String | Current active geo country code, see [geo](#geo). |
 | `CURRENCY_CODE` | String | Current active currency code. |
 | `LANGUAGE_CODE` | String | Current active language code. |
+
+
+
 
 ### store
 
