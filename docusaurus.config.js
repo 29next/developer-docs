@@ -98,6 +98,16 @@ const config = {
                 blog: {
                     showReadingTime: true,
                 },
+                sitemap: {
+                    changefreq: 'weekly',
+                    priority: 0.5,
+                    ignorePatterns: ['/tags/**'],
+                    filename: 'sitemap.xml',
+                },
+                gtag: {
+                    trackingID: 'G-PW101GSQMJ',
+                    anonymizeIP: true,
+                },
                 theme: {
                     customCss: [
                         require.resolve('./src/css/custom.css'),
