@@ -8,6 +8,8 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
 
+Template tags enable theme developers to include and extend templates and blocks, add logical operators, query and filter data, and much more. See all available template tags below.
+
 ### app_asset_url
 
 The `app_asset_url` tag is used to reference asset files included in app snippets.
@@ -77,11 +79,9 @@ This tag is used for CSRF protection and required on any template with a form th
 </form>
 ```
 
-
-
 ### extends & block
 
-Extends and block tags allow you to define blocks of content in a base template that can be overridden by templates that extend from it.
+Extends and block tags allow you to define blocks of content in a base template that can be overridden by templates that extend from it for template inheritance.
 
 <Tabs>
 <TabItem value="parent" label="Parent Template">
