@@ -182,7 +182,7 @@ The `image_thumbnail` tag is used to resize images dynamically in templates. The
 {% endwith %}
 ```
 
-| Arguemnt | Description |
+| Argument | Description |
 | --- | --- |
 | size | Example, 100x100 (widthxheight), sets the desired image size in pixels. If width and height are given the image is rescaled to maximum values of height and width given. Aspect ratio preserved. |
 | crop | This option is only used if both width and height is given. Crop behaves much like css background-position. The image is first rescaled to minimum values of height and width given, this will be equivalent to the padding box in the above text.  |
@@ -194,17 +194,27 @@ The `image_thumbnail` tag is used to resize images dynamically in templates. The
 |padding|Padding is a boolean and controls if the image should be padded to fit the specified geometry.|
 
 
-### url
-
-Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
-
-```django
-<a href="{% url 'blog:blog-list' %}">Blog</a>
-```
-
 ### now
 
 Displays the current date and/or time, using a format according to the given string. [See available date reference for format options](https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date).
+
+
+
+### purchase_info_for_product
+
+The `purchase_info_for_product` tag is used to retrieve the price of a product in the current user session's currency.
+
+```django
+{% purchase_info_for_product request product as session %}
+{% if session.price.exists %}
+    {{ session.price.price|currency:session.price.currency }}
+{% else %}
+```
+
+| Argument | Description |
+| --- | --- |
+| request | Must pass the current `request` context object. |
+| product | Must pass the current `product` context object. |
 
 
 ### seo
@@ -224,6 +234,14 @@ The `t` (translation) tag is used to display localized content from a theme's tr
 {% t 'customer.orders.order_count' with count=orders.count %}
 ```
 
+### url
+
+Returns an absolute url path reference matching a given view with parameters. See the URL & Template Path reference for a list of all URL names to use with the `{% url %}` template tag.
+
+```django
+<a href="{% url 'blog:blog-list' %}">Blog</a>
+```
+
 ### where
 
 Queries and filters store objects to dynamically assign objects to a variable.
@@ -232,7 +250,7 @@ Queries and filters store objects to dynamically assign objects to a variable.
 {% where {{ objects }} {{ field_name }} {{ lookup_expr }} as {{ variable }} %}
 ```
 
-| Arguemnt | Description |
+| Argument | Description |
 | --- | --- |
 | objects | The global context object. Supported objects include; [`products`](/docs/themes/templates/objects.md#products), [`product_categories`](/docs/themes/templates/objects.md#product_categories), [`posts`](/docs/themes/templates/objects.md#posts), [`post_categories`](/docs/themes/templates/objects.md#post_categories), [`currencies`](/docs/themes/templates/objects.md#currencies), [`storefront_geos`](/docs/themes/templates/objects.md#storefront_geos)  |
 | field_name | Object field name to perform the lookup on. |

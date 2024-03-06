@@ -2,19 +2,7 @@
 title: Object Reference
 ---
 
-Intro to object context available...
-
-```mdx-code-block
-
-import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
-
-<IntroTheme />
-
-```
-
-:::caution
-This documentation is in progress.
-:::
+Objects are template variables you can use to dynamically populate templates in your storefront theme. See documentation below and details of available template objects and their properties.
 
 ## Global Objects
 
@@ -185,7 +173,7 @@ Returns a list of blog posts you can iterate over, see [post](#post).
 
 ### post_categories
 
-Returns a list of post categories you can iterate over, see [post_category](#post_category)
+Returns a list of post categories you can iterate over, see [post_category](#post_category).
 
 ### privacy_policy
 
@@ -202,6 +190,21 @@ Content from store Privacy Policy settings, typically used in a "Privacy Policy"
 
   </div>
 </details>
+
+
+
+### request
+
+The current session active request context.
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `user` | Object | Current authenticated user, see [user](#user). |
+| `get_host` | String | Current host domain. |
+| `path` | String | Current url path. |
+| `COUNTRY_CODE` | String | Current active geo country code, see [geo](#geo). |
+| `CURRENCY_CODE` | String | Current active currency code. |
+| `LANGUAGE_CODE` | String | Current active language code. |
 
 ### store
 
@@ -222,7 +225,7 @@ Returns the store object with general information about the store and the contac
 
 ### storefront_geos
 
-Returns a list of configured markets, see [geos](#geo)
+Returns a list of configured markets, see [geos](#geo).
 
 <details>
   <summary>Example Usage</summary>
@@ -261,7 +264,7 @@ Returns a list of configured markets, see [geos](#geo)
 
 ### subscription_terms_and_conditions
 
-Content from store Subscription Terms and Conditions settings, typically used in a "Subscription Terms & Conditions" page to automatically pull content in from settings.
+Content from store subscription terms and conditions settings, typically used in a "Subscription Terms & Conditions" page to automatically pull content in from settings.
 
 <details>
   <summary>Example Usage</summary>
@@ -276,7 +279,7 @@ Content from store Subscription Terms and Conditions settings, typically used in
 
 ### terms_and_conditions
 
-Content from store Terms and Conditions settings, typically used in a "Terms & Conditions" page to automatically pull content in from settings.
+Content from store terms and conditions settings, typically used in a "Terms & Conditions" page to automatically pull content in from settings.
 
 <details>
   <summary>Example Usage</summary>
@@ -310,8 +313,8 @@ Store branding properties accessed through the [store](#store) object to leverag
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `logo` | File | Store branding logo, use `.url` to access the CDN File link. |
-| `icon` | File | Store branding icon, use `.url` to access the CDN File link. |
+| `logo` | File | Store branding logo, use `.url` to access the file link. |
+| `icon` | File | Store branding icon, use `.url` to access the file link. |
 | `primary_color` | String | Store branding primary color, returns a HEX code. |
 | `accent_color` | String | Store branding accent color, returns a HEX code.  |
 
@@ -349,11 +352,6 @@ A `geo` is a combination of a language and currency typically associated with a 
 
 Product images, see example usage below.
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `id` | String | The image unique ID. |
-| `url` | String | The full CDN link to render the image. |
-
 <details>
   <summary>Example Usage</summary>
   <div>
@@ -373,25 +371,17 @@ Product images, see example usage below.
 </div>
 </details>
 
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `original` | File | The original image file, typically used when creating a thumbnail. |
+| `url` | String | The full CDN link to render the image. |
+
+
+
 
 ### order
 
-Full Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations.
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `number` | String | |
-| `currency` | String | |
-| `lines` | List | |
-| `user` | Object | The order customer, see [user](#user) |
-| `total_excl_tax` | String | |
-| `total_incl_tax` | String | |
-| `total_tax` | String | |
-| `shipping_incl_tax` | String | |
-| `shipping_excl_tax` | String | |
-| `voucherapplication_set` | List | |
-| `shipping_address` | Object | |
-| `billing_address` | Object | |
+Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations, see example usage below.
 
 <details>
   <summary>Example Usage</summary>
@@ -430,22 +420,44 @@ Full Order object available on the order confirmation view, typically used in ta
 </div>
 </details>
 
-### order line
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `product` | Object | see [product](#product) |
-| `title` | String |  |
-| `quantity` | String |  |
-| `unit_price_incl_tax_incl_discount` | String |  |
-| `unit_price_excl_tax` | String |  |
-| `unit_price_incl_tax` | String |  |
+| `number` | String | Order number. |
+| `currency` | String | Order currency. |
+| `lines` | List | List of order line items, see [order line](#order-line). |
+| `user` | Object | The order customer, see [user](#user). |
+| `total_excl_tax` | String | Order total excluding tax. |
+| `total_incl_tax` | String | Order total including tax. |
+| `total_tax` | String | Order total tax. |
+| `shipping_incl_tax` | String | Order shipping including tax. |
+| `shipping_excl_tax` | String | Order shipping excluding tax. |
+| `voucherapplication_set` | List | Order voucher discounts applied, see [voucher](#voucher). |
+| `shipping_address` | Object | Order shipping address, see [address](#address). |
+| `billing_address` | Object | Order billing address, see [address](#address). |
+
+
+### order line
+
+Order line object details accessed through an order. See [order](#order) for example usage.
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `product` | Object | Line item product, see [product](#product). |
+| `title` | String | The order line title, full product name at time of sale. |
+| `quantity` | String | Product quantity. |
+| `unit_price_incl_tax_incl_discount` | String | Per unit price including tax, including discounts. |
+| `unit_price_excl_tax` | String | Per unit price excluding tax. |
+| `unit_price_incl_tax` | String | Per unit price including tax. |
 
 ### page
 
+Storefront Page object details available in the `pages/page.html` template and custom page templates.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `title` | String | |
-| `content` | String | |
+| `title` | String | Page title. |
+| `content` | String | Page content. |
 | `get_meta_title` | String | Page SEO meta title. |
 | `get_meta_description` | String | Page SEO meta description. |
 
@@ -455,8 +467,7 @@ The `paginator` object is available on "list views" where the items to display a
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `num_pages` | String | |
-| `page_range` | String | |
+| `num_pages` | Integer | Number of pages in pagination set. |
 
 
 ### page_obj
@@ -465,11 +476,11 @@ The `page_obj` object is available on "list views" where the items to display ar
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `number` | String | |
-| `has_next` | String | |
-| `has_previous` | String | |
-| `next_page_number` | String | |
-| `previous_page_number` | String | |
+| `number` | Integer | Current page number. |
+| `has_next` | Object | Next page object. |
+| `has_previous` | Object | Previous page. |
+| `next_page_number` | Integer | Next page number. |
+| `previous_page_number` | Integer | Previous page number. |
 
 <details>
   <summary>Example Usage</summary>
@@ -498,94 +509,93 @@ The `page_obj` object is available on "list views" where the items to display ar
 
 ### post
 
+Blog post properties available through global [post](#posts) context and the `blog/post.html` and `blog/index.html` templates.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | String | |
-| `featured_image` | String | |
-| `categories` | List | List of related post categories, see [post_category](#post_category )|
+| `id` | String | The post ID. |
+| `featured_image` | File | Blog post featured image file, use `.url` to access full file link. |
+| `categories` | List | List of related post categories, see [post_category](#post_category ). |
 | `get_absolute_url` | String | A full path link to the blog post. |
-| `title` | String | |
-| `content` | String | |
-| `slug` | String | |
+| `title` | String | The post title. |
+| `content` | String | Post content. |
+| `slug` | String | Post url slug. |
 | `get_meta_title` | String | Post SEO meta title. |
 | `get_meta_description` | String | Post SEO meta description.|
 
 ### post_category
 
+Blog post category properties available through global [post_categories](#post_categories) context and the `blog/post.html` and `blog/index.html` templates.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | String | |
-| `name` | String | |
-| `get_absolute_url` | String | |
-| `title` | String | |
-| `content` | String | |
-| `get_meta_title` | String | |
-| `get_meta_description` | String | |
+| `id` | String | Blog post category ID. |
+| `name` | String | Blog post category name. |
+| `get_absolute_url` | String | Blog post category canonical url link. |
 
 ### product
 
+Product configured in the store.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | String | |
-| `get_title` | String | |
-| `get_all_images` | List | List of product images, see [image](#image) |
-| `get_description` | String | |
-| `sku` | String | |
+| `id` | String | Product ID. |
+| `title` | String | Product title. |
+| `get_title` | String | Product title. |
+| `get_all_images` | List | List of product images, see [image](#image). |
+| `get_description` | String | Product description. |
+| `sku` | String | Product stock keeping unit (sku). |
 | `categories` | List | List of product categories, see [product_category](#product_category).|
-| `parent` | Object | Parent product if product is variant (child), see [product](#product). |
-| `primary_image` | File | |
-| `is_child` | Boolean |  |
-| `get_absolute_url` | String | |
-| `num_approved_reviews` | int | Count of approved product reviews. |
-| `rating` | String | |
-| `reviews` | String | List of product reviews, see [review](#review) |
+| `parent` | Object | Parent product if product is variant (child). |
+| `is_child` | Boolean | Product structure indicating this is a variant product. |
+| `primary_image` | File | Primary image of the product, use `.url` to access a full file link. |
+| `get_absolute_url` | String | Product canonical url link. |
+| `num_approved_reviews` | Integer | Count of approved product reviews. |
+| `rating` | Integer | Product rating as a number between 1 and 5. |
+| `reviews` | Integer | List of product reviews, see [review](#review). |
 | `get_meta_title` | String | Product SEO meta title. |
 | `get_meta_description` | String | Product SEO meta description. |
 
 ### product_category
 
+Product category object.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | String | |
-| `name` | String | |
-| `description` | String | |
-| `image` | String | |
-| `get_absolute_url` | String | |
-| `get_meta_title` | String | |
-| `get_meta_description` | String | |
+| `id` | String | Category ID. |
+| `name` | String | Category name. |
+| `description` | String | Category description. |
+| `image` | File | Category image, use `.url` to access image link. |
+| `get_absolute_url` | String | Category canonical url link. |
+| `get_meta_title` | String | Category SEO meta title. |
+| `get_meta_description` | String | Category SEO meta description. |
 
 ### price
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `currency` | String | |
-| `price` | String | |
-| `price_retail` | String | |
+Product price object.
 
-### request
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `user` | Object | Current authenticated user, see [user](#user). |
-| `get_host` | String | |
-| `path` | String | |
-| `COUNTRY_CODE` | String | |
-| `CURRENCY_CODE` | String | |
-| `LANGUAGE_CODE` | String | |
+| `currency` | String | Price currency. |
+| `price` | String | Price that will be charged. |
+| `price_retail` | String | Suggested retail price. |
 
 
 ### review
 
+Product review object.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `id` | String | |
-| `title` | String | |
-| `score` | String | |
-| `user` | String | The customer that created the review, see [user](#user) |
+| `id` | String | Review ID. |
+| `title` | String | Review title. |
+| `score` | Integer | Review score. |
+| `user` | Object | The customer that created the review, see [user](#user). |
 
 
 ### user
 
-User in storefront context is the same as the "customer".
+User in storefront context is the same as "customer".
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -600,7 +610,10 @@ User in storefront context is the same as the "customer".
 | `user_agent` | String | Customer's most recently used user agent String. |
 
 ### voucher
+
+Voucher object.
+
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `voucher` | Object |  |
-| `title` | String |  |
+| `title` | String | Voucher title. |
+| `code` | String | Voucher code. |
