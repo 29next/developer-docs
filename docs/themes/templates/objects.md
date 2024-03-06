@@ -240,8 +240,25 @@ The current session active request context.
 | `CURRENCY_CODE` | String | Current active currency code. |
 | `LANGUAGE_CODE` | String | Current active language code. |
 
+### settings
 
+Theme settings object with stored theme settings values as properties. See [theme settings](/docs/themes/settings.md) docs.
 
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django title="Example Colors Styles From Theme Settings"
+<style>
+:root {
+    --primary-color: {{ settings.theme_primary_color }};
+    --accent-color: {{ settings.theme_accent_color }};
+}
+</style>
+```
+
+  </div>
+</details>
 
 ### store
 
@@ -418,7 +435,7 @@ Product images, see example usage below.
 
 ### order
 
-Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations, see example usage below.
+Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations, see example usage below. Only available in the `confirmation` step in the `checkout/checkout.html` template, see [Checkout Customization](/docs/themes/guides/checkout.md).
 
 <details>
   <summary>Example Usage</summary>
