@@ -181,10 +181,9 @@ Returns a list of post categories you can iterate over, see [post_category](#pos
   <div>
 
 ```django title="Example Storefront Post Categories Query and Loop"
-{% where post_categories 'id' 'exact' 2 as featured_blog_posts %}
 <ul>
-{% for cat in featured_blog_posts %}
-<li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
+{% for cat in post_categories %}
+    <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
 {% endfor %}
 </ul>
 ```
@@ -263,6 +262,23 @@ Theme settings object with stored theme settings values as properties. See [them
 ### store
 
 Returns the store object with general information about the store and the contact details.
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django title="Example Store Object Usage"
+<address>
+{{ store.legal_name }}<br>
+{{ store.address.line_1 }}<br>
+{% if store.address.line_2 %}{{ store.address.line_2 }}<br>{% endif %}
+{{ store.address.city }}, {{ store.address.state }} {{ store.address.postcode }}<br>
+{{ store.address.country }}
+</address>
+<p><a href="mailto:{{ store.email }}">Email Support</a></p>
+```
+</div>
+</details>
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -519,23 +535,6 @@ Storefront Page object details available in the `pages/page.html` template and c
 
 The `paginator` object is available on "list views" where the items to display are paginated from the backend, works in tandem with [page_obj](#page_obj).
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `num_pages` | Integer | Number of pages in pagination set. |
-
-
-### page_obj
-
-The `page_obj` object is available on "list views" where the items to display are paginated from the backend, works in tandem with [paginator](#paginator).
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `number` | Integer | Current page number. |
-| `has_next` | Object | Next page object. |
-| `has_previous` | Object | Previous page. |
-| `next_page_number` | Integer | Next page number. |
-| `previous_page_number` | Integer | Previous page number. |
-
 <details>
   <summary>Example Usage</summary>
   <div>
@@ -560,6 +559,24 @@ The `page_obj` object is available on "list views" where the items to display ar
 ```
 </div>
 </details>
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `num_pages` | Integer | Number of pages in pagination set. |
+
+
+### page_obj
+
+
+The `page_obj` object is available on "list views" where the items to display are paginated from the backend, works in tandem with [paginator](#paginator).
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `number` | Integer | Current page number. |
+| `has_next` | Object | Next page object. |
+| `has_previous` | Object | Previous page. |
+| `next_page_number` | Integer | Next page number. |
+| `previous_page_number` | Integer | Previous page number. |
 
 ### post
 
