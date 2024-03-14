@@ -976,6 +976,9 @@ components:
           type:
           - string
           - 'null'
+        created_at:
+          format: date-time
+          type: string
         estimated_delivery_at:
           format: date-time
           type:
@@ -1926,6 +1929,8 @@ components:
       type: object
     DisputeNote:
       properties:
+        app:
+          $ref: '#/components/schemas/OAuthApp'
         author:
           $ref: '#/components/schemas/Author'
         created_at:
@@ -1942,6 +1947,7 @@ components:
           readOnly: true
           type: string
       required:
+      - app
       - author
       - created_at
       - id
@@ -1991,7 +1997,6 @@ components:
           - 'null'
         created_at:
           format: date-time
-          readOnly: true
           type: string
         estimated_delivery_at:
           format: date-time
@@ -2086,7 +2091,6 @@ components:
           type: string
       required:
       - city
-      - created_at
       - fulfillment
       - id
       - order
@@ -2455,6 +2459,10 @@ components:
           readOnly: true
           title: Order number
           type: string
+        origin_address:
+          allOf:
+          - $ref: '#/components/schemas/LocationAddress'
+          readOnly: true
         shipping_method:
           type: string
         status:
@@ -2484,6 +2492,7 @@ components:
       - line_items
       - location_id
       - order_number
+      - origin_address
       - shipping_method
       - status
       - tracking_carrier
@@ -2753,6 +2762,15 @@ components:
           - cancel_request
           type: string
           x-spec-enum-id: 4d67e89980fba849
+      type: object
+    OAuthApp:
+      properties:
+        client_id:
+          maxLength: 100
+          type: string
+        name:
+          maxLength: 255
+          type: string
       type: object
     Order:
       properties:
@@ -3364,6 +3382,8 @@ components:
       type: object
     OrderNote:
       properties:
+        app:
+          $ref: '#/components/schemas/OAuthApp'
         author:
           $ref: '#/components/schemas/Author'
         date_created:
@@ -3380,6 +3400,7 @@ components:
         message:
           type: string
       required:
+      - app
       - author
       - date_created
       - date_updated
@@ -8118,6 +8139,8 @@ components:
       type: object
     UserNote:
       properties:
+        app:
+          $ref: '#/components/schemas/OAuthApp'
         author:
           $ref: '#/components/schemas/Author'
         created_at:
@@ -8134,6 +8157,7 @@ components:
           readOnly: true
           type: string
       required:
+      - app
       - author
       - created_at
       - id
@@ -10837,7 +10861,9 @@ paths:
 
           * `checkout` - Checkout Flow
 
-          * `subscription` - Subscription'
+          * `subscription` - Subscription
+
+          * `dashboard` - Dashboard'
         explode: true
         in: query
         name: sources
@@ -10846,11 +10872,12 @@ paths:
             enum:
             - admin_api
             - checkout
+            - dashboard
             - subscription
             type:
             - string
             - 'null'
-            x-spec-enum-id: e030e8ea39c71c4d
+            x-spec-enum-id: 560f42e2fb5961ae
           type: array
         style: form
       - description: Agents
@@ -16400,6 +16427,43 @@ webhooks:
                           order_number:
                             title: Order number
                             type: string
+                          origin_address:
+                            properties:
+                              country:
+                                title: ISO 3166-1 alpha-2
+                                type: string
+                              line1:
+                                maxLength: 255
+                                title: First line of address
+                                type: string
+                              line2:
+                                maxLength: 255
+                                title: Second line of address
+                                type: string
+                              line3:
+                                maxLength: 255
+                                title: Third line of address
+                                type: string
+                              line4:
+                                maxLength: 255
+                                title: City
+                                type: string
+                              phone_number:
+                                maxLength: 128
+                                type: string
+                              postcode:
+                                maxLength: 64
+                                title: Post/Zip-code
+                                type: string
+                              state:
+                                maxLength: 255
+                                title: State/County
+                                type: string
+                            required:
+                            - country
+                            - line1
+                            - line4
+                            type: object
                           shipping_method:
                             type: string
                           status:
@@ -16423,6 +16487,7 @@ webhooks:
                         - line_items
                         - location_id
                         - order_number
+                        - origin_address
                         - shipping_method
                         - status
                         - tracking_carrier
@@ -17712,6 +17777,43 @@ webhooks:
                           order_number:
                             title: Order number
                             type: string
+                          origin_address:
+                            properties:
+                              country:
+                                title: ISO 3166-1 alpha-2
+                                type: string
+                              line1:
+                                maxLength: 255
+                                title: First line of address
+                                type: string
+                              line2:
+                                maxLength: 255
+                                title: Second line of address
+                                type: string
+                              line3:
+                                maxLength: 255
+                                title: Third line of address
+                                type: string
+                              line4:
+                                maxLength: 255
+                                title: City
+                                type: string
+                              phone_number:
+                                maxLength: 128
+                                type: string
+                              postcode:
+                                maxLength: 64
+                                title: Post/Zip-code
+                                type: string
+                              state:
+                                maxLength: 255
+                                title: State/County
+                                type: string
+                            required:
+                            - country
+                            - line1
+                            - line4
+                            type: object
                           shipping_method:
                             type: string
                           status:
@@ -17735,6 +17837,7 @@ webhooks:
                         - line_items
                         - location_id
                         - order_number
+                        - origin_address
                         - shipping_method
                         - status
                         - tracking_carrier
