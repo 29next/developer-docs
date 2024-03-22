@@ -431,12 +431,15 @@ components:
           readOnly: true
           type: integer
         interval:
-          readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         interval_count:
-          format: int32
-          readOnly: true
-          type: integer
+          maximum: 2147483647
+          minimum: 0
+          type:
+          - integer
+          - 'null'
         is_upsell:
           default: false
           type: boolean
@@ -484,8 +487,6 @@ components:
           type: string
       required:
       - id
-      - interval
-      - interval_count
       - price_excl_tax
       - price_incl_tax
       - product_id
@@ -970,20 +971,22 @@ components:
     CreateOrderFulfillmentEvent:
       properties:
         city:
-          type: string
+          type:
+          - string
+          - 'null'
         country:
           title: ISO 3166-1 alpha-2
           type:
           - string
           - 'null'
-        created_at:
-          format: date-time
-          type: string
         estimated_delivery_at:
           format: date-time
           type:
           - string
           - 'null'
+        happened_at:
+          format: date-time
+          type: string
         latitude:
           format: double
           maximum: 90
@@ -993,6 +996,11 @@ components:
           - 'null'
         line1:
           title: First line of address
+          type:
+          - string
+          - 'null'
+        line2:
+          title: Second line of address
           type:
           - string
           - 'null'
@@ -1997,6 +2005,7 @@ components:
           - 'null'
         created_at:
           format: date-time
+          readOnly: true
           type: string
         estimated_delivery_at:
           format: date-time
@@ -2005,6 +2014,9 @@ components:
           - 'null'
         fulfillment:
           type: integer
+        happened_at:
+          format: date-time
+          type: string
         id:
           readOnly: true
           type: integer
@@ -2017,6 +2029,11 @@ components:
           - 'null'
         line1:
           title: First line of address
+          type:
+          - string
+          - 'null'
+        line2:
+          title: Second line of address
           type:
           - string
           - 'null'
@@ -2091,6 +2108,7 @@ components:
           type: string
       required:
       - city
+      - created_at
       - fulfillment
       - id
       - order
@@ -15143,10 +15161,15 @@ webhooks:
                           id:
                             type: integer
                           interval:
-                            type: string
+                            type:
+                            - string
+                            - 'null'
                           interval_count:
-                            format: int32
-                            type: integer
+                            maximum: 2147483647
+                            minimum: 0
+                            type:
+                            - integer
+                            - 'null'
                           is_upsell:
                             default: false
                             type: boolean
@@ -15184,8 +15207,6 @@ webhooks:
                             type: string
                         required:
                         - id
-                        - interval
-                        - interval_count
                         - price_excl_tax
                         - price_incl_tax
                         - product_id

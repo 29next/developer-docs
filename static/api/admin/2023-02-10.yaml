@@ -946,20 +946,22 @@ components:
     CreateOrderFulfillmentEvent:
       properties:
         city:
-          type: string
+          type:
+          - string
+          - 'null'
         country:
           title: ISO 3166-1 alpha-2
           type:
           - string
           - 'null'
-        created_at:
-          format: date-time
-          type: string
         estimated_delivery_at:
           format: date-time
           type:
           - string
           - 'null'
+        happened_at:
+          format: date-time
+          type: string
         latitude:
           format: double
           maximum: 90
@@ -969,6 +971,11 @@ components:
           - 'null'
         line1:
           title: First line of address
+          type:
+          - string
+          - 'null'
+        line2:
+          title: Second line of address
           type:
           - string
           - 'null'
@@ -1989,6 +1996,7 @@ components:
           - 'null'
         created_at:
           format: date-time
+          readOnly: true
           type: string
         estimated_delivery_at:
           format: date-time
@@ -1997,6 +2005,9 @@ components:
           - 'null'
         fulfillment:
           type: integer
+        happened_at:
+          format: date-time
+          type: string
         id:
           readOnly: true
           type: integer
@@ -2009,6 +2020,11 @@ components:
           - 'null'
         line1:
           title: First line of address
+          type:
+          - string
+          - 'null'
+        line2:
+          title: Second line of address
           type:
           - string
           - 'null'
@@ -2083,6 +2099,7 @@ components:
           type: string
       required:
       - city
+      - created_at
       - fulfillment
       - id
       - order
@@ -2629,9 +2646,7 @@ components:
         option:
           readOnly: true
           type: string
-        value:
-          maxLength: 255
-          type: string
+        value: {}
       required:
       - option
       - value
@@ -15108,9 +15123,7 @@ webhooks:
                               properties:
                                 option:
                                   type: string
-                                value:
-                                  maxLength: 255
-                                  type: string
+                                value: {}
                               required:
                               - option
                               - value
