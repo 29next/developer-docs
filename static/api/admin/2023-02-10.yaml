@@ -229,25 +229,6 @@ components:
           maxLength: 255
           title: State/Province
           type: string
-        title:
-          description: '* `Mr` - Mr
-
-            * `Miss` - Miss
-
-            * `Mrs` - Mrs
-
-            * `Ms` - Ms
-
-            * `Dr` - Dr'
-          enum:
-          - Mr
-          - Miss
-          - Mrs
-          - Ms
-          - Dr
-          - ''
-          type: string
-          x-spec-enum-id: 3b7599a39c200f21
       required:
       - country
       - first_name
@@ -1682,25 +1663,6 @@ components:
           maxLength: 255
           title: State/Province
           type: string
-        title:
-          description: '* `Mr` - Mr
-
-            * `Miss` - Miss
-
-            * `Mrs` - Mrs
-
-            * `Ms` - Ms
-
-            * `Dr` - Dr'
-          enum:
-          - Mr
-          - Miss
-          - Mrs
-          - Ms
-          - Dr
-          - ''
-          type: string
-          x-spec-enum-id: 3b7599a39c200f21
       required:
       - country
       - id
@@ -2569,25 +2531,6 @@ components:
           maxLength: 255
           title: State/Province
           type: string
-        title:
-          description: '* `Mr` - Mr
-
-            * `Miss` - Miss
-
-            * `Mrs` - Mrs
-
-            * `Ms` - Ms
-
-            * `Dr` - Dr'
-          enum:
-          - Mr
-          - Miss
-          - Mrs
-          - Ms
-          - Dr
-          - ''
-          type: string
-          x-spec-enum-id: 3b7599a39c200f21
       required:
       - country
       - first_name
@@ -6114,25 +6057,6 @@ components:
           maxLength: 255
           title: State/Province
           type: string
-        title:
-          description: '* `Mr` - Mr
-
-            * `Miss` - Miss
-
-            * `Mrs` - Mrs
-
-            * `Ms` - Ms
-
-            * `Dr` - Dr'
-          enum:
-          - Mr
-          - Miss
-          - Mrs
-          - Ms
-          - Dr
-          - ''
-          type: string
-          x-spec-enum-id: 3b7599a39c200f21
       required:
       - country
       - first_name
@@ -8045,25 +7969,6 @@ components:
           maxLength: 255
           title: State/Province
           type: string
-        title:
-          description: '* `Mr` - Mr
-
-            * `Miss` - Miss
-
-            * `Mrs` - Mrs
-
-            * `Ms` - Ms
-
-            * `Dr` - Dr'
-          enum:
-          - Mr
-          - Miss
-          - Mrs
-          - Ms
-          - Dr
-          - ''
-          type: string
-          x-spec-enum-id: 3b7599a39c200f21
       required:
       - country
       - id
@@ -10317,11 +10222,37 @@ paths:
       tags:
       - fulfillment
   /locations/{id}/:
+    delete:
+      operationId: locationsDestroy
+      parameters:
+      - description: A unique integer value identifying this partner.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+      - oauth2:
+        - fulfillment_service:write
+        - locations:write
+      tags:
+      - fulfillment
     get:
       description: Retrieve an existing fulfillment location.
       operationId: locationsRetrieve
       parameters:
-      - description: A unique integer value identifying this Fulfillment partner.
+      - description: A unique integer value identifying this partner.
         in: path
         name: id
         required: true
@@ -10352,7 +10283,7 @@ paths:
       description: Update an existing fulfillment location.
       operationId: locationsUpdate
       parameters:
-      - description: A unique integer value identifying this Fulfillment partner.
+      - description: A unique integer value identifying this partner.
         in: path
         name: id
         required: true
@@ -15510,25 +15441,6 @@ webhooks:
                             maxLength: 255
                             title: State/Province
                             type: string
-                          title:
-                            description: '* `Mr` - Mr
-
-                              * `Miss` - Miss
-
-                              * `Mrs` - Mrs
-
-                              * `Ms` - Ms
-
-                              * `Dr` - Dr'
-                            enum:
-                            - Mr
-                            - Miss
-                            - Mrs
-                            - Ms
-                            - Dr
-                            - ''
-                            type: string
-                            x-spec-enum-id: 3b7599a39c200f21
                         required:
                         - country
                         - id
@@ -15743,25 +15655,6 @@ webhooks:
                             maxLength: 255
                             title: State/Province
                             type: string
-                          title:
-                            description: '* `Mr` - Mr
-
-                              * `Miss` - Miss
-
-                              * `Mrs` - Mrs
-
-                              * `Ms` - Ms
-
-                              * `Dr` - Dr'
-                            enum:
-                            - Mr
-                            - Miss
-                            - Mrs
-                            - Ms
-                            - Dr
-                            - ''
-                            type: string
-                            x-spec-enum-id: 3b7599a39c200f21
                         required:
                         - country
                         - id
@@ -16376,25 +16269,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -17099,25 +16973,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -17615,25 +17470,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -18338,25 +18174,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -20115,25 +19932,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -20384,25 +20182,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -20673,25 +20452,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
@@ -20942,25 +20702,6 @@ webhooks:
                           maxLength: 255
                           title: State/Province
                           type: string
-                        title:
-                          description: '* `Mr` - Mr
-
-                            * `Miss` - Miss
-
-                            * `Mrs` - Mrs
-
-                            * `Ms` - Ms
-
-                            * `Dr` - Dr'
-                          enum:
-                          - Mr
-                          - Miss
-                          - Mrs
-                          - Ms
-                          - Dr
-                          - ''
-                          type: string
-                          x-spec-enum-id: 3b7599a39c200f21
                       required:
                       - country
                       - first_name
