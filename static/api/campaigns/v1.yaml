@@ -720,6 +720,12 @@ components:
         card_token:
           nullable: true
           type: string
+        payment_gateway:
+          nullable: true
+          type: integer
+        payment_gateway_group:
+          nullable: true
+          type: integer
         payment_method:
           $ref: '#/components/schemas/PaymentMethodEnum'
       required:
