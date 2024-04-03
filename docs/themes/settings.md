@@ -167,6 +167,30 @@ Schema input types map to input fields that will be rendered in the theme settin
     "default": ""
 }
 ```
+### product
+
+```json
+{
+    "name": "hero_product",
+    "label": "Hero Product",
+    "type": "product",
+    "help_text": "Hero product on homepage banner."
+}
+
+```
+
+### products
+
+```json
+{
+    "name": "featured_products",
+    "label": "Featured Products",
+    "type": "products",
+    "help_text": "Featured products for homepage."
+}
+```
+
+
 
 ### radio
 
