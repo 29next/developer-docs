@@ -45,7 +45,7 @@ You can optionally provide a `paypal_account` when creating the order to use a P
 :::
 
 
-### Redirect Customer to Payment Complete URL
+### Redirect Customer to Paypal
 The response when creating the order will provide a `payment_complete_url`. Your application should redirect the customer to this URL for completing the payment on PayPal.
 
 ```json title="Response with Payment Complete URL"
@@ -63,3 +63,13 @@ import RedirectPaymentStep3 from '@site/_snippets/_redirect-payment-flows-step-3
 <RedirectPaymentStep3 />
 
 ```
+
+### Upsells
+
+Paypal supports one-click upsells through the [ordersAddLineItemsCreate](/docs/api/admin/reference/#/operations/ordersAddLineItemsCreate) API, enabling additional items to be added to the order with a payment transaction.
+
+:::info
+To process upsells, the Paypal account must have [Reference Transactions](https://developer.paypal.com/api/nvp-soap/do-reference-transaction-soap/) enabled and configured on the store.
+:::
+
+If the store Paypal account has reference transactions enabled, the [ordersCreate](/docs/api/admin/reference/#/operations/ordersCreate) API response will include `supports_post_purchase_upsells: true`, signaling you can process one-click upsell transactions.
