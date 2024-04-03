@@ -105,31 +105,7 @@ import TabItem from '@theme/TabItem';
 
 Schema input types map to input fields that will be rendered in the theme settings form in the dashboard.
 
-### text
 
-```json
-{
-    "type": "text",
-    "name": "store_name",
-    "label": "Store Name",
-    "help_text": "Public name for your store.",
-    "max_length": 250,
-    "required": true,
-    "default": "My New Store Name"
-}
-```
-
-### textarea
-
-```json
-{
-    "type": "textarea",
-    "name": "description",
-    "label": "Description",
-    "help_text": "Example input textarea",
-    "default": "Test"
-}
-```
 
 ### checkbox
 
@@ -142,6 +118,80 @@ Schema input types map to input fields that will be rendered in the theme settin
     "default": true
 }
 ```
+
+### color
+```json
+{
+    "type": "color",
+    "name": "btn_primary_color",
+    "label": "Primary Button Color",
+    "help_text": "Primary color for buttons.",
+    "default": ""
+}
+```
+
+### email
+
+```json
+{
+    "type": "email",
+    "name": "contact_email_address",
+    "label": "Public contact email address.",
+    "help_text": "Email to show in site footer.",
+    "default": ""
+}
+```
+
+### file
+
+```json
+{
+    "type": "file",
+    "name": "logo",
+    "label": "Store Logo",
+    "help_text": "Primary logo used throughout the site.",
+    "default": "uploads/logo.png"
+}
+```
+
+### multi-select
+```json
+{
+    "type": "select",
+    "multi-select": true,
+    "name": "accepted_payment_methods",
+    "label": "Accepted Payment Methods",
+    "help_text": "Control which payment methods are shown.",
+    "options": [
+        {
+            "name": "Visa",
+            "value": "visa"
+        },
+        {
+            "name": "Master Card",
+            "value": "mastercard"
+        },
+        {
+            "name": "American Express",
+            "value": "amex"
+        },
+        {
+            "name": "Paypal",
+            "value": "paypal"
+        },
+        {
+            "name": "Klarna",
+            "value": "klarna"
+        }
+    ],
+    "default": [
+        "visa",
+        "mastercard"
+    ]
+}
+```
+
+
 ### number
 ```json
 {
@@ -156,17 +206,6 @@ Schema input types map to input fields that will be rendered in the theme settin
 ```
 
 
-### email
-
-```json
-{
-    "type": "email",
-    "name": "contact_email_address",
-    "label": "Public contact email address.",
-    "help_text": "Email to show in site footer.",
-    "default": ""
-}
-```
 ### product
 
 ```json
@@ -239,53 +278,35 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
-### multi-select
+### text
+
 ```json
 {
-    "type": "select",
-    "multi-select": true,
-    "name": "accepted_payment_methods",
-    "label": "Accepted Payment Methods",
-    "help_text": "Control which payment methods are shown.",
-    "options": [
-        {
-            "name": "Visa",
-            "value": "visa"
-        },
-        {
-            "name": "Master Card",
-            "value": "mastercard"
-        },
-        {
-            "name": "American Express",
-            "value": "amex"
-        },
-        {
-            "name": "Paypal",
-            "value": "paypal"
-        },
-        {
-            "name": "Klarna",
-            "value": "klarna"
-        }
-    ],
-    "default": [
-        "visa",
-        "mastercard"
-    ]
+    "type": "text",
+    "name": "store_name",
+    "label": "Store Name",
+    "help_text": "Public name for your store.",
+    "max_length": 250,
+    "required": true,
+    "default": "My New Store Name"
 }
 ```
 
-### file
+### textarea
+
 ```json
 {
-    "type": "file",
-    "name": "logo",
-    "label": "Store Logo",
-    "help_text": "Primary logo used throughout the site.",
-    "default": "uploads/logo.png"
+    "type": "textarea",
+    "name": "description",
+    "label": "Description",
+    "help_text": "Example input textarea",
+    "default": "Test"
 }
 ```
+
+
+
+
 
 ### url
 ```json
@@ -294,17 +315,6 @@ Schema input types map to input fields that will be rendered in the theme settin
     "name": "social_link",
     "label": "Social Media Link",
     "help_text": "Link to your social media page.",
-    "default": ""
-}
-```
-
-### color
-```json
-{
-    "type": "color",
-    "name": "btn_primary_color",
-    "label": "Primary Button Color",
-    "help_text": "Primary color for buttons.",
     "default": ""
 }
 ```
