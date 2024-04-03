@@ -29,7 +29,7 @@ Ensure your template paths match with expected template paths for built-in store
 
 | URL Name | URL Path | Template Path |
 | --- | --- | --- |
-| basket:summary | /basket/ | templates/cart.html |
+| cart:summary | /cart/ | templates/cart.html |
 
 ### Catalogue
 
@@ -82,4 +82,3 @@ Ensure your template paths match with expected template paths for built-in store
 | N/A | /:any-403-error | templates/403.html |
 | N/A | /:any-404-error | templates/404.html |
 | N/A | /:any-500-error | templates/500.html |
-
