@@ -8,6 +8,7 @@ Objects are template variables you can use to dynamically populate templates in 
 
 Global objects are available across all templates and pages enabling theme developers to create dynamic custom pages powered by the store data.
 
+
 ### currencies
 
 Returns a list of active storefront currencies you can iterate over, see [currency](#currency).
@@ -388,6 +389,55 @@ Store branding properties accessed through the [store](#store) object to leverag
 | `primary_color` | String | Store branding primary color, returns a HEX code. |
 | `accent_color` | String | Store branding accent color, returns a HEX code.  |
 
+### cart
+
+Cart object that contains all of the information about the users currently active cart.
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `all_lines` | List | Returns a list of all cart line items. |
+| `num_items` | Integer | Returns the count of the items in the cart. |
+| `is_empty` | Boolean | Returns true/false if the cart is empty or not. |
+| `currency` | Object | Returns the currency of the cart as an object, see [currency](#currency). |
+| `vouchers` | List | Returns a list of vouchers attached to the cart, see [voucher](#voucher).  |
+| `is_tax_known` | Boolean | Returns true/false if the cart tax is known yet or not. |
+| `total_incl_tax` | String | Returns the cart total including tax.|
+| `total_excl_tax` | String | Returns the cart total excluding tax.|
+
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django
+<script>
+    dataLayer.push({ ecommerce: null });
+    dataLayer.push({
+        event: 'begin_checkout',
+        ecommerce: {
+            currency: '{{ cart.currency }}',
+            value: '{{ cart.total_incl_tax }}',
+            coupon: '{{ cart.vouchers.first.code }}',
+            items: [
+                {% for line in cart.all_lines %}
+                {
+                    index: {{ forloop.counter0 }},
+                    item_id: '{{ line.product.id|escapejs }}',
+                    item_name: '{{ line.product.get_title|escapejs }}',
+                    item_brand: '{{ store.name|escapejs }}',
+                    item_category:  '{{ line.product.categories.first.name|safe }}',
+                    price:  '{{ line.unit_price_incl_tax_incl_discount|unlocalize|escapejs }}',
+                    quantity: {{ line.quantity | escapejs }}
+                }{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            ]
+        }
+    });
+</script>
+```
+
+</div>
+</details>
 
 ### currency
 
