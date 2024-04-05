@@ -234,6 +234,7 @@ The current session active request context.
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `user` | Object | Current authenticated user, see [user](#user). |
+| `cart` | Object | Current cart for the current session, see [cart](#cart). |
 | `get_host` | String | Current host domain. |
 | `path` | String | Current url path. |
 | `COUNTRY_CODE` | String | Current active geo country code, see [geo](#geo). |
