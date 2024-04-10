@@ -6859,25 +6859,13 @@ components:
         status:
           description: '* `succeeded` - Succeeded
 
-            * `failed` - Failed
-
-            * `pending` - Pending
-
-            * `canceled` - Canceled
-
-            * `expired` - Expired
-
-            * `refunded` - Refunded'
+            * `failed` - Failed'
           enum:
           - succeeded
           - failed
-          - pending
-          - canceled
-          - expired
-          - refunded
           - ''
           type: string
-          x-spec-enum-id: cc1437e7b0b66998
+          x-spec-enum-id: a6661c405ff6d2ee
         subscriptions:
           readOnly: true
         type:
@@ -6954,25 +6942,13 @@ components:
         status:
           description: '* `succeeded` - Succeeded
 
-            * `failed` - Failed
-
-            * `pending` - Pending
-
-            * `canceled` - Canceled
-
-            * `expired` - Expired
-
-            * `refunded` - Refunded'
+            * `failed` - Failed'
           enum:
           - succeeded
           - failed
-          - pending
-          - canceled
-          - expired
-          - refunded
           - ''
           type: string
-          x-spec-enum-id: cc1437e7b0b66998
+          x-spec-enum-id: a6661c405ff6d2ee
         subscriptions:
           readOnly: true
         type:
@@ -7049,25 +7025,13 @@ components:
         status:
           description: '* `succeeded` - Succeeded
 
-            * `failed` - Failed
-
-            * `pending` - Pending
-
-            * `canceled` - Canceled
-
-            * `expired` - Expired
-
-            * `refunded` - Refunded'
+            * `failed` - Failed'
           enum:
           - succeeded
           - failed
-          - pending
-          - canceled
-          - expired
-          - refunded
           - ''
           type: string
-          x-spec-enum-id: cc1437e7b0b66998
+          x-spec-enum-id: a6661c405ff6d2ee
         type:
           type: string
       required:
@@ -10639,6 +10603,38 @@ paths:
             x-spec-enum-id: f261fc3cfdafb745
           type: array
         style: form
+      - description: 'Delivery Status
+
+
+          * `tracking_added` - Tracking Added
+
+          * `in_transit` - In Transit
+
+          * `out_for_delivery` - Out For Delivery
+
+          * `attempted_delivery` - Attempted Delivery
+
+          * `failed_delivery` - Failed Delivery
+
+          * `delivered` - Delivered
+
+          * `delayed` - Delayed'
+        explode: true
+        in: query
+        name: delivery_status
+        schema:
+          items:
+            enum:
+            - attempted_delivery
+            - delayed
+            - delivered
+            - failed_delivery
+            - in_transit
+            - out_for_delivery
+            - tracking_added
+            type: string
+          type: array
+        style: form
       - description: 'Payment Status
 
 
@@ -13790,27 +13786,15 @@ paths:
 
           * `succeeded` - Succeeded
 
-          * `failed` - Failed
-
-          * `pending` - Pending
-
-          * `canceled` - Canceled
-
-          * `expired` - Expired
-
-          * `refunded` - Refunded'
+          * `failed` - Failed'
         in: query
         name: status
         schema:
           enum:
-          - canceled
-          - expired
           - failed
-          - pending
-          - refunded
           - succeeded
           type: string
-          x-spec-enum-id: cc1437e7b0b66998
+          x-spec-enum-id: a6661c405ff6d2ee
       - in: query
         name: is_3ds
         schema:
@@ -16834,25 +16818,13 @@ webhooks:
                                 status:
                                   description: '* `succeeded` - Succeeded
 
-                                    * `failed` - Failed
-
-                                    * `pending` - Pending
-
-                                    * `canceled` - Canceled
-
-                                    * `expired` - Expired
-
-                                    * `refunded` - Refunded'
+                                    * `failed` - Failed'
                                   enum:
                                   - succeeded
                                   - failed
-                                  - pending
-                                  - canceled
-                                  - expired
-                                  - refunded
                                   - ''
                                   type: string
-                                  x-spec-enum-id: cc1437e7b0b66998
+                                  x-spec-enum-id: a6661c405ff6d2ee
                                 type:
                                   type: string
                               required:
@@ -17144,25 +17116,13 @@ webhooks:
                           status:
                             description: '* `succeeded` - Succeeded
 
-                              * `failed` - Failed
-
-                              * `pending` - Pending
-
-                              * `canceled` - Canceled
-
-                              * `expired` - Expired
-
-                              * `refunded` - Refunded'
+                              * `failed` - Failed'
                             enum:
                             - succeeded
                             - failed
-                            - pending
-                            - canceled
-                            - expired
-                            - refunded
                             - ''
                             type: string
-                            x-spec-enum-id: cc1437e7b0b66998
+                            x-spec-enum-id: a6661c405ff6d2ee
                           type:
                             type: string
                         required:
@@ -18035,25 +17995,13 @@ webhooks:
                                 status:
                                   description: '* `succeeded` - Succeeded
 
-                                    * `failed` - Failed
-
-                                    * `pending` - Pending
-
-                                    * `canceled` - Canceled
-
-                                    * `expired` - Expired
-
-                                    * `refunded` - Refunded'
+                                    * `failed` - Failed'
                                   enum:
                                   - succeeded
                                   - failed
-                                  - pending
-                                  - canceled
-                                  - expired
-                                  - refunded
                                   - ''
                                   type: string
-                                  x-spec-enum-id: cc1437e7b0b66998
+                                  x-spec-enum-id: a6661c405ff6d2ee
                                 type:
                                   type: string
                               required:
@@ -18345,25 +18293,13 @@ webhooks:
                           status:
                             description: '* `succeeded` - Succeeded
 
-                              * `failed` - Failed
-
-                              * `pending` - Pending
-
-                              * `canceled` - Canceled
-
-                              * `expired` - Expired
-
-                              * `refunded` - Refunded'
+                              * `failed` - Failed'
                             enum:
                             - succeeded
                             - failed
-                            - pending
-                            - canceled
-                            - expired
-                            - refunded
                             - ''
                             type: string
-                            x-spec-enum-id: cc1437e7b0b66998
+                            x-spec-enum-id: a6661c405ff6d2ee
                           type:
                             type: string
                         required:
@@ -21457,25 +21393,13 @@ webhooks:
                     status:
                       description: '* `succeeded` - Succeeded
 
-                        * `failed` - Failed
-
-                        * `pending` - Pending
-
-                        * `canceled` - Canceled
-
-                        * `expired` - Expired
-
-                        * `refunded` - Refunded'
+                        * `failed` - Failed'
                       enum:
                       - succeeded
                       - failed
-                      - pending
-                      - canceled
-                      - expired
-                      - refunded
                       - ''
                       type: string
-                      x-spec-enum-id: cc1437e7b0b66998
+                      x-spec-enum-id: a6661c405ff6d2ee
                     subscriptions: {}
                     type:
                       type: string
