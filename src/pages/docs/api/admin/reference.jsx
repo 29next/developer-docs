@@ -62,7 +62,7 @@ export default function Home() {
                         defaultValue={currentVersion}
                         values={[
                             { name: '2023-02-10 (default)', docId: '2023-02-10' },
-                            { name: '2024-04-01 (release candidate)', docId: '2024-04-01' },
+                            { name: '2024-04-01 (stable)', docId: '2024-04-01' },
                             { name: 'Unstable', docId: 'unstable' }
                         ]}
                         onValueChange={(version) => {

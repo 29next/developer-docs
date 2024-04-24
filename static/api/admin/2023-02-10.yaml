@@ -10680,8 +10680,6 @@ paths:
       - description: 'Subscription Lifecycle
 
 
-          * `None` - --------
-
           * `recurring` - Recurring
 
           * `non-recurring` - Non-Recurring'
@@ -10689,12 +10687,9 @@ paths:
         name: subscription_lifecycle
         schema:
           enum:
-          - null
           - non-recurring
           - recurring
-          title: Lifecycle
           type: string
-          x-spec-enum-id: 1f42528346cd911e
       - description: YYYY-MM-DD
         in: query
         name: date_placed_from

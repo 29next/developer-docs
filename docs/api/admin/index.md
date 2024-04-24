@@ -53,7 +53,7 @@ API versioning allows 29 Next to continuously evolve the platform while maintain
 | Version | Status | Docs |
 | ---- | ---- | ---- |
 | `2023-02-10` | Stable | [View Reference](/docs/api/admin/reference/?v=2023-02-10) |
-| `2024-04-01` | Release Candidate | [View Reference](/docs/api/admin/reference/?v=2024-04-01) |
+| `2024-04-01` | Stable (recommended) | [View Reference](/docs/api/admin/reference/?v=2024-04-01) |
 | `unstable` | Unstable | [View Reference](/docs/api/admin/reference/?v=unstable) |
 
 
@@ -80,4 +80,3 @@ Once you reach API rate limits you'll then receive a 429 Too Many Requests respo
 
 
 We recommend API users to appropriately limit calls, cache results, and retry requests using strategies that are considered industry best practices,to avoid hitting getting rate limit errors
-
