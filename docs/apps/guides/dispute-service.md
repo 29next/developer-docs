@@ -109,7 +109,7 @@ POST https://{store}.29next.store/api/admin/disputes/
 To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
 
 ```json title="Match dispute"
-POST https://{store}.29next.store/api/admin/disputes/{id}/
+PUT https://{store}.29next.store/api/admin/disputes/{id}/
 {
   "transaction": 7388
 }
