@@ -9536,7 +9536,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -9623,7 +9622,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -9711,7 +9709,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -9798,7 +9795,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment

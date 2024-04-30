@@ -1185,11 +1185,6 @@ components:
           items:
             type: integer
           type: array
-        children:
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
-          type: array
         date_created:
           format: date-time
           readOnly: true
@@ -1292,8 +1287,8 @@ components:
         sku:
           type: string
         slug:
-          maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
           type: string
         stockrecords:
           items:
@@ -1309,6 +1304,7 @@ components:
           - standalone
           - parent
           - child
+          readOnly: true
           title: Product Structure
           type: string
           x-spec-enum-id: a1df31d9b9dfd9ac
@@ -1340,15 +1336,22 @@ components:
           items:
             $ref: '#/components/schemas/ProductVariantAttribute'
           type: array
+        variants:
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+          type: array
       required:
-      - children
       - date_created
       - date_updated
       - id
       - images
       - rating
+      - slug
+      - structure
       - title
       - url
+      - variants
       type: object
     CreateProductVariant:
       properties:
@@ -4641,11 +4644,6 @@ components:
           items:
             type: integer
           type: array
-        children:
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
-          type: array
         date_created:
           format: date-time
           readOnly: true
@@ -4748,8 +4746,8 @@ components:
         sku:
           type: string
         slug:
-          maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
           type: string
         stockrecords:
           items:
@@ -4766,6 +4764,7 @@ components:
           - standalone
           - parent
           - child
+          readOnly: true
           title: Product Structure
           type: string
           x-spec-enum-id: a1df31d9b9dfd9ac
@@ -4796,6 +4795,11 @@ components:
         variant_attributes:
           items:
             $ref: '#/components/schemas/ProductVariantAttribute'
+          type: array
+        variants:
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
           type: array
       type: object
     PatchedUpdateProductVariant:
@@ -5382,6 +5386,7 @@ components:
         slug:
           maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
           type: string
         stockrecords:
           items:
@@ -5397,6 +5402,7 @@ components:
           - standalone
           - parent
           - child
+          readOnly: true
           title: Product Structure
           type: string
           x-spec-enum-id: a1df31d9b9dfd9ac
@@ -5441,6 +5447,8 @@ components:
       - id
       - images
       - rating
+      - slug
+      - structure
       - title
       - url
       - variants
@@ -5594,6 +5602,7 @@ components:
         slug:
           maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
           type: string
         stockrecords:
           items:
@@ -5609,6 +5618,7 @@ components:
           - standalone
           - parent
           - child
+          readOnly: true
           title: Product Structure
           type: string
           x-spec-enum-id: a1df31d9b9dfd9ac
@@ -5646,6 +5656,8 @@ components:
       - id
       - images
       - rating
+      - slug
+      - structure
       - title
       - url
       - variants
@@ -7504,11 +7516,6 @@ components:
           items:
             type: integer
           type: array
-        children:
-          items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
-          type: array
         date_created:
           format: date-time
           readOnly: true
@@ -7611,8 +7618,8 @@ components:
         sku:
           type: string
         slug:
-          maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
           type: string
         stockrecords:
           items:
@@ -7629,6 +7636,7 @@ components:
           - standalone
           - parent
           - child
+          readOnly: true
           title: Product Structure
           type: string
           x-spec-enum-id: a1df31d9b9dfd9ac
@@ -7660,15 +7668,22 @@ components:
           items:
             $ref: '#/components/schemas/ProductVariantAttribute'
           type: array
+        variants:
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+          type: array
       required:
-      - children
       - date_created
       - date_updated
       - id
       - images
       - rating
+      - slug
       - stockrecords
+      - structure
       - url
+      - variants
       type: object
     UpdateProductVariant:
       properties:
@@ -9580,7 +9595,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -9667,7 +9681,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -9755,7 +9768,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -9842,7 +9854,6 @@ paths:
           description: ''
       security:
       - oauth2:
-        - fulfillment_service:write
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -19082,6 +19093,8 @@ webhooks:
                   - id
                   - images
                   - rating
+                  - slug
+                  - structure
                   - title
                   - url
                   - variants
@@ -19585,6 +19598,8 @@ webhooks:
                   - id
                   - images
                   - rating
+                  - slug
+                  - structure
                   - title
                   - url
                   - variants
