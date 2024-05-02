@@ -740,13 +740,17 @@ components:
 
         * `klarna` - Klarna
 
-        * `ideal` - Ideal
+        * `ideal` - iDEAL
 
         * `bancontact` - Bancontact
 
         * `giropay` - Giropay
 
-        * `google_pay` - Google Pay'
+        * `google_pay` - Google Pay
+
+        * `sofort` - Sofort
+
+        * `sepa_debit` - SEPA Direct Debit'
       enum:
       - apple_pay
       - card_token
@@ -756,6 +760,8 @@ components:
       - bancontact
       - giropay
       - google_pay
+      - sofort
+      - sepa_debit
       type: string
     ShippingOption:
       properties:

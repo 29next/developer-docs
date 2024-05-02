@@ -156,7 +156,21 @@ WEBHOOKS = [
         "object": "customer",
         "schema_ref": "#/components/schemas/User",
         "tag": "customers",
-        "description": "Triggers when a customer is created.",
+        "description": "Triggers when a customer is updated.",
+    },
+    {
+        "event": "gateway.created",
+        "object": "gateway",
+        "schema_ref": "#/components/schemas/PaymentGateway",
+        "tag": "payments",
+        "description": "Triggers when a new gateway is created.",
+    },
+    {
+        "event": "gateway.updated",
+        "object": "gateway",
+        "schema_ref": "#/components/schemas/PaymentGateway",
+        "tag": "payments",
+        "description": "Triggers when a gateway is updated.",
     },
     {
         "event": "dispute.created",

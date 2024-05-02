@@ -15561,7 +15561,7 @@ webhooks:
           be disabled.
   customer.updated:
     post:
-      description: Triggers when a customer is created.
+      description: Triggers when a customer is updated.
       requestBody:
         content:
           application/json:
@@ -16074,6 +16074,314 @@ webhooks:
                   description: Object data type.
                   examples:
                   - dispute
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - payments
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
+  gateway.created:
+    post:
+      description: Triggers when a new gateway is created.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - '2023-02-10'
+                  type:
+                  - string
+                data:
+                  properties:
+                    accepted_card_types:
+                      type: string
+                    accepted_currencies:
+                      type: string
+                    active:
+                      description: Gateway must be active to accept and process transactions.
+                      type: boolean
+                    auto_capture_on_fulfillment:
+                      description: When enabled, payments will be automatically captured
+                        when orders are fulfilled.
+                      type: boolean
+                    delayed_capture_days:
+                      description: Payments will be automatically captured up to 7
+                        days after the authorization.
+                      maximum: 7
+                      minimum: 1
+                      type:
+                      - integer
+                      - 'null'
+                    downgrade_3ds_retry:
+                      description: Non-3DS enrolled cards will be automatically retried
+                        as a standard transaction.
+                      title: Retry Non-3DS Enrolled Cards as Standard Transaction
+                      type: boolean
+                    enable_3ds2:
+                      description: Transactions are attempted with 3DS authentication.
+                      title: Enable 3D Secure Transactions
+                      type: boolean
+                    gateway_groups:
+                      properties:
+                        accepted_card_types:
+                          items:
+                            type: string
+                          type: array
+                        accepted_currencies:
+                          items:
+                            type: string
+                          type: array
+                        active:
+                          type: boolean
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        weight:
+                          type: integer
+                      required:
+                      - accepted_card_types
+                      - accepted_currencies
+                      - active
+                      - id
+                      - name
+                      - weight
+                      type: object
+                    gateway_type:
+                      maxLength: 100
+                      type: string
+                    id:
+                      type: integer
+                    merchant_profile:
+                      type:
+                      - integer
+                      - 'null'
+                    name:
+                      description: Used for reporting and transaction references.
+                      maxLength: 100
+                      type: string
+                    optimized_3ds:
+                      description: Transactions will be optimized for lowest friction.
+                      title: Enable Optimized 3D Secure Transactions
+                      type: boolean
+                    payment_flow:
+                      description: 'Transaction type initiated for new orders.
+
+
+                        * `charge` - Charge
+
+                        * `auth-capture` - Auth / Capture'
+                      enum:
+                      - charge
+                      - auth-capture
+                      type: string
+                      x-spec-enum-id: 0e887a41ea162b2f
+                  required:
+                  - accepted_card_types
+                  - accepted_currencies
+                  - gateway_groups
+                  - gateway_type
+                  - id
+                  - name
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - gateway
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - payments
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
+  gateway.updated:
+    post:
+      description: Triggers when a gateway is updated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - '2023-02-10'
+                  type:
+                  - string
+                data:
+                  properties:
+                    accepted_card_types:
+                      type: string
+                    accepted_currencies:
+                      type: string
+                    active:
+                      description: Gateway must be active to accept and process transactions.
+                      type: boolean
+                    auto_capture_on_fulfillment:
+                      description: When enabled, payments will be automatically captured
+                        when orders are fulfilled.
+                      type: boolean
+                    delayed_capture_days:
+                      description: Payments will be automatically captured up to 7
+                        days after the authorization.
+                      maximum: 7
+                      minimum: 1
+                      type:
+                      - integer
+                      - 'null'
+                    downgrade_3ds_retry:
+                      description: Non-3DS enrolled cards will be automatically retried
+                        as a standard transaction.
+                      title: Retry Non-3DS Enrolled Cards as Standard Transaction
+                      type: boolean
+                    enable_3ds2:
+                      description: Transactions are attempted with 3DS authentication.
+                      title: Enable 3D Secure Transactions
+                      type: boolean
+                    gateway_groups:
+                      properties:
+                        accepted_card_types:
+                          items:
+                            type: string
+                          type: array
+                        accepted_currencies:
+                          items:
+                            type: string
+                          type: array
+                        active:
+                          type: boolean
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        weight:
+                          type: integer
+                      required:
+                      - accepted_card_types
+                      - accepted_currencies
+                      - active
+                      - id
+                      - name
+                      - weight
+                      type: object
+                    gateway_type:
+                      maxLength: 100
+                      type: string
+                    id:
+                      type: integer
+                    merchant_profile:
+                      type:
+                      - integer
+                      - 'null'
+                    name:
+                      description: Used for reporting and transaction references.
+                      maxLength: 100
+                      type: string
+                    optimized_3ds:
+                      description: Transactions will be optimized for lowest friction.
+                      title: Enable Optimized 3D Secure Transactions
+                      type: boolean
+                    payment_flow:
+                      description: 'Transaction type initiated for new orders.
+
+
+                        * `charge` - Charge
+
+                        * `auth-capture` - Auth / Capture'
+                      enum:
+                      - charge
+                      - auth-capture
+                      type: string
+                      x-spec-enum-id: 0e887a41ea162b2f
+                  required:
+                  - accepted_card_types
+                  - accepted_currencies
+                  - gateway_groups
+                  - gateway_type
+                  - id
+                  - name
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - gateway
                   type:
                   - string
                 webhook:
