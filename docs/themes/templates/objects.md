@@ -68,6 +68,61 @@ Returns a list of active storefront languages you can iterate over, see [languag
   </div>
 </details>
 
+### menus
+
+
+Allows you to access a menu's items by it's code to iterate over to generate a menu from the backend, see [menu items](#items-menu).
+
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django title="Example Dynamic Menu"
+{% for item in menus.header_menu.items %}
+    {% if item.level > 0 %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if item.child_active %}active{% endif %}" href="{{ item.url }}">{{ item.name|title }}</a>
+            <ul class="dropdown-menu">
+                {% for child_item in item.items %}
+                    {% if child_item.level > 0 %}
+                        <li>
+                            <a class="dropdown-item dropdown-toggle {% if child_item.child_active %}active{% endif %}" href="{{ child_item.url }}">{{ child_item.name|title }}</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                {% for grandchild_item in child_item.items %}
+                                <li>
+                                    <a class="dropdown-item {% if grandchild_item.current %}active{% endif %}" href="{{ grandchild_item.url }}">
+                                    {{ grandchild_item.name|title }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="dropdown-item {% if child_item.current %}active{% endif %}" href="{{ child_item.url }}">
+                                {{ child_item.name|title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link {% if item.current %}active{% endif %}" href="{{ item.url }}">{{ item.name|title }}</a>
+        </li>
+    {% endif %}
+{% endfor %}
+```
+
+:::tip
+Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 nested menu item levels, see child and grandchild above.
+:::
+
+  </div>
+</details>
+
 
 ### products
 Returns a list of products you can iterate over, see [product](#product).
@@ -498,7 +553,69 @@ Product images, see example usage below.
 | `url` | String | The full CDN link to render the image. |
 
 
+### items (menu)
 
+A menu `item` has properties to support creating dynamic menus configured through the dashboard menu editor.
+
+<details>
+  <summary>Example Usage</summary>
+  <div>
+
+```django title="Example Dynamic Menu"
+{% for item in menus.header_menu.items %}
+    {% if item.level > 0 %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if item.child_active %}active{% endif %}" href="{{ item.url }}">{{ item.name|title }}</a>
+            <ul class="dropdown-menu">
+                {% for child_item in item.items %}
+                    {% if child_item.level > 0 %}
+                        <li>
+                            <a class="dropdown-item dropdown-toggle {% if child_item.child_active %}active{% endif %}" href="{{ child_item.url }}">{{ child_item.name|title }}</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                {% for grandchild_item in child_item.items %}
+                                <li>
+                                    <a class="dropdown-item {% if grandchild_item.current %}active{% endif %}" href="{{ grandchild_item.url }}">
+                                    {{ grandchild_item.name|title }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="dropdown-item {% if child_item.current %}active{% endif %}" href="{{ child_item.url }}">
+                                {{ child_item.name|title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link {% if item.current %}active{% endif %}" href="{{ item.url }}">{{ item.name|title }}</a>
+        </li>
+    {% endif %}
+{% endfor %}
+```
+
+:::tip
+Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 nested menu item levels, see child and grandchild above.
+:::
+
+  </div>
+</details>
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `active` | Boolean | Indicates whether the link is currently active. |
+| `child_active` | Boolean | Indicates whether any child link of the current link is active. |
+| `child_current` | Boolean | Indicates whether the URL path matches the URL of a child link of the current link. |
+| `current` | Boolean | Indicates whether the current URL path matches the URL of the link. |
+| `items` | List |  Contains the child items belonging to the current menu item.  |
+| `level` | Integer | Specifies the hierarchical level of the current menu item. |
+| `name` | String | Represents the display name of the current menu item. |
+| `url` | String | Denotes the URL path for the menu item's href link. |
 
 ### order
 
