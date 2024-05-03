@@ -154,6 +154,17 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
+### menu
+```json
+{
+    "name": "header_menu",
+    "label": "Header Menu",
+    "type": "menu",
+    "required": true,
+    "help_text": "Header Menu"
+}
+```
+
 ### multi-select
 ```json
 {
