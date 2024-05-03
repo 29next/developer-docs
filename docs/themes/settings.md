@@ -229,7 +229,27 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
+### product_category
 
+```json
+{
+    "name": "featured_products",
+    "label": "Featured Product Category",
+    "type": "product_category",
+    "help_text": "Featured product category for homepage"
+}
+```
+
+### product_categories
+
+```json
+{
+    "name": "top_product_categories",
+    "label": "Top Product Categories",
+    "type": "product_categories",
+    "help_text": "Featured product categories for homepage"
+}
+```
 
 ### radio
 
