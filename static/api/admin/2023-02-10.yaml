@@ -7070,10 +7070,6 @@ components:
           type: boolean
         optimized_3ds:
           type: boolean
-        partner_transaction_id:
-          type:
-          - string
-          - 'null'
         sca_flow:
           type: string
       required:
@@ -17085,10 +17081,6 @@ webhooks:
                                       type: boolean
                                     optimized_3ds:
                                       type: boolean
-                                    partner_transaction_id:
-                                      type:
-                                      - string
-                                      - 'null'
                                     sca_flow:
                                       type: string
                                   required:
@@ -17383,10 +17375,6 @@ webhooks:
                                 type: boolean
                               optimized_3ds:
                                 type: boolean
-                              partner_transaction_id:
-                                type:
-                                - string
-                                - 'null'
                               sca_flow:
                                 type: string
                             required:
@@ -18262,10 +18250,6 @@ webhooks:
                                       type: boolean
                                     optimized_3ds:
                                       type: boolean
-                                    partner_transaction_id:
-                                      type:
-                                      - string
-                                      - 'null'
                                     sca_flow:
                                       type: string
                                   required:
@@ -18560,10 +18544,6 @@ webhooks:
                                 type: boolean
                               optimized_3ds:
                                 type: boolean
-                              partner_transaction_id:
-                                type:
-                                - string
-                                - 'null'
                               sca_flow:
                                 type: string
                             required:
@@ -21660,10 +21640,6 @@ webhooks:
                           type: boolean
                         optimized_3ds:
                           type: boolean
-                        partner_transaction_id:
-                          type:
-                          - string
-                          - 'null'
                         sca_flow:
                           type: string
                       required:
