@@ -48,6 +48,8 @@ Returning a `410` response code indicates the target resource is no longer avail
 | `customer.updated`        | Triggers when an existing customer is updated. | [View Example](/docs/api/admin/reference/#/webhooks/customer.updated/post) |
 | `dispute.created`         | Triggers when a new dispute is created. | [View Example](/docs/api/admin/reference/#/webhooks/dispute.created/post) |
 | `dispute.updated`         | Triggers when a dispute is updated. | [View Example](/docs/api/admin/reference/#/webhooks/dispute.updated/post) |
+| `gateway.created`         | Triggers when a new gateway is created. | [View Example](/docs/api/admin/reference/#/webhooks/gateway.created/post) |
+| `gateway.updated`         | Triggers when a gateway is updated. | [View Example](/docs/api/admin/reference/#/webhooks/gateway.updated/post) |
 | `order.created`           | Triggers when an order is created. | [View Example](/docs/api/admin/reference/#/webhooks/order.created/post) |
 | `order.updated`           | Triggers when an existing order is updated. | [View Example](/docs/api/admin/reference/#/webhooks/order.updated/post) |
 | `product.created`         | Triggers when a product is created. | [View Example](/docs/api/admin/reference/#/webhooks/product.created/post) |
