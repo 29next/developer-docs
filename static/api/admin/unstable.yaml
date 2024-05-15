@@ -2542,9 +2542,10 @@ components:
     GatewayGroup:
       properties:
         gateways:
-          allOf:
-          - $ref: '#/components/schemas/PaymentGroupGateway'
+          items:
+            $ref: '#/components/schemas/PaymentGroupGateway'
           readOnly: true
+          type: array
         id:
           readOnly: true
           type: integer
@@ -5201,9 +5202,10 @@ components:
           title: Enable 3D Secure Transactions
           type: boolean
         gateway_groups:
-          allOf:
-          - $ref: '#/components/schemas/PaymentGatewayGroup'
+          items:
+            $ref: '#/components/schemas/PaymentGatewayGroup'
           readOnly: true
+          type: array
         gateway_type:
           maxLength: 100
           type: string
@@ -16119,18 +16121,20 @@ webhooks:
                       title: Enable 3D Secure Transactions
                       type: boolean
                     gateway_groups:
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        weight:
-                          type: integer
-                      required:
-                      - id
-                      - name
-                      - weight
-                      type: object
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          weight:
+                            type: integer
+                        required:
+                        - id
+                        - name
+                        - weight
+                        type: object
+                      type: array
                     gateway_type:
                       maxLength: 100
                       type: string
@@ -16260,18 +16264,20 @@ webhooks:
                       title: Enable 3D Secure Transactions
                       type: boolean
                     gateway_groups:
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        weight:
-                          type: integer
-                      required:
-                      - id
-                      - name
-                      - weight
-                      type: object
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          weight:
+                            type: integer
+                        required:
+                        - id
+                        - name
+                        - weight
+                        type: object
+                      type: array
                     gateway_type:
                       maxLength: 100
                       type: string
