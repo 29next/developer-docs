@@ -5110,7 +5110,7 @@ components:
           type: boolean
         gateway_groups:
           allOf:
-          - $ref: '#/components/schemas/PaymentGroupGateway'
+          - $ref: '#/components/schemas/PaymentGatewayGroup'
           readOnly: true
         gateway_type:
           maxLength: 100
@@ -5149,6 +5149,19 @@ components:
       - gateway_type
       - id
       - name
+      type: object
+    PaymentGatewayGroup:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        weight:
+          type: integer
+      required:
+      - id
+      - name
+      - weight
       type: object
     PaymentGroupGateway:
       properties:
@@ -16153,16 +16166,6 @@ webhooks:
                       type: boolean
                     gateway_groups:
                       properties:
-                        accepted_card_types:
-                          items:
-                            type: string
-                          type: array
-                        accepted_currencies:
-                          items:
-                            type: string
-                          type: array
-                        active:
-                          type: boolean
                         id:
                           type: integer
                         name:
@@ -16170,9 +16173,6 @@ webhooks:
                         weight:
                           type: integer
                       required:
-                      - accepted_card_types
-                      - accepted_currencies
-                      - active
                       - id
                       - name
                       - weight
@@ -16307,16 +16307,6 @@ webhooks:
                       type: boolean
                     gateway_groups:
                       properties:
-                        accepted_card_types:
-                          items:
-                            type: string
-                          type: array
-                        accepted_currencies:
-                          items:
-                            type: string
-                          type: array
-                        active:
-                          type: boolean
                         id:
                           type: integer
                         name:
@@ -16324,9 +16314,6 @@ webhooks:
                         weight:
                           type: integer
                       required:
-                      - accepted_card_types
-                      - accepted_currencies
-                      - active
                       - id
                       - name
                       - weight
