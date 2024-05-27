@@ -40,7 +40,11 @@ components:
 
             * `royal_mail` - royal_mail
 
-            * `yunexpress` - yunexpress'
+            * `yunexpress` - yunexpress
+
+            * `firstmile` - firstmile
+
+            * `4px` - 4px'
           enum:
           - other
           - ups
@@ -56,11 +60,13 @@ components:
           - myhermes
           - royal_mail
           - yunexpress
+          - firstmile
+          - 4px
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 1e667a4e4f80c5b5
+          x-spec-enum-id: c05e6b2878ed4101
         date_created:
           format: date-time
           readOnly: true
@@ -1302,6 +1308,11 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         upc:
           deprecated: true
           description: Universal Product Code (UPC) is an identifier for a product
@@ -1325,6 +1336,7 @@ components:
       - images
       - rating
       - title
+      - unit_cost
       - url
       type: object
     CreateProductVariant:
@@ -2932,6 +2944,11 @@ components:
             - string
             - 'null'
           type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_excl_tax:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -2990,6 +3007,7 @@ components:
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - total_cost
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -3033,6 +3051,16 @@ components:
           type: integer
         stockrecord:
           $ref: '#/components/schemas/Stockrecord'
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
       required:
       - id
       - price_currency
@@ -3042,6 +3070,8 @@ components:
       - price_incl_tax_excl_discounts
       - product
       - stockrecord
+      - total_cost
+      - unit_cost
       type: object
     OrderList:
       properties:
@@ -3211,6 +3241,11 @@ components:
             - string
             - 'null'
           type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_excl_tax:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -3260,6 +3295,7 @@ components:
       - source
       - subscription_lifecycle
       - subscriptions
+      - total_cost
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -3343,6 +3379,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_excl_tax:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -3361,6 +3402,7 @@ components:
       - original_total_incl_tax
       - shipping_excl_tax
       - shipping_incl_tax
+      - total_cost
       - total_excl_tax
       - total_incl_tax
       type: object
@@ -3601,6 +3643,11 @@ components:
             - string
             - 'null'
           type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_excl_tax:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -3655,6 +3702,7 @@ components:
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - total_cost
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -4484,6 +4532,11 @@ components:
             - string
             - 'null'
           type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_excl_tax:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -4695,6 +4748,11 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         upc:
           deprecated: true
           description: Universal Product Code (UPC) is an identifier for a product
@@ -5346,6 +5404,11 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         upc:
           deprecated: true
           description: Universal Product Code (UPC) is an identifier for a product
@@ -5370,6 +5433,7 @@ components:
       - images
       - rating
       - title
+      - unit_cost
       - url
       type: object
     'Product ':
@@ -5588,6 +5652,11 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         upc:
           deprecated: true
           description: Universal Product Code (UPC) is an identifier for a product
@@ -5612,6 +5681,7 @@ components:
       - images
       - rating
       - title
+      - unit_cost
       - url
       type: object
     ProductPrices:
@@ -5703,6 +5773,11 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -5714,6 +5789,7 @@ components:
       - images
       - product_id
       - title
+      - unit_cost
       type: object
     ProductVariantAttribute:
       properties:
@@ -6751,7 +6827,9 @@ components:
     TrackingInfo:
       properties:
         carrier:
-          description: '* `asendia` - asendia
+          description: '* `4px` - 4px
+
+            * `asendia` - asendia
 
             * `boxme` - boxme
 
@@ -6762,6 +6840,8 @@ components:
             * `dhl_ecommerce` - dhl_ecommerce
 
             * `fedex` - fedex
+
+            * `firstmile` - firstmile
 
             * `hermesworld_uk` - hermesworld_uk
 
@@ -6779,12 +6859,14 @@ components:
 
             * `yunexpress` - yunexpress'
           enum:
+          - 4px
           - asendia
           - boxme
           - deutsche_de
           - dhl
           - dhl_ecommerce
           - fedex
+          - firstmile
           - hermesworld_uk
           - myhermes
           - other
@@ -6794,7 +6876,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 7ee2f34658fe0f1e
+          x-spec-enum-id: 8fbc861d1070ab08
         carrier_other_name:
           type:
           - string
@@ -7367,6 +7449,11 @@ components:
             - string
             - 'null'
           type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_excl_tax:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -7424,6 +7511,7 @@ components:
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - total_cost
       - total_excl_tax
       - total_incl_tax
       - total_tax
@@ -7612,6 +7700,11 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         upc:
           deprecated: true
           description: Universal Product Code (UPC) is an identifier for a product
@@ -7635,6 +7728,7 @@ components:
       - images
       - rating
       - stockrecords
+      - unit_cost
       - url
       type: object
     UpdateProductVariant:
@@ -16755,6 +16849,14 @@ webhooks:
                             required:
                             - id
                             type: object
+                          total_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          unit_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
                         required:
                         - id
                         - price_currency
@@ -16764,6 +16866,8 @@ webhooks:
                         - price_incl_tax_excl_discounts
                         - product
                         - stockrecord
+                        - total_cost
+                        - unit_cost
                         type: object
                       type: array
                     metadata:
@@ -17165,6 +17269,10 @@ webhooks:
                           format: decimal
                           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                           type: string
+                        total_cost:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
                         total_excl_tax:
                           format: decimal
                           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -17181,6 +17289,7 @@ webhooks:
                       - original_total_incl_tax
                       - shipping_excl_tax
                       - shipping_incl_tax
+                      - total_cost
                       - total_excl_tax
                       - total_incl_tax
                       type: object
@@ -17282,6 +17391,10 @@ webhooks:
                         - string
                         - 'null'
                       type: array
+                    total_cost:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
                     total_excl_tax:
                       format: decimal
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -17523,6 +17636,7 @@ webhooks:
                   - subscription_lifecycle
                   - subscriptions
                   - supports_post_purchase_upsells
+                  - total_cost
                   - total_excl_tax
                   - total_incl_tax
                   - total_tax
@@ -17924,6 +18038,14 @@ webhooks:
                             required:
                             - id
                             type: object
+                          total_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          unit_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
                         required:
                         - id
                         - price_currency
@@ -17933,6 +18055,8 @@ webhooks:
                         - price_incl_tax_excl_discounts
                         - product
                         - stockrecord
+                        - total_cost
+                        - unit_cost
                         type: object
                       type: array
                     metadata:
@@ -18334,6 +18458,10 @@ webhooks:
                           format: decimal
                           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                           type: string
+                        total_cost:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
                         total_excl_tax:
                           format: decimal
                           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -18350,6 +18478,7 @@ webhooks:
                       - original_total_incl_tax
                       - shipping_excl_tax
                       - shipping_incl_tax
+                      - total_cost
                       - total_excl_tax
                       - total_incl_tax
                       type: object
@@ -18451,6 +18580,10 @@ webhooks:
                         - string
                         - 'null'
                       type: array
+                    total_cost:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
                     total_excl_tax:
                       format: decimal
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -18692,6 +18825,7 @@ webhooks:
                   - subscription_lifecycle
                   - subscriptions
                   - supports_post_purchase_upsells
+                  - total_cost
                   - total_excl_tax
                   - total_incl_tax
                   - total_tax
@@ -18936,6 +19070,10 @@ webhooks:
                               locations.
                             title: Track Stock Levels
                             type: boolean
+                          unit_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
                           variant_attribute_values:
                             items:
                               properties:
@@ -18960,6 +19098,7 @@ webhooks:
                         - images
                         - product_id
                         - title
+                        - unit_cost
                         type: object
                       type: array
                     date_created:
@@ -19197,6 +19336,10 @@ webhooks:
                       description: Track inventory quantities at fulfillment locations.
                       title: Track Stock Levels
                       type: boolean
+                    unit_cost:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
                     upc:
                       deprecated: true
                       description: Universal Product Code (UPC) is an identifier for
@@ -19255,6 +19398,7 @@ webhooks:
                   - images
                   - rating
                   - title
+                  - unit_cost
                   - url
                   type: object
                 event_id:
@@ -19494,6 +19638,10 @@ webhooks:
                               locations.
                             title: Track Stock Levels
                             type: boolean
+                          unit_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
                           variant_attribute_values:
                             items:
                               properties:
@@ -19518,6 +19666,7 @@ webhooks:
                         - images
                         - product_id
                         - title
+                        - unit_cost
                         type: object
                       type: array
                     date_created:
@@ -19755,6 +19904,10 @@ webhooks:
                       description: Track inventory quantities at fulfillment locations.
                       title: Track Stock Levels
                       type: boolean
+                    unit_cost:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
                     upc:
                       deprecated: true
                       description: Universal Product Code (UPC) is an identifier for
@@ -19813,6 +19966,7 @@ webhooks:
                   - images
                   - rating
                   - title
+                  - unit_cost
                   - url
                   type: object
                 event_id:
