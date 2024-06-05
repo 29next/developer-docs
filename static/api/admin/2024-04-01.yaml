@@ -757,6 +757,108 @@ components:
             $ref: '#/components/schemas/TrackingInfo'
           type: array
       type: object
+    CreateFulfillmentEvent:
+      properties:
+        city:
+          type:
+          - string
+          - 'null'
+        country:
+          title: ISO 3166-1 alpha-2
+          type:
+          - string
+          - 'null'
+        estimated_delivery_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        happened_at:
+          format: date-time
+          type: string
+        latitude:
+          format: double
+          maximum: 90
+          minimum: -90
+          type:
+          - number
+          - 'null'
+        line1:
+          title: First line of address
+          type:
+          - string
+          - 'null'
+        line2:
+          title: Second line of address
+          type:
+          - string
+          - 'null'
+        longitude:
+          format: double
+          maximum: 180
+          minimum: -180
+          type:
+          - number
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        postcode:
+          title: Post/Zip-code
+          type:
+          - string
+          - 'null'
+        state:
+          title: State/County
+          type:
+          - string
+          - 'null'
+        status:
+          description: 'Expected statuses.
+
+
+            * `label_printed` - Label Printed
+
+            * `label_purchased` - Label Purchased
+
+            * `confirmed` - Confirmed
+
+            * `ready_for_pickup` - Ready For Pickup
+
+            * `carrier_picked_up` - Carrier Picked Up
+
+            * `picked_up` - Picked Up
+
+            * `in_transit` - In Transit
+
+            * `out_for_delivery` - Out For Delivery
+
+            * `attempted_delivery` - Attempted Delivery
+
+            * `failure` - Failure
+
+            * `delivered` - Delivered
+
+            * `delayed` - Delayed'
+          enum:
+          - label_printed
+          - label_purchased
+          - confirmed
+          - ready_for_pickup
+          - carrier_picked_up
+          - picked_up
+          - in_transit
+          - out_for_delivery
+          - attempted_delivery
+          - failure
+          - delivered
+          - delayed
+          type: string
+          x-spec-enum-id: 99c7bdf85f387700
+      required:
+      - status
+      type: object
     CreateMarketingAttribution:
       properties:
         affiliate:
@@ -954,108 +1056,6 @@ components:
           - 'null'
       required:
       - lines
-      type: object
-    CreateOrderFulfillmentEvent:
-      properties:
-        city:
-          type:
-          - string
-          - 'null'
-        country:
-          title: ISO 3166-1 alpha-2
-          type:
-          - string
-          - 'null'
-        estimated_delivery_at:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        happened_at:
-          format: date-time
-          type: string
-        latitude:
-          format: double
-          maximum: 90
-          minimum: -90
-          type:
-          - number
-          - 'null'
-        line1:
-          title: First line of address
-          type:
-          - string
-          - 'null'
-        line2:
-          title: Second line of address
-          type:
-          - string
-          - 'null'
-        longitude:
-          format: double
-          maximum: 180
-          minimum: -180
-          type:
-          - number
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        postcode:
-          title: Post/Zip-code
-          type:
-          - string
-          - 'null'
-        state:
-          title: State/County
-          type:
-          - string
-          - 'null'
-        status:
-          description: 'Expected statuses.
-
-
-            * `label_printed` - Label Printed
-
-            * `label_purchased` - Label Purchased
-
-            * `confirmed` - Confirmed
-
-            * `ready_for_pickup` - Ready For Pickup
-
-            * `carrier_picked_up` - Carrier Picked Up
-
-            * `picked_up` - Picked Up
-
-            * `in_transit` - In Transit
-
-            * `out_for_delivery` - Out For Delivery
-
-            * `attempted_delivery` - Attempted Delivery
-
-            * `failure` - Failure
-
-            * `delivered` - Delivered
-
-            * `delayed` - Delayed'
-          enum:
-          - label_printed
-          - label_purchased
-          - confirmed
-          - ready_for_pickup
-          - carrier_picked_up
-          - picked_up
-          - in_transit
-          - out_for_delivery
-          - attempted_delivery
-          - failure
-          - delivered
-          - delayed
-          type: string
-          x-spec-enum-id: 99c7bdf85f387700
-      required:
-      - status
       type: object
     CreateOrderLine:
       properties:
@@ -11484,13 +11484,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateOrderFulfillmentEvent'
+              $ref: '#/components/schemas/CreateFulfillmentEvent'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CreateOrderFulfillmentEvent'
+              $ref: '#/components/schemas/CreateFulfillmentEvent'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CreateOrderFulfillmentEvent'
+              $ref: '#/components/schemas/CreateFulfillmentEvent'
         required: true
       responses:
         '200':
@@ -12950,12 +12950,6 @@ paths:
       description: Retrieve a subscription.
       operationId: subscriptionsRetrieve
       parameters:
-      - description: A unique integer value identifying this Subscription.
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12964,6 +12958,12 @@ paths:
           enum:
           - '2024-04-01'
           type: string
+      - description: A unique integer value identifying the Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           content:
@@ -12980,12 +12980,6 @@ paths:
       description: Partial update an existing subscription.
       operationId: subscriptionsPartialUpdate
       parameters:
-      - description: A unique integer value identifying this Subscription.
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12994,6 +12988,12 @@ paths:
           enum:
           - '2024-04-01'
           type: string
+      - description: A unique integer value identifying the Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -13022,12 +13022,6 @@ paths:
       description: Create a new subscription line.
       operationId: subscriptionsLinesCreate
       parameters:
-      - description: A unique integer value identifying this Subscription line.
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
       - in: header
         name: X-29next-API-Version
         required: true
@@ -13036,6 +13030,12 @@ paths:
           enum:
           - '2024-04-01'
           type: string
+      - description: A unique integer value identifying the Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
@@ -13065,18 +13065,6 @@ paths:
       description: Delete a subscription line in an existing subscription line.
       operationId: subscriptionsLinesDestroy
       parameters:
-      - description: A unique integer value identifying this Subscription line.
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-      - description: A unique integer value identifying this Subscription line.
-        in: path
-        name: lineId
-        required: true
-        schema:
-          type: integer
       - in: header
         name: X-29next-API-Version
         required: true
@@ -13085,6 +13073,18 @@ paths:
           enum:
           - '2024-04-01'
           type: string
+      - description: A unique integer value identifying the Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: A unique integer value identifying the Subscription line.
+        in: path
+        name: lineId
+        required: true
+        schema:
+          type: integer
       responses:
         '204':
           description: No response body
@@ -13097,18 +13097,6 @@ paths:
       description: Update an existing subscription line.
       operationId: subscriptionsLinesUpdate
       parameters:
-      - description: A unique integer value identifying this Subscription line.
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-      - description: A unique integer value identifying this Subscription line.
-        in: path
-        name: lineId
-        required: true
-        schema:
-          type: integer
       - in: header
         name: X-29next-API-Version
         required: true
@@ -13117,6 +13105,18 @@ paths:
           enum:
           - '2024-04-01'
           type: string
+      - description: A unique integer value identifying the Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: A unique integer value identifying the Subscription line.
+        in: path
+        name: lineId
+        required: true
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
