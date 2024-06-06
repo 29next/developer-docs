@@ -16182,6 +16182,422 @@ webhooks:
       '410':
         description: Indicates the webhook target is no longer available and will
           be disabled.
+  fulfillment.created:
+    post:
+      description: Triggers when a fulfillment is created.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - unstable
+                  type:
+                  - string
+                data:
+                  properties:
+                    created_at:
+                      format: date-time
+                      type: string
+                    delivery_status:
+                      type: string
+                    id:
+                      type: integer
+                    line_items:
+                      items:
+                        properties:
+                          currency:
+                            maxLength: 12
+                            type: string
+                          fulfilled_quantity:
+                            type: string
+                          fulfillment_service:
+                            type: string
+                          id:
+                            type: integer
+                          order_line_id:
+                            type: integer
+                          price_excl_tax:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          price_incl_tax:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          product_id:
+                            type: integer
+                          product_image:
+                            format: uri
+                            type: string
+                          product_title:
+                            type: string
+                          quantity:
+                            maximum: 2147483647
+                            minimum: 0
+                            type: integer
+                          requires_shipping:
+                            type: boolean
+                          returnable_quantity:
+                            type: string
+                          returned_quantity:
+                            type: string
+                          sku:
+                            type: string
+                          total_discount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                        required:
+                        - currency
+                        - fulfilled_quantity
+                        - fulfillment_service
+                        - id
+                        - order_line_id
+                        - price_excl_tax
+                        - price_incl_tax
+                        - product_id
+                        - product_image
+                        - product_title
+                        - requires_shipping
+                        - returnable_quantity
+                        - returned_quantity
+                        - sku
+                        - total_discount
+                        type: object
+                      type: array
+                    location_id:
+                      type: integer
+                    order_number:
+                      title: Order number
+                      type: string
+                    origin_address:
+                      properties:
+                        country:
+                          title: ISO 3166-1 alpha-2
+                          type: string
+                        line1:
+                          maxLength: 255
+                          title: First line of address
+                          type: string
+                        line2:
+                          maxLength: 255
+                          title: Second line of address
+                          type: string
+                        line3:
+                          maxLength: 255
+                          title: Third line of address
+                          type: string
+                        line4:
+                          maxLength: 255
+                          title: City
+                          type: string
+                        phone_number:
+                          maxLength: 128
+                          type: string
+                        postcode:
+                          maxLength: 64
+                          title: Post/Zip-code
+                          type: string
+                        state:
+                          maxLength: 255
+                          title: State/County
+                          type: string
+                      required:
+                      - country
+                      - line1
+                      - line4
+                      type: object
+                    shipping_method:
+                      type: string
+                    status:
+                      type: string
+                    tracking_carrier:
+                      type: string
+                    tracking_carriers:
+                      type: string
+                    tracking_code:
+                      type: string
+                    tracking_codes:
+                      type: string
+                    tracking_link:
+                      type: string
+                    tracking_links:
+                      format: uri
+                      type: string
+                  required:
+                  - delivery_status
+                  - id
+                  - line_items
+                  - location_id
+                  - order_number
+                  - origin_address
+                  - shipping_method
+                  - status
+                  - tracking_carrier
+                  - tracking_carriers
+                  - tracking_code
+                  - tracking_codes
+                  - tracking_link
+                  - tracking_links
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - fulfillment
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - fulfillment
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
+  fulfillment.updated:
+    post:
+      description: Triggers when a fulfillment is updated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - unstable
+                  type:
+                  - string
+                data:
+                  properties:
+                    created_at:
+                      format: date-time
+                      type: string
+                    delivery_status:
+                      type: string
+                    id:
+                      type: integer
+                    line_items:
+                      items:
+                        properties:
+                          currency:
+                            maxLength: 12
+                            type: string
+                          fulfilled_quantity:
+                            type: string
+                          fulfillment_service:
+                            type: string
+                          id:
+                            type: integer
+                          order_line_id:
+                            type: integer
+                          price_excl_tax:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          price_incl_tax:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          product_id:
+                            type: integer
+                          product_image:
+                            format: uri
+                            type: string
+                          product_title:
+                            type: string
+                          quantity:
+                            maximum: 2147483647
+                            minimum: 0
+                            type: integer
+                          requires_shipping:
+                            type: boolean
+                          returnable_quantity:
+                            type: string
+                          returned_quantity:
+                            type: string
+                          sku:
+                            type: string
+                          total_discount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                        required:
+                        - currency
+                        - fulfilled_quantity
+                        - fulfillment_service
+                        - id
+                        - order_line_id
+                        - price_excl_tax
+                        - price_incl_tax
+                        - product_id
+                        - product_image
+                        - product_title
+                        - requires_shipping
+                        - returnable_quantity
+                        - returned_quantity
+                        - sku
+                        - total_discount
+                        type: object
+                      type: array
+                    location_id:
+                      type: integer
+                    order_number:
+                      title: Order number
+                      type: string
+                    origin_address:
+                      properties:
+                        country:
+                          title: ISO 3166-1 alpha-2
+                          type: string
+                        line1:
+                          maxLength: 255
+                          title: First line of address
+                          type: string
+                        line2:
+                          maxLength: 255
+                          title: Second line of address
+                          type: string
+                        line3:
+                          maxLength: 255
+                          title: Third line of address
+                          type: string
+                        line4:
+                          maxLength: 255
+                          title: City
+                          type: string
+                        phone_number:
+                          maxLength: 128
+                          type: string
+                        postcode:
+                          maxLength: 64
+                          title: Post/Zip-code
+                          type: string
+                        state:
+                          maxLength: 255
+                          title: State/County
+                          type: string
+                      required:
+                      - country
+                      - line1
+                      - line4
+                      type: object
+                    shipping_method:
+                      type: string
+                    status:
+                      type: string
+                    tracking_carrier:
+                      type: string
+                    tracking_carriers:
+                      type: string
+                    tracking_code:
+                      type: string
+                    tracking_codes:
+                      type: string
+                    tracking_link:
+                      type: string
+                    tracking_links:
+                      format: uri
+                      type: string
+                  required:
+                  - delivery_status
+                  - id
+                  - line_items
+                  - location_id
+                  - order_number
+                  - origin_address
+                  - shipping_method
+                  - status
+                  - tracking_carrier
+                  - tracking_carriers
+                  - tracking_code
+                  - tracking_codes
+                  - tracking_link
+                  - tracking_links
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - fulfillment
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - fulfillment
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   gateway.created:
     post:
       description: Triggers when a new gateway is created.
