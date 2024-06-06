@@ -86,6 +86,11 @@ def webhook_schema_generator(spec):
                                         "format": ["uuid"],
                                         "description": "Unique id associated with this webhook event.",
                                     },
+                                    "event_type": {
+                                        "type": ["string"],
+                                        "examples": [each["event"]],
+                                        "description": "Webhook event type of the current event.",
+                                    },
                                     "webhook": {
                                         "type": "object",
                                         "properties": {

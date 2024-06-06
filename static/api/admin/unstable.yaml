@@ -15044,6 +15044,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - app.uninstalled
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -15375,6 +15381,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - cart.abandoned
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -15587,6 +15599,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - customer.created
                   type:
                   - string
                 object:
@@ -15803,6 +15821,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - customer.updated
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -15972,6 +15996,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - dispute.created
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -16139,6 +16169,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - dispute.updated
                   type:
                   - string
                 object:
@@ -16349,6 +16385,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - fulfillment.created
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -16557,6 +16599,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - fulfillment.updated
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -16700,6 +16748,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - gateway.created
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -16841,6 +16895,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - gateway.updated
                   type:
                   - string
                 object:
@@ -18153,6 +18213,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - order.created
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -19463,6 +19529,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - order.updated
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -19976,6 +20048,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - product.created
                   type:
                   - string
                 object:
@@ -20493,6 +20571,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - product.updated
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -20636,6 +20720,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - store.updated
                   type:
                   - string
                 object:
@@ -21062,6 +21152,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - subscription.created
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -21486,6 +21582,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - subscription.updated
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -21689,6 +21791,12 @@ webhooks:
                   - uuid
                   type:
                   - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - ticket.created
+                  type:
+                  - string
                 object:
                   description: Object data type.
                   examples:
@@ -21890,6 +21998,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - ticket.updated
                   type:
                   - string
                 object:
@@ -22210,6 +22324,12 @@ webhooks:
                   description: Unique id associated with this webhook event.
                   format:
                   - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - transaction.created
                   type:
                   - string
                 object:
