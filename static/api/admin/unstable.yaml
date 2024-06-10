@@ -6979,6 +6979,10 @@ components:
           format: date-time
           readOnly: true
           type: string
+        external_id:
+          type:
+          - string
+          - 'null'
         id:
           readOnly: true
           type: integer
@@ -7070,6 +7074,10 @@ components:
           format: date-time
           readOnly: true
           type: string
+        external_id:
+          type:
+          - string
+          - 'null'
         id:
           readOnly: true
           type: integer
@@ -7148,6 +7156,10 @@ components:
           format: date-time
           readOnly: true
           type: string
+        external_id:
+          type:
+          - string
+          - 'null'
         id:
           readOnly: true
           type: integer
@@ -13837,6 +13849,11 @@ paths:
       description: Retrieve a list of transactions.
       operationId: transactionsList
       parameters:
+      - description: External ID
+        in: query
+        name: external_id
+        schema:
+          type: string
       - description: YYYY-MM-DD
         in: query
         name: date_created_from
@@ -17660,6 +17677,10 @@ webhooks:
                                 date_created:
                                   format: date-time
                                   type: string
+                                external_id:
+                                  type:
+                                  - string
+                                  - 'null'
                                 id:
                                   type: integer
                                 is_disputed:
@@ -17983,6 +18004,10 @@ webhooks:
                           date_created:
                             format: date-time
                             type: string
+                          external_id:
+                            type:
+                            - string
+                            - 'null'
                           id:
                             type: integer
                           is_disputed:
@@ -18976,6 +19001,10 @@ webhooks:
                                 date_created:
                                   format: date-time
                                   type: string
+                                external_id:
+                                  type:
+                                  - string
+                                  - 'null'
                                 id:
                                   type: integer
                                 is_disputed:
@@ -19299,6 +19328,10 @@ webhooks:
                           date_created:
                             format: date-time
                             type: string
+                          external_id:
+                            type:
+                            - string
+                            - 'null'
                           id:
                             type: integer
                           is_disputed:
@@ -22151,6 +22184,10 @@ webhooks:
                     date_created:
                       format: date-time
                       type: string
+                    external_id:
+                      type:
+                      - string
+                      - 'null'
                     id:
                       type: integer
                     initiator:
