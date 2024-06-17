@@ -8,8 +8,23 @@ components:
           items:
             $ref: '#/components/schemas/CreateOrderLine'
           type: array
+        payment_details:
+          oneOf:
+          - $ref: '#/components/schemas/AddLineItemPaymentDetail'
+          - type: 'null'
       required:
       - lines
+      type: object
+    AddLineItemPaymentDetail:
+      properties:
+        payment_gateway:
+          type:
+          - integer
+          - 'null'
+        payment_gateway_group:
+          type:
+          - integer
+          - 'null'
       type: object
     AddOrderShipmentTracking:
       properties:
@@ -858,6 +873,26 @@ components:
           x-spec-enum-id: 99c7bdf85f387700
       required:
       - status
+      type: object
+    CreateGiftCard:
+      properties:
+        currency:
+          maxLength: 3
+          type: string
+        expired_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        initial:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        user:
+          $ref: '#/components/schemas/CreateOrderUser'
+      required:
+      - currency
+      - initial
       type: object
     CreateMarketingAttribution:
       properties:
@@ -2439,8 +2474,36 @@ components:
           format: date-time
           type: string
         delivery_status:
+          description: 'Expected delivery statuses.
+
+
+            * `None` - No Status
+
+            * `tracking_added` - Tracking Added
+
+            * `in_transit` - In Transit
+
+            * `out_for_delivery` - Out For Delivery
+
+            * `attempted_delivery` - Attempted Delivery
+
+            * `failed_delivery` - Failed Delivery
+
+            * `delivered` - Delivered
+
+            * `delayed` - Delayed'
+          enum:
+          - null
+          - tracking_added
+          - in_transit
+          - out_for_delivery
+          - attempted_delivery
+          - failed_delivery
+          - delivered
+          - delayed
+          - ''
           readOnly: true
-          type: string
+          x-spec-enum-id: 3b886e5b796c0603
         id:
           readOnly: true
           type: integer
@@ -2461,8 +2524,15 @@ components:
         shipping_method:
           type: string
         status:
+          description: '* `success` - Success
+
+            * `canceled` - Canceled'
+          enum:
+          - success
+          - canceled
           readOnly: true
           type: string
+          x-spec-enum-id: 4d2f0d468cf04267
         tracking_carrier:
           type: string
         tracking_carriers:
@@ -4004,6 +4074,22 @@ components:
             $ref: '#/components/schemas/ProductList'
           type: array
       type: object
+    PaginatedResponseGiftCardList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          nullable: true
+          type: string
+        previous:
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/ResponseGiftCard'
+          type: array
+      type: object
     PaginatedShippingMethodList:
       properties:
         count:
@@ -4449,6 +4535,16 @@ components:
           items:
             $ref: '#/components/schemas/Validation'
           type: array
+      type: object
+    PatchedUpdateGiftCard:
+      properties:
+        expired_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        user:
+          $ref: '#/components/schemas/CreateOrderUser'
       type: object
     PatchedUpdateOrder:
       properties:
@@ -6164,6 +6260,110 @@ components:
           type: boolean
       required:
       - amount
+      type: object
+    ResponseCreateGiftCard:
+      properties:
+        balance:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        created_at:
+          format: date-time
+          type: string
+        currency:
+          maxLength: 12
+          type: string
+        disabled_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        expired_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        id:
+          readOnly: true
+          type: integer
+        initial:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        last_four:
+          readOnly: true
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserInline'
+          readOnly: true
+      required:
+      - currency
+      - id
+      - initial
+      - last_four
+      - updated_at
+      - user
+      type: object
+    ResponseGiftCard:
+      properties:
+        balance:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type:
+          - string
+          - 'null'
+        created_at:
+          format: date-time
+          type: string
+        currency:
+          maxLength: 12
+          type: string
+        disabled_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        expired_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        id:
+          readOnly: true
+          type: integer
+        initial:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        last_four:
+          readOnly: true
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserInline'
+          readOnly: true
+      required:
+      - currency
+      - id
+      - initial
+      - last_four
+      - updated_at
+      - user
       type: object
     ShippingAddress:
       properties:
@@ -8345,6 +8545,8 @@ components:
               own locations
             fulfillment_service:write: Access to create fulfillment locations and
               fulfillments
+            gift_cards:read: Access to list and view all gift cards
+            gift_cards:write: Access to create and update gift cards
             locations:read: Access to list and view all locations
             locations:write: Access to create and update locations
             metadata:read: Access to list and view all metadata definitions
@@ -10300,6 +10502,229 @@ paths:
       - oauth2: []
       tags:
       - payments
+  /gift-cards/:
+    get:
+      description: Retrieve a list of gift cards.
+      operationId: giftCardsList
+      parameters:
+      - description: Generic search by code, name, email.
+        in: query
+        name: search_text
+        schema:
+          type: string
+      - description: YYYY-MM-DD
+        in: query
+        name: created_from
+        schema:
+          format: date
+          type: string
+      - description: YYYY-MM-DD
+        in: query
+        name: created_to
+        schema:
+          format: date
+          type: string
+      - description: Customer
+        in: query
+        name: customer
+        schema:
+          type: integer
+      - description: 'Status
+
+
+          * `active` - Active
+
+          * `expired` - Expired
+
+          * `disabled` - Disabled'
+        in: query
+        name: status
+        schema:
+          enum:
+          - active
+          - disabled
+          - expired
+          type: string
+      - description: Currency
+        in: query
+        name: currency
+        schema:
+          type: string
+      - description: Amount From
+        in: query
+        name: amount_from
+        schema:
+          type: number
+      - description: Amount To
+        in: query
+        name: amount_to
+        schema:
+          type: number
+      - description: A page number within the paginated result set.
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseGiftCardList'
+          description: ''
+      security:
+      - oauth2:
+        - gift_cards:read
+      tags:
+      - gift-cards
+    post:
+      description: Create a gift card.
+      operationId: giftCardsCreate
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGiftCard'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateGiftCard'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateGiftCard'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseCreateGiftCard'
+          description: ''
+      security:
+      - oauth2:
+        - gift_cards:write
+      tags:
+      - gift-cards
+  /gift-cards/{id}/:
+    get:
+      description: Retrieve a gift card.
+      operationId: giftCardsRetrieve
+      parameters:
+      - description: A unique integer value identifying this gift card.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGiftCard'
+          description: ''
+      security:
+      - oauth2:
+        - gift_cards:read
+      tags:
+      - gift-cards
+    patch:
+      description: Update a gift card.
+      operationId: giftCardsPartialUpdate
+      parameters:
+      - description: A unique integer value identifying this gift card.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateGiftCard'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateGiftCard'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateGiftCard'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGiftCard'
+          description: ''
+      security:
+      - oauth2:
+        - gift_cards:write
+      tags:
+      - gift-cards
+  /gift-cards/{id}/deactivate/:
+    post:
+      description: Deactivate a gift card.
+      operationId: deactivate
+      parameters:
+      - description: A unique integer value identifying this gift card.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGiftCard'
+          description: ''
+      security:
+      - oauth2:
+        - gift_cards:write
+      tags:
+      - gift-cards
   /locations/:
     get:
       description: Retrieve a list of all configured fulfillment locations.
@@ -16255,7 +16680,35 @@ webhooks:
                       format: date-time
                       type: string
                     delivery_status:
-                      type: string
+                      description: 'Expected delivery statuses.
+
+
+                        * `None` - No Status
+
+                        * `tracking_added` - Tracking Added
+
+                        * `in_transit` - In Transit
+
+                        * `out_for_delivery` - Out For Delivery
+
+                        * `attempted_delivery` - Attempted Delivery
+
+                        * `failed_delivery` - Failed Delivery
+
+                        * `delivered` - Delivered
+
+                        * `delayed` - Delayed'
+                      enum:
+                      - null
+                      - tracking_added
+                      - in_transit
+                      - out_for_delivery
+                      - attempted_delivery
+                      - failed_delivery
+                      - delivered
+                      - delayed
+                      - ''
+                      x-spec-enum-id: 3b886e5b796c0603
                     id:
                       type: integer
                     line_items:
@@ -16366,7 +16819,14 @@ webhooks:
                     shipping_method:
                       type: string
                     status:
+                      description: '* `success` - Success
+
+                        * `canceled` - Canceled'
+                      enum:
+                      - success
+                      - canceled
                       type: string
+                      x-spec-enum-id: 4d2f0d468cf04267
                     tracking_carrier:
                       type: string
                     tracking_carriers:
@@ -16469,7 +16929,35 @@ webhooks:
                       format: date-time
                       type: string
                     delivery_status:
-                      type: string
+                      description: 'Expected delivery statuses.
+
+
+                        * `None` - No Status
+
+                        * `tracking_added` - Tracking Added
+
+                        * `in_transit` - In Transit
+
+                        * `out_for_delivery` - Out For Delivery
+
+                        * `attempted_delivery` - Attempted Delivery
+
+                        * `failed_delivery` - Failed Delivery
+
+                        * `delivered` - Delivered
+
+                        * `delayed` - Delayed'
+                      enum:
+                      - null
+                      - tracking_added
+                      - in_transit
+                      - out_for_delivery
+                      - attempted_delivery
+                      - failed_delivery
+                      - delivered
+                      - delayed
+                      - ''
+                      x-spec-enum-id: 3b886e5b796c0603
                     id:
                       type: integer
                     line_items:
@@ -16580,7 +17068,14 @@ webhooks:
                     shipping_method:
                       type: string
                     status:
+                      description: '* `success` - Success
+
+                        * `canceled` - Canceled'
+                      enum:
+                      - success
+                      - canceled
                       type: string
+                      x-spec-enum-id: 4d2f0d468cf04267
                     tracking_carrier:
                       type: string
                     tracking_carriers:
@@ -17137,7 +17632,35 @@ webhooks:
                             format: date-time
                             type: string
                           delivery_status:
-                            type: string
+                            description: 'Expected delivery statuses.
+
+
+                              * `None` - No Status
+
+                              * `tracking_added` - Tracking Added
+
+                              * `in_transit` - In Transit
+
+                              * `out_for_delivery` - Out For Delivery
+
+                              * `attempted_delivery` - Attempted Delivery
+
+                              * `failed_delivery` - Failed Delivery
+
+                              * `delivered` - Delivered
+
+                              * `delayed` - Delayed'
+                            enum:
+                            - null
+                            - tracking_added
+                            - in_transit
+                            - out_for_delivery
+                            - attempted_delivery
+                            - failed_delivery
+                            - delivered
+                            - delayed
+                            - ''
+                            x-spec-enum-id: 3b886e5b796c0603
                           id:
                             type: integer
                           line_items:
@@ -17248,7 +17771,14 @@ webhooks:
                           shipping_method:
                             type: string
                           status:
+                            description: '* `success` - Success
+
+                              * `canceled` - Canceled'
+                            enum:
+                            - success
+                            - canceled
                             type: string
+                            x-spec-enum-id: 4d2f0d468cf04267
                           tracking_carrier:
                             type: string
                           tracking_carriers:
@@ -18461,7 +18991,35 @@ webhooks:
                             format: date-time
                             type: string
                           delivery_status:
-                            type: string
+                            description: 'Expected delivery statuses.
+
+
+                              * `None` - No Status
+
+                              * `tracking_added` - Tracking Added
+
+                              * `in_transit` - In Transit
+
+                              * `out_for_delivery` - Out For Delivery
+
+                              * `attempted_delivery` - Attempted Delivery
+
+                              * `failed_delivery` - Failed Delivery
+
+                              * `delivered` - Delivered
+
+                              * `delayed` - Delayed'
+                            enum:
+                            - null
+                            - tracking_added
+                            - in_transit
+                            - out_for_delivery
+                            - attempted_delivery
+                            - failed_delivery
+                            - delivered
+                            - delayed
+                            - ''
+                            x-spec-enum-id: 3b886e5b796c0603
                           id:
                             type: integer
                           line_items:
@@ -18572,7 +19130,14 @@ webhooks:
                           shipping_method:
                             type: string
                           status:
+                            description: '* `success` - Success
+
+                              * `canceled` - Canceled'
+                            enum:
+                            - success
+                            - canceled
                             type: string
+                            x-spec-enum-id: 4d2f0d468cf04267
                           tracking_carrier:
                             type: string
                           tracking_carriers:
