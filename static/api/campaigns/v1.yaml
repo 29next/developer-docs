@@ -7,6 +7,8 @@ components:
           items:
             $ref: '#/components/schemas/Line'
           type: array
+        payment_detail:
+          $ref: '#/components/schemas/PaymentDetail'
       required:
       - lines
       type: object
@@ -377,6 +379,7 @@ components:
     Line:
       properties:
         package_id:
+          description: Package id of products to add to the order.
           type: integer
         quantity:
           description: Package quantity * line quantity = order line quantity
@@ -390,6 +393,7 @@ components:
         is_upsell:
           type: boolean
         package_id:
+          description: Package id of products to add to the order.
           type: integer
         quantity:
           description: Package quantity * line quantity = order line quantity
@@ -721,15 +725,28 @@ components:
           nullable: true
           type: string
         payment_gateway:
+          description: Specify a payment gateway to be used for order payment.
           nullable: true
           type: integer
         payment_gateway_group:
+          description: Specify a payment gateway group to be used for order payment.
           nullable: true
           type: integer
         payment_method:
           $ref: '#/components/schemas/PaymentMethodEnum'
       required:
       - payment_method
+      type: object
+    PaymentDetail:
+      properties:
+        payment_gateway:
+          description: Specify a payment gateway to be used for order payment.
+          nullable: true
+          type: integer
+        payment_gateway_group:
+          description: Specify a payment gateway group to be used for order payment.
+          nullable: true
+          type: integer
       type: object
     PaymentMethodEnum:
       description: '* `apple_pay` - Apple Pay
@@ -1013,7 +1030,8 @@ paths:
       description: Add an upsell to an existing order.
       operationId: ordersUpsellCreate
       parameters:
-      - in: path
+      - description: ref_id -> Order reference id
+        in: path
         name: ref_id
         required: true
         schema:

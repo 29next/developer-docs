@@ -751,6 +751,123 @@ components:
       - object
       - type
       type: object
+    CreateDispute:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          title: Dispute Amount
+          type:
+          - string
+          - 'null'
+        arn:
+          type:
+          - string
+          - 'null'
+        case_number:
+          type:
+          - string
+          - 'null'
+        currency:
+          type:
+          - string
+          - 'null'
+        date_created:
+          format: date-time
+          readOnly: true
+          type: string
+        happened_at:
+          format: date-time
+          title: Dispute Date
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        order:
+          readOnly: true
+          type: integer
+        report_amount:
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        report_currency:
+          readOnly: true
+          type: string
+        resolution:
+          description: '* `could_not_find_order` - Transaction Not found
+
+            * `declined_or_canceled_nothing_to_do` - Nothing To Do
+
+            * `issued_full_refund` - Issued Full Refund
+
+            * `issued_refund_for_remaining_amount` - Refunded Remaining Amount
+
+            * `3ds_authorized_successfully` - Transaction 3DS Authorized
+
+            * `previously_refunded_nothing_to_do` - Previously Refunded
+
+            * `unable_to_refund_merchant_account_closed` - Unable to Refund
+
+            * `won` - Won
+
+            * `lost` - Lost
+
+            * `accepted` - Accepted
+
+            * `other` - Other'
+          enum:
+          - could_not_find_order
+          - declined_or_canceled_nothing_to_do
+          - issued_full_refund
+          - issued_refund_for_remaining_amount
+          - 3ds_authorized_successfully
+          - previously_refunded_nothing_to_do
+          - unable_to_refund_merchant_account_closed
+          - won
+          - lost
+          - accepted
+          - other
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: 8848f3a079993862
+        status:
+          description: '* `new` - New
+
+            * `open` - Open
+
+            * `resolved` - Resolved'
+          enum:
+          - new
+          - open
+          - resolved
+          readOnly: true
+          type: string
+          x-spec-enum-id: 4c48cc1c536a35b2
+        transaction:
+          type:
+          - integer
+          - 'null'
+        type:
+          description: '* `alert` - Alert
+
+            * `chargeback` - Chargeback'
+          enum:
+          - alert
+          - chargeback
+          type: string
+          x-spec-enum-id: 3c60da80149644ea
+      required:
+      - date_created
+      - id
+      - order
+      - report_amount
+      - report_currency
+      - status
+      type: object
     CreateDisputeNote:
       properties:
         message:
@@ -1859,6 +1976,11 @@ components:
           format: date-time
           readOnly: true
           type: string
+        happened_at:
+          format: date-time
+          readOnly: true
+          title: Dispute Date
+          type: string
         id:
           readOnly: true
           type: integer
@@ -1941,6 +2063,7 @@ components:
           x-spec-enum-id: 3c60da80149644ea
       required:
       - date_created
+      - happened_at
       - id
       - order
       - report_amount
@@ -4420,6 +4543,11 @@ components:
         date_created:
           format: date-time
           readOnly: true
+          type: string
+        happened_at:
+          format: date-time
+          readOnly: true
+          title: Dispute Date
           type: string
         id:
           readOnly: true
@@ -9445,6 +9573,18 @@ paths:
           - string
           - 'null'
           x-spec-enum-id: 8848f3a079993862
+      - description: YYYY-MM-DD
+        in: query
+        name: dispute_date_from
+        schema:
+          format: date
+          type: string
+      - description: YYYY-MM-DD
+        in: query
+        name: dispute_date_to
+        schema:
+          format: date
+          type: string
       - description: A page number within the paginated result set.
         in: query
         name: page
@@ -9487,13 +9627,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Dispute'
+              $ref: '#/components/schemas/CreateDispute'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Dispute'
+              $ref: '#/components/schemas/CreateDispute'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Dispute'
+              $ref: '#/components/schemas/CreateDispute'
       responses:
         '201':
           content:
@@ -16348,6 +16488,10 @@ webhooks:
                     date_created:
                       format: date-time
                       type: string
+                    happened_at:
+                      format: date-time
+                      title: Dispute Date
+                      type: string
                     id:
                       type: integer
                     order:
@@ -16426,6 +16570,7 @@ webhooks:
                       x-spec-enum-id: 3c60da80149644ea
                   required:
                   - date_created
+                  - happened_at
                   - id
                   - order
                   - report_amount
@@ -16523,6 +16668,10 @@ webhooks:
                     date_created:
                       format: date-time
                       type: string
+                    happened_at:
+                      format: date-time
+                      title: Dispute Date
+                      type: string
                     id:
                       type: integer
                     order:
@@ -16601,6 +16750,7 @@ webhooks:
                       x-spec-enum-id: 3c60da80149644ea
                   required:
                   - date_created
+                  - happened_at
                   - id
                   - order
                   - report_amount
