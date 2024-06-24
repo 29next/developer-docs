@@ -20,6 +20,8 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `fulfillment_service:write` | Access to create fulfillment locations and fulfillments |
 | `fulfillment_orders:read` | Access to list fulfillment order fulfillment requests |
 | `fulfillment_orders:write` | Access to update fulfillment order fulfillment requests |
+| `gift_cards:read` | Access to list and view all gift cards |
+| `gift_cards:write` | Access to create and update gift cards |
 | `locations:read` | Access to list and view all locations |
 | `locations:write` | Access to create and update locations |
 | `metadata:read` | Access to list and view all metadata definitions |
