@@ -212,41 +212,51 @@ components:
     BillingAddress:
       properties:
         country:
+          description: The address country code.
           title: ISO 3166-1 alpha-2
           type: string
         first_name:
+          description: The first name of the address.
           maxLength: 255
           type: string
         id:
           readOnly: true
           type: integer
         last_name:
+          description: The last name of the address.
           maxLength: 255
           type: string
         line1:
+          description: The first line of the address.
           maxLength: 255
           title: First line of address
           type: string
         line2:
+          description: Optional second line of of the address.
           maxLength: 255
           title: Second line of address
           type: string
         line3:
+          description: Optional third line of of the address.
           maxLength: 255
           title: Third line of address
           type: string
         line4:
+          description: City of the address.
           maxLength: 255
           title: City
           type: string
         phone_number:
+          description: The address phone number.
           maxLength: 128
           type: string
         postcode:
+          description: The address post code or zip code.
           maxLength: 64
           title: Post/Zip-code
           type: string
         state:
+          description: The address state/province.
           maxLength: 255
           title: State/Province
           type: string
@@ -992,59 +1002,74 @@ components:
     CreateMarketingAttribution:
       properties:
         affiliate:
+          description: Affiliate identifier.
           type:
           - string
           - 'null'
         agent:
+          description: Identifier for the agent handling the order.
           type:
           - integer
           - 'null'
         funnel:
+          description: The marketing funnel attributed to the order.
           type:
           - string
           - 'null'
         gclid:
+          description: Google Click Identifier.
           type:
           - string
           - 'null'
-        metadata: {}
+        metadata:
+          description: Additional attribution metadata.
         subaffiliate1:
+          description: Sub-affiliate identifier 1.
           type:
           - string
           - 'null'
         subaffiliate2:
+          description: Sub-affiliate identifier 2.
           type:
           - string
           - 'null'
         subaffiliate3:
+          description: Sub-affiliate identifier 3.
           type:
           - string
           - 'null'
         subaffiliate4:
+          description: Sub-affiliate identifier 4.
           type:
           - string
           - 'null'
         subaffiliate5:
+          description: ' Sub-affiliate identifier 5.'
           type:
           - string
           - 'null'
         utm_campaign:
+          description: Medium of the traffic (e.g., email, CPC).
           type:
           - string
           - 'null'
         utm_content:
+          description: Search term or keyword.
           type:
           - string
           - 'null'
         utm_medium:
+          description: Source of the traffic (e.g., search engine, newsletter).
           type:
           - string
           - 'null'
         utm_source:
+          description: Google UTM Source attribution.
           type:
           - string
           - 'null'
         utm_term:
+          description: Campaign name.
           type:
           - string
           - 'null'
@@ -1817,6 +1842,7 @@ components:
           title: Instructions
           type: string
         phone_number:
+          description: In case we need to call you about your order
           maxLength: 128
           type: string
         postcode:
@@ -2868,57 +2894,71 @@ components:
     MarketingAttribution:
       properties:
         affiliate:
+          description: Affiliate identifier.
           type:
           - string
           - 'null'
         agent:
           $ref: '#/components/schemas/Agent'
         funnel:
+          description: The marketing funnel attributed to the order.
           type:
           - string
           - 'null'
         gclid:
+          description: Google Click Identifier.
           type:
           - string
           - 'null'
-        metadata: {}
+        metadata:
+          description: Additional attribution metadata.
         subaffiliate1:
+          description: Sub-affiliate identifier 1.
           type:
           - string
           - 'null'
         subaffiliate2:
+          description: Sub-affiliate identifier 2.
           type:
           - string
           - 'null'
         subaffiliate3:
+          description: Sub-affiliate identifier 3.
           type:
           - string
           - 'null'
         subaffiliate4:
+          description: Sub-affiliate identifier 4.
           type:
           - string
           - 'null'
         subaffiliate5:
+          description: ' Sub-affiliate identifier 5.'
           type:
           - string
           - 'null'
         utm_campaign:
+          description: Medium of the traffic (e.g., email, CPC).
           type:
           - string
           - 'null'
         utm_content:
+          description: Search term or keyword.
           type:
           - string
           - 'null'
         utm_medium:
+          description: Source of the traffic (e.g., search engine, newsletter).
           type:
           - string
           - 'null'
         utm_source:
+          description: Google UTM Source attribution.
           type:
           - string
           - 'null'
         utm_term:
+          description: Campaign name.
           type:
           - string
           - 'null'
@@ -2957,7 +2997,6 @@ components:
         attribution:
           $ref: '#/components/schemas/MarketingAttribution'
         billing_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
@@ -2972,7 +3011,10 @@ components:
           readOnly: true
           type: string
         fulfillment_status:
-          description: '* `not_required` - Not Required
+          description: 'The order''s status in terms of fulfillment.
+
+
+            * `not_required` - Not Required
 
             * `unfulfilled` - Unfulfilled
 
@@ -3001,12 +3043,12 @@ components:
           readOnly: true
           type: boolean
         lines:
-          deprecated: true
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
           type: array
         metadata:
+          description: Additional order metadata.
           oneOf:
           - {}
           - type: 'null'
@@ -3087,7 +3129,6 @@ components:
           - $ref: '#/components/schemas/OrderReportValues'
           readOnly: true
         shipping_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
           - type: 'null'
@@ -3118,6 +3159,7 @@ components:
           readOnly: true
           type: string
         status:
+          description: The order's overall status.
           maxLength: 100
           type: string
         subscription_lifecycle:
@@ -3132,6 +3174,7 @@ components:
           readOnly: true
           type: boolean
         tags:
+          description: An array of tags associated with the order.
           items:
             type:
             - string
@@ -3286,7 +3329,10 @@ components:
           readOnly: true
           type: string
         fulfillment_status:
-          description: '* `not_required` - Not Required
+          description: 'The order''s status in terms of fulfillment.
+
+
+            * `not_required` - Not Required
 
             * `unfulfilled` - Unfulfilled
 
@@ -3316,6 +3362,7 @@ components:
           readOnly: true
           type: array
         metadata:
+          description: Additional order metadata.
           oneOf:
           - {}
           - type: 'null'
@@ -3418,6 +3465,7 @@ components:
           readOnly: true
           type: string
         status:
+          description: The order's overall status.
           maxLength: 100
           type: string
         subscription_lifecycle:
@@ -3429,6 +3477,7 @@ components:
           readOnly: true
           type: array
         tags:
+          description: An array of tags associated with the order.
           items:
             type:
             - string
@@ -3656,7 +3705,6 @@ components:
         attribution:
           $ref: '#/components/schemas/MarketingAttribution'
         billing_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
@@ -3671,7 +3719,10 @@ components:
           readOnly: true
           type: string
         fulfillment_status:
-          description: '* `not_required` - Not Required
+          description: 'The order''s status in terms of fulfillment.
+
+
+            * `not_required` - Not Required
 
             * `unfulfilled` - Unfulfilled
 
@@ -3700,12 +3751,12 @@ components:
           readOnly: true
           type: boolean
         lines:
-          deprecated: true
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
           type: array
         metadata:
+          description: Additional order metadata.
           oneOf:
           - {}
           - type: 'null'
@@ -3786,7 +3837,6 @@ components:
           - $ref: '#/components/schemas/OrderReportValues'
           readOnly: true
         shipping_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
           - type: 'null'
@@ -3817,6 +3867,7 @@ components:
           readOnly: true
           type: string
         status:
+          description: The order's overall status.
           maxLength: 100
           type: string
         subscription_lifecycle:
@@ -3831,6 +3882,7 @@ components:
           readOnly: true
           type: boolean
         tags:
+          description: An array of tags associated with the order.
           items:
             type:
             - string
@@ -4576,7 +4628,6 @@ components:
         attribution:
           $ref: '#/components/schemas/CreateMarketingAttribution'
         billing_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
@@ -4591,7 +4642,10 @@ components:
           readOnly: true
           type: string
         fulfillment_status:
-          description: '* `not_required` - Not Required
+          description: 'The order''s status in terms of fulfillment.
+
+
+            * `not_required` - Not Required
 
             * `unfulfilled` - Unfulfilled
 
@@ -4620,12 +4674,12 @@ components:
           readOnly: true
           type: boolean
         lines:
-          deprecated: true
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
           type: array
         metadata:
+          description: Additional order metadata.
           oneOf:
           - {}
           - type: 'null'
@@ -4706,7 +4760,6 @@ components:
           - $ref: '#/components/schemas/OrderReportValues'
           readOnly: true
         shipping_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
           - type: 'null'
@@ -4737,6 +4790,7 @@ components:
           readOnly: true
           type: string
         status:
+          description: The order's overall status.
           maxLength: 100
           type: string
         subscription_lifecycle:
@@ -4751,6 +4805,7 @@ components:
           readOnly: true
           type: boolean
         tags:
+          description: An array of tags associated with the order.
           items:
             type:
             - string
@@ -6434,30 +6489,37 @@ components:
     ShippingAddress:
       properties:
         country:
+          description: The address country code.
           title: ISO 3166-1 alpha-2
           type: string
         first_name:
+          description: The first name of the address.
           maxLength: 255
           type: string
         id:
           readOnly: true
           type: integer
         last_name:
+          description: The last name of the address.
           maxLength: 255
           type: string
         line1:
+          description: The first line of the address.
           maxLength: 255
           title: First line of address
           type: string
         line2:
+          description: Optional second line of of the address.
           maxLength: 255
           title: Second line of address
           type: string
         line3:
+          description: Optional third line of of the address.
           maxLength: 255
           title: Third line of address
           type: string
         line4:
+          description: City of the address.
           maxLength: 255
           title: City
           type: string
@@ -6466,13 +6528,16 @@ components:
           title: Instructions
           type: string
         phone_number:
+          description: The address phone number.
           maxLength: 128
           type: string
         postcode:
+          description: The address post code or zip code.
           maxLength: 64
           title: Post/Zip-code
           type: string
         state:
+          description: The address state/province.
           maxLength: 255
           title: State/Province
           type: string
@@ -7609,7 +7674,6 @@ components:
         attribution:
           $ref: '#/components/schemas/CreateMarketingAttribution'
         billing_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
@@ -7624,7 +7688,10 @@ components:
           readOnly: true
           type: string
         fulfillment_status:
-          description: '* `not_required` - Not Required
+          description: 'The order''s status in terms of fulfillment.
+
+
+            * `not_required` - Not Required
 
             * `unfulfilled` - Unfulfilled
 
@@ -7653,12 +7720,12 @@ components:
           readOnly: true
           type: boolean
         lines:
-          deprecated: true
           items:
             $ref: '#/components/schemas/OrderLine'
           readOnly: true
           type: array
         metadata:
+          description: Additional order metadata.
           oneOf:
           - {}
           - type: 'null'
@@ -7739,7 +7806,6 @@ components:
           - $ref: '#/components/schemas/OrderReportValues'
           readOnly: true
         shipping_address:
-          deprecated: true
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
           - type: 'null'
@@ -7770,6 +7836,7 @@ components:
           readOnly: true
           type: string
         status:
+          description: The order's overall status.
           maxLength: 100
           type: string
         subscription_lifecycle:
@@ -7784,6 +7851,7 @@ components:
           readOnly: true
           type: boolean
         tags:
+          description: An array of tags associated with the order.
           items:
             type:
             - string
@@ -8368,6 +8436,7 @@ components:
           title: Instructions
           type: string
         phone_number:
+          description: In case we need to call you about your order
           maxLength: 128
           type: string
         postcode:
@@ -15627,6 +15696,7 @@ webhooks:
                     attribution:
                       properties:
                         affiliate:
+                          description: Affiliate identifier.
                           type:
                           - string
                           - 'null'
@@ -15650,51 +15720,65 @@ webhooks:
                           - id
                           type: object
                         funnel:
+                          description: The marketing funnel attributed to the order.
                           type:
                           - string
                           - 'null'
                         gclid:
+                          description: Google Click Identifier.
                           type:
                           - string
                           - 'null'
-                        metadata: {}
+                        metadata:
+                          description: Additional attribution metadata.
                         subaffiliate1:
+                          description: Sub-affiliate identifier 1.
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
+                          description: Sub-affiliate identifier 2.
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
+                          description: Sub-affiliate identifier 3.
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
+                          description: Sub-affiliate identifier 4.
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
                           type:
                           - string
                           - 'null'
                         utm_campaign:
+                          description: Medium of the traffic (e.g., email, CPC).
                           type:
                           - string
                           - 'null'
                         utm_content:
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
                           type:
                           - string
                           - 'null'
                         utm_source:
+                          description: Google UTM Source attribution.
                           type:
                           - string
                           - 'null'
                         utm_term:
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
@@ -16105,6 +16189,7 @@ webhooks:
                             title: Instructions
                             type: string
                           phone_number:
+                            description: In case we need to call you about your order
                             maxLength: 128
                             type: string
                           postcode:
@@ -16325,6 +16410,7 @@ webhooks:
                             title: Instructions
                             type: string
                           phone_number:
+                            description: In case we need to call you about your order
                             maxLength: 128
                             type: string
                           postcode:
@@ -17669,6 +17755,7 @@ webhooks:
                     attribution:
                       properties:
                         affiliate:
+                          description: Affiliate identifier.
                           type:
                           - string
                           - 'null'
@@ -17692,51 +17779,65 @@ webhooks:
                           - id
                           type: object
                         funnel:
+                          description: The marketing funnel attributed to the order.
                           type:
                           - string
                           - 'null'
                         gclid:
+                          description: Google Click Identifier.
                           type:
                           - string
                           - 'null'
-                        metadata: {}
+                        metadata:
+                          description: Additional attribution metadata.
                         subaffiliate1:
+                          description: Sub-affiliate identifier 1.
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
+                          description: Sub-affiliate identifier 2.
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
+                          description: Sub-affiliate identifier 3.
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
+                          description: Sub-affiliate identifier 4.
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
                           type:
                           - string
                           - 'null'
                         utm_campaign:
+                          description: Medium of the traffic (e.g., email, CPC).
                           type:
                           - string
                           - 'null'
                         utm_content:
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
                           type:
                           - string
                           - 'null'
                         utm_source:
+                          description: Google UTM Source attribution.
                           type:
                           - string
                           - 'null'
                         utm_term:
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
@@ -17746,40 +17847,50 @@ webhooks:
                     billing_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -17799,7 +17910,10 @@ webhooks:
                     display_taxes:
                       type: string
                     fulfillment_status:
-                      description: '* `not_required` - Not Required
+                      description: 'The order''s status in terms of fulfillment.
+
+
+                        * `not_required` - Not Required
 
                         * `unfulfilled` - Unfulfilled
 
@@ -17850,7 +17964,6 @@ webhooks:
                     is_test:
                       type: boolean
                     lines:
-                      deprecated: true
                       items:
                         properties:
                           id:
@@ -18019,6 +18132,7 @@ webhooks:
                         type: object
                       type: array
                     metadata:
+                      description: Additional order metadata.
                       oneOf:
                       - {}
                       - type: 'null'
@@ -18448,29 +18562,36 @@ webhooks:
                     shipping_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
@@ -18480,13 +18601,16 @@ webhooks:
                           title: Instructions
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -18519,6 +18643,7 @@ webhooks:
                     source:
                       type: string
                     status:
+                      description: The order's overall status.
                       maxLength: 100
                       type: string
                     subscription_lifecycle:
@@ -18538,6 +18663,7 @@ webhooks:
                     supports_post_purchase_upsells:
                       type: boolean
                     tags:
+                      description: An array of tags associated with the order.
                       items:
                         type:
                         - string
@@ -18872,6 +18998,7 @@ webhooks:
                     attribution:
                       properties:
                         affiliate:
+                          description: Affiliate identifier.
                           type:
                           - string
                           - 'null'
@@ -18895,51 +19022,65 @@ webhooks:
                           - id
                           type: object
                         funnel:
+                          description: The marketing funnel attributed to the order.
                           type:
                           - string
                           - 'null'
                         gclid:
+                          description: Google Click Identifier.
                           type:
                           - string
                           - 'null'
-                        metadata: {}
+                        metadata:
+                          description: Additional attribution metadata.
                         subaffiliate1:
+                          description: Sub-affiliate identifier 1.
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
+                          description: Sub-affiliate identifier 2.
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
+                          description: Sub-affiliate identifier 3.
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
+                          description: Sub-affiliate identifier 4.
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
                           type:
                           - string
                           - 'null'
                         utm_campaign:
+                          description: Medium of the traffic (e.g., email, CPC).
                           type:
                           - string
                           - 'null'
                         utm_content:
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
                           type:
                           - string
                           - 'null'
                         utm_source:
+                          description: Google UTM Source attribution.
                           type:
                           - string
                           - 'null'
                         utm_term:
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
@@ -18949,40 +19090,50 @@ webhooks:
                     billing_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -19002,7 +19153,10 @@ webhooks:
                     display_taxes:
                       type: string
                     fulfillment_status:
-                      description: '* `not_required` - Not Required
+                      description: 'The order''s status in terms of fulfillment.
+
+
+                        * `not_required` - Not Required
 
                         * `unfulfilled` - Unfulfilled
 
@@ -19053,7 +19207,6 @@ webhooks:
                     is_test:
                       type: boolean
                     lines:
-                      deprecated: true
                       items:
                         properties:
                           id:
@@ -19222,6 +19375,7 @@ webhooks:
                         type: object
                       type: array
                     metadata:
+                      description: Additional order metadata.
                       oneOf:
                       - {}
                       - type: 'null'
@@ -19651,29 +19805,36 @@ webhooks:
                     shipping_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
@@ -19683,13 +19844,16 @@ webhooks:
                           title: Instructions
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -19722,6 +19886,7 @@ webhooks:
                     source:
                       type: string
                     status:
+                      description: The order's overall status.
                       maxLength: 100
                       type: string
                     subscription_lifecycle:
@@ -19741,6 +19906,7 @@ webhooks:
                     supports_post_purchase_upsells:
                       type: boolean
                     tags:
+                      description: An array of tags associated with the order.
                       items:
                         type:
                         - string
@@ -21374,6 +21540,7 @@ webhooks:
                     attribution:
                       properties:
                         affiliate:
+                          description: Affiliate identifier.
                           type:
                           - string
                           - 'null'
@@ -21397,51 +21564,65 @@ webhooks:
                           - id
                           type: object
                         funnel:
+                          description: The marketing funnel attributed to the order.
                           type:
                           - string
                           - 'null'
                         gclid:
+                          description: Google Click Identifier.
                           type:
                           - string
                           - 'null'
-                        metadata: {}
+                        metadata:
+                          description: Additional attribution metadata.
                         subaffiliate1:
+                          description: Sub-affiliate identifier 1.
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
+                          description: Sub-affiliate identifier 2.
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
+                          description: Sub-affiliate identifier 3.
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
+                          description: Sub-affiliate identifier 4.
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
                           type:
                           - string
                           - 'null'
                         utm_campaign:
+                          description: Medium of the traffic (e.g., email, CPC).
                           type:
                           - string
                           - 'null'
                         utm_content:
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
                           type:
                           - string
                           - 'null'
                         utm_source:
+                          description: Google UTM Source attribution.
                           type:
                           - string
                           - 'null'
                         utm_term:
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
@@ -21451,40 +21632,50 @@ webhooks:
                     billing_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -21696,29 +21887,36 @@ webhooks:
                     shipping_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
@@ -21728,13 +21926,16 @@ webhooks:
                           title: Instructions
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -21900,6 +22101,7 @@ webhooks:
                     attribution:
                       properties:
                         affiliate:
+                          description: Affiliate identifier.
                           type:
                           - string
                           - 'null'
@@ -21923,51 +22125,65 @@ webhooks:
                           - id
                           type: object
                         funnel:
+                          description: The marketing funnel attributed to the order.
                           type:
                           - string
                           - 'null'
                         gclid:
+                          description: Google Click Identifier.
                           type:
                           - string
                           - 'null'
-                        metadata: {}
+                        metadata:
+                          description: Additional attribution metadata.
                         subaffiliate1:
+                          description: Sub-affiliate identifier 1.
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
+                          description: Sub-affiliate identifier 2.
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
+                          description: Sub-affiliate identifier 3.
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
+                          description: Sub-affiliate identifier 4.
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
                           type:
                           - string
                           - 'null'
                         utm_campaign:
+                          description: Medium of the traffic (e.g., email, CPC).
                           type:
                           - string
                           - 'null'
                         utm_content:
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
                           type:
                           - string
                           - 'null'
                         utm_source:
+                          description: Google UTM Source attribution.
                           type:
                           - string
                           - 'null'
                         utm_term:
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
@@ -21977,40 +22193,50 @@ webhooks:
                     billing_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -22222,29 +22448,36 @@ webhooks:
                     shipping_address:
                       properties:
                         country:
+                          description: The address country code.
                           title: ISO 3166-1 alpha-2
                           type: string
                         first_name:
+                          description: The first name of the address.
                           maxLength: 255
                           type: string
                         id:
                           type: integer
                         last_name:
+                          description: The last name of the address.
                           maxLength: 255
                           type: string
                         line1:
+                          description: The first line of the address.
                           maxLength: 255
                           title: First line of address
                           type: string
                         line2:
+                          description: Optional second line of of the address.
                           maxLength: 255
                           title: Second line of address
                           type: string
                         line3:
+                          description: Optional third line of of the address.
                           maxLength: 255
                           title: Third line of address
                           type: string
                         line4:
+                          description: City of the address.
                           maxLength: 255
                           title: City
                           type: string
@@ -22254,13 +22487,16 @@ webhooks:
                           title: Instructions
                           type: string
                         phone_number:
+                          description: The address phone number.
                           maxLength: 128
                           type: string
                         postcode:
+                          description: The address post code or zip code.
                           maxLength: 64
                           title: Post/Zip-code
                           type: string
                         state:
+                          description: The address state/province.
                           maxLength: 255
                           title: State/Province
                           type: string
@@ -22848,6 +23084,7 @@ webhooks:
                     attribution:
                       properties:
                         affiliate:
+                          description: Affiliate identifier.
                           type:
                           - string
                           - 'null'
@@ -22871,51 +23108,65 @@ webhooks:
                           - id
                           type: object
                         funnel:
+                          description: The marketing funnel attributed to the order.
                           type:
                           - string
                           - 'null'
                         gclid:
+                          description: Google Click Identifier.
                           type:
                           - string
                           - 'null'
-                        metadata: {}
+                        metadata:
+                          description: Additional attribution metadata.
                         subaffiliate1:
+                          description: Sub-affiliate identifier 1.
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
+                          description: Sub-affiliate identifier 2.
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
+                          description: Sub-affiliate identifier 3.
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
+                          description: Sub-affiliate identifier 4.
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
                           type:
                           - string
                           - 'null'
                         utm_campaign:
+                          description: Medium of the traffic (e.g., email, CPC).
                           type:
                           - string
                           - 'null'
                         utm_content:
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
                           type:
                           - string
                           - 'null'
                         utm_source:
+                          description: Google UTM Source attribution.
                           type:
                           - string
                           - 'null'
                         utm_term:
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
