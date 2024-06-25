@@ -99,6 +99,7 @@ POST https://{store}.29next.store/api/admin/disputes/
   "type": "alert", // dispute type
   "arn": "string", // optional
   "case_number": "string", // optional
+  "happened_at": "2019-08-24T14:15:22Z", // date when dispute occurred
   "amount": "string", // dispute amount, sometimes doesnt match transaction amount
   "currency": "USD", // dispute currency
 }
