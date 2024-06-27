@@ -78,12 +78,13 @@ import TabItem from '@theme/TabItem';
 ```html
 <div class="{% if settings.layout == 'boxed' %}container{% endif %}">
     <h1>Welcome to {{ settings.store_name }}!</h1>
-    <div>Contionally boxed or full width content</div>
+    <div>Conditionally boxed or full width content</div>
 </div>
 ```
 
 </TabItem>
 </Tabs>
+
 
 ### Attribute Reference
 
@@ -103,9 +104,7 @@ import TabItem from '@theme/TabItem';
 
 ## Schema Input Types
 
-Schema input types map to input fields that will be rendered in the theme settings form in the dashboard.
-
-
+Schema input types map to input fields that will be rendered in the settings form in the dashboard.
 
 ### checkbox
 
@@ -130,6 +129,20 @@ Schema input types map to input fields that will be rendered in the theme settin
 }
 ```
 
+### css
+
+```json
+{
+    "type": "css",
+    "name": "custom_css",
+    "label": "Custom CSS",
+    "help_text": "Example css input."
+}
+```
+:::info
+CSS settings field content is automatically wrapped in `<style></style>` tags when rendering in templates.
+:::
+
 ### email
 
 ```json
@@ -153,6 +166,33 @@ Schema input types map to input fields that will be rendered in the theme settin
     "default": "uploads/logo.png"
 }
 ```
+
+
+### html
+
+```json
+{
+    "type": "html",
+    "name": "custom_html",
+    "label": "Custom HTML",
+    "help_text": "Example html input."
+}
+```
+
+
+### javascript
+
+```json
+{
+    "type": "javascript",
+    "name": "custom_javascript",
+    "label": "Custom Javascript",
+    "help_text": "Example javascript input."
+}
+```
+:::info
+Javascript settings field content is automatically wrapped in `<script></script>` tags when rendering in templates.
+:::
 
 ### menu
 ```json
@@ -336,9 +376,6 @@ Schema input types map to input fields that will be rendered in the theme settin
 ```
 
 
-
-
-
 ### url
 ```json
 {
@@ -349,3 +386,4 @@ Schema input types map to input fields that will be rendered in the theme settin
     "default": ""
 }
 ```
+
