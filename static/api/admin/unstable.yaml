@@ -795,15 +795,21 @@ components:
           type: integer
         order:
           readOnly: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         report_amount:
           format: decimal
           pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         report_currency:
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         resolution:
           description: '* `could_not_find_order` - Transaction Not found
 
@@ -1459,7 +1465,9 @@ components:
         rating:
           format: double
           readOnly: true
-          type: number
+          type:
+          - number
+          - 'null'
         recommended_products:
           items:
             type: integer
@@ -2012,15 +2020,21 @@ components:
           type: integer
         order:
           readOnly: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         report_amount:
           format: decimal
           pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         report_currency:
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         resolution:
           description: '* `could_not_find_order` - Transaction Not found
 
@@ -2137,6 +2151,8 @@ components:
         reference:
           maxLength: 512
           type: string
+        requires_shipping:
+          type: boolean
         status:
           readOnly: true
           type: string
@@ -2670,6 +2686,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/LocationAddress'
           readOnly: true
+        requires_shipping:
+          type: boolean
         shipping_method:
           type: string
         status:
@@ -3270,6 +3288,8 @@ components:
         id:
           readOnly: true
           type: integer
+        is_gift_card:
+          type: boolean
         is_upsell:
           type: boolean
         original_price_excl_tax:
@@ -3565,7 +3585,9 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         total_discount:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -4052,15 +4074,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Cart'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedCategoryList:
       properties:
@@ -4068,15 +4097,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Category'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedDefinitionList:
       properties:
@@ -4084,15 +4120,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Definition'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedDisputeList:
       properties:
@@ -4100,15 +4143,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Dispute'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedDisputeNoteList:
       properties:
@@ -4116,15 +4166,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/DisputeNote'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedFulfillmentOrderList:
       properties:
@@ -4132,15 +4189,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/FulfillmentOrder'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedGatewayGroupList:
       properties:
@@ -4148,15 +4212,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/GatewayGroup'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedLocationList:
       properties:
@@ -4164,15 +4235,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Location'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedOrderListList:
       properties:
@@ -4180,15 +4258,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/OrderList'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedOrderNoteList:
       properties:
@@ -4196,15 +4281,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/OrderNote'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedPaymentGatewayList:
       properties:
@@ -4212,15 +4304,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/PaymentGateway'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedProductListList:
       properties:
@@ -4228,15 +4327,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/ProductList'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedResponseGiftCardList:
       properties:
@@ -4244,15 +4350,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/ResponseGiftCard'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedShippingMethodList:
       properties:
@@ -4260,15 +4373,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/ShippingMethod'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedStockRecordList:
       properties:
@@ -4276,15 +4396,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/StockRecord'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedSubscriptionDetailList:
       properties:
@@ -4292,15 +4419,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/SubscriptionDetail'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedThemeList:
       properties:
@@ -4308,15 +4442,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Theme'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedTicketList:
       properties:
@@ -4324,15 +4465,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Ticket'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedTicketTypeList:
       properties:
@@ -4340,15 +4488,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/TicketType'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedTransactionListList:
       properties:
@@ -4356,15 +4511,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/TransactionList'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedUpdatePriceWithCurrencyList:
       properties:
@@ -4372,15 +4534,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/UpdatePriceWithCurrency'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedUserAddressList:
       properties:
@@ -4388,15 +4557,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/UserAddress'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedUserList:
       properties:
@@ -4404,15 +4580,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/User'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedUserNoteList:
       properties:
@@ -4420,15 +4603,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/UserNote'
           type: array
+      required:
+      - count
+      - results
       type: object
     PaginatedWebhookList:
       properties:
@@ -4436,15 +4626,22 @@ components:
           example: 123
           type: integer
         next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
           nullable: true
           type: string
         previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
           nullable: true
           type: string
         results:
           items:
             $ref: '#/components/schemas/Webhook'
           type: array
+      required:
+      - count
+      - results
       type: object
     PatchedCreateUpdateStockRecord:
       properties:
@@ -4595,15 +4792,21 @@ components:
           type: integer
         order:
           readOnly: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         report_amount:
           format: decimal
           pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         report_currency:
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         resolution:
           description: '* `could_not_find_order` - Transaction Not found
 
@@ -5069,7 +5272,9 @@ components:
         rating:
           format: double
           readOnly: true
-          type: number
+          type:
+          - number
+          - 'null'
         recommended_products:
           items:
             type: integer
@@ -5416,7 +5621,9 @@ components:
         next_check_date:
           format: date-time
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         secret_key:
           type:
           - string
@@ -5723,7 +5930,9 @@ components:
         rating:
           format: double
           readOnly: true
-          type: number
+          type:
+          - number
+          - 'null'
         recommended_products:
           items:
             type: integer
@@ -5945,7 +6154,9 @@ components:
         rating:
           format: double
           readOnly: true
-          type: number
+          type:
+          - number
+          - 'null'
         recommended_products:
           items:
             type: integer
@@ -6704,7 +6915,9 @@ components:
         num_allocated:
           readOnly: true
           title: Number allocated
-          type: integer
+          type:
+          - integer
+          - 'null'
         num_in_stock:
           maximum: 2147483647
           minimum: -2147483648
@@ -8115,7 +8328,9 @@ components:
         rating:
           format: double
           readOnly: true
-          type: number
+          type:
+          - number
+          - 'null'
         recommended_products:
           items:
             type: integer
@@ -8677,7 +8892,9 @@ components:
         next_check_date:
           format: date-time
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         secret_key:
           type:
           - string
@@ -11345,7 +11562,9 @@ paths:
         name: sku
         schema:
           items:
-            type: string
+            type:
+            - string
+            - 'null'
           type: array
         style: form
       - description: 'Status
@@ -12409,6 +12628,11 @@ paths:
       - description: Is Public
         in: query
         name: is_public
+        schema:
+          type: boolean
+      - description: Is Gift Card
+        in: query
+        name: is_gift_card
         schema:
           type: boolean
       - in: query
@@ -16570,13 +16794,19 @@ webhooks:
                     id:
                       type: integer
                     order:
-                      type: integer
+                      type:
+                      - integer
+                      - 'null'
                     report_amount:
                       format: decimal
                       pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                     report_currency:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                     resolution:
                       description: '* `could_not_find_order` - Transaction Not found
 
@@ -16750,13 +16980,19 @@ webhooks:
                     id:
                       type: integer
                     order:
-                      type: integer
+                      type:
+                      - integer
+                      - 'null'
                     report_amount:
                       format: decimal
                       pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                     report_currency:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                     resolution:
                       description: '* `could_not_find_order` - Transaction Not found
 
@@ -17041,6 +17277,8 @@ webhooks:
                       - line1
                       - line4
                       type: object
+                    requires_shipping:
+                      type: boolean
                     shipping_method:
                       type: string
                     status:
@@ -17290,6 +17528,8 @@ webhooks:
                       - line1
                       - line4
                       type: object
+                    requires_shipping:
+                      type: boolean
                     shipping_method:
                       type: string
                     status:
@@ -18018,6 +18258,8 @@ webhooks:
                             - line1
                             - line4
                             type: object
+                          requires_shipping:
+                            type: boolean
                           shipping_method:
                             type: string
                           status:
@@ -18076,6 +18318,8 @@ webhooks:
                             type: integer
                           id:
                             type: integer
+                          is_gift_card:
+                            type: boolean
                           is_upsell:
                             type: boolean
                           original_price_excl_tax:
@@ -19412,6 +19656,8 @@ webhooks:
                             - line1
                             - line4
                             type: object
+                          requires_shipping:
+                            type: boolean
                           shipping_method:
                             type: string
                           status:
@@ -19470,6 +19716,8 @@ webhooks:
                             type: integer
                           id:
                             type: integer
+                          is_gift_card:
+                            type: boolean
                           is_upsell:
                             type: boolean
                           original_price_excl_tax:
@@ -20646,7 +20894,9 @@ webhooks:
                       type: integer
                     rating:
                       format: double
-                      type: number
+                      type:
+                      - number
+                      - 'null'
                     recommended_products:
                       items:
                         type: integer
@@ -20680,7 +20930,9 @@ webhooks:
                             - 'null'
                           num_allocated:
                             title: Number allocated
-                            type: integer
+                            type:
+                            - integer
+                            - 'null'
                           num_in_stock:
                             maximum: 2147483647
                             minimum: -2147483648
@@ -20871,7 +21123,9 @@ webhooks:
                                   - 'null'
                                 num_allocated:
                                   title: Number allocated
-                                  type: integer
+                                  type:
+                                  - integer
+                                  - 'null'
                                 num_in_stock:
                                   maximum: 2147483647
                                   minimum: -2147483648
@@ -21167,7 +21421,9 @@ webhooks:
                       type: integer
                     rating:
                       format: double
-                      type: number
+                      type:
+                      - number
+                      - 'null'
                     recommended_products:
                       items:
                         type: integer
@@ -21201,7 +21457,9 @@ webhooks:
                             - 'null'
                           num_allocated:
                             title: Number allocated
-                            type: integer
+                            type:
+                            - integer
+                            - 'null'
                           num_in_stock:
                             maximum: 2147483647
                             minimum: -2147483648
@@ -21392,7 +21650,9 @@ webhooks:
                                   - 'null'
                                 num_allocated:
                                   title: Number allocated
-                                  type: integer
+                                  type:
+                                  - integer
+                                  - 'null'
                                 num_in_stock:
                                   maximum: 2147483647
                                   minimum: -2147483648
