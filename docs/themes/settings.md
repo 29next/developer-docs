@@ -179,7 +179,6 @@ CSS settings field content is automatically wrapped in `<style></style>` tags wh
 }
 ```
 
-
 ### javascript
 
 ```json
@@ -195,6 +194,7 @@ Javascript settings field content is automatically wrapped in `<script></script>
 :::
 
 ### menu
+
 ```json
 {
     "name": "header_menu",
@@ -206,6 +206,7 @@ Javascript settings field content is automatically wrapped in `<script></script>
 ```
 
 ### multi-select
+
 ```json
 {
     "type": "select",
@@ -253,6 +254,16 @@ Javascript settings field content is automatically wrapped in `<script></script>
     "max_value": 10,
     "min_value": 0,
     "default": 3
+}
+```
+
+### page
+```json
+{
+    "type": "page",
+    "name": "page_setting",
+    "label": "Example Setting Page",
+    "help_text": "Link to page configured from settings."
 }
 ```
 
@@ -324,6 +335,17 @@ Javascript settings field content is automatically wrapped in `<script></script>
 }
 ```
 
+### richtext
+```json
+{
+    "type": "richtext",
+    "name": "richtext_content",
+    "label": "Description Content",
+    "help_text": "Example rich text input field."
+}
+```
+
+
 ### select
 ```json
 {
@@ -386,4 +408,3 @@ Javascript settings field content is automatically wrapped in `<script></script>
     "default": ""
 }
 ```
-
