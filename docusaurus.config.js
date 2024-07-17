@@ -158,6 +158,9 @@ const config = {
                     { href: 'https://github.com/29next/', position: 'right', className: 'header-github-link' },
                 ],
             },
+            colorMode: {
+                defaultMode: 'dark'
+            },
             footer: {
                 style: 'light',
                 links: [
