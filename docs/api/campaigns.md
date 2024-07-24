@@ -1,5 +1,10 @@
 # Campaigns API
 
+``` mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 Campaigns App opens up new possibilities for frontend developers to easily create complex external campaign flows using Javascript, **no backend server-side integration required**.
 
 The Campaigns App provides an easy to use CORS enabled API that follows the best practices for integrating to our Admin API for an [External Checkout Flow](/docs/api/admin/guides/external-checkout.md).
@@ -83,15 +88,13 @@ console.log(result); // Show result in console
 ### Create Order
 Creating an order is the core method in an external checkout flow, see the example below to familiarize yourself with the payload data required.
 
-:::info The `success_url` Explained
-All orders require a `success_url` to handle payments requiring a redirect flow. The `success_url` should be the absolute URL of the "Next Page" in your campaign flow. In most cases, this should be your first upsell page, see more below in [Adding Upsells](#adding-upsells) on retrieving order details and handling payment methods that support upsells.
-:::
-
+<Tabs queryString="order-create">
+<TabItem value="bankcard" label="Bankcard">
 
 ```javascript title="Create an Order"
 var payload = {
     "user": {
-        "email": "test@email.com",
+        "email": "example@test.com",
         "first_name": "John",
         "last_name": "Doe"
     },
@@ -140,10 +143,9 @@ console.log(result); // Show result in console
 :::info iFrame Payment Form
 Bankcard payments require using the [iFrame Payment Form](/docs/api/admin/guides/iframe-payment-form.md) and passing the generated `card_token` for secure transfer of the payment method details. View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/).
 :::
-
 :::caution You Must Handle the Order Create Response
 - If response data has a `number`, order was successfully created, you can redirect to the next page.
-- If response data has a `payment_complete_url`, redirect the user to this page. After payment, user will come back to your `success_url` or `payment_failed_url`.
+- If response data has a `payment_complete_url`, the transaction requires [3DS Authentication](/docs/api/admin/guides/3ds2.md), redirect the user to this page. After payment, user will come back to your `success_url` or `payment_failed_url`.
 :::
 
 :::tip Handle APM Redirect Flow Declines
@@ -151,8 +153,124 @@ If an APM redirect flow declines or is canceled, by default the user is redirect
 
 Pass `payment_failed_url` to more explicitly control the decline handling for APM redirect flows.
 :::
+</TabItem>
+
+<TabItem value="apple_pay" label="Apple Pay">
+
+```javascript title="Create an Order Apple Pay One-click Flow"
+
+var payload = {
+  "lines": [
+    {
+      "package_id": 1,
+      "quantity": 1
+    }
+  ],
+  "payment_detail": {
+    "payment_method": "apple_pay"
+  },
+  "shipping_method": 1,
+  "success_url": "https://your-campaign.com/next-page/", // Next Page in Flow
+  "user": {
+    "email": "example@test.com"
+  }
+}
+
+
+const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": '<YOUR CAMPAIGN API KEY>' // Campaign API Key
+    },
+    body: JSON.stringify(payload),
+});
+const result = await response.json();
+```
+
+</TabItem>
+<TabItem value="google_pay" label="Google Pay">
+
+```javascript title="Create an Order Google Pay One-click Flow"
+
+var payload = {
+  "lines": [
+    {
+      "package_id": 1,
+      "quantity": 1
+    }
+  ],
+  "payment_detail": {
+    "payment_method": "google_pay"
+  },
+  "shipping_method": 1,
+  "success_url": "https://your-campaign.com/next-page/", // Next Page in Flow
+  "user": {
+    "email": "example@test.com"
+  }
+}
+
+
+const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": '<YOUR CAMPAIGN API KEY>' // Campaign API Key
+    },
+    body: JSON.stringify(payload),
+});
+const result = await response.json();
+```
+
+</TabItem>
+<TabItem value="paypal" label="Paypal">
+
+```javascript title="Create an Order Paypal One-click Flow"
+
+var payload = {
+  "lines": [
+    {
+      "package_id": 1,
+      "quantity": 1
+    }
+  ],
+  "payment_detail": {
+    "payment_method": "google_pay"
+  },
+  "shipping_method": 1,
+  "success_url": "https://your-campaign.com/next-page/", // Next Page in Flow
+  "user": {
+    "email": "example@test.com"
+  }
+}
+
+
+const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": '<YOUR CAMPAIGN API KEY>' // Campaign API Key
+    },
+    body: JSON.stringify(payload),
+});
+const result = await response.json();
+```
+
+</TabItem>
+<TabItem value="apms" label="APMs">
+
+APMs
+
+</TabItem>
+
+</Tabs>
+
+:::info The `success_url` Explained
+All orders require a `success_url` to handle payments requiring a redirect flow. The `success_url` should be the absolute URL of the "Next Page" in your campaign flow. In most cases, this should be your first upsell page, see more below in [Adding Upsells](#adding-upsells) on retrieving order details and handling payment methods that support upsells.
+:::
 
 ### Adding Upsells
+
 To add an upsell to an existing order, first you should check to see if the order payment method `supports_post_purchase_upsells` is `True` in the `orderRetrieve` response.
 
 ```javascript title="Retrieve Order Details"

@@ -137,11 +137,6 @@ The `ordersAddLineItemsCreate` API requires that the order initial **payment met
 ### Cart / Order / Upsell lines Detail
 Cart, Order, and Upsell line items represent the products the customer is purchasing. When an order is created, the product fulfillment location will be automatically chosen based on product stock records and inventory availability.
 
-**Acceptable Line Combinations for a Product**
-
-<Tabs>
-<TabItem value="parent" label="product_id + currency">
-
 ```json
 
 {
@@ -155,42 +150,6 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
 ]
 }
 ```
-</TabItem>
-<TabItem value="sku" label="sku + currency">
-
-:::warning Deprecation Notice
-Using `sku` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
-:::
-
-```json
-"lines": [
-    {
-        "sku": "DEMO-SKU",
-        "currency": "USD",
-        "quantity": 1,
-        "price": "33.44" // optional custom price
-    }
-]
-```
-</TabItem>
-<TabItem value="stockrecord_id" label="stockrecord_id">
-
-:::warning Deprecation Notice
-Using `stockrecord_id` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
-:::
-
-```json
-"lines": [
-    {
-        "stockrecord_id": 23,
-        "quantity": 1,
-        "price": 33.44 // optional
-    }
-]
-```
-</TabItem>
-</Tabs>
-
 
 #### Subscription Line Items
 
