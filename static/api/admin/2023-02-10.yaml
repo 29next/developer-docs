@@ -41,8 +41,6 @@ components:
 
             * `asendia` - asendia
 
-            * `boxme` - boxme
-
             * `hermesworld_uk` - hermesworld_uk
 
             * `deutsche_de` - deutsche_de
@@ -67,7 +65,6 @@ components:
           - usps
           - dhl
           - asendia
-          - boxme
           - hermesworld_uk
           - deutsche_de
           - swiss_post
@@ -81,7 +78,7 @@ components:
           type:
           - string
           - 'null'
-          x-spec-enum-id: c05e6b2878ed4101
+          x-spec-enum-id: 27dc2095d7ab4b38
         date_created:
           format: date-time
           readOnly: true
@@ -7439,8 +7436,6 @@ components:
 
             * `asendia` - asendia
 
-            * `boxme` - boxme
-
             * `deutsche_de` - deutsche_de
 
             * `dhl` - dhl
@@ -7469,7 +7464,6 @@ components:
           enum:
           - 4px
           - asendia
-          - boxme
           - deutsche_de
           - dhl
           - dhl_ecommerce
@@ -7484,7 +7478,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 8fbc861d1070ab08
+          x-spec-enum-id: ec29e8d4c32f7517
         carrier_other_name:
           type:
           - string
