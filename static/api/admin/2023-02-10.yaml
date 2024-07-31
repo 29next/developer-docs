@@ -13524,16 +13524,20 @@ paths:
           * `canceled` - Canceled
 
           * `retrying` - Retrying'
+        explode: true
         in: query
         name: status
         schema:
-          enum:
-          - active
-          - canceled
-          - past_due
-          - retrying
-          type: string
-          x-spec-enum-id: c5c93fe104ef015e
+          items:
+            enum:
+            - active
+            - canceled
+            - past_due
+            - retrying
+            type: string
+            x-spec-enum-id: c5c93fe104ef015e
+          type: array
+        style: form
       - explode: true
         in: query
         name: product
@@ -13554,10 +13558,49 @@ paths:
           type: array
         style: form
       - description: Gateway
+        explode: true
         in: query
         name: gateway
         schema:
-          type: integer
+          items:
+            type: integer
+          type: array
+        style: form
+      - description: 'Card Brand
+
+
+          * `visa` - Visa
+
+          * `mastercard` - Mastercard
+
+          * `american_express` - American Express
+
+          * `diners_club` - Diners Club
+
+          * `discover` - Discover
+
+          * `jcb` - JCB
+
+          * `maestro` - Maestro
+
+          * `dankort` - Dankort'
+        explode: true
+        in: query
+        name: card_type
+        schema:
+          items:
+            enum:
+            - american_express
+            - dankort
+            - diners_club
+            - discover
+            - jcb
+            - maestro
+            - mastercard
+            - visa
+            type: string
+          type: array
+        style: form
       - description: Order Number
         in: query
         name: order_number
