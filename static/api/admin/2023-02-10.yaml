@@ -57,7 +57,9 @@ components:
 
             * `firstmile` - firstmile
 
-            * `4px` - 4px'
+            * `4px` - 4px
+
+            * `ontrac` - ontrac'
           enum:
           - other
           - ups
@@ -74,11 +76,12 @@ components:
           - yunexpress
           - firstmile
           - 4px
+          - ontrac
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 27dc2095d7ab4b38
+          x-spec-enum-id: 20cbfbd7e6150522
         date_created:
           format: date-time
           readOnly: true
@@ -825,6 +828,11 @@ components:
           - string
           - 'null'
           x-spec-enum-id: 8848f3a079993862
+        resolution_other_message:
+          title: Other Message
+          type:
+          - string
+          - 'null'
         status:
           description: '* `new` - New
 
@@ -2060,6 +2068,11 @@ components:
           - string
           - 'null'
           x-spec-enum-id: 8848f3a079993862
+        resolution_other_message:
+          title: Other Message
+          type:
+          - string
+          - 'null'
         status:
           description: '* `new` - New
 
@@ -4756,6 +4769,11 @@ components:
           - string
           - 'null'
           x-spec-enum-id: 8848f3a079993862
+        resolution_other_message:
+          title: Other Message
+          type:
+          - string
+          - 'null'
         status:
           description: '* `new` - New
 
@@ -7450,6 +7468,8 @@ components:
 
             * `myhermes` - myhermes
 
+            * `ontrac` - ontrac
+
             * `other` - other
 
             * `royal_mail` - royal_mail
@@ -7471,6 +7491,7 @@ components:
           - firstmile
           - hermesworld_uk
           - myhermes
+          - ontrac
           - other
           - royal_mail
           - swiss_post
@@ -7478,7 +7499,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: ec29e8d4c32f7517
+          x-spec-enum-id: 546b28a3efd6fb8e
         carrier_other_name:
           type:
           - string
@@ -16932,6 +16953,11 @@ webhooks:
                       - string
                       - 'null'
                       x-spec-enum-id: 8848f3a079993862
+                    resolution_other_message:
+                      title: Other Message
+                      type:
+                      - string
+                      - 'null'
                     status:
                       description: '* `new` - New
 
@@ -17118,6 +17144,11 @@ webhooks:
                       - string
                       - 'null'
                       x-spec-enum-id: 8848f3a079993862
+                    resolution_other_message:
+                      title: Other Message
+                      type:
+                      - string
+                      - 'null'
                     status:
                       description: '* `new` - New
 
