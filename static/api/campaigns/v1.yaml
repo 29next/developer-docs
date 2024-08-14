@@ -54,9 +54,6 @@ components:
         state:
           maxLength: 225
           type: string
-        title:
-          maxLength: 64
-          type: string
       required:
       - country
       - first_name
@@ -99,9 +96,6 @@ components:
           type: string
         state:
           maxLength: 225
-          type: string
-        title:
-          maxLength: 64
           type: string
       required:
       - country
@@ -581,9 +575,6 @@ components:
           type: string
         state:
           maxLength: 225
-          type: string
-        title:
-          maxLength: 64
           type: string
       required:
       - country
