@@ -6,11 +6,7 @@ sidebar_position: 3
 
 ### Introduction
 
-Theme support dynamic settings for use in in a theme that can be managed in the store dashboard theme editor.
-
-### Theme Editor Experience
-
-Theme settings are the power behind providing a powerful easy to use editor experience for users to customize the look and feel of their storefront without needing to know how to code.
+Theme settings are the power behind the dashboard theme editor experience allowing users to customize the look and feel of their storefront without needing to know how to code.
 
 ```mdx-code-block
 import useBaseUrl from '@docusaurus/useBaseUrl';
