@@ -6,15 +6,20 @@ sidebar_position: 3
 
 ### Introduction
 
-Theme support dynamic settings for use in in a theme that can be managed in the store dashboard theme editor. Theme settings consist of two JSON files in the config directory.
+Theme support dynamic settings for use in in a theme that can be managed in the store dashboard theme editor.
 
-- `settings_schema.json` - Used to create the settings schema to create the settings form in the dashboard theme editor.
+### Theme Editor Experience
 
-- `settings_data.json` - Used to store theme settings values for access in templates for template compiling.
+Theme settings are the power behind providing a powerful easy to use editor experience for users to customize the look and feel of their storefront without needing to know how to code.
 
-### Theme settings location
+```mdx-code-block
+import useBaseUrl from '@docusaurus/useBaseUrl';
+```
+<img src={useBaseUrl('img/theme-customize-editor.jpg')} />
 
-In the `configs` directory of a theme, theme developers can edit/manage dynamic settings that can be used to customize a theme.
+### Theme Settings Location
+
+Theme settings consist of two JSON files in the `/configs` directory.
 
 ```title="Theme settings location"
 configs
@@ -22,12 +27,12 @@ configs
   └── settings_data.json
 ```
 
+- `settings_schema.json` - Used to create the settings schema to create settings shown in the dashboard theme editor.
+- `settings_data.json` - Used to store theme settings values for access in templates for rendering.
+
 ### Using Settings in Templates
 
 Settings are passed to templates settings context variable allowing you to access settings values by their name. See example below of changing the layout by conditionally adding a class based on a radio setting.
-
-
-
 
 ```mdx-code-block
 import Tabs from '@theme/Tabs';
@@ -108,7 +113,11 @@ Schema input types map to input fields that will be rendered in the settings for
 
 ### checkbox
 
-```json
+A `checkbox` setting outputs a checkbox field input for use cases such as toggling features on and off.
+
+When accessing a `checkbox` field value in a template, it returns boolean.
+
+```json title="Example checkbox setting"
 {
     "name": "enable_cookie_msg",
     "label": "Enable Cookie Message Pop",
@@ -119,7 +128,12 @@ Schema input types map to input fields that will be rendered in the settings for
 ```
 
 ### color
-```json
+
+A `color` setting outputs a color picker field allowing the user to chose a color for cases such as customizing font and button styles.
+
+When accessing a `color` field value in a template, it returns a hex value as a string.
+
+```json title="Example color setting"
 {
     "type": "color",
     "name": "btn_primary_color",
@@ -131,7 +145,11 @@ Schema input types map to input fields that will be rendered in the settings for
 
 ### css
 
-```json
+A `css` setting outputs an css code editor allowing the user to add custom css in a nicely formatted editor for cases such as custom css styles.
+
+When accessing a `css` field value in a template, it returns the a string with the css pre-wrapped with `<style></style>` tags.
+
+```json title="Example css setting"
 {
     "type": "css",
     "name": "custom_css",
@@ -139,13 +157,14 @@ Schema input types map to input fields that will be rendered in the settings for
     "help_text": "Example css input."
 }
 ```
-:::info
-CSS settings field content is automatically wrapped in `<style></style>` tags when rendering in templates.
-:::
 
 ### email
 
-```json
+A `email` setting outputs a email field allowing the user to add validated email text for cases of showing a contact email.
+
+When accessing a `email` field value in a template, it returns a string.
+
+```json title="Example email setting"
 {
     "type": "email",
     "name": "contact_email_address",
@@ -157,7 +176,11 @@ CSS settings field content is automatically wrapped in `<style></style>` tags wh
 
 ### file
 
-```json
+A `file` setting outputs a file upload input field allowing the user to upload files for scenarios such as a homepage banner background image.
+
+When accessing a `file` field value in a template, it returns a full CDN link to the uploaded file.
+
+```json title="Example file setting"
 {
     "type": "file",
     "name": "logo",
@@ -170,7 +193,11 @@ CSS settings field content is automatically wrapped in `<style></style>` tags wh
 
 ### html
 
-```json
+A `html` setting outputs an html code editor allowing the user to add custom html in a nicely formatted editor for cases such as code snippets or video embeds.
+
+When accessing a `html` field value in a template, it returns the html content string.
+
+```json title="Example html setting"
 {
     "type": "html",
     "name": "custom_html",
@@ -179,23 +206,13 @@ CSS settings field content is automatically wrapped in `<style></style>` tags wh
 }
 ```
 
-### javascript
-
-```json
-{
-    "type": "javascript",
-    "name": "custom_javascript",
-    "label": "Custom Javascript",
-    "help_text": "Example javascript input."
-}
-```
-:::info
-Javascript settings field content is automatically wrapped in `<script></script>` tags when rendering in templates.
-:::
-
 ### menu
 
-```json
+A `menu` setting field outputs a dropdown select field to choose from the available navigation menus.
+
+When accessing a `menu` setting value in a template, it returns a menu object allowing you to access the menus items. See [menus](/docs/themes/templates/objects.md#menus) object details for working with menus in templates.
+
+```json title="Example menu setting"
 {
     "name": "header_menu",
     "label": "Header Menu",
@@ -207,7 +224,11 @@ Javascript settings field content is automatically wrapped in `<script></script>
 
 ### multi-select
 
-```json
+A `multi-select` setting outputs a multi-select field that can allows users to select multiple values from a predefined list of options.
+
+When accessing a `multi-select` field value in a template, it returns a list of values that have been saved.
+
+```json title="Example multi-select setting"
 {
     "type": "select",
     "multi-select": true,
@@ -245,7 +266,12 @@ Javascript settings field content is automatically wrapped in `<script></script>
 
 
 ### number
-```json
+
+A `number` setting field outputs a standard number input field allowing users to input a number respecting the optionally available min and max values.
+
+When accessing a `number` setting value in a template, it's returned as an integer.
+
+```json title="Example number setting"
 {
     "type": "number",
     "name": "homepage_testimonials_count",
@@ -258,7 +284,13 @@ Javascript settings field content is automatically wrapped in `<script></script>
 ```
 
 ### page
-```json
+
+A `page` setting field outputs a dropdown select field to choose from the available pages.
+
+When accessing a `page` setting value in a template, it returns a page object. See [page](/docs/themes/templates/objects.md#page) object details for working with pages in templates.
+
+
+```json title="Example page setting"
 {
     "type": "page",
     "name": "page_setting",
@@ -270,7 +302,11 @@ Javascript settings field content is automatically wrapped in `<script></script>
 
 ### product
 
-```json
+A `product` setting field outputs a dropdown select field to choose from the available products in the store catalogue.
+
+When accessing a `product` setting value in a template, it returns a product object. See [product](/docs/themes/templates/objects.md#product) object details for working with products in templates.
+
+```json title="Example product setting"
 {
     "name": "hero_product",
     "label": "Hero Product",
@@ -280,9 +316,15 @@ Javascript settings field content is automatically wrapped in `<script></script>
 
 ```
 
+
 ### products
 
-```json
+A `products` setting field outputs a multi-select field to choose from the available products in the store catalogue.
+
+When accessing a `products` setting value in a template, it returns a list of products to iterate through. See [product](/docs/themes/templates/objects.md#product) object details for working with products in templates.
+
+
+```json title="Example products setting"
 {
     "name": "featured_products",
     "label": "Featured Products",
@@ -291,9 +333,15 @@ Javascript settings field content is automatically wrapped in `<script></script>
 }
 ```
 
+
 ### product_category
 
-```json
+A `product_category` setting field outputs a dropdown select field to choose from the available product categories.
+
+When accessing a `product_category` setting value in a template, it returns a product category object. See [product category](/docs/themes/templates/objects.md#product_category) object details for working with product categories in templates.
+
+
+```json title="Example featured_products setting"
 {
     "name": "featured_products",
     "label": "Featured Product Category",
@@ -302,9 +350,15 @@ Javascript settings field content is automatically wrapped in `<script></script>
 }
 ```
 
+
 ### product_categories
 
-```json
+A `product_categories` setting field outputs a multi-select field to choose from the available product categories.
+
+When accessing a `product_categories` setting value in a template, it returns a list of product categories to iterate through. See [product category](/docs/themes/templates/objects.md#product_category) object details for working with product categories in templates.
+
+
+```json title="Example product_categories setting"
 {
     "name": "top_product_categories",
     "label": "Top Product Categories",
@@ -315,7 +369,11 @@ Javascript settings field content is automatically wrapped in `<script></script>
 
 ### radio
 
-```json
+A `radio` setting outputs a radio option field that can be used in option selection scenarios such as alignment or layout style.
+
+When accessing a `radio` setting value in a template, it's returned as a string.
+
+```json title="Example radio setting"
 {
     "type": "radio",
     "name": "layout",
@@ -335,8 +393,35 @@ Javascript settings field content is automatically wrapped in `<script></script>
 }
 ```
 
+
+### range
+
+A `range` setting outputs a slider that can be used to a varying numerical value such as font size, number of columns or opacity.
+
+When accessing a `range` setting value in a template, it's returned as an integer.
+
+```json title="Example range setting"
+{
+    "type": "range",
+    "name": "slider_range_field",
+    "label": "Headings font size",
+    "help_text": "",
+    "min": 0,
+    "max": 50,
+    "step": 1,
+    "unit": "px",
+    "required": true,
+    "default": 25
+}
+```
+
 ### richtext
-```json
+
+A `richtext` setting displays a WYSIWYG editor with basic text formatting options allowing users to input and format text content.
+
+When accessing a `richtext` setting value in a template, it's returned as a string.
+
+```json title="Example richtext setting"
 {
     "type": "richtext",
     "name": "richtext_content",
@@ -347,7 +432,12 @@ Javascript settings field content is automatically wrapped in `<script></script>
 
 
 ### select
-```json
+
+A `select` setting outputs a dropdown option select field that can be used in option selection scenarios such as alignment or layout style.
+
+When accessing a `select` setting value in a template, it's returned as a string.
+
+```json title="Example select setting"
 {
     "type": "select",
     "name": "header_style",
@@ -371,9 +461,15 @@ Javascript settings field content is automatically wrapped in `<script></script>
 }
 ```
 
+
+
 ### text
 
-```json
+A `text` setting outputs a single line input field that can be used in scenarios such as the banner heading text on the homepage.
+
+When accessing a `text` setting value in a template, it's returned as a string.
+
+```json title="Example text setting"
 {
     "type": "text",
     "name": "store_name",
@@ -385,21 +481,32 @@ Javascript settings field content is automatically wrapped in `<script></script>
 }
 ```
 
+
 ### textarea
 
-```json
+A `textarea` setting outputs a multi-line textarea input field that can be used in scenarios such as the banner sub-heading text on the homepage.
+
+When accessing a `textarea` setting value in a template, it's returned as a string.
+
+```json title="Example textarea setting"
 {
     "type": "textarea",
     "name": "description",
     "label": "Description",
     "help_text": "Example input textarea",
-    "default": "Test"
+    "default": "Example long multi-line sub-heading text for the banner."
 }
 ```
 
 
 ### url
-```json
+
+A `url` setting outputs an input url type field that accepts fully qualified urls that can be used for relative paths or external url links.
+
+When accessing a `url` setting value in a template, it's returned as a string.
+
+
+```json title="Example url setting"
 {
     "type": "url",
     "name": "social_link",

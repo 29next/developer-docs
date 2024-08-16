@@ -774,7 +774,7 @@ Blog post category properties available through global [post_categories](#post_c
 
 ### product
 
-Product configured in the store.
+Product configured in the store catalogue.
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
