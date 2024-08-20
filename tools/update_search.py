@@ -7,7 +7,7 @@ BASE_API_FILES_PATH = '../static/api/'
 app_id = 'GNSJUJD786'
 api_key = os.environ['ALGOLIA_API_KEY']
 index_name = 'docs'
-api_base_url = 'https://developers.29next.com/docs/api/admin/reference/?v=2024-04-01#/operations/'
+api_base_url = 'https://developers.29next.com/docs/api/admin/reference/#/operations/'
 
 
 def generate_objects():

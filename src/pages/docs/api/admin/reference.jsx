@@ -36,10 +36,11 @@ export default function Home() {
     const location = router.location;
 
     const url = new URL(
-        `https://developers.29next.com${location.pathname}${location.search}`
+        `https://developers.29next.com${location.pathname}${location.hash}`
     );
 
     const currentVersion = url.searchParams.get('v') || '2023-02-10';
+
     return (
         <Layout
             title="Admin API Reference"
