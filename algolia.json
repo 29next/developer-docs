@@ -25,7 +25,7 @@
         "lvl6": "article h6",
         "text": "article p, article li, article td:last-child"
     },
-    "strip_chars": " .,;:#",
+    "strip_chars": " .,;:",
     "custom_settings": {
         "separatorsToIndex": "_",
         "attributesForFaceting": [

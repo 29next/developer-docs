@@ -24,13 +24,14 @@ def generate_objects():
                 operation_id = each[1].get('operationId', '')
                 tag = each[1]['tags'][0]
                 description = each[1].get('description', '')
+                url = '{}{}{}'.format(api_base_url, operation_id, '?ref=search')
                 navigation = {
                         'lvl0': 'Documentation',
                         'lvl1': 'Admin API',
-                        'lvl2': tag,
-                        'lvl3': operation_id,
-                        'lvl4': None,
-                        'lvl5': None,
+                        'lvl2': None,
+                        'lvl3': tag,
+                        'lvl4': operation_id,
+                        'lvl5': description,
                         'lvl6': None
                 }
                 apis.append(
@@ -41,9 +42,11 @@ def generate_objects():
                         'docusaurus_tag': 'docs-default-current',
                         'category': 'API',
                         'language': 'en',
-                        'type': 'lvl3',
-                        'url': '{}{}{}'.format(api_base_url, operation_id, '?v=2024-04-01&ref=search'),
-                        'url_without_anchor': '{}{}'.format(api_base_url, operation_id),
+                        'type': 'lvl4',
+                        'anchor': '/operations/{}'.format(operation_id),
+                        'url': url,
+                        'url_without_variables': url,
+                        'url_without_anchor': url,
                         'weight': {
                             'page_rank': 100,
                             'level': 100,
