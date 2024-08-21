@@ -1,20 +1,24 @@
 import React from 'react';
-import { useHistory } from '@docusaurus/router';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
 /*
 This is a hack to create a redirect view for algolia search to work
+Example:
+http://localhost:3000/docs/api/redirect/?type=admin&operation=operations/cartsList&v=2024-04-01
 */
-
 export default function redirectAPI() {
-    const router = useHistory();
-    const location = router.location;
-    const queryParams = new URLSearchParams(location.search)
+    return (
+        <BrowserOnly>
+            {() => {
+                const location = window.location;
+                const queryParams = new URLSearchParams(location.search)
+                const apiType = queryParams.get('type')
+                const operation = '#/' + queryParams.get('operation')
+                const version = queryParams.get('v')
+                const destination = '/docs/api/' + apiType + '/reference/?v=' + version + operation
 
-    const apiType = queryParams.get('type')
-    const operation = '#/' + queryParams.get('operation')
-    const version = queryParams.get('v')
-
-    let destination = '/docs/api/' + apiType + '/reference/?v=' + version + operation
-
-    return window.location = destination;
+                window.location = destination;
+            }}
+        </BrowserOnly>
+    );
 }
-// http://localhost:3000/docs/api/redirect/?type=admin&operation=operations/cartsList&v=2024-04-01
