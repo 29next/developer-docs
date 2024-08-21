@@ -9,12 +9,11 @@ API_KEY = os.environ['ALGOLIA_API_KEY']
 INDEX_NAME = 'docs'
 
 
-def create_index_object(api_type, tag, object_id, description, anchor):
+def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
     url = SITE_DOMAIN + anchor
-
     navigation = {
         'lvl0': 'Documentation',
-        'lvl1': '{} API'.format(api_type.capitalize()),
+        'lvl1': api_type_title,
         'lvl2': None,
         'lvl3': tag,
         'lvl4': object_id,
@@ -22,11 +21,11 @@ def create_index_object(api_type, tag, object_id, description, anchor):
         'lvl6': None
     }
     object = {
-        'objectID': object_id,
+        'objectID': '{}-{}'.format(api_type, object_id),
         'name': object_id,
         'content': description,
         'docusaurus_tag': 'docs-default-current',
-        'category': 'API',
+        'category': api_type_title,
         'language': 'en',
         'type': 'lvl4',
         'anchor': anchor,
@@ -47,7 +46,7 @@ def create_index_object(api_type, tag, object_id, description, anchor):
     return object
 
 
-def generate_api_objects(api_type, version):
+def generate_api_objects(api_type, api_type_title, version):
     print('Generating {} api index objects...'.format(api_type))
     apis = []
 
@@ -63,7 +62,7 @@ def generate_api_objects(api_type, version):
                 description = each[1].get('description', '')
                 anchor = '/docs/api/{}/reference/?v={}#/operations/{}'.format(api_type, version, object_id)
                 apis.append(
-                    create_index_object(api_type, tag, object_id, description, anchor)
+                    create_index_object(api_type, api_type_title, tag, object_id, description, anchor)
                 )
     return apis
 
@@ -79,12 +78,13 @@ def generate_webhook_objects():
     with open(api_file, 'r+') as f:
         spec = yaml.safe_load(f.read())
         for webhook in spec['webhooks'].items():
+            api_type_title = 'Webhooks'
             tag = webhook[1]['post']['tags'][0]
             object_id = webhook[0]
             description = webhook[1]['post']['description']
             anchor = '/docs/api/admin/reference/?v={}#/webhooks/{}/post'.format(version, object_id)
             webhooks.append(
-                create_index_object('admin', tag, object_id, description, anchor)
+                create_index_object('admin', api_type_title, tag, object_id, description, anchor)
             )
     return webhooks
 
@@ -97,16 +97,18 @@ def add_to_index():
     indexed_apis = [
         {
             'type': 'admin',
+            'type_title': 'Admin API',
             'version': '2024-04-01'
         },
         {
             'type': 'campaigns',
+            'type_title': 'Campaigns API',
             'version': 'v1'
         }
     ]
 
     for each in indexed_apis:
-        objects = generate_api_objects(each['type'], each['version'])
+        objects = generate_api_objects(each['type'], each['type_title'], each['version'])
         print('Pushing {} objects to search index...'.format(len(objects)))
         index.save_objects(objects)
 
