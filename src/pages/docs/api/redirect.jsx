@@ -1,9 +1,12 @@
+import { useHistory } from '@docusaurus/router';
 /*
 This is a hack to create a redirect view for algolia search to work
 */
 
 export default function redirectAPI() {
-    const queryParams = new URLSearchParams(window.location.search)
+    const router = useHistory();
+    const location = router.location;
+    const queryParams = new URLSearchParams(location.search)
 
     const apiType = queryParams.get('type')
     const operation = '#/' + queryParams.get('operation')
