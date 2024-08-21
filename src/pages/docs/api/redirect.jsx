@@ -1,3 +1,4 @@
+import React from 'react';
 import { useHistory } from '@docusaurus/router';
 /*
 This is a hack to create a redirect view for algolia search to work
