@@ -36,7 +36,7 @@ export default function Home() {
     const location = router.location;
 
     const url = new URL(
-        `https://developers.29next.com${location.pathname}${location.hash}`
+        `https://developers.29next.com${location.pathname}${location.search}`
     );
 
     const currentVersion = url.searchParams.get('v') || '2023-02-10';
