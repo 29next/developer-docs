@@ -1,14 +1,12 @@
 import requests
 import yaml
 
-from config import API_VERSIONS
+from config import BASE_API_FILES_PATH, API_VERSIONS
 from webhooks import webhook_schema_generator
-
-BASE_OUTPUT_PATH = "../static/api/"
 
 
 def download_and_update_spec_file(type, source, version, description, additions):
-    api_file = BASE_OUTPUT_PATH + "/{}/{}.yaml".format(type, version)
+    api_file = BASE_API_FILES_PATH + "/{}/{}.yaml".format(type, version)
     response = requests.get(source, {"version": version})
 
     with open(api_file, "wb") as f:

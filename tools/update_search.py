@@ -2,16 +2,15 @@ import os
 import yaml
 from algoliasearch.search_client import SearchClient
 
-BASE_API_FILES_PATH = '../static/api/'
+from config import SITE_DOMAIN, BASE_API_FILES_PATH
 
-app_id = 'GNSJUJD786'
-api_key = os.environ['ALGOLIA_API_KEY']
-index_name = 'docs'
-domain = 'https://developers.29next.com'
+APP_ID = 'GNSJUJD786'
+API_KEY = os.environ['ALGOLIA_API_KEY']
+INDEX_NAME = 'docs'
 
 
 def create_index_object(api_type, tag, object_id, description, anchor):
-    url = domain + anchor
+    url = SITE_DOMAIN + anchor
 
     navigation = {
         'lvl0': 'Documentation',
@@ -90,11 +89,10 @@ def generate_webhook_objects():
     return webhooks
 
 
-
 def add_to_index():
 
-    client = SearchClient.create(app_id, api_key)
-    index = client.init_index(index_name)
+    client = SearchClient.create(APP_ID, API_KEY)
+    index = client.init_index(INDEX_NAME)
 
     indexed_apis = [
         {

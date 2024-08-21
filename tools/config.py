@@ -1,3 +1,6 @@
+SITE_DOMAIN = "https://developers.29next.com"
+BASE_API_FILES_PATH = "../static/api/"
+
 CAMPAIGNS_API_SPEC_SOURCE = "https://campaigns.apps.29next.com/api/schema/"
 
 CAMPAIGNS_API_SPEC_ADDITIONS = {

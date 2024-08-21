@@ -13720,6 +13720,43 @@ paths:
         schema:
           format: date
           type: string
+      - description: 'Recovery Source
+
+
+          * `email_automation` - Email Automation
+
+          * `retries` - Retries
+
+          * `account_updater` - Account Updater
+
+          * `other` - Other
+
+          * `storefront` - Storefront
+
+          * `dashboard` - Dashboard'
+        in: query
+        name: recoveries_source
+        schema:
+          enum:
+          - account_updater
+          - dashboard
+          - email_automation
+          - other
+          - retries
+          - storefront
+          type: string
+      - description: YYYY-MM-DD
+        in: query
+        name: recoveries_date_from
+        schema:
+          format: date
+          type: string
+      - description: YYYY-MM-DD
+        in: query
+        name: recoveries_date_to
+        schema:
+          format: date
+          type: string
       - description: Funnels
         explode: true
         in: query
