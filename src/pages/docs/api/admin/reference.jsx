@@ -4,6 +4,8 @@ import Head from '@docusaurus/Head';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useHistory } from '@docusaurus/router';
 import clsx from 'clsx';
+
+import useBreakpoint from '../../../../lib/useBreakpoint';
 import SectionsMenu from '../../../../components/SectionsMenu'
 
 function APIElement({ layout = 'responsive', currentVersion = '2023-02-10' }) {
@@ -33,6 +35,7 @@ function APIElement({ layout = 'responsive', currentVersion = '2023-02-10' }) {
 
 export default function Home() {
     const router = useHistory();
+    const size = useBreakpoint();
     const location = router.location;
 
     const url = new URL(
@@ -74,6 +77,7 @@ export default function Home() {
                 </div>
             </div>
             <APIElement
+                layout={size === 'sm' ? 'stacked' : 'sidebar'}
                 currentVersion={currentVersion}
             />
         </Layout>
