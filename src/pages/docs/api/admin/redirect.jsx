@@ -10,7 +10,8 @@ export default function redirectAPI() {
             {() => {
                 const location = window.location;
                 const hash = location.hash;
-                const newPath = location.pathname.replace('redirect', 'reference') + hash;
+                const version = '?v=2024-04-01'
+                const newPath = location.pathname.replace('redirect', 'reference') + version + hash;
                 window.location = newPath;
             }}
         </BrowserOnly>
