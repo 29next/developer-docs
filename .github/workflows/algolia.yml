@@ -33,5 +33,10 @@ jobs:
           cache: 'pip'
         env:
             ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
-      - run: pip install -r requirements.txt
-      - run: python tools/update_api_docs.py
+
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+
+      - name: Update index
+        working-directory: ./tools
+        run: python update_api_docs.py
