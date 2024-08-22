@@ -60,7 +60,7 @@ def generate_api_objects(api_type, api_type_title, version):
                 object_id = each[1].get('operationId', '')
                 tag = each[1]['tags'][0]
                 description = each[1].get('description', '')
-                anchor = '/docs/api/redirect/?v={}&type={}&operation=operations/{}'.format(version, api_type, object_id)
+                anchor = '/docs/api/{}/reference/?v={}#/operations/{}'.format(api_type, version, object_id)
                 apis.append(
                     create_index_object(api_type, api_type_title, tag, object_id, description, anchor)
                 )
@@ -82,7 +82,7 @@ def generate_webhook_objects():
             tag = webhook[1]['post']['tags'][0]
             object_id = webhook[0]
             description = webhook[1]['post']['description']
-            anchor = '/docs/api/redirect/?v={}&type={}&operation=webhooks/{}/post'.format(version, api_type, object_id)
+            anchor = '/docs/api/admin/reference/?v={}#/webhooks/{}/post'.format(version, object_id)
             webhooks.append(
                 create_index_object('admin', api_type_title, tag, object_id, description, anchor)
             )
