@@ -40,4 +40,4 @@ jobs:
 
       - name: Update index
         working-directory: ./tools
-        run: python update_api_docs.py
+        run: python update_search.py
