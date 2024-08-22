@@ -39,5 +39,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Update index
+        env:
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
         working-directory: ./tools
         run: python update_search.py
