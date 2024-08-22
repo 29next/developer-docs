@@ -24,6 +24,7 @@ jobs:
           CONFIG: ${{ steps.algolia_config.outputs.config }}
 
   index_apis:
+    needs: algolia
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
