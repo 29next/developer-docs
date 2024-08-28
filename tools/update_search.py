@@ -115,7 +115,7 @@ def add_to_index():
         index.save_objects(objects)
 
     webhook_objects = generate_webhook_objects()
-    print('Pushing webhook objects to search index...'.format(len(webhook_objects)))
+    print('Pushing {} webhook objects to search index...'.format(len(webhook_objects)))
     index.save_objects(webhook_objects)
 
 

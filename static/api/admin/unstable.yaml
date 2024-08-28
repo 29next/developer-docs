@@ -7577,6 +7577,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
+        amount_available_for_refund:
+          default: '0.00'
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
         attribution:
           allOf:
           - $ref: '#/components/schemas/MarketingAttribution'
@@ -7669,6 +7674,11 @@ components:
     TransactionList:
       properties:
         amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        amount_available_for_refund:
+          default: '0.00'
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
@@ -23392,6 +23402,11 @@ webhooks:
                 data:
                   properties:
                     amount:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
+                    amount_available_for_refund:
+                      default: '0.00'
                       format: decimal
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
