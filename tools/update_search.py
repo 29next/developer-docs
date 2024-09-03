@@ -10,14 +10,15 @@ INDEX_NAME = 'docs'
 
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
+    # object structure follow docusaurus algolia default structure
     url = SITE_DOMAIN + anchor
     navigation = {
         'lvl0': 'Documentation',
         'lvl1': api_type_title,
-        'lvl2': None,
-        'lvl3': tag,
-        'lvl4': object_id,
-        'lvl5': description,
+        'lvl2': tag,
+        'lvl3': object_id,
+        'lvl4': description,
+        'lvl5': None,
         'lvl6': None
     }
     object = {
