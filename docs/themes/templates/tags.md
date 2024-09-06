@@ -247,7 +247,7 @@ Returns an absolute url path reference matching a given view with parameters. Se
 Queries and filters store objects to dynamically assign objects to a variable.
 
 ```django
-{% where {{ objects }} {{ field_name }} {{ lookup_expr }} as {{ variable }} %}
+{% where {{ objects }} '{{ field_name }}' '{{ lookup_expr }}' '{{ filter_query }}' as {{ variable }} %}
 ```
 
 | Argument | Description |
@@ -255,4 +255,18 @@ Queries and filters store objects to dynamically assign objects to a variable.
 | objects | The global context object. Supported objects include; [`products`](/docs/themes/templates/objects.md#products), [`product_categories`](/docs/themes/templates/objects.md#product_categories), [`posts`](/docs/themes/templates/objects.md#posts), [`post_categories`](/docs/themes/templates/objects.md#post_categories), [`currencies`](/docs/themes/templates/objects.md#currencies), [`storefront_geos`](/docs/themes/templates/objects.md#storefront_geos)  |
 | field_name | Object field name to perform the lookup on. |
 | lookup_expr | Query lookup expression; `exact` or `contains`. |
+| filter_query | Your custom query filter. |
 | variable | Assigned template variable name, ie `featured_products`. |
+
+
+```django title="Example Usage"
+
+{% where products 'title' 'contains' 'watch' as watches %}
+
+<ul>
+{% for each in watches %}
+    <li><a href="{{ each.get_absolute_url }}">{{ each.title }}</a></li>
+{% endfor %}
+</ul>
+
+```
