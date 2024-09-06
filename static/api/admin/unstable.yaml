@@ -716,14 +716,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         type:
           description: 'Expected data type.
 
@@ -793,6 +796,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         order:
           readOnly: true
           type:
@@ -1936,14 +1943,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         type:
           description: 'Expected data type.
 
@@ -2023,6 +2033,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         order:
           readOnly: true
           type:
@@ -4800,6 +4814,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         order:
           readOnly: true
           type:
@@ -4910,14 +4928,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -7948,14 +7969,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -16898,6 +16922,10 @@ webhooks:
                       type: string
                     id:
                       type: integer
+                    metadata:
+                      oneOf:
+                      - {}
+                      - type: 'null'
                     order:
                       type:
                       - integer
@@ -17089,6 +17117,10 @@ webhooks:
                       type: string
                     id:
                       type: integer
+                    metadata:
+                      oneOf:
+                      - {}
+                      - type: 'null'
                     order:
                       type:
                       - integer
