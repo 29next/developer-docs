@@ -93,14 +93,9 @@ Creating an order is the core resource in an external checkout flow, see the exa
         "country": "US"
     },
     "billing_same_as_shipping_address": true,
-    "payment_method": "bankcard",
+    "payment_method": "card_token",
     "payment_details": {
-        "card_name": "John Doe",
-        "card_number": "6011111111111117",
-        "card_cvv": 879,
-        "card_expiry_month": 7,
-        "card_expiry_year": 2029,
-        "save_card": true
+        "card_token": "test_card"
     }
 }
 ```
@@ -291,16 +286,16 @@ Use `billing_same_as_shipping_address` to forego having to pass a full duplicate
 
 ### Order Payment Detail
 
-The order `payment_method` and `payment_details` objects work in tandem to specify the payment method for the order and provide any additional data that may be required per payment method. The example below uses a [Test Card](https://docs.29next.com/features/orders/test-orders) to create a **Test Order**. See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow: [PayPal](/docs/api/admin/guides/paypal.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [Stripe APMs](/docs/api/admin/guides/stripe-apms.md), and [3DS2](/docs/api/admin/guides/3ds2.md).
+The order `payment_method` and `payment_details` objects work in tandem to specify the payment method for the order and provide any additional data that may be required per payment method.
+
+The example below uses a [Test Card Token](/docs/api/admin/guides/testing-guide.md#test-card-tokens) to create a **Test Order**.
+
 
 ```json
-"payment_method": "bankcard",
+"payment_method": "card_token",
 "payment_details": {
-    "card_name": "John Doe",
-    "card_number": "6011111111111117",
-    "card_cvv": 879,
-    "card_expiry_month": 7,
-    "card_expiry_year": 2029,
-    "save_card": true
+    "card_token": "test_card" // See iFrame Payment Form Guide
 },
 ```
+
+See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow: [PayPal](/docs/api/admin/guides/paypal.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [Stripe APMs](/docs/api/admin/guides/stripe-apms.md), and [3DS2](/docs/api/admin/guides/3ds2.md).

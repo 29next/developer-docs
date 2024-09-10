@@ -117,7 +117,7 @@ var payload = {
     "billing_same_as_shipping_address": false,
     "payment_detail": {
         "payment_method": "card_token",
-        "card_token": "<CARD TOKEN FROM IFRAME>" // See iFrame Payment Form Guide
+        "card_token": "test_card" // See iFrame Payment Form Guide
     },
     "shipping_method": 1,
     "success_url": "https://your-campaign.com/next-page/" // Next Page in Flow
