@@ -281,6 +281,43 @@ components:
       required:
       - cancel_reason
       type: object
+    CancelSubscription:
+      properties:
+        cancel_reason:
+          description: '* `not_satisfied_with_product` - Not satisfied with product
+            quality
+
+            * `product_too_expensive` - Product is too expensive
+
+            * `cancel_recurring` - Changed my mind, cancel recurring
+
+            * `unwanted_subscription` - Didn''t intend to sign up for a subscription
+
+            * `recurring_payment_declined` - Recurring payment declined
+
+            * `disputed_cancel_recurring` - Disputed cancel recurring
+
+            * `other` - Other'
+          enum:
+          - not_satisfied_with_product
+          - product_too_expensive
+          - cancel_recurring
+          - unwanted_subscription
+          - recurring_payment_declined
+          - disputed_cancel_recurring
+          - other
+          type: string
+          x-spec-enum-id: 5231bb14ef0f67ff
+        cancel_reason_other_message:
+          type:
+          - string
+          - 'null'
+        send_cancel_notification:
+          default: true
+          type: boolean
+      required:
+      - cancel_reason
+      type: object
     CancellationRequest:
       properties:
         message:
@@ -13993,6 +14030,49 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateSubscription'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDetail'
+          description: ''
+      security:
+      - oauth2:
+        - subscriptions:write
+      tags:
+      - subscriptions
+  /subscriptions/{id}/cancel/:
+    post:
+      description: Cancel an existing subscription.
+      operationId: subscriptionsCancelCreate
+      parameters:
+      - description: A unique integer value identifying this Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+        required: true
       responses:
         '200':
           content:
