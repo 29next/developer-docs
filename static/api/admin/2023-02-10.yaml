@@ -6670,6 +6670,58 @@ components:
       required:
       - amount
       type: object
+    ResolveDispute:
+      properties:
+        create_external_refund:
+          type:
+          - boolean
+          - 'null'
+        resolution:
+          description: '* `could_not_find_order` - Transaction Not found
+
+            * `declined_or_canceled_nothing_to_do` - Nothing To Do
+
+            * `issued_full_refund` - Issued Full Refund
+
+            * `issued_refund_for_remaining_amount` - Refunded Remaining Amount
+
+            * `3ds_authorized_successfully` - Transaction 3DS Authorized
+
+            * `previously_refunded_nothing_to_do` - Previously Refunded
+
+            * `unable_to_refund_merchant_account_closed` - Unable to Refund
+
+            * `won` - Won
+
+            * `lost` - Lost
+
+            * `accepted` - Accepted
+
+            * `other` - Other'
+          enum:
+          - could_not_find_order
+          - declined_or_canceled_nothing_to_do
+          - issued_full_refund
+          - issued_refund_for_remaining_amount
+          - 3ds_authorized_successfully
+          - previously_refunded_nothing_to_do
+          - unable_to_refund_merchant_account_closed
+          - won
+          - lost
+          - accepted
+          - other
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: 8848f3a079993862
+        resolution_other_message:
+          title: Other Message
+          type:
+          - string
+          - 'null'
+      type: object
     ResponseCreateGiftCard:
       properties:
         balance:
@@ -10167,6 +10219,48 @@ paths:
         - disputes:write
       tags:
       - payments
+  /disputes/{id}/resolve/:
+    post:
+      description: Resolve a dispute with a resolution and optional external refund.
+      operationId: disputesResolveCreate
+      parameters:
+      - description: A unique integer value identifying this Dispute.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveDispute'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResolveDispute'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResolveDispute'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dispute'
+          description: ''
+      security:
+      - oauth2:
+        - disputes:write
+      tags:
+      - payments
   /fulfillment-orders/:
     get:
       description: Retrieve a list of fulfillment orders.
@@ -11575,8 +11669,7 @@ paths:
             type: integer
           type: array
         style: form
-      - description: Fulfillment Location
-        explode: true
+      - explode: true
         in: query
         name: location_id
         schema:
