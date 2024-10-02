@@ -281,6 +281,43 @@ components:
       required:
       - cancel_reason
       type: object
+    CancelSubscription:
+      properties:
+        cancel_reason:
+          description: '* `not_satisfied_with_product` - Not satisfied with product
+            quality
+
+            * `product_too_expensive` - Product is too expensive
+
+            * `cancel_recurring` - Changed my mind, cancel recurring
+
+            * `unwanted_subscription` - Didn''t intend to sign up for a subscription
+
+            * `recurring_payment_declined` - Recurring payment declined
+
+            * `disputed_cancel_recurring` - Disputed cancel recurring
+
+            * `other` - Other'
+          enum:
+          - not_satisfied_with_product
+          - product_too_expensive
+          - cancel_recurring
+          - unwanted_subscription
+          - recurring_payment_declined
+          - disputed_cancel_recurring
+          - other
+          type: string
+          x-spec-enum-id: 5231bb14ef0f67ff
+        cancel_reason_other_message:
+          type:
+          - string
+          - 'null'
+        send_cancel_notification:
+          default: true
+          type: boolean
+      required:
+      - cancel_reason
+      type: object
     CancellationRequest:
       properties:
         message:
@@ -694,14 +731,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         type:
           description: 'Expected data type.
 
@@ -771,6 +811,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         order:
           readOnly: true
           type:
@@ -1924,14 +1968,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         type:
           description: 'Expected data type.
 
@@ -2011,6 +2058,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         order:
           readOnly: true
           type:
@@ -4712,6 +4763,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         order:
           readOnly: true
           type:
@@ -4822,14 +4877,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -6612,6 +6670,58 @@ components:
       required:
       - amount
       type: object
+    ResolveDispute:
+      properties:
+        create_external_refund:
+          type:
+          - boolean
+          - 'null'
+        resolution:
+          description: '* `could_not_find_order` - Transaction Not found
+
+            * `declined_or_canceled_nothing_to_do` - Nothing To Do
+
+            * `issued_full_refund` - Issued Full Refund
+
+            * `issued_refund_for_remaining_amount` - Refunded Remaining Amount
+
+            * `3ds_authorized_successfully` - Transaction 3DS Authorized
+
+            * `previously_refunded_nothing_to_do` - Previously Refunded
+
+            * `unable_to_refund_merchant_account_closed` - Unable to Refund
+
+            * `won` - Won
+
+            * `lost` - Lost
+
+            * `accepted` - Accepted
+
+            * `other` - Other'
+          enum:
+          - could_not_find_order
+          - declined_or_canceled_nothing_to_do
+          - issued_full_refund
+          - issued_refund_for_remaining_amount
+          - 3ds_authorized_successfully
+          - previously_refunded_nothing_to_do
+          - unable_to_refund_merchant_account_closed
+          - won
+          - lost
+          - accepted
+          - other
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: 8848f3a079993862
+        resolution_other_message:
+          title: Other Message
+          type:
+          - string
+          - 'null'
+      type: object
     ResponseCreateGiftCard:
       properties:
         balance:
@@ -7522,6 +7632,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
+        amount_available_for_refund:
+          default: '0.00'
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
         attribution:
           allOf:
           - $ref: '#/components/schemas/MarketingAttribution'
@@ -7614,6 +7729,11 @@ components:
     TransactionList:
       properties:
         amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        amount_available_for_refund:
+          default: '0.00'
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
@@ -7883,14 +8003,17 @@ components:
 
             * `attribution` - Attribution
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `dispute` - Dispute'
           enum:
           - order
           - customer
           - attribution
           - product
+          - dispute
           type: string
-          x-spec-enum-id: e1aaa18fa8fbb9a8
+          x-spec-enum-id: c22481add7a5f601
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -10096,6 +10219,48 @@ paths:
         - disputes:write
       tags:
       - payments
+  /disputes/{id}/resolve/:
+    post:
+      description: Resolve a dispute with a resolution and optional external refund.
+      operationId: disputesResolveCreate
+      parameters:
+      - description: A unique integer value identifying this Dispute.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveDispute'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResolveDispute'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResolveDispute'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dispute'
+          description: ''
+      security:
+      - oauth2:
+        - disputes:write
+      tags:
+      - payments
   /fulfillment-orders/:
     get:
       description: Retrieve a list of fulfillment orders.
@@ -11504,8 +11669,7 @@ paths:
             type: integer
           type: array
         style: form
-      - description: Fulfillment Location
-        explode: true
+      - explode: true
         in: query
         name: location_id
         schema:
@@ -12230,6 +12394,42 @@ paths:
       security:
       - oauth2:
         - orders:write
+      tags:
+      - orders
+  /orders/{number}/fulfillments/{fulfillmentId}/:
+    get:
+      description: Retrieve an existing order fulfillment.
+      operationId: ordersFulfillmentRetrieve
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          title: Order number
+          type: string
+      - in: path
+        name: fulfillmentId
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentResponse'
+          description: ''
+      security:
+      - oauth2:
+        - orders:read
       tags:
       - orders
   /orders/{number}/fulfillments/{fulfillmentId}/events/:
@@ -13905,6 +14105,49 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateSubscription'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDetail'
+          description: ''
+      security:
+      - oauth2:
+        - subscriptions:write
+      tags:
+      - subscriptions
+  /subscriptions/{id}/cancel/:
+    post:
+      description: Cancel an existing subscription.
+      operationId: subscriptionsCancelCreate
+      parameters:
+      - description: A unique integer value identifying this Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+        required: true
       responses:
         '200':
           content:
@@ -16935,6 +17178,10 @@ webhooks:
                       type: string
                     id:
                       type: integer
+                    metadata:
+                      oneOf:
+                      - {}
+                      - type: 'null'
                     order:
                       type:
                       - integer
@@ -17126,6 +17373,10 @@ webhooks:
                       type: string
                     id:
                       type: integer
+                    metadata:
+                      oneOf:
+                      - {}
+                      - type: 'null'
                     order:
                       type:
                       - integer
@@ -23443,6 +23694,11 @@ webhooks:
                 data:
                   properties:
                     amount:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
+                    amount_available_for_refund:
+                      default: '0.00'
                       format: decimal
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
