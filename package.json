@@ -23,7 +23,7 @@
     "@fluentui/react-icons": "^2.0.227",
     "@mdx-js/react": "^1.6.22",
     "@radix-ui/react-select": "^2.0.0",
-    "@stoplight/elements": "^8.0.0",
+    "@stoplight/elements": "^8.3.4",
     "clsx": "^1.2.1",
     "mime-db": "^1.52.0",
     "node-polyfill-webpack-plugin": "^3.0.0",

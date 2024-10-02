@@ -754,7 +754,7 @@ Blog post properties available through global [post](#posts) context and the `bl
 | ----- | ------ | ------ |
 | `id` | String | The post ID. |
 | `featured_image` | File | Blog post featured image file, use `.url` to access full file link. |
-| `categories` | List | List of related post categories, see [post_category](#post_category ). |
+| `categories` | List | List of related post categories, use `.all` to return a list of categories, see [post_category](#post_category ). |
 | `get_absolute_url` | String | A full path link to the blog post. |
 | `title` | String | The post title. |
 | `content` | String | Post content. |
@@ -784,7 +784,7 @@ Product configured in the store catalogue.
 | `get_all_images` | List | List of product images, see [image](#image). |
 | `get_description` | String | Product description. |
 | `sku` | String | Product stock keeping unit (sku). |
-| `categories` | List | List of product categories, see [product_category](#product_category).|
+| `categories` | List | List of product categories, use `.all` to return a list of categories, see [product_category](#product_category).|
 | `parent` | Object | Parent product if product is variant (child). |
 | `is_child` | Boolean | Product structure indicating this is a variant product. |
 | `primary_image` | File | Primary image of the product, use `.url` to access a full file link. |

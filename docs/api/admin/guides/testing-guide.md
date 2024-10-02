@@ -9,6 +9,32 @@ tags:
 
 Testing your integration is a critical step when developing on the 29 Next platform. There are two distinct paths to creating Test Orders, Transactions, and Subscriptions through the Admin API or storefront checkout flow.
 
+### Test Cards
+
+Test cards can be used on live stores and live integrations to create **Test Orders** with the exception they do not touch the gateway and have no attached transactions.
+
+| Test Card |  Use Case |
+| ---- | ---- |
+| 6011111111111117 | Test payment success flow without transaction. |
+| 6011000990139424 | Test 3DS payment flow without transaction.  |
+
+:::tip
+Test cards can be used to test your live integration flows without changing any store payment settings. **Test cards are generally safe to use to test your flows.**
+:::
+
+### Test Card Tokens
+
+Test card tokens can be used on the API directly without needing to tokenize the card before submitting the create order request.
+
+| Test Card |  Use Case |
+| ---- | ---- |
+| `test_card` | Test payment success flow without transaction. |
+| `test_3ds_card` | Test 3DS payment flow without transaction. |
+
+:::tip
+Use the test card tokens before you've integrated the [iFrame Card Tokenization](/docs/api/admin/guides/iframe-payment-form.md) to validate your API requests.
+:::
+
 ### Test Gateway
 
 The Test Gateway behaves exactly as a regular gateway, when orders are created using the `test` gateway, they also have associated Test transactions.
@@ -25,20 +51,6 @@ To setup the test gateway, go to **Settings > Payments > Add Gateway** to add th
 
 :::caution
 The `test` gateway path requires setting up the gateway and can negatively impact your store's live order flows. **Use with caution if your store has live traffic.**
-:::
-
-
-### Test Cards
-
-Test cards can be used on live stores and live integrations to create **Test Orders** with the exception they do not touch the gateway and have no attached transactions.
-
-| Test Card |  Use Case |
-| ---- | ---- |
-| 6011111111111117 | Test payment success flow without transaction. |
-| 6011000990139424 | Test 3DS payment flow without transaction.  |
-
-:::tip
-Test cards can be used to test your live integration flows without changing any store payment settings. **Test cards are generally safe to use to test your flows.**
 :::
 
 ### Test Subscriptions

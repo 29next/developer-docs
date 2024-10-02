@@ -79,7 +79,7 @@ Webhook data structure follows our Admin API data structures (serializers) makin
 
 ```
 
-Below is a full example of a webhook payload for a `customer.created` event to demonstrate
+Below is a full example of a webhook payload for a `customer.created` event to demonstrate.
 
 ```json title="Example Webhook Event Data"
 {

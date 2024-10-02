@@ -10,14 +10,15 @@ INDEX_NAME = 'docs'
 
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
+    # object structure follow docusaurus algolia default structure
     url = SITE_DOMAIN + anchor
     navigation = {
         'lvl0': 'Documentation',
         'lvl1': api_type_title,
-        'lvl2': None,
-        'lvl3': tag,
-        'lvl4': object_id,
-        'lvl5': description,
+        'lvl2': tag,
+        'lvl3': object_id,
+        'lvl4': description,
+        'lvl5': None,
         'lvl6': None
     }
     object = {
@@ -60,7 +61,8 @@ def generate_api_objects(api_type, api_type_title, version):
                 object_id = each[1].get('operationId', '')
                 tag = each[1]['tags'][0]
                 description = each[1].get('description', '')
-                anchor = '/docs/api/redirect/?v={}&type={}&operation=operations/{}'.format(version, api_type, object_id)
+                # use redirect instead of reference to fix ui state not updating
+                anchor = '/docs/api/{}/redirect/?v={}#/operations/{}'.format(api_type, version, object_id)
                 apis.append(
                     create_index_object(api_type, api_type_title, tag, object_id, description, anchor)
                 )
@@ -82,7 +84,8 @@ def generate_webhook_objects():
             tag = webhook[1]['post']['tags'][0]
             object_id = webhook[0]
             description = webhook[1]['post']['description']
-            anchor = '/docs/api/redirect/?v={}&type={}&operation=webhooks/{}/post'.format(version, api_type, object_id)
+            # use redirect instead of reference to fix ui state not updating
+            anchor = '/docs/api/admin/redirect/?v={}#/webhooks/{}/post'.format(version, object_id)
             webhooks.append(
                 create_index_object('admin', api_type_title, tag, object_id, description, anchor)
             )
@@ -113,7 +116,7 @@ def add_to_index():
         index.save_objects(objects)
 
     webhook_objects = generate_webhook_objects()
-    print('Pushing webhook objects to search index...'.format(len(webhook_objects)))
+    print('Pushing {} webhook objects to search index...'.format(len(webhook_objects)))
     index.save_objects(webhook_objects)
 
 

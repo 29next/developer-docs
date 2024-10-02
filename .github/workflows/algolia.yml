@@ -22,3 +22,24 @@ jobs:
           APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
           API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
           CONFIG: ${{ steps.algolia_config.outputs.config }}
+
+  index_apis:
+    needs: algolia
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+        env:
+            ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+
+      - name: Update index
+        env:
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+        working-directory: ./tools
+        run: python update_search.py
