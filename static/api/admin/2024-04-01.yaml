@@ -12454,6 +12454,42 @@ paths:
         - orders:write
       tags:
       - orders
+  /orders/{number}/fulfillments/{fulfillmentId}/:
+    get:
+      description: Retrieve an existing order fulfillment.
+      operationId: ordersFulfillmentRetrieve
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          title: Order number
+          type: string
+      - in: path
+        name: fulfillmentId
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentResponse'
+          description: ''
+      security:
+      - oauth2:
+        - orders:read
+      tags:
+      - orders
   /orders/{number}/fulfillments/{fulfillmentId}/events/:
     get:
       description: Retrieve a list of fulfillment events of a order fulfillment.
