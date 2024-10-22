@@ -2160,6 +2160,7 @@ components:
           enum:
           - alert
           - chargeback
+          readOnly: true
           type: string
           x-spec-enum-id: 3c60da80149644ea
       required:
@@ -2170,6 +2171,7 @@ components:
       - report_amount
       - report_currency
       - status
+      - type
       type: object
     DisputeNote:
       properties:
@@ -4941,6 +4943,7 @@ components:
           enum:
           - alert
           - chargeback
+          readOnly: true
           type: string
           x-spec-enum-id: 3c60da80149644ea
       type: object
@@ -17228,6 +17231,7 @@ webhooks:
                   - report_amount
                   - report_currency
                   - status
+                  - type
                   type: object
                 event_id:
                   description: Unique id associated with this webhook event.
@@ -17423,6 +17427,7 @@ webhooks:
                   - report_amount
                   - report_currency
                   - status
+                  - type
                   type: object
                 event_id:
                   description: Unique id associated with this webhook event.

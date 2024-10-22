@@ -715,6 +715,10 @@ components:
         card_token:
           nullable: true
           type: string
+        external_payment_method:
+          description: External payment method code.
+          nullable: true
+          type: string
         payment_gateway:
           description: Specify a payment gateway to be used for order payment.
           nullable: true
@@ -758,7 +762,9 @@ components:
 
         * `sofort` - Sofort
 
-        * `sepa_debit` - SEPA Direct Debit'
+        * `sepa_debit` - SEPA Direct Debit
+
+        * `external` - External'
       enum:
       - apple_pay
       - card_token
@@ -770,6 +776,7 @@ components:
       - google_pay
       - sofort
       - sepa_debit
+      - external
       type: string
     ShippingOption:
       properties:
