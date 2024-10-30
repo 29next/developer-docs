@@ -201,6 +201,18 @@ When accessing a `html` field value in a template, it returns the html content s
     "help_text": "Example html input."
 }
 ```
+### image_picker
+
+An `image_picker` setting outputs outputs an image picker modal making all uploaded image assets available to select from.
+
+```json title="Example image picker setting"
+{
+"name": "example_image_picker",
+"label": "Example Image Field",
+"type": "image_picker",
+"required": false
+}
+```
 
 ### menu
 
