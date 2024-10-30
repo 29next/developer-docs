@@ -59,7 +59,9 @@ components:
 
             * `4px` - 4px
 
-            * `ontrac` - ontrac'
+            * `ontrac` - ontrac
+
+            * `uniuni` - uniuni'
           enum:
           - other
           - ups
@@ -77,11 +79,12 @@ components:
           - firstmile
           - 4px
           - ontrac
+          - uniuni
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 20cbfbd7e6150522
+          x-spec-enum-id: c72e3006622b8860
         date_created:
           format: date-time
           readOnly: true
@@ -625,9 +628,6 @@ components:
           oneOf:
           - {}
           - type: 'null'
-        send_welcome_email:
-          default: false
-          type: boolean
         user:
           $ref: '#/components/schemas/CreateCartUser'
         vouchers:
@@ -1211,9 +1211,6 @@ components:
         send_receipt:
           default: true
           type: boolean
-        send_welcome_email:
-          default: false
-          type: boolean
         shipping_address:
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
@@ -1656,9 +1653,6 @@ components:
           - card_token
           type: string
           x-spec-enum-id: 98d6b14356537d48
-        send_welcome_email:
-          default: false
-          type: boolean
         shipping_address:
           oneOf:
           - $ref: '#/components/schemas/ShippingAddress'
@@ -7589,6 +7583,8 @@ components:
 
             * `swiss_post` - swiss_post
 
+            * `uniuni` - uniuni
+
             * `ups` - ups
 
             * `usps` - usps
@@ -7608,11 +7604,12 @@ components:
           - other
           - royal_mail
           - swiss_post
+          - uniuni
           - ups
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 546b28a3efd6fb8e
+          x-spec-enum-id: 3387d78aa4a85e0d
         carrier_other_name:
           type:
           - string
