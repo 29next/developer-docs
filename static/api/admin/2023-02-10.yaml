@@ -164,23 +164,6 @@ components:
       - file_name
       - id
       type: object
-    AttributeOptionGroup:
-      properties:
-        id:
-          readOnly: true
-          type: integer
-        name:
-          maxLength: 128
-          type: string
-        options:
-          items:
-            type: string
-          type: array
-      required:
-      - id
-      - name
-      - options
-      type: object
     Author:
       properties:
         email:
@@ -1514,18 +1497,15 @@ components:
             $ref: '#/components/schemas/Stockrecord'
           type: array
         structure:
-          description: '* `standalone` - Stand-alone Product
+          description: '* `standalone` - standalone
 
-            * `parent` - Product with Variants
-
-            * `child` - Child Product'
+            * `parent` - parent'
           enum:
           - standalone
           - parent
-          - child
           title: Product Structure
           type: string
-          x-spec-enum-id: a1df31d9b9dfd9ac
+          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Use a custom template from your theme to customize the product
             display.
@@ -1542,7 +1522,6 @@ components:
         unit_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
           type: string
         upc:
           deprecated: true
@@ -1566,8 +1545,8 @@ components:
       - id
       - images
       - rating
+      - structure
       - title
-      - unit_cost
       - url
       type: object
     CreateProductVariant:
@@ -1596,6 +1575,13 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Cost Per Item
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -5281,18 +5267,16 @@ components:
           readOnly: true
           type: array
         structure:
-          description: '* `standalone` - Stand-alone Product
+          description: '* `standalone` - standalone
 
-            * `parent` - Product with Variants
-
-            * `child` - Child Product'
+            * `parent` - parent'
           enum:
           - standalone
           - parent
-          - child
+          readOnly: true
           title: Product Structure
           type: string
-          x-spec-enum-id: a1df31d9b9dfd9ac
+          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Use a custom template from your theme to customize the product
             display.
@@ -5309,7 +5293,6 @@ components:
         unit_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
           type: string
         upc:
           deprecated: true
@@ -5354,6 +5337,13 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Cost Per Item
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -5940,18 +5930,15 @@ components:
             $ref: '#/components/schemas/Stockrecord'
           type: array
         structure:
-          description: '* `standalone` - Stand-alone Product
+          description: '* `standalone` - standalone
 
-            * `parent` - Product with Variants
-
-            * `child` - Child Product'
+            * `parent` - parent'
           enum:
           - standalone
           - parent
-          - child
           title: Product Structure
           type: string
-          x-spec-enum-id: a1df31d9b9dfd9ac
+          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Use a custom template from your theme to customize the product
             display.
@@ -5969,7 +5956,6 @@ components:
         unit_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
           type: string
         upc:
           deprecated: true
@@ -5994,8 +5980,8 @@ components:
       - id
       - images
       - rating
+      - structure
       - title
-      - unit_cost
       - url
       type: object
     'Product ':
@@ -6197,18 +6183,15 @@ components:
             $ref: '#/components/schemas/Stockrecord'
           type: array
         structure:
-          description: '* `standalone` - Stand-alone Product
+          description: '* `standalone` - standalone
 
-            * `parent` - Product with Variants
-
-            * `child` - Child Product'
+            * `parent` - parent'
           enum:
           - standalone
           - parent
-          - child
           title: Product Structure
           type: string
-          x-spec-enum-id: a1df31d9b9dfd9ac
+          x-spec-enum-id: b22b8a00bc29acd2
         title:
           readOnly: true
           type: string
@@ -6219,7 +6202,6 @@ components:
         unit_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
           type: string
         upc:
           deprecated: true
@@ -6244,8 +6226,8 @@ components:
       - id
       - images
       - rating
+      - structure
       - title
-      - unit_cost
       - url
       type: object
     ProductPrices:
@@ -6365,37 +6347,26 @@ components:
         name:
           maxLength: 128
           type: string
-        option_group:
-          oneOf:
-          - $ref: '#/components/schemas/AttributeOptionGroup'
-          - type: 'null'
-        type:
-          description: '* `option` - Option'
-          enum:
-          - option
-          readOnly: true
-          type: string
-          x-spec-enum-id: 07372b684004488e
+        values:
+          items:
+            type: string
+          type: array
       required:
       - code
       - name
-      - type
+      - values
       type: object
     ProductVariantAttributeValue:
       properties:
         code:
           readOnly: true
           type: string
-        id:
-          readOnly: true
-          type: integer
         name:
-          readOnly: true
           type: string
-        value: {}
+        value:
+          type: string
       required:
       - code
-      - id
       - name
       - value
       type: object
@@ -8438,18 +8409,16 @@ components:
           readOnly: true
           type: array
         structure:
-          description: '* `standalone` - Stand-alone Product
+          description: '* `standalone` - standalone
 
-            * `parent` - Product with Variants
-
-            * `child` - Child Product'
+            * `parent` - parent'
           enum:
           - standalone
           - parent
-          - child
+          readOnly: true
           title: Product Structure
           type: string
-          x-spec-enum-id: a1df31d9b9dfd9ac
+          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Use a custom template from your theme to customize the product
             display.
@@ -8466,7 +8435,6 @@ components:
         unit_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
           type: string
         upc:
           deprecated: true
@@ -8491,7 +8459,7 @@ components:
       - images
       - rating
       - stockrecords
-      - unit_cost
+      - structure
       - url
       type: object
     UpdateProductVariant:
@@ -8521,6 +8489,13 @@ components:
           description: Track inventory quantities at fulfillment locations.
           title: Track Stock Levels
           type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Cost Per Item
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -21035,14 +21010,12 @@ webhooks:
                               properties:
                                 code:
                                   type: string
-                                id:
-                                  type: integer
                                 name:
                                   type: string
-                                value: {}
+                                value:
+                                  type: string
                               required:
                               - code
-                              - id
                               - name
                               - value
                               type: object
@@ -21269,18 +21242,15 @@ webhooks:
                         type: object
                       type: array
                     structure:
-                      description: '* `standalone` - Stand-alone Product
+                      description: '* `standalone` - standalone
 
-                        * `parent` - Product with Variants
-
-                        * `child` - Child Product'
+                        * `parent` - parent'
                       enum:
                       - standalone
                       - parent
-                      - child
                       title: Product Structure
                       type: string
-                      x-spec-enum-id: a1df31d9b9dfd9ac
+                      x-spec-enum-id: b22b8a00bc29acd2
                     template:
                       description: Use a custom template from your theme to customize
                         the product display.
@@ -21319,32 +21289,14 @@ webhooks:
                           name:
                             maxLength: 128
                             type: string
-                          option_group:
-                            properties:
-                              id:
-                                type: integer
-                              name:
-                                maxLength: 128
-                                type: string
-                              options:
-                                items:
-                                  type: string
-                                type: array
-                            required:
-                            - id
-                            - name
-                            - options
-                            type: object
-                          type:
-                            description: '* `option` - Option'
-                            enum:
-                            - option
-                            type: string
-                            x-spec-enum-id: 07372b684004488e
+                          values:
+                            items:
+                              type: string
+                            type: array
                         required:
                         - code
                         - name
-                        - type
+                        - values
                         type: object
                       type: array
                   required:
@@ -21355,8 +21307,8 @@ webhooks:
                   - id
                   - images
                   - rating
+                  - structure
                   - title
-                  - unit_cost
                   - url
                   type: object
                 event_id:
@@ -21611,14 +21563,12 @@ webhooks:
                               properties:
                                 code:
                                   type: string
-                                id:
-                                  type: integer
                                 name:
                                   type: string
-                                value: {}
+                                value:
+                                  type: string
                               required:
                               - code
-                              - id
                               - name
                               - value
                               type: object
@@ -21845,18 +21795,15 @@ webhooks:
                         type: object
                       type: array
                     structure:
-                      description: '* `standalone` - Stand-alone Product
+                      description: '* `standalone` - standalone
 
-                        * `parent` - Product with Variants
-
-                        * `child` - Child Product'
+                        * `parent` - parent'
                       enum:
                       - standalone
                       - parent
-                      - child
                       title: Product Structure
                       type: string
-                      x-spec-enum-id: a1df31d9b9dfd9ac
+                      x-spec-enum-id: b22b8a00bc29acd2
                     template:
                       description: Use a custom template from your theme to customize
                         the product display.
@@ -21895,32 +21842,14 @@ webhooks:
                           name:
                             maxLength: 128
                             type: string
-                          option_group:
-                            properties:
-                              id:
-                                type: integer
-                              name:
-                                maxLength: 128
-                                type: string
-                              options:
-                                items:
-                                  type: string
-                                type: array
-                            required:
-                            - id
-                            - name
-                            - options
-                            type: object
-                          type:
-                            description: '* `option` - Option'
-                            enum:
-                            - option
-                            type: string
-                            x-spec-enum-id: 07372b684004488e
+                          values:
+                            items:
+                              type: string
+                            type: array
                         required:
                         - code
                         - name
-                        - type
+                        - values
                         type: object
                       type: array
                   required:
@@ -21931,8 +21860,8 @@ webhooks:
                   - id
                   - images
                   - rating
+                  - structure
                   - title
-                  - unit_cost
                   - url
                   type: object
                 event_id:
