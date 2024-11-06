@@ -4,10 +4,15 @@ sidebar_label: Review & Publishing
 sidebar_position: 8
 ---
 
-Congradulations, you've built an app and now it's ready to publish to all 29 Next customers. Before we publish your app, we need to ensure your app is ready to go.
+Congratulations, you've built an app and now it's ready to publish to all 29 Next customers. Before we publish your app, we need to ensure your app is ready to go.
+
+:::tip
+Private apps can be shared with merchants and installed using the **Install Link** feature available on your app dashboard. Use install links to install and validate your app with merchants before submitting for review.
+:::
 
 ### App Review Checklist
 
+- Your app is currently live and on more than 3 merchant stores.
 - You've uploaded a logo to your app that is properly sized and displays nicely.
 - You've named your app inline with your business and how customers would find your service/app.
 - Your app description is 40-60 characters that concisely describes your app.
@@ -19,7 +24,7 @@ Congradulations, you've built an app and now it's ready to publish to all 29 Nex
 
 ### Submit App for Review
 
-Once you've completed all of your app functionality and the checklist items, you're now ready to submit your app for review. Use the link below to submit your app for reivew.
+Once you've completed all of your app functionality and the checklist items, you're now ready to submit your app for review. Use the link below to submit your app for review.
 
 ```mdx-code-block
 
