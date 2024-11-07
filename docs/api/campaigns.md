@@ -157,7 +157,7 @@ To add an upsell to an existing order, first you should check to see if the orde
 
 ```javascript title="Retrieve Order Details"
 const refId = '<YOUR ORDER REF ID>'
-const response = await fetch('https://campaigns.apps-staging.29next.com/api/v1/orders/' + refId + '/', {
+const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/' + refId + '/', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ On the order confirmation page, you can retrieve the order details and map the v
 
 ```javascript title="Retrieve Order Details"
 const refId = '<YOUR ORDER REF ID>'
-const response = await fetch('https://campaigns.apps-staging.29next.com/api/v1/orders/' + refId + '/', {
+const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/' + refId + '/', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
