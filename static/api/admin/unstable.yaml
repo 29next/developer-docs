@@ -61,7 +61,9 @@ components:
 
             * `ontrac` - ontrac
 
-            * `uniuni` - uniuni'
+            * `uniuni` - uniuni
+
+            * `china_post` - china_post'
           enum:
           - other
           - ups
@@ -80,11 +82,12 @@ components:
           - 4px
           - ontrac
           - uniuni
+          - china_post
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: c72e3006622b8860
+          x-spec-enum-id: 94a8d4ab3dcef71c
         date_created:
           format: date-time
           readOnly: true
@@ -1582,6 +1585,10 @@ components:
           type:
           - integer
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         prices:
           items:
             $ref: '#/components/schemas/ProductPrices'
@@ -5405,6 +5412,10 @@ components:
           type:
           - integer
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         prices:
           items:
             $ref: '#/components/schemas/ProductPrices'
@@ -6339,6 +6350,10 @@ components:
             $ref: '#/components/schemas/ProductImage'
           readOnly: true
           type: array
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         prices:
           items:
             $ref: '#/components/schemas/ProductPrices'
@@ -7582,6 +7597,8 @@ components:
 
             * `asendia` - asendia
 
+            * `china_post` - china_post
+
             * `deutsche_de` - deutsche_de
 
             * `dhl` - dhl
@@ -7614,6 +7631,7 @@ components:
           enum:
           - 4px
           - asendia
+          - china_post
           - deutsche_de
           - dhl
           - dhl_ecommerce
@@ -7630,7 +7648,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 3387d78aa4a85e0d
+          x-spec-enum-id: 3a68cf65f7105df0
         carrier_other_name:
           type:
           - string
@@ -8522,6 +8540,10 @@ components:
           type:
           - integer
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         prices:
           items:
             $ref: '#/components/schemas/ProductPrices'
@@ -21369,6 +21391,10 @@ webhooks:
                               - product
                               type: object
                             type: array
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           prices:
                             items:
                               properties:
@@ -21872,6 +21898,10 @@ webhooks:
                               - product
                               type: object
                             type: array
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           prices:
                             items:
                               properties:
