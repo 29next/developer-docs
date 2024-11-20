@@ -2193,6 +2193,10 @@ components:
         date_created:
           format: date-time
           type: string
+        last_event_date:
+          format: date-time
+          readOnly: true
+          type: string
         lines:
           readOnly: true
           type: string
@@ -2213,6 +2217,7 @@ components:
       required:
       - carrier
       - date_created
+      - last_event_date
       - lines
       - status
       - tracking_code
@@ -2720,6 +2725,11 @@ components:
         id:
           readOnly: true
           type: integer
+        last_event_date:
+          format: date-time
+          type:
+          - string
+          - 'null'
         line_items:
           items:
             $ref: '#/components/schemas/FulfillmentLineResponse'
@@ -5577,9 +5587,7 @@ components:
           type: string
         email:
           format: email
-          type:
-          - string
-          - 'null'
+          type: string
         first_name:
           maxLength: 255
           type: string
@@ -7455,14 +7463,17 @@ components:
 
             * `email` - Email
 
-            * `api` - API'
+            * `api` - API
+
+            * `follow_up` - Follow up'
           enum:
           - customer_account
           - dashboard
           - email
           - api
+          - follow_up
           type: string
-          x-spec-enum-id: 6d3c6bcf5b565a76
+          x-spec-enum-id: c3aad35666245662
         comments:
           items:
             $ref: '#/components/schemas/TicketComment'
@@ -8604,9 +8615,7 @@ components:
           type: string
         email:
           format: email
-          type:
-          - string
-          - 'null'
+          type: string
         first_name:
           maxLength: 255
           type: string
@@ -8688,6 +8697,7 @@ components:
       required:
       - addresses
       - date_joined
+      - email
       - id
       - orders_count
       - subscriptions_count
@@ -8709,9 +8719,7 @@ components:
           type: string
         email:
           format: email
-          type:
-          - string
-          - 'null'
+          type: string
         first_name:
           maxLength: 255
           type: string
@@ -8792,6 +8800,7 @@ components:
           type: string
       required:
       - date_joined
+      - email
       - id
       - orders_count
       - subscriptions_count
@@ -14650,7 +14659,9 @@ paths:
 
           * `email` - Email
 
-          * `api` - API'
+          * `api` - API
+
+          * `follow_up` - Follow up'
         in: query
         name: channel
         schema:
@@ -14659,8 +14670,9 @@ paths:
           - customer_account
           - dashboard
           - email
+          - follow_up
           type: string
-          x-spec-enum-id: 6d3c6bcf5b565a76
+          x-spec-enum-id: c3aad35666245662
       - description: Created From
         in: query
         name: created_from
@@ -15491,6 +15503,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/User'
+        required: true
       responses:
         '201':
           content:
@@ -15604,6 +15617,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/UpdateUser'
+        required: true
       responses:
         '200':
           content:
@@ -16719,9 +16733,7 @@ webhooks:
                       type: string
                     email:
                       format: email
-                      type:
-                      - string
-                      - 'null'
+                      type: string
                     first_name:
                       maxLength: 255
                       type: string
@@ -16797,6 +16809,7 @@ webhooks:
                       type: string
                   required:
                   - date_joined
+                  - email
                   - id
                   - orders_count
                   - subscriptions_count
@@ -16940,9 +16953,7 @@ webhooks:
                       type: string
                     email:
                       format: email
-                      type:
-                      - string
-                      - 'null'
+                      type: string
                     first_name:
                       maxLength: 255
                       type: string
@@ -17018,6 +17029,7 @@ webhooks:
                       type: string
                   required:
                   - date_joined
+                  - email
                   - id
                   - orders_count
                   - subscriptions_count
@@ -17520,6 +17532,11 @@ webhooks:
                       x-spec-enum-id: 3b886e5b796c0603
                     id:
                       type: integer
+                    last_event_date:
+                      format: date-time
+                      type:
+                      - string
+                      - 'null'
                     line_items:
                       items:
                         properties:
@@ -17771,6 +17788,11 @@ webhooks:
                       x-spec-enum-id: 3b886e5b796c0603
                     id:
                       type: integer
+                    last_event_date:
+                      format: date-time
+                      type:
+                      - string
+                      - 'null'
                     line_items:
                       items:
                         properties:
@@ -18501,6 +18523,11 @@ webhooks:
                             x-spec-enum-id: 3b886e5b796c0603
                           id:
                             type: integer
+                          last_event_date:
+                            format: date-time
+                            type:
+                            - string
+                            - 'null'
                           line_items:
                             items:
                               properties:
@@ -19899,6 +19926,11 @@ webhooks:
                             x-spec-enum-id: 3b886e5b796c0603
                           id:
                             type: integer
+                          last_event_date:
+                            format: date-time
+                            type:
+                            - string
+                            - 'null'
                           line_items:
                             items:
                               properties:
@@ -23187,14 +23219,17 @@ webhooks:
 
                         * `email` - Email
 
-                        * `api` - API'
+                        * `api` - API
+
+                        * `follow_up` - Follow up'
                       enum:
                       - customer_account
                       - dashboard
                       - email
                       - api
+                      - follow_up
                       type: string
-                      x-spec-enum-id: 6d3c6bcf5b565a76
+                      x-spec-enum-id: c3aad35666245662
                     comments:
                       items:
                         properties:
@@ -23396,14 +23431,17 @@ webhooks:
 
                         * `email` - Email
 
-                        * `api` - API'
+                        * `api` - API
+
+                        * `follow_up` - Follow up'
                       enum:
                       - customer_account
                       - dashboard
                       - email
                       - api
+                      - follow_up
                       type: string
-                      x-spec-enum-id: 6d3c6bcf5b565a76
+                      x-spec-enum-id: c3aad35666245662
                     comments:
                       items:
                         properties:
