@@ -2430,6 +2430,11 @@ components:
         sku:
           readOnly: true
           type: string
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/FulfillmentTaxPriceBreakdown'
+          readOnly: true
+          type: array
         total_discount:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -2450,6 +2455,7 @@ components:
       - returnable_quantity
       - returned_quantity
       - sku
+      - tax_lines
       - total_discount
       type: object
     FulfillmentOrder:
@@ -2587,6 +2593,11 @@ components:
         stockrecord_id:
           readOnly: true
           type: integer
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/FulfillmentTaxPriceBreakdown'
+          readOnly: true
+          type: array
         total_discount:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -2604,6 +2615,7 @@ components:
       - product_title
       - sku
       - stockrecord_id
+      - tax_lines
       - total_discount
       type: object
     FulfillmentOrderLineItem:
@@ -2845,6 +2857,44 @@ components:
       - last_name
       - line1
       - line4
+      type: object
+    FulfillmentTaxPriceBreakdown:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        currency:
+          readOnly: true
+          type: string
+        rate:
+          format: double
+          type: number
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/TaxPriceBreakdownReportValueSeraizlier'
+          readOnly: true
+        source:
+          readOnly: true
+          type: string
+        tax_class_name:
+          readOnly: true
+          type: string
+        tax_id:
+          type: integer
+        tax_rate_name:
+          readOnly: true
+          type: string
+      required:
+      - amount
+      - currency
+      - rate
+      - report_values
+      - source
+      - tax_class_name
+      - tax_id
+      - tax_rate_name
       type: object
     GatewayGroup:
       properties:
@@ -3222,6 +3272,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        shipping_tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
         source:
           readOnly: true
           type: string
@@ -3245,6 +3300,11 @@ components:
             type:
             - string
             - 'null'
+          type: array
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxSerailizer'
+          readOnly: true
           type: array
         total_cost:
           format: decimal
@@ -3316,10 +3376,12 @@ components:
       - shipping_incl_tax
       - shipping_method
       - shipping_tax
+      - shipping_tax_lines
       - source
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - tax_lines
       - total_cost
       - total_discount
       - total_excl_tax
@@ -3401,6 +3463,11 @@ components:
         sku:
           readOnly: true
           type: string
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
         total_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -3440,11 +3507,78 @@ components:
       - report_values
       - requires_shipping
       - sku
+      - tax_lines
       - total_cost
       - total_discount
       - unit_cost
       - variant_id
       - variant_title
+      type: object
+    OrderLineDetailSerailizer:
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        is_gift_card:
+          type: boolean
+        is_upsell:
+          type: boolean
+        price_currency:
+          maxLength: 12
+          type: string
+        price_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_excl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price_incl_tax_excl_discounts:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        product:
+          allOf:
+          - $ref: '#/components/schemas/Product '
+          readOnly: true
+        quantity:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        stockrecord:
+          $ref: '#/components/schemas/Stockrecord'
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+      required:
+      - id
+      - price_currency
+      - price_excl_tax
+      - price_excl_tax_excl_discounts
+      - price_incl_tax
+      - price_incl_tax_excl_discounts
+      - product
+      - stockrecord
+      - tax_lines
+      - total_cost
+      - unit_cost
       type: object
     OrderLineReport:
       properties:
@@ -3924,7 +4058,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLine'
+            $ref: '#/components/schemas/OrderLineDetailSerailizer'
           readOnly: true
           type: array
         metadata:
@@ -4035,6 +4169,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        shipping_tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
         source:
           readOnly: true
           type: string
@@ -4059,6 +4198,11 @@ components:
             type:
             - string
             - 'null'
+          type: array
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxSerailizer'
+          readOnly: true
           type: array
         total_cost:
           format: decimal
@@ -4115,10 +4259,12 @@ components:
       - shipping_incl_tax
       - shipping_method
       - shipping_tax
+      - shipping_tax_lines
       - source
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - tax_lines
       - total_cost
       - total_excl_tax
       - total_incl_tax
@@ -5041,7 +5187,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLine'
+            $ref: '#/components/schemas/OrderLineDetailSerailizer'
           readOnly: true
           type: array
         metadata:
@@ -5152,6 +5298,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        shipping_tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
         source:
           readOnly: true
           type: string
@@ -5176,6 +5327,11 @@ components:
             type:
             - string
             - 'null'
+          type: array
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxSerailizer'
+          readOnly: true
           type: array
         total_cost:
           format: decimal
@@ -6091,6 +6247,43 @@ components:
       - title
       - url
       - variants
+      type: object
+    'Product ':
+      properties:
+        categories:
+          deprecated: true
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+          readOnly: true
+          type: array
+        id:
+          readOnly: true
+          type: integer
+        images:
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+          type: array
+        title:
+          readOnly: true
+          type: string
+        upc:
+          deprecated: true
+          description: Universal Product Code (UPC) is an identifier for a product
+            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          type:
+          - string
+          - 'null'
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+      - categories
+      - id
+      - images
+      - title
+      - url
       type: object
     ProductCategory:
       properties:
@@ -7013,10 +7206,6 @@ components:
         id:
           readOnly: true
           type: integer
-        location_id:
-          type:
-          - integer
-          - 'null'
         low_stock_threshold:
           maximum: 2147483647
           minimum: 0
@@ -7024,7 +7213,8 @@ components:
           - integer
           - 'null'
         num_allocated:
-          readOnly: true
+          maximum: 2147483647
+          minimum: -2147483648
           title: Number allocated
           type:
           - integer
@@ -7036,10 +7226,31 @@ components:
           type:
           - integer
           - 'null'
+        partner_sku:
+          title: SKU
+          type:
+          - string
+          - 'null'
+        price:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type:
+          - string
+          - 'null'
+        price_currency:
+          title: Currency
+          type:
+          - string
+          - 'null'
+        price_retail:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Price (retail)
+          type:
+          - string
+          - 'null'
       required:
       - id
-      - location_id
-      - num_allocated
       type: object
     Store:
       properties:
@@ -7415,6 +7626,108 @@ components:
           type:
           - integer
           - 'null'
+      type: object
+    TaxPriceBreakdown:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        currency:
+          readOnly: true
+          type: string
+        rate:
+          format: double
+          type: number
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/TaxPriceBreakdownReportValueSeraizlier'
+          readOnly: true
+        source:
+          readOnly: true
+          type: string
+        tax_class_name:
+          readOnly: true
+          type: string
+        tax_id:
+          type: integer
+        tax_rate_name:
+          readOnly: true
+          type: string
+      required:
+      - amount
+      - currency
+      - rate
+      - report_values
+      - source
+      - tax_class_name
+      - tax_id
+      - tax_rate_name
+      type: object
+    TaxPriceBreakdownReportValueSeraizlier:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        currency:
+          readOnly: true
+          type: string
+      required:
+      - amount
+      - currency
+      type: object
+    TaxReportValueSeraizlier:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        currency:
+          readOnly: true
+          type: string
+      required:
+      - amount
+      - currency
+      type: object
+    TaxSerailizer:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        currency:
+          type:
+          - string
+          - 'null'
+        id:
+          readOnly: true
+          type: integer
+        rate:
+          format: double
+          readOnly: true
+          type: number
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/TaxReportValueSeraizlier'
+          readOnly: true
+        source:
+          type:
+          - string
+          - 'null'
+        tax_class_name:
+          maxLength: 128
+          type: string
+        tax_rate_name:
+          maxLength: 128
+          type: string
+      required:
+      - id
+      - rate
+      - report_values
       type: object
     Template:
       properties:
@@ -8124,7 +8437,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLine'
+            $ref: '#/components/schemas/OrderLineDetailSerailizer'
           readOnly: true
           type: array
         metadata:
@@ -8235,6 +8548,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        shipping_tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
         source:
           readOnly: true
           type: string
@@ -8259,6 +8577,11 @@ components:
             type:
             - string
             - 'null'
+          type: array
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxSerailizer'
+          readOnly: true
           type: array
         total_cost:
           format: decimal
@@ -8318,10 +8641,12 @@ components:
       - shipping_incl_tax
       - shipping_method
       - shipping_tax
+      - shipping_tax_lines
       - source
       - subscription_lifecycle
       - subscriptions
       - supports_post_purchase_upsells
+      - tax_lines
       - total_cost
       - total_excl_tax
       - total_incl_tax
@@ -17578,6 +17903,49 @@ webhooks:
                             type: string
                           sku:
                             type: string
+                          tax_lines:
+                            items:
+                              properties:
+                                amount:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  type: string
+                                currency:
+                                  type: string
+                                rate:
+                                  format: double
+                                  type: number
+                                report_values:
+                                  properties:
+                                    amount:
+                                      format: decimal
+                                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                      type: string
+                                    currency:
+                                      type: string
+                                  required:
+                                  - amount
+                                  - currency
+                                  type: object
+                                source:
+                                  type: string
+                                tax_class_name:
+                                  type: string
+                                tax_id:
+                                  type: integer
+                                tax_rate_name:
+                                  type: string
+                              required:
+                              - amount
+                              - currency
+                              - rate
+                              - report_values
+                              - source
+                              - tax_class_name
+                              - tax_id
+                              - tax_rate_name
+                              type: object
+                            type: array
                           total_discount:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -17597,6 +17965,7 @@ webhooks:
                         - returnable_quantity
                         - returned_quantity
                         - sku
+                        - tax_lines
                         - total_discount
                         type: object
                       type: array
@@ -17834,6 +18203,49 @@ webhooks:
                             type: string
                           sku:
                             type: string
+                          tax_lines:
+                            items:
+                              properties:
+                                amount:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  type: string
+                                currency:
+                                  type: string
+                                rate:
+                                  format: double
+                                  type: number
+                                report_values:
+                                  properties:
+                                    amount:
+                                      format: decimal
+                                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                      type: string
+                                    currency:
+                                      type: string
+                                  required:
+                                  - amount
+                                  - currency
+                                  type: object
+                                source:
+                                  type: string
+                                tax_class_name:
+                                  type: string
+                                tax_id:
+                                  type: integer
+                                tax_rate_name:
+                                  type: string
+                              required:
+                              - amount
+                              - currency
+                              - rate
+                              - report_values
+                              - source
+                              - tax_class_name
+                              - tax_id
+                              - tax_rate_name
+                              type: object
+                            type: array
                           total_discount:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -17853,6 +18265,7 @@ webhooks:
                         - returnable_quantity
                         - returned_quantity
                         - sku
+                        - tax_lines
                         - total_discount
                         type: object
                       type: array
@@ -18569,6 +18982,49 @@ webhooks:
                                   type: string
                                 sku:
                                   type: string
+                                tax_lines:
+                                  items:
+                                    properties:
+                                      amount:
+                                        format: decimal
+                                        pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                        type: string
+                                      currency:
+                                        type: string
+                                      rate:
+                                        format: double
+                                        type: number
+                                      report_values:
+                                        properties:
+                                          amount:
+                                            format: decimal
+                                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                            type: string
+                                          currency:
+                                            type: string
+                                        required:
+                                        - amount
+                                        - currency
+                                        type: object
+                                      source:
+                                        type: string
+                                      tax_class_name:
+                                        type: string
+                                      tax_id:
+                                        type: integer
+                                      tax_rate_name:
+                                        type: string
+                                    required:
+                                    - amount
+                                    - currency
+                                    - rate
+                                    - report_values
+                                    - source
+                                    - tax_class_name
+                                    - tax_id
+                                    - tax_rate_name
+                                    type: object
+                                  type: array
                                 total_discount:
                                   format: decimal
                                   pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -18588,6 +19044,7 @@ webhooks:
                               - returnable_quantity
                               - returned_quantity
                               - sku
+                              - tax_lines
                               - total_discount
                               type: object
                             type: array
@@ -18782,6 +19239,49 @@ webhooks:
                             type: boolean
                           sku:
                             type: string
+                          tax_lines:
+                            items:
+                              properties:
+                                amount:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  type: string
+                                currency:
+                                  type: string
+                                rate:
+                                  format: double
+                                  type: number
+                                report_values:
+                                  properties:
+                                    amount:
+                                      format: decimal
+                                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                      type: string
+                                    currency:
+                                      type: string
+                                  required:
+                                  - amount
+                                  - currency
+                                  type: object
+                                source:
+                                  type: string
+                                tax_class_name:
+                                  type: string
+                                tax_id:
+                                  type: integer
+                                tax_rate_name:
+                                  type: string
+                              required:
+                              - amount
+                              - currency
+                              - rate
+                              - report_values
+                              - source
+                              - tax_class_name
+                              - tax_id
+                              - tax_rate_name
+                              type: object
+                            type: array
                           total_cost:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -18816,6 +19316,7 @@ webhooks:
                         - report_values
                         - requires_shipping
                         - sku
+                        - tax_lines
                         - total_cost
                         - total_discount
                         - unit_cost
@@ -19345,6 +19846,49 @@ webhooks:
                       format: decimal
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
+                    shipping_tax_lines:
+                      items:
+                        properties:
+                          amount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          currency:
+                            type: string
+                          rate:
+                            format: double
+                            type: number
+                          report_values:
+                            properties:
+                              amount:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              currency:
+                                type: string
+                            required:
+                            - amount
+                            - currency
+                            type: object
+                          source:
+                            type: string
+                          tax_class_name:
+                            type: string
+                          tax_id:
+                            type: integer
+                          tax_rate_name:
+                            type: string
+                        required:
+                        - amount
+                        - currency
+                        - rate
+                        - report_values
+                        - source
+                        - tax_class_name
+                        - tax_id
+                        - tax_rate_name
+                        type: object
+                      type: array
                     source:
                       type: string
                     status:
@@ -19372,6 +19916,50 @@ webhooks:
                         type:
                         - string
                         - 'null'
+                      type: array
+                    tax_lines:
+                      items:
+                        properties:
+                          amount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          currency:
+                            type:
+                            - string
+                            - 'null'
+                          id:
+                            type: integer
+                          rate:
+                            format: double
+                            type: number
+                          report_values:
+                            properties:
+                              amount:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              currency:
+                                type: string
+                            required:
+                            - amount
+                            - currency
+                            type: object
+                          source:
+                            type:
+                            - string
+                            - 'null'
+                          tax_class_name:
+                            maxLength: 128
+                            type: string
+                          tax_rate_name:
+                            maxLength: 128
+                            type: string
+                        required:
+                        - id
+                        - rate
+                        - report_values
+                        type: object
                       type: array
                     total_cost:
                       format: decimal
@@ -19627,10 +20215,12 @@ webhooks:
                   - shipping_incl_tax
                   - shipping_method
                   - shipping_tax
+                  - shipping_tax_lines
                   - source
                   - subscription_lifecycle
                   - subscriptions
                   - supports_post_purchase_upsells
+                  - tax_lines
                   - total_cost
                   - total_discount
                   - total_excl_tax
@@ -19972,6 +20562,49 @@ webhooks:
                                   type: string
                                 sku:
                                   type: string
+                                tax_lines:
+                                  items:
+                                    properties:
+                                      amount:
+                                        format: decimal
+                                        pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                        type: string
+                                      currency:
+                                        type: string
+                                      rate:
+                                        format: double
+                                        type: number
+                                      report_values:
+                                        properties:
+                                          amount:
+                                            format: decimal
+                                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                            type: string
+                                          currency:
+                                            type: string
+                                        required:
+                                        - amount
+                                        - currency
+                                        type: object
+                                      source:
+                                        type: string
+                                      tax_class_name:
+                                        type: string
+                                      tax_id:
+                                        type: integer
+                                      tax_rate_name:
+                                        type: string
+                                    required:
+                                    - amount
+                                    - currency
+                                    - rate
+                                    - report_values
+                                    - source
+                                    - tax_class_name
+                                    - tax_id
+                                    - tax_rate_name
+                                    type: object
+                                  type: array
                                 total_discount:
                                   format: decimal
                                   pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -19991,6 +20624,7 @@ webhooks:
                               - returnable_quantity
                               - returned_quantity
                               - sku
+                              - tax_lines
                               - total_discount
                               type: object
                             type: array
@@ -20185,6 +20819,49 @@ webhooks:
                             type: boolean
                           sku:
                             type: string
+                          tax_lines:
+                            items:
+                              properties:
+                                amount:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  type: string
+                                currency:
+                                  type: string
+                                rate:
+                                  format: double
+                                  type: number
+                                report_values:
+                                  properties:
+                                    amount:
+                                      format: decimal
+                                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                      type: string
+                                    currency:
+                                      type: string
+                                  required:
+                                  - amount
+                                  - currency
+                                  type: object
+                                source:
+                                  type: string
+                                tax_class_name:
+                                  type: string
+                                tax_id:
+                                  type: integer
+                                tax_rate_name:
+                                  type: string
+                              required:
+                              - amount
+                              - currency
+                              - rate
+                              - report_values
+                              - source
+                              - tax_class_name
+                              - tax_id
+                              - tax_rate_name
+                              type: object
+                            type: array
                           total_cost:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -20219,6 +20896,7 @@ webhooks:
                         - report_values
                         - requires_shipping
                         - sku
+                        - tax_lines
                         - total_cost
                         - total_discount
                         - unit_cost
@@ -20748,6 +21426,49 @@ webhooks:
                       format: decimal
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
+                    shipping_tax_lines:
+                      items:
+                        properties:
+                          amount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          currency:
+                            type: string
+                          rate:
+                            format: double
+                            type: number
+                          report_values:
+                            properties:
+                              amount:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              currency:
+                                type: string
+                            required:
+                            - amount
+                            - currency
+                            type: object
+                          source:
+                            type: string
+                          tax_class_name:
+                            type: string
+                          tax_id:
+                            type: integer
+                          tax_rate_name:
+                            type: string
+                        required:
+                        - amount
+                        - currency
+                        - rate
+                        - report_values
+                        - source
+                        - tax_class_name
+                        - tax_id
+                        - tax_rate_name
+                        type: object
+                      type: array
                     source:
                       type: string
                     status:
@@ -20775,6 +21496,50 @@ webhooks:
                         type:
                         - string
                         - 'null'
+                      type: array
+                    tax_lines:
+                      items:
+                        properties:
+                          amount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          currency:
+                            type:
+                            - string
+                            - 'null'
+                          id:
+                            type: integer
+                          rate:
+                            format: double
+                            type: number
+                          report_values:
+                            properties:
+                              amount:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              currency:
+                                type: string
+                            required:
+                            - amount
+                            - currency
+                            type: object
+                          source:
+                            type:
+                            - string
+                            - 'null'
+                          tax_class_name:
+                            maxLength: 128
+                            type: string
+                          tax_rate_name:
+                            maxLength: 128
+                            type: string
+                        required:
+                        - id
+                        - rate
+                        - report_values
+                        type: object
                       type: array
                     total_cost:
                       format: decimal
@@ -21030,10 +21795,12 @@ webhooks:
                   - shipping_incl_tax
                   - shipping_method
                   - shipping_tax
+                  - shipping_tax_lines
                   - source
                   - subscription_lifecycle
                   - subscriptions
                   - supports_post_purchase_upsells
+                  - tax_lines
                   - total_cost
                   - total_discount
                   - total_excl_tax
@@ -21298,10 +22065,6 @@ webhooks:
                         properties:
                           id:
                             type: integer
-                          location_id:
-                            type:
-                            - integer
-                            - 'null'
                           low_stock_threshold:
                             maximum: 2147483647
                             minimum: 0
@@ -21309,6 +22072,8 @@ webhooks:
                             - integer
                             - 'null'
                           num_allocated:
+                            maximum: 2147483647
+                            minimum: -2147483648
                             title: Number allocated
                             type:
                             - integer
@@ -21320,10 +22085,31 @@ webhooks:
                             type:
                             - integer
                             - 'null'
+                          partner_sku:
+                            title: SKU
+                            type:
+                            - string
+                            - 'null'
+                          price:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type:
+                            - string
+                            - 'null'
+                          price_currency:
+                            title: Currency
+                            type:
+                            - string
+                            - 'null'
+                          price_retail:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            title: Price (retail)
+                            type:
+                            - string
+                            - 'null'
                         required:
                         - id
-                        - location_id
-                        - num_allocated
                         type: object
                       type: array
                     structure:
@@ -21474,10 +22260,6 @@ webhooks:
                               properties:
                                 id:
                                   type: integer
-                                location_id:
-                                  type:
-                                  - integer
-                                  - 'null'
                                 low_stock_threshold:
                                   maximum: 2147483647
                                   minimum: 0
@@ -21485,6 +22267,8 @@ webhooks:
                                   - integer
                                   - 'null'
                                 num_allocated:
+                                  maximum: 2147483647
+                                  minimum: -2147483648
                                   title: Number allocated
                                   type:
                                   - integer
@@ -21496,10 +22280,31 @@ webhooks:
                                   type:
                                   - integer
                                   - 'null'
+                                partner_sku:
+                                  title: SKU
+                                  type:
+                                  - string
+                                  - 'null'
+                                price:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  type:
+                                  - string
+                                  - 'null'
+                                price_currency:
+                                  title: Currency
+                                  type:
+                                  - string
+                                  - 'null'
+                                price_retail:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  title: Price (retail)
+                                  type:
+                                  - string
+                                  - 'null'
                               required:
                               - id
-                              - location_id
-                              - num_allocated
                               type: object
                             type: array
                           title:
@@ -21805,10 +22610,6 @@ webhooks:
                         properties:
                           id:
                             type: integer
-                          location_id:
-                            type:
-                            - integer
-                            - 'null'
                           low_stock_threshold:
                             maximum: 2147483647
                             minimum: 0
@@ -21816,6 +22617,8 @@ webhooks:
                             - integer
                             - 'null'
                           num_allocated:
+                            maximum: 2147483647
+                            minimum: -2147483648
                             title: Number allocated
                             type:
                             - integer
@@ -21827,10 +22630,31 @@ webhooks:
                             type:
                             - integer
                             - 'null'
+                          partner_sku:
+                            title: SKU
+                            type:
+                            - string
+                            - 'null'
+                          price:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type:
+                            - string
+                            - 'null'
+                          price_currency:
+                            title: Currency
+                            type:
+                            - string
+                            - 'null'
+                          price_retail:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            title: Price (retail)
+                            type:
+                            - string
+                            - 'null'
                         required:
                         - id
-                        - location_id
-                        - num_allocated
                         type: object
                       type: array
                     structure:
@@ -21981,10 +22805,6 @@ webhooks:
                               properties:
                                 id:
                                   type: integer
-                                location_id:
-                                  type:
-                                  - integer
-                                  - 'null'
                                 low_stock_threshold:
                                   maximum: 2147483647
                                   minimum: 0
@@ -21992,6 +22812,8 @@ webhooks:
                                   - integer
                                   - 'null'
                                 num_allocated:
+                                  maximum: 2147483647
+                                  minimum: -2147483648
                                   title: Number allocated
                                   type:
                                   - integer
@@ -22003,10 +22825,31 @@ webhooks:
                                   type:
                                   - integer
                                   - 'null'
+                                partner_sku:
+                                  title: SKU
+                                  type:
+                                  - string
+                                  - 'null'
+                                price:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  type:
+                                  - string
+                                  - 'null'
+                                price_currency:
+                                  title: Currency
+                                  type:
+                                  - string
+                                  - 'null'
+                                price_retail:
+                                  format: decimal
+                                  pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                  title: Price (retail)
+                                  type:
+                                  - string
+                                  - 'null'
                               required:
                               - id
-                              - location_id
-                              - num_allocated
                               type: object
                             type: array
                           title:
