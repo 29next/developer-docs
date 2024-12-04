@@ -2892,6 +2892,9 @@ components:
         tax_rate_name:
           readOnly: true
           type: string
+        tax_type:
+          readOnly: true
+          type: string
       required:
       - amount
       - currency
@@ -2901,6 +2904,7 @@ components:
       - tax_class_name
       - tax_id
       - tax_rate_name
+      - tax_type
       type: object
     GatewayGroup:
       properties:
@@ -4543,6 +4547,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/SubscriptionDetail'
+          type: array
+      required:
+      - count
+      - results
+      type: object
+    PaginatedSubscriptionTransactionList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/SubscriptionTransaction'
           type: array
       required:
       - count
@@ -6967,6 +6994,13 @@ components:
       - updated_at
       - user
       type: object
+    RetrySubscription:
+      properties:
+        payment_gateway:
+          type:
+          - integer
+          - 'null'
+      type: object
     ShippingAddress:
       properties:
         country:
@@ -7516,6 +7550,108 @@ components:
           - integer
           - 'null'
       type: object
+    SubscriptionTransaction:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        amount_available_for_refund:
+          default: '0.00'
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        attribution:
+          allOf:
+          - $ref: '#/components/schemas/MarketingAttribution'
+          readOnly: true
+        currency:
+          type:
+          - string
+          - 'null'
+        date_created:
+          format: date-time
+          readOnly: true
+          type: string
+        external_id:
+          type:
+          - string
+          - 'null'
+        id:
+          readOnly: true
+          type: integer
+        initiator:
+          allOf:
+          - $ref: '#/components/schemas/Agent'
+          readOnly: true
+        is_disputed:
+          type: boolean
+        is_external:
+          type: boolean
+        is_test:
+          type:
+          - boolean
+          - 'null'
+        order:
+          type:
+          - string
+          - 'null'
+        parent_id:
+          description: "The ID of an associated transaction.\n- For capture transactions,\
+            \ the parent is the authorization transaction. \n- For void transactions,\
+            \ the parent is the authorization transaction. \n- For refund transactions,\
+            \ the parent is the debit transaction. \n"
+          readOnly: true
+          type:
+          - integer
+          - 'null'
+        payment_details:
+          allOf:
+          - $ref: '#/components/schemas/TransactionPaymentDetail'
+          readOnly: true
+        payment_method:
+          type:
+          - string
+          - 'null'
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/TransactionReportValues'
+          readOnly: true
+        response_code:
+          type: integer
+        status:
+          description: '* `succeeded` - Succeeded
+
+            * `failed` - Failed'
+          enum:
+          - succeeded
+          - failed
+          - ''
+          type: string
+          x-spec-enum-id: a6661c405ff6d2ee
+        subscription:
+          allOf:
+          - $ref: '#/components/schemas/TransactionSubscription'
+          readOnly: true
+        type:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserInline'
+      required:
+      - amount
+      - attribution
+      - date_created
+      - id
+      - initiator
+      - order
+      - parent_id
+      - payment_details
+      - report_values
+      - response_code
+      - subscription
+      - type
+      - user
+      type: object
     TaxPriceBreakdown:
       properties:
         amount:
@@ -7544,6 +7680,9 @@ components:
         tax_rate_name:
           readOnly: true
           type: string
+        tax_type:
+          readOnly: true
+          type: string
       required:
       - amount
       - currency
@@ -7553,6 +7692,7 @@ components:
       - tax_class_name
       - tax_id
       - tax_rate_name
+      - tax_type
       type: object
     TaxPriceBreakdownReportValueSeraizlier:
       properties:
@@ -7613,10 +7753,14 @@ components:
         tax_rate_name:
           maxLength: 128
           type: string
+        tax_type:
+          readOnly: true
+          type: string
       required:
       - id
       - rate
       - report_values
+      - tax_type
       type: object
     Template:
       properties:
@@ -7957,7 +8101,9 @@ components:
           - ''
           type: string
           x-spec-enum-id: a6661c405ff6d2ee
-        subscriptions:
+        subscription:
+          allOf:
+          - $ref: '#/components/schemas/TransactionSubscription'
           readOnly: true
         type:
           type: string
@@ -7974,7 +8120,7 @@ components:
       - payment_details
       - report_values
       - response_code
-      - subscriptions
+      - subscription
       - type
       - user
       type: object
@@ -8049,7 +8195,9 @@ components:
           - ''
           type: string
           x-spec-enum-id: a6661c405ff6d2ee
-        subscriptions:
+        subscription:
+          allOf:
+          - $ref: '#/components/schemas/TransactionSubscription'
           readOnly: true
         type:
           type: string
@@ -8065,7 +8213,7 @@ components:
       - parent_id
       - payment_details
       - response_code
-      - subscriptions
+      - subscription
       - type
       - user
       type: object
@@ -8207,6 +8355,20 @@ components:
       required:
       - amount
       - currency
+      type: object
+    TransactionSubscription:
+      properties:
+        billing_cycle:
+          readOnly: true
+          type:
+          - integer
+          - 'null'
+        id:
+          readOnly: true
+          type: integer
+      required:
+      - billing_cycle
+      - id
       type: object
     UpdateCart:
       properties:
@@ -14554,6 +14716,85 @@ paths:
         - subscriptions:write
       tags:
       - subscriptions
+  /subscriptions/{id}/retry/:
+    post:
+      description: Trigger a renewal payment retry for a subscription.
+      operationId: subscriptionsRetryCreate
+      parameters:
+      - description: A unique integer value identifying this Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrySubscription'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RetrySubscription'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RetrySubscription'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDetail'
+          description: ''
+      security:
+      - oauth2:
+        - subscriptions:write
+      tags:
+      - subscriptions
+  /subscriptions/{id}/transactions/:
+    get:
+      description: Retrieve a list of transactions in an existing subscription.
+      operationId: subscriptionsTransactionsList
+      parameters:
+      - description: A unique integer value identifying this Subscription.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: A page number within the paginated result set.
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSubscriptionTransactionList'
+          description: ''
+      security:
+      - oauth2:
+        - subscriptions:read
+      tags:
+      - subscriptions
   /themes/:
     get:
       description: Retrieve a list of themes.
@@ -17938,6 +18179,8 @@ webhooks:
                                   type: integer
                                 tax_rate_name:
                                   type: string
+                                tax_type:
+                                  type: string
                               required:
                               - amount
                               - currency
@@ -17947,6 +18190,7 @@ webhooks:
                               - tax_class_name
                               - tax_id
                               - tax_rate_name
+                              - tax_type
                               type: object
                             type: array
                         required:
@@ -18246,6 +18490,8 @@ webhooks:
                                   type: integer
                                 tax_rate_name:
                                   type: string
+                                tax_type:
+                                  type: string
                               required:
                               - amount
                               - currency
@@ -18255,6 +18501,7 @@ webhooks:
                               - tax_class_name
                               - tax_id
                               - tax_rate_name
+                              - tax_type
                               type: object
                             type: array
                         required:
@@ -19127,6 +19374,8 @@ webhooks:
                                   type: integer
                                 tax_rate_name:
                                   type: string
+                                tax_type:
+                                  type: string
                               required:
                               - amount
                               - currency
@@ -19136,6 +19385,7 @@ webhooks:
                               - tax_class_name
                               - tax_id
                               - tax_rate_name
+                              - tax_type
                               type: object
                             type: array
                           total_cost:
@@ -19701,6 +19951,8 @@ webhooks:
                             type: integer
                           tax_rate_name:
                             type: string
+                          tax_type:
+                            type: string
                         required:
                         - amount
                         - currency
@@ -19710,6 +19962,7 @@ webhooks:
                         - tax_class_name
                         - tax_id
                         - tax_rate_name
+                        - tax_type
                         type: object
                       type: array
                     source:
@@ -19779,10 +20032,13 @@ webhooks:
                           tax_rate_name:
                             maxLength: 128
                             type: string
+                          tax_type:
+                            type: string
                         required:
                         - id
                         - rate
                         - report_values
+                        - tax_type
                         type: object
                       type: array
                     total_cost:
@@ -20511,6 +20767,8 @@ webhooks:
                                   type: integer
                                 tax_rate_name:
                                   type: string
+                                tax_type:
+                                  type: string
                               required:
                               - amount
                               - currency
@@ -20520,6 +20778,7 @@ webhooks:
                               - tax_class_name
                               - tax_id
                               - tax_rate_name
+                              - tax_type
                               type: object
                             type: array
                           total_cost:
@@ -21085,6 +21344,8 @@ webhooks:
                             type: integer
                           tax_rate_name:
                             type: string
+                          tax_type:
+                            type: string
                         required:
                         - amount
                         - currency
@@ -21094,6 +21355,7 @@ webhooks:
                         - tax_class_name
                         - tax_id
                         - tax_rate_name
+                        - tax_type
                         type: object
                       type: array
                     source:
@@ -21163,10 +21425,13 @@ webhooks:
                           tax_rate_name:
                             maxLength: 128
                             type: string
+                          tax_type:
+                            type: string
                         required:
                         - id
                         - rate
                         - report_values
+                        - tax_type
                         type: object
                       type: array
                     total_cost:
@@ -24531,7 +24796,18 @@ webhooks:
                       - ''
                       type: string
                       x-spec-enum-id: a6661c405ff6d2ee
-                    subscriptions: {}
+                    subscription:
+                      properties:
+                        billing_cycle:
+                          type:
+                          - integer
+                          - 'null'
+                        id:
+                          type: integer
+                      required:
+                      - billing_cycle
+                      - id
+                      type: object
                     type:
                       type: string
                     user:
@@ -24585,7 +24861,7 @@ webhooks:
                   - payment_details
                   - report_values
                   - response_code
-                  - subscriptions
+                  - subscription
                   - type
                   - user
                   type: object

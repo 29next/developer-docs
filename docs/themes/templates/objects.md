@@ -133,7 +133,7 @@ Returns a list of products you can iterate over, see [product](#product).
 
 ```django title="Example Storefront Products Query and Loop"
 {% where products 'title' 'contains' 'featured' as products_filtered %}
-{% for product in products %}
+{% for product in products_filtered %}
 <div class="col">
     <div class="card h-100">
         {% with image=product.primary_image %}
