@@ -2884,15 +2884,9 @@ components:
         source:
           readOnly: true
           type: string
-        tax_class_name:
-          readOnly: true
-          type: string
         tax_id:
           type: integer
-        tax_rate_name:
-          readOnly: true
-          type: string
-        tax_type:
+        tax_title:
           readOnly: true
           type: string
       required:
@@ -2901,10 +2895,8 @@ components:
       - rate
       - report_values
       - source
-      - tax_class_name
       - tax_id
-      - tax_rate_name
-      - tax_type
+      - tax_title
       type: object
     GatewayGroup:
       properties:
@@ -7672,15 +7664,9 @@ components:
         source:
           readOnly: true
           type: string
-        tax_class_name:
-          readOnly: true
-          type: string
         tax_id:
           type: integer
-        tax_rate_name:
-          readOnly: true
-          type: string
-        tax_type:
+        tax_title:
           readOnly: true
           type: string
       required:
@@ -7689,10 +7675,8 @@ components:
       - rate
       - report_values
       - source
-      - tax_class_name
       - tax_id
-      - tax_rate_name
-      - tax_type
+      - tax_title
       type: object
     TaxPriceBreakdownReportValueSeraizlier:
       properties:
@@ -7747,20 +7731,14 @@ components:
           type:
           - string
           - 'null'
-        tax_class_name:
-          maxLength: 128
-          type: string
-        tax_rate_name:
-          maxLength: 128
-          type: string
-        tax_type:
+        tax_title:
           readOnly: true
           type: string
       required:
       - id
       - rate
       - report_values
-      - tax_type
+      - tax_title
       type: object
     Template:
       properties:
@@ -18173,13 +18151,9 @@ webhooks:
                                   type: object
                                 source:
                                   type: string
-                                tax_class_name:
-                                  type: string
                                 tax_id:
                                   type: integer
-                                tax_rate_name:
-                                  type: string
-                                tax_type:
+                                tax_title:
                                   type: string
                               required:
                               - amount
@@ -18187,10 +18161,8 @@ webhooks:
                               - rate
                               - report_values
                               - source
-                              - tax_class_name
                               - tax_id
-                              - tax_rate_name
-                              - tax_type
+                              - tax_title
                               type: object
                             type: array
                         required:
@@ -18484,13 +18456,9 @@ webhooks:
                                   type: object
                                 source:
                                   type: string
-                                tax_class_name:
-                                  type: string
                                 tax_id:
                                   type: integer
-                                tax_rate_name:
-                                  type: string
-                                tax_type:
+                                tax_title:
                                   type: string
                               required:
                               - amount
@@ -18498,10 +18466,8 @@ webhooks:
                               - rate
                               - report_values
                               - source
-                              - tax_class_name
                               - tax_id
-                              - tax_rate_name
-                              - tax_type
+                              - tax_title
                               type: object
                             type: array
                         required:
@@ -19368,13 +19334,9 @@ webhooks:
                                   type: object
                                 source:
                                   type: string
-                                tax_class_name:
-                                  type: string
                                 tax_id:
                                   type: integer
-                                tax_rate_name:
-                                  type: string
-                                tax_type:
+                                tax_title:
                                   type: string
                               required:
                               - amount
@@ -19382,10 +19344,8 @@ webhooks:
                               - rate
                               - report_values
                               - source
-                              - tax_class_name
                               - tax_id
-                              - tax_rate_name
-                              - tax_type
+                              - tax_title
                               type: object
                             type: array
                           total_cost:
@@ -19945,13 +19905,9 @@ webhooks:
                             type: object
                           source:
                             type: string
-                          tax_class_name:
-                            type: string
                           tax_id:
                             type: integer
-                          tax_rate_name:
-                            type: string
-                          tax_type:
+                          tax_title:
                             type: string
                         required:
                         - amount
@@ -19959,10 +19915,8 @@ webhooks:
                         - rate
                         - report_values
                         - source
-                        - tax_class_name
                         - tax_id
-                        - tax_rate_name
-                        - tax_type
+                        - tax_title
                         type: object
                       type: array
                     source:
@@ -20026,19 +19980,13 @@ webhooks:
                             type:
                             - string
                             - 'null'
-                          tax_class_name:
-                            maxLength: 128
-                            type: string
-                          tax_rate_name:
-                            maxLength: 128
-                            type: string
-                          tax_type:
+                          tax_title:
                             type: string
                         required:
                         - id
                         - rate
                         - report_values
-                        - tax_type
+                        - tax_title
                         type: object
                       type: array
                     total_cost:
@@ -20761,13 +20709,9 @@ webhooks:
                                   type: object
                                 source:
                                   type: string
-                                tax_class_name:
-                                  type: string
                                 tax_id:
                                   type: integer
-                                tax_rate_name:
-                                  type: string
-                                tax_type:
+                                tax_title:
                                   type: string
                               required:
                               - amount
@@ -20775,10 +20719,8 @@ webhooks:
                               - rate
                               - report_values
                               - source
-                              - tax_class_name
                               - tax_id
-                              - tax_rate_name
-                              - tax_type
+                              - tax_title
                               type: object
                             type: array
                           total_cost:
@@ -21338,13 +21280,9 @@ webhooks:
                             type: object
                           source:
                             type: string
-                          tax_class_name:
-                            type: string
                           tax_id:
                             type: integer
-                          tax_rate_name:
-                            type: string
-                          tax_type:
+                          tax_title:
                             type: string
                         required:
                         - amount
@@ -21352,10 +21290,8 @@ webhooks:
                         - rate
                         - report_values
                         - source
-                        - tax_class_name
                         - tax_id
-                        - tax_rate_name
-                        - tax_type
+                        - tax_title
                         type: object
                       type: array
                     source:
@@ -21419,19 +21355,13 @@ webhooks:
                             type:
                             - string
                             - 'null'
-                          tax_class_name:
-                            maxLength: 128
-                            type: string
-                          tax_rate_name:
-                            maxLength: 128
-                            type: string
-                          tax_type:
+                          tax_title:
                             type: string
                         required:
                         - id
                         - rate
                         - report_values
-                        - tax_type
+                        - tax_title
                         type: object
                       type: array
                     total_cost:
