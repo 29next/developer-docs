@@ -4,7 +4,7 @@ sidebar_label: Event Tracking
 sidebar_position: 3
 ---
 ## Overview
-Event Trackering allows merchants and third-party integrations to subscribe to customer engagement events on your storefront.
+Event Tracking allows merchants and third-party integrations to subscribe to customer engagement events on your storefront for robust customer behavior tracking.
 
 
 ## Getting Started
