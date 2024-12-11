@@ -5896,11 +5896,6 @@ components:
           type:
           - integer
           - 'null'
-        downgrade_3ds_retry:
-          description: Non-3DS enrolled cards will be automatically retried as a standard
-            transaction.
-          title: Retry Non-3DS Enrolled Cards as Standard Transaction
-          type: boolean
         enable_3ds2:
           description: Transactions are attempted with 3DS authentication.
           title: Enable 3D Secure Transactions
@@ -5925,7 +5920,8 @@ components:
           maxLength: 100
           type: string
         optimized_3ds:
-          description: Transactions will be optimized for lowest friction.
+          description: Transactions will be optimized for lowest friction, requires
+            non-3DS transaction support.
           title: Enable Optimized 3D Secure Transactions
           type: boolean
         payment_flow:
@@ -8289,9 +8285,6 @@ components:
         card_token:
           readOnly: true
           type: string
-        downgrade_3ds_retry:
-          title: Retry Non-3DS Enrolled Cards as Standard Transaction
-          type: boolean
         gateway:
           allOf:
           - $ref: '#/components/schemas/TransactionPaymentDetailGateway'
@@ -15606,11 +15599,6 @@ paths:
         name: optimized_3ds
         schema:
           type: boolean
-      - description: 3DS Downgrade Retry
-        in: query
-        name: downgrade_3ds_retry
-        schema:
-          type: boolean
       - in: query
         name: is_initial_retry
         schema:
@@ -18663,11 +18651,6 @@ webhooks:
                       type:
                       - integer
                       - 'null'
-                    downgrade_3ds_retry:
-                      description: Non-3DS enrolled cards will be automatically retried
-                        as a standard transaction.
-                      title: Retry Non-3DS Enrolled Cards as Standard Transaction
-                      type: boolean
                     enable_3ds2:
                       description: Transactions are attempted with 3DS authentication.
                       title: Enable 3D Secure Transactions
@@ -18701,7 +18684,8 @@ webhooks:
                       maxLength: 100
                       type: string
                     optimized_3ds:
-                      description: Transactions will be optimized for lowest friction.
+                      description: Transactions will be optimized for lowest friction,
+                        requires non-3DS transaction support.
                       title: Enable Optimized 3D Secure Transactions
                       type: boolean
                     payment_flow:
@@ -18812,11 +18796,6 @@ webhooks:
                       type:
                       - integer
                       - 'null'
-                    downgrade_3ds_retry:
-                      description: Non-3DS enrolled cards will be automatically retried
-                        as a standard transaction.
-                      title: Retry Non-3DS Enrolled Cards as Standard Transaction
-                      type: boolean
                     enable_3ds2:
                       description: Transactions are attempted with 3DS authentication.
                       title: Enable 3D Secure Transactions
@@ -18850,7 +18829,8 @@ webhooks:
                       maxLength: 100
                       type: string
                     optimized_3ds:
-                      description: Transactions will be optimized for lowest friction.
+                      description: Transactions will be optimized for lowest friction,
+                        requires non-3DS transaction support.
                       title: Enable Optimized 3D Secure Transactions
                       type: boolean
                     payment_flow:
@@ -19662,10 +19642,6 @@ webhooks:
                                       - 'null'
                                     card_token:
                                       type: string
-                                    downgrade_3ds_retry:
-                                      title: Retry Non-3DS Enrolled Cards as Standard
-                                        Transaction
-                                      type: boolean
                                     gateway:
                                       properties:
                                         id:
@@ -20063,9 +20039,6 @@ webhooks:
                                 - 'null'
                               card_token:
                                 type: string
-                              downgrade_3ds_retry:
-                                title: Retry Non-3DS Enrolled Cards as Standard Transaction
-                                type: boolean
                               gateway:
                                 properties:
                                   id:
@@ -21037,10 +21010,6 @@ webhooks:
                                       - 'null'
                                     card_token:
                                       type: string
-                                    downgrade_3ds_retry:
-                                      title: Retry Non-3DS Enrolled Cards as Standard
-                                        Transaction
-                                      type: boolean
                                     gateway:
                                       properties:
                                         id:
@@ -21438,9 +21407,6 @@ webhooks:
                                 - 'null'
                               card_token:
                                 type: string
-                              downgrade_3ds_retry:
-                                title: Retry Non-3DS Enrolled Cards as Standard Transaction
-                                type: boolean
                               gateway:
                                 properties:
                                   id:
@@ -24671,9 +24637,6 @@ webhooks:
                           - 'null'
                         card_token:
                           type: string
-                        downgrade_3ds_retry:
-                          title: Retry Non-3DS Enrolled Cards as Standard Transaction
-                          type: boolean
                         gateway:
                           properties:
                             id:
