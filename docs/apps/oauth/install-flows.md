@@ -8,7 +8,7 @@ sidebar_position: 6
 ### Private Apps
 All apps start in a `private` state while the app developer is building and testing their app internally. While an app is `private`, you can use the "Install Link" builder form on your app detail page.
 
-You may also want to trigger the install flow from your app's UI, to do this you can add a form build the install link for your user to start the install flow.
+You may also want to trigger the install flow from your app's UI, to do this you can add a form to build the install link for your user to start the install flow on their store.
 
 ```python title="Install Link"
 https://{store_subdomain}.29next.store/dashboard/apps/install-app/?client_id={client_id}
