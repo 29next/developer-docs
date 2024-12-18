@@ -1497,7 +1497,7 @@ components:
           type: string
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           type: array
         structure:
           description: '* `standalone` - standalone
@@ -1576,7 +1576,7 @@ components:
           - 'null'
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           type: array
         track_stock:
           description: Track inventory quantities at fulfillment locations.
@@ -2963,7 +2963,9 @@ components:
           $ref: '#/components/schemas/LocationAddress'
         callback_url:
           format: uri
-          type: string
+          type:
+          - string
+          - 'null'
         id:
           readOnly: true
           type: integer
@@ -2972,7 +2974,6 @@ components:
           type: string
       required:
       - address
-      - callback_url
       - id
       type: object
     LocationAddress:
@@ -5449,7 +5450,7 @@ components:
           type: string
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           readOnly: true
           type: array
         structure:
@@ -5520,7 +5521,7 @@ components:
           - 'null'
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           readOnly: true
           type: array
         track_stock:
@@ -6111,7 +6112,7 @@ components:
           type: string
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           type: array
         structure:
           description: '* `standalone` - standalone
@@ -6364,7 +6365,7 @@ components:
           type: string
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           type: array
         structure:
           description: '* `standalone` - standalone
@@ -6485,7 +6486,7 @@ components:
           - 'null'
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           type: array
         structure:
           description: '* `standalone` - Stand-alone Product
@@ -7179,6 +7180,65 @@ components:
           - 'null'
       required:
       - id
+      type: object
+    StockrecordLocation:
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        location_id:
+          type: integer
+        low_stock_threshold:
+          maximum: 2147483647
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        num_allocated:
+          readOnly: true
+          title: Number allocated
+          type:
+          - integer
+          - 'null'
+        num_in_stock:
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Number in stock
+          type:
+          - integer
+          - 'null'
+        price:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        price_currency:
+          readOnly: true
+          title: Currency
+          type:
+          - string
+          - 'null'
+        price_retail:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Price (retail)
+          type:
+          - string
+          - 'null'
+        sku:
+          readOnly: true
+          type: string
+      required:
+      - id
+      - location_id
+      - num_allocated
+      - price
+      - price_currency
+      - price_retail
+      - sku
       type: object
     Store:
       properties:
@@ -8831,7 +8891,7 @@ components:
           type: string
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           readOnly: true
           type: array
         structure:
@@ -8912,7 +8972,7 @@ components:
           - 'null'
         stockrecords:
           items:
-            $ref: '#/components/schemas/Stockrecord'
+            $ref: '#/components/schemas/StockrecordLocation'
           readOnly: true
           type: array
         track_stock:
@@ -9043,7 +9103,6 @@ components:
       required:
       - addresses
       - date_joined
-      - email
       - id
       - orders_count
       - subscriptions_count
@@ -16041,7 +16100,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/UpdateUser'
-        required: true
       responses:
         '200':
           content:
@@ -21769,6 +21827,8 @@ webhooks:
                               properties:
                                 id:
                                   type: integer
+                                location_id:
+                                  type: integer
                                 low_stock_threshold:
                                   maximum: 2147483647
                                   minimum: 0
@@ -21776,8 +21836,6 @@ webhooks:
                                   - integer
                                   - 'null'
                                 num_allocated:
-                                  maximum: 2147483647
-                                  minimum: -2147483648
                                   title: Number allocated
                                   type:
                                   - integer
@@ -21788,11 +21846,6 @@ webhooks:
                                   title: Number in stock
                                   type:
                                   - integer
-                                  - 'null'
-                                partner_sku:
-                                  title: SKU
-                                  type:
-                                  - string
                                   - 'null'
                                 price:
                                   format: decimal
@@ -21812,8 +21865,16 @@ webhooks:
                                   type:
                                   - string
                                   - 'null'
+                                sku:
+                                  type: string
                               required:
                               - id
+                              - location_id
+                              - num_allocated
+                              - price
+                              - price_currency
+                              - price_retail
+                              - sku
                               type: object
                             type: array
                           structure:
@@ -22029,6 +22090,8 @@ webhooks:
                         properties:
                           id:
                             type: integer
+                          location_id:
+                            type: integer
                           low_stock_threshold:
                             maximum: 2147483647
                             minimum: 0
@@ -22036,8 +22099,6 @@ webhooks:
                             - integer
                             - 'null'
                           num_allocated:
-                            maximum: 2147483647
-                            minimum: -2147483648
                             title: Number allocated
                             type:
                             - integer
@@ -22048,11 +22109,6 @@ webhooks:
                             title: Number in stock
                             type:
                             - integer
-                            - 'null'
-                          partner_sku:
-                            title: SKU
-                            type:
-                            - string
                             - 'null'
                           price:
                             format: decimal
@@ -22072,8 +22128,16 @@ webhooks:
                             type:
                             - string
                             - 'null'
+                          sku:
+                            type: string
                         required:
                         - id
+                        - location_id
+                        - num_allocated
+                        - price
+                        - price_currency
+                        - price_retail
+                        - sku
                         type: object
                       type: array
                     structure:
@@ -22326,6 +22390,8 @@ webhooks:
                               properties:
                                 id:
                                   type: integer
+                                location_id:
+                                  type: integer
                                 low_stock_threshold:
                                   maximum: 2147483647
                                   minimum: 0
@@ -22333,8 +22399,6 @@ webhooks:
                                   - integer
                                   - 'null'
                                 num_allocated:
-                                  maximum: 2147483647
-                                  minimum: -2147483648
                                   title: Number allocated
                                   type:
                                   - integer
@@ -22345,11 +22409,6 @@ webhooks:
                                   title: Number in stock
                                   type:
                                   - integer
-                                  - 'null'
-                                partner_sku:
-                                  title: SKU
-                                  type:
-                                  - string
                                   - 'null'
                                 price:
                                   format: decimal
@@ -22369,8 +22428,16 @@ webhooks:
                                   type:
                                   - string
                                   - 'null'
+                                sku:
+                                  type: string
                               required:
                               - id
+                              - location_id
+                              - num_allocated
+                              - price
+                              - price_currency
+                              - price_retail
+                              - sku
                               type: object
                             type: array
                           structure:
@@ -22586,6 +22653,8 @@ webhooks:
                         properties:
                           id:
                             type: integer
+                          location_id:
+                            type: integer
                           low_stock_threshold:
                             maximum: 2147483647
                             minimum: 0
@@ -22593,8 +22662,6 @@ webhooks:
                             - integer
                             - 'null'
                           num_allocated:
-                            maximum: 2147483647
-                            minimum: -2147483648
                             title: Number allocated
                             type:
                             - integer
@@ -22605,11 +22672,6 @@ webhooks:
                             title: Number in stock
                             type:
                             - integer
-                            - 'null'
-                          partner_sku:
-                            title: SKU
-                            type:
-                            - string
                             - 'null'
                           price:
                             format: decimal
@@ -22629,8 +22691,16 @@ webhooks:
                             type:
                             - string
                             - 'null'
+                          sku:
+                            type: string
                         required:
                         - id
+                        - location_id
+                        - num_allocated
+                        - price
+                        - price_currency
+                        - price_retail
+                        - sku
                         type: object
                       type: array
                     structure:
