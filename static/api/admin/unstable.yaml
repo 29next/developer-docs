@@ -1175,9 +1175,7 @@ components:
           - $ref: '#/components/schemas/PaymentDetail'
           - type: 'null'
         payment_method:
-          description: '* `bankcard` - Bank Card
-
-            * `card_token` - Card Token
+          description: '* `card_token` - Card Token
 
             * `saved_card` - Saved Card
 
@@ -1201,7 +1199,6 @@ components:
 
             * `sepa_debit` - SEPA Direct Debit'
           enum:
-          - bankcard
           - card_token
           - saved_card
           - apple_pay
@@ -1218,7 +1215,7 @@ components:
           type:
           - string
           - 'null'
-          x-spec-enum-id: ccc6742cdb4ec926
+          x-spec-enum-id: 9f41b1e66378e33f
         send_receipt:
           default: true
           type: boolean
@@ -2554,6 +2551,9 @@ components:
           maxLength: 12
           readOnly: true
           type: string
+        fulfillable_quantity:
+          readOnly: true
+          type: string
         fulfillment_order_id:
           readOnly: true
           type: integer
@@ -2605,6 +2605,7 @@ components:
           type: string
       required:
       - currency
+      - fulfillable_quantity
       - fulfillment_order_id
       - id
       - order_line_id
@@ -5907,28 +5908,6 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
-        card_cvv:
-          type:
-          - string
-          - 'null'
-        card_expiry_month:
-          maximum: 12
-          minimum: 1
-          type:
-          - integer
-          - 'null'
-        card_expiry_year:
-          type:
-          - integer
-          - 'null'
-        card_name:
-          type:
-          - string
-          - 'null'
-        card_number:
-          type:
-          - string
-          - 'null'
         card_token:
           type:
           - string
@@ -13338,10 +13317,14 @@ paths:
         name: is_gift_card
         schema:
           type: boolean
-      - in: query
+      - explode: true
+        in: query
         name: sku
         schema:
-          type: string
+          items:
+            type: string
+          type: array
+        style: form
       - description: A page number within the paginated result set.
         in: query
         name: page
