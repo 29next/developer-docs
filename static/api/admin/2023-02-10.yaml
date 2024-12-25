@@ -2180,6 +2180,9 @@ components:
         date_created:
           format: date-time
           type: string
+        id:
+          readOnly: true
+          type: integer
         last_event_date:
           format: date-time
           readOnly: true
@@ -2204,6 +2207,7 @@ components:
       required:
       - carrier
       - date_created
+      - id
       - last_event_date
       - lines
       - status
@@ -19152,6 +19156,8 @@ webhooks:
                           date_created:
                             format: date-time
                             type: string
+                          id:
+                            type: integer
                           last_event_date:
                             format: date-time
                             type: string
@@ -19171,6 +19177,7 @@ webhooks:
                         required:
                         - carrier
                         - date_created
+                        - id
                         - last_event_date
                         - lines
                         - status
@@ -20520,6 +20527,8 @@ webhooks:
                           date_created:
                             format: date-time
                             type: string
+                          id:
+                            type: integer
                           last_event_date:
                             format: date-time
                             type: string
@@ -20539,6 +20548,7 @@ webhooks:
                         required:
                         - carrier
                         - date_created
+                        - id
                         - last_event_date
                         - lines
                         - status
