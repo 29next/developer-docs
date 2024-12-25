@@ -19,7 +19,7 @@ Your app should redirect the user back to the store authorization view configure
 :::
 
 :::info
-At every stage in the Oauth flow you'll receive a querystring variable `store` with the network domain of the store that is installing the app. **You should use this in your app logic as the unique identifier for the store.
+At every stage in the Oauth flow you'll receive a querystring variable `store` with the network domain of the store that is installing the app. **You should use this in your app logic as the unique identifier for the store.**
 :::
 
 ``` title="Authorization Link Format"
@@ -52,9 +52,11 @@ https://yourapp.com/setup/authorize/?store={network_domain}&code={authorization_
 
 After you have the `authorization_code`, you then need to retrieve the access token to gain access to the Admin API.
 
-**Send a POST Request to `https://{network_domain}/oauth2/token/`**
-
-```json title="Request Body to Retrieve Access Token"
+**Send a POST Request to `https://{network_domain}/oauth2/token/` to retrieve your access token**
+:::info
+Post request must be sent as `application/x-www-form-urlencoded` format.
+:::
+```json title="Post Request to Retrieve Access Token"
 {
     "grant_type": "authorization_code",
     "client_id": "{client_id}",
@@ -63,6 +65,8 @@ After you have the `authorization_code`, you then need to retrieve the access to
     "code": "{authorize_code}"
 }
 ```
+
+
 
 A successful request will have the following response.
 
