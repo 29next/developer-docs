@@ -222,6 +222,12 @@ html[data-theme='dark'] {
 
 }
 
+/* Table of Contents */
+
+.table-of-contents ul {
+    text-wrap-mode: nowrap;
+}
+
 /* Navbar */
 
 [data-theme='dark'] .navbar {

@@ -493,6 +493,326 @@ analytics.subscribe("checkout_started", event => {
 </div>
 </details>
 
+
+### checkout_contact_info_submitted
+```javascript
+analytics.subscribe("checkout_contact_info_submitted", event => {
+    console.log("Event data ", event.data);
+});
+```
+<details>
+  <summary>Event Data</summary>
+  <div>
+
+```json
+{
+    "object": "checkout",
+    "data": {
+        "number": null,
+        "status": null,
+        "fulfillment_status": null,
+        "payment_status": null,
+        "is_test": null,
+        "lines": [
+            {
+                "product_id": 111,
+                "sku": "TIMELESS-WATCH-B-BL",
+                "product_title": "Timeless Watch",
+                "product_image": "https://assets.29nex.store/media/demostore/images/products/2021/03/watch.jpg",
+                "product_url": "https://examplestore.com/catalogue/timeless-watch_2/",
+                "variant_id": 2,
+                "variant_title": "",
+                "quantity": 1,
+                "currency": "USD",
+                "price_excl_tax": "79.99",
+                "price_incl_tax": "79.99",
+                "total_discount": "0.00",
+                "is_upsell": false,
+                "interval": null,
+                "interval_count": null
+            }
+        ],
+        "shipping_method": null,
+        "shipping_code": null,
+        "total_incl_tax": "79.99",
+        "total_excl_tax": "79.99",
+        "total_discount": "0.00",
+        "shipping_incl_tax": null,
+        "shipping_excl_tax": null,
+        "total_cost": null,
+        "total_tax": null,
+        "shipping_tax": null,
+        "display_taxes": null,
+        "currency": "USD",
+        "user": {
+            "id": 123456,
+            "email": "customer@gmail.com",
+            "ip": "182.82.112.1",
+            "first_name": null,
+            "last_name": null,
+            "phone_number": null,
+            "accepts_marketing": true,
+            "language": "en",
+            "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        },
+        "shipping_address": null,
+        "billing_address": null,
+        "date_placed": null,
+        "offer_discounts": [],
+        "voucher_discounts": [],
+        "attribution": {
+            "agent": null,
+            "funnel": null,
+            "utm_source": null,
+            "utm_medium": null,
+            "utm_campaign": null,
+            "utm_term": null,
+            "utm_content": null,
+            "gclid": null,
+            "metadata": {},
+            "affiliate": null,
+            "subaffiliate1": null,
+            "subaffiliate2": null,
+            "subaffiliate3": null,
+            "subaffiliate4": null,
+            "subaffiliate5": null
+        },
+        "metadata": {},
+        "transactions": null,
+        "order_status_url": null
+    },
+    "event_type": "checkout_contact_info_submitted",
+    "timestamp": "2024-12-09T06:58:34.676675+00:00",
+    "event_version": "2024-04-01"
+}
+```
+
+</div>
+</details>
+
+
+### checkout_shipping_address_submitted
+```javascript
+analytics.subscribe("checkout_shipping_address_submitted", event => {
+    console.log("Event data ", event.data);
+});
+```
+
+<details>
+  <summary>Event Data</summary>
+  <div>
+
+```json
+{
+    "object": "checkout",
+        "data": {
+        "number": null,
+        "status": null,
+        "fulfillment_status": null,
+        "payment_status": null,
+        "is_test": null,
+        "lines": [
+            {
+                "product_id": 111,
+                "sku": "TIMELESS-WATCH-B-BL",
+                "product_title": "Timeless Watch",
+                "product_image": "https://assets.29nex.store/media/demostore/images/products/2021/03/watch.jpg",
+                "product_url": "https://examplestore.com/catalogue/timeless-watch_2/",
+                "variant_id": 2,
+                "variant_title": "",
+                "quantity": 1,
+                "currency": "USD",
+                "price_excl_tax": "79.99",
+                "price_incl_tax": "79.99",
+                "total_discount": "0.00",
+                "is_upsell": false,
+                "interval": null,
+                "interval_count": null
+            }
+        ],
+        "shipping_method": null,
+        "shipping_code": null,
+        "total_incl_tax": "79.99",
+        "total_excl_tax": "79.99",
+        "total_discount": "0.00",
+        "shipping_incl_tax": null,
+        "shipping_excl_tax": null,
+        "total_cost": null,
+        "total_tax": null,
+        "shipping_tax": null,
+        "display_taxes": null,
+        "currency": "USD",
+        "user": {
+            "id": 123456,
+            "email": "customer@gmail.com",
+            "ip": "182.82.112.1",
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone_number": null,
+            "accepts_marketing": true,
+            "language": "en",
+            "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        },
+        "shipping_address": {
+            "id": 7851,
+             "first_name": "John",
+            "last_name": "Doe",
+            "line1": "2200 Western Pl",
+            "line2": "",
+            "line3": "",
+            "line4": "Henderson",
+            "postcode": "42304",
+            "phone_number": "+18123158899",
+            "notes": "",
+            "state": "KY",
+            "country": "US"
+        },
+        "billing_address": null,
+        "date_placed": null,
+        "offer_discounts": [],
+        "voucher_discounts": [],
+        "attribution": {
+            "agent": null,
+            "funnel": null,
+            "utm_source": null,
+            "utm_medium": null,
+            "utm_campaign": null,
+            "utm_term": null,
+            "utm_content": null,
+            "gclid": null,
+            "metadata": {},
+            "affiliate": null,
+            "subaffiliate1": null,
+            "subaffiliate2": null,
+            "subaffiliate3": null,
+            "subaffiliate4": null,
+            "subaffiliate5": null
+        },
+        "metadata": {},
+        "transactions": null,
+        "order_status_url": null
+    },
+    "event_type": "checkout_shipping_address_submitted",
+    "timestamp": "2024-12-26T06:46:36.936236+00:00",
+    "event_version": "2024-04-01"
+}
+```
+
+</div>
+</details>
+
+
+### checkout_shipping_method_submitted
+```javascript
+analytics.subscribe("checkout_shipping_method_submitted", event => {
+    console.log("Event data ", event.data);
+});
+```
+<details>
+  <summary>Event Data</summary>
+  <div>
+
+```json
+{
+    "object": "checkout",
+        "data": {
+        "number": null,
+        "status": null,
+        "fulfillment_status": null,
+        "payment_status": null,
+        "is_test": null,
+        "lines": [
+            {
+                "product_id": 111,
+                "sku": "TIMELESS-WATCH-B-BL",
+                "product_title": "Timeless Watch",
+                "product_image": "https://assets.29nex.store/media/demostore/images/products/2021/03/watch.jpg",
+                "product_url": "https://examplestore.com/catalogue/timeless-watch_2/",
+                "variant_id": 2,
+                "variant_title": "",
+                "quantity": 1,
+                "currency": "USD",
+                "price_excl_tax": "79.99",
+                "price_incl_tax": "79.99",
+                "total_discount": "0.00",
+                "is_upsell": false,
+                "interval": null,
+                "interval_count": null
+            }
+        ],
+        "shipping_method": "Express 1-2 Days",
+        "shipping_code": "express",
+        "total_incl_tax": "79.99",
+        "total_excl_tax": "79.99",
+        "total_discount": "0.00",
+        "shipping_incl_tax": null,
+        "shipping_excl_tax": null,
+        "total_cost": null,
+        "total_tax": null,
+        "shipping_tax": null,
+        "display_taxes": null,
+        "currency": "USD",
+        "user": {
+            "id": 123456,
+            "email": "customer@gmail.com",
+            "ip": "182.82.112.1",
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone_number": null,
+            "accepts_marketing": true,
+            "language": "en",
+            "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        },
+        "shipping_address": {
+            "id": 7851,
+             "first_name": "John",
+            "last_name": "Doe",
+            "line1": "2200 Western Pl",
+            "line2": "",
+            "line3": "",
+            "line4": "Henderson",
+            "postcode": "42304",
+            "phone_number": "+18123158899",
+            "notes": "",
+            "state": "KY",
+            "country": "US"
+        },
+        "billing_address": null,
+        "date_placed": null,
+        "offer_discounts": [],
+        "voucher_discounts": [],
+        "attribution": {
+            "agent": null,
+            "funnel": null,
+            "utm_source": null,
+            "utm_medium": null,
+            "utm_campaign": null,
+            "utm_term": null,
+            "utm_content": null,
+            "gclid": null,
+            "metadata": {},
+            "affiliate": null,
+            "subaffiliate1": null,
+            "subaffiliate2": null,
+            "subaffiliate3": null,
+            "subaffiliate4": null,
+            "subaffiliate5": null
+        },
+        "metadata": {},
+        "transactions": null,
+        "order_status_url": null
+    },
+    "event_type": "checkout_shipping_method_submitted",
+    "timestamp": "2024-12-26T06:46:36.936236+00:00",
+    "event_version": "2024-04-01"
+}
+```
+
+</div>
+</details>
+
+
+
 ### checkout_completed
 ```javascript
 analytics.subscribe("checkout_completed", event => {
@@ -549,7 +869,7 @@ analytics.subscribe("checkout_completed", event => {
         "display_taxes": "",
         "currency": "USD",
         "user": {
-            "id": 7917,
+            "id": 123456,
             "email": "customer@gmail.com",
             "ip": "182.82.112.1",
             "first_name": "John",
