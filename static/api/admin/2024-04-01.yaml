@@ -585,6 +585,11 @@ components:
       - name
       - slug
       type: object
+    CloseFulfillmentOrder:
+      properties:
+        message:
+          type: string
+      type: object
     ContactAddress:
       properties:
         city:
@@ -2499,7 +2504,9 @@ components:
 
             * `cancel_accepted` - Cancel Accepted
 
-            * `cancel_rejected` - Cancel Rejected'
+            * `cancel_rejected` - Cancel Rejected
+
+            * `closed` - Closed'
           enum:
           - pending
           - requested
@@ -2508,8 +2515,9 @@ components:
           - cancel_requested
           - cancel_accepted
           - cancel_rejected
+          - closed
           type: string
-          x-spec-enum-id: 330ea64940e97cb7
+          x-spec-enum-id: 5e87a3d9cb8f7ccc
         shipping_address:
           oneOf:
           - $ref: '#/components/schemas/FulfillmentShippingAddress'
@@ -2548,6 +2556,16 @@ components:
       - line_items
       - order_number
       - shipping_method
+      type: object
+    FulfillmentOrderCancelResponse:
+      properties:
+        new_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+        original_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+      required:
+      - new_fulfillment_order
+      - original_fulfillment_order
       type: object
     FulfillmentOrderLine:
       properties:
@@ -3139,7 +3157,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -3147,8 +3167,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/FulfillmentResponse'
@@ -3662,7 +3683,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -3670,8 +3693,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         is_test:
           readOnly: true
           type: boolean
@@ -4040,7 +4064,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -4048,8 +4074,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/Fulfillment'
@@ -5192,7 +5219,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -5200,8 +5229,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/Fulfillment'
@@ -8565,7 +8595,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -8573,8 +8605,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/Fulfillment'
@@ -9871,7 +9904,7 @@ paths:
           - fulfillment_requested
           - fulfillment_unrequested
           type: string
-          x-spec-enum-id: 330ea64940e97cb7
+          x-spec-enum-id: 5e87a3d9cb8f7ccc
       - description: YYYY-MM-DD
         in: query
         name: date_created_from
@@ -10850,7 +10883,9 @@ paths:
 
           * `cancel_accepted` - Cancel Accepted
 
-          * `cancel_rejected` - Cancel Rejected'
+          * `cancel_rejected` - Cancel Rejected
+
+          * `closed` - Closed'
         explode: true
         in: query
         name: request_status
@@ -10861,11 +10896,12 @@ paths:
             - cancel_accepted
             - cancel_rejected
             - cancel_requested
+            - closed
             - pending
             - rejected
             - requested
             type: string
-            x-spec-enum-id: 330ea64940e97cb7
+            x-spec-enum-id: 5e87a3d9cb8f7ccc
           type: array
         style: form
       - description: Fulfillment Order  Id
@@ -10951,6 +10987,38 @@ paths:
       - oauth2:
         - fulfillment_service:read
         - fulfillment_orders:read
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/cancel/:
+    post:
+      description: Cancel fulfillment order
+      operationId: fulfillmentOrdersCancel
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrderCancelResponse'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_service:write
+        - fulfillment_orders:write
       tags:
       - fulfillment
   /fulfillment-orders/{id}/cancellation-request/:
@@ -11112,6 +11180,49 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/CancellationRequestReject'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_service:write
+        - fulfillment_orders:write
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/close/:
+    post:
+      description: Marks an processing fulfillment order as incomplete
+      operationId: fulfillmentOrdersClose
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseFulfillmentOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CloseFulfillmentOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CloseFulfillmentOrder'
       responses:
         '200':
           content:
@@ -12261,7 +12372,9 @@ paths:
 
           * `partially_fulfilled` - Partially Fulfilled
 
-          * `fulfilled` - Fulfilled'
+          * `fulfilled` - Fulfilled
+
+          * `incomplete` - Incomplete'
         explode: true
         in: query
         name: fulfillment_status
@@ -12269,6 +12382,7 @@ paths:
           items:
             enum:
             - fulfilled
+            - incomplete
             - not_required
             - on_hold
             - partially_fulfilled
@@ -12276,7 +12390,7 @@ paths:
             - rejected
             - unfulfilled
             type: string
-            x-spec-enum-id: f261fc3cfdafb745
+            x-spec-enum-id: 732a013686f682ba
           type: array
         style: form
       - description: 'Delivery Status
@@ -19098,7 +19212,9 @@ webhooks:
 
                         * `processing` - Processing
 
-                        * `fulfilled` - Fulfilled'
+                        * `fulfilled` - Fulfilled
+
+                        * `incomplete` - Incomplete'
                       enum:
                       - not_required
                       - unfulfilled
@@ -19106,8 +19222,9 @@ webhooks:
                       - rejected
                       - processing
                       - fulfilled
+                      - incomplete
                       type: string
-                      x-spec-enum-id: ecba144d8143b41f
+                      x-spec-enum-id: f7a016fc10fb8390
                     fulfillments:
                       items:
                         properties:
@@ -20659,7 +20776,9 @@ webhooks:
 
                         * `processing` - Processing
 
-                        * `fulfilled` - Fulfilled'
+                        * `fulfilled` - Fulfilled
+
+                        * `incomplete` - Incomplete'
                       enum:
                       - not_required
                       - unfulfilled
@@ -20667,8 +20786,9 @@ webhooks:
                       - rejected
                       - processing
                       - fulfilled
+                      - incomplete
                       type: string
-                      x-spec-enum-id: ecba144d8143b41f
+                      x-spec-enum-id: f7a016fc10fb8390
                     fulfillments:
                       items:
                         properties:
