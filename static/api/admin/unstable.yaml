@@ -599,11 +599,6 @@ components:
         message:
           type: string
       type: object
-    CloseFulfillmentOrder:
-      properties:
-        message:
-          type: string
-      type: object
     ContactAddress:
       properties:
         city:
@@ -11056,6 +11051,37 @@ paths:
       security:
       - oauth2:
         - fulfillment_service:read
+        - fulfillment_orders:read
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/available-locations/:
+    get:
+      description: Retrieve available locations for a Fulfillment Order.
+      operationId: availableLocationsRetrieve
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableLocationFulfillmentOrder'
+          description: ''
+      security:
+      - oauth2:
         - fulfillment_orders:read
       tags:
       - fulfillment
