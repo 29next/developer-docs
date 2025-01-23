@@ -198,6 +198,15 @@ components:
       - code
       - label
       type: object
+    AvailableLocationFulfillmentOrder:
+      properties:
+        available_locations:
+          additionalProperties: {}
+          readOnly: true
+          type: object
+      required:
+      - available_locations
+      type: object
     BillingAddress:
       properties:
         country:
@@ -584,6 +593,11 @@ components:
       - id
       - name
       - slug
+      type: object
+    CloseFulfillmentOrder:
+      properties:
+        message:
+          type: string
       type: object
     ContactAddress:
       properties:
@@ -2499,7 +2513,9 @@ components:
 
             * `cancel_accepted` - Cancel Accepted
 
-            * `cancel_rejected` - Cancel Rejected'
+            * `cancel_rejected` - Cancel Rejected
+
+            * `closed` - Closed'
           enum:
           - pending
           - requested
@@ -2508,8 +2524,9 @@ components:
           - cancel_requested
           - cancel_accepted
           - cancel_rejected
+          - closed
           type: string
-          x-spec-enum-id: 330ea64940e97cb7
+          x-spec-enum-id: 5e87a3d9cb8f7ccc
         shipping_address:
           oneOf:
           - $ref: '#/components/schemas/FulfillmentShippingAddress'
@@ -2548,6 +2565,16 @@ components:
       - line_items
       - order_number
       - shipping_method
+      type: object
+    FulfillmentOrderCancelResponse:
+      properties:
+        new_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+        original_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+      required:
+      - new_fulfillment_order
+      - original_fulfillment_order
       type: object
     FulfillmentOrderLine:
       properties:
@@ -3101,6 +3128,34 @@ components:
           type: string
           x-spec-enum-id: 4d67e89980fba849
       type: object
+    MoveFulfillmentOrder:
+      properties:
+        fulfillment_order_line_items:
+          items:
+            $ref: '#/components/schemas/MoveFulfillmentOrderLineItem'
+          type: array
+        new_location_id:
+          type: integer
+      required:
+      - new_location_id
+      type: object
+    MoveFulfillmentOrderLineItem:
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      type: object
+    MoveFulfillmentOrderResponse:
+      properties:
+        moved_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+        original_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+      required:
+      - moved_fulfillment_order
+      - original_fulfillment_order
+      type: object
     OAuthApp:
       properties:
         client_id:
@@ -3139,7 +3194,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -3147,8 +3204,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/FulfillmentResponse'
@@ -3662,7 +3720,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -3670,8 +3730,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         is_test:
           readOnly: true
           type: boolean
@@ -4040,7 +4101,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -4048,8 +4111,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/Fulfillment'
@@ -5113,6 +5177,25 @@ components:
           type: string
           x-spec-enum-id: 3c60da80149644ea
       type: object
+    PatchedProductImageUpdate:
+      properties:
+        caption:
+          maxLength: 200
+          type: string
+        display_order:
+          description: An image with a display order of zero will be the primary image
+            for a product
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        variants:
+          items:
+            type: integer
+          type: array
+      type: object
     PatchedUpdateDefinition:
       properties:
         enable_export:
@@ -5192,7 +5275,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -5200,8 +5285,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/Fulfillment'
@@ -6303,6 +6389,10 @@ components:
       type: object
     ProductImage:
       properties:
+        attachment:
+          description: The base64 string file to upload (image attachment).
+          format: uri
+          type: string
         caption:
           maxLength: 200
           type: string
@@ -6312,17 +6402,22 @@ components:
           maximum: 2147483647
           minimum: 0
           type: integer
+        file_name:
+          type: string
+          writeOnly: true
         id:
           readOnly: true
           type: integer
-        original:
-          format: uri
-          type: string
         product:
+          readOnly: true
           type: integer
+        variants:
+          items:
+            type: integer
+          type: array
       required:
+      - attachment
       - id
-      - original
       - product
       type: object
     ProductList:
@@ -8565,7 +8660,9 @@ components:
 
             * `processing` - Processing
 
-            * `fulfilled` - Fulfilled'
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
           enum:
           - not_required
           - unfulfilled
@@ -8573,8 +8670,9 @@ components:
           - rejected
           - processing
           - fulfilled
+          - incomplete
           type: string
-          x-spec-enum-id: ecba144d8143b41f
+          x-spec-enum-id: f7a016fc10fb8390
         fulfillments:
           items:
             $ref: '#/components/schemas/Fulfillment'
@@ -9871,7 +9969,7 @@ paths:
           - fulfillment_requested
           - fulfillment_unrequested
           type: string
-          x-spec-enum-id: 330ea64940e97cb7
+          x-spec-enum-id: 5e87a3d9cb8f7ccc
       - description: YYYY-MM-DD
         in: query
         name: date_created_from
@@ -10850,7 +10948,9 @@ paths:
 
           * `cancel_accepted` - Cancel Accepted
 
-          * `cancel_rejected` - Cancel Rejected'
+          * `cancel_rejected` - Cancel Rejected
+
+          * `closed` - Closed'
         explode: true
         in: query
         name: request_status
@@ -10861,11 +10961,12 @@ paths:
             - cancel_accepted
             - cancel_rejected
             - cancel_requested
+            - closed
             - pending
             - rejected
             - requested
             type: string
-            x-spec-enum-id: 330ea64940e97cb7
+            x-spec-enum-id: 5e87a3d9cb8f7ccc
           type: array
         style: form
       - description: Fulfillment Order  Id
@@ -10951,6 +11052,69 @@ paths:
       - oauth2:
         - fulfillment_service:read
         - fulfillment_orders:read
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/available-locations/:
+    get:
+      description: Retrieve available locations for a Fulfillment Order.
+      operationId: availableLocationsRetrieve
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableLocationFulfillmentOrder'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_orders:read
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/cancel/:
+    post:
+      description: Cancel fulfillment order
+      operationId: fulfillmentOrdersCancel
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrderCancelResponse'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_service:write
+        - fulfillment_orders:write
       tags:
       - fulfillment
   /fulfillment-orders/{id}/cancellation-request/:
@@ -11112,6 +11276,49 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/CancellationRequestReject'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FulfillmentOrder'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_service:write
+        - fulfillment_orders:write
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/close/:
+    post:
+      description: Marks an processing fulfillment order as incomplete
+      operationId: fulfillmentOrdersClose
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseFulfillmentOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CloseFulfillmentOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CloseFulfillmentOrder'
       responses:
         '200':
           content:
@@ -11413,6 +11620,49 @@ paths:
       security:
       - oauth2:
         - fulfillment_service:write
+        - fulfillment_orders:write
+      tags:
+      - fulfillment
+  /fulfillment-orders/{id}/move/:
+    post:
+      description: Move location of a fulfillment order.
+      operationId: fulfillmentOrdersMove
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveFulfillmentOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MoveFulfillmentOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MoveFulfillmentOrder'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveFulfillmentOrderResponse'
+          description: ''
+      security:
+      - oauth2:
         - fulfillment_orders:write
       tags:
       - fulfillment
@@ -12261,7 +12511,9 @@ paths:
 
           * `partially_fulfilled` - Partially Fulfilled
 
-          * `fulfilled` - Fulfilled'
+          * `fulfilled` - Fulfilled
+
+          * `incomplete` - Incomplete'
         explode: true
         in: query
         name: fulfillment_status
@@ -12269,6 +12521,7 @@ paths:
           items:
             enum:
             - fulfilled
+            - incomplete
             - not_required
             - on_hold
             - partially_fulfilled
@@ -12276,7 +12529,7 @@ paths:
             - rejected
             - unfulfilled
             type: string
-            x-spec-enum-id: f261fc3cfdafb745
+            x-spec-enum-id: 732a013686f682ba
           type: array
         style: form
       - description: 'Delivery Status
@@ -13667,9 +13920,39 @@ paths:
       tags:
       - products
   /products/{id}/images/:
+    get:
+      description: Retrieve a list of all images from a product.
+      operationId: productsImageList
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+      security:
+      - oauth2:
+        - catalogue:read
+      tags:
+      - products
     post:
-      description: Create images in an existing product.
-      operationId: productsImagesCreate
+      description: Create a new image in an existing product.
+      operationId: productsImageCreate
       parameters:
       - description: A unique integer value identifying this Product.
         in: path
@@ -13709,9 +13992,125 @@ paths:
         - catalogue:write
       tags:
       - products
+  /products/{id}/images/{imageId}/:
+    delete:
+      description: Delete an image of the product.
+      operationId: productsImageDelete
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: imageId
+        required: true
+        schema:
+          pattern: ^\d+$
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+      - oauth2:
+        - catalogue:write
+      tags:
+      - products
+    get:
+      description: Retrieve the details of an image from a product.
+      operationId: productsImageDetail
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: imageId
+        required: true
+        schema:
+          pattern: ^\d+$
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+      security:
+      - oauth2:
+        - catalogue:read
+      tags:
+      - products
+    patch:
+      description: Update details of an existing product image.
+      operationId: productsImageUpdate
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: imageId
+        required: true
+        schema:
+          pattern: ^\d+$
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageUpdate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+      security:
+      - oauth2:
+        - catalogue:write
+      tags:
+      - products
   /products/{id}/prices/:
     get:
-      description: Retrieve a list of price products for a product.
+      description: Retrieve a list of all prices from a product.
       operationId: productsPricesList
       parameters:
       - description: A unique integer value identifying this Product.
@@ -13784,7 +14183,7 @@ paths:
       - products
   /products/{id}/prices/{currency}/:
     delete:
-      description: Delete an price in an existing product.
+      description: Delete a price in an existing product.
       operationId: productsPricesDestroy
       parameters:
       - description: A unique integer value identifying this Price.
@@ -13815,7 +14214,7 @@ paths:
       tags:
       - products
     get:
-      description: Retrieve an price in an existing product.
+      description: Retrieve a price in an existing product.
       operationId: productsPricesRetrieve
       parameters:
       - description: A unique integer value identifying this Price.
@@ -13850,7 +14249,7 @@ paths:
       tags:
       - products
     patch:
-      description: Update an price in an existing product.
+      description: Update details of an existing product price.
       operationId: productsPricesPartialUpdate
       parameters:
       - description: A unique integer value identifying this Price.
@@ -19098,7 +19497,9 @@ webhooks:
 
                         * `processing` - Processing
 
-                        * `fulfilled` - Fulfilled'
+                        * `fulfilled` - Fulfilled
+
+                        * `incomplete` - Incomplete'
                       enum:
                       - not_required
                       - unfulfilled
@@ -19106,8 +19507,9 @@ webhooks:
                       - rejected
                       - processing
                       - fulfilled
+                      - incomplete
                       type: string
-                      x-spec-enum-id: ecba144d8143b41f
+                      x-spec-enum-id: f7a016fc10fb8390
                     fulfillments:
                       items:
                         properties:
@@ -20659,7 +21061,9 @@ webhooks:
 
                         * `processing` - Processing
 
-                        * `fulfilled` - Fulfilled'
+                        * `fulfilled` - Fulfilled
+
+                        * `incomplete` - Incomplete'
                       enum:
                       - not_required
                       - unfulfilled
@@ -20667,8 +21071,9 @@ webhooks:
                       - rejected
                       - processing
                       - fulfilled
+                      - incomplete
                       type: string
-                      x-spec-enum-id: ecba144d8143b41f
+                      x-spec-enum-id: f7a016fc10fb8390
                     fulfillments:
                       items:
                         properties:
@@ -22095,6 +22500,10 @@ webhooks:
                     images:
                       items:
                         properties:
+                          attachment:
+                            description: The base64 string file to upload (image attachment).
+                            format: uri
+                            type: string
                           caption:
                             maxLength: 200
                             type: string
@@ -22104,16 +22513,20 @@ webhooks:
                             maximum: 2147483647
                             minimum: 0
                             type: integer
+                          file_name:
+                            type: string
+                            writeOnly: true
                           id:
                             type: integer
-                          original:
-                            format: uri
-                            type: string
                           product:
                             type: integer
+                          variants:
+                            items:
+                              type: integer
+                            type: array
                         required:
+                        - attachment
                         - id
-                        - original
                         - product
                         type: object
                       type: array
@@ -22338,6 +22751,11 @@ webhooks:
                           images:
                             items:
                               properties:
+                                attachment:
+                                  description: The base64 string file to upload (image
+                                    attachment).
+                                  format: uri
+                                  type: string
                                 caption:
                                   maxLength: 200
                                   type: string
@@ -22347,16 +22765,20 @@ webhooks:
                                   maximum: 2147483647
                                   minimum: 0
                                   type: integer
+                                file_name:
+                                  type: string
+                                  writeOnly: true
                                 id:
                                   type: integer
-                                original:
-                                  format: uri
-                                  type: string
                                 product:
                                   type: integer
+                                variants:
+                                  items:
+                                    type: integer
+                                  type: array
                               required:
+                              - attachment
                               - id
-                              - original
                               - product
                               type: object
                             type: array
@@ -22598,6 +23020,10 @@ webhooks:
                     images:
                       items:
                         properties:
+                          attachment:
+                            description: The base64 string file to upload (image attachment).
+                            format: uri
+                            type: string
                           caption:
                             maxLength: 200
                             type: string
@@ -22607,16 +23033,20 @@ webhooks:
                             maximum: 2147483647
                             minimum: 0
                             type: integer
+                          file_name:
+                            type: string
+                            writeOnly: true
                           id:
                             type: integer
-                          original:
-                            format: uri
-                            type: string
                           product:
                             type: integer
+                          variants:
+                            items:
+                              type: integer
+                            type: array
                         required:
+                        - attachment
                         - id
-                        - original
                         - product
                         type: object
                       type: array
@@ -22841,6 +23271,11 @@ webhooks:
                           images:
                             items:
                               properties:
+                                attachment:
+                                  description: The base64 string file to upload (image
+                                    attachment).
+                                  format: uri
+                                  type: string
                                 caption:
                                   maxLength: 200
                                   type: string
@@ -22850,16 +23285,20 @@ webhooks:
                                   maximum: 2147483647
                                   minimum: 0
                                   type: integer
+                                file_name:
+                                  type: string
+                                  writeOnly: true
                                 id:
                                   type: integer
-                                original:
-                                  format: uri
-                                  type: string
                                 product:
                                   type: integer
+                                variants:
+                                  items:
+                                    type: integer
+                                  type: array
                               required:
+                              - attachment
                               - id
-                              - original
                               - product
                               type: object
                             type: array
