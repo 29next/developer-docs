@@ -5,7 +5,7 @@ description: The asset directory is meant to contain any static assets needed fo
 ---
 # App Assets Reference
 
-App Assets are static files included in an App that can be included in Snippets to extend storefront themes.
+App Assets are static files included in an App that can be included in Event Trackers or Snippets to extend storefront themes.
 
 :::caution
 **App bundle max size is 2MB**, it's important to minimize and reduce the size of the assets in your App to maintain efficiency. If you are compiling CSS or JS bundles locally, it is recommended to not include the raw source files and only include the compiled minified files.

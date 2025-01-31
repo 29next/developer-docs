@@ -16,10 +16,10 @@ The manifest.json file is used to configure your app.
 
 ```json title="Example manifest.json"
 {
+  "storefront_event_tracker": "tracking.js",
   "locations": {
     "storefront": {
-      "global_header": "snippets/global-header.html",
-      "view_product": "snippets/view-product.html"
+      "global_header": "snippets/global-header.html"
     }
   },
   "settings_schema": [
@@ -46,6 +46,15 @@ The manifest.json file is used to configure your app.
 
 ## Manifest Properties
 
+### storefront_event_tracker
+
+Specify a javascript file to install a storefront [Event Tracker](/docs/themes/event-tracking.md) to be installed to track user behavior on the storefront and ecommerce related user behavior.
+
+```json title="Example Storefront Event Tracker"
+"storefront_event_tracker": "tracking.js",
+```
+
+
 ### locations
 
 Specifies and maps App Snippets that extend Storefront theme templates. See Theme [app_hook reference](/themes/templates/tags.md#app_hook) for a full list of supported Storefront Theme locations.
@@ -55,10 +64,13 @@ Specifies and maps App Snippets that extend Storefront theme templates. See Them
 "locations": {
     "storefront": {
       "global_header": "snippets/global-header.html",
-      "complete_checkout": "snippets/complete-checkout.html"
     }
-  },
+}
 ```
+
+:::caution
+App Hook Locations are limited to only extending a themes header and do not have access to tracking events, consider using an [Event Tracker](/docs/themes/event-tracking.md) instead.
+:::
 
 
 ### settings_schema
