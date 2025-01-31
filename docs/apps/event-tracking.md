@@ -10,7 +10,7 @@ This makes setting up and using your app easy for merchants requiring fewer manu
 
 
 :::caution
-Event trackers aren App snippets are not cross compatible as Event Trackers are loaded in their own sandboxed environment for greater security.
+Event trackers and App snippets are not cross compatible as Event Trackers are loaded in their own sandboxed environment for greater security.
 :::
 
 ### Add Event Tracker to Manifest
