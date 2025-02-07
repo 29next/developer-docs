@@ -19,13 +19,31 @@ When building your app, map a javascript file to be installed as an [Event Track
 
 ```json title="Example Storefront Event Tracker"
 "storefront_event_tracker": "tracking.js",
+"settings_schema": [
+     {
+        "name": "custom_app_id_enabled",
+        "type": "checkbox",
+        "label": "Enable Custom App",
+        "help_text": "",
+        "default": false
+     },
+    {
+        "name": "custom_app_id",
+        "type": "text",
+        "label": "Example Text Setting",
+        "default": "",
+        "required": 1,
+        "help_text": "",
+        "max_length": 250
+    }
+  ]
 ```
 
 When your app is installed, an event tracker will be automatically created with the content of the javascrpt file mapped to the `storefront_event_tracker` key from your manifest.json.
 
 ### Access App Settings Inside Event Tracker
 
-Apps also have Settings that can be used to control the configuration of how the app works, such as enabling or disabling some funcationality, or adding an ID into for the tracking script.
+Apps also have [Settings](/docs/apps/settings.md) that can be used to control the configuration of how the app works, such as enabling or disabling some funcationality, or adding an ID into for the tracking script.
 
 Access the settings keys in your event tracker for configuration variables in your javascript.
 
