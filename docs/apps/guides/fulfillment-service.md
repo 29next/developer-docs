@@ -286,6 +286,10 @@ PATCH https://{store}.29next.store/api/admin/stockrecords/{id}/
 
 Moving a Fulfillment Order is a 2-step process to first check the available locations and then send a request to move the desired fulfillment order line items to a new location.
 
+:::info
+Fulfillment Orders must be `"status": "open"` to be moved to a new location. If the fulfillment order you want to move is   `"status": "processing"`, use the [cancellationRequestSend](/docs/api/admin/reference/#/operations/cancellationRequestSend) endpoint to request cancellation with the current fulfillment location before moving to a new location.
+:::
+
 #### Retrieve Available Locations
 
 Fulfillment order line items often contain products that are in stock at many locations where they could be fulfilled from. To check what locations fulfillment order items are available at, use the [availableLocationsRetrieve](/docs/api/admin/reference/#/operations/availableLocationsRetrieve) endpoint.
