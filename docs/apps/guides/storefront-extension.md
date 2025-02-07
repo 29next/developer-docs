@@ -11,9 +11,7 @@ In this guide we'll go over all of the steps to get started building an app that
 
 Storefront extensions are commonly used for but not limited to:
 
-- Install javascript tracking snippets to storefront and checkout flow
-- Add custom functionality to checkout flow
-- Add custom functionality to storefront themes
+- Install javascript tracking snippets to storefront and checkout flow, see [event tracking](/docs/apps/event-tracking.md).
 
 ### Preparation
 

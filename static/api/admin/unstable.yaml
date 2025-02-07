@@ -1556,9 +1556,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -1605,7 +1603,7 @@ components:
             $ref: '#/components/schemas/ProductPrices'
           type: array
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -1621,6 +1619,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           title: Cost Per Item
+          type:
+          - string
+          - 'null'
+        upc:
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -5660,9 +5663,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -5698,7 +5699,7 @@ components:
             $ref: '#/components/schemas/ProductPrices'
           type: array
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -5715,6 +5716,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           title: Cost Per Item
+          type:
+          - string
+          - 'null'
+        upc:
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6258,7 +6264,7 @@ components:
           title: Requires shipping?
           type: boolean
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -6301,9 +6307,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6353,9 +6357,7 @@ components:
           readOnly: true
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6523,7 +6525,7 @@ components:
           title: Requires shipping?
           type: boolean
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -6559,9 +6561,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6656,7 +6656,7 @@ components:
         product_id:
           type: integer
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -6676,6 +6676,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        upc:
+          description: Universal Product Code
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -9082,9 +9087,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -9131,7 +9134,7 @@ components:
             $ref: '#/components/schemas/ProductPrices'
           type: array
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -9148,6 +9151,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           title: Cost Per Item
+          type:
+          - string
+          - 'null'
+        upc:
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -22637,7 +22645,7 @@ webhooks:
                       title: Requires shipping?
                       type: boolean
                     sku:
-                      description: Stock Keeping Unit.
+                      description: Stock Keeping Unit
                       type:
                       - string
                       - 'null'
@@ -22704,10 +22712,7 @@ webhooks:
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
                     upc:
-                      deprecated: true
-                      description: Universal Product Code (UPC) is an identifier for
-                        a product which is not specific to a particular  supplier.
-                        Eg an ISBN for a book.
+                      description: Universal Product Code
                       type:
                       - string
                       - 'null'
@@ -22824,7 +22829,7 @@ webhooks:
                           product_id:
                             type: integer
                           sku:
-                            description: Stock Keeping Unit.
+                            description: Stock Keeping Unit
                             type:
                             - string
                             - 'null'
@@ -22870,6 +22875,11 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          upc:
+                            description: Universal Product Code
+                            type:
+                            - string
+                            - 'null'
                           variant_attribute_values:
                             items:
                               properties:
@@ -23157,7 +23167,7 @@ webhooks:
                       title: Requires shipping?
                       type: boolean
                     sku:
-                      description: Stock Keeping Unit.
+                      description: Stock Keeping Unit
                       type:
                       - string
                       - 'null'
@@ -23224,10 +23234,7 @@ webhooks:
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
                     upc:
-                      deprecated: true
-                      description: Universal Product Code (UPC) is an identifier for
-                        a product which is not specific to a particular  supplier.
-                        Eg an ISBN for a book.
+                      description: Universal Product Code
                       type:
                       - string
                       - 'null'
@@ -23344,7 +23351,7 @@ webhooks:
                           product_id:
                             type: integer
                           sku:
-                            description: Stock Keeping Unit.
+                            description: Stock Keeping Unit
                             type:
                             - string
                             - 'null'
@@ -23390,6 +23397,11 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          upc:
+                            description: Universal Product Code
+                            type:
+                            - string
+                            - 'null'
                           variant_attribute_values:
                             items:
                               properties:
