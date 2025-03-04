@@ -63,7 +63,15 @@ components:
 
             * `uniuni` - uniuni
 
-            * `china_post` - china_post'
+            * `china_post` - china_post
+
+            * `ulala` - ulala
+
+            * `gofo_express` - gofo_express
+
+            * `australia_post` - australia_post
+
+            * `deutsche_post_dhl` - deutsche_post_dhl'
           enum:
           - other
           - ups
@@ -83,11 +91,15 @@ components:
           - ontrac
           - uniuni
           - china_post
+          - ulala
+          - gofo_express
+          - australia_post
+          - deutsche_post_dhl
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 94a8d4ab3dcef71c
+          x-spec-enum-id: 1c581f0fff48f8ca
         date_created:
           format: date-time
           readOnly: true
@@ -6393,8 +6405,9 @@ components:
       properties:
         attachment:
           description: The base64 string file to upload (image attachment).
-          format: uri
-          type: string
+          type:
+          - string
+          - 'null'
         caption:
           maxLength: 200
           type: string
@@ -6413,12 +6426,18 @@ components:
         product:
           readOnly: true
           type: integer
+        src:
+          description: URL of the image to fetch and associate with the product
+          format: uri
+          type:
+          - string
+          - 'null'
+          writeOnly: true
         variants:
           items:
             type: integer
           type: array
       required:
-      - attachment
       - id
       - product
       type: object
@@ -8154,9 +8173,13 @@ components:
 
             * `asendia` - asendia
 
+            * `australia_post` - australia_post
+
             * `china_post` - china_post
 
             * `deutsche_de` - deutsche_de
+
+            * `deutsche_post_dhl` - deutsche_post_dhl
 
             * `dhl` - dhl
 
@@ -8165,6 +8188,8 @@ components:
             * `fedex` - fedex
 
             * `firstmile` - firstmile
+
+            * `gofo_express` - gofo_express
 
             * `hermesworld_uk` - hermesworld_uk
 
@@ -8178,6 +8203,8 @@ components:
 
             * `swiss_post` - swiss_post
 
+            * `ulala` - ulala
+
             * `uniuni` - uniuni
 
             * `ups` - ups
@@ -8188,24 +8215,28 @@ components:
           enum:
           - 4px
           - asendia
+          - australia_post
           - china_post
           - deutsche_de
+          - deutsche_post_dhl
           - dhl
           - dhl_ecommerce
           - fedex
           - firstmile
+          - gofo_express
           - hermesworld_uk
           - myhermes
           - ontrac
           - other
           - royal_mail
           - swiss_post
+          - ulala
           - uniuni
           - ups
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 3a68cf65f7105df0
+          x-spec-enum-id: 784c84f26a207d02
         carrier_other_name:
           type:
           - string
@@ -13987,7 +14018,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ProductImage'
-        required: true
       responses:
         '200':
           content:
@@ -22510,8 +22540,9 @@ webhooks:
                         properties:
                           attachment:
                             description: The base64 string file to upload (image attachment).
-                            format: uri
-                            type: string
+                            type:
+                            - string
+                            - 'null'
                           caption:
                             maxLength: 200
                             type: string
@@ -22528,12 +22559,19 @@ webhooks:
                             type: integer
                           product:
                             type: integer
+                          src:
+                            description: URL of the image to fetch and associate with
+                              the product
+                            format: uri
+                            type:
+                            - string
+                            - 'null'
+                            writeOnly: true
                           variants:
                             items:
                               type: integer
                             type: array
                         required:
-                        - attachment
                         - id
                         - product
                         type: object
@@ -22759,8 +22797,9 @@ webhooks:
                                 attachment:
                                   description: The base64 string file to upload (image
                                     attachment).
-                                  format: uri
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                 caption:
                                   maxLength: 200
                                   type: string
@@ -22777,12 +22816,19 @@ webhooks:
                                   type: integer
                                 product:
                                   type: integer
+                                src:
+                                  description: URL of the image to fetch and associate
+                                    with the product
+                                  format: uri
+                                  type:
+                                  - string
+                                  - 'null'
+                                  writeOnly: true
                                 variants:
                                   items:
                                     type: integer
                                   type: array
                               required:
-                              - attachment
                               - id
                               - product
                               type: object
@@ -23032,8 +23078,9 @@ webhooks:
                         properties:
                           attachment:
                             description: The base64 string file to upload (image attachment).
-                            format: uri
-                            type: string
+                            type:
+                            - string
+                            - 'null'
                           caption:
                             maxLength: 200
                             type: string
@@ -23050,12 +23097,19 @@ webhooks:
                             type: integer
                           product:
                             type: integer
+                          src:
+                            description: URL of the image to fetch and associate with
+                              the product
+                            format: uri
+                            type:
+                            - string
+                            - 'null'
+                            writeOnly: true
                           variants:
                             items:
                               type: integer
                             type: array
                         required:
-                        - attachment
                         - id
                         - product
                         type: object
@@ -23281,8 +23335,9 @@ webhooks:
                                 attachment:
                                   description: The base64 string file to upload (image
                                     attachment).
-                                  format: uri
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                 caption:
                                   maxLength: 200
                                   type: string
@@ -23299,12 +23354,19 @@ webhooks:
                                   type: integer
                                 product:
                                   type: integer
+                                src:
+                                  description: URL of the image to fetch and associate
+                                    with the product
+                                  format: uri
+                                  type:
+                                  - string
+                                  - 'null'
+                                  writeOnly: true
                                 variants:
                                   items:
                                     type: integer
                                   type: array
                               required:
-                              - attachment
                               - id
                               - product
                               type: object
