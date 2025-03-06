@@ -43,8 +43,6 @@ components:
 
             * `hermesworld_uk` - hermesworld_uk
 
-            * `deutsche_de` - deutsche_de
-
             * `swiss_post` - swiss_post
 
             * `dhl_ecommerce` - dhl_ecommerce
@@ -71,7 +69,7 @@ components:
 
             * `australia_post` - australia_post
 
-            * `deutsche_post_dhl` - deutsche_post_dhl'
+            * `deutsche_de` - deutsche_de'
           enum:
           - other
           - ups
@@ -80,7 +78,6 @@ components:
           - dhl
           - asendia
           - hermesworld_uk
-          - deutsche_de
           - swiss_post
           - dhl_ecommerce
           - myhermes
@@ -94,12 +91,12 @@ components:
           - ulala
           - gofo_express
           - australia_post
-          - deutsche_post_dhl
+          - deutsche_de
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 1c581f0fff48f8ca
+          x-spec-enum-id: 4bc8b415981ab821
         date_created:
           format: date-time
           readOnly: true
@@ -8179,8 +8176,6 @@ components:
 
             * `deutsche_de` - deutsche_de
 
-            * `deutsche_post_dhl` - deutsche_post_dhl
-
             * `dhl` - dhl
 
             * `dhl_ecommerce` - dhl_ecommerce
@@ -8218,7 +8213,6 @@ components:
           - australia_post
           - china_post
           - deutsche_de
-          - deutsche_post_dhl
           - dhl
           - dhl_ecommerce
           - fedex
@@ -8236,7 +8230,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 784c84f26a207d02
+          x-spec-enum-id: f71cee29ddfc20e3
         carrier_other_name:
           type:
           - string
@@ -12052,7 +12046,7 @@ paths:
   /gift-cards/{id}/deactivate/:
     post:
       description: Deactivate a gift card.
-      operationId: deactivate
+      operationId: giftCardsDeactivate
       parameters:
       - description: A unique integer value identifying this gift card.
         in: path
