@@ -1183,7 +1183,7 @@ components:
 
             * `external` - External
 
-            * `paypal` - Paypal
+            * `paypal` - PayPal
 
             * `klarna` - Klarna
 
@@ -1213,7 +1213,7 @@ components:
           type:
           - string
           - 'null'
-          x-spec-enum-id: 9f41b1e66378e33f
+          x-spec-enum-id: 27ca71ee81f01a5d
         send_receipt:
           default: true
           type: boolean
@@ -1617,7 +1617,6 @@ components:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
           type: array
       required:
-      - sku
       - variant_attribute_values
       type: object
     CreateSubscription:
