@@ -43,8 +43,6 @@ components:
 
             * `hermesworld_uk` - hermesworld_uk
 
-            * `deutsche_de` - deutsche_de
-
             * `swiss_post` - swiss_post
 
             * `dhl_ecommerce` - dhl_ecommerce
@@ -63,7 +61,15 @@ components:
 
             * `uniuni` - uniuni
 
-            * `china_post` - china_post'
+            * `china_post` - china_post
+
+            * `ulala` - ulala
+
+            * `gofo_express` - gofo_express
+
+            * `australia_post` - australia_post
+
+            * `deutsche_de` - deutsche_de'
           enum:
           - other
           - ups
@@ -72,7 +78,6 @@ components:
           - dhl
           - asendia
           - hermesworld_uk
-          - deutsche_de
           - swiss_post
           - dhl_ecommerce
           - myhermes
@@ -83,11 +88,15 @@ components:
           - ontrac
           - uniuni
           - china_post
+          - ulala
+          - gofo_express
+          - australia_post
+          - deutsche_de
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 94a8d4ab3dcef71c
+          x-spec-enum-id: 4bc8b415981ab821
         date_created:
           format: date-time
           readOnly: true
@@ -119,6 +128,10 @@ components:
       type: object
     AddSubscriptionLine:
       properties:
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -197,6 +210,15 @@ components:
       required:
       - code
       - label
+      type: object
+    AvailableLocationFulfillmentOrder:
+      properties:
+        available_locations:
+          additionalProperties: {}
+          readOnly: true
+          type: object
+      required:
+      - available_locations
       type: object
     BillingAddress:
       properties:
@@ -497,6 +519,10 @@ components:
         is_upsell:
           default: false
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price_currency:
           maxLength: 12
           title: Currency
@@ -1165,7 +1191,7 @@ components:
 
             * `external` - External
 
-            * `paypal` - Paypal
+            * `paypal` - PayPal
 
             * `klarna` - Klarna
 
@@ -1195,7 +1221,7 @@ components:
           type:
           - string
           - 'null'
-          x-spec-enum-id: 9f41b1e66378e33f
+          x-spec-enum-id: 27ca71ee81f01a5d
         send_receipt:
           default: true
           type: boolean
@@ -1257,6 +1283,10 @@ components:
         is_upsell:
           default: false
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -1529,9 +1559,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -1572,7 +1600,7 @@ components:
             $ref: '#/components/schemas/ProductPrices'
           type: array
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -1591,12 +1619,16 @@ components:
           type:
           - string
           - 'null'
+        upc:
+          description: Universal Product Code
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
           type: array
       required:
-      - sku
       - variant_attribute_values
       type: object
     CreateSubscription:
@@ -1681,6 +1713,10 @@ components:
         currency:
           maxLength: 12
           type: string
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -3135,6 +3171,34 @@ components:
           type: string
           x-spec-enum-id: 4d67e89980fba849
       type: object
+    MoveFulfillmentOrder:
+      properties:
+        fulfillment_order_line_items:
+          items:
+            $ref: '#/components/schemas/MoveFulfillmentOrderLineItem'
+          type: array
+        new_location_id:
+          type: integer
+      required:
+      - new_location_id
+      type: object
+    MoveFulfillmentOrderLineItem:
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      type: object
+    MoveFulfillmentOrderResponse:
+      properties:
+        moved_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+        original_fulfillment_order:
+          $ref: '#/components/schemas/FulfillmentOrder'
+      required:
+      - moved_fulfillment_order
+      - original_fulfillment_order
+      type: object
     OAuthApp:
       properties:
         client_id:
@@ -3199,7 +3263,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -3427,6 +3491,10 @@ components:
           type: boolean
         is_upsell:
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price_currency:
           maxLength: 12
           type: string
@@ -3478,7 +3546,7 @@ components:
       - total_cost
       - unit_cost
       type: object
-    OrderLineDetailSerailizer:
+    OrderLineDetail:
       properties:
         id:
           readOnly: true
@@ -3487,6 +3555,10 @@ components:
           type: boolean
         is_upsell:
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price_currency:
           maxLength: 12
           type: string
@@ -3995,7 +4067,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -5048,6 +5120,25 @@ components:
           type: string
           x-spec-enum-id: 3c60da80149644ea
       type: object
+    PatchedProductImageUpdate:
+      properties:
+        caption:
+          maxLength: 200
+          type: string
+        display_order:
+          description: An image with a display order of zero will be the primary image
+            for a product
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        variants:
+          items:
+            type: integer
+          type: array
+      type: object
     PatchedUpdateDefinition:
       properties:
         enable_export:
@@ -5150,7 +5241,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -5517,9 +5608,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -5550,7 +5639,7 @@ components:
             $ref: '#/components/schemas/ProductPrices'
           type: array
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -5567,6 +5656,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           title: Cost Per Item
+          type:
+          - string
+          - 'null'
+        upc:
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6115,7 +6209,7 @@ components:
           title: Requires shipping?
           type: boolean
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -6156,9 +6250,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6202,9 +6294,7 @@ components:
           readOnly: true
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6238,6 +6328,11 @@ components:
       type: object
     ProductImage:
       properties:
+        attachment:
+          description: The base64 string file to upload (image attachment).
+          type:
+          - string
+          - 'null'
         caption:
           maxLength: 200
           type: string
@@ -6247,17 +6342,28 @@ components:
           maximum: 2147483647
           minimum: 0
           type: integer
+        file_name:
+          type: string
+          writeOnly: true
         id:
           readOnly: true
           type: integer
-        original:
-          format: uri
-          type: string
         product:
+          readOnly: true
           type: integer
+        src:
+          description: URL of the image to fetch and associate with the product
+          format: uri
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+        variants:
+          items:
+            type: integer
+          type: array
       required:
       - id
-      - original
       - product
       type: object
     ProductList:
@@ -6368,7 +6474,7 @@ components:
           title: Requires shipping?
           type: boolean
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -6402,9 +6508,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -6493,7 +6597,7 @@ components:
         product_id:
           type: integer
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -6526,6 +6630,11 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        upc:
+          description: Universal Product Code
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -7560,6 +7669,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -8001,6 +8114,8 @@ components:
 
             * `asendia` - asendia
 
+            * `australia_post` - australia_post
+
             * `china_post` - china_post
 
             * `deutsche_de` - deutsche_de
@@ -8012,6 +8127,8 @@ components:
             * `fedex` - fedex
 
             * `firstmile` - firstmile
+
+            * `gofo_express` - gofo_express
 
             * `hermesworld_uk` - hermesworld_uk
 
@@ -8025,6 +8142,8 @@ components:
 
             * `swiss_post` - swiss_post
 
+            * `ulala` - ulala
+
             * `uniuni` - uniuni
 
             * `ups` - ups
@@ -8035,24 +8154,27 @@ components:
           enum:
           - 4px
           - asendia
+          - australia_post
           - china_post
           - deutsche_de
           - dhl
           - dhl_ecommerce
           - fedex
           - firstmile
+          - gofo_express
           - hermesworld_uk
           - myhermes
           - ontrac
           - other
           - royal_mail
           - swiss_post
+          - ulala
           - uniuni
           - ups
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: 3a68cf65f7105df0
+          x-spec-enum-id: f71cee29ddfc20e3
         carrier_other_name:
           type:
           - string
@@ -8535,7 +8657,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -8939,9 +9061,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         upc:
-          deprecated: true
-          description: Universal Product Code (UPC) is an identifier for a product
-            which is not specific to a particular  supplier. Eg an ISBN for a book.
+          description: Universal Product Code
           type:
           - string
           - 'null'
@@ -8982,7 +9102,7 @@ components:
             $ref: '#/components/schemas/ProductPrices'
           type: array
         sku:
-          description: Stock Keeping Unit.
+          description: Stock Keeping Unit
           type:
           - string
           - 'null'
@@ -9002,6 +9122,11 @@ components:
           type:
           - string
           - 'null'
+        upc:
+          description: Universal Product Code
+          type:
+          - string
+          - 'null'
         variant_attribute_values:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
@@ -9012,6 +9137,10 @@ components:
       type: object
     UpdateSubscriptionLine:
       properties:
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -10905,6 +11034,37 @@ paths:
         - fulfillment_orders:read
       tags:
       - fulfillment
+  /fulfillment-orders/{id}/available-locations/:
+    get:
+      description: Retrieve available locations for a Fulfillment Order.
+      operationId: availableLocationsRetrieve
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableLocationFulfillmentOrder'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_orders:read
+      tags:
+      - fulfillment
   /fulfillment-orders/{id}/cancel/:
     post:
       description: Cancel fulfillment order
@@ -11443,6 +11603,49 @@ paths:
         - fulfillment_orders:write
       tags:
       - fulfillment
+  /fulfillment-orders/{id}/move/:
+    post:
+      description: Move location of a fulfillment order.
+      operationId: fulfillmentOrdersMove
+      parameters:
+      - description: A unique integer value identifying this fulfillment order.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveFulfillmentOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MoveFulfillmentOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MoveFulfillmentOrder'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveFulfillmentOrderResponse'
+          description: ''
+      security:
+      - oauth2:
+        - fulfillment_orders:write
+      tags:
+      - fulfillment
   /fulfillment-orders/{id}/release-hold/:
     post:
       description: Release On Hold Fulfillment.
@@ -11790,7 +11993,7 @@ paths:
   /gift-cards/{id}/deactivate/:
     post:
       description: Deactivate a gift card.
-      operationId: deactivate
+      operationId: giftCardsDeactivate
       parameters:
       - description: A unique integer value identifying this gift card.
         in: path
@@ -13774,9 +13977,39 @@ paths:
       tags:
       - products
   /products/{id}/images/:
+    get:
+      description: Retrieve a list of all images from a product.
+      operationId: productsImageList
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+      security:
+      - oauth2:
+        - catalogue:read
+      tags:
+      - products
     post:
-      description: Create images in an existing product.
-      operationId: productsImagesCreate
+      description: Create a new image in an existing product.
+      operationId: productsImageCreate
       parameters:
       - description: A unique integer value identifying this Product.
         in: path
@@ -13803,7 +14036,122 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ProductImage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+      security:
+      - oauth2:
+        - catalogue:write
+      tags:
+      - products
+  /products/{id}/images/{imageId}/:
+    delete:
+      description: Delete an image of the product.
+      operationId: productsImageDelete
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
         required: true
+        schema:
+          type: integer
+      - in: path
+        name: imageId
+        required: true
+        schema:
+          pattern: ^\d+$
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+      - oauth2:
+        - catalogue:write
+      tags:
+      - products
+    get:
+      description: Retrieve the details of an image from a product.
+      operationId: productsImageDetail
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: imageId
+        required: true
+        schema:
+          pattern: ^\d+$
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+      security:
+      - oauth2:
+        - catalogue:read
+      tags:
+      - products
+    patch:
+      description: Update details of an existing product image.
+      operationId: productsImageUpdate
+      parameters:
+      - description: A unique integer value identifying this Product.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: imageId
+        required: true
+        schema:
+          pattern: ^\d+$
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImageUpdate'
       responses:
         '200':
           content:
@@ -13818,7 +14166,7 @@ paths:
       - products
   /products/{id}/prices/:
     get:
-      description: Retrieve a list of price products for a product.
+      description: Retrieve a list of all prices from a product.
       operationId: productsPricesList
       parameters:
       - description: A unique integer value identifying this Product.
@@ -13891,7 +14239,7 @@ paths:
       - products
   /products/{id}/prices/{currency}/:
     delete:
-      description: Delete an price in an existing product.
+      description: Delete a price in an existing product.
       operationId: productsPricesDestroy
       parameters:
       - description: A unique integer value identifying this Price.
@@ -13922,7 +14270,7 @@ paths:
       tags:
       - products
     get:
-      description: Retrieve an price in an existing product.
+      description: Retrieve a price in an existing product.
       operationId: productsPricesRetrieve
       parameters:
       - description: A unique integer value identifying this Price.
@@ -13957,7 +14305,7 @@ paths:
       tags:
       - products
     patch:
-      description: Update an price in an existing product.
+      description: Update details of an existing product price.
       operationId: productsPricesPartialUpdate
       parameters:
       - description: A unique integer value identifying this Price.
@@ -17022,6 +17370,10 @@ webhooks:
                           is_upsell:
                             default: false
                             type: boolean
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price_currency:
                             maxLength: 12
                             title: Currency
@@ -17051,6 +17403,12 @@ webhooks:
                               images:
                                 items:
                                   properties:
+                                    attachment:
+                                      description: The base64 string file to upload
+                                        (image attachment).
+                                      type:
+                                      - string
+                                      - 'null'
                                     caption:
                                       maxLength: 200
                                       type: string
@@ -17060,26 +17418,34 @@ webhooks:
                                       maximum: 2147483647
                                       minimum: 0
                                       type: integer
+                                    file_name:
+                                      type: string
+                                      writeOnly: true
                                     id:
                                       type: integer
-                                    original:
-                                      format: uri
-                                      type: string
                                     product:
                                       type: integer
+                                    src:
+                                      description: URL of the image to fetch and associate
+                                        with the product
+                                      format: uri
+                                      type:
+                                      - string
+                                      - 'null'
+                                      writeOnly: true
+                                    variants:
+                                      items:
+                                        type: integer
+                                      type: array
                                   required:
                                   - id
-                                  - original
                                   - product
                                   type: object
                                 type: array
                               title:
                                 type: string
                               upc:
-                                deprecated: true
-                                description: Universal Product Code (UPC) is an identifier
-                                  for a product which is not specific to a particular  supplier.
-                                  Eg an ISBN for a book.
+                                description: Universal Product Code
                                 type:
                                 - string
                                 - 'null'
@@ -19313,6 +19679,10 @@ webhooks:
                             type: boolean
                           is_upsell:
                             type: boolean
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price_currency:
                             maxLength: 12
                             type: string
@@ -19357,6 +19727,12 @@ webhooks:
                               images:
                                 items:
                                   properties:
+                                    attachment:
+                                      description: The base64 string file to upload
+                                        (image attachment).
+                                      type:
+                                      - string
+                                      - 'null'
                                     caption:
                                       maxLength: 200
                                       type: string
@@ -19366,26 +19742,34 @@ webhooks:
                                       maximum: 2147483647
                                       minimum: 0
                                       type: integer
+                                    file_name:
+                                      type: string
+                                      writeOnly: true
                                     id:
                                       type: integer
-                                    original:
-                                      format: uri
-                                      type: string
                                     product:
                                       type: integer
+                                    src:
+                                      description: URL of the image to fetch and associate
+                                        with the product
+                                      format: uri
+                                      type:
+                                      - string
+                                      - 'null'
+                                      writeOnly: true
+                                    variants:
+                                      items:
+                                        type: integer
+                                      type: array
                                   required:
                                   - id
-                                  - original
                                   - product
                                   type: object
                                 type: array
                               title:
                                 type: string
                               upc:
-                                deprecated: true
-                                description: Universal Product Code (UPC) is an identifier
-                                  for a product which is not specific to a particular  supplier.
-                                  Eg an ISBN for a book.
+                                description: Universal Product Code
                                 type:
                                 - string
                                 - 'null'
@@ -20687,6 +21071,10 @@ webhooks:
                             type: boolean
                           is_upsell:
                             type: boolean
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price_currency:
                             maxLength: 12
                             type: string
@@ -20731,6 +21119,12 @@ webhooks:
                               images:
                                 items:
                                   properties:
+                                    attachment:
+                                      description: The base64 string file to upload
+                                        (image attachment).
+                                      type:
+                                      - string
+                                      - 'null'
                                     caption:
                                       maxLength: 200
                                       type: string
@@ -20740,26 +21134,34 @@ webhooks:
                                       maximum: 2147483647
                                       minimum: 0
                                       type: integer
+                                    file_name:
+                                      type: string
+                                      writeOnly: true
                                     id:
                                       type: integer
-                                    original:
-                                      format: uri
-                                      type: string
                                     product:
                                       type: integer
+                                    src:
+                                      description: URL of the image to fetch and associate
+                                        with the product
+                                      format: uri
+                                      type:
+                                      - string
+                                      - 'null'
+                                      writeOnly: true
+                                    variants:
+                                      items:
+                                        type: integer
+                                      type: array
                                   required:
                                   - id
-                                  - original
                                   - product
                                   type: object
                                 type: array
                               title:
                                 type: string
                               upc:
-                                deprecated: true
-                                description: Universal Product Code (UPC) is an identifier
-                                  for a product which is not specific to a particular  supplier.
-                                  Eg an ISBN for a book.
+                                description: Universal Product Code
                                 type:
                                 - string
                                 - 'null'
@@ -21867,6 +22269,12 @@ webhooks:
                           images:
                             items:
                               properties:
+                                attachment:
+                                  description: The base64 string file to upload (image
+                                    attachment).
+                                  type:
+                                  - string
+                                  - 'null'
                                 caption:
                                   maxLength: 200
                                   type: string
@@ -21876,16 +22284,27 @@ webhooks:
                                   maximum: 2147483647
                                   minimum: 0
                                   type: integer
+                                file_name:
+                                  type: string
+                                  writeOnly: true
                                 id:
                                   type: integer
-                                original:
-                                  format: uri
-                                  type: string
                                 product:
                                   type: integer
+                                src:
+                                  description: URL of the image to fetch and associate
+                                    with the product
+                                  format: uri
+                                  type:
+                                  - string
+                                  - 'null'
+                                  writeOnly: true
+                                variants:
+                                  items:
+                                    type: integer
+                                  type: array
                               required:
                               - id
-                              - original
                               - product
                               type: object
                             type: array
@@ -21931,7 +22350,7 @@ webhooks:
                           product_id:
                             type: integer
                           sku:
-                            description: Stock Keeping Unit.
+                            description: Stock Keeping Unit
                             type:
                             - string
                             - 'null'
@@ -22014,6 +22433,11 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          upc:
+                            description: Universal Product Code
+                            type:
+                            - string
+                            - 'null'
                           variant_attribute_values:
                             items:
                               properties:
@@ -22061,6 +22485,11 @@ webhooks:
                     images:
                       items:
                         properties:
+                          attachment:
+                            description: The base64 string file to upload (image attachment).
+                            type:
+                            - string
+                            - 'null'
                           caption:
                             maxLength: 200
                             type: string
@@ -22070,16 +22499,27 @@ webhooks:
                             maximum: 2147483647
                             minimum: 0
                             type: integer
+                          file_name:
+                            type: string
+                            writeOnly: true
                           id:
                             type: integer
-                          original:
-                            format: uri
-                            type: string
                           product:
                             type: integer
+                          src:
+                            description: URL of the image to fetch and associate with
+                              the product
+                            format: uri
+                            type:
+                            - string
+                            - 'null'
+                            writeOnly: true
+                          variants:
+                            items:
+                              type: integer
+                            type: array
                         required:
                         - id
-                        - original
                         - product
                         type: object
                       type: array
@@ -22190,7 +22630,7 @@ webhooks:
                       title: Requires shipping?
                       type: boolean
                     sku:
-                      description: Stock Keeping Unit.
+                      description: Stock Keeping Unit
                       type:
                       - string
                       - 'null'
@@ -22281,10 +22721,7 @@ webhooks:
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
                     upc:
-                      deprecated: true
-                      description: Universal Product Code (UPC) is an identifier for
-                        a product which is not specific to a particular  supplier.
-                        Eg an ISBN for a book.
+                      description: Universal Product Code
                       type:
                       - string
                       - 'null'
@@ -22430,6 +22867,12 @@ webhooks:
                           images:
                             items:
                               properties:
+                                attachment:
+                                  description: The base64 string file to upload (image
+                                    attachment).
+                                  type:
+                                  - string
+                                  - 'null'
                                 caption:
                                   maxLength: 200
                                   type: string
@@ -22439,16 +22882,27 @@ webhooks:
                                   maximum: 2147483647
                                   minimum: 0
                                   type: integer
+                                file_name:
+                                  type: string
+                                  writeOnly: true
                                 id:
                                   type: integer
-                                original:
-                                  format: uri
-                                  type: string
                                 product:
                                   type: integer
+                                src:
+                                  description: URL of the image to fetch and associate
+                                    with the product
+                                  format: uri
+                                  type:
+                                  - string
+                                  - 'null'
+                                  writeOnly: true
+                                variants:
+                                  items:
+                                    type: integer
+                                  type: array
                               required:
                               - id
-                              - original
                               - product
                               type: object
                             type: array
@@ -22494,7 +22948,7 @@ webhooks:
                           product_id:
                             type: integer
                           sku:
-                            description: Stock Keeping Unit.
+                            description: Stock Keeping Unit
                             type:
                             - string
                             - 'null'
@@ -22577,6 +23031,11 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          upc:
+                            description: Universal Product Code
+                            type:
+                            - string
+                            - 'null'
                           variant_attribute_values:
                             items:
                               properties:
@@ -22624,6 +23083,11 @@ webhooks:
                     images:
                       items:
                         properties:
+                          attachment:
+                            description: The base64 string file to upload (image attachment).
+                            type:
+                            - string
+                            - 'null'
                           caption:
                             maxLength: 200
                             type: string
@@ -22633,16 +23097,27 @@ webhooks:
                             maximum: 2147483647
                             minimum: 0
                             type: integer
+                          file_name:
+                            type: string
+                            writeOnly: true
                           id:
                             type: integer
-                          original:
-                            format: uri
-                            type: string
                           product:
                             type: integer
+                          src:
+                            description: URL of the image to fetch and associate with
+                              the product
+                            format: uri
+                            type:
+                            - string
+                            - 'null'
+                            writeOnly: true
+                          variants:
+                            items:
+                              type: integer
+                            type: array
                         required:
                         - id
-                        - original
                         - product
                         type: object
                       type: array
@@ -22753,7 +23228,7 @@ webhooks:
                       title: Requires shipping?
                       type: boolean
                     sku:
-                      description: Stock Keeping Unit.
+                      description: Stock Keeping Unit
                       type:
                       - string
                       - 'null'
@@ -22844,10 +23319,7 @@ webhooks:
                       pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
                     upc:
-                      deprecated: true
-                      description: Universal Product Code (UPC) is an identifier for
-                        a product which is not specific to a particular  supplier.
-                        Eg an ISBN for a book.
+                      description: Universal Product Code
                       type:
                       - string
                       - 'null'
@@ -23295,6 +23767,10 @@ webhooks:
                         properties:
                           id:
                             type: integer
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -23324,6 +23800,12 @@ webhooks:
                               images:
                                 items:
                                   properties:
+                                    attachment:
+                                      description: The base64 string file to upload
+                                        (image attachment).
+                                      type:
+                                      - string
+                                      - 'null'
                                     caption:
                                       maxLength: 200
                                       type: string
@@ -23333,26 +23815,34 @@ webhooks:
                                       maximum: 2147483647
                                       minimum: 0
                                       type: integer
+                                    file_name:
+                                      type: string
+                                      writeOnly: true
                                     id:
                                       type: integer
-                                    original:
-                                      format: uri
-                                      type: string
                                     product:
                                       type: integer
+                                    src:
+                                      description: URL of the image to fetch and associate
+                                        with the product
+                                      format: uri
+                                      type:
+                                      - string
+                                      - 'null'
+                                      writeOnly: true
+                                    variants:
+                                      items:
+                                        type: integer
+                                      type: array
                                   required:
                                   - id
-                                  - original
                                   - product
                                   type: object
                                 type: array
                               title:
                                 type: string
                               upc:
-                                deprecated: true
-                                description: Universal Product Code (UPC) is an identifier
-                                  for a product which is not specific to a particular  supplier.
-                                  Eg an ISBN for a book.
+                                description: Universal Product Code
                                 type:
                                 - string
                                 - 'null'
@@ -23856,6 +24346,10 @@ webhooks:
                         properties:
                           id:
                             type: integer
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -23885,6 +24379,12 @@ webhooks:
                               images:
                                 items:
                                   properties:
+                                    attachment:
+                                      description: The base64 string file to upload
+                                        (image attachment).
+                                      type:
+                                      - string
+                                      - 'null'
                                     caption:
                                       maxLength: 200
                                       type: string
@@ -23894,26 +24394,34 @@ webhooks:
                                       maximum: 2147483647
                                       minimum: 0
                                       type: integer
+                                    file_name:
+                                      type: string
+                                      writeOnly: true
                                     id:
                                       type: integer
-                                    original:
-                                      format: uri
-                                      type: string
                                     product:
                                       type: integer
+                                    src:
+                                      description: URL of the image to fetch and associate
+                                        with the product
+                                      format: uri
+                                      type:
+                                      - string
+                                      - 'null'
+                                      writeOnly: true
+                                    variants:
+                                      items:
+                                        type: integer
+                                      type: array
                                   required:
                                   - id
-                                  - original
                                   - product
                                   type: object
                                 type: array
                               title:
                                 type: string
                               upc:
-                                deprecated: true
-                                description: Universal Product Code (UPC) is an identifier
-                                  for a product which is not specific to a particular  supplier.
-                                  Eg an ISBN for a book.
+                                description: Universal Product Code
                                 type:
                                 - string
                                 - 'null'
