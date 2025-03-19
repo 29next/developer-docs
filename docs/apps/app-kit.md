@@ -6,7 +6,7 @@ tags:
 ---
 # App Kit
 
-App Kit is a command line tool for developers to build and maintain apps that extend storefront themes with [App Snippets](/docs/apps/snippets.md).
+App Kit is a command line tool for developers to build and maintain apps that extend storefront themes with [Event Trackers](/docs/apps/event-tracking.md).
 
 :::caution Not Required for Server to Server Apps
 App Kit is only required for Apps that extend to the storefront with App Snippets, [Server to Server Apps](/docs/apps/guides/server-to-server-apps/) do not need to use App Kit to complete the Oauth Flow for your App to access the Admin API.

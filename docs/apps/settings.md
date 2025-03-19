@@ -9,9 +9,9 @@ App Settings allow you to define settings that you want users to configure and s
 
 ```mdx-code-block
 
-import GoogleTagManager from '@site/_snippets/_view-google-tag-manager.mdx';
+import GoogleAnalytics from '@site/_snippets/_view-google-analytics.mdx';
 
-<GoogleTagManager />
+<GoogleAnalytics />
 
 ```
 
@@ -43,14 +43,12 @@ At this time, the primary use case of settings is to allow apps to store setting
 
 You can then use the settings in your app snippets.
 
-```html title="Example Settings Usage in Snippet"
+```javascript title="Example Settings Usage in Snippet"
+// access your app settings through app.settings.<settings name>
 
-{% if app.settings.custom_app_id_enabled %}
-<script>
-console.log({{ app.settings.custom_app_id }});
-</script>
-{% endif %}
-
+if (app.settings.custom_app_id_enabled) {
+    console.log(app.settings.custom_app_id);
+}
 ```
 
 :::info

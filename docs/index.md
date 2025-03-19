@@ -7,7 +7,7 @@ sidebar_position: 0
 
 ### Solve Complex Problems with Apps
 
-🚀 Apps combine the power of our [Admin APIs](/api/admin/index.md), [Webhooks](/webhooks.md), and theme [App Hooks](/apps/snippets.md#locations) giving developers the tools they need to add new integrations and solve complex problems with an installable app flow.
+🚀 Apps combine the power of our [Admin APIs](/api/admin/index.md), [Webhooks](/webhooks.md), and theme [App Hooks](/) giving developers the tools they need to add new integrations and solve complex problems with an installable app flow.
 
 ### Create Unique Brand Experiences with Themes
 
