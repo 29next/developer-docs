@@ -128,6 +128,10 @@ components:
       type: object
     AddSubscriptionLine:
       properties:
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -515,6 +519,10 @@ components:
         is_upsell:
           default: false
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price_currency:
           maxLength: 12
           title: Currency
@@ -1275,6 +1283,10 @@ components:
         is_upsell:
           default: false
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -1701,6 +1713,10 @@ components:
         currency:
           maxLength: 12
           type: string
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -3247,7 +3263,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -3475,6 +3491,10 @@ components:
           type: boolean
         is_upsell:
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price_currency:
           maxLength: 12
           type: string
@@ -3526,7 +3546,7 @@ components:
       - total_cost
       - unit_cost
       type: object
-    OrderLineDetailSerailizer:
+    OrderLineDetail:
       properties:
         id:
           readOnly: true
@@ -3535,6 +3555,10 @@ components:
           type: boolean
         is_upsell:
           type: boolean
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price_currency:
           maxLength: 12
           type: string
@@ -4043,7 +4067,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -5217,7 +5241,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -7645,6 +7669,10 @@ components:
         id:
           readOnly: true
           type: integer
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -8629,7 +8657,7 @@ components:
           type: boolean
         lines:
           items:
-            $ref: '#/components/schemas/OrderLineDetailSerailizer'
+            $ref: '#/components/schemas/OrderLineDetail'
           readOnly: true
           type: array
         metadata:
@@ -9109,6 +9137,10 @@ components:
       type: object
     UpdateSubscriptionLine:
       properties:
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         price:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -17338,6 +17370,10 @@ webhooks:
                           is_upsell:
                             default: false
                             type: boolean
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price_currency:
                             maxLength: 12
                             title: Currency
@@ -19643,6 +19679,10 @@ webhooks:
                             type: boolean
                           is_upsell:
                             type: boolean
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price_currency:
                             maxLength: 12
                             type: string
@@ -21031,6 +21071,10 @@ webhooks:
                             type: boolean
                           is_upsell:
                             type: boolean
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price_currency:
                             maxLength: 12
                             type: string
@@ -23723,6 +23767,10 @@ webhooks:
                         properties:
                           id:
                             type: integer
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -24298,6 +24346,10 @@ webhooks:
                         properties:
                           id:
                             type: integer
+                          metadata:
+                            oneOf:
+                            - {}
+                            - type: 'null'
                           price:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
