@@ -29,74 +29,77 @@ components:
     AddOrderShipmentTracking:
       properties:
         carrier:
-          description: '* `other` - other
+          description: '* `asendia` - asendia
 
-            * `ups` - ups
+            * `australia_post` - australia_post
 
-            * `fedex` - fedex
+            * `china_post` - china_post
 
-            * `usps` - usps
+            * `deutsche_de` - deutsche_de
 
             * `dhl` - dhl
 
-            * `asendia` - asendia
-
-            * `hermesworld_uk` - hermesworld_uk
-
-            * `swiss_post` - swiss_post
-
             * `dhl_ecommerce` - dhl_ecommerce
 
-            * `myhermes` - myhermes
-
-            * `royal_mail` - royal_mail
-
-            * `yunexpress` - yunexpress
+            * `fedex` - fedex
 
             * `firstmile` - firstmile
 
             * `4px` - 4px
 
+            * `gofo_express` - gofo_express
+
+            * `hermesworld_uk` - hermesworld_uk
+
+            * `myhermes` - myhermes
+
             * `ontrac` - ontrac
 
-            * `uniuni` - uniuni
+            * `other` - other
 
-            * `china_post` - china_post
+            * `royal_mail` - royal_mail
+
+            * `speedx` - speedx
+
+            * `swiss_post` - swiss_post
 
             * `ulala` - ulala
 
-            * `gofo_express` - gofo_express
+            * `uniuni` - uniuni
 
-            * `australia_post` - australia_post
+            * `ups` - ups
 
-            * `deutsche_de` - deutsche_de'
+            * `usps` - usps
+
+            * `yunexpress` - yunexpress'
           enum:
-          - other
-          - ups
-          - fedex
-          - usps
-          - dhl
           - asendia
-          - hermesworld_uk
-          - swiss_post
+          - australia_post
+          - china_post
+          - deutsche_de
+          - dhl
           - dhl_ecommerce
-          - myhermes
-          - royal_mail
-          - yunexpress
+          - fedex
           - firstmile
           - 4px
-          - ontrac
-          - uniuni
-          - china_post
-          - ulala
           - gofo_express
-          - australia_post
-          - deutsche_de
+          - hermesworld_uk
+          - myhermes
+          - ontrac
+          - other
+          - royal_mail
+          - speedx
+          - swiss_post
+          - ulala
+          - uniuni
+          - ups
+          - usps
+          - yunexpress
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 4bc8b415981ab821
+          x-spec-enum-id: 49b9515e63a6bf3e
         date_created:
           format: date-time
           readOnly: true
@@ -278,6 +281,191 @@ components:
       - last_name
       - line1
       - line4
+      type: object
+    CalculateRefundLineResponse:
+      properties:
+        amount_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        amount_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        line_id:
+          readOnly: true
+          type: integer
+        product_id:
+          readOnly: true
+          type: integer
+        product_image:
+          format: uri
+          readOnly: true
+          type: string
+        product_title:
+          readOnly: true
+          type: string
+        product_url:
+          format: uri
+          readOnly: true
+          type: string
+        quantity:
+          minimum: 0
+          readOnly: true
+          type: integer
+        refundable_quantity:
+          type: integer
+        restock_type:
+          readOnly: true
+          type: string
+        sku:
+          readOnly: true
+          type: string
+        total_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        variant_id:
+          readOnly: true
+          type: integer
+        variant_title:
+          readOnly: true
+          type: string
+      required:
+      - amount_excl_tax
+      - amount_incl_tax
+      - line_id
+      - product_id
+      - product_image
+      - product_title
+      - product_url
+      - quantity
+      - refundable_quantity
+      - restock_type
+      - sku
+      - total_tax
+      - variant_id
+      - variant_title
+      type: object
+    CalculateRefundRequest:
+      properties:
+        refund_lines:
+          items:
+            $ref: '#/components/schemas/RefundLineRequest'
+          type: array
+        refund_shipping:
+          $ref: '#/components/schemas/RefundShippingRequest'
+      type: object
+    CalculateRefundResponse:
+      properties:
+        amount_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        amount_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        currency:
+          readOnly: true
+          type: string
+        refund_lines:
+          items:
+            $ref: '#/components/schemas/CalculateRefundLineResponse'
+          readOnly: true
+          type: array
+        refund_shipping:
+          allOf:
+          - $ref: '#/components/schemas/CalculateRefundShippingResponse'
+          readOnly: true
+        total_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        transactions:
+          items:
+            $ref: '#/components/schemas/CalculateRefundTransactionResponseSerailizer'
+          readOnly: true
+          type: array
+      required:
+      - amount_excl_tax
+      - amount_incl_tax
+      - currency
+      - refund_lines
+      - refund_shipping
+      - total_tax
+      - transactions
+      type: object
+    CalculateRefundShippingResponse:
+      properties:
+        amount_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        amount_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        currency:
+          readOnly: true
+          type: string
+        refundable_amount:
+          readOnly: true
+          type: string
+        shipping_code:
+          readOnly: true
+          type: string
+        shipping_method:
+          readOnly: true
+          type: string
+        total_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+      required:
+      - amount_excl_tax
+      - amount_incl_tax
+      - currency
+      - refundable_amount
+      - shipping_code
+      - shipping_method
+      - total_tax
+      type: object
+    CalculateRefundTransactionResponseSerailizer:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        gateway_id:
+          readOnly: true
+          type: integer
+        gateway_name:
+          readOnly: true
+          type: string
+        id:
+          type: integer
+        payment_method:
+          readOnly: true
+          type: string
+        refundable_amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        type:
+          readOnly: true
+          type: string
+      required:
+      - amount
+      - gateway_id
+      - gateway_name
+      - payment_method
+      - refundable_amount
+      - type
       type: object
     CancelOrder:
       properties:
@@ -764,23 +952,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         type:
           description: 'Expected data type.
 
@@ -1655,6 +1846,30 @@ components:
       required:
       - variant_attribute_values
       type: object
+    CreateRefundLineRequest:
+      properties:
+        line_id:
+          type: integer
+        quantity:
+          minimum: 0
+          type: integer
+        restock_type:
+          description: '* `no_restock` - No Restock
+
+            * `cancel` - Cancel
+
+            * `return` - Return'
+          enum:
+          - no_restock
+          - cancel
+          - return
+          type: string
+          x-spec-enum-id: 3b668cded6165064
+      required:
+      - line_id
+      - quantity
+      - restock_type
+      type: object
     CreateSubscription:
       description: "Any transaction that be a part of handle_payment,\n    for saving\
         \ and update status of order"
@@ -1993,23 +2208,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         type:
           description: 'Expected data type.
 
@@ -2557,7 +2775,9 @@ components:
         shipping_method:
           $ref: '#/components/schemas/ShippingMethod'
         status:
-          description: '* `open` - Open
+          description: '* `not_required` - Not Requried
+
+            * `open` - Open
 
             * `processing` - Processing
 
@@ -2569,6 +2789,7 @@ components:
 
             * `canceled` - Canceled'
           enum:
+          - not_required
           - open
           - processing
           - on_hold
@@ -2576,7 +2797,7 @@ components:
           - closed
           - canceled
           type: string
-          x-spec-enum-id: 2c5824414ff237e4
+          x-spec-enum-id: 4980268d45eef5a2
         supported_actions:
           items: {}
           type:
@@ -5242,23 +5463,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -6974,20 +7198,48 @@ components:
       - amount_incl_tax
       - currency
       type: object
+    RefundLineRequest:
+      properties:
+        line_id:
+          type: integer
+        quantity:
+          minimum: 0
+          type: integer
+        restock_type:
+          description: '* `no_restock` - No Restock
+
+            * `cancel` - Cancel
+
+            * `return` - Return'
+          enum:
+          - no_restock
+          - cancel
+          - return
+          type: string
+          x-spec-enum-id: 3b668cded6165064
+      required:
+      - line_id
+      - quantity
+      type: object
     RefundOrder:
       properties:
-        amount:
-          format: decimal
-          pattern: ^-?\d{0,7}(?:\.\d{0,2})?$
+        note:
           type: string
-        is_external:
-          default: false
-          type: boolean
+        refund_lines:
+          items:
+            $ref: '#/components/schemas/CreateRefundLineRequest'
+          type: array
+        refund_shipping:
+          $ref: '#/components/schemas/RefundShippingRequest'
         send_refund_notification:
           default: true
           type: boolean
+        transactions:
+          items:
+            $ref: '#/components/schemas/RefundTransactionRequest'
+          type: array
       required:
-      - amount
+      - transactions
       type: object
     RefundReportValue:
       properties:
@@ -7015,6 +7267,16 @@ components:
       - total_return_excl_tax
       - total_return_incl_tax
       type: object
+    RefundShippingRequest:
+      properties:
+        amount_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          type: string
+        full_refund:
+          default: false
+          type: boolean
+      type: object
     RefundTransaction:
       properties:
         amount:
@@ -7029,6 +7291,21 @@ components:
           type: boolean
       required:
       - amount
+      type: object
+    RefundTransactionRequest:
+      properties:
+        amount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        id:
+          type: integer
+        is_external:
+          default: false
+          type: boolean
+      required:
+      - amount
+      - id
       type: object
     ResolveDispute:
       properties:
@@ -8219,6 +8496,8 @@ components:
 
             * `royal_mail` - royal_mail
 
+            * `speedx` - speedx
+
             * `swiss_post` - swiss_post
 
             * `ulala` - ulala
@@ -8246,6 +8525,7 @@ components:
           - ontrac
           - other
           - royal_mail
+          - speedx
           - swiss_post
           - ulala
           - uniuni
@@ -8253,7 +8533,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: f71cee29ddfc20e3
+          x-spec-enum-id: f158f32a97db14d4
         carrier_other_name:
           type:
           - string
@@ -8656,23 +8936,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -9715,6 +9998,7 @@ components:
               own locations
             fulfillment_service:write: Access to create fulfillment locations and
               fulfillments
+            gateways:read: Access to list and view all gateways
             gift_cards:read: Access to list and view all gift cards
             gift_cards:write: Access to create and update gift cards
             locations:read: Access to list and view all locations
@@ -10966,6 +11250,8 @@ paths:
       - description: 'Status
 
 
+          * `not_required` - Not Requried
+
           * `open` - Open
 
           * `processing` - Processing
@@ -10986,11 +11272,12 @@ paths:
             - canceled
             - closed
             - incomplete
+            - not_required
             - on_hold
             - open
             - processing
             type: string
-            x-spec-enum-id: 2c5824414ff237e4
+            x-spec-enum-id: 4980268d45eef5a2
           type: array
         style: form
       - description: 'Request Status
@@ -11785,7 +12072,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedGatewayGroupList'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gateway-groups/{id}/:
@@ -11815,7 +12103,8 @@ paths:
                 $ref: '#/components/schemas/GatewayGroup'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gateways/:
@@ -11845,7 +12134,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedPaymentGatewayList'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gateways/{id}/:
@@ -11875,7 +12165,8 @@ paths:
                 $ref: '#/components/schemas/PaymentGateway'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gift-cards/:
@@ -12836,6 +13127,10 @@ paths:
         name: has_outstanding_balance
         schema:
           type: boolean
+      - in: query
+        name: has_split_fulfillment
+        schema:
+          type: boolean
       - description: Is Test Order
         in: query
         name: is_test
@@ -13592,7 +13887,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Refund'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
+  /orders/{number}/refund/calculate/:
+    post:
+      operationId: ordersRefundCalculateCreate
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          title: Order number
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculateRefundRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CalculateRefundRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CalculateRefundRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculateRefundResponse'
           description: ''
       security:
       - oauth2:

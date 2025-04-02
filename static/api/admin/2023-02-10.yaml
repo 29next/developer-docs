@@ -29,74 +29,77 @@ components:
     AddOrderShipmentTracking:
       properties:
         carrier:
-          description: '* `other` - other
+          description: '* `asendia` - asendia
 
-            * `ups` - ups
+            * `australia_post` - australia_post
 
-            * `fedex` - fedex
+            * `china_post` - china_post
 
-            * `usps` - usps
+            * `deutsche_de` - deutsche_de
 
             * `dhl` - dhl
 
-            * `asendia` - asendia
-
-            * `hermesworld_uk` - hermesworld_uk
-
-            * `swiss_post` - swiss_post
-
             * `dhl_ecommerce` - dhl_ecommerce
 
-            * `myhermes` - myhermes
-
-            * `royal_mail` - royal_mail
-
-            * `yunexpress` - yunexpress
+            * `fedex` - fedex
 
             * `firstmile` - firstmile
 
             * `4px` - 4px
 
+            * `gofo_express` - gofo_express
+
+            * `hermesworld_uk` - hermesworld_uk
+
+            * `myhermes` - myhermes
+
             * `ontrac` - ontrac
 
-            * `uniuni` - uniuni
+            * `other` - other
 
-            * `china_post` - china_post
+            * `royal_mail` - royal_mail
+
+            * `speedx` - speedx
+
+            * `swiss_post` - swiss_post
 
             * `ulala` - ulala
 
-            * `gofo_express` - gofo_express
+            * `uniuni` - uniuni
 
-            * `australia_post` - australia_post
+            * `ups` - ups
 
-            * `deutsche_de` - deutsche_de'
+            * `usps` - usps
+
+            * `yunexpress` - yunexpress'
           enum:
-          - other
-          - ups
-          - fedex
-          - usps
-          - dhl
           - asendia
-          - hermesworld_uk
-          - swiss_post
+          - australia_post
+          - china_post
+          - deutsche_de
+          - dhl
           - dhl_ecommerce
-          - myhermes
-          - royal_mail
-          - yunexpress
+          - fedex
           - firstmile
           - 4px
-          - ontrac
-          - uniuni
-          - china_post
-          - ulala
           - gofo_express
-          - australia_post
-          - deutsche_de
+          - hermesworld_uk
+          - myhermes
+          - ontrac
+          - other
+          - royal_mail
+          - speedx
+          - swiss_post
+          - ulala
+          - uniuni
+          - ups
+          - usps
+          - yunexpress
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 4bc8b415981ab821
+          x-spec-enum-id: 49b9515e63a6bf3e
         date_created:
           format: date-time
           readOnly: true
@@ -742,23 +745,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         type:
           description: 'Expected data type.
 
@@ -1987,23 +1993,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         type:
           description: 'Expected data type.
 
@@ -2561,7 +2570,9 @@ components:
         shipping_method:
           $ref: '#/components/schemas/ShippingMethod'
         status:
-          description: '* `open` - Open
+          description: '* `not_required` - Not Requried
+
+            * `open` - Open
 
             * `processing` - Processing
 
@@ -2573,6 +2584,7 @@ components:
 
             * `canceled` - Canceled'
           enum:
+          - not_required
           - open
           - processing
           - on_hold
@@ -2580,7 +2592,7 @@ components:
           - closed
           - canceled
           type: string
-          x-spec-enum-id: 2c5824414ff237e4
+          x-spec-enum-id: 4980268d45eef5a2
         supported_actions:
           items: {}
           type:
@@ -5154,23 +5166,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -8140,6 +8155,8 @@ components:
 
             * `royal_mail` - royal_mail
 
+            * `speedx` - speedx
+
             * `swiss_post` - swiss_post
 
             * `ulala` - ulala
@@ -8167,6 +8184,7 @@ components:
           - ontrac
           - other
           - royal_mail
+          - speedx
           - swiss_post
           - ulala
           - uniuni
@@ -8174,7 +8192,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: f71cee29ddfc20e3
+          x-spec-enum-id: f158f32a97db14d4
         carrier_other_name:
           type:
           - string
@@ -8577,23 +8595,26 @@ components:
           description: 'Source object this metadata is linked to.
 
 
-            * `order` - Order
+            * `attribution` - Attribution
 
             * `customer` - Customer
 
-            * `attribution` - Attribution
+            * `dispute` - Dispute
 
-            * `product` - Product
+            * `line` - Line Item
 
-            * `dispute` - Dispute'
+            * `order` - Order
+
+            * `product` - Product'
           enum:
-          - order
-          - customer
           - attribution
-          - product
+          - customer
           - dispute
+          - line
+          - order
+          - product
           type: string
-          x-spec-enum-id: c22481add7a5f601
+          x-spec-enum-id: 447aaef6f2a3d4c1
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -9635,6 +9656,7 @@ components:
               own locations
             fulfillment_service:write: Access to create fulfillment locations and
               fulfillments
+            gateways:read: Access to list and view all gateways
             gift_cards:read: Access to list and view all gift cards
             gift_cards:write: Access to create and update gift cards
             locations:read: Access to list and view all locations
@@ -10886,6 +10908,8 @@ paths:
       - description: 'Status
 
 
+          * `not_required` - Not Requried
+
           * `open` - Open
 
           * `processing` - Processing
@@ -10906,11 +10930,12 @@ paths:
             - canceled
             - closed
             - incomplete
+            - not_required
             - on_hold
             - open
             - processing
             type: string
-            x-spec-enum-id: 2c5824414ff237e4
+            x-spec-enum-id: 4980268d45eef5a2
           type: array
         style: form
       - description: 'Request Status
@@ -11705,7 +11730,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedGatewayGroupList'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gateway-groups/{id}/:
@@ -11735,7 +11761,8 @@ paths:
                 $ref: '#/components/schemas/GatewayGroup'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gateways/:
@@ -11765,7 +11792,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedPaymentGatewayList'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gateways/{id}/:
@@ -11795,7 +11823,8 @@ paths:
                 $ref: '#/components/schemas/PaymentGateway'
           description: ''
       security:
-      - oauth2: []
+      - oauth2:
+        - gateways:read
       tags:
       - payments
   /gift-cards/:
@@ -12754,6 +12783,10 @@ paths:
           type: boolean
       - in: query
         name: has_outstanding_balance
+        schema:
+          type: boolean
+      - in: query
+        name: has_split_fulfillment
         schema:
           type: boolean
       - description: Is Test Order

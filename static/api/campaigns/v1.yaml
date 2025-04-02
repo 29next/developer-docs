@@ -928,7 +928,7 @@ info:
   version: v1
   x-logo:
     altText: 29Next Campaigns API Logo
-    url: https://d1xly3wkgehfot.cloudfront.net/static/images/logo/campaigns-logo.png
+    url: https://d1w87fp8j98gad.cloudfront.net/static/images/logo/campaigns-logo.png
 openapi: 3.0.3
 paths:
   /api/v1/campaigns/:
