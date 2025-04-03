@@ -143,7 +143,7 @@ POST https://{store}.29next.store/api/admin/orders/{number}/refund/
 :::info Restock Actions
 Depending on the product type and status of the line items being refunded, there are differen't restock actions available.
 
-**Physical Products**
+**Physical Product**
 - If unfulfilled, restock_type must be `cancel`.
 - If fullfilled, restock_type can be `return` or `no_restock`.
 
