@@ -138,7 +138,7 @@ const config = {
                         position: 'left',
                         items: [
                             {
-                                label: 'Docs',
+                                label: 'API Guides',
                                 to: '/docs/api/',
                             },
                             {

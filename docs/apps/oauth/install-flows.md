@@ -23,3 +23,5 @@ https://{store_subdomain}.29next.store/dashboard/apps/install-app/?client_id={cl
 ### Public Apps
 
 Public apps show in all store dashboards and can be installed by any merchant at any time. If you plan to publish your app, ensure your app handles the install flow with a good user experience that guides the user through the process with your app.
+
+To get your app published to our Public App store, see the [review and publishing guide](/docs/apps/review.md).
