@@ -60,7 +60,7 @@ Order payments must be captured in order to create partial refunds, uncaptured p
 
 Call the [ordersRefundCalculateCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRefundCalculateCreate) endpoint with your line items to calculate the refund and see which initial payment transactions will be refunded.
 
-```json title="Retrieve Refund Calculate Request"
+```json title="Refund Calculate Request"
 POST https://{store}.29next.store/api/admin/orders/{number}/refund/calculate/
 
 {
@@ -78,7 +78,7 @@ POST https://{store}.29next.store/api/admin/orders/{number}/refund/calculate/
 ```
 Below is the response from the [ordersRefundCalculateCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRefundCalculateCreate)  API that has been slightly abbreviated to focus on the relevant refund items.
 
-```json title="Retrieve Refund Calculate Response"
+```json title="Refund Calculate Response"
 {
   "refund_lines": [
     {
