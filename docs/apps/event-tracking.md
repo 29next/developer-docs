@@ -4,7 +4,7 @@ sidebar_position: 5
 ---
 # App Event Trackers
 
-Apps can install an [Event Tracker](/docs/themes/event-tracking.md) to add storefront ecommerce Event Tracking as part of their integration.
+Apps can install an [Event Tracker](/docs/storefront/event-tracking.md) to add storefront ecommerce Event Tracking as part of their integration.
 
 App installed event trackers simplifies the setup flow and makes using your app easy for merchants requiring fewer manual setup steps with easy configuration through the dashboard.
 
@@ -15,7 +15,7 @@ Event trackers and App snippets are not cross compatible as Event Trackers are l
 
 ### Add Event Tracker to Manifest
 
-When building your app, map a javascript file to be installed as an [Event Tracker](/docs/themes/event-tracking.md).
+When building your app, map a javascript file to be installed as an [Event Tracker](/docs/storefront/event-tracking.md).
 
 ```json title="Example Storefront Event Tracker"
 "storefront_event_tracker": "tracking.js",

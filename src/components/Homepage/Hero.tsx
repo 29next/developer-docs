@@ -24,7 +24,7 @@ const PRODUCTS = [
     },
     {
         title: 'Storefront Themes',
-        link: '/docs/themes/',
+        link: '/docs/storefront/themes/',
         icon: Layout,
         text: 'Create unique branded storefronts for customers with our theme framework.',
     },

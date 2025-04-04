@@ -4,6 +4,11 @@ sidebar_position: 1
 tags:
  - Guide
 ---
+
+:::caution Deprecated
+This guide is only applicable to our There Page Checkout flow. The Single Page Checkout flow is not customizable through the same strategy.
+:::
+
 # Checkout Customization
 
 Theme developers can customize the store checkout flow using the `checkout.html` template which provides several methods to override and customize the user experience.

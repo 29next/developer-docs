@@ -11,7 +11,7 @@ sidebar_position: 0
 
 ### Create Unique Brand Experiences with Themes
 
-🎯 Use [Theme Kit](/docs/themes/theme-kit.md) to build custom themes that offer amazing brand experiences for customers. Get started with our [Intro](https://github.com/29next/intro) or [Intro Bootstrap](https://github.com/29next/intro-bootstrap) themes to get up and running quickly.
+🎯 Use [Theme Kit](/docs/storefront/themes/theme-kit.md) to build custom themes that offer amazing brand experiences for customers. Get started with our [Intro](https://github.com/29next/intro) or [Intro Bootstrap](https://github.com/29next/intro-bootstrap) themes to get up and running quickly.
 
 
 ### Getting Started

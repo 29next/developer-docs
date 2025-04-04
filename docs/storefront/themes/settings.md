@@ -218,7 +218,7 @@ An `image_picker` setting outputs outputs an image picker modal making all uploa
 
 A `menu` setting field outputs a dropdown select field to choose from the available navigation menus.
 
-When accessing a `menu` setting value in a template, it returns a menu object allowing you to access the menus items. See [menus](/docs/themes/templates/objects.md#menus) object details for working with menus in templates.
+When accessing a `menu` setting value in a template, it returns a menu object allowing you to access the menus items. See [menus](/docs/storefront/themes/templates/objects.md#menus) object details for working with menus in templates.
 
 ```json title="Example menu setting"
 {
@@ -295,7 +295,7 @@ When accessing a `number` setting value in a template, it's returned as an integ
 
 A `page` setting field outputs a dropdown select field to choose from the available pages.
 
-When accessing a `page` setting value in a template, it returns a page object. See [page](/docs/themes/templates/objects.md#page) object details for working with pages in templates.
+When accessing a `page` setting value in a template, it returns a page object. See [page](/docs/storefront/themes/templates/objects.md#page) object details for working with pages in templates.
 
 
 ```json title="Example page setting"
@@ -312,7 +312,7 @@ When accessing a `page` setting value in a template, it returns a page object. S
 
 A `product` setting field outputs a dropdown select field to choose from the available products in the store catalogue.
 
-When accessing a `product` setting value in a template, it returns a product object. See [product](/docs/themes/templates/objects.md#product) object details for working with products in templates.
+When accessing a `product` setting value in a template, it returns a product object. See [product](/docs/storefront/themes/templates/objects.md#product) object details for working with products in templates.
 
 ```json title="Example product setting"
 {
@@ -329,7 +329,7 @@ When accessing a `product` setting value in a template, it returns a product obj
 
 A `products` setting field outputs a multi-select field to choose from the available products in the store catalogue.
 
-When accessing a `products` setting value in a template, it returns a list of products to iterate through. See [product](/docs/themes/templates/objects.md#product) object details for working with products in templates.
+When accessing a `products` setting value in a template, it returns a list of products to iterate through. See [product](/docs/storefront/themes/templates/objects.md#product) object details for working with products in templates.
 
 
 ```json title="Example products setting"
@@ -346,7 +346,7 @@ When accessing a `products` setting value in a template, it returns a list of pr
 
 A `product_category` setting field outputs a dropdown select field to choose from the available product categories.
 
-When accessing a `product_category` setting value in a template, it returns a product category object. See [product category](/docs/themes/templates/objects.md#product_category) object details for working with product categories in templates.
+When accessing a `product_category` setting value in a template, it returns a product category object. See [product category](/docs/storefront/themes/templates/objects.md#product_category) object details for working with product categories in templates.
 
 
 ```json title="Example featured_products setting"
@@ -363,7 +363,7 @@ When accessing a `product_category` setting value in a template, it returns a pr
 
 A `product_categories` setting field outputs a multi-select field to choose from the available product categories.
 
-When accessing a `product_categories` setting value in a template, it returns a list of product categories to iterate through. See [product category](/docs/themes/templates/objects.md#product_category) object details for working with product categories in templates.
+When accessing a `product_categories` setting value in a template, it returns a list of product categories to iterate through. See [product category](/docs/storefront/themes/templates/objects.md#product_category) object details for working with product categories in templates.
 
 
 ```json title="Example product_categories setting"

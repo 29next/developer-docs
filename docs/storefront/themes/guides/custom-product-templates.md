@@ -33,7 +33,7 @@ Templates that follow this naming convention will be selectable on the product d
 
 **Extend & Override Default Product Template**
 
-As a best practice, you should [extend](/themes/templates/tags.md#extends-block) the default product template to override the necessary [template blocks](/themes/templates/tags.md#extends-block) to achieve your customization with a limited amount of duplicate code.
+As a best practice, you should [extend](/docs/storefront/themes/templates/tags.md#extends-block) the default product template to override the necessary [template blocks](/docs/storefront/themes/templates/tags.md#extends-block) to achieve your customization with a limited amount of duplicate code.
 
 
 ```django title="Example Custom Product Template"

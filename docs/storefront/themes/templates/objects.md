@@ -298,7 +298,7 @@ The current session active request context.
 
 ### settings
 
-Theme settings object with stored theme settings values as properties. See [theme settings](/docs/themes/settings.md) docs.
+Theme settings object with stored theme settings values as properties. See [theme settings](/docs/storefront/themes/settings.md) docs.
 
 <details>
   <summary>Example Usage</summary>
@@ -619,7 +619,7 @@ Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 neste
 
 ### order
 
-Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations, see example usage below. Only available in the `confirmation` step in the `checkout/checkout.html` template, see [Checkout Customization](/docs/themes/guides/checkout.md).
+Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations, see example usage below. Only available in the `confirmation` step in the `checkout/checkout.html` template, see [Checkout Customization](/docs/storefront/themes/guides/checkout.md).
 
 <details>
   <summary>Example Usage</summary>

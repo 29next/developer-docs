@@ -33,7 +33,7 @@ Templates that follow this naming convention will be selectable from the page de
 
 **Extend & Override Default Page Template**
 
-As a best practice, you should [extend](/themes/templates/tags.md#extends-block) the default page template to override the necessary [template blocks](/themes/templates/tags.md#extends-block) to achieve your customization with a limited amount of duplicate code.
+As a best practice, you should [extend](/docs/storefront/themes/templates/tags.md#extends-block) the default page template to override the necessary [template blocks](/docs/storefront/themes/templates/tags.md#extends-block) to achieve your customization with a limited amount of duplicate code.
 
 
 ```django title="Example Custom Page Template"

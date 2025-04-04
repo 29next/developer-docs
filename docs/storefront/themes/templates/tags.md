@@ -252,7 +252,7 @@ Queries and filters store objects to dynamically assign objects to a variable.
 
 | Argument | Description |
 | --- | --- |
-| objects | The global context object. Supported objects include; [`products`](/docs/themes/templates/objects.md#products), [`product_categories`](/docs/themes/templates/objects.md#product_categories), [`posts`](/docs/themes/templates/objects.md#posts), [`post_categories`](/docs/themes/templates/objects.md#post_categories), [`currencies`](/docs/themes/templates/objects.md#currencies), [`storefront_geos`](/docs/themes/templates/objects.md#storefront_geos)  |
+| objects | The global context object. Supported objects include; [`products`](/docs/storefront/themes/templates/objects.md#products), [`product_categories`](/docs/storefront/themes/templates/objects.md#product_categories), [`posts`](/docs/storefront/themes/templates/objects.md#posts), [`post_categories`](/docs/storefront/themes/templates/objects.md#post_categories), [`currencies`](/docs/storefront/themes/templates/objects.md#currencies), [`storefront_geos`](/docs/storefront/themes/templates/objects.md#storefront_geos)  |
 | field_name | Object field name to perform the lookup on. |
 | lookup_expr | Query lookup expression; `exact` or `contains`. |
 | filter_query | Your custom query filter. |

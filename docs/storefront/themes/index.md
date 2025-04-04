@@ -1,6 +1,7 @@
 ---
 title: Themes
 sidebar_title: Themes
+sidebar_position: 0
 ---
 # Getting Started with Themes
 
@@ -33,7 +34,7 @@ theme
 
 
 ### Assets
-The assets directory is used to upload static asset files used in the theme such as images, stylesheets, web fonts, and javascript files. The assets directory works in conjunction with the [`asset_url` template filter](/themes/templates/filters.md#asset_url) to render the full path on your storefront.
+The assets directory is used to upload static asset files used in the theme such as images, stylesheets, web fonts, and javascript files. The assets directory works in conjunction with the [`asset_url` template filter](/docs/storefront/themes/templates/filters.md#asset_url) to render the full path on your storefront.
 
 ```django title="Example link in template to /assets/css/style.css"
 {{ 'css/style.css'|asset_url }}
@@ -47,7 +48,7 @@ checkout
   └── checkout.html
 ```
 
-[See Checkout Customization Guide](/themes/guides/checkout.md)
+[See Checkout Customization Guide](/docs/storefront/themes/guides/checkout.md)
 
 ### Configs
 The configs directory is used to store your theme settings options and also the settings data as they should be configured with the theme.
@@ -60,13 +61,13 @@ configs
  ├── settings_data.json
  └── settings_schema.json
 ```
-[See Theme Settings Guide](themes/settings.md)
+[See Theme Settings Guide](/docs/storefront/themes/settings.md)
 
 ### Locales
 
 The `locales` directory is used to for storefront theme translation json files. The translation files are used in conjunction with the translation template tag to support multiple languages for your storefront.
 
-Translation files should be named according to the ISO 639-1 2 letter language code standard. The default or fallback language should be denoted with a .default in the file name as shown below. See the [Translations guide](themes/translations.md) for more examples on how to localize your theme content.
+Translation files should be named according to the ISO 639-1 2 letter language code standard. The default or fallback language should be denoted with a .default in the file name as shown below. See the [Translations guide](/docs/storefront/themes/translations.md) for more examples on how to localize your theme content.
 
 ```shell title="Locale Files Example"
 locales
@@ -76,10 +77,10 @@ locales
  ├── it.json
  └── fr.json
 ```
-[See Translations Guide](themes/translations.md)
+[See Translations Guide](/docs/storefront/themes/translations.md)
 
 ### Layouts
-The `layouts` directory is used to store base templates that are then extended from in view specific templates, see extends and block template tags for more on template inheritance. See the [`extends` template tag](themes/templates/tags.md#extends-block) for more on template inheritance.
+The `layouts` directory is used to store base templates that are then extended from in view specific templates, see extends and block template tags for more on template inheritance. See the [`extends` template tag](/docs/storefront/themes/templates/tags.md#extends-block) for more on template inheritance.
 
 ```shell title="Layouts Directory Example"
 layouts
@@ -106,7 +107,7 @@ partials
 
 
 ### Templates
-The templates directory is used to store all templates for a theme, see [URLs and Template Paths](themes/templates/urls-and-template-paths.md) for reference.
+The templates directory is used to store all templates for a theme, see [URLs and Template Paths](/docs/storefront/themes/templates/urls-and-template-paths.md) for reference.
 
 ```shell title="Templates Directory Example"
 templates

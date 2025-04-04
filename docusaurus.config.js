@@ -41,7 +41,11 @@ const plugins = [
                 },
                 {
                     from: '/themes',
-                    to: '/docs/themes',
+                    to: '/docs/storefront/themes',
+                },
+                {
+                    from: '/docs/themes',
+                    to: '/docs/storefront/themes',
                 },
                 {
                     from: '/webhooks',
@@ -151,9 +155,8 @@ const config = {
                             }
                         ],
                     },
-                    // { to: '/docs/api/', label: 'APIs', position: 'left' },
-                    { to: '/docs/themes/', label: 'Themes', position: 'left' },
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
+                    { to: '/docs/storefront/', label: 'Storefront', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
                     { href: 'https://github.com/29next/', position: 'right', className: 'header-github-link' },
                 ],
