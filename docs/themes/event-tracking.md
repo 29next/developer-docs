@@ -3,11 +3,7 @@ title: Event Tracking
 sidebar_label: Event Tracking
 sidebar_position: 3
 ---
----
-```mdx-code-block
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-```
+
 
 ## Overview
 Event Tracking allows merchants and third-party integrations to subscribe to customer engagement events on your storefront for robust customer behavior tracking.
@@ -44,6 +40,11 @@ Below is the equivalent expressed as a javascript function to create and append 
 })();
 ```
 We can now use this to include the Google Analytics javascript in our event tracker.
+
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
 
 ## Init
 
