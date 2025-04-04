@@ -3,6 +3,12 @@ title: Event Tracking
 sidebar_label: Event Tracking
 sidebar_position: 3
 ---
+---
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 ## Overview
 Event Tracking allows merchants and third-party integrations to subscribe to customer engagement events on your storefront for robust customer behavior tracking.
 
@@ -38,6 +44,210 @@ Below is the equivalent expressed as a javascript function to create and append 
 })();
 ```
 We can now use this to include the Google Analytics javascript in our event tracker.
+
+## Init
+
+Init is utility method to produce context of the current request/session with details of a `cart`, `store`, or `user` as a JSON object. Use the init method to add context to event tracking integrations.
+
+<Tabs>
+<TabItem value="initCart" label="Init Cart (init.cart)">
+
+Use `init.cart` to load context of the current cart data as a JSON object.
+
+```javascript
+console.log(init.cart);
+```
+
+<details>
+  <summary>Init Cart Data</summary>
+  <div>
+
+```javascript
+{
+    "id": 1000,
+    "status": "open",
+    "lines": [
+        {
+            "id": 1000,
+            "product_id": 111,
+            "sku": "TIMELESS-WATCH",
+            "product_title": "Timeless Watch",
+            "product_image": "https://d36qjeq4w.cloudfront.net/media/..../product.jpg",
+            "product_url": "https://amazingwidgets.com/catalogue/timeless-watch_2/",
+            "variant_id": 2,
+            "variant_title": "Black Band",
+            "quantity": 2,
+            "currency": "USD",
+            "price_excl_tax": "45.76",
+            "price_incl_tax": "45.76",
+            "total_discount": "0.00",
+            "is_upsell": false,
+            "interval": null,
+            "interval_count": null,
+            "metadata": {}
+        }
+    ],
+    "abandoned": true,
+    "total_incl_tax": "45.76",
+    "total_excl_tax": "45.76",
+    "total_discount": "0.00",
+    "currency": "USD",
+    "user": {
+        "id": 1000,
+        "email": "johndoe@gmail.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "ip": "123.123.123.123",
+        "phone_number": "+12706814477",
+        "date_joined": "2023-03-15T06:27:46.253558-04:00",
+        "language": "en",
+        "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36...."
+    },
+    "voucher_discounts": [],
+    "attribution": {
+        "agent": null,
+        "funnel": null,
+        "utm_source": null,
+        "utm_medium": null,
+        "utm_campaign": null,
+        "utm_term": null,
+        "utm_content": null,
+        "gclid": null,
+        "metadata": {},
+        "affiliate": null,
+        "subaffiliate1": null,
+        "subaffiliate2": null,
+        "subaffiliate3": null,
+        "subaffiliate4": null,
+        "subaffiliate5": null
+    },
+    "checkout_url": "https://amazingwidgets.com/accounts/complete-order/549167as8232c/",
+    "created_at": "2025-03-18T05:27:46.765627-04:00",
+    "metadata": {}
+}
+
+```
+
+</div>
+</details>
+
+</TabItem>
+<TabItem value="initStore" label="Init Store (init.store)">
+
+Use `init.store` to load context of the store public data as a JSON object.
+
+```javascript
+console.log(init.store);
+```
+
+<details>
+  <summary>Init Store Data</summary>
+  <div>
+
+```json
+{
+    "name": "Amazing Widgets",
+    "tagline": "Amazing Widget and Deals",
+    "timezone": "US/Eastern",
+    "contact_address": {
+        "company_name": "Amazing Widgets LLC",
+        "line1": "2200 Western Pl W",
+        "line2": "",
+        "postcode": "42304",
+        "city": "Hop Top",
+        "state": "KY",
+        "country": "United States",
+        "phone_number": "(270) 686-4455"
+    },
+    "primary_domain": "amazingwidgets.com",
+    "tax_id": "",
+    "available_languages": [
+        {
+            "code": "en",
+            "label": "English"
+        },
+        {
+            "code": "fr",
+            "label": "Français"
+        }
+    ],
+    "available_currencies": [
+        {
+            "code": "USD",
+            "label": "$ USD"
+        },
+        {
+            "code": "CAD",
+            "label": "CA$ CAD"
+        }
+    ],
+    "payments": {
+        "environment_key": "X1lbCiGPapQbN11W3tig4OOTRVD"
+    }
+}
+```
+
+</div>
+</details>
+
+</TabItem>
+<TabItem value="initUser" label="Init User (init.user)">
+
+Use `init.user` to load context of the current authenticated user as a JSON object.
+
+```javascript
+console.log(init.user);
+```
+
+<details>
+  <summary>Init User Data</summary>
+  <div>
+
+```json
+{
+    "id": 1000,
+    "email": "johndoe@gmail.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "ip": "123.123.123.123",
+    "phone_number": "+12706814477",
+    "date_joined": "2023-03-15T06:27:46.253558-04:00",
+    "language": "en",
+    "is_blocked": false,
+    "addresses": [
+        {
+            "id": 1001,
+            "first_name": "John",
+            "last_name": "Doe",
+            "line1": "2200 Western Pl W",
+            "line2": "",
+            "line3": "",
+            "line4": "Hoptown",
+            "state": "KY",
+            "postcode": "42234",
+            "country": "US",
+            "phone_number": "",
+            "notes": "",
+            "is_default_for_shipping": true,
+            "is_default_for_billing": true
+        }
+    ],
+    "orders_count": 1,
+    "subscriptions_count": 1,
+    "total_spent": "100.00",
+    "user_type": "customer",
+    "tags": [],
+    "accepts_marketing": true,
+    "metadata": {},
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36..."
+}
+```
+
+</div>
+</details>
+
+</TabItem>
+</Tabs>
 
 ## Available Tracking Events
 
