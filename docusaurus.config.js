@@ -40,6 +40,10 @@ const plugins = [
                     to: '/docs/apps',
                 },
                 {
+                    from: '/docs/themes/event-tracking',
+                    to: '/docs/storefront/event-tracking',
+                },
+                {
                     from: '/themes',
                     to: '/docs/storefront/themes',
                 },
