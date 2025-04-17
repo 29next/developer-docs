@@ -1854,17 +1854,20 @@ components:
           minimum: 0
           type: integer
         restock_type:
-          description: '* `no_restock` - No Restock
-
-            * `cancel` - Cancel
-
-            * `return` - Return'
+          description: "\n    For physical products:\n        - Unfulfilled: restock_type\
+            \ must be cancel\n        - Fulfilled: restock_type can be no_restock\
+            \ or return\n\n    For digital products:\n        - Unfulfilled: restock_type\
+            \ must be cancel\n        - Fulfilled: restock_type must be no_restock\n\
+            \n    If restock_type is not provided in the calculate endpoint, the system\
+            \ will infer it based on quantity.\n    You can then use the inferred\
+            \ value in the orderRefundCreate endpoint.\n\n\n* `cancel` - Cancel\n\
+            * `no_restock` - No Restock\n* `return` - Return"
           enum:
-          - no_restock
           - cancel
+          - no_restock
           - return
           type: string
-          x-spec-enum-id: 3b668cded6165064
+          x-spec-enum-id: fdd1ffe20f0e32e5
       required:
       - line_id
       - quantity
@@ -6900,10 +6903,8 @@ components:
           readOnly: true
           type: integer
         images:
-          items:
-            $ref: '#/components/schemas/ProductImage'
           readOnly: true
-          type: array
+          type: string
         metadata:
           oneOf:
           - {}
@@ -7158,17 +7159,17 @@ components:
           - $ref: '#/components/schemas/RefundLineReportValue'
           readOnly: true
         restock_type:
-          description: '* `no_restock` - No Restock
+          description: '* `cancel` - Cancel
 
-            * `cancel` - Cancel
+            * `no_restock` - No Restock
 
             * `return` - Return'
           enum:
-          - no_restock
           - cancel
+          - no_restock
           - return
           type: string
-          x-spec-enum-id: 3b668cded6165064
+          x-spec-enum-id: fdd1ffe20f0e32e5
       required:
       - amount_excl_tax
       - amount_incl_tax
@@ -7206,17 +7207,20 @@ components:
           minimum: 0
           type: integer
         restock_type:
-          description: '* `no_restock` - No Restock
-
-            * `cancel` - Cancel
-
-            * `return` - Return'
+          description: "\n    For physical products:\n        - Unfulfilled: restock_type\
+            \ must be cancel\n        - Fulfilled: restock_type can be no_restock\
+            \ or return\n\n    For digital products:\n        - Unfulfilled: restock_type\
+            \ must be cancel\n        - Fulfilled: restock_type must be no_restock\n\
+            \n    If restock_type is not provided in the calculate endpoint, the system\
+            \ will infer it based on quantity.\n    You can then use the inferred\
+            \ value in the orderRefundCreate endpoint.\n\n\n* `cancel` - Cancel\n\
+            * `no_restock` - No Restock\n* `return` - Return"
           enum:
-          - no_restock
           - cancel
+          - no_restock
           - return
           type: string
-          x-spec-enum-id: 3b668cded6165064
+          x-spec-enum-id: fdd1ffe20f0e32e5
       required:
       - line_id
       - quantity
@@ -20511,17 +20515,17 @@ webhooks:
                                   - currency
                                   type: object
                                 restock_type:
-                                  description: '* `no_restock` - No Restock
+                                  description: '* `cancel` - Cancel
 
-                                    * `cancel` - Cancel
+                                    * `no_restock` - No Restock
 
                                     * `return` - Return'
                                   enum:
-                                  - no_restock
                                   - cancel
+                                  - no_restock
                                   - return
                                   type: string
-                                  x-spec-enum-id: 3b668cded6165064
+                                  x-spec-enum-id: fdd1ffe20f0e32e5
                               required:
                               - amount_excl_tax
                               - amount_incl_tax
@@ -22079,17 +22083,17 @@ webhooks:
                                   - currency
                                   type: object
                                 restock_type:
-                                  description: '* `no_restock` - No Restock
+                                  description: '* `cancel` - Cancel
 
-                                    * `cancel` - Cancel
+                                    * `no_restock` - No Restock
 
                                     * `return` - Return'
                                   enum:
-                                  - no_restock
                                   - cancel
+                                  - no_restock
                                   - return
                                   type: string
-                                  x-spec-enum-id: 3b668cded6165064
+                                  x-spec-enum-id: fdd1ffe20f0e32e5
                               required:
                               - amount_excl_tax
                               - amount_incl_tax
@@ -23161,47 +23165,7 @@ webhooks:
                           id:
                             type: integer
                           images:
-                            items:
-                              properties:
-                                attachment:
-                                  description: The base64 string file to upload (image
-                                    attachment).
-                                  type:
-                                  - string
-                                  - 'null'
-                                caption:
-                                  maxLength: 200
-                                  type: string
-                                display_order:
-                                  description: An image with a display order of zero
-                                    will be the primary image for a product
-                                  maximum: 2147483647
-                                  minimum: 0
-                                  type: integer
-                                file_name:
-                                  type: string
-                                  writeOnly: true
-                                id:
-                                  type: integer
-                                product:
-                                  type: integer
-                                src:
-                                  description: URL of the image to fetch and associate
-                                    with the product
-                                  format: uri
-                                  type:
-                                  - string
-                                  - 'null'
-                                  writeOnly: true
-                                variants:
-                                  items:
-                                    type: integer
-                                  type: array
-                              required:
-                              - id
-                              - product
-                              type: object
-                            type: array
+                            type: string
                           metadata:
                             oneOf:
                             - {}
@@ -23699,47 +23663,7 @@ webhooks:
                           id:
                             type: integer
                           images:
-                            items:
-                              properties:
-                                attachment:
-                                  description: The base64 string file to upload (image
-                                    attachment).
-                                  type:
-                                  - string
-                                  - 'null'
-                                caption:
-                                  maxLength: 200
-                                  type: string
-                                display_order:
-                                  description: An image with a display order of zero
-                                    will be the primary image for a product
-                                  maximum: 2147483647
-                                  minimum: 0
-                                  type: integer
-                                file_name:
-                                  type: string
-                                  writeOnly: true
-                                id:
-                                  type: integer
-                                product:
-                                  type: integer
-                                src:
-                                  description: URL of the image to fetch and associate
-                                    with the product
-                                  format: uri
-                                  type:
-                                  - string
-                                  - 'null'
-                                  writeOnly: true
-                                variants:
-                                  items:
-                                    type: integer
-                                  type: array
-                              required:
-                              - id
-                              - product
-                              type: object
-                            type: array
+                            type: string
                           metadata:
                             oneOf:
                             - {}
