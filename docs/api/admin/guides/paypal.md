@@ -9,11 +9,8 @@ tags:
 
 **PayPal** is a fully integrated payment app that is supported both in the storefront checkout, and via the Admin API.  PayPal transactions send the customer through a PayPal redirect flow, with the resulting order information provided back to your application.  Below are the steps needed to get PayPal set up and working on the Admin API.
 
-:::caution
-PayPal custom checkouts require the use of the PayPal NVP/SOAP (Legacy) APIs.  Please ensure that your valid NVP/SOAP credentials are configured in the [Paypal Extension](https://docs.29next.com/payments#paypal) prior to attempting custom checkouts with PayPal over the Admin API.
-:::
 
-For custom PayPal checkouts, there are two checkout flows available -- the standard method where a user enters their shipping address, chooses products, and then checks out via PayPal; and the "One-Click" method, where the user is not required to enter shipping information before being redirected to PayPal checkout.
+For custom PayPal checkouts, there are two checkout flows available, the standard method where a user enters their shipping address, chooses products, and then checks out via PayPal; and the "One-Click" method, where the user is not required to enter shipping information before being redirected to PayPal checkout.
 
 
 ### API Payment Redirect Flow
