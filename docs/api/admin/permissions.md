@@ -12,7 +12,7 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `admin:write` | Access to create and update all data |
 | `carts:read` | Access to list and view carts |
 | `carts:write` | Access to create and update carts |
-| `catalogue:read` | Access to list and view catalogue related objects |
+| `catalogue:read` | Access to list and view catalogue objects such as products and categories |
 | `catalogue:write` | Access to create and update catalogue related objects |
 | `disputes:read` | Access to list and view disputes |
 | `disputes:write` | Access to create and update disputes |
@@ -20,7 +20,7 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `fulfillment_service:write` | Access to create fulfillment locations and fulfillments |
 | `fulfillment_orders:read` | Access to list fulfillment order fulfillment requests |
 | `fulfillment_orders:write` | Access to update fulfillment order fulfillment requests |
-| `gateways:read` | Access to list and view all gateways |
+| `gateways:read` | Access to list and view all gateways and gateway groups |
 | `gift_cards:read` | Access to list and view all gift cards |
 | `gift_cards:write` | Access to create and update gift cards |
 | `locations:read` | Access to list and view all locations |
