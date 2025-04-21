@@ -3420,6 +3420,10 @@ components:
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
         currency:
           readOnly: true
           type: string
@@ -3650,6 +3654,10 @@ components:
             $ref: '#/components/schemas/TransactionObject'
           readOnly: true
           type: array
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
@@ -3661,6 +3669,7 @@ components:
           type: array
       required:
       - attribution
+      - created_at
       - currency
       - date_placed
       - display_taxes
@@ -3696,6 +3705,7 @@ components:
       - total_outstanding
       - total_tax
       - transactions
+      - updated_at
       - user
       - voucher_discounts
       type: object
@@ -3954,6 +3964,10 @@ components:
       type: object
     OrderList:
       properties:
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
         currency:
           readOnly: true
           type: string
@@ -4125,11 +4139,16 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
           readOnly: true
       required:
+      - created_at
       - currency
       - date_placed
       - display_taxes
@@ -4154,6 +4173,7 @@ components:
       - total_incl_tax
       - total_outstanding
       - total_tax
+      - updated_at
       - user
       type: object
     OrderNote:
@@ -4332,6 +4352,10 @@ components:
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
         currency:
           readOnly: true
           type: string
@@ -4552,6 +4576,10 @@ components:
             $ref: '#/components/schemas/TransactionObject'
           readOnly: true
           type: array
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
         voucher_discounts:
           items:
             $ref: '#/components/schemas/OrderVoucherOffer'
@@ -4559,6 +4587,7 @@ components:
           type: array
       required:
       - attribution
+      - created_at
       - currency
       - date_placed
       - display_taxes
@@ -4591,6 +4620,7 @@ components:
       - total_incl_tax
       - total_tax
       - transactions
+      - updated_at
       - voucher_discounts
       type: object
     PaginatedCartList:
@@ -5509,6 +5539,10 @@ components:
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
         currency:
           readOnly: true
           type: string
@@ -5729,6 +5763,10 @@ components:
             $ref: '#/components/schemas/TransactionObject'
           readOnly: true
           type: array
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
@@ -8976,6 +9014,10 @@ components:
           oneOf:
           - $ref: '#/components/schemas/BillingAddress'
           - type: 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
         currency:
           readOnly: true
           type: string
@@ -9196,6 +9238,10 @@ components:
             $ref: '#/components/schemas/TransactionObject'
           readOnly: true
           type: array
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
         user:
           allOf:
           - $ref: '#/components/schemas/UserInline'
@@ -9206,6 +9252,7 @@ components:
           readOnly: true
           type: array
       required:
+      - created_at
       - currency
       - date_placed
       - display_taxes
@@ -9238,6 +9285,7 @@ components:
       - total_incl_tax
       - total_tax
       - transactions
+      - updated_at
       - user
       - voucher_discounts
       type: object
@@ -19882,6 +19930,9 @@ webhooks:
                       - line1
                       - line4
                       type: object
+                    created_at:
+                      format: date-time
+                      type: string
                     currency:
                       type: string
                     date_placed:
@@ -21111,6 +21162,9 @@ webhooks:
                         - type
                         type: object
                       type: array
+                    updated_at:
+                      format: date-time
+                      type: string
                     user:
                       properties:
                         accepts_marketing:
@@ -21193,6 +21247,7 @@ webhooks:
                       type: array
                   required:
                   - attribution
+                  - created_at
                   - currency
                   - date_placed
                   - display_taxes
@@ -21228,6 +21283,7 @@ webhooks:
                   - total_outstanding
                   - total_tax
                   - transactions
+                  - updated_at
                   - user
                   - voucher_discounts
                   type: object
@@ -21450,6 +21506,9 @@ webhooks:
                       - line1
                       - line4
                       type: object
+                    created_at:
+                      format: date-time
+                      type: string
                     currency:
                       type: string
                     date_placed:
@@ -22679,6 +22738,9 @@ webhooks:
                         - type
                         type: object
                       type: array
+                    updated_at:
+                      format: date-time
+                      type: string
                     user:
                       properties:
                         accepts_marketing:
@@ -22761,6 +22823,7 @@ webhooks:
                       type: array
                   required:
                   - attribution
+                  - created_at
                   - currency
                   - date_placed
                   - display_taxes
@@ -22796,6 +22859,7 @@ webhooks:
                   - total_outstanding
                   - total_tax
                   - transactions
+                  - updated_at
                   - user
                   - voucher_discounts
                   type: object
