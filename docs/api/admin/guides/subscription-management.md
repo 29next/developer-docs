@@ -191,7 +191,7 @@ Subscriptions that are `past_due` status can be attemted to retry the renewal, o
 The subscription retry endpoint is useful for custom recovery logic when attempting to recover failing subscriptions.
 :::
 
-### Canceling
+### Cancel
 
 To cancel a subscription, use the [subscriptionsCancelCreate](/docs/api/admin/reference/#/operations/subscriptionsCancelCreate) endpoint to stop all future renewals.
 
