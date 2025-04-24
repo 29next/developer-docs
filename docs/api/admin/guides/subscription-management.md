@@ -33,21 +33,21 @@ Subscriptions can be created directly through the [subscriptionsCreate](/docs/ap
     "next_renewal_date": "2022-2-28T08:41:37+07:00", // first renewal date
     "user": {
         "email": "john@smiths.com", // get or create a customer based on email address
-        "first_name": "Alex",
-        "last_name": "Test"
+        "first_name": "John",
+        "last_name": "Smith"
     },
     "use_default_billing_address": true, // alternatively pass full billing_address
     "use_default_shipping_address": true, // alternatively pass full shipping_address
     "payment_method": "card_token",
     "payment_details": {
-        "card_token": "<Card Token>" //
+        "card_token": "<Card Token>" // see card tokenization iFrame guide
     },
 }
 ```
 
 ### Updating Products & Pricing
 
-Updating a subscription recurring price can be done through [subscriptionLinesCreate](/docs/api/admin/reference/#/operations/subscriptionsLinesCreate) and [subscriptionLinesUpdate](/docs/api/admin/reference/#/operations/subscriptionsLinesUpdate) API endpoints.
+Updating subscription recurring items and pricing can be done through [subscriptionLinesCreate](/docs/api/admin/reference/#/operations/subscriptionsLinesCreate), [subscriptionLinesUpdate](/docs/api/admin/reference/#/operations/subscriptionsLinesUpdate), and [subscriptionsLinesDestroy](/docs/api/admin/reference/#/operations/subscriptionsLinesDestroy) endpoints.
 
 **Adding an Additional Product**
 
@@ -79,7 +79,7 @@ To update and existing product price and quantity on a subscription line, use th
 
 **Removing a Product**
 
-To remove a product from a subscription, use the [subscriptionsLinesDestroy](/docs/api/admin/reference/#/operations/subscriptionsLinesDestroy) endpoint to remove the line item (ie the product) from future renewal orders from the subscription.
+To remove a product from a subscription, send a DELETE request to the [subscriptionsLinesDestroy](/docs/api/admin/reference/#/operations/subscriptionsLinesDestroy) endpoint to remove the line item (ie the product) from future renewal orders created from the subscription.
 
 ```json title="Remove an Existing Product"
 // DELETE https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/
