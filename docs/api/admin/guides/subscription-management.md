@@ -91,7 +91,7 @@ Subscriptions must have at least one line item with a product, you can alternati
 
 ### Updating Renewal Schedule
 
-Changing the rewnal schedule of a subscription can be achived with a PATCH request to the [subscriptionsPartialUpdate](/docs/api/admin/reference/#/operations/subscriptionsPartialUpdate) endpoint with a new `interval` and `interval_count`, ie 30 days.
+Changing the renewal schedule of a subscription can be achived with a PATCH request to the [subscriptionsPartialUpdate](/docs/api/admin/reference/#/operations/subscriptionsPartialUpdate) endpoint with a new `interval` and `interval_count`, ie 30 days.
 
 ```json title="Update Subscription Renewal Schedule"
 // PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
