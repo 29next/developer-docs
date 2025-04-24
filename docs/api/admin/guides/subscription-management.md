@@ -63,7 +63,7 @@ To add a new product to a subscription, use the [subscriptionLinesCreate](/docs/
 }
 ```
 
-**Updating an Existing Product Price**
+**Updating an Existing Line Item Product Price**
 
 To update and existing product price and quantity on a subscription line, use the [subscriptionsLinesUpdate](/docs/api/admin/reference/#/operations/subscriptionsLinesUpdate) Admin API endpoint with the new price, and new quanity details.
 
@@ -72,7 +72,6 @@ To update and existing product price and quantity on a subscription line, use th
 
 {
   "price": "9.99", // new recurring price for the product
-  "product_id": 100, // new product ID
   "quantity": 1 // new quantity of the product
 }
 ```
