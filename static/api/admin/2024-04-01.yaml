@@ -1982,6 +1982,34 @@ components:
       required:
       - id
       type: object
+    CreateUpdatePage:
+      properties:
+        content:
+          type: string
+        meta_description:
+          type:
+          - string
+          - 'null'
+        meta_title:
+          type:
+          - string
+          - 'null'
+        slug:
+          type:
+          - string
+          - 'null'
+        template_name:
+          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
+            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
+            ."
+          maxLength: 70
+          type: string
+        title:
+          maxLength: 200
+          type: string
+      required:
+      - title
+      type: object
     CreateUpdateStockRecord:
       properties:
         date_created:
@@ -4623,6 +4651,38 @@ components:
       - updated_at
       - voucher_discounts
       type: object
+    Page:
+      properties:
+        content:
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        meta_description:
+          type:
+          - string
+          - 'null'
+        meta_title:
+          type:
+          - string
+          - 'null'
+        slug:
+          readOnly: true
+          type: string
+        template_name:
+          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
+            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
+            ."
+          maxLength: 70
+          type: string
+        title:
+          maxLength: 200
+          type: string
+      required:
+      - id
+      - slug
+      - title
+      type: object
     PaginatedCartList:
       properties:
         count:
@@ -4848,6 +4908,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/OrderNote'
+          type: array
+      required:
+      - count
+      - results
+      type: object
+    PaginatedPageList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/Page'
           type: array
       required:
       - count
@@ -5220,6 +5303,32 @@ components:
       required:
       - count
       - results
+      type: object
+    PatchedCreateUpdatePage:
+      properties:
+        content:
+          type: string
+        meta_description:
+          type:
+          - string
+          - 'null'
+        meta_title:
+          type:
+          - string
+          - 'null'
+        slug:
+          type:
+          - string
+          - 'null'
+        template_name:
+          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
+            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
+            ."
+          maxLength: 70
+          type: string
+        title:
+          maxLength: 200
+          type: string
       type: object
     PatchedCreateUpdateStockRecord:
       properties:
@@ -10040,6 +10149,9 @@ components:
             carts:write: Access to create and update carts
             catalogue:read: Access to list and view catalogue related objects
             catalogue:write: Access to create and update catalogue related objects
+            content:read: Access to list and view storefront content related objects
+            content:write: Access to create and update storefront content related
+              objects
             disputes:read: Access to list and view disputes
             disputes:write: Access to create and update disputes
             fulfillment_orders:read: Access to list fulfillment order fulfillment
@@ -13987,6 +14099,213 @@ paths:
         - orders:write
       tags:
       - orders
+  /pages/:
+    get:
+      description: Retrieve a list of pages.
+      operationId: pagesList
+      parameters:
+      - description: A page number within the paginated result set.
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPageList'
+          description: ''
+      security:
+      - oauth2:
+        - content:read
+      tags:
+      - storefront
+    post:
+      description: Create a new page.
+      operationId: pagesCreate
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePage'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+          description: ''
+      security:
+      - oauth2:
+        - content:write
+      tags:
+      - storefront
+  /pages/{id}/:
+    delete:
+      description: Delete an existing page.
+      operationId: pagesDestroy
+      parameters:
+      - description: A unique integer value identifying this flat page.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+      - oauth2:
+        - content:write
+      tags:
+      - storefront
+    get:
+      description: Retrieve a page.
+      operationId: pagesRetrieve
+      parameters:
+      - description: A unique integer value identifying this flat page.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+          description: ''
+      security:
+      - oauth2:
+        - content:read
+      tags:
+      - storefront
+    patch:
+      description: Partially update an existing page.
+      operationId: pagesPartialUpdate
+      parameters:
+      - description: A unique integer value identifying this flat page.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCreateUpdatePage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCreateUpdatePage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCreateUpdatePage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+          description: ''
+      security:
+      - oauth2:
+        - content:write
+      tags:
+      - storefront
+    put:
+      description: Update an existing page.
+      operationId: pagesUpdate
+      parameters:
+      - description: A unique integer value identifying this flat page.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePage'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+          description: ''
+      security:
+      - oauth2:
+        - content:write
+      tags:
+      - storefront
   /products/:
     get:
       description: Retrieve a list of all products.
