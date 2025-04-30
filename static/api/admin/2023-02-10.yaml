@@ -1548,8 +1548,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -1780,12 +1779,11 @@ components:
           type:
           - string
           - 'null'
-        template_name:
-          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
-            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
-            ."
-          maxLength: 70
-          type: string
+        template:
+          description: Custom template name from your theme, ie pages/page.{custom_name}.html
+          type:
+          - string
+          - 'null'
         title:
           maxLength: 200
           type: string
@@ -4369,12 +4367,11 @@ components:
         slug:
           readOnly: true
           type: string
-        template_name:
-          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
-            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
-            ."
-          maxLength: 70
-          type: string
+        template:
+          description: Custom template name from your theme, ie pages/page.{custom_name}.html
+          type:
+          - string
+          - 'null'
         title:
           maxLength: 200
           type: string
@@ -5020,12 +5017,11 @@ components:
           type:
           - string
           - 'null'
-        template_name:
-          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
-            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
-            ."
-          maxLength: 70
-          type: string
+        template:
+          description: Custom template name from your theme, ie pages/page.{custom_name}.html
+          type:
+          - string
+          - 'null'
         title:
           maxLength: 200
           type: string
@@ -5753,8 +5749,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -6394,8 +6389,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -8092,7 +8086,7 @@ components:
           type: string
         name:
           description: 'Example: ''flatpages/default.html'''
-          maxLength: 255
+          maxLength: 256
           type: string
         theme:
           type:
@@ -9220,8 +9214,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -23078,8 +23071,7 @@ webhooks:
                       type: string
                       x-spec-enum-id: b22b8a00bc29acd2
                     template:
-                      description: Use a custom template from your theme to customize
-                        the product display.
+                      description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
                       title: Theme Template
                       type:
                       - string
@@ -23636,8 +23628,7 @@ webhooks:
                       type: string
                       x-spec-enum-id: b22b8a00bc29acd2
                     template:
-                      description: Use a custom template from your theme to customize
-                        the product display.
+                      description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
                       title: Theme Template
                       type:
                       - string
