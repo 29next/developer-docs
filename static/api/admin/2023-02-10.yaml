@@ -1548,8 +1548,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -1780,12 +1779,11 @@ components:
           type:
           - string
           - 'null'
-        template_name:
-          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
-            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
-            ."
-          maxLength: 70
-          type: string
+        template:
+          description: Custom template name from your theme, ie pages/page.{custom_name}.html
+          type:
+          - string
+          - 'null'
         title:
           maxLength: 200
           type: string
@@ -4369,12 +4367,11 @@ components:
         slug:
           readOnly: true
           type: string
-        template_name:
-          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
-            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
-            ."
-          maxLength: 70
-          type: string
+        template:
+          description: Custom template name from your theme, ie pages/page.{custom_name}.html
+          type:
+          - string
+          - 'null'
         title:
           maxLength: 200
           type: string
@@ -5020,12 +5017,11 @@ components:
           type:
           - string
           - 'null'
-        template_name:
-          description: "Example: \u201Cflatpages/contact_page.html\u201D. If this\
-            \ isn\u2019t provided, the system will use \u201Cflatpages/default.html\u201D\
-            ."
-          maxLength: 70
-          type: string
+        template:
+          description: Custom template name from your theme, ie pages/page.{custom_name}.html
+          type:
+          - string
+          - 'null'
         title:
           maxLength: 200
           type: string
@@ -5753,8 +5749,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -6394,8 +6389,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -8092,7 +8086,7 @@ components:
           type: string
         name:
           description: 'Example: ''flatpages/default.html'''
-          maxLength: 255
+          maxLength: 256
           type: string
         theme:
           type:
@@ -8631,11 +8625,13 @@ components:
     TransactionPaymentDetail:
       properties:
         bankcard_first_six:
+          readOnly: true
           title: First Six
           type:
           - string
           - 'null'
         bankcard_last_four:
+          readOnly: true
           title: Last four
           type:
           - string
@@ -8648,14 +8644,24 @@ components:
           - $ref: '#/components/schemas/TransactionPaymentDetailGateway'
           readOnly: true
         is_3ds:
+          readOnly: true
           type: boolean
         optimized_3ds:
+          readOnly: true
           type: boolean
+        paypal_vault_id:
+          readOnly: true
+          type: string
         sca_flow:
           type: string
       required:
+      - bankcard_first_six
+      - bankcard_last_four
       - card_token
       - gateway
+      - is_3ds
+      - optimized_3ds
+      - paypal_vault_id
       - sca_flow
       type: object
     TransactionPaymentDetailGateway:
@@ -9220,8 +9226,7 @@ components:
           type: string
           x-spec-enum-id: b22b8a00bc29acd2
         template:
-          description: Use a custom template from your theme to customize the product
-            display.
+          description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
           type:
           - string
@@ -15292,6 +15297,26 @@ paths:
         name: is_test
         schema:
           type: boolean
+      - description: 'Payment Method
+
+
+          * `bankcard` - Bankcard
+
+          * `paypal` - Paypal'
+        explode: true
+        in: query
+        name: payment_method
+        schema:
+          items:
+            enum:
+            - bankcard
+            - paypal
+            type:
+            - string
+            - 'null'
+            x-spec-enum-id: 26db7321804e45c6
+          type: array
+        style: form
       - description: A page number within the paginated result set.
         in: query
         name: page
@@ -20609,11 +20634,18 @@ webhooks:
                                       type: boolean
                                     optimized_3ds:
                                       type: boolean
+                                    paypal_vault_id:
+                                      type: string
                                     sca_flow:
                                       type: string
                                   required:
+                                  - bankcard_first_six
+                                  - bankcard_last_four
                                   - card_token
                                   - gateway
+                                  - is_3ds
+                                  - optimized_3ds
+                                  - paypal_vault_id
                                   - sca_flow
                                   type: object
                                 payment_method:
@@ -21006,11 +21038,18 @@ webhooks:
                                 type: boolean
                               optimized_3ds:
                                 type: boolean
+                              paypal_vault_id:
+                                type: string
                               sca_flow:
                                 type: string
                             required:
+                            - bankcard_first_six
+                            - bankcard_last_four
                             - card_token
                             - gateway
+                            - is_3ds
+                            - optimized_3ds
+                            - paypal_vault_id
                             - sca_flow
                             type: object
                           payment_method:
@@ -22009,11 +22048,18 @@ webhooks:
                                       type: boolean
                                     optimized_3ds:
                                       type: boolean
+                                    paypal_vault_id:
+                                      type: string
                                     sca_flow:
                                       type: string
                                   required:
+                                  - bankcard_first_six
+                                  - bankcard_last_four
                                   - card_token
                                   - gateway
+                                  - is_3ds
+                                  - optimized_3ds
+                                  - paypal_vault_id
                                   - sca_flow
                                   type: object
                                 payment_method:
@@ -22406,11 +22452,18 @@ webhooks:
                                 type: boolean
                               optimized_3ds:
                                 type: boolean
+                              paypal_vault_id:
+                                type: string
                               sca_flow:
                                 type: string
                             required:
+                            - bankcard_first_six
+                            - bankcard_last_four
                             - card_token
                             - gateway
+                            - is_3ds
+                            - optimized_3ds
+                            - paypal_vault_id
                             - sca_flow
                             type: object
                           payment_method:
@@ -23078,8 +23131,7 @@ webhooks:
                       type: string
                       x-spec-enum-id: b22b8a00bc29acd2
                     template:
-                      description: Use a custom template from your theme to customize
-                        the product display.
+                      description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
                       title: Theme Template
                       type:
                       - string
@@ -23636,8 +23688,7 @@ webhooks:
                       type: string
                       x-spec-enum-id: b22b8a00bc29acd2
                     template:
-                      description: Use a custom template from your theme to customize
-                        the product display.
+                      description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
                       title: Theme Template
                       type:
                       - string
@@ -25679,11 +25730,18 @@ webhooks:
                           type: boolean
                         optimized_3ds:
                           type: boolean
+                        paypal_vault_id:
+                          type: string
                         sca_flow:
                           type: string
                       required:
+                      - bankcard_first_six
+                      - bankcard_last_four
                       - card_token
                       - gateway
+                      - is_3ds
+                      - optimized_3ds
+                      - paypal_vault_id
                       - sca_flow
                       type: object
                     payment_method:
