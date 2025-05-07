@@ -35,7 +35,6 @@ Before using the Admin API, you'll need to create a store and create an OAuth Ap
 https://{store}.29next.store/api/admin/
 ```
 
-
 **Use your Oauth App Access Token in the request headers to access the API.**
 
 ```shell title="Example Request"
@@ -43,6 +42,12 @@ curl -X GET "https://{store}.29next.store/api/admin/" \
 -H "Authorization: Bearer <api access token>" \
 -H "X-29Next-Api-Version: 2024-04-01"
 ```
+
+:::caution Do NOT publish or share Admin API authentication tokens
+Admin API tokens provide full access to your system, including the ability to perform destructive actions like deleting data or users. These tokens should never be shared publicly or exposed in client-side code.
+
+**Always keep your Admin API tokens private and secure.**
+:::
 
 ### Versioning
 
