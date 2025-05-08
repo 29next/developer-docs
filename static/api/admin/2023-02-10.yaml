@@ -8625,11 +8625,13 @@ components:
     TransactionPaymentDetail:
       properties:
         bankcard_first_six:
+          readOnly: true
           title: First Six
           type:
           - string
           - 'null'
         bankcard_last_four:
+          readOnly: true
           title: Last four
           type:
           - string
@@ -8642,14 +8644,24 @@ components:
           - $ref: '#/components/schemas/TransactionPaymentDetailGateway'
           readOnly: true
         is_3ds:
+          readOnly: true
           type: boolean
         optimized_3ds:
+          readOnly: true
           type: boolean
+        paypal_vault_id:
+          readOnly: true
+          type: string
         sca_flow:
           type: string
       required:
+      - bankcard_first_six
+      - bankcard_last_four
       - card_token
       - gateway
+      - is_3ds
+      - optimized_3ds
+      - paypal_vault_id
       - sca_flow
       type: object
     TransactionPaymentDetailGateway:
@@ -15285,6 +15297,26 @@ paths:
         name: is_test
         schema:
           type: boolean
+      - description: 'Payment Method
+
+
+          * `bankcard` - Bankcard
+
+          * `paypal` - Paypal'
+        explode: true
+        in: query
+        name: payment_method
+        schema:
+          items:
+            enum:
+            - bankcard
+            - paypal
+            type:
+            - string
+            - 'null'
+            x-spec-enum-id: 26db7321804e45c6
+          type: array
+        style: form
       - description: A page number within the paginated result set.
         in: query
         name: page
@@ -20602,11 +20634,18 @@ webhooks:
                                       type: boolean
                                     optimized_3ds:
                                       type: boolean
+                                    paypal_vault_id:
+                                      type: string
                                     sca_flow:
                                       type: string
                                   required:
+                                  - bankcard_first_six
+                                  - bankcard_last_four
                                   - card_token
                                   - gateway
+                                  - is_3ds
+                                  - optimized_3ds
+                                  - paypal_vault_id
                                   - sca_flow
                                   type: object
                                 payment_method:
@@ -20999,11 +21038,18 @@ webhooks:
                                 type: boolean
                               optimized_3ds:
                                 type: boolean
+                              paypal_vault_id:
+                                type: string
                               sca_flow:
                                 type: string
                             required:
+                            - bankcard_first_six
+                            - bankcard_last_four
                             - card_token
                             - gateway
+                            - is_3ds
+                            - optimized_3ds
+                            - paypal_vault_id
                             - sca_flow
                             type: object
                           payment_method:
@@ -22002,11 +22048,18 @@ webhooks:
                                       type: boolean
                                     optimized_3ds:
                                       type: boolean
+                                    paypal_vault_id:
+                                      type: string
                                     sca_flow:
                                       type: string
                                   required:
+                                  - bankcard_first_six
+                                  - bankcard_last_four
                                   - card_token
                                   - gateway
+                                  - is_3ds
+                                  - optimized_3ds
+                                  - paypal_vault_id
                                   - sca_flow
                                   type: object
                                 payment_method:
@@ -22399,11 +22452,18 @@ webhooks:
                                 type: boolean
                               optimized_3ds:
                                 type: boolean
+                              paypal_vault_id:
+                                type: string
                               sca_flow:
                                 type: string
                             required:
+                            - bankcard_first_six
+                            - bankcard_last_four
                             - card_token
                             - gateway
+                            - is_3ds
+                            - optimized_3ds
+                            - paypal_vault_id
                             - sca_flow
                             type: object
                           payment_method:
@@ -25670,11 +25730,18 @@ webhooks:
                           type: boolean
                         optimized_3ds:
                           type: boolean
+                        paypal_vault_id:
+                          type: string
                         sca_flow:
                           type: string
                       required:
+                      - bankcard_first_six
+                      - bankcard_last_four
                       - card_token
                       - gateway
+                      - is_3ds
+                      - optimized_3ds
+                      - paypal_vault_id
                       - sca_flow
                       type: object
                     payment_method:
