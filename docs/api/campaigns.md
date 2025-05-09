@@ -23,6 +23,18 @@ import Link from '@docusaurus/Link';
 
 A "campaign" is a defined set of packages and payment rules as a backend for the HTML/JS webpages of a campaign (or funnel) frontend. You can easily setup multiple campaigns for different product offers, markets, and A/B testing.
 
+
+### Session Tracking
+
+Session tracking is available to enable visibility into campaign performance by adding a [javascript snippet](#add-session-tracking) to the head of every page on your campaign. With session tracking configured, we'll automatically track events for:
+
+- Page Veiw
+- Cart Create
+- Order Create
+- Upsell Create
+
+These events flow into Campaign Performance reports for real time monitoring of acvitities on your campaign.
+
 ### Packages
 Each campaign can have multiple "Packages" configured to set quantity based pricing rules for your products. Typically this results in packages such as:
 
@@ -49,6 +61,26 @@ Campaigns can have custom shipping prices to optimize shipping fees and methods 
 ## Getting Started
 
 To get started, create a new campaign with a package mapped to a product in your store. Use the examples below with your **Campaign API Key** to get started using the Campaigns API.
+
+### Add Session Tracking
+
+Add the script below to every page of your campaign for full session tracking integration.
+
+```javascript
+<script async src="https://campaigns.apps.29next.com/js/v1/campaign/"></script>
+<script>
+    window.addEventListener('load', function () {
+        nextCampaign.config({
+            apiKey: "<YOUR CAMPAIGN API KEY>",
+        })
+        nextCampaign.event('page_view', {
+            title: document.title,
+            url: window.location.href
+        });
+    });
+</script>
+```
+
 
 ### Create Cart
 
