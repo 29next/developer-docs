@@ -146,17 +146,13 @@ const config = {
                         position: 'left',
                         items: [
                             {
-                                label: 'API Guides',
-                                to: '/docs/api/',
+                                label: 'Campaigns API',
+                                href: '/docs/api/campaigns/',
                             },
                             {
-                                label: 'Admin API Reference',
-                                href: '/docs/api/admin/reference/',
+                                label: 'Admin API',
+                                href: '/docs/api/admin/',
                             },
-                            {
-                                label: 'Campaigns API Reference',
-                                href: '/docs/api/campaigns/reference/',
-                            }
                         ],
                     },
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
