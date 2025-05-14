@@ -1813,6 +1813,9 @@ components:
           items:
             $ref: '#/components/schemas/ProductPrices'
           type: array
+        requires_shipping:
+          title: Requires shipping?
+          type: boolean
         sku:
           description: Stock Keeping Unit
           type:
@@ -6095,6 +6098,9 @@ components:
           items:
             $ref: '#/components/schemas/ProductPrices'
           type: array
+        requires_shipping:
+          title: Requires shipping?
+          type: boolean
         sku:
           description: Stock Keeping Unit
           type:
@@ -7056,6 +7062,9 @@ components:
           type: array
         product_id:
           type: integer
+        requires_shipping:
+          title: Requires shipping?
+          type: boolean
         sku:
           description: Stock Keeping Unit
           type:
@@ -9630,6 +9639,9 @@ components:
           items:
             $ref: '#/components/schemas/ProductPrices'
           type: array
+        requires_shipping:
+          title: Requires shipping?
+          type: boolean
         sku:
           description: Stock Keeping Unit
           type:
@@ -15702,6 +15714,19 @@ paths:
             x-spec-enum-id: 26db7321804e45c6
           type: array
         style: form
+      - description: 'Gateway Status
+
+
+          * `active` - Active
+
+          * `inactive` - Inactive'
+        in: query
+        name: gateway_status
+        schema:
+          enum:
+          - active
+          - inactive
+          type: string
       - description: A page number within the paginated result set.
         in: query
         name: page
@@ -23642,6 +23667,9 @@ webhooks:
                             type: array
                           product_id:
                             type: integer
+                          requires_shipping:
+                            title: Requires shipping?
+                            type: boolean
                           sku:
                             description: Stock Keeping Unit
                             type:
@@ -24139,6 +24167,9 @@ webhooks:
                             type: array
                           product_id:
                             type: integer
+                          requires_shipping:
+                            title: Requires shipping?
+                            type: boolean
                           sku:
                             description: Stock Keeping Unit
                             type:
