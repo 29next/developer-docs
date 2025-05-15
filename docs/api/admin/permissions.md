@@ -14,6 +14,8 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `carts:write` | Access to create and update carts |
 | `catalogue:read` | Access to list and view catalogue objects such as products and categories |
 | `catalogue:write` | Access to create and update catalogue related objects |
+| `content:read` | Access to list and view storefront content related objects |
+| `content:write` | Access to create and update storefront content related objects |
 | `disputes:read` | Access to list and view disputes |
 | `disputes:write` | Access to create and update disputes |
 | `fulfillment_service:read` | Access to list assigned fulfillment orders and own locations |
