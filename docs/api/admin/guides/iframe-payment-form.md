@@ -58,7 +58,7 @@ We have partnered with [Spreedly](https://docs.spreedly.com/reference/iframe/v1/
 
 ```
 
-After you have he form on your page, initialize the iFrame fields on card number and cvv.
+After you have the form on your page, initialize the iFrame fields on card number and cvv.
 
 ```html title="Add JS and Configure"
 
