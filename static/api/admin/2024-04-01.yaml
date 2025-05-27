@@ -1621,9 +1621,6 @@ components:
       type: object
     CreateProduct:
       properties:
-        allow_backorders:
-          description: Continue selling when out of stock.
-          type: boolean
         categories:
           deprecated: true
           items:
@@ -1708,10 +1705,6 @@ components:
           oneOf:
           - {}
           - type: 'null'
-        prices:
-          items:
-            $ref: '#/components/schemas/ProductPrices'
-          type: array
         ranking:
           description: The highest ranking are shown first
           maximum: 2147483647
@@ -1727,29 +1720,10 @@ components:
           items:
             type: integer
           type: array
-        requires_shipping:
-          title: Requires shipping?
-          type: boolean
-        sku:
-          type: string
         slug:
           pattern: ^[-a-zA-Z0-9_]+$
           readOnly: true
           type: string
-        stockrecords:
-          items:
-            $ref: '#/components/schemas/StockrecordLocation'
-          type: array
-        structure:
-          description: '* `standalone` - standalone
-
-            * `parent` - parent'
-          enum:
-          - standalone
-          - parent
-          title: Product Structure
-          type: string
-          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
@@ -1758,19 +1732,6 @@ components:
           - 'null'
         title:
           type: string
-        track_stock:
-          description: Track inventory quantities at fulfillment locations.
-          title: Track Stock Levels
-          type: boolean
-        unit_cost:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          type: string
-        upc:
-          description: Universal Product Code
-          type:
-          - string
-          - 'null'
         url:
           format: uri
           readOnly: true
@@ -1781,8 +1742,7 @@ components:
           type: array
         variants:
           items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
+            $ref: '#/components/schemas/CreateProductVariantForProduct'
           type: array
       required:
       - date_created
@@ -1791,10 +1751,8 @@ components:
       - images
       - rating
       - slug
-      - structure
       - title
       - url
-      - variants
       type: object
     CreateProductVariant:
       properties:
@@ -1847,6 +1805,69 @@ components:
           type: array
       required:
       - variant_attribute_values
+      type: object
+    CreateProductVariantAttributeValue:
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    CreateProductVariantForProduct:
+      properties:
+        allow_backorders:
+          description: Continue selling when out of stock.
+          type: boolean
+        image:
+          readOnly: true
+          type:
+          - integer
+          - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
+        prices:
+          items:
+            $ref: '#/components/schemas/ProductPrices'
+          type: array
+        requires_shipping:
+          title: Requires shipping?
+          type: boolean
+        sku:
+          description: Stock Keeping Unit
+          type:
+          - string
+          - 'null'
+        stockrecords:
+          items:
+            $ref: '#/components/schemas/StockrecordLocation'
+          type: array
+        track_stock:
+          description: Track inventory quantities at fulfillment locations.
+          title: Track Stock Levels
+          type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Cost Per Item
+          type:
+          - string
+          - 'null'
+        upc:
+          description: Universal Product Code
+          type:
+          - string
+          - 'null'
+        variant_attribute_values:
+          items:
+            $ref: '#/components/schemas/CreateProductVariantAttributeValue'
+          type: array
+      required:
+      - image
       type: object
     CreateRefundLineRequest:
       properties:
@@ -4685,16 +4706,13 @@ components:
       type: object
     PaginatedCartList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4703,21 +4721,17 @@ components:
             $ref: '#/components/schemas/Cart'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedCategoryList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4726,21 +4740,17 @@ components:
             $ref: '#/components/schemas/Category'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedDefinitionList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4749,21 +4759,17 @@ components:
             $ref: '#/components/schemas/Definition'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedDisputeList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4772,21 +4778,17 @@ components:
             $ref: '#/components/schemas/Dispute'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedDisputeNoteList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4795,21 +4797,17 @@ components:
             $ref: '#/components/schemas/DisputeNote'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedFulfillmentOrderList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4818,21 +4816,17 @@ components:
             $ref: '#/components/schemas/FulfillmentOrder'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedGatewayGroupList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4841,21 +4835,17 @@ components:
             $ref: '#/components/schemas/GatewayGroup'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedLocationList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4864,21 +4854,17 @@ components:
             $ref: '#/components/schemas/Location'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedOrderListList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4887,21 +4873,17 @@ components:
             $ref: '#/components/schemas/OrderList'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedOrderNoteList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4910,21 +4892,17 @@ components:
             $ref: '#/components/schemas/OrderNote'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedPageList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4933,21 +4911,17 @@ components:
             $ref: '#/components/schemas/Page'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedPaymentGatewayList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4956,21 +4930,17 @@ components:
             $ref: '#/components/schemas/PaymentGateway'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedProductListList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -4979,21 +4949,17 @@ components:
             $ref: '#/components/schemas/ProductList'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedResponseGiftCardList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5002,21 +4968,17 @@ components:
             $ref: '#/components/schemas/ResponseGiftCard'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedShippingMethodList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5025,21 +4987,17 @@ components:
             $ref: '#/components/schemas/ShippingMethod'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedStockRecordList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5048,21 +5006,17 @@ components:
             $ref: '#/components/schemas/StockRecord'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedSubscriptionDetailList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5071,21 +5025,17 @@ components:
             $ref: '#/components/schemas/SubscriptionDetail'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedSubscriptionTransactionList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5094,21 +5044,17 @@ components:
             $ref: '#/components/schemas/SubscriptionTransaction'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedThemeList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5117,21 +5063,17 @@ components:
             $ref: '#/components/schemas/Theme'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedTicketList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5140,21 +5082,17 @@ components:
             $ref: '#/components/schemas/Ticket'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedTicketTypeList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5163,21 +5101,17 @@ components:
             $ref: '#/components/schemas/TicketType'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedTransactionListList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5186,21 +5120,17 @@ components:
             $ref: '#/components/schemas/TransactionList'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedUpdatePriceWithCurrencyList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5209,21 +5139,17 @@ components:
             $ref: '#/components/schemas/UpdatePriceWithCurrency'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedUserAddressList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5232,21 +5158,17 @@ components:
             $ref: '#/components/schemas/UserAddress'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedUserList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5255,21 +5177,17 @@ components:
             $ref: '#/components/schemas/User'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedUserNoteList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5278,21 +5196,17 @@ components:
             $ref: '#/components/schemas/UserNote'
           type: array
       required:
-      - count
       - results
       type: object
     PaginatedWebhookList:
       properties:
-        count:
-          example: 123
-          type: integer
         next:
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
           format: uri
           nullable: true
           type: string
         previous:
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
           format: uri
           nullable: true
           type: string
@@ -5301,7 +5215,6 @@ components:
             $ref: '#/components/schemas/Webhook'
           type: array
       required:
-      - count
       - results
       type: object
     PatchedCreateUpdatePage:
@@ -5915,9 +5828,6 @@ components:
       type: object
     PatchedUpdateProduct:
       properties:
-        allow_backorders:
-          description: Continue selling when out of stock.
-          type: boolean
         categories:
           deprecated: true
           items:
@@ -6002,10 +5912,6 @@ components:
           oneOf:
           - {}
           - type: 'null'
-        prices:
-          items:
-            $ref: '#/components/schemas/ProductPrices'
-          type: array
         ranking:
           description: The highest ranking are shown first
           maximum: 2147483647
@@ -6021,31 +5927,10 @@ components:
           items:
             type: integer
           type: array
-        requires_shipping:
-          title: Requires shipping?
-          type: boolean
-        sku:
-          type: string
         slug:
           pattern: ^[-a-zA-Z0-9_]+$
           readOnly: true
           type: string
-        stockrecords:
-          items:
-            $ref: '#/components/schemas/StockrecordLocation'
-          readOnly: true
-          type: array
-        structure:
-          description: '* `standalone` - standalone
-
-            * `parent` - parent'
-          enum:
-          - standalone
-          - parent
-          readOnly: true
-          title: Product Structure
-          type: string
-          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
@@ -6054,19 +5939,6 @@ components:
           - 'null'
         title:
           type: string
-        track_stock:
-          description: Track inventory quantities at fulfillment locations.
-          title: Track Stock Levels
-          type: boolean
-        unit_cost:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          type: string
-        upc:
-          description: Universal Product Code
-          type:
-          - string
-          - 'null'
         url:
           format: uri
           readOnly: true
@@ -6077,8 +5949,7 @@ components:
           type: array
         variants:
           items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
+            $ref: '#/components/schemas/UpdateProductVariantForProduct'
           type: array
       type: object
     PatchedUpdateProductVariant:
@@ -6556,9 +6427,6 @@ components:
       type: object
     Product:
       properties:
-        allow_backorders:
-          description: Continue selling when out of stock.
-          type: boolean
         categories:
           deprecated: true
           items:
@@ -6644,10 +6512,6 @@ components:
           oneOf:
           - {}
           - type: 'null'
-        prices:
-          items:
-            $ref: '#/components/schemas/ProductPrices'
-          type: array
         ranking:
           description: The highest ranking are shown first
           maximum: 2147483647
@@ -6663,34 +6527,25 @@ components:
           items:
             type: integer
           type: array
-        requires_shipping:
-          title: Requires shipping?
-          type: boolean
-        sku:
-          description: Stock Keeping Unit
-          type:
-          - string
-          - 'null'
         slug:
           maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
           readOnly: true
           type: string
-        stockrecords:
-          items:
-            $ref: '#/components/schemas/StockrecordLocation'
-          type: array
         structure:
-          description: '* `standalone` - standalone
+          description: '* `standalone` - Stand-alone Product
 
-            * `parent` - parent'
+            * `parent` - Product with Variants
+
+            * `child` - Child Product'
           enum:
           - standalone
           - parent
+          - child
           readOnly: true
           title: Product Structure
           type: string
-          x-spec-enum-id: b22b8a00bc29acd2
+          x-spec-enum-id: a1df31d9b9dfd9ac
         template:
           description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
@@ -6700,19 +6555,6 @@ components:
         title:
           readOnly: true
           type: string
-        track_stock:
-          description: Track inventory quantities at fulfillment locations.
-          title: Track Stock Levels
-          type: boolean
-        unit_cost:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          type: string
-        upc:
-          description: Universal Product Code
-          type:
-          - string
-          - 'null'
         url:
           format: uri
           readOnly: true
@@ -6833,9 +6675,6 @@ components:
       type: object
     ProductList:
       properties:
-        allow_backorders:
-          description: Continue selling when out of stock.
-          type: boolean
         categories:
           deprecated: true
           items:
@@ -6911,10 +6750,6 @@ components:
           oneOf:
           - {}
           - type: 'null'
-        prices:
-          items:
-            $ref: '#/components/schemas/ProductPrices'
-          type: array
         ranking:
           description: The highest ranking are shown first
           maximum: 2147483647
@@ -6930,50 +6765,28 @@ components:
           items:
             type: integer
           type: array
-        requires_shipping:
-          title: Requires shipping?
-          type: boolean
-        sku:
-          description: Stock Keeping Unit
-          type:
-          - string
-          - 'null'
         slug:
           maxLength: 255
           pattern: ^[-a-zA-Z0-9_]+$
           readOnly: true
           type: string
-        stockrecords:
-          items:
-            $ref: '#/components/schemas/StockrecordLocation'
-          type: array
         structure:
-          description: '* `standalone` - standalone
+          description: '* `standalone` - Stand-alone Product
 
-            * `parent` - parent'
+            * `parent` - Product with Variants
+
+            * `child` - Child Product'
           enum:
           - standalone
           - parent
+          - child
           readOnly: true
           title: Product Structure
           type: string
-          x-spec-enum-id: b22b8a00bc29acd2
+          x-spec-enum-id: a1df31d9b9dfd9ac
         title:
           readOnly: true
           type: string
-        track_stock:
-          description: Track inventory quantities at fulfillment locations.
-          title: Track Stock Levels
-          type: boolean
-        unit_cost:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          type: string
-        upc:
-          description: Universal Product Code
-          type:
-          - string
-          - 'null'
         url:
           format: uri
           readOnly: true
@@ -9445,9 +9258,6 @@ components:
       type: object
     UpdateProduct:
       properties:
-        allow_backorders:
-          description: Continue selling when out of stock.
-          type: boolean
         categories:
           deprecated: true
           items:
@@ -9532,10 +9342,6 @@ components:
           oneOf:
           - {}
           - type: 'null'
-        prices:
-          items:
-            $ref: '#/components/schemas/ProductPrices'
-          type: array
         ranking:
           description: The highest ranking are shown first
           maximum: 2147483647
@@ -9551,31 +9357,10 @@ components:
           items:
             type: integer
           type: array
-        requires_shipping:
-          title: Requires shipping?
-          type: boolean
-        sku:
-          type: string
         slug:
           pattern: ^[-a-zA-Z0-9_]+$
           readOnly: true
           type: string
-        stockrecords:
-          items:
-            $ref: '#/components/schemas/StockrecordLocation'
-          readOnly: true
-          type: array
-        structure:
-          description: '* `standalone` - standalone
-
-            * `parent` - parent'
-          enum:
-          - standalone
-          - parent
-          readOnly: true
-          title: Product Structure
-          type: string
-          x-spec-enum-id: b22b8a00bc29acd2
         template:
           description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
           title: Theme Template
@@ -9584,19 +9369,6 @@ components:
           - 'null'
         title:
           type: string
-        track_stock:
-          description: Track inventory quantities at fulfillment locations.
-          title: Track Stock Levels
-          type: boolean
-        unit_cost:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          type: string
-        upc:
-          description: Universal Product Code
-          type:
-          - string
-          - 'null'
         url:
           format: uri
           readOnly: true
@@ -9607,8 +9379,7 @@ components:
           type: array
         variants:
           items:
-            $ref: '#/components/schemas/ProductVariant'
-          readOnly: true
+            $ref: '#/components/schemas/UpdateProductVariantForProduct'
           type: array
       required:
       - date_created
@@ -9617,10 +9388,7 @@ components:
       - images
       - rating
       - slug
-      - stockrecords
-      - structure
       - url
-      - variants
       type: object
     UpdateProductVariant:
       properties:
@@ -9673,6 +9441,66 @@ components:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
           type: array
       required:
+      - stockrecords
+      - variant_attribute_values
+      type: object
+    UpdateProductVariantForProduct:
+      properties:
+        allow_backorders:
+          description: Continue selling when out of stock.
+          type: boolean
+        id:
+          type: integer
+        image:
+          readOnly: true
+          type:
+          - integer
+          - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
+        prices:
+          items:
+            $ref: '#/components/schemas/ProductPrices'
+          type: array
+        requires_shipping:
+          title: Requires shipping?
+          type: boolean
+        sku:
+          description: Stock Keeping Unit
+          type:
+          - string
+          - 'null'
+        stockrecords:
+          items:
+            $ref: '#/components/schemas/StockrecordLocation'
+          readOnly: true
+          type: array
+        track_stock:
+          description: Track inventory quantities at fulfillment locations.
+          title: Track Stock Levels
+          type: boolean
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Cost Per Item
+          type:
+          - string
+          - 'null'
+        upc:
+          description: Universal Product Code
+          type:
+          - string
+          - 'null'
+        variant_attribute_values:
+          items:
+            $ref: '#/components/schemas/ProductVariantAttributeValue'
+          readOnly: true
+          type: array
+      required:
+      - id
+      - image
       - stockrecords
       - variant_attribute_values
       type: object
@@ -10507,12 +10335,12 @@ paths:
         schema:
           format: date
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -10629,12 +10457,12 @@ paths:
         name: subaffiliate5
         schema:
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -10795,12 +10623,12 @@ paths:
       description: Retrieve a list of categories.
       operationId: categoriesList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -11092,12 +10920,12 @@ paths:
         schema:
           format: date
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -11303,12 +11131,12 @@ paths:
         required: true
         schema:
           type: integer
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -11523,12 +11351,12 @@ paths:
         schema:
           format: date
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12231,12 +12059,12 @@ paths:
       description: Retrieve a list of gatway groups.
       operationId: gatewayGroupsList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12293,12 +12121,12 @@ paths:
       description: Retrieve a list of gateways.
       operationId: gatewaysList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12408,12 +12236,12 @@ paths:
         name: amount_to
         schema:
           type: number
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12578,12 +12406,12 @@ paths:
       description: Retrieve a list of all configured fulfillment locations.
       operationId: locationsList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -12748,12 +12576,12 @@ paths:
       description: Retrieve a list of metadata definitions.
       operationId: metadataList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -13317,12 +13145,12 @@ paths:
         name: is_test
         schema:
           type: boolean
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -13964,12 +13792,12 @@ paths:
         schema:
           title: Order number
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -14121,12 +13949,12 @@ paths:
       description: Retrieve a list of pages.
       operationId: pagesList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -14366,12 +14194,12 @@ paths:
             type: string
           type: array
         style: form
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -15155,12 +14983,12 @@ paths:
       description: Retrieve a list of all configured shipping methods.
       operationId: shippingMethodsList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -15234,12 +15062,12 @@ paths:
         name: sku
         schema:
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -15727,12 +15555,12 @@ paths:
           - active
           - inactive
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -16081,12 +15909,12 @@ paths:
         required: true
         schema:
           type: integer
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -16112,12 +15940,12 @@ paths:
       description: Retrieve a list of themes.
       operationId: themesList
       parameters:
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -16455,12 +16283,12 @@ paths:
         schema:
           format: date
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -16744,12 +16572,12 @@ paths:
         name: name
         schema:
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -17026,12 +16854,12 @@ paths:
         name: subaffiliate5
         schema:
           type: string
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -17219,12 +17047,12 @@ paths:
         name: accepts_marketing
         schema:
           type: boolean
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -17405,12 +17233,12 @@ paths:
         required: true
         schema:
           type: integer
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -17600,12 +17428,12 @@ paths:
         required: true
         schema:
           type: integer
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -17754,12 +17582,12 @@ paths:
         name: active
         schema:
           type: boolean
-      - description: A page number within the paginated result set.
+      - description: The pagination cursor value.
         in: query
-        name: page
+        name: cursor
         required: false
         schema:
-          type: integer
+          type: string
       - in: header
         name: X-29next-API-Version
         required: true
@@ -23329,9 +23157,6 @@ webhooks:
                   - string
                 data:
                   properties:
-                    allow_backorders:
-                      description: Continue selling when out of stock.
-                      type: boolean
                     categories:
                       deprecated: true
                       items:
@@ -23464,41 +23289,6 @@ webhooks:
                       oneOf:
                       - {}
                       - type: 'null'
-                    prices:
-                      items:
-                        properties:
-                          currency:
-                            maxLength: 12
-                            type: string
-                          price:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            type: string
-                          retail:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            title: Price (retail)
-                            type:
-                            - string
-                            - 'null'
-                          subscription:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            title: Subscription Price
-                            type:
-                            - string
-                            - 'null'
-                          subscription_suggested_downsell:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            title: Suggested Downsell Price
-                            type:
-                            - string
-                            - 'null'
-                        required:
-                        - price
-                        type: object
-                      type: array
                     ranking:
                       description: The highest ranking are shown first
                       maximum: 2147483647
@@ -23513,59 +23303,23 @@ webhooks:
                       items:
                         type: integer
                       type: array
-                    requires_shipping:
-                      title: Requires shipping?
-                      type: boolean
-                    sku:
-                      description: Stock Keeping Unit
-                      type:
-                      - string
-                      - 'null'
                     slug:
                       maxLength: 255
                       pattern: ^[-a-zA-Z0-9_]+$
                       type: string
-                    stockrecords:
-                      items:
-                        properties:
-                          id:
-                            type: integer
-                          location_id:
-                            type: integer
-                          low_stock_threshold:
-                            maximum: 2147483647
-                            minimum: 0
-                            type:
-                            - integer
-                            - 'null'
-                          num_allocated:
-                            title: Number allocated
-                            type:
-                            - integer
-                            - 'null'
-                          num_in_stock:
-                            maximum: 2147483647
-                            minimum: -2147483648
-                            title: Number in stock
-                            type:
-                            - integer
-                            - 'null'
-                        required:
-                        - id
-                        - location_id
-                        - num_allocated
-                        type: object
-                      type: array
                     structure:
-                      description: '* `standalone` - standalone
+                      description: '* `standalone` - Stand-alone Product
 
-                        * `parent` - parent'
+                        * `parent` - Product with Variants
+
+                        * `child` - Child Product'
                       enum:
                       - standalone
                       - parent
+                      - child
                       title: Product Structure
                       type: string
-                      x-spec-enum-id: b22b8a00bc29acd2
+                      x-spec-enum-id: a1df31d9b9dfd9ac
                     template:
                       description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
                       title: Theme Template
@@ -23574,19 +23328,6 @@ webhooks:
                       - 'null'
                     title:
                       type: string
-                    track_stock:
-                      description: Track inventory quantities at fulfillment locations.
-                      title: Track Stock Levels
-                      type: boolean
-                    unit_cost:
-                      format: decimal
-                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                      type: string
-                    upc:
-                      description: Universal Product Code
-                      type:
-                      - string
-                      - 'null'
                     url:
                       format: uri
                       type: string
@@ -23829,9 +23570,6 @@ webhooks:
                   - string
                 data:
                   properties:
-                    allow_backorders:
-                      description: Continue selling when out of stock.
-                      type: boolean
                     categories:
                       deprecated: true
                       items:
@@ -23964,41 +23702,6 @@ webhooks:
                       oneOf:
                       - {}
                       - type: 'null'
-                    prices:
-                      items:
-                        properties:
-                          currency:
-                            maxLength: 12
-                            type: string
-                          price:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            type: string
-                          retail:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            title: Price (retail)
-                            type:
-                            - string
-                            - 'null'
-                          subscription:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            title: Subscription Price
-                            type:
-                            - string
-                            - 'null'
-                          subscription_suggested_downsell:
-                            format: decimal
-                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                            title: Suggested Downsell Price
-                            type:
-                            - string
-                            - 'null'
-                        required:
-                        - price
-                        type: object
-                      type: array
                     ranking:
                       description: The highest ranking are shown first
                       maximum: 2147483647
@@ -24013,59 +23716,23 @@ webhooks:
                       items:
                         type: integer
                       type: array
-                    requires_shipping:
-                      title: Requires shipping?
-                      type: boolean
-                    sku:
-                      description: Stock Keeping Unit
-                      type:
-                      - string
-                      - 'null'
                     slug:
                       maxLength: 255
                       pattern: ^[-a-zA-Z0-9_]+$
                       type: string
-                    stockrecords:
-                      items:
-                        properties:
-                          id:
-                            type: integer
-                          location_id:
-                            type: integer
-                          low_stock_threshold:
-                            maximum: 2147483647
-                            minimum: 0
-                            type:
-                            - integer
-                            - 'null'
-                          num_allocated:
-                            title: Number allocated
-                            type:
-                            - integer
-                            - 'null'
-                          num_in_stock:
-                            maximum: 2147483647
-                            minimum: -2147483648
-                            title: Number in stock
-                            type:
-                            - integer
-                            - 'null'
-                        required:
-                        - id
-                        - location_id
-                        - num_allocated
-                        type: object
-                      type: array
                     structure:
-                      description: '* `standalone` - standalone
+                      description: '* `standalone` - Stand-alone Product
 
-                        * `parent` - parent'
+                        * `parent` - Product with Variants
+
+                        * `child` - Child Product'
                       enum:
                       - standalone
                       - parent
+                      - child
                       title: Product Structure
                       type: string
-                      x-spec-enum-id: b22b8a00bc29acd2
+                      x-spec-enum-id: a1df31d9b9dfd9ac
                     template:
                       description: Custom template name from your theme, ie catalogue/product.{custom_name}.html
                       title: Theme Template
@@ -24074,19 +23741,6 @@ webhooks:
                       - 'null'
                     title:
                       type: string
-                    track_stock:
-                      description: Track inventory quantities at fulfillment locations.
-                      title: Track Stock Levels
-                      type: boolean
-                    unit_cost:
-                      format: decimal
-                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-                      type: string
-                    upc:
-                      description: Universal Product Code
-                      type:
-                      - string
-                      - 'null'
                     url:
                       format: uri
                       type: string
