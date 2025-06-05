@@ -6267,9 +6267,12 @@ components:
       type: object
     Payment:
       properties:
+        certificate_token:
+          type: string
         environment_key:
           type: string
       required:
+      - certificate_token
       - environment_key
       type: object
     PaymentDetail:
@@ -24041,9 +24044,12 @@ webhooks:
                       type: string
                     payments:
                       properties:
+                        certificate_token:
+                          type: string
                         environment_key:
                           type: string
                       required:
+                      - certificate_token
                       - environment_key
                       type: object
                     primary_domain:
