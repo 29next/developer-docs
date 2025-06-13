@@ -5967,9 +5967,12 @@ components:
       type: object
     Payment:
       properties:
+        certificate_token:
+          type: string
         environment_key:
           type: string
       required:
+      - certificate_token
       - environment_key
       type: object
     PaymentDetail:
@@ -9147,16 +9150,10 @@ components:
           type:
           - string
           - 'null'
-        variant_attribute_values:
-          items:
-            $ref: '#/components/schemas/ProductVariantAttributeValue'
-          readOnly: true
-          type: array
       required:
       - id
       - image
       - stockrecords
-      - variant_attribute_values
       type: object
     UpdateSubscriptionLine:
       properties:
@@ -22986,6 +22983,79 @@ webhooks:
       '410':
         description: Indicates the webhook target is no longer available and will
           be disabled.
+  product.deleted:
+    post:
+      description: Triggers when a product is deleted.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - '2023-02-10'
+                  type:
+                  - string
+                data:
+                  properties:
+                    id:
+                      description: The unique identifier of the deleted product.
+                      type: integer
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - product.deleted
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - product
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - products
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
   product.updated:
     post:
       description: Triggers when a product is updated.
@@ -23509,9 +23579,12 @@ webhooks:
                       type: string
                     payments:
                       properties:
+                        certificate_token:
+                          type: string
                         environment_key:
                           type: string
                       required:
+                      - certificate_token
                       - environment_key
                       type: object
                     primary_domain:

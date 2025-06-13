@@ -670,6 +670,7 @@ components:
           type: boolean
         name:
           maxLength: 200
+          title: Package name
           type: string
         price:
           format: decimal

@@ -132,6 +132,24 @@ API_VERSIONS = [
     },
 ]
 
+# Custom Webhook Event Payloads
+# These payloads don't follow their respective object data schema.
+CUSTOM_WEBHOOK_EVENT_PAYLOADS = [
+    {
+        "event": "product.deleted",
+        "data": {
+            'type': 'object',
+            'properties': {
+                'id': {
+                    'type': 'integer',
+                    'description': 'The unique identifier of the deleted product.',
+                }
+            }
+        }
+    }
+]
+
+
 WEBHOOKS = [
     {
         "event": "app.uninstalled",
@@ -230,6 +248,13 @@ WEBHOOKS = [
         "schema_ref": "#/components/schemas/Product",
         "tag": "products",
         "description": "Triggers when a product is updated.",
+    },
+    {
+        "event": "product.deleted",
+        "object": "product",
+        "schema_ref": None,
+        "tag": "products",
+        "description": "Triggers when a product is deleted.",
     },
     {
         "event": "transaction.created",

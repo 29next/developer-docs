@@ -1,6 +1,6 @@
 import copy
 
-from config import WEBHOOKS
+from config import WEBHOOKS, CUSTOM_WEBHOOK_EVENT_PAYLOADS
 
 
 def get_schema(spec, ref):
@@ -52,13 +52,26 @@ def webhook_data_schema_handler(spec, data_schema):
     return data_schema
 
 
+def get_custom_webhook_event_payloads(event):
+    """
+    Returns custom webhook event payloads for the given event.
+    """
+    for each in CUSTOM_WEBHOOK_EVENT_PAYLOADS:
+        if each["event"] == event:
+            return each["data"]
+    return None
+
+
 def webhook_schema_generator(spec):
     webhooks = {}
     version = spec["info"]["version"]
     webhook_schema = {}
     for each in WEBHOOKS:
-        schema = get_schema(spec, each["schema_ref"])
-        cleaned_data_schema = webhook_data_schema_handler(spec, schema)
+        if each["schema_ref"]:
+            schema = get_schema(spec, each["schema_ref"])
+            cleaned_data_schema = webhook_data_schema_handler(spec, schema)
+        else:
+            cleaned_data_schema = get_custom_webhook_event_payloads(each["event"])
 
         webhook_schema[each["event"]] = {
             "post": {
