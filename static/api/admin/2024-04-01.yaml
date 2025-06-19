@@ -3761,6 +3761,12 @@ components:
       type: object
     OrderLine:
       properties:
+        created_at:
+          format: date-time
+          readOnly: true
+          type:
+          - string
+          - 'null'
         currency:
           maxLength: 12
           type: string
@@ -3854,6 +3860,12 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type:
+          - string
+          - 'null'
         variant_id:
           readOnly: true
           type: integer
@@ -3861,6 +3873,7 @@ components:
           readOnly: true
           type: string
       required:
+      - created_at
       - currency
       - current_quantity
       - fulfillable_quantity
@@ -3882,11 +3895,18 @@ components:
       - total_cost
       - total_discount
       - unit_cost
+      - updated_at
       - variant_id
       - variant_title
       type: object
     OrderLineDetail:
       properties:
+        created_at:
+          format: date-time
+          readOnly: true
+          type:
+          - string
+          - 'null'
         id:
           readOnly: true
           type: integer
@@ -3942,7 +3962,14 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type:
+          - string
+          - 'null'
       required:
+      - created_at
       - id
       - price_currency
       - price_excl_tax
@@ -3954,6 +3981,7 @@ components:
       - tax_lines
       - total_cost
       - unit_cost
+      - updated_at
       type: object
     OrderLineReport:
       properties:
@@ -12573,6 +12601,89 @@ paths:
       description: Retrieve a list of metadata definitions.
       operationId: metadataList
       parameters:
+      - description: Name
+        in: query
+        name: name
+        schema:
+          type: string
+      - description: 'Object
+
+
+          * `attribution` - Attribution
+
+          * `customer` - Customer
+
+          * `dispute` - Dispute
+
+          * `line` - Line Item
+
+          * `order` - Order
+
+          * `product` - Product'
+        explode: true
+        in: query
+        name: object
+        schema:
+          items:
+            enum:
+            - attribution
+            - customer
+            - dispute
+            - line
+            - order
+            - product
+            type: string
+            x-spec-enum-id: 447aaef6f2a3d4c1
+          type: array
+        style: form
+      - description: Metadata Key
+        in: query
+        name: metadata_key
+        schema:
+          type: string
+      - description: 'Type
+
+
+          * `text` - Text
+
+          * `integer` - Integer
+
+          * `decimal` - Decimal
+
+          * `rich_text` - Rich Text
+
+          * `multi_text` - Multi Text
+
+          * `file` - File
+
+          * `boolean` - Boolean'
+        explode: true
+        in: query
+        name: type
+        schema:
+          items:
+            enum:
+            - boolean
+            - decimal
+            - file
+            - integer
+            - multi_text
+            - rich_text
+            - text
+            type: string
+            x-spec-enum-id: 079b46b0c121a3e8
+          type: array
+        style: form
+      - description: Export
+        in: query
+        name: enable_export
+        schema:
+          type: boolean
+      - description: Search Filter
+        in: query
+        name: enable_filter
+        schema:
+          type: boolean
       - description: The pagination cursor value.
         in: query
         name: cursor
@@ -12853,6 +12964,10 @@ paths:
             type: string
           type: array
         style: form
+      - in: query
+        name: currency
+        schema:
+          type: string
       - description: 'Fulfillment Status
 
 
@@ -20395,6 +20510,11 @@ webhooks:
                     lines:
                       items:
                         properties:
+                          created_at:
+                            format: date-time
+                            type:
+                            - string
+                            - 'null'
                           currency:
                             maxLength: 12
                             type: string
@@ -20552,11 +20672,17 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          updated_at:
+                            format: date-time
+                            type:
+                            - string
+                            - 'null'
                           variant_id:
                             type: integer
                           variant_title:
                             type: string
                         required:
+                        - created_at
                         - currency
                         - current_quantity
                         - fulfillable_quantity
@@ -20578,6 +20704,7 @@ webhooks:
                         - total_cost
                         - total_discount
                         - unit_cost
+                        - updated_at
                         - variant_id
                         - variant_title
                         type: object
@@ -21985,6 +22112,11 @@ webhooks:
                     lines:
                       items:
                         properties:
+                          created_at:
+                            format: date-time
+                            type:
+                            - string
+                            - 'null'
                           currency:
                             maxLength: 12
                             type: string
@@ -22142,11 +22274,17 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          updated_at:
+                            format: date-time
+                            type:
+                            - string
+                            - 'null'
                           variant_id:
                             type: integer
                           variant_title:
                             type: string
                         required:
+                        - created_at
                         - currency
                         - current_quantity
                         - fulfillable_quantity
@@ -22168,6 +22306,7 @@ webhooks:
                         - total_cost
                         - total_discount
                         - unit_cost
+                        - updated_at
                         - variant_id
                         - variant_title
                         type: object
