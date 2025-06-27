@@ -29,7 +29,9 @@ components:
     AddOrderShipmentTracking:
       properties:
         carrier:
-          description: '* `asendia` - asendia
+          description: '* `amazon` - amazon
+
+            * `asendia` - asendia
 
             * `australia_post` - australia_post
 
@@ -73,6 +75,7 @@ components:
 
             * `yunexpress` - yunexpress'
           enum:
+          - amazon
           - asendia
           - australia_post
           - china_post
@@ -99,7 +102,7 @@ components:
           type:
           - string
           - 'null'
-          x-spec-enum-id: 49b9515e63a6bf3e
+          x-spec-enum-id: 8408719985f36b77
         date_created:
           format: date-time
           readOnly: true
@@ -8466,6 +8469,8 @@ components:
         carrier:
           description: '* `4px` - 4px
 
+            * `amazon` - amazon
+
             * `asendia` - asendia
 
             * `australia_post` - australia_post
@@ -8509,6 +8514,7 @@ components:
             * `yunexpress` - yunexpress'
           enum:
           - 4px
+          - amazon
           - asendia
           - australia_post
           - china_post
@@ -8531,7 +8537,7 @@ components:
           - usps
           - yunexpress
           type: string
-          x-spec-enum-id: f158f32a97db14d4
+          x-spec-enum-id: 8924f253485e6d5f
         carrier_other_name:
           type:
           - string
