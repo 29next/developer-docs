@@ -3024,11 +3024,18 @@ components:
       type: object
     GatewayGroup:
       properties:
-        gateways:
-          items:
-            $ref: '#/components/schemas/PaymentGroupGateway'
+        alternative_payment_methods:
           readOnly: true
-          type: array
+          type: string
+        card_types:
+          readOnly: true
+          type: string
+        currencies:
+          readOnly: true
+          type: string
+        express_payment_methods:
+          readOnly: true
+          type: string
         id:
           readOnly: true
           type: integer
@@ -3036,7 +3043,10 @@ components:
           maxLength: 256
           type: string
       required:
-      - gateways
+      - alternative_payment_methods
+      - card_types
+      - currencies
+      - express_payment_methods
       - id
       - name
       type: object
@@ -5998,11 +6008,19 @@ components:
       type: object
     Payment:
       properties:
+        available_express_payment_methods:
+          readOnly: true
+          type: string
+        available_payment_methods:
+          readOnly: true
+          type: string
         certificate_token:
           type: string
         environment_key:
           type: string
       required:
+      - available_express_payment_methods
+      - available_payment_methods
       - certificate_token
       - environment_key
       type: object
@@ -6051,12 +6069,6 @@ components:
       type: object
     PaymentGateway:
       properties:
-        accepted_card_types:
-          readOnly: true
-          type: string
-        accepted_currencies:
-          readOnly: true
-          type: string
         active:
           description: Gateway must be active to accept and process transactions.
           type: boolean
@@ -6064,6 +6076,12 @@ components:
           description: When enabled, payments will be automatically captured when
             orders are fulfilled.
           type: boolean
+        card_types:
+          readOnly: true
+          type: string
+        currencies:
+          readOnly: true
+          type: string
         delayed_capture_days:
           description: Payments will be automatically captured up to 7 days after
             the authorization.
@@ -6113,8 +6131,8 @@ components:
           type: string
           x-spec-enum-id: 0e887a41ea162b2f
       required:
-      - accepted_card_types
-      - accepted_currencies
+      - card_types
+      - currencies
       - gateway_groups
       - gateway_type
       - id
@@ -6129,32 +6147,6 @@ components:
         weight:
           type: integer
       required:
-      - id
-      - name
-      - weight
-      type: object
-    PaymentGroupGateway:
-      properties:
-        accepted_card_types:
-          items:
-            type: string
-          type: array
-        accepted_currencies:
-          items:
-            type: string
-          type: array
-        active:
-          type: boolean
-        id:
-          type: integer
-        name:
-          type: string
-        weight:
-          type: integer
-      required:
-      - accepted_card_types
-      - accepted_currencies
-      - active
       - id
       - name
       - weight
@@ -19553,10 +19545,6 @@ webhooks:
                   - string
                 data:
                   properties:
-                    accepted_card_types:
-                      type: string
-                    accepted_currencies:
-                      type: string
                     active:
                       description: Gateway must be active to accept and process transactions.
                       type: boolean
@@ -19564,6 +19552,10 @@ webhooks:
                       description: When enabled, payments will be automatically captured
                         when orders are fulfilled.
                       type: boolean
+                    card_types:
+                      type: string
+                    currencies:
+                      type: string
                     delayed_capture_days:
                       description: Payments will be automatically captured up to 7
                         days after the authorization.
@@ -19622,8 +19614,8 @@ webhooks:
                       type: string
                       x-spec-enum-id: 0e887a41ea162b2f
                   required:
-                  - accepted_card_types
-                  - accepted_currencies
+                  - card_types
+                  - currencies
                   - gateway_groups
                   - gateway_type
                   - id
@@ -19698,10 +19690,6 @@ webhooks:
                   - string
                 data:
                   properties:
-                    accepted_card_types:
-                      type: string
-                    accepted_currencies:
-                      type: string
                     active:
                       description: Gateway must be active to accept and process transactions.
                       type: boolean
@@ -19709,6 +19697,10 @@ webhooks:
                       description: When enabled, payments will be automatically captured
                         when orders are fulfilled.
                       type: boolean
+                    card_types:
+                      type: string
+                    currencies:
+                      type: string
                     delayed_capture_days:
                       description: Payments will be automatically captured up to 7
                         days after the authorization.
@@ -19767,8 +19759,8 @@ webhooks:
                       type: string
                       x-spec-enum-id: 0e887a41ea162b2f
                   required:
-                  - accepted_card_types
-                  - accepted_currencies
+                  - card_types
+                  - currencies
                   - gateway_groups
                   - gateway_type
                   - id
@@ -23724,11 +23716,17 @@ webhooks:
                       type: string
                     payments:
                       properties:
+                        available_express_payment_methods:
+                          type: string
+                        available_payment_methods:
+                          type: string
                         certificate_token:
                           type: string
                         environment_key:
                           type: string
                       required:
+                      - available_express_payment_methods
+                      - available_payment_methods
                       - certificate_token
                       - environment_key
                       type: object
