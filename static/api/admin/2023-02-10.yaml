@@ -3025,17 +3025,25 @@ components:
     GatewayGroup:
       properties:
         alternative_payment_methods:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
-          type: string
+          type: array
         card_types:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
-          type: string
+          type: array
         currencies:
+          items:
+            $ref: '#/components/schemas/Currency'
           readOnly: true
-          type: string
+          type: array
         express_payment_methods:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
-          type: string
+          type: array
         id:
           readOnly: true
           type: integer
@@ -5755,6 +5763,11 @@ components:
         cancel_reason:
           readOnly: true
           type: string
+        cancel_reason_other_message:
+          readOnly: true
+          type:
+          - string
+          - 'null'
         currency:
           readOnly: true
           type: string
@@ -6009,11 +6022,15 @@ components:
     Payment:
       properties:
         available_express_payment_methods:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
-          type: string
+          type: array
         available_payment_methods:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
-          type: string
+          type: array
         certificate_token:
           type: string
         environment_key:
@@ -6077,11 +6094,15 @@ components:
             orders are fulfilled.
           type: boolean
         card_types:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
-          type: string
+          type: array
         currencies:
+          items:
+            $ref: '#/components/schemas/Currency'
           readOnly: true
-          type: string
+          type: array
         delayed_capture_days:
           description: Payments will be automatically captured up to 7 days after
             the authorization.
@@ -6150,6 +6171,16 @@ components:
       - id
       - name
       - weight
+      type: object
+    PaymentMethod:
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+      required:
+      - code
+      - label
       type: object
     Product:
       properties:
@@ -7423,6 +7454,11 @@ components:
         cancel_reason:
           readOnly: true
           type: string
+        cancel_reason_other_message:
+          readOnly: true
+          type:
+          - string
+          - 'null'
         currency:
           readOnly: true
           type: string
@@ -7525,6 +7561,7 @@ components:
       required:
       - attribution
       - cancel_reason
+      - cancel_reason_other_message
       - currency
       - date_created
       - frequency
@@ -7551,6 +7588,11 @@ components:
         cancel_reason:
           readOnly: true
           type: string
+        cancel_reason_other_message:
+          readOnly: true
+          type:
+          - string
+          - 'null'
         currency:
           readOnly: true
           type: string
@@ -7653,6 +7695,7 @@ components:
       required:
       - attribution
       - cancel_reason
+      - cancel_reason_other_message
       - currency
       - date_created
       - frequency
@@ -19553,9 +19596,31 @@ webhooks:
                         when orders are fulfilled.
                       type: boolean
                     card_types:
-                      type: string
+                      items:
+                        properties:
+                          code:
+                            type: string
+                          label:
+                            type: string
+                        required:
+                        - code
+                        - label
+                        type: object
+                      type: array
                     currencies:
-                      type: string
+                      items:
+                        properties:
+                          code:
+                            maxLength: 5
+                            title: Currency Code
+                            type: string
+                          label:
+                            type: string
+                        required:
+                        - code
+                        - label
+                        type: object
+                      type: array
                     delayed_capture_days:
                       description: Payments will be automatically captured up to 7
                         days after the authorization.
@@ -19698,9 +19763,31 @@ webhooks:
                         when orders are fulfilled.
                       type: boolean
                     card_types:
-                      type: string
+                      items:
+                        properties:
+                          code:
+                            type: string
+                          label:
+                            type: string
+                        required:
+                        - code
+                        - label
+                        type: object
+                      type: array
                     currencies:
-                      type: string
+                      items:
+                        properties:
+                          code:
+                            maxLength: 5
+                            title: Currency Code
+                            type: string
+                          label:
+                            type: string
+                        required:
+                        - code
+                        - label
+                        type: object
+                      type: array
                     delayed_capture_days:
                       description: Payments will be automatically captured up to 7
                         days after the authorization.
@@ -23717,9 +23804,29 @@ webhooks:
                     payments:
                       properties:
                         available_express_payment_methods:
-                          type: string
+                          items:
+                            properties:
+                              code:
+                                type: string
+                              label:
+                                type: string
+                            required:
+                            - code
+                            - label
+                            type: object
+                          type: array
                         available_payment_methods:
-                          type: string
+                          items:
+                            properties:
+                              code:
+                                type: string
+                              label:
+                                type: string
+                            required:
+                            - code
+                            - label
+                            type: object
+                          type: array
                         certificate_token:
                           type: string
                         environment_key:
@@ -23970,6 +24077,10 @@ webhooks:
                       type: object
                     cancel_reason:
                       type: string
+                    cancel_reason_other_message:
+                      type:
+                      - string
+                      - 'null'
                     currency:
                       type: string
                     date_created:
@@ -24313,6 +24424,7 @@ webhooks:
                   required:
                   - attribution
                   - cancel_reason
+                  - cancel_reason_other_message
                   - currency
                   - date_created
                   - frequency
@@ -24549,6 +24661,10 @@ webhooks:
                       type: object
                     cancel_reason:
                       type: string
+                    cancel_reason_other_message:
+                      type:
+                      - string
+                      - 'null'
                     currency:
                       type: string
                     date_created:
@@ -24892,6 +25008,7 @@ webhooks:
                   required:
                   - attribution
                   - cancel_reason
+                  - cancel_reason_other_message
                   - currency
                   - date_created
                   - frequency
