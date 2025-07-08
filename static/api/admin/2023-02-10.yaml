@@ -15295,21 +15295,27 @@ paths:
       - description: 'Payment Method
 
 
+          * `apple_pay` - Apple Pay
+
           * `bankcard` - Bankcard
 
-          * `paypal` - Paypal'
+          * `google_pay` - Google Pay
+
+          * `paypal` - PayPal'
         explode: true
         in: query
         name: payment_method
         schema:
           items:
             enum:
+            - apple_pay
             - bankcard
+            - google_pay
             - paypal
             type:
             - string
             - 'null'
-            x-spec-enum-id: 26db7321804e45c6
+            x-spec-enum-id: ee5cec980b0ff345
           type: array
         style: form
       - description: 'Gateway Status

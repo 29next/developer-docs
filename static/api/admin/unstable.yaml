@@ -226,6 +226,77 @@ components:
       required:
       - available_locations
       type: object
+    BasketLineReport:
+      properties:
+        currency:
+          maxLength: 3
+          readOnly: true
+          type: string
+        price_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        price_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        total_discount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        unit_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+      required:
+      - currency
+      - price_excl_tax
+      - price_incl_tax
+      - total_cost
+      - total_discount
+      - unit_cost
+      type: object
+    BasketReportValues:
+      properties:
+        currency:
+          readOnly: true
+          type: string
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        total_discount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        total_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        total_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+      required:
+      - currency
+      - total_cost
+      - total_discount
+      - total_excl_tax
+      - total_incl_tax
+      type: object
     BillingAddress:
       properties:
         country:
@@ -635,8 +706,17 @@ components:
           oneOf:
           - {}
           - type: 'null'
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/BasketReportValues'
+          readOnly: true
         status:
           description: 'Available values : Open'
+          readOnly: true
+          type: string
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
         total_discount:
@@ -667,7 +747,9 @@ components:
       - currency
       - id
       - lines
+      - report_values
       - status
+      - total_cost
       - total_discount
       - total_excl_tax
       - total_incl_tax
@@ -726,10 +808,24 @@ components:
           maximum: 2147483647
           minimum: 0
           type: integer
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/BasketLineReport'
+          readOnly: true
         sku:
           readOnly: true
           type: string
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
         total_discount:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        unit_cost:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
@@ -748,8 +844,11 @@ components:
       - product_image
       - product_title
       - product_url
+      - report_values
       - sku
+      - total_cost
       - total_discount
+      - unit_cost
       - variant_id
       - variant_title
       type: object
@@ -15678,21 +15777,27 @@ paths:
       - description: 'Payment Method
 
 
+          * `apple_pay` - Apple Pay
+
           * `bankcard` - Bankcard
 
-          * `paypal` - Paypal'
+          * `google_pay` - Google Pay
+
+          * `paypal` - PayPal'
         explode: true
         in: query
         name: payment_method
         schema:
           items:
             enum:
+            - apple_pay
             - bankcard
+            - google_pay
             - paypal
             type:
             - string
             - 'null'
-            x-spec-enum-id: 26db7321804e45c6
+            x-spec-enum-id: ee5cec980b0ff345
           type: array
         style: form
       - description: 'Gateway Status
@@ -18209,9 +18314,50 @@ webhooks:
                             maximum: 2147483647
                             minimum: 0
                             type: integer
+                          report_values:
+                            properties:
+                              currency:
+                                maxLength: 3
+                                type: string
+                              price_excl_tax:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              price_incl_tax:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              total_cost:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              total_discount:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                              unit_cost:
+                                format: decimal
+                                pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                                type: string
+                            required:
+                            - currency
+                            - price_excl_tax
+                            - price_incl_tax
+                            - total_cost
+                            - total_discount
+                            - unit_cost
+                            type: object
                           sku:
                             type: string
+                          total_cost:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
                           total_discount:
+                            format: decimal
+                            pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                            type: string
+                          unit_cost:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
@@ -18227,8 +18373,11 @@ webhooks:
                         - product_image
                         - product_title
                         - product_url
+                        - report_values
                         - sku
+                        - total_cost
                         - total_discount
+                        - unit_cost
                         - variant_id
                         - variant_title
                         type: object
@@ -18237,8 +18386,39 @@ webhooks:
                       oneOf:
                       - {}
                       - type: 'null'
+                    report_values:
+                      properties:
+                        currency:
+                          type: string
+                        total_cost:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
+                        total_discount:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
+                        total_excl_tax:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
+                        total_incl_tax:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
+                      required:
+                      - currency
+                      - total_cost
+                      - total_discount
+                      - total_excl_tax
+                      - total_incl_tax
+                      type: object
                     status:
                       description: 'Available values : Open'
+                      type: string
+                    total_cost:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                       type: string
                     total_discount:
                       format: decimal
@@ -18339,7 +18519,9 @@ webhooks:
                   - currency
                   - id
                   - lines
+                  - report_values
                   - status
+                  - total_cost
                   - total_discount
                   - total_excl_tax
                   - total_incl_tax
