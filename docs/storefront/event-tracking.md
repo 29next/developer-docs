@@ -250,6 +250,26 @@ console.log(init.user);
 </TabItem>
 </Tabs>
 
+## Context
+
+All events have `context` of the parent frame to easily access contextual data about where and how the event occurred.
+
+| Property | Description | Reference |
+|-------------|------------------------|---------------|
+| `document`  | Data from the top-frame `document` object (e.g., title, referrer). | [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document) |
+| `navigator` | Data from the top-frame `navigator` object (e.g., userAgent, language). | [Navigator](https://developer.mozilla.org/en-US/docs/Web/API/Navigator) |
+| `window`    | Data from the top-frame `window` object (e.g., innerWidth, location). | [Window](https://developer.mozilla.org/en-US/docs/Web/API/Window) |
+
+```json title="Example conext object"
+{
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    }
+}
+```
+
 ## Available Tracking Events
 
 
@@ -266,6 +286,11 @@ analytics.subscribe("page_viewed", event => {
 ```json
 {
     "object": "page",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {},
     "event_type": "page_viewed",
     "timestamp": "2024-12-09T06:42:47.750998+00:00",
@@ -290,6 +315,11 @@ analytics.subscribe("product_category_viewed", event => {
 ```json
 {
     "object": "products",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": [
         {
             "id": 111,
@@ -434,6 +464,11 @@ analytics.subscribe("product_viewed", event => {
 
 {
     "object": "product",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {
         "id": 111,
         "url": "https://examplestore.com/catalogue/timeless-watch_111/",
@@ -550,6 +585,11 @@ analytics.subscribe("product_added_to_cart", event => {
 ```json
 {
     "object": "cart_line",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {
         "currency": "USD",
         "interval": null,
@@ -590,6 +630,11 @@ analytics.subscribe("product_removed_from_cart", event => {
 ```json
 {
     "object": "cart_line",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {
         "currency": "USD",
         "interval": null,
@@ -630,6 +675,11 @@ analytics.subscribe("checkout_started", event => {
 ```json
 {
     "object": "checkout",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {
         "number": null,
         "status": null,
@@ -718,6 +768,11 @@ analytics.subscribe("checkout_contact_info_submitted", event => {
 ```json
 {
     "object": "checkout",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {
         "number": null,
         "status": null,
@@ -816,7 +871,12 @@ analytics.subscribe("checkout_shipping_address_submitted", event => {
 ```json
 {
     "object": "checkout",
-        "data": {
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
+    "data": {
         "number": null,
         "status": null,
         "fulfillment_status": null,
@@ -926,7 +986,12 @@ analytics.subscribe("checkout_shipping_method_submitted", event => {
 ```json
 {
     "object": "checkout",
-        "data": {
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
+    "data": {
         "number": null,
         "status": null,
         "fulfillment_status": null,
@@ -1038,6 +1103,11 @@ analytics.subscribe("checkout_completed", event => {
 ```json
 {
     "object": "checkout",
+    "context": {
+        "document": {...}, // frame parent document 
+        "navigator": {...}, // frame parent navigator 
+        "window": {...} // frame parent window 
+    },
     "data": {
         "number": "109659",
         "status": "open",
