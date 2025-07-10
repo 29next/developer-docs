@@ -276,7 +276,7 @@ All events have `context` of the parent frame to easily access contextual data a
 ### page_viewed
 ```javascript
 analytics.subscribe("page_viewed", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 <details>
@@ -304,7 +304,7 @@ analytics.subscribe("page_viewed", event => {
 ### product_category_viewed
 ```javascript
 analytics.subscribe("product_category_viewed", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
@@ -452,7 +452,7 @@ analytics.subscribe("product_category_viewed", event => {
 ### product_viewed
 ```javascript
 analytics.subscribe("product_viewed", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
@@ -574,7 +574,7 @@ analytics.subscribe("product_viewed", event => {
 ### product_added_to_cart
 ```javascript
 analytics.subscribe("product_added_to_cart", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
@@ -619,7 +619,7 @@ analytics.subscribe("product_added_to_cart", event => {
 ### product_removed_from_cart
 ```javascript
 analytics.subscribe("product_removed_from_cart", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
@@ -664,7 +664,7 @@ analytics.subscribe("product_removed_from_cart", event => {
 ### checkout_started
 ```javascript
 analytics.subscribe("checkout_started", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
@@ -758,7 +758,7 @@ analytics.subscribe("checkout_started", event => {
 ### checkout_contact_info_submitted
 ```javascript
 analytics.subscribe("checkout_contact_info_submitted", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 <details>
@@ -860,7 +860,7 @@ analytics.subscribe("checkout_contact_info_submitted", event => {
 ### checkout_shipping_address_submitted
 ```javascript
 analytics.subscribe("checkout_shipping_address_submitted", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
@@ -976,7 +976,7 @@ analytics.subscribe("checkout_shipping_address_submitted", event => {
 ### checkout_shipping_method_submitted
 ```javascript
 analytics.subscribe("checkout_shipping_method_submitted", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 <details>
@@ -1092,7 +1092,7 @@ analytics.subscribe("checkout_shipping_method_submitted", event => {
 ### checkout_completed
 ```javascript
 analytics.subscribe("checkout_completed", event => {
-    console.log("Event data ", event.data);
+    analytics.debugHelper(event.event_type, event);
 });
 ```
 
