@@ -40,8 +40,7 @@ Order Refund Calculate APIs are only available on `2024-04-01` version and newer
 Below is an abreviated example request to [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to get the line items of the order.
 
 ```json title="Retrieve Order Details"
-GET https://{store}.29next.store/api/admin/orders/{number}/
-
+//GET https://{store}.29next.store/api/admin/orders/{number}/
 {
   "lines": [
     {
@@ -61,8 +60,7 @@ Order payments must be captured in order to create partial refunds, uncaptured p
 Call the [ordersRefundCalculateCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRefundCalculateCreate) endpoint with your line items to calculate the refund and see which initial payment transactions will be refunded.
 
 ```json title="Refund Calculate Request"
-POST https://{store}.29next.store/api/admin/orders/{number}/refund/calculate/
-
+// POST https://{store}.29next.store/api/admin/orders/{number}/refund/calculate/
 {
   "refund_lines": [
     {
@@ -117,7 +115,7 @@ Below is the response from the [ordersRefundCalculateCreate](/docs/api/admin/ref
 We're now ready to create a refund using the [ordersRefundCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRefundCreate) endpoint, see request details below.
 
 ```json title="Order Create Refund Request"
-POST https://{store}.29next.store/api/admin/orders/{number}/refund/
+// POST https://{store}.29next.store/api/admin/orders/{number}/refund/
 {
   "note": "Example reason for the refund",
   "refund_lines": [
@@ -160,7 +158,6 @@ Updating an order shipping address is a common task that can be done with a PATC
 
 ```json title="Update Order Shipping Address"
 // PATCH https://{store}.29next.store/api/admin/orders/{number}/
-
 {
   "shipping_address": {
     "line1": "4765 Test Lane West", // new shipping adddress line 1
@@ -208,12 +205,11 @@ stateDiagram-v2
     sendFulfillmentCancelRequest: Send Fulfillment Cancel Request
     retrieveFulfillmentOrders --> sendFulfillmentCancelRequest
 ```
-- Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
-- Send a [fulfillmentOrdersHold](/docs/api/admin/reference/#/operations/fulfillmentOrdersHold) request for each fulfillment order to hold.
+1. Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
+2. Send a [fulfillmentOrdersHold](/docs/api/admin/reference/#/operations/fulfillmentOrdersHold) request for each fulfillment order to hold.
 
 ```json title="Hold Fulfillment Order Request"
 // POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
-
 {
   "reason": "address_incorrect", // see available reasons in api reference
   "reason_message": "Additional relevant detail." // provide additional relevant detail
@@ -231,8 +227,9 @@ stateDiagram-v2
     sendFulfillmentCancelRequest: Send Fulfillment Cancel Request
     retrieveFulfillmentOrders --> sendFulfillmentCancelRequest
 ```
-- Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
-- Send a [cancellationRequestSend](/docs/api/admin/reference/#/operations/cancellationRequestSend) request for each fulfillment order to request fulfillment cancellation.
+
+1. Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
+2. Send a [cancellationRequestSend](/docs/api/admin/reference/#/operations/cancellationRequestSend) request for each fulfillment order to request fulfillment cancellation.
 
 
 ```json titl="Fulfillment Order Cancellation Request"
@@ -257,7 +254,6 @@ Canceling an order is a common order management task when you need to cancel the
 
 ```json title="Cacenl Order Request"
 // POST https://{store}.29next.store/api/admin/orders/{number}/cancel/
-
 {
   "cancel_reason": "Customer wants to cancel", // Appropiate cancel reason message
   "full_refund": true, // Refund all remainaing payments or not

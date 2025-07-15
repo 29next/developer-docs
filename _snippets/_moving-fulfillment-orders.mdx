@@ -23,9 +23,8 @@ Fulfillment Orders must be `"status": "open"` to be moved to a new location. If 
 Fulfillment order line items often contain products that are in stock at many locations where they could be fulfilled from. To check what locations fulfillment order items are available at, use the [availableLocationsRetrieve](/docs/api/admin/reference/#/operations/availableLocationsRetrieve) endpoint.
 
 ```json title="Retrieve Available Fulfillment Locations"
-GET https://{store}.29next.store/api/admin/fulfillment-orders/{id}/available-locations/
-
-// Example Response
+// GET https://{store}.29next.store/api/admin/fulfillment-orders/{id}/available-locations/
+// Response
 {
     "available_locations": [
         {
@@ -52,8 +51,7 @@ GET https://{store}.29next.store/api/admin/fulfillment-orders/{id}/available-loc
 Once the available locations fulfillment order line items can move, use the [fulfillmentOrdersMove](/docs/api/admin/reference/#/operations/fulfillmentOrdersMove) endpoint to move all or some of the line items.
 
 ```json title="Move Fulfillment Order Items to New Location"
-POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/move/
-
+// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/move/
 {
   "new_location_id": 123,
   /// optional, if not passed, all lines will be moved to the new location
