@@ -194,7 +194,7 @@ Fulfillment can be requested immediately through the [fulfillmentRequestSend](/d
 }
 ```
 
-### Holding Fulfillment
+### Hold Fulfillment
 
 Holding fulfillment for an order while waiting for additional review or making adments to the order before sending to the fulfillment location for shipping.
 
@@ -239,7 +239,7 @@ stateDiagram-v2
 }
 ```
 
-### Moving Fulfillment Orders
+### Move Fulfillment Orders
 
 ```mdx-code-block
 
