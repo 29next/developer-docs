@@ -153,8 +153,94 @@ Depending on the product type and status of the line items being refunded, there
 :::
 
 
+### Update Shipping Address
+
+Updating an order shipping address is a common task that can be done with a PATCH request to the [ordersUpdate](/docs/api/admin/reference/#/operations/ordersUpdate) endpoint.
 
 
+```json title="Update Order Shipping Address"
+// PATCH https://{store}.29next.store/api/admin/orders/{number}/
+
+{
+  "shipping_address": {
+    "line1": "4765 Test Lane West", // new shipping adddress line 1
+    "line4": "Mountain Pass", // new shipping address city
+    "state": "CA", // new shipping address state
+    "postcode": "92366", // new shipping address postcode
+    "country": "US" // new shipping address country
+  }
+}
+```
+:::info Before Fulfillment Processing
+
+Updating an order shipping address should be done **before** the order is sent to a fulfillment location for fulfillment. If the order has already been accepted and processing, send a a [cancellationRequestSend](/docs/api/admin/reference/#/operations/cancellationRequestSend) request and then [fulfillmentRequestSend](/docs/api/admin/reference/#/operations/fulfillmentRequestSend) after you've updated the shipping address. 
+:::
+
+
+### Request Fulfillment
+
+Fulfillment can be requested immediately through the [fulfillmentRequestSend](/docs/api/admin/reference/#/operations/fulfillmentRequestSend) for cases that you'd like to immediately send the fulfillment order to the fulfillment location for fulfillment. 
+
+
+```json title="Fulfillment Request"
+// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/
+
+{
+  "fulfillment_order_line_items": [  // will split the fulfillment order into a new fulfillment order
+    {
+      "id": 0,
+      "quantity": 1
+    }
+  ],
+  "message": "Special message to warehouse", // message to the fulfillment location
+  "notify": true // notify the customer when fulfillment order is fulfilled
+}
+```
+
+### Holding Fulfillment
+
+Holding fulfillment for an order while waiting for additional review or making adments to the order before sending to the fulfillment location for shipping.
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    retrieveFulfillmentOrders: Retrieve Fulfillment Orders
+    sendFulfillmentCancelRequest: Send Fulfillment Cancel Request
+    retrieveFulfillmentOrders --> sendFulfillmentCancelRequest
+```
+- Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
+- Send a [fulfillmentOrdersHold](/docs/api/admin/reference/#/operations/fulfillmentOrdersHold) request for each fulfillment order to hold.
+
+```json title="Hold Fulfillment Order Request"
+// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
+
+{
+  "reason": "address_incorrect", // see available reasons in api reference
+  "reason_message": "Additional relevant detail." // provide additional relevant detail
+}
+```
+
+### Cancel Fulfillment
+
+Canceling a fulfillment order that is already accepted and processing with a fuflillment location is a common order management task to stop fulfillment or as a prerequisite step to moving a fulfillment order to a new location. 
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    retrieveFulfillmentOrders: Retrieve Fulfillment Orders
+    sendFulfillmentCancelRequest: Send Fulfillment Cancel Request
+    retrieveFulfillmentOrders --> sendFulfillmentCancelRequest
+```
+- Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
+- Send a [cancellationRequestSend](/docs/api/admin/reference/#/operations/cancellationRequestSend) request for each fulfillment order to request fulfillment cancellation.
+
+
+```json titl="Fulfillment Order Cancellation Request"
+// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/
+{
+  "message": "Reason why canceling fulfillment" // message sent to the fulfillment location regarding the cancellation
+}
+```
 
 ### Moving Fulfillment Orders
 
@@ -164,3 +250,22 @@ import MoveFulfillmentOrders from '@site/_snippets/_moving-fulfillment-orders.md
 
 <MoveFulfillmentOrders />
 ```
+
+### Cancel Order
+
+Canceling an order is a common order management task when you need to cancel the entire order and refund all payment transactions. To cancel an order, send a request to the [ordersCancelCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersCancelCreate) endpoint. 
+
+```json title="Cacenl Order Request"
+// POST https://{store}.29next.store/api/admin/orders/{number}/cancel/
+
+{
+  "cancel_reason": "Customer wants to cancel", // Appropiate cancel reason message
+  "full_refund": true, // Refund all remainaing payments or not
+  "send_cancel_notification": true // Send the customer a notification or not
+}
+```
+
+
+
+
+
