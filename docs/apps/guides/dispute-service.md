@@ -36,7 +36,7 @@ sequenceDiagram
   Dispute Service->>Store: Matches dispute to store transaction
   Store-->>Customer: Customer is added to block lists
   Dispute Service-->>Store: Create refund (optional)
-  Dispute Service-->>Store: Cancel fulfillment (optional)
+  Dispute Service-->>Store: Cancel fulfillment (recommended)
   Dispute Service->>Store: Resolve dispute
 ```
 
@@ -120,7 +120,7 @@ To create a dispute in the store using the [disputesCreate](/docs/api/admin/refe
 To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
 
 ```json title="Match dispute"
-PUT https://{store}.29next.store/api/admin/disputes/{id}/
+// PUT https://{store}.29next.store/api/admin/disputes/{id}/
 {
   "transaction": 7388
 }
@@ -152,7 +152,7 @@ If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fu
 
 
 ```json title="Hold Fulfillment"
-//POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
+// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
 
 {
   "reason": "other",

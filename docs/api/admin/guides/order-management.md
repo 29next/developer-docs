@@ -40,7 +40,7 @@ Order Refund Calculate APIs are only available on `2024-04-01` version and newer
 Below is an abreviated example request to [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to get the line items of the order.
 
 ```json title="Retrieve Order Details"
-//GET https://{store}.29next.store/api/admin/orders/{number}/
+// GET https://{store}.29next.store/api/admin/orders/{number}/
 {
   "lines": [
     {
