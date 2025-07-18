@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Session Token Overview
 
-Session tokens are a method your app can use to authenticate users and requests from 29 Next and your App.
+Session tokens are a method your app can use to authenticate users and requests from Next Commerce and your App.
 
 ### How Session Tokens Work
 

@@ -7,7 +7,7 @@ sidebar_position: 3
 App manifest.json is used for apps extending the storefront to configure HTML snippets that can be injected into storefront themes through [app_hooks](/storefront/themes/templates/tags.md#app_hook). You can also add settings that can generate a settings page in the store dashboard to configure your app in the case your app only extends the storefront and doesn't have a server side integration.
 
 :::info
-To upload your snippets and manifest.json, install [App Kit](/docs/apps/app-kit.md) to zip your snippet files and push them to 29 Next.
+To upload your snippets and manifest.json, install [App Kit](/docs/apps/app-kit.md) to zip your snippet files and push them to Next Commerce.
 :::
 
 

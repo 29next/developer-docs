@@ -4,7 +4,7 @@ sidebar_label: Review & Publishing
 sidebar_position: 8
 ---
 
-Congratulations, you've built an app and now it's ready to publish to all 29 Next customers. Before we publish your app, we need to ensure your app is ready to go.
+Congratulations, you've built an app and now it's ready to publish to all Next Commerce customers. Before we publish your app, we need to ensure your app is ready to go.
 
 :::tip
 Private apps can be shared with merchants and installed using the **Install Link** feature available on your app dashboard. Use install links to install and validate your app with merchants before submitting for review.

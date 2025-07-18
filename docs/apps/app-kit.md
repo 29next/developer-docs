@@ -41,11 +41,11 @@ With the package installed, you can now use the commands inside your app directo
 |-----|-----|
 |`nak setup` | Configure current directory with an app in your account |
 |`nak build` | build new app zip file |
-|`nak push` | push latest app zip file to 29 Next platform |
+|`nak push` | push latest app zip file to Next Commerce platform |
 
 
 #### Setup
-Configures the current directory with necessary data to push the app files to 29 Next.
+Configures the current directory with necessary data to push the app files to Next Commerce.
 
 **Data collected by the `setup` command:**
 
@@ -54,7 +54,7 @@ Configures the current directory with necessary data to push the app files to 29
 - **Password** - your password used to access your partner account.
 
 #### Build
-Creates a new version (zip of the current directory files) to prepare your app to be pushed to 29 Next.
+Creates a new version (zip of the current directory files) to prepare your app to be pushed to Next Commerce.
 
 #### Push
-Pushes the latest version to 29 Next and to your development stores to review and test your app.
+Pushes the latest version to Next Commerce and to your development stores to review and test your app.

@@ -6,9 +6,9 @@ sidebar_position: 1
 
 ### Getting Started
 
-<!-- At the core of 29 Next is the Admin API, developers can seamless build custom store operations, create orders, and integrate third-party services. Empower your business with streamlined control and endless possibilities, all through our intuitive and powerful API. -->
+<!-- At the core of Next Commerce is the Admin API, developers can seamless build custom store operations, create orders, and integrate third-party services. Empower your business with streamlined control and endless possibilities, all through our intuitive and powerful API. -->
 
-At the core of 29 Next is the Admin API, developers can manage store resources, integrate third-party services and build seamless external order flows.
+At the core of Next Commerce is the Admin API, developers can manage store resources, integrate third-party services and build seamless external order flows.
 
 
 
@@ -51,7 +51,7 @@ Admin API tokens provide full access to your system, including the ability to pe
 
 ### Versioning
 
-API versioning allows 29 Next to continuously evolve the platform while maintaining predictable behavior for existing APIs with a path for upgrades and deprecations.
+API versioning allows Next Commerce to continuously evolve the platform while maintaining predictable behavior for existing APIs with a path for upgrades and deprecations.
 
 **Admin API Versions**
 

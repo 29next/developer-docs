@@ -1,6 +1,6 @@
 # Storefront
 
-The 29 Next storefront is a flexible, customizable front-end layer for your ecommerce business. Whether you're building a completely custom storefront or enhancing an existing theme, this section will guide you through the tools and features available for developers.
+The Next Commerce storefront is a flexible, customizable front-end layer for your ecommerce business. Whether you're building a completely custom storefront or enhancing an existing theme, this section will guide you through the tools and features available for developers.
 
 ### Themes
 

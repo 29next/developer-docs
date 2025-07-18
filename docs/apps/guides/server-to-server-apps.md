@@ -11,14 +11,14 @@ Server to Server apps are those that leverage the [Oauth flow](/apps/oauth/index
 
 
 :::info
-Server to Server apps don't need to upload any "code" or files to 29 Next, their apps are fully external and simply use Oauth to obtain Admin API access.
+Server to Server apps don't need to upload any "code" or files to Next Commerce, their apps are fully external and simply use Oauth to obtain Admin API access.
 :::
 
 In this guide, we'll show you how to create your first app to get you up and running and familiar with many of the concepts.
 
 ### Preparation
 
-1. If you haven't done so already, create your [29 Next account](https://accounts.29next.com) and complete your [Partner Registration](https://accounts.29next.com/partners/).
+1. If you haven't done so already, create your [Next Commerce account](https://accounts.29next.com) and complete your [Partner Registration](https://accounts.29next.com/partners/).
 
 2. Make sure you have access to a store you plan to use for development - you will use this in later steps.
 

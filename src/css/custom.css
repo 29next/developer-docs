@@ -209,6 +209,11 @@ html[data-theme='dark'] {
     --ifm-menu-color-background-active: var(--docs-color-primary-tint);
 }
 
+.navbar__logo img {
+    height: 88%;
+    vertical-align: middle;
+}
+
 /* Homepage */
 
 @layer components {

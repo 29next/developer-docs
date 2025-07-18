@@ -63,13 +63,13 @@ const plugins = [
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: '29 Next Developer Docs',
-    tagline: 'Documentation and Guides for Developers on the 29 Next platform.',
+    title: 'Next Commerce Developer Docs',
+    tagline: 'Documentation and Guides for Developers on the Next Commerce platform.',
     url: 'https://developers.29next.com',
     baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/logo.png',
+    favicon: 'img/logo-icon.png',
     trailingSlash: true,
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
@@ -134,10 +134,11 @@ const config = {
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                title: '29 Next Developers',
+                title: '',
                 logo: {
-                    alt: '29 Next Logo',
-                    src: 'img/logo.png',
+                    alt: 'Next Commerce Logo',
+                    src: 'img/logo-light.png',
+                    srcDark: 'img/logo-dark.png',
                 },
                 items: [
                     {

@@ -15,7 +15,7 @@ Storefront extensions are commonly used for but not limited to:
 
 ### Preparation
 
-1. If you haven't done so already, create your [29 Next account](https://accounts.29next.com) and complete your [Partner Registration](https://accounts.29next.com/partners/).
+1. If you haven't done so already, create your [Next Commerce account](https://accounts.29next.com) and complete your [Partner Registration](https://accounts.29next.com/partners/).
 
 2. Make sure you have access to a store you plan to use for development - you will use this in later steps.
 

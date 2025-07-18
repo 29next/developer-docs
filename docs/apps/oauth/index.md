@@ -18,7 +18,7 @@ OAuth 2.0 uses **Access Tokens** which represent authorization to access resourc
 
 ### OAuth Setup Flow
 
-29 Next uses OAuth 2.0's Authorization Code Flow to issue an access token on behalf of users.
+Next Commerce uses OAuth 2.0's Authorization Code Flow to issue an access token on behalf of users.
 
 ##### Authorization Flow
 

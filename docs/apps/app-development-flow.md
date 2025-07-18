@@ -11,7 +11,7 @@ App development stores are stores linked to your app for quick iterations, testi
 
 **App changes are automatically pushed to your development stores**
 
-When developing your app, you'll be using App Kit to `nak build` and `nak push` your latest changes to 29 Next.  Your app will automatically updated on your development store for a quick feedback loop and reviewing your latest changes.
+When developing your app, you'll be using App Kit to `nak build` and `nak push` your latest changes to Next Commerce.  Your app will automatically updated on your development store for a quick feedback loop and reviewing your latest changes.
 
 
 **App changes are not automatically pushed to existing stores with your app installed**

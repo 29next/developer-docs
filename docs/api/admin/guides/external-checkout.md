@@ -10,7 +10,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
-In this guide we'll cover the best practices when building an external checkout flow using the 29 Next Admin API. Using the API gives you the most flexibility of data and functionality across the platform and external integrations.
+In this guide we'll cover the best practices when building an external checkout flow using the Next Commerce Admin API. Using the API gives you the most flexibility of data and functionality across the platform and external integrations.
 
 ```mermaid
 stateDiagram-v2

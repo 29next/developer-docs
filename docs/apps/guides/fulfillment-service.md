@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 import Link from '@docusaurus/Link';
 ```
 
-Fulfillment service apps are integrations that manage fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the 29 Next dashboard.
+Fulfillment service apps are integrations that manage fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the Next Commerce dashboard.
 
 
 :::info

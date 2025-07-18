@@ -7,7 +7,7 @@ tags:
 
 # Test Order Flows
 
-Testing your integration is a critical step when developing on the 29 Next platform. There are two distinct paths to creating Test Orders, Transactions, and Subscriptions through the Admin API or storefront checkout flow.
+Testing your integration is a critical step when developing on the Next Commerce platform. There are two distinct paths to creating Test Orders, Transactions, and Subscriptions through the Admin API or storefront checkout flow.
 
 :::info Card Tokenization
 Cards must be tokenized before submitting on the Admin API, see [iframe card tokenization](/docs/api/admin/guides/iframe-payment-form.md) guide.

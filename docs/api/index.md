@@ -4,7 +4,7 @@ sidebar_position: 1
 ---
 # APIs
 
-Build unique ecommerce experiences and custom functionality with 29 Next APIs.
+Build unique ecommerce experiences and custom functionality with Next Commerce APIs.
 
 
 ```mdx-code-block
