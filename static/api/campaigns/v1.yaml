@@ -15,43 +15,54 @@ components:
     Address:
       properties:
         country:
+          description: The address country code
           maxLength: 225
           type: string
         first_name:
+          description: The first name of the address
           maxLength: 255
           type: string
         is_default_for_billing:
           default: false
+          description: Set this address as the customer's default billing address
           type: boolean
         is_default_for_shipping:
           default: false
+          description: Set this address as the customer's default shipping address
           type: boolean
         last_name:
+          description: The last name of the address
           maxLength: 255
           type: string
         line1:
+          description: The first line of the address
           maxLength: 225
           type: string
         line2:
+          description: Optional second line of of the address
           maxLength: 225
           type: string
         line3:
+          description: Optional third line of of the address
           maxLength: 225
           type: string
         line4:
-          description: City
+          description: City of the address
           maxLength: 225
           type: string
         notes:
           maxLength: 225
           type: string
         phone_number:
+          description: The address phone number
           maxLength: 225
           type: string
         postcode:
+          description: The address post code or zip code
           maxLength: 64
           type: string
         state:
+          description: The address state/province
           maxLength: 225
           type: string
       required:
@@ -64,37 +75,46 @@ components:
     AddressCart:
       properties:
         country:
+          description: The address country code
           maxLength: 225
           type: string
         first_name:
+          description: The first name of the address
           maxLength: 255
           type: string
         last_name:
+          description: The last name of the address
           maxLength: 255
           type: string
         line1:
+          description: The first line of the address
           maxLength: 225
           type: string
         line2:
+          description: Optional second line of of the address
           maxLength: 225
           type: string
         line3:
+          description: Optional third line of of the address
           maxLength: 225
           type: string
         line4:
-          description: City
+          description: City of the address
           maxLength: 225
           type: string
         notes:
           maxLength: 225
           type: string
         phone_number:
+          description: The address phone number
           maxLength: 225
           type: string
         postcode:
+          description: The address post code or zip code
           maxLength: 64
           type: string
         state:
+          description: The address state/province
           maxLength: 225
           type: string
       required:
@@ -107,76 +127,87 @@ components:
     Attribution:
       properties:
         affiliate:
+          description: Affiliate identifier
           maxLength: 225
           nullable: true
           type: string
         funnel:
+          description: The marketing funnel attributed to the order
           maxLength: 225
           nullable: true
           type: string
         gclid:
+          description: Google Click Identifier
           maxLength: 225
           nullable: true
           type: string
         metadata:
           additionalProperties: {}
+          description: Additional attribution metadata
           type: object
         subaffiliate1:
+          description: Sub-affiliate identifier 1
           maxLength: 225
           nullable: true
           type: string
         subaffiliate2:
+          description: Sub-affiliate identifier 2
           maxLength: 225
           nullable: true
           type: string
         subaffiliate3:
+          description: Sub-affiliate identifier 3
           maxLength: 225
           nullable: true
           type: string
         subaffiliate4:
+          description: Sub-affiliate identifier 4
           maxLength: 225
           nullable: true
           type: string
         subaffiliate5:
+          description: Sub-affiliate identifier 5
           maxLength: 225
           nullable: true
           type: string
         utm_campaign:
+          description: Campaign name
           maxLength: 225
           nullable: true
           type: string
         utm_content:
+          description: Content of the traffic (e.g., banner, text link)
           maxLength: 225
           nullable: true
           type: string
         utm_medium:
+          description: Medium of the traffic (e.g., email, CPC)
           maxLength: 225
           nullable: true
           type: string
         utm_source:
+          description: Source of the traffic (e.g., search engine, newsletter)
           maxLength: 225
           nullable: true
           type: string
         utm_term:
+          description: Search term or keyword
           maxLength: 225
           nullable: true
           type: string
       type: object
-    BlankEnum:
-      enum:
-      - ''
     Campaign:
       properties:
         currency:
-          description: Currency for orders created through this campaign.
+          description: Currency for orders created through this campaign
           maxLength: 3
           type: string
         language:
-          description: Preferred language for customers of this campaign.
+          description: Preferred language for customers of this campaign
           maxLength: 3
           type: string
         name:
-          description: Campaign name used internally for reference.
+          description: Campaign name used internally for reference
           maxLength: 200
           type: string
         packages:
@@ -184,7 +215,7 @@ components:
             $ref: '#/components/schemas/PackageSerilaizer'
           type: array
         payment_env_key:
-          readOnly: true
+          description: Payment environment key associated with the store
           type: string
         shipping_methods:
           items:
@@ -194,20 +225,20 @@ components:
       - currency
       - language
       - name
-      - packages
-      - payment_env_key
-      - shipping_methods
       type: object
     Cart:
       properties:
         attribution:
           $ref: '#/components/schemas/MarketingAttribution'
         checkout_url:
+          description: Storefront checkout flow url
           type: string
         currency:
+          description: Cart currency
           maxLength: 50
           type: string
         discounts:
+          description: Array of discounts
           items:
             $ref: '#/components/schemas/Voucher'
           type: array
@@ -216,21 +247,26 @@ components:
             $ref: '#/components/schemas/CartLine'
           type: array
         total_discounts:
+          description: Total discount amount applied to the order
           readOnly: true
           type: string
         total_excl_tax:
+          description: Total price before tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         total_excl_tax_excl_discounts:
+          description: Total price before tax and discounts
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         total_incl_tax:
+          description: Total price including tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         total_incl_tax_excl_discounts:
+          description: Total price including tax, before discounts
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
@@ -248,7 +284,7 @@ components:
         address:
           allOf:
           - $ref: '#/components/schemas/AddressCart'
-          description: Set default shipping and billing address for the user.
+          description: Set default shipping and billing address for the user
         attribution:
           $ref: '#/components/schemas/Attribution'
         lines:
@@ -270,32 +306,42 @@ components:
     CartLine:
       properties:
         id:
+          description: Cart line ID
           type: integer
         image:
+          description: Product image
           type: string
         is_upsell:
+          description: Track this line item as an upsell
           type: boolean
         price_excl_tax:
+          description: Cart line price before tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_excl_tax_excl_discounts:
+          description: Cart line price before tax and discounts
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_incl_tax:
+          description: Cart line price including tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_incl_tax_excl_discounts:
+          description: Cart line price including tax, before discounts
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         product_sku:
+          description: Product's Stock Keeping Unit
           type: string
         product_title:
+          description: Name of the product as displayed to customers
           type: string
         quantity:
+          description: Total product units from the package
           type: integer
       required:
       - id
@@ -309,6 +355,7 @@ components:
           $ref: '#/components/schemas/Address'
         billing_same_as_shipping_address:
           default: false
+          description: Use the shipping address as the billing address
           type: boolean
         lines:
           description: Array of package IDs
@@ -318,21 +365,24 @@ components:
         payment_detail:
           $ref: '#/components/schemas/Payment'
         payment_failed_url:
-          description: Redirect user to this url if payment is unsuccessful.
+          description: Redirect user to this url if payment is unsuccessful
           type: string
         shipping_address:
           $ref: '#/components/schemas/Address'
         shipping_method:
+          description: Shipping method ID for order shipping
           type: integer
         success_url:
           description: Fully qualified url that payment redirect flows will redirect
-            to.
+            to
           type: string
         use_default_billing_address:
           default: false
+          description: Use the customer's default billing address for this order
           type: boolean
         use_default_shipping_address:
           default: false
+          description: Use the customer's default shipping address for this order
           type: boolean
         user:
           allOf:
@@ -373,10 +423,10 @@ components:
     Line:
       properties:
         package_id:
-          description: Package id of products to add to the order.
+          description: Package ID of products to add to the order
           type: integer
         quantity:
-          description: Package quantity * line quantity = order line quantity
+          description: Package quantity
           minimum: 1
           type: integer
       required:
@@ -385,12 +435,13 @@ components:
     LineWithUpsell:
       properties:
         is_upsell:
+          description: Track this line item as an upsell
           type: boolean
         package_id:
-          description: Package id of products to add to the order.
+          description: Package ID of products to add to the order
           type: integer
         quantity:
-          description: Package quantity * line quantity = order line quantity
+          description: Package quantity
           minimum: 1
           type: integer
       required:
@@ -399,65 +450,76 @@ components:
     MarketingAttribution:
       properties:
         affiliate:
+          description: Affiliate identifier
           maxLength: 225
           nullable: true
           type: string
         funnel:
+          description: The marketing funnel attributed to the order
           maxLength: 225
           nullable: true
           type: string
         gclid:
+          description: Google Click Identifier
           maxLength: 225
           nullable: true
           type: string
         metadata:
           additionalProperties: {}
+          description: Additional attribution metadata
           nullable: true
           type: object
         subaffiliate1:
+          description: Sub-affiliate identifier 1
           maxLength: 225
           nullable: true
           type: string
         subaffiliate2:
+          description: Sub-affiliate identifier 2
           maxLength: 225
           nullable: true
           type: string
         subaffiliate3:
+          description: Sub-affiliate identifier 3
           maxLength: 225
           nullable: true
           type: string
         subaffiliate4:
+          description: Sub-affiliate identifier 4
           maxLength: 225
           nullable: true
           type: string
         subaffiliate5:
+          description: Sub-affiliate identifier 5
           maxLength: 225
           nullable: true
           type: string
         utm_campaign:
+          description: Campaign name
           maxLength: 225
           nullable: true
           type: string
         utm_content:
+          description: Content of the traffic (e.g., banner, text link)
           maxLength: 225
           nullable: true
           type: string
         utm_medium:
+          description: Medium of the traffic (e.g., email, CPC)
           maxLength: 225
           nullable: true
           type: string
         utm_source:
+          description: Source of the traffic (e.g., search engine, newsletter)
           maxLength: 225
           nullable: true
           type: string
         utm_term:
+          description: Search term or keyword
           maxLength: 225
           nullable: true
           type: string
       type: object
-    NullEnum:
-      enum:
-      - null
     Order:
       properties:
         attribution:
@@ -465,66 +527,83 @@ components:
         billing_address:
           $ref: '#/components/schemas/OrderAddress'
         currency:
+          description: Order currency
           maxLength: 50
           type: string
         discounts:
+          description: Array of discounts
           items:
             $ref: '#/components/schemas/Discount'
           type: array
         display_taxes:
+          description: Names of taxes applied to the order
           maxLength: 225
           nullable: true
           type: string
         is_test:
+          description: Indicates if the order is a test
           type: boolean
         lines:
           items:
             $ref: '#/components/schemas/OrderLine'
           type: array
         number:
+          description: Order number
           maxLength: 255
           type: string
         order_status_url:
+          description: The url for the order's status page
           maxLength: 255
           type: string
         ref_id:
+          description: Order reference ID
           maxLength: 255
           type: string
         shipping_address:
           $ref: '#/components/schemas/OrderAddress'
         shipping_code:
+          description: Shipping method code
           maxLength: 255
           type: string
         shipping_excl_tax:
+          description: Shipping price before tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         shipping_incl_tax:
+          description: Shipping price including tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         shipping_method:
+          description: Shipping method name
           maxLength: 255
           type: string
         shipping_tax:
+          description: Total shipping tax amount applied to the order
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         supports_post_purchase_upsells:
+          description: Indicates whether upsells are allowed for this order
           readOnly: true
           type: boolean
         total_discounts:
+          description: Total discount amount applied to the order
           readOnly: true
           type: string
         total_excl_tax:
+          description: Total price before tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         total_incl_tax:
+          description: Total price including tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         total_tax:
+          description: Total tax amount applied to the order
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
@@ -543,37 +622,46 @@ components:
     OrderAddress:
       properties:
         country:
+          description: The address country code
           maxLength: 225
           type: string
         first_name:
+          description: The first name of the address
           maxLength: 255
           type: string
         last_name:
+          description: The last name of the address
           maxLength: 255
           type: string
         line1:
+          description: The first line of the address
           maxLength: 225
           type: string
         line2:
+          description: Optional second line of of the address
           maxLength: 225
           type: string
         line3:
+          description: Optional third line of of the address
           maxLength: 225
           type: string
         line4:
-          description: City
+          description: City of the address
           maxLength: 225
           type: string
         notes:
           maxLength: 225
           type: string
         phone_number:
+          description: The address phone number
           maxLength: 225
           type: string
         postcode:
+          description: The address post code or zip code
           maxLength: 64
           type: string
         state:
+          description: The address state/province
           maxLength: 225
           type: string
       required:
@@ -586,32 +674,42 @@ components:
     OrderLine:
       properties:
         id:
+          description: Order line ID
           type: integer
         image:
+          description: Product image
           type: string
         is_upsell:
+          description: Track this line item as an upsell
           type: boolean
         price_excl_tax:
+          description: Order line price before tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_excl_tax_excl_discounts:
+          description: Order line price before tax and discounts
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_incl_tax:
+          description: Order line price including tax
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_incl_tax_excl_discounts:
+          description: Order line price including tax, before discounts
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         product_sku:
+          description: Product's Stock Keeping Unit
           type: string
         product_title:
+          description: Name of the product as displayed to customers
           type: string
         quantity:
+          description: Total product units from the package
           type: integer
       required:
       - id
@@ -621,85 +719,109 @@ components:
       properties:
         accepts_marketing:
           default: true
+          description: Customer marketing acceptance
           nullable: true
           type: boolean
         email:
+          description: Customer email
           format: email
           nullable: true
           type: string
         first_name:
+          description: Customer first name
           maxLength: 255
           type: string
         ip:
+          description: Customer IP address
           nullable: true
           type: string
         language:
+          description: Customer ISO 2 letter langauge code
           maxLength: 10
           type: string
         last_name:
+          description: Customer last name
           maxLength: 255
           type: string
         phone_number:
+          description: Customer phone number, must be E. 164 format
           nullable: true
           type: string
         user_agent:
+          description: Customer user agent
           nullable: true
           type: string
       type: object
     PackageSerilaizer:
       properties:
         external_id:
+          description: ID of the product linked to the package
           maximum: 2147483647
           minimum: 0
           type: integer
         image:
+          description: Package image
           readOnly: true
           type: string
         interval:
-          nullable: true
-          oneOf:
+          allOf:
           - $ref: '#/components/schemas/IntervalEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          description: 'Recurring subscription interval
+
+
+            * `day` - Day
+
+            * `month` - Month'
         interval_count:
+          description: Recurring subscription interval count
           maximum: 2147483647
           minimum: 0
           nullable: true
           type: integer
         is_recurring:
+          description: Recurring subscription status of the package
           type: boolean
         name:
+          description: Package name
           maxLength: 200
           title: Package name
           type: string
         price:
+          description: Price per product unit in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           title: Price per unit
           type: string
         price_recurring:
+          description: Recurring subscription price per unit of product in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_recurring_total:
+          description: Total recurring subscription price of the package when purchased
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_retail:
+          description: Retail price per product unit in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_retail_total:
+          description: Total retail price of the package when purchased
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         price_total:
+          description: Total price of the package when purchased
           type: string
         qty:
+          description: Quantity of product in the package
           maximum: 2147483647
           minimum: 0
           type: integer
         ref_id:
+          description: Package reference ID
           title: id
           type: integer
       required:
@@ -714,33 +836,59 @@ components:
     Payment:
       properties:
         card_token:
+          description: Card token when using `card_token` payment method
           nullable: true
           type: string
         external_payment_method:
-          description: External payment method code.
+          description: External payment method code
           nullable: true
           type: string
         payment_gateway:
-          description: Specify a payment gateway to be used for order payment.
+          description: Specify a payment gateway to be used for order payment
           nullable: true
           type: integer
         payment_gateway_group:
-          description: Specify a payment gateway group to be used for order payment.
+          description: Specify a payment gateway group to be used for order payment
           nullable: true
           type: integer
         payment_method:
-          $ref: '#/components/schemas/PaymentMethodEnum'
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodEnum'
+          description: 'Payment method
+
+
+            * `apple_pay` - Apple Pay
+
+            * `card_token` - Card Token
+
+            * `paypal` - Paypal
+
+            * `klarna` - Klarna
+
+            * `ideal` - iDEAL
+
+            * `bancontact` - Bancontact
+
+            * `giropay` - Giropay
+
+            * `google_pay` - Google Pay
+
+            * `sofort` - Sofort
+
+            * `sepa_debit` - SEPA Direct Debit
+
+            * `external` - External'
       required:
       - payment_method
       type: object
     PaymentDetail:
       properties:
         payment_gateway:
-          description: Specify a payment gateway to be used for order payment.
+          description: Specify a payment gateway to be used for order payment
           nullable: true
           type: integer
         payment_gateway_group:
-          description: Specify a payment gateway group to be used for order payment.
+          description: Specify a payment gateway group to be used for order payment
           nullable: true
           type: integer
       type: object
@@ -782,42 +930,51 @@ components:
     ShippingOption:
       properties:
         code:
+          description: Shipping method code
           type: string
         price:
+          description: Shipping method price
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         ref_id:
+          description: Shipping method reference ID
           type: integer
-      required:
-      - ref_id
       type: object
     User:
       properties:
         accepts_marketing:
           default: true
+          description: Customer marketing acceptance
           nullable: true
           type: boolean
         email:
+          description: Customer email
           format: email
           nullable: true
           type: string
         first_name:
+          description: Customer first name
           maxLength: 255
           type: string
         ip:
+          description: Customer IP address
           nullable: true
           type: string
         language:
+          description: Customer ISO 2 letter langauge code
           maxLength: 10
           type: string
         last_name:
+          description: Customer last name
           maxLength: 255
           type: string
         phone_number:
+          description: Customer phone number, must be E. 164 format
           nullable: true
           type: string
         user_agent:
+          description: Customer user agent
           nullable: true
           type: string
       type: object
@@ -825,22 +982,28 @@ components:
       properties:
         accepts_marketing:
           default: true
+          description: Customer marketing acceptance
           nullable: true
           type: boolean
         email:
+          description: Customer email
           format: email
           nullable: true
           type: string
         first_name:
+          description: Customer first name
           maxLength: 255
           type: string
         language:
+          description: Customer ISO 2 letter langauge code
           maxLength: 10
           type: string
         last_name:
+          description: Customer last name
           maxLength: 255
           type: string
         phone_number:
+          description: Customer phone number, must be E. 164 format
           nullable: true
           type: string
       type: object
@@ -934,7 +1097,7 @@ openapi: 3.0.3
 paths:
   /api/v1/campaigns/:
     get:
-      description: Retrieve a campaign.
+      description: Retrieve campaign details.
       operationId: campaignRetrieve
       responses:
         '200':
@@ -1005,10 +1168,11 @@ paths:
       - orders
   /api/v1/orders/{ref_id}/:
     get:
-      description: Retrieve order detail.
+      description: Retrieve specific order details.
       operationId: orderRetrieve
       parameters:
-      - in: path
+      - description: Order reference ID
+        in: path
         name: ref_id
         required: true
         schema:
@@ -1029,7 +1193,7 @@ paths:
       description: Add an upsell to an existing order.
       operationId: ordersUpsellCreate
       parameters:
-      - description: Order reference id
+      - description: Order reference ID
         in: path
         name: ref_id
         required: true

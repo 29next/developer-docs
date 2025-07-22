@@ -1130,27 +1130,27 @@ components:
           - string
           - 'null'
         utm_campaign:
-          description: Medium of the traffic (e.g., email, CPC).
+          description: Campaign name.
           type:
           - string
           - 'null'
         utm_content:
-          description: Search term or keyword.
+          description: Content of the traffic (e.g., banner, text link).
           type:
           - string
           - 'null'
         utm_medium:
-          description: Source of the traffic (e.g., search engine, newsletter).
+          description: Medium of the traffic (e.g., email, CPC).
           type:
           - string
           - 'null'
         utm_source:
-          description: Google UTM Source attribution.
+          description: Source of the traffic (e.g., search engine, newsletter).
           type:
           - string
           - 'null'
         utm_term:
-          description: Campaign name.
+          description: Search term or keyword.
           type:
           - string
           - 'null'
@@ -3209,27 +3209,27 @@ components:
           - string
           - 'null'
         utm_campaign:
-          description: Medium of the traffic (e.g., email, CPC).
+          description: Campaign name.
           type:
           - string
           - 'null'
         utm_content:
-          description: Search term or keyword.
+          description: Content of the traffic (e.g., banner, text link).
           type:
           - string
           - 'null'
         utm_medium:
-          description: Source of the traffic (e.g., search engine, newsletter).
+          description: Medium of the traffic (e.g., email, CPC).
           type:
           - string
           - 'null'
         utm_source:
-          description: Google UTM Source attribution.
+          description: Source of the traffic (e.g., search engine, newsletter).
           type:
           - string
           - 'null'
         utm_term:
-          description: Campaign name.
+          description: Search term or keyword.
           type:
           - string
           - 'null'
@@ -17747,28 +17747,29 @@ webhooks:
                           - string
                           - 'null'
                         utm_campaign:
-                          description: Medium of the traffic (e.g., email, CPC).
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
                         utm_content:
-                          description: Search term or keyword.
+                          description: Content of the traffic (e.g., banner, text
+                            link).
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
                           description: Source of the traffic (e.g., search engine,
                             newsletter).
                           type:
                           - string
                           - 'null'
-                        utm_source:
-                          description: Google UTM Source attribution.
-                          type:
-                          - string
-                          - 'null'
                         utm_term:
-                          description: Campaign name.
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
@@ -19992,28 +19993,29 @@ webhooks:
                           - string
                           - 'null'
                         utm_campaign:
-                          description: Medium of the traffic (e.g., email, CPC).
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
                         utm_content:
-                          description: Search term or keyword.
+                          description: Content of the traffic (e.g., banner, text
+                            link).
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
                           description: Source of the traffic (e.g., search engine,
                             newsletter).
                           type:
                           - string
                           - 'null'
-                        utm_source:
-                          description: Google UTM Source attribution.
-                          type:
-                          - string
-                          - 'null'
                         utm_term:
-                          description: Campaign name.
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
@@ -21418,28 +21420,29 @@ webhooks:
                           - string
                           - 'null'
                         utm_campaign:
-                          description: Medium of the traffic (e.g., email, CPC).
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
                         utm_content:
-                          description: Search term or keyword.
+                          description: Content of the traffic (e.g., banner, text
+                            link).
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
                           description: Source of the traffic (e.g., search engine,
                             newsletter).
                           type:
                           - string
                           - 'null'
-                        utm_source:
-                          description: Google UTM Source attribution.
-                          type:
-                          - string
-                          - 'null'
                         utm_term:
-                          description: Campaign name.
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
@@ -23995,28 +23998,29 @@ webhooks:
                           - string
                           - 'null'
                         utm_campaign:
-                          description: Medium of the traffic (e.g., email, CPC).
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
                         utm_content:
-                          description: Search term or keyword.
+                          description: Content of the traffic (e.g., banner, text
+                            link).
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
                           description: Source of the traffic (e.g., search engine,
                             newsletter).
                           type:
                           - string
                           - 'null'
-                        utm_source:
-                          description: Google UTM Source attribution.
-                          type:
-                          - string
-                          - 'null'
                         utm_term:
-                          description: Campaign name.
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
@@ -24579,28 +24583,29 @@ webhooks:
                           - string
                           - 'null'
                         utm_campaign:
-                          description: Medium of the traffic (e.g., email, CPC).
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
                         utm_content:
-                          description: Search term or keyword.
+                          description: Content of the traffic (e.g., banner, text
+                            link).
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
                           description: Source of the traffic (e.g., search engine,
                             newsletter).
                           type:
                           - string
                           - 'null'
-                        utm_source:
-                          description: Google UTM Source attribution.
-                          type:
-                          - string
-                          - 'null'
                         utm_term:
-                          description: Campaign name.
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
@@ -25596,28 +25601,29 @@ webhooks:
                           - string
                           - 'null'
                         utm_campaign:
-                          description: Medium of the traffic (e.g., email, CPC).
+                          description: Campaign name.
                           type:
                           - string
                           - 'null'
                         utm_content:
-                          description: Search term or keyword.
+                          description: Content of the traffic (e.g., banner, text
+                            link).
                           type:
                           - string
                           - 'null'
                         utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
                           description: Source of the traffic (e.g., search engine,
                             newsletter).
                           type:
                           - string
                           - 'null'
-                        utm_source:
-                          description: Google UTM Source attribution.
-                          type:
-                          - string
-                          - 'null'
                         utm_term:
-                          description: Campaign name.
+                          description: Search term or keyword.
                           type:
                           - string
                           - 'null'
