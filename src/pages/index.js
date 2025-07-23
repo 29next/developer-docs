@@ -34,9 +34,7 @@ function HomepageHeader() {
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`${siteConfig.title} Developer Docs`}
-      description="API Documentation and guides for building on 29 Next platform.">
+    <Layout>
           <Head>
               {/* Preload styles for Stoplight Elements */}
               <link rel="preload" href="/assets/css/elements.min.css" as="style" />
@@ -51,4 +49,3 @@ export default function Home() {
     </Layout>
   );
 }
-
