@@ -198,6 +198,18 @@ components:
       type: object
     Campaign:
       properties:
+        available_express_payment_methods:
+          description: All available payment methods
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+          readOnly: true
+          type: array
+        available_payment_methods:
+          description: Available express payment methods
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+          readOnly: true
+          type: array
         currency:
           description: Currency for orders created through this campaign
           maxLength: 3
@@ -222,6 +234,8 @@ components:
             $ref: '#/components/schemas/ShippingOption'
           type: array
       required:
+      - available_express_payment_methods
+      - available_payment_methods
       - currency
       - language
       - name
@@ -891,6 +905,16 @@ components:
           description: Specify a payment gateway group to be used for order payment
           nullable: true
           type: integer
+      type: object
+    PaymentMethod:
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+      required:
+      - code
+      - label
       type: object
     PaymentMethodEnum:
       description: '* `apple_pay` - Apple Pay

@@ -3374,7 +3374,7 @@ components:
           type: array
         available_payment_methods:
           items:
-            $ref: '#/components/schemas/PaymentMethod'
+            $ref: '#/components/schemas/PaymentMethodSupportCurrencies'
           readOnly: true
           type: array
         card_types:
@@ -6470,7 +6470,7 @@ components:
           type: array
         available_payment_methods:
           items:
-            $ref: '#/components/schemas/PaymentMethod'
+            $ref: '#/components/schemas/PaymentMethodSupportCurrencies'
           readOnly: true
           type: array
         certificate_token:
@@ -6615,6 +6615,16 @@ components:
       - weight
       type: object
     PaymentMethod:
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+      required:
+      - code
+      - label
+      type: object
+    PaymentMethodSupportCurrencies:
       properties:
         code:
           type: string
@@ -20130,13 +20140,9 @@ webhooks:
                             type: string
                           label:
                             type: string
-                          supported_currencies:
-                            items: {}
-                            type: array
                         required:
                         - code
                         - label
-                        - supported_currencies
                         type: object
                       type: array
                     currencies:
@@ -20301,13 +20307,9 @@ webhooks:
                             type: string
                           label:
                             type: string
-                          supported_currencies:
-                            items: {}
-                            type: array
                         required:
                         - code
                         - label
-                        - supported_currencies
                         type: object
                       type: array
                     currencies:
@@ -24647,13 +24649,9 @@ webhooks:
                                 type: string
                               label:
                                 type: string
-                              supported_currencies:
-                                items: {}
-                                type: array
                             required:
                             - code
                             - label
-                            - supported_currencies
                             type: object
                           type: array
                         available_payment_methods:
