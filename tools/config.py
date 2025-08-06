@@ -264,6 +264,13 @@ WEBHOOKS = [
         "description": "Triggers when a payment transaction is created.",
     },
     {
+        "event": "transaction.updated",
+        "object": "transaction",
+        "schema_ref": "#/components/schemas/Transaction",
+        "tag": "payments",
+        "description": "Triggers when a payment transaction is updated.",
+    },
+    {
         "event": "subscription.created",
         "object": "subscription",
         "schema_ref": "#/components/schemas/Subscription",

@@ -3073,7 +3073,7 @@ components:
           type: array
         available_payment_methods:
           items:
-            $ref: '#/components/schemas/PaymentMethod'
+            $ref: '#/components/schemas/PaymentMethodSupportCurrencies'
           readOnly: true
           type: array
         card_types:
@@ -6071,7 +6071,7 @@ components:
           type: array
         available_payment_methods:
           items:
-            $ref: '#/components/schemas/PaymentMethod'
+            $ref: '#/components/schemas/PaymentMethodSupportCurrencies'
           readOnly: true
           type: array
         certificate_token:
@@ -6216,6 +6216,16 @@ components:
       - weight
       type: object
     PaymentMethod:
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+      required:
+      - code
+      - label
+      type: object
+    PaymentMethodSupportCurrencies:
       properties:
         code:
           type: string
@@ -19702,13 +19712,9 @@ webhooks:
                             type: string
                           label:
                             type: string
-                          supported_currencies:
-                            items: {}
-                            type: array
                         required:
                         - code
                         - label
-                        - supported_currencies
                         type: object
                       type: array
                     currencies:
@@ -19873,13 +19879,9 @@ webhooks:
                             type: string
                           label:
                             type: string
-                          supported_currencies:
-                            items: {}
-                            type: array
                         required:
                         - code
                         - label
-                        - supported_currencies
                         type: object
                       type: array
                     currencies:
@@ -23923,13 +23925,9 @@ webhooks:
                                 type: string
                               label:
                                 type: string
-                              supported_currencies:
-                                items: {}
-                                type: array
                             required:
                             - code
                             - label
-                            - supported_currencies
                             type: object
                           type: array
                         available_payment_methods:
@@ -25947,6 +25945,372 @@ webhooks:
                   description: Webhook event type of the current event.
                   examples:
                   - transaction.created
+                  type:
+                  - string
+                object:
+                  description: Object data type.
+                  examples:
+                  - transaction
+                  type:
+                  - string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type:
+                        - string
+                        - 'null'
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                      - example
+                      type:
+                      - string
+                      - 'null'
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+      security: []
+      tags:
+      - payments
+    responses:
+      '200':
+        description: Return a 200 status to indicate that the data was received successfully.
+      '410':
+        description: Indicates the webhook target is no longer available and will
+          be disabled.
+  transaction.updated:
+    post:
+      description: Triggers when a payment transaction is updated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                  - '2023-02-10'
+                  type:
+                  - string
+                data:
+                  properties:
+                    amount:
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
+                    amount_available_for_refund:
+                      default: '0.00'
+                      format: decimal
+                      pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                      type: string
+                    attribution:
+                      properties:
+                        affiliate:
+                          description: Affiliate identifier.
+                          type:
+                          - string
+                          - 'null'
+                        agent:
+                          properties:
+                            email:
+                              format: email
+                              title: Email address
+                              type:
+                              - string
+                              - 'null'
+                            first_name:
+                              maxLength: 255
+                              type: string
+                            id:
+                              type: integer
+                            last_name:
+                              maxLength: 255
+                              type: string
+                          required:
+                          - id
+                          type: object
+                        funnel:
+                          description: The marketing funnel attributed to the order.
+                          type:
+                          - string
+                          - 'null'
+                        gclid:
+                          description: Google Click Identifier.
+                          type:
+                          - string
+                          - 'null'
+                        metadata:
+                          description: Additional attribution metadata.
+                        subaffiliate1:
+                          description: Sub-affiliate identifier 1.
+                          type:
+                          - string
+                          - 'null'
+                        subaffiliate2:
+                          description: Sub-affiliate identifier 2.
+                          type:
+                          - string
+                          - 'null'
+                        subaffiliate3:
+                          description: Sub-affiliate identifier 3.
+                          type:
+                          - string
+                          - 'null'
+                        subaffiliate4:
+                          description: Sub-affiliate identifier 4.
+                          type:
+                          - string
+                          - 'null'
+                        subaffiliate5:
+                          description: ' Sub-affiliate identifier 5.'
+                          type:
+                          - string
+                          - 'null'
+                        utm_campaign:
+                          description: Campaign name.
+                          type:
+                          - string
+                          - 'null'
+                        utm_content:
+                          description: Content of the traffic (e.g., banner, text
+                            link).
+                          type:
+                          - string
+                          - 'null'
+                        utm_medium:
+                          description: Medium of the traffic (e.g., email, CPC).
+                          type:
+                          - string
+                          - 'null'
+                        utm_source:
+                          description: Source of the traffic (e.g., search engine,
+                            newsletter).
+                          type:
+                          - string
+                          - 'null'
+                        utm_term:
+                          description: Search term or keyword.
+                          type:
+                          - string
+                          - 'null'
+                      required:
+                      - agent
+                      type: object
+                    currency:
+                      type:
+                      - string
+                      - 'null'
+                    date_created:
+                      format: date-time
+                      type: string
+                    external_id:
+                      type:
+                      - string
+                      - 'null'
+                    id:
+                      type: integer
+                    initiator:
+                      properties:
+                        email:
+                          format: email
+                          title: Email address
+                          type:
+                          - string
+                          - 'null'
+                        first_name:
+                          maxLength: 255
+                          type: string
+                        id:
+                          type: integer
+                        last_name:
+                          maxLength: 255
+                          type: string
+                      required:
+                      - id
+                      type: object
+                    is_disputed:
+                      type: boolean
+                    is_external:
+                      type: boolean
+                    is_test:
+                      type:
+                      - boolean
+                      - 'null'
+                    order:
+                      type:
+                      - string
+                      - 'null'
+                    parent_id:
+                      description: "The ID of an associated transaction.\n- For capture\
+                        \ transactions, the parent is the authorization transaction.\
+                        \ \n- For void transactions, the parent is the authorization\
+                        \ transaction. \n- For refund transactions, the parent is\
+                        \ the debit transaction. \n"
+                      type:
+                      - integer
+                      - 'null'
+                    payment_details:
+                      properties:
+                        bankcard_first_six:
+                          title: First Six
+                          type:
+                          - string
+                          - 'null'
+                        bankcard_last_four:
+                          title: Last four
+                          type:
+                          - string
+                          - 'null'
+                        card_token:
+                          type: string
+                        gateway:
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            type:
+                              type: string
+                          required:
+                          - id
+                          - name
+                          - type
+                          type: object
+                        is_3ds:
+                          type: boolean
+                        optimized_3ds:
+                          type: boolean
+                        paypal_vault_id:
+                          type: string
+                        sca_flow:
+                          type: string
+                      required:
+                      - bankcard_first_six
+                      - bankcard_last_four
+                      - card_token
+                      - gateway
+                      - is_3ds
+                      - optimized_3ds
+                      - paypal_vault_id
+                      - sca_flow
+                      type: object
+                    payment_method:
+                      type:
+                      - string
+                      - 'null'
+                    report_values:
+                      properties:
+                        amount:
+                          format: decimal
+                          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+                          type: string
+                        currency:
+                          type: string
+                      required:
+                      - amount
+                      - currency
+                      type: object
+                    response_code:
+                      type: integer
+                    status:
+                      description: '* `succeeded` - Succeeded
+
+                        * `failed` - Failed'
+                      enum:
+                      - succeeded
+                      - failed
+                      - ''
+                      type: string
+                      x-spec-enum-id: a6661c405ff6d2ee
+                    subscription:
+                      properties:
+                        billing_cycle:
+                          type:
+                          - integer
+                          - 'null'
+                        id:
+                          type: integer
+                      required:
+                      - billing_cycle
+                      - id
+                      type: object
+                    type:
+                      type: string
+                    user:
+                      properties:
+                        accepts_marketing:
+                          title: Subscribe to Marketing Emails
+                          type: boolean
+                        email:
+                          format: email
+                          title: Email address
+                          type:
+                          - string
+                          - 'null'
+                        first_name:
+                          maxLength: 255
+                          type: string
+                        id:
+                          type: integer
+                        ip:
+                          title: Ip address
+                          type:
+                          - string
+                          - 'null'
+                        language:
+                          title: Preferred language
+                          type:
+                          - string
+                          - 'null'
+                        last_name:
+                          maxLength: 255
+                          type: string
+                        phone_number:
+                          type:
+                          - string
+                          - 'null'
+                        user_agent:
+                          type:
+                          - string
+                          - 'null'
+                      required:
+                      - id
+                      type: object
+                  required:
+                  - amount
+                  - attribution
+                  - date_created
+                  - id
+                  - initiator
+                  - order
+                  - parent_id
+                  - payment_details
+                  - report_values
+                  - response_code
+                  - subscription
+                  - type
+                  - user
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format:
+                  - uuid
+                  type:
+                  - string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                  - transaction.updated
                   type:
                   - string
                 object:

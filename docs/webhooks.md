@@ -58,6 +58,7 @@ Returning a `410` response code indicates the target resource is no longer avail
 | `product.deleted`         | Triggers when an existing product is deleted. | [View Example](/docs/api/admin/reference/#/webhooks/product.deleted/post) |
 | `product.updated`         | Triggers when an existing product is updated. | [View Example](/docs/api/admin/reference/#/webhooks/product.updated/post) |
 | `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/api/admin/reference/#/webhooks/transaction.created/post) |
+| `transaction.updated`     | Triggers when a payment transaction is updated. | [View Example](/docs/api/admin/reference/#/webhooks/transaction.updated/post) |
 | `subscription.created`    | Triggers when a new subscription is created. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.created/post) |
 | `subscription.updated`    | Triggers when an existing subscription is updated. | [View Example](/docs/api/admin/reference/#/webhooks/subscription.updated/post) |
 | `store.updated`           | Triggers when store settings are updated. | [View Example](/docs/api/admin/reference/#/webhooks/store.updated/post) |
