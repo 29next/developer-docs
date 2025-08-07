@@ -1,11 +1,11 @@
 <p align="center">
-    <a href="https://29next.com">
-    <img src="https://github.com/29next/developer-docs/blob/main/static/img/29next-logo.png" alt="Logo" width="240">
+    <a href="https://nextcommerce.com">
+    <img src="https://github.com/29next/developer-docs/blob/main/static/img/next-logo-stroked.png" alt="Logo" width="240">
   </a>
-  <h2 align="center">29 Next Developer Docs</h3>
+  <h2 align="center">Next Commerce Developer Docs</h3>
 
   <p align="center">
-    29 Next's developer documentation portal, built with Docusaurus and Stoplight.
+    Next Commerce's developer documentation portal, built with Docusaurus and Stoplight.
     <br />
     <a href="https://developers.29next.com/"><strong>Explore the Docs »</strong></a>
   </p>
