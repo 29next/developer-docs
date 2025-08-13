@@ -347,6 +347,7 @@ Returns the store object with general information about the store and the contac
 | `phone` | String |Store phone number. |
 | `email` | String |Store email address. |
 | `timezone` | String |Store timezone. |
+| `schema` | String |Store schema, ie the store network subdomain. |
 | `get_meta_title` | String |Store SEO meta title. |
 | `get_meta_description` | String |Store SEO meta description. |
 
