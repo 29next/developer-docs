@@ -198,6 +198,12 @@ components:
       type: object
     Campaign:
       properties:
+        available_currencies:
+          description: List of available currencies for the campaign
+          items:
+            $ref: '#/components/schemas/Currency'
+          readOnly: true
+          type: array
         available_express_payment_methods:
           description: All available payment methods
           items:
@@ -211,8 +217,9 @@ components:
           readOnly: true
           type: array
         currency:
-          description: Currency for orders created through this campaign
-          maxLength: 3
+          description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
+            campaign currency if not provided
+          readOnly: true
           type: string
         language:
           description: Preferred language for customers of this campaign
@@ -223,22 +230,29 @@ components:
           maxLength: 200
           type: string
         packages:
+          description: List of packages available in the campaign
           items:
-            $ref: '#/components/schemas/PackageSerilaizer'
+            $ref: '#/components/schemas/Package'
+          readOnly: true
           type: array
         payment_env_key:
           description: Payment environment key associated with the store
           type: string
         shipping_methods:
+          description: List of shipping methods available for the campaign
           items:
             $ref: '#/components/schemas/ShippingOption'
+          readOnly: true
           type: array
       required:
+      - available_currencies
       - available_express_payment_methods
       - available_payment_methods
       - currency
       - language
       - name
+      - packages
+      - shipping_methods
       type: object
     Cart:
       properties:
@@ -262,6 +276,8 @@ components:
           type: array
         total_discounts:
           description: Total discount amount applied to the order
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
         total_excl_tax:
@@ -301,6 +317,12 @@ components:
           description: Set default shipping and billing address for the user
         attribution:
           $ref: '#/components/schemas/Attribution'
+        currency:
+          description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
+            campaign currency if not provided
+          maxLength: 3
+          nullable: true
+          type: string
         lines:
           description: Array of package IDs
           items:
@@ -371,6 +393,12 @@ components:
           default: false
           description: Use the shipping address as the billing address
           type: boolean
+        currency:
+          description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
+            campaign currency if not provided
+          maxLength: 3
+          nullable: true
+          type: string
         lines:
           description: Array of package IDs
           items:
@@ -413,6 +441,18 @@ components:
       - shipping_method
       - success_url
       type: object
+    Currency:
+      properties:
+        code:
+          description: ISO 4217 currency code (e.g., USD, EUR, GBP)
+          type: string
+        label:
+          description: "Display name of the currency (e.g., $ USD, \u20AC EUR)"
+          type: string
+      required:
+      - code
+      - label
+      type: object
     Discount:
       properties:
         amount:
@@ -427,9 +467,6 @@ components:
           type: string
       type: object
     IntervalEnum:
-      description: '* `day` - Day
-
-        * `month` - Month'
       enum:
       - day
       - month
@@ -541,8 +578,9 @@ components:
         billing_address:
           $ref: '#/components/schemas/OrderAddress'
         currency:
-          description: Order currency
-          maxLength: 50
+          description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
+            campaign currency if not provided
+          maxLength: 3
           type: string
         discounts:
           description: Array of discounts
@@ -604,6 +642,8 @@ components:
           type: boolean
         total_discounts:
           description: Total discount amount applied to the order
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
         total_excl_tax:
@@ -766,7 +806,7 @@ components:
           nullable: true
           type: string
       type: object
-    PackageSerilaizer:
+    Package:
       properties:
         external_id:
           description: ID of the product linked to the package
@@ -775,25 +815,22 @@ components:
           type: integer
         image:
           description: Package image
+          format: uri
+          nullable: true
           readOnly: true
           type: string
         interval:
           allOf:
           - $ref: '#/components/schemas/IntervalEnum'
-          description: 'Recurring subscription interval
-
-
-            * `day` - Day
-
-            * `month` - Month'
+          description: Recurring subscription interval type
+          readOnly: true
         interval_count:
           description: Recurring subscription interval count
-          maximum: 2147483647
-          minimum: 0
-          nullable: true
+          readOnly: true
           type: integer
         is_recurring:
           description: Recurring subscription status of the package
+          readOnly: true
           type: boolean
         name:
           description: Package name
@@ -804,30 +841,37 @@ components:
           description: Price per product unit in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          title: Price per unit
+          readOnly: true
           type: string
         price_recurring:
           description: Recurring subscription price per unit of product in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
           type: string
         price_recurring_total:
           description: Total recurring subscription price of the package when purchased
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
           type: string
         price_retail:
           description: Retail price per product unit in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
           type: string
         price_retail_total:
           description: Total retail price of the package when purchased
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
           type: string
         price_total:
           description: Total price of the package when purchased
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
           type: string
         qty:
           description: Quantity of product in the package
@@ -841,8 +885,15 @@ components:
       required:
       - external_id
       - image
+      - interval
+      - interval_count
+      - is_recurring
       - name
       - price
+      - price_recurring
+      - price_recurring_total
+      - price_retail
+      - price_retail_total
       - price_total
       - qty
       - ref_id
@@ -960,10 +1011,13 @@ components:
           description: Shipping method price
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
           type: string
         ref_id:
           description: Shipping method reference ID
           type: integer
+      required:
+      - price
       type: object
     User:
       properties:
@@ -1123,6 +1177,13 @@ paths:
     get:
       description: Retrieve campaign details.
       operationId: campaignRetrieve
+      parameters:
+      - description: ISO 4217 currency code (e.g., USD, EUR, GBP) used to filter available
+          packages and shipping methods in the campaign
+        in: query
+        name: currency
+        schema:
+          type: string
       responses:
         '200':
           content:

@@ -1394,7 +1394,7 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         user:
-          $ref: '#/components/schemas/CreateOrderUser'
+          $ref: '#/components/schemas/CreateUser'
       required:
       - currency
       - initial
@@ -1524,17 +1524,17 @@ components:
 
             * `paypal` - PayPal
 
-            * `klarna` - Klarna
-
-            * `ideal` - iDEAL
-
             * `bancontact` - Bancontact
 
             * `giropay` - Giropay
 
-            * `sofort` - Sofort
+            * `ideal` - iDEAL
 
-            * `sepa_debit` - SEPA Direct Debit'
+            * `klarna` - Klarna
+
+            * `sepa_debit` - SEPA Direct Debit
+
+            * `sofort` - Sofort'
           enum:
           - card_token
           - saved_card
@@ -1542,17 +1542,17 @@ components:
           - google_pay
           - external
           - paypal
-          - klarna
-          - ideal
           - bancontact
           - giropay
-          - sofort
+          - ideal
+          - klarna
           - sepa_debit
+          - sofort
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 27ca71ee81f01a5d
+          x-spec-enum-id: 0e6ef8641712cc64
         send_receipt:
           default: true
           type: boolean
@@ -1596,7 +1596,7 @@ components:
           default: false
           type: boolean
         user:
-          $ref: '#/components/schemas/CreateOrderUser'
+          $ref: '#/components/schemas/CreateUser'
         vouchers:
           items:
             type: string
@@ -1664,75 +1664,6 @@ components:
       required:
       - interval
       - interval_count
-      type: object
-    CreateOrderUser:
-      properties:
-        accepts_marketing:
-          title: Subscribe to Marketing Emails
-          type: boolean
-        email:
-          format: email
-          title: Email address
-          type:
-          - string
-          - 'null'
-        first_name:
-          maxLength: 255
-          type: string
-        id:
-          type:
-          - integer
-          - 'null'
-        ip:
-          title: Ip address
-          type:
-          - string
-          - 'null'
-        language:
-          description: "* `en` - English\n* `fr` - Fran\xE7ais\n* `th` - \u0E20\u0E32\
-            \u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n*\
-            \ `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1ol\n* `nl` - Nederlands\n\
-            * `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi` - Suomi"
-          enum:
-          - en
-          - fr
-          - th
-          - de
-          - sv
-          - 'no'
-          - it
-          - es
-          - nl
-          - pt
-          - da
-          - fi
-          - null
-          type:
-          - string
-          - 'null'
-          x-spec-enum-id: 70ceea9c8488568b
-        last_name:
-          maxLength: 255
-          type: string
-        metadata:
-          oneOf:
-          - {}
-          - type: 'null'
-        phone_number:
-          description: 'required : E164'
-          type:
-          - string
-          - 'null'
-        tags:
-          items:
-            type:
-            - string
-            - 'null'
-          type: array
-        user_agent:
-          type:
-          - string
-          - 'null'
       type: object
     CreateProduct:
       properties:
@@ -2080,7 +2011,7 @@ components:
           default: false
           type: boolean
         user:
-          $ref: '#/components/schemas/CreateOrderUser'
+          $ref: '#/components/schemas/CreateUser'
       required:
       - interval
       - interval_count
@@ -2269,6 +2200,75 @@ components:
       - created_at
       - id
       - updated_at
+      type: object
+    CreateUser:
+      properties:
+        accepts_marketing:
+          title: Subscribe to Marketing Emails
+          type: boolean
+        email:
+          format: email
+          title: Email address
+          type:
+          - string
+          - 'null'
+        first_name:
+          maxLength: 255
+          type: string
+        id:
+          type:
+          - integer
+          - 'null'
+        ip:
+          title: Ip address
+          type:
+          - string
+          - 'null'
+        language:
+          description: "* `en` - English\n* `fr` - Fran\xE7ais\n* `th` - \u0E20\u0E32\
+            \u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n*\
+            \ `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1ol\n* `nl` - Nederlands\n\
+            * `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi` - Suomi"
+          enum:
+          - en
+          - fr
+          - th
+          - de
+          - sv
+          - 'no'
+          - it
+          - es
+          - nl
+          - pt
+          - da
+          - fi
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: 70ceea9c8488568b
+        last_name:
+          maxLength: 255
+          type: string
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
+        phone_number:
+          description: 'required : E164'
+          type:
+          - string
+          - 'null'
+        tags:
+          items:
+            type:
+            - string
+            - 'null'
+          type: array
+        user_agent:
+          type:
+          - string
+          - 'null'
       type: object
     CreateUserAddress:
       properties:
@@ -5743,7 +5743,7 @@ components:
           - string
           - 'null'
         user:
-          $ref: '#/components/schemas/CreateOrderUser'
+          $ref: '#/components/schemas/CreateUser'
       type: object
     PatchedUpdateOrder:
       properties:
@@ -6474,6 +6474,7 @@ components:
           readOnly: true
           type: array
         certificate_token:
+          readOnly: true
           type: string
         environment_key:
           type: string
@@ -6638,6 +6639,23 @@ components:
       - code
       - label
       - supported_currencies
+      type: object
+    PreferredPaymentGateway:
+      properties:
+        gateway_type:
+          maxLength: 100
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          description: Used for reporting and transaction references.
+          maxLength: 100
+          type: string
+      required:
+      - gateway_type
+      - id
+      - name
       type: object
     Product:
       properties:
@@ -10105,6 +10123,42 @@ components:
       required:
       - type
       - value
+      type: object
+    VerifyTransaction:
+      properties:
+        card_token:
+          maxLength: 128
+          type: string
+        currency:
+          maxLength: 12
+          type: string
+        payment_gateway:
+          type:
+          - integer
+          - 'null'
+        payment_gateway_group:
+          type:
+          - integer
+          - 'null'
+        user:
+          $ref: '#/components/schemas/CreateUser'
+      required:
+      - card_token
+      - currency
+      - user
+      type: object
+    VerifyTransactionResponse:
+      properties:
+        card_token:
+          type: string
+        preferred_payment_gateway:
+          $ref: '#/components/schemas/PreferredPaymentGateway'
+        user:
+          $ref: '#/components/schemas/CreateUser'
+      required:
+      - card_token
+      - preferred_payment_gateway
+      - user
       type: object
     Voucher:
       properties:
@@ -17199,6 +17253,43 @@ paths:
       security:
       - oauth2:
         - transactions:read
+      tags:
+      - payments
+  /transactions/verify/:
+    post:
+      description: Verify a card token.
+      operationId: transactionsVerifyCreate
+      parameters:
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyTransaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyTransaction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyTransaction'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyTransactionResponse'
+          description: ''
+      security:
+      - oauth2:
+        - transactions:write
       tags:
       - payments
   /transactions/{id}/:
