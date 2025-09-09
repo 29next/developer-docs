@@ -1777,9 +1777,7 @@ components:
         low_stock_threshold:
           maximum: 2147483647
           minimum: 0
-          type:
-          - integer
-          - 'null'
+          type: integer
         num_in_stock:
           type: integer
         product:
@@ -5054,9 +5052,7 @@ components:
         low_stock_threshold:
           maximum: 2147483647
           minimum: 0
-          type:
-          - integer
-          - 'null'
+          type: integer
         num_in_stock:
           type: integer
         product:
@@ -6690,6 +6686,28 @@ components:
         images:
           readOnly: true
           type: string
+        inventory_availability:
+          description: 'Inventory availability at fulfillment locations
+
+
+            * `in_stock` - In Stock
+
+            * `low_stock` - Low Stock
+
+            * `out_of_stock` - Out of Stock
+
+            * `untracked` - Untracked'
+          enum:
+          - in_stock
+          - low_stock
+          - out_of_stock
+          - untracked
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: b27c4da75c8684c5
         metadata:
           oneOf:
           - {}
@@ -6700,6 +6718,22 @@ components:
           type: array
         product_id:
           type: integer
+        purchase_availability:
+          description: 'Product''s availability to purchase in new orders
+
+
+            * `available` - Available
+
+            * `unavailable` - Unavailable'
+          enum:
+          - available
+          - unavailable
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: c3aa4eaf80db200b
         requires_shipping:
           title: Requires shipping?
           type: boolean
@@ -7312,9 +7346,7 @@ components:
         low_stock_threshold:
           maximum: 2147483647
           minimum: 0
-          type:
-          - integer
-          - 'null'
+          type: integer
         net_stock_level:
           readOnly: true
           type: integer
@@ -7367,9 +7399,7 @@ components:
         low_stock_threshold:
           maximum: 2147483647
           minimum: 0
-          type:
-          - integer
-          - 'null'
+          type: integer
         num_allocated:
           maximum: 2147483647
           minimum: -2147483648
@@ -7420,9 +7450,7 @@ components:
         low_stock_threshold:
           maximum: 2147483647
           minimum: 0
-          type:
-          - integer
-          - 'null'
+          type: integer
         num_allocated:
           readOnly: true
           title: Number allocated
@@ -14949,6 +14977,41 @@ paths:
         name: sku
         schema:
           type: string
+      - description: 'Inventory Availability
+
+
+          * `in_stock` - In Stock
+
+          * `low_stock` - Low Stock
+
+          * `out_of_stock` - Out of Stock
+
+          * `untracked` - Untracked'
+        in: query
+        name: inventory_availability
+        schema:
+          enum:
+          - in_stock
+          - low_stock
+          - out_of_stock
+          - untracked
+          type: string
+      - description: 'Purchase Availability
+
+
+          * `available` - Available
+
+          * `unavailable` - Unavailable'
+        in: query
+        name: purchase_availability
+        schema:
+          enum:
+          - available
+          - unavailable
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: c3aa4eaf80db200b
       - description: The pagination cursor value.
         in: query
         name: cursor
@@ -18062,9 +18125,7 @@ webhooks:
                               low_stock_threshold:
                                 maximum: 2147483647
                                 minimum: 0
-                                type:
-                                - integer
-                                - 'null'
+                                type: integer
                               num_allocated:
                                 maximum: 2147483647
                                 minimum: -2147483648
@@ -20479,9 +20540,7 @@ webhooks:
                               low_stock_threshold:
                                 maximum: 2147483647
                                 minimum: 0
-                                type:
-                                - integer
-                                - 'null'
+                                type: integer
                               num_allocated:
                                 maximum: 2147483647
                                 minimum: -2147483648
@@ -21906,9 +21965,7 @@ webhooks:
                               low_stock_threshold:
                                 maximum: 2147483647
                                 minimum: 0
-                                type:
-                                - integer
-                                - 'null'
+                                type: integer
                               num_allocated:
                                 maximum: 2147483647
                                 minimum: -2147483648
@@ -23011,6 +23068,28 @@ webhooks:
                             type: integer
                           images:
                             type: string
+                          inventory_availability:
+                            description: 'Inventory availability at fulfillment locations
+
+
+                              * `in_stock` - In Stock
+
+                              * `low_stock` - Low Stock
+
+                              * `out_of_stock` - Out of Stock
+
+                              * `untracked` - Untracked'
+                            enum:
+                            - in_stock
+                            - low_stock
+                            - out_of_stock
+                            - untracked
+                            - ''
+                            - null
+                            type:
+                            - string
+                            - 'null'
+                            x-spec-enum-id: b27c4da75c8684c5
                           metadata:
                             oneOf:
                             - {}
@@ -23052,6 +23131,23 @@ webhooks:
                             type: array
                           product_id:
                             type: integer
+                          purchase_availability:
+                            description: 'Product''s availability to purchase in new
+                              orders
+
+
+                              * `available` - Available
+
+                              * `unavailable` - Unavailable'
+                            enum:
+                            - available
+                            - unavailable
+                            - ''
+                            - null
+                            type:
+                            - string
+                            - 'null'
+                            x-spec-enum-id: c3aa4eaf80db200b
                           requires_shipping:
                             title: Requires shipping?
                             type: boolean
@@ -23070,9 +23166,7 @@ webhooks:
                                 low_stock_threshold:
                                   maximum: 2147483647
                                   minimum: 0
-                                  type:
-                                  - integer
-                                  - 'null'
+                                  type: integer
                                 num_allocated:
                                   title: Number allocated
                                   type:
@@ -23531,6 +23625,28 @@ webhooks:
                             type: integer
                           images:
                             type: string
+                          inventory_availability:
+                            description: 'Inventory availability at fulfillment locations
+
+
+                              * `in_stock` - In Stock
+
+                              * `low_stock` - Low Stock
+
+                              * `out_of_stock` - Out of Stock
+
+                              * `untracked` - Untracked'
+                            enum:
+                            - in_stock
+                            - low_stock
+                            - out_of_stock
+                            - untracked
+                            - ''
+                            - null
+                            type:
+                            - string
+                            - 'null'
+                            x-spec-enum-id: b27c4da75c8684c5
                           metadata:
                             oneOf:
                             - {}
@@ -23572,6 +23688,23 @@ webhooks:
                             type: array
                           product_id:
                             type: integer
+                          purchase_availability:
+                            description: 'Product''s availability to purchase in new
+                              orders
+
+
+                              * `available` - Available
+
+                              * `unavailable` - Unavailable'
+                            enum:
+                            - available
+                            - unavailable
+                            - ''
+                            - null
+                            type:
+                            - string
+                            - 'null'
+                            x-spec-enum-id: c3aa4eaf80db200b
                           requires_shipping:
                             title: Requires shipping?
                             type: boolean
@@ -23590,9 +23723,7 @@ webhooks:
                                 low_stock_threshold:
                                   maximum: 2147483647
                                   minimum: 0
-                                  type:
-                                  - integer
-                                  - 'null'
+                                  type: integer
                                 num_allocated:
                                   title: Number allocated
                                   type:
@@ -24429,9 +24560,7 @@ webhooks:
                               low_stock_threshold:
                                 maximum: 2147483647
                                 minimum: 0
-                                type:
-                                - integer
-                                - 'null'
+                                type: integer
                               num_allocated:
                                 maximum: 2147483647
                                 minimum: -2147483648
@@ -25014,9 +25143,7 @@ webhooks:
                               low_stock_threshold:
                                 maximum: 2147483647
                                 minimum: 0
-                                type:
-                                - integer
-                                - 'null'
+                                type: integer
                               num_allocated:
                                 maximum: 2147483647
                                 minimum: -2147483648

@@ -320,7 +320,6 @@ components:
         currency:
           description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
             campaign currency if not provided
-          maxLength: 3
           nullable: true
           type: string
         lines:
@@ -396,7 +395,6 @@ components:
         currency:
           description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
             campaign currency if not provided
-          maxLength: 3
           nullable: true
           type: string
         lines:
@@ -809,7 +807,8 @@ components:
     Package:
       properties:
         external_id:
-          description: ID of the product linked to the package
+          deprecated: true
+          description: This field is deprecated. Use `product_variant_id` instead.
           maximum: 2147483647
           minimum: 0
           type: integer
@@ -873,8 +872,51 @@ components:
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
+        product_id:
+          description: ID of the product linked to the package
+          type: integer
+        product_inventory_availability:
+          allOf:
+          - $ref: '#/components/schemas/ProductInventoryAvailabilityEnum'
+          description: 'Inventory availability at fulfillment locations
+
+
+            * `in_stock` - In Stock
+
+            * `low_stock` - Low Stock
+
+            * `out_of_stock` - Out of Stock
+
+            * `untracked` - Untracked'
+        product_name:
+          description: Product name
+          type: string
+        product_purchase_availability:
+          allOf:
+          - $ref: '#/components/schemas/ProductPurchaseAvailabilityEnum'
+          description: 'Product''s availability to purchase in new orders
+
+
+            * `available` - Available
+
+            * `unavailable` - Unavailable'
+        product_sku:
+          description: SKU of the product linked to the package
+          maxLength: 128
+          nullable: true
+          type: string
+        product_variant_attribute_values:
+          additionalProperties: {}
+          description: Product variant atrribute values
+          type: object
+        product_variant_id:
+          description: ID of the product variant linked to the package
+          type: integer
+        product_variant_name:
+          description: Product variant name
+          type: string
         qty:
-          description: Quantity of product in the package
+          description: Quantity of product variant in the package
           maximum: 2147483647
           minimum: 0
           type: integer
@@ -895,6 +937,14 @@ components:
       - price_retail
       - price_retail_total
       - price_total
+      - product_id
+      - product_inventory_availability
+      - product_name
+      - product_purchase_availability
+      - product_sku
+      - product_variant_attribute_values
+      - product_variant_id
+      - product_variant_name
       - qty
       - ref_id
       type: object
@@ -1001,6 +1051,28 @@ components:
       - sofort
       - sepa_debit
       - external
+      type: string
+    ProductInventoryAvailabilityEnum:
+      description: '* `in_stock` - In Stock
+
+        * `low_stock` - Low Stock
+
+        * `out_of_stock` - Out of Stock
+
+        * `untracked` - Untracked'
+      enum:
+      - in_stock
+      - low_stock
+      - out_of_stock
+      - untracked
+      type: string
+    ProductPurchaseAvailabilityEnum:
+      description: '* `available` - Available
+
+        * `unavailable` - Unavailable'
+      enum:
+      - available
+      - unavailable
       type: string
     ShippingOption:
       properties:
