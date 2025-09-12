@@ -4186,285 +4186,6 @@ components:
       - description
       - name
       type: object
-    OrderWithoutUser:
-      properties:
-        attribution:
-          $ref: '#/components/schemas/MarketingAttribution'
-        billing_address:
-          oneOf:
-          - $ref: '#/components/schemas/BillingAddress'
-          - type: 'null'
-        created_at:
-          format: date-time
-          readOnly: true
-          type: string
-        currency:
-          readOnly: true
-          type: string
-        date_placed:
-          format: date-time
-          readOnly: true
-          type: string
-        display_taxes:
-          readOnly: true
-          type: string
-        fulfillment_status:
-          description: 'The order''s status in terms of fulfillment.
-
-
-            * `not_required` - Not Required
-
-            * `unfulfilled` - Unfulfilled
-
-            * `on_hold` - On Hold
-
-            * `rejected` - Rejected
-
-            * `processing` - Processing
-
-            * `fulfilled` - Fulfilled
-
-            * `incomplete` - Incomplete'
-          enum:
-          - not_required
-          - unfulfilled
-          - on_hold
-          - rejected
-          - processing
-          - fulfilled
-          - incomplete
-          type: string
-          x-spec-enum-id: f7a016fc10fb8390
-        fulfillments:
-          items:
-            $ref: '#/components/schemas/Fulfillment'
-          readOnly: true
-          type: array
-        is_test:
-          readOnly: true
-          type: boolean
-        lines:
-          items:
-            $ref: '#/components/schemas/OrderLineDetail'
-          readOnly: true
-          type: array
-        metadata:
-          description: Additional order metadata.
-          oneOf:
-          - {}
-          - type: 'null'
-        number:
-          readOnly: true
-          title: Order number
-          type: string
-        offer_discounts:
-          items:
-            $ref: '#/components/schemas/OrderOfferDiscount'
-          readOnly: true
-          type: array
-        order_status_url:
-          format: uri
-          readOnly: true
-          type: string
-        original_shipping_excl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        original_shipping_incl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        original_total_excl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        original_total_incl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        payment_status:
-          description: '* `pending` - Payment Pending
-
-            * `authorized` - Authorized
-
-            * `expiring` - Expiring
-
-            * `expired` - Expired
-
-            * `paid` - Paid
-
-            * `voided` - Voided
-
-            * `refunded` - Refunded
-
-            * `partially_paid` - Partially Paid
-
-            * `partially_refunded` - Partially Refunded
-
-            * `partially_voided` - Partially Voided'
-          enum:
-          - pending
-          - authorized
-          - expiring
-          - expired
-          - paid
-          - voided
-          - refunded
-          - partially_paid
-          - partially_refunded
-          - partially_voided
-          readOnly: true
-          type: string
-          x-spec-enum-id: 4ddf29c57b2eb8f6
-        refunds:
-          items:
-            $ref: '#/components/schemas/Refund'
-          readOnly: true
-          type: array
-        report_values:
-          allOf:
-          - $ref: '#/components/schemas/OrderReportValues'
-          readOnly: true
-        shipping_address:
-          oneOf:
-          - $ref: '#/components/schemas/ShippingAddress'
-          - type: 'null'
-        shipping_code:
-          readOnly: true
-          type: string
-        shipping_excl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Shipping charge (excl. tax)
-          type: string
-        shipping_incl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Shipping charge (inc. tax)
-          type: string
-        shipping_method:
-          readOnly: true
-          type: string
-        shipping_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        shipping_tax_lines:
-          items:
-            $ref: '#/components/schemas/TaxPriceBreakdown'
-          readOnly: true
-          type: array
-        source:
-          readOnly: true
-          type: string
-        status:
-          description: The order's overall status.
-          maxLength: 100
-          type: string
-        subscription_lifecycle:
-          readOnly: true
-          type: string
-        subscriptions:
-          items:
-            $ref: '#/components/schemas/OrderSubscription'
-          readOnly: true
-          type: array
-        supports_post_purchase_upsells:
-          readOnly: true
-          type: boolean
-        tags:
-          description: An array of tags associated with the order.
-          items:
-            type:
-            - string
-            - 'null'
-          type: array
-        tax_lines:
-          items:
-            $ref: '#/components/schemas/TaxSerailizer'
-          readOnly: true
-          type: array
-        total_cost:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        total_excl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Order total (excl. tax)
-          type: string
-        total_incl_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          title: Order total (inc. tax)
-          type: string
-        total_tax:
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
-          readOnly: true
-          type: string
-        transactions:
-          items:
-            $ref: '#/components/schemas/TransactionObject'
-          readOnly: true
-          type: array
-        updated_at:
-          format: date-time
-          readOnly: true
-          type: string
-        voucher_discounts:
-          items:
-            $ref: '#/components/schemas/OrderVoucherOffer'
-          readOnly: true
-          type: array
-      required:
-      - attribution
-      - created_at
-      - currency
-      - date_placed
-      - display_taxes
-      - fulfillments
-      - is_test
-      - lines
-      - number
-      - offer_discounts
-      - order_status_url
-      - original_shipping_excl_tax
-      - original_shipping_incl_tax
-      - original_total_excl_tax
-      - original_total_incl_tax
-      - payment_status
-      - refunds
-      - report_values
-      - shipping_code
-      - shipping_excl_tax
-      - shipping_incl_tax
-      - shipping_method
-      - shipping_tax
-      - shipping_tax_lines
-      - source
-      - subscription_lifecycle
-      - subscriptions
-      - supports_post_purchase_upsells
-      - tax_lines
-      - total_cost
-      - total_excl_tax
-      - total_incl_tax
-      - total_tax
-      - transactions
-      - updated_at
-      - voucher_discounts
-      type: object
     Page:
       properties:
         content:
@@ -9680,6 +9401,285 @@ components:
       - id
       - message
       - updated_at
+      type: object
+    UserOrderInline:
+      properties:
+        attribution:
+          $ref: '#/components/schemas/MarketingAttribution'
+        billing_address:
+          oneOf:
+          - $ref: '#/components/schemas/BillingAddress'
+          - type: 'null'
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        currency:
+          readOnly: true
+          type: string
+        date_placed:
+          format: date-time
+          readOnly: true
+          type: string
+        display_taxes:
+          readOnly: true
+          type: string
+        fulfillment_status:
+          description: 'The order''s status in terms of fulfillment.
+
+
+            * `not_required` - Not Required
+
+            * `unfulfilled` - Unfulfilled
+
+            * `on_hold` - On Hold
+
+            * `rejected` - Rejected
+
+            * `processing` - Processing
+
+            * `fulfilled` - Fulfilled
+
+            * `incomplete` - Incomplete'
+          enum:
+          - not_required
+          - unfulfilled
+          - on_hold
+          - rejected
+          - processing
+          - fulfilled
+          - incomplete
+          type: string
+          x-spec-enum-id: f7a016fc10fb8390
+        fulfillments:
+          items:
+            $ref: '#/components/schemas/Fulfillment'
+          readOnly: true
+          type: array
+        is_test:
+          readOnly: true
+          type: boolean
+        lines:
+          items:
+            $ref: '#/components/schemas/OrderLineDetail'
+          readOnly: true
+          type: array
+        metadata:
+          description: Additional order metadata.
+          oneOf:
+          - {}
+          - type: 'null'
+        number:
+          readOnly: true
+          title: Order number
+          type: string
+        offer_discounts:
+          items:
+            $ref: '#/components/schemas/OrderOfferDiscount'
+          readOnly: true
+          type: array
+        order_status_url:
+          format: uri
+          readOnly: true
+          type: string
+        original_shipping_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        original_shipping_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        original_total_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        original_total_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        payment_status:
+          description: '* `pending` - Payment Pending
+
+            * `authorized` - Authorized
+
+            * `expiring` - Expiring
+
+            * `expired` - Expired
+
+            * `paid` - Paid
+
+            * `voided` - Voided
+
+            * `refunded` - Refunded
+
+            * `partially_paid` - Partially Paid
+
+            * `partially_refunded` - Partially Refunded
+
+            * `partially_voided` - Partially Voided'
+          enum:
+          - pending
+          - authorized
+          - expiring
+          - expired
+          - paid
+          - voided
+          - refunded
+          - partially_paid
+          - partially_refunded
+          - partially_voided
+          readOnly: true
+          type: string
+          x-spec-enum-id: 4ddf29c57b2eb8f6
+        refunds:
+          items:
+            $ref: '#/components/schemas/Refund'
+          readOnly: true
+          type: array
+        report_values:
+          allOf:
+          - $ref: '#/components/schemas/OrderReportValues'
+          readOnly: true
+        shipping_address:
+          oneOf:
+          - $ref: '#/components/schemas/ShippingAddress'
+          - type: 'null'
+        shipping_code:
+          readOnly: true
+          type: string
+        shipping_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (excl. tax)
+          type: string
+        shipping_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Shipping charge (inc. tax)
+          type: string
+        shipping_method:
+          readOnly: true
+          type: string
+        shipping_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        shipping_tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxPriceBreakdown'
+          readOnly: true
+          type: array
+        source:
+          readOnly: true
+          type: string
+        status:
+          description: The order's overall status.
+          maxLength: 100
+          type: string
+        subscription_lifecycle:
+          readOnly: true
+          type: string
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/OrderSubscription'
+          readOnly: true
+          type: array
+        supports_post_purchase_upsells:
+          readOnly: true
+          type: boolean
+        tags:
+          description: An array of tags associated with the order.
+          items:
+            type:
+            - string
+            - 'null'
+          type: array
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxSerailizer'
+          readOnly: true
+          type: array
+        total_cost:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        total_excl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Order total (excl. tax)
+          type: string
+        total_incl_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Order total (inc. tax)
+          type: string
+        total_tax:
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        transactions:
+          items:
+            $ref: '#/components/schemas/TransactionObject'
+          readOnly: true
+          type: array
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        voucher_discounts:
+          items:
+            $ref: '#/components/schemas/OrderVoucherOffer'
+          readOnly: true
+          type: array
+      required:
+      - attribution
+      - created_at
+      - currency
+      - date_placed
+      - display_taxes
+      - fulfillments
+      - is_test
+      - lines
+      - number
+      - offer_discounts
+      - order_status_url
+      - original_shipping_excl_tax
+      - original_shipping_incl_tax
+      - original_total_excl_tax
+      - original_total_incl_tax
+      - payment_status
+      - refunds
+      - report_values
+      - shipping_code
+      - shipping_excl_tax
+      - shipping_incl_tax
+      - shipping_method
+      - shipping_tax
+      - shipping_tax_lines
+      - source
+      - subscription_lifecycle
+      - subscriptions
+      - supports_post_purchase_upsells
+      - tax_lines
+      - total_cost
+      - total_excl_tax
+      - total_incl_tax
+      - total_tax
+      - transactions
+      - updated_at
+      - voucher_discounts
       type: object
     Validation:
       properties:
@@ -17513,7 +17513,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderWithoutUser'
+                $ref: '#/components/schemas/UserOrderInline'
           description: ''
       security:
       - oauth2:
