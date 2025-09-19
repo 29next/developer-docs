@@ -1071,7 +1071,9 @@ components:
 
             * `order` - Order
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `variant` - Variant'
           enum:
           - attribution
           - customer
@@ -1079,8 +1081,9 @@ components:
           - line
           - order
           - product
+          - variant
           type: string
-          x-spec-enum-id: 447aaef6f2a3d4c1
+          x-spec-enum-id: 710fa42e3a1fe82c
         type:
           description: 'Expected data type.
 
@@ -2393,7 +2396,9 @@ components:
 
             * `order` - Order
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `variant` - Variant'
           enum:
           - attribution
           - customer
@@ -2401,8 +2406,9 @@ components:
           - line
           - order
           - product
+          - variant
           type: string
-          x-spec-enum-id: 447aaef6f2a3d4c1
+          x-spec-enum-id: 710fa42e3a1fe82c
         type:
           description: 'Expected data type.
 
@@ -5437,7 +5443,9 @@ components:
 
             * `order` - Order
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `variant` - Variant'
           enum:
           - attribution
           - customer
@@ -5445,8 +5453,9 @@ components:
           - line
           - order
           - product
+          - variant
           type: string
-          x-spec-enum-id: 447aaef6f2a3d4c1
+          x-spec-enum-id: 710fa42e3a1fe82c
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -8917,7 +8926,9 @@ components:
 
             * `order` - Order
 
-            * `product` - Product'
+            * `product` - Product
+
+            * `variant` - Variant'
           enum:
           - attribution
           - customer
@@ -8925,8 +8936,9 @@ components:
           - line
           - order
           - product
+          - variant
           type: string
-          x-spec-enum-id: 447aaef6f2a3d4c1
+          x-spec-enum-id: 710fa42e3a1fe82c
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -12917,7 +12929,9 @@ paths:
 
           * `order` - Order
 
-          * `product` - Product'
+          * `product` - Product
+
+          * `variant` - Variant'
         explode: true
         in: query
         name: object
@@ -12930,8 +12944,9 @@ paths:
             - line
             - order
             - product
+            - variant
             type: string
-            x-spec-enum-id: 447aaef6f2a3d4c1
+            x-spec-enum-id: 710fa42e3a1fe82c
           type: array
         style: form
       - description: Metadata Key
