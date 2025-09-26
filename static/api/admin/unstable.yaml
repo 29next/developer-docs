@@ -15991,6 +15991,8 @@ paths:
 
           * `google_pay` - Google Pay
 
+          * `klarna` - Klarna
+
           * `paypal` - PayPal'
         explode: true
         in: query
@@ -16001,11 +16003,12 @@ paths:
             - apple_pay
             - bankcard
             - google_pay
+            - klarna
             - paypal
             type:
             - string
             - 'null'
-            x-spec-enum-id: ee5cec980b0ff345
+            x-spec-enum-id: a1a64e53289dc9ac
           type: array
         style: form
       - description: 'Gateway Status

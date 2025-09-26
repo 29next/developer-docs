@@ -369,6 +369,10 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
+        product_id:
+          description: The ID of the product
+          nullable: true
+          type: integer
         product_sku:
           description: Product's Stock Keeping Unit
           type: string
@@ -377,6 +381,10 @@ components:
           type: string
         quantity:
           description: Total product units from the package
+          type: integer
+        variant_id:
+          description: The ID of the product variant
+          nullable: true
           type: integer
       required:
       - id
@@ -569,6 +577,9 @@ components:
           nullable: true
           type: string
       type: object
+    NullEnum:
+      enum:
+      - null
     Order:
       properties:
         attribution:
@@ -605,6 +616,35 @@ components:
           description: The url for the order's status page
           maxLength: 255
           type: string
+        payment_method:
+          description: 'Payment method used for the order
+
+
+            * `apple_pay` - Apple Pay
+
+            * `card_token` - Card Token
+
+            * `paypal` - Paypal
+
+            * `klarna` - Klarna
+
+            * `ideal` - iDEAL
+
+            * `bancontact` - Bancontact
+
+            * `giropay` - Giropay
+
+            * `google_pay` - Google Pay
+
+            * `sofort` - Sofort
+
+            * `sepa_debit` - SEPA Direct Debit
+
+            * `external` - External'
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/PaymentMethodEnum'
+          - $ref: '#/components/schemas/NullEnum'
         ref_id:
           description: Order reference ID
           maxLength: 255
@@ -754,6 +794,10 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
+        product_id:
+          description: The ID of the product
+          nullable: true
+          type: integer
         product_sku:
           description: Product's Stock Keeping Unit
           type: string
@@ -762,6 +806,10 @@ components:
           type: string
         quantity:
           description: Total product units from the package
+          type: integer
+        variant_id:
+          description: The ID of the product variant
+          nullable: true
           type: integer
       required:
       - id
