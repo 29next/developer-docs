@@ -564,6 +564,7 @@ components:
           readOnly: true
           type: integer
         image:
+          description: URL of the image to fetch and associate with the category
           format: uri
           type:
           - string
@@ -1122,26 +1123,31 @@ components:
           description: Additional attribution metadata.
         subaffiliate1:
           description: Sub-affiliate identifier 1.
+          title: Sub-Affiliate 1
           type:
           - string
           - 'null'
         subaffiliate2:
           description: Sub-affiliate identifier 2.
+          title: Sub-Affiliate 2
           type:
           - string
           - 'null'
         subaffiliate3:
           description: Sub-affiliate identifier 3.
+          title: Sub-Affiliate 3
           type:
           - string
           - 'null'
         subaffiliate4:
           description: Sub-affiliate identifier 4.
+          title: Sub-Affiliate 4
           type:
           - string
           - 'null'
         subaffiliate5:
           description: ' Sub-affiliate identifier 5.'
+          title: Sub-Affiliate 5
           type:
           - string
           - 'null'
@@ -1228,7 +1234,9 @@ components:
 
             * `sepa_debit` - SEPA Direct Debit
 
-            * `sofort` - Sofort'
+            * `sofort` - Sofort
+
+            * `twint` - Twint'
           enum:
           - card_token
           - saved_card
@@ -1242,11 +1250,12 @@ components:
           - klarna
           - sepa_debit
           - sofort
+          - twint
           - null
           type:
           - string
           - 'null'
-          x-spec-enum-id: 0e6ef8641712cc64
+          x-spec-enum-id: 2a6b8428fa1a986f
         send_receipt:
           default: true
           type: boolean
@@ -3234,26 +3243,31 @@ components:
           description: Additional attribution metadata.
         subaffiliate1:
           description: Sub-affiliate identifier 1.
+          title: Sub-Affiliate 1
           type:
           - string
           - 'null'
         subaffiliate2:
           description: Sub-affiliate identifier 2.
+          title: Sub-Affiliate 2
           type:
           - string
           - 'null'
         subaffiliate3:
           description: Sub-affiliate identifier 3.
+          title: Sub-Affiliate 3
           type:
           - string
           - 'null'
         subaffiliate4:
           description: Sub-affiliate identifier 4.
+          title: Sub-Affiliate 4
           type:
           - string
           - 'null'
         subaffiliate5:
           description: ' Sub-affiliate identifier 5.'
+          title: Sub-Affiliate 5
           type:
           - string
           - 'null'
@@ -10309,27 +10323,27 @@ paths:
         name: affiliate
         schema:
           type: string
-      - description: Sub Affiliate1
+      - description: Sub-Affiliate 1
         in: query
         name: subaffiliate1
         schema:
           type: string
-      - description: Sub Affiliate2
+      - description: Sub-Affiliate 2
         in: query
         name: subaffiliate2
         schema:
           type: string
-      - description: Sub Affiliate3
+      - description: Sub-Affiliate 3
         in: query
         name: subaffiliate3
         schema:
           type: string
-      - description: Sub Affiliate4
+      - description: Sub-Affiliate 4
         in: query
         name: subaffiliate4
         schema:
           type: string
-      - description: Sub Affiliate5
+      - description: Sub-Affiliate 5
         in: query
         name: subaffiliate5
         schema:
@@ -13070,27 +13084,27 @@ paths:
         name: affiliate
         schema:
           type: string
-      - description: Sub Affiliate1
+      - description: Sub-Affiliate 1
         in: query
         name: subaffiliate1
         schema:
           type: string
-      - description: Sub Affiliate2
+      - description: Sub-Affiliate 2
         in: query
         name: subaffiliate2
         schema:
           type: string
-      - description: Sub Affiliate3
+      - description: Sub-Affiliate 3
         in: query
         name: subaffiliate3
         schema:
           type: string
-      - description: Sub Affiliate4
+      - description: Sub-Affiliate 4
         in: query
         name: subaffiliate4
         schema:
           type: string
-      - description: Sub Affiliate5
+      - description: Sub-Affiliate 5
         in: query
         name: subaffiliate5
         schema:
@@ -15457,27 +15471,27 @@ paths:
         name: affiliate
         schema:
           type: string
-      - description: Sub Affiliate1
+      - description: Sub-Affiliate 1
         in: query
         name: subaffiliate1
         schema:
           type: string
-      - description: Sub Affiliate2
+      - description: Sub-Affiliate 2
         in: query
         name: subaffiliate2
         schema:
           type: string
-      - description: Sub Affiliate3
+      - description: Sub-Affiliate 3
         in: query
         name: subaffiliate3
         schema:
           type: string
-      - description: Sub Affiliate4
+      - description: Sub-Affiliate 4
         in: query
         name: subaffiliate4
         schema:
           type: string
-      - description: Sub Affiliate5
+      - description: Sub-Affiliate 5
         in: query
         name: subaffiliate5
         schema:
@@ -15498,7 +15512,9 @@ paths:
 
           * `klarna` - Klarna
 
-          * `paypal` - PayPal'
+          * `paypal` - PayPal
+
+          * `twint` - Twint'
         explode: true
         in: query
         name: payment_method
@@ -15510,10 +15526,11 @@ paths:
             - google_pay
             - klarna
             - paypal
+            - twint
             type:
             - string
             - 'null'
-            x-spec-enum-id: a1a64e53289dc9ac
+            x-spec-enum-id: e0bb272f934cecf0
           type: array
         style: form
       - description: 'Gateway Status
@@ -16803,27 +16820,27 @@ paths:
         name: affiliate
         schema:
           type: string
-      - description: Sub Affiliate 1
+      - description: Sub-Affiliate 1
         in: query
         name: subaffiliate1
         schema:
           type: string
-      - description: Sub Affiliate 2
+      - description: Sub-Affiliate 2
         in: query
         name: subaffiliate2
         schema:
           type: string
-      - description: Sub Affiliate 3
+      - description: Sub-Affiliate 3
         in: query
         name: subaffiliate3
         schema:
           type: string
-      - description: Sub Affiliate 4
+      - description: Sub-Affiliate 4
         in: query
         name: subaffiliate4
         schema:
           type: string
-      - description: Sub Affiliate 5
+      - description: Sub-Affiliate 5
         in: query
         name: subaffiliate5
         schema:
@@ -17958,26 +17975,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
@@ -20242,26 +20264,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
@@ -21667,26 +21694,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
@@ -24324,26 +24356,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
@@ -24907,26 +24944,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
@@ -25923,26 +25965,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
@@ -26289,26 +26336,31 @@ webhooks:
                           description: Additional attribution metadata.
                         subaffiliate1:
                           description: Sub-affiliate identifier 1.
+                          title: Sub-Affiliate 1
                           type:
                           - string
                           - 'null'
                         subaffiliate2:
                           description: Sub-affiliate identifier 2.
+                          title: Sub-Affiliate 2
                           type:
                           - string
                           - 'null'
                         subaffiliate3:
                           description: Sub-affiliate identifier 3.
+                          title: Sub-Affiliate 3
                           type:
                           - string
                           - 'null'
                         subaffiliate4:
                           description: Sub-affiliate identifier 4.
+                          title: Sub-Affiliate 4
                           type:
                           - string
                           - 'null'
                         subaffiliate5:
                           description: ' Sub-affiliate identifier 5.'
+                          title: Sub-Affiliate 5
                           type:
                           - string
                           - 'null'
