@@ -640,6 +640,8 @@ components:
 
             * `sepa_debit` - SEPA Direct Debit
 
+            * `twint` - Twint
+
             * `external` - External'
           nullable: true
           oneOf:
@@ -1040,6 +1042,8 @@ components:
 
             * `sepa_debit` - SEPA Direct Debit
 
+            * `twint` - Twint
+
             * `external` - External'
       required:
       - payment_method
@@ -1086,6 +1090,8 @@ components:
 
         * `sepa_debit` - SEPA Direct Debit
 
+        * `twint` - Twint
+
         * `external` - External'
       enum:
       - apple_pay
@@ -1098,6 +1104,7 @@ components:
       - google_pay
       - sofort
       - sepa_debit
+      - twint
       - external
       type: string
     ProductInventoryAvailabilityEnum:
