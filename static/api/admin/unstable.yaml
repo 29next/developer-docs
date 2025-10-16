@@ -950,6 +950,19 @@ components:
       - postcode
       - state
       type: object
+    Country:
+      properties:
+        code:
+          readOnly: true
+          type: string
+        name:
+          maxLength: 128
+          title: Official name
+          type: string
+      required:
+      - code
+      - name
+      type: object
     CreateCart:
       properties:
         attribution:
@@ -2969,7 +2982,7 @@ components:
           - $ref: '#/components/schemas/FulfillmentShippingAddress'
           - type: 'null'
         shipping_method:
-          $ref: '#/components/schemas/ShippingMethod'
+          $ref: '#/components/schemas/ShippingMethodObject'
         status:
           description: '* `not_required` - Not Requried
 
@@ -3957,6 +3970,10 @@ components:
           description: Number of line items, minus removed quantity.
           readOnly: true
           type: integer
+        editable_quantity:
+          description: Number of items that can be edited.
+          readOnly: true
+          type: integer
         fulfillable_quantity:
           description: The number of items that can be fulfilled from this line.
           readOnly: true
@@ -4059,6 +4076,7 @@ components:
       - created_at
       - currency
       - current_quantity
+      - editable_quantity
       - fulfillable_quantity
       - id
       - original_price_excl_tax
@@ -7509,12 +7527,64 @@ components:
     ShippingMethod:
       properties:
         code:
+          description: If left empty, a code name will be generated based on the name
+            of the shipping method.
+          maxLength: 128
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+        countries:
+          items:
+            $ref: '#/components/schemas/Country'
+          type: array
+        delivery_time:
+          description: Shows in checkout, example value should be "3-5 days".
+          maxLength: 128
+          type: string
+        description:
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        is_public:
+          description: Only public shipping methods are shown in the checkout flow.
+          type: boolean
+        name:
+          maxLength: 128
+          type: string
+        prices:
+          items:
+            $ref: '#/components/schemas/ShippingMethodPrices'
+          readOnly: true
+          type: array
+      required:
+      - countries
+      - id
+      - name
+      - prices
+      type: object
+    ShippingMethodObject:
+      properties:
+        code:
           type: string
         name:
           type: string
       required:
       - code
       - name
+      type: object
+    ShippingMethodPrices:
+      properties:
+        currency:
+          description: Currency to apply this pricing.
+          maxLength: 5
+          type: string
+        price_per_order:
+          description: Shipping fee for the order.
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+      required:
+      - currency
       type: object
     StockRecord:
       properties:
@@ -21113,6 +21183,9 @@ webhooks:
                           current_quantity:
                             description: Number of line items, minus removed quantity.
                             type: integer
+                          editable_quantity:
+                            description: Number of items that can be edited.
+                            type: integer
                           fulfillable_quantity:
                             description: The number of items that can be fulfilled
                               from this line.
@@ -21277,6 +21350,7 @@ webhooks:
                         - created_at
                         - currency
                         - current_quantity
+                        - editable_quantity
                         - fulfillable_quantity
                         - id
                         - original_price_excl_tax
@@ -22729,6 +22803,9 @@ webhooks:
                           current_quantity:
                             description: Number of line items, minus removed quantity.
                             type: integer
+                          editable_quantity:
+                            description: Number of items that can be edited.
+                            type: integer
                           fulfillable_quantity:
                             description: The number of items that can be fulfilled
                               from this line.
@@ -22893,6 +22970,7 @@ webhooks:
                         - created_at
                         - currency
                         - current_quantity
+                        - editable_quantity
                         - fulfillable_quantity
                         - id
                         - original_price_excl_tax

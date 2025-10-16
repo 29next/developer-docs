@@ -26,6 +26,26 @@ components:
           - integer
           - 'null'
       type: object
+    AddOrderLine:
+      properties:
+        metadata: {}
+        price:
+          description: Set custom price for this item.
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        product_id:
+          type: integer
+        quantity:
+          minimum: 0
+          type: integer
+        reason:
+          description: Reason for adding this item.
+          type: string
+      required:
+      - product_id
+      - quantity
+      type: object
     AddOrderShipmentTracking:
       properties:
         carrier:
@@ -949,6 +969,19 @@ components:
       - phone_number
       - postcode
       - state
+      type: object
+    Country:
+      properties:
+        code:
+          readOnly: true
+          type: string
+        name:
+          maxLength: 128
+          title: Official name
+          type: string
+      required:
+      - code
+      - name
       type: object
     CreateCart:
       properties:
@@ -2969,7 +3002,7 @@ components:
           - $ref: '#/components/schemas/FulfillmentShippingAddress'
           - type: 'null'
         shipping_method:
-          $ref: '#/components/schemas/ShippingMethod'
+          $ref: '#/components/schemas/ShippingMethodObject'
         status:
           description: '* `not_required` - Not Requried
 
@@ -3957,6 +3990,10 @@ components:
           description: Number of line items, minus removed quantity.
           readOnly: true
           type: integer
+        editable_quantity:
+          description: Number of items that can be edited.
+          readOnly: true
+          type: integer
         fulfillable_quantity:
           description: The number of items that can be fulfilled from this line.
           readOnly: true
@@ -4059,6 +4096,7 @@ components:
       - created_at
       - currency
       - current_quantity
+      - editable_quantity
       - fulfillable_quantity
       - id
       - original_price_excl_tax
@@ -5730,6 +5768,16 @@ components:
             $ref: '#/components/schemas/OrderVoucherOffer'
           readOnly: true
           type: array
+      type: object
+    PatchedUpdateOrderLine:
+      properties:
+        metadata: {}
+        quantity:
+          minimum: 0
+          type: integer
+        reason:
+          description: Reason for editing this item.
+          type: string
       type: object
     PatchedUpdatePriceWithCurrency:
       properties:
@@ -7509,12 +7557,64 @@ components:
     ShippingMethod:
       properties:
         code:
+          description: If left empty, a code name will be generated based on the name
+            of the shipping method.
+          maxLength: 128
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+        countries:
+          items:
+            $ref: '#/components/schemas/Country'
+          type: array
+        delivery_time:
+          description: Shows in checkout, example value should be "3-5 days".
+          maxLength: 128
+          type: string
+        description:
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        is_public:
+          description: Only public shipping methods are shown in the checkout flow.
+          type: boolean
+        name:
+          maxLength: 128
+          type: string
+        prices:
+          items:
+            $ref: '#/components/schemas/ShippingMethodPrices'
+          readOnly: true
+          type: array
+      required:
+      - countries
+      - id
+      - name
+      - prices
+      type: object
+    ShippingMethodObject:
+      properties:
+        code:
           type: string
         name:
           type: string
       required:
       - code
       - name
+      type: object
+    ShippingMethodPrices:
+      properties:
+        currency:
+          description: Currency to apply this pricing.
+          maxLength: 5
+          type: string
+        price_per_order:
+          description: Shipping fee for the order.
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+      required:
+      - currency
       type: object
     StockRecord:
       properties:
@@ -14175,6 +14275,130 @@ paths:
       security:
       - oauth2:
         - orders:read
+      tags:
+      - orders
+  /orders/{number}/lines/:
+    post:
+      description: Add a new line item to an existing order.
+      operationId: ordersLinesCreate
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOrderLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddOrderLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddOrderLine'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
+  /orders/{number}/lines/{lineId}/:
+    delete:
+      description: Remove a line item from an existing order.
+      operationId: ordersLinesDestroy
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - description: A unique integer value identifying this Order Line.
+        in: path
+        name: lineId
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
+    patch:
+      description: Update an existing line item in an order.
+      operationId: ordersLinesPartialUpdate
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          type: string
+      - description: A unique integer value identifying this Order Line.
+        in: path
+        name: lineId
+        required: true
+        schema:
+          type: integer
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2024-04-01'
+          enum:
+          - '2024-04-01'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateOrderLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateOrderLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateOrderLine'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
       tags:
       - orders
   /orders/{number}/mark-as-paid/:
@@ -21113,6 +21337,9 @@ webhooks:
                           current_quantity:
                             description: Number of line items, minus removed quantity.
                             type: integer
+                          editable_quantity:
+                            description: Number of items that can be edited.
+                            type: integer
                           fulfillable_quantity:
                             description: The number of items that can be fulfilled
                               from this line.
@@ -21277,6 +21504,7 @@ webhooks:
                         - created_at
                         - currency
                         - current_quantity
+                        - editable_quantity
                         - fulfillable_quantity
                         - id
                         - original_price_excl_tax
@@ -22729,6 +22957,9 @@ webhooks:
                           current_quantity:
                             description: Number of line items, minus removed quantity.
                             type: integer
+                          editable_quantity:
+                            description: Number of items that can be edited.
+                            type: integer
                           fulfillable_quantity:
                             description: The number of items that can be fulfilled
                               from this line.
@@ -22893,6 +23124,7 @@ webhooks:
                         - created_at
                         - currency
                         - current_quantity
+                        - editable_quantity
                         - fulfillable_quantity
                         - id
                         - original_price_excl_tax
