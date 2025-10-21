@@ -164,7 +164,7 @@ Order editing APIs also do not affect order payment within each request. To remo
 
 #### Line Item Quantities Explained
 
-Order line items have 4 quanity attributes that represent quantities at differen't states in an order life cycle. 
+Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle. 
 
  - `quantity` - Item quantity of items ever added to the order in this line item.
  - `current_quantity` - Current item quantity that have not yet been removed.
@@ -186,7 +186,6 @@ Order line items have 4 quanity attributes that represent quantities at differen
 
 #### Swap Items Flow
 
-
 ```mermaid
 stateDiagram-v2
     direction LR
@@ -197,8 +196,8 @@ stateDiagram-v2
     removeLine --> addLine
 ```
 
-Swaping Items on an order is a 3-step process:
-1. Retreive order line items using the [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to obtain line items and check `editable_quantity` is > 0.
+Swapping Items on an order is a 3-step process:
+1. Retrieve order line items using the [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to obtain line items and check `editable_quantity` is > 0.
 2. Update/Remove line items using the [ordersLinesPartialUpdate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesPartialUpdate) or [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint.
 3. Create new line item [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
 
@@ -262,7 +261,7 @@ Updating an order shipping address is a common task that can be done with a PATC
 
 {
   "shipping_address": {
-    "line1": "4765 Test Lane West", // new shipping adddress line 1
+    "line1": "4765 Test Lane West", // new shipping address line 1
     "line4": "Mountain Pass", // new shipping address city
     "state": "CA", // new shipping address state
     "postcode": "92366", // new shipping address postcode
