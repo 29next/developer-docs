@@ -10,6 +10,8 @@ Order management operations can be automated through the Admin API for more effi
 
 Below are best practices and guides for common scenarios merchants and partners use to manage orders on the Admin API.
 
+
+
 ### Order Refunds
 
 Order management actions that require refunding and removing items from an order can be done through the refund flow. The refund flow is espcially useful when creating partial refunds or creating refunds for items that have already shipped to the customer.
@@ -150,6 +152,104 @@ Depending on the product type and status of the line items being refunded, there
 - If fulfilled, restock_type must be `no_restock`.
 :::
 
+### Order Items Editing
+
+Editing items on an order is common practice, such as swapping products purchased for a different size or color. 
+
+:::info Only Available on 2024-04-01 API Version
+Order editing APIs are only available on 2024-04-01 API Version and above, if you are still using older versions we recommend you upgrade your integration.
+
+Order editing APIs also do not affect order payment within each request. To remove items with an associated refund, see [order refunds](#order-refunds). Using order edit APIs can result in the customer owing or the merchant owing to the customer.
+:::
+
+#### Line Item Quantties Explained
+
+Order line items have 4 quanity attributes that represent quantities at differen't states in an order life cycle. 
+
+ - `quantity` - Item quantity of items ever added to the order in this line item.
+ - `current_quantity` - Current item quantity that have not yet been removed.
+ - `fulfillable_quantity` - Item quantity that have not yet been fulfilled, such as a partial fulfillment.
+ - `editable_quantity` - Item quantity that currently can be edited.
+
+```json title="Line Item Qantities Explained"
+"lines": [
+  {
+    ...
+    "quantity": 3, // quantity of items ever added
+    "current_quantity": 2, // current quantity that have not been removed
+    "fulfillable_quantity": 1, // quantity that have not yet been fulfilled 
+    "editable_quantity": 1, // quantity that can be edited
+    ...
+  }
+]
+```
+
+#### Swap Items Flow
+
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    lines: Retrieve Order Lines
+    removeLine: Remove Unwanted Items
+    addLine: Add Line Item
+    lines --> removeLine
+    removeLine --> addLine
+```
+
+Swaping Items on an order is a 3-step process:
+1. Retreive order line items using the [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to obtain line items and check `editable_quantity` is > 0.
+2. Update/Remove line items using the [ordersLinesPartialUpdate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesPartialUpdate) or [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint.
+3. Create new line item [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
+
+
+#### Update Existing Line Item
+
+Below is an example API call to change the quantity of a line item to 1. If the existing quantity was 2, this would remove 1 quantity, can also be used to increase line item quantity. This endpoint only accepts quantity changes, to change the product or price, see [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
+
+```json title="Update Existing Line Item"
+// PATCH https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
+{
+  "quantity": 1, // change quantity to 1
+  "reason": "product swap" // optional
+}
+```
+
+#### Remove Full Line Item
+
+Below is an example DELETE request to the [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint to remove a line item. 
+
+```json title="Remove Line Item"
+// DELETE https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+```
+
+
+:::info Check Line Item Editable Quantity
+Line items have `editable_quantity` which represents the item quantity not already in process of being fulfilled, already fulfilled, or  already removed from the order. 
+
+**If `editable_quantity` is `0`, the line item cannot be edited.**
+:::
+
+
+#### Create New Line Item
+
+Below is an example POST request to the [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint to create a new line item. 
+
+```json title="Create New Line Item"
+// POST https://{store}.29next.store/api/admin/orders/{number}/lines/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
+{
+  "product_id": 184,
+  "quantity": 1,
+  "price": 89.99, // optional
+  "reason": "product swap" // optional
+}
+```
+
 
 ### Update Shipping Address
 
@@ -158,6 +258,8 @@ Updating an order shipping address is a common task that can be done with a PATC
 
 ```json title="Update Order Shipping Address"
 // PATCH https://{store}.29next.store/api/admin/orders/{number}/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
 {
   "shipping_address": {
     "line1": "4765 Test Lane West", // new shipping adddress line 1
@@ -181,6 +283,7 @@ Fulfillment can be requested immediately through the [fulfillmentRequestSend](/d
 
 ```json title="Fulfillment Request"
 // POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
 
 {
   "fulfillment_order_line_items": [  // will split the fulfillment order into a new fulfillment order
@@ -210,6 +313,8 @@ stateDiagram-v2
 
 ```json title="Hold Fulfillment Order Request"
 // POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
 {
   "reason": "address_incorrect", // see available reasons in api reference
   "reason_message": "Additional relevant detail." // provide additional relevant detail
@@ -234,6 +339,8 @@ stateDiagram-v2
 
 ```json titl="Fulfillment Order Cancellation Request"
 // POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
 {
   "message": "Reason why canceling fulfillment" // message sent to the fulfillment location regarding the cancellation
 }
@@ -254,6 +361,8 @@ Canceling an order is a common order management task when you need to cancel the
 
 ```json title="Cacenl Order Request"
 // POST https://{store}.29next.store/api/admin/orders/{number}/cancel/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
 {
   "cancel_reason": "Customer wants to cancel", // Appropiate cancel reason message
   "full_refund": true, // Refund all remainaing payments or not
