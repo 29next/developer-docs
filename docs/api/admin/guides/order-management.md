@@ -162,7 +162,7 @@ Order editing APIs are only available on 2024-04-01 API Version and above, if yo
 Order editing APIs also do not affect order payment within each request. To remove items with an associated refund, see [order refunds](#order-refunds). Using order edit APIs can result in the customer owing or the merchant owing to the customer.
 :::
 
-#### Line Item Quantties Explained
+#### Line Item Quantities Explained
 
 Order line items have 4 quanity attributes that represent quantities at differen't states in an order life cycle. 
 
@@ -171,7 +171,7 @@ Order line items have 4 quanity attributes that represent quantities at differen
  - `fulfillable_quantity` - Item quantity that have not yet been fulfilled, such as a partial fulfillment.
  - `editable_quantity` - Item quantity that currently can be edited.
 
-```json title="Line Item Qantities Explained"
+```json title="Line Item Quantities Explained"
 "lines": [
   {
     ...
