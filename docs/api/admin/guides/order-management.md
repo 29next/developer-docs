@@ -166,7 +166,7 @@ Order editing APIs also do not affect order payment within each request. To remo
 
 Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle. 
 
- - `quantity` - Item quantity of items ever added to the order in this line item.
+ - `quantity` - Item quantity total ever added to the order in this line.
  - `current_quantity` - Current item quantity that have not yet been removed.
  - `fulfillable_quantity` - Item quantity that have not yet been fulfilled, such as a partial fulfillment.
  - `editable_quantity` - Item quantity that currently can be edited.
