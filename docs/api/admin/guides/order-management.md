@@ -154,7 +154,7 @@ Depending on the product type and status of the line items being refunded, there
 
 ### Order Items Editing
 
-Editing items on an order is common practice, such as swapping products purchased for a different size or color. 
+Editing items on an order is common practice, such as swapping products purchased for a different size or color with the same value without needing to collect payment or create a refund. 
 
 :::info Only Available on 2024-04-01 API Version
 Order editing APIs are only available on 2024-04-01 API Version and above, if you are still using older versions we recommend you upgrade your integration.
