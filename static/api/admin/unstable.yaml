@@ -956,8 +956,7 @@ components:
           readOnly: true
           type: string
         name:
-          maxLength: 128
-          title: Official name
+          readOnly: true
           type: string
       required:
       - code
