@@ -1,6 +1,6 @@
 ---
-title: iFrame Payment Form
-sidebar_label: iFrame Payment Form
+title: Bankcard iFrame Payment Form
+sidebar_label: Bankcard iFrame
 sidebar_position: 2
 tags:
  - Guide
