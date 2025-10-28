@@ -264,12 +264,12 @@ See our other guides on creating orders below.
 
 | Payment Method | Flow | Express | Upsells | Subscriptions |
 | --- | --- | --- | --- | --- | 
-| [`card_token`](/docs/api/admin/guides/iframe-payment-form.md) | Direct | Yes | Yes | Yes |
-| [`apple_pay`](/docs/api/admin/guides/apple-pay.md) | Direct | Yes | Yes | Yes |
-| [`google_pay`](/docs/api/admin/guides/google-pay.md) | Direct | Yes | Yes | Yes |
-| [`paypal`](/docs/api/admin/guides/paypal.md) | Direct | Yes | Yes | Yes |
-| [`klarna`](/docs/api/admin/guides/klarna.md) | Direct | Yes | Yes | Yes |
-| [`twint`](/docs/api/admin/guides/twint.md) | Direct | Yes | Yes | Yes |
-| [`bancontact`](/docs/api/admin/guides/bancontact.md) | Direct | Yes | Yes | Yes |
-| [`ideal`](/docs/api/admin/guides/ideal.md) | Direct | Yes | Yes | Yes |
-| [`sepa_direct`](/docs/api/admin/guides/sepa-debit.md) | Direct | Yes | Yes | Yes |
+| [`card_token`](/docs/api/admin/guides/iframe-payment-form.md) | Direct & Redirect ([3DS](/docs/api/admin/guides/3ds2.md)) | Yes | Yes | Yes |
+| [`apple_pay`](/docs/api/admin/guides/apple-pay.md) | Redirect | Yes | Yes | Yes |
+| [`google_pay`](/docs/api/admin/guides/google-pay.md) | Redirect | Yes | Yes | Yes |
+| [`paypal`](/docs/api/admin/guides/paypal.md) | Redirect | Yes | Yes | Yes |
+| [`klarna`](/docs/api/admin/guides/klarna.md) | Redirect | No | Yes | Yes |
+| [`twint`](/docs/api/admin/guides/twint.md) | Redirect | No | Yes | Yes |
+| [`bancontact`](/docs/api/admin/guides/bancontact.md) | Redirect | No | No | No |
+| [`ideal`](/docs/api/admin/guides/ideal.md) | Redirect | No | No | No |
+| [`sepa_direct`](/docs/api/admin/guides/sepa-debit.md) | Redirect | No | No | No |
