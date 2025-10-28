@@ -104,7 +104,7 @@ Creating an order is the core resource in an external checkout flow, see the exa
 - Attribution detail are not necessary if you have already added it to the users active cart.
 - `shipping_code` and `shipping_price` are optional parameters you can set to specify the shipping method and shipping price.
 - If you already created an address for the user, pass `use_default_shipping_address` and `use_default_billing_address` as true to use their default address for the order.
-- For additional payment methods, see our guides on [Card Tokenization](/docs/api/admin/guides/iframe-payment-form.md), [3DS2](/docs/api/admin/guides/3ds2.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [PayPal](/docs/api/admin/guides/paypal.md), and [Stripe APMs](/docs/api/admin/guides/stripe-apms.md).
+- For additional payment methods, see our guides on [Card Tokenization](/docs/api/admin/guides/iframe-payment-form.md), [3DS2](/docs/api/admin/guides/3ds2.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [PayPal](/docs/api/admin/guides/paypal.md), [Klarna](/docs/api/admin/guides/klarna.md), [Twint](/docs/api/admin/guides/twint.md), [Bancontact](/docs/api/admin/guides/bancontact.md), and [SEPA](/docs/api/admin/guides/sepa-debit.md).
 :::
 
 ### Add Upsells
@@ -298,4 +298,4 @@ The example below uses a [Test Card Token](/docs/api/admin/guides/testing-guide.
 },
 ```
 
-See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow: [PayPal](/docs/api/admin/guides/paypal.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [Stripe APMs](/docs/api/admin/guides/stripe-apms.md), and [3DS2](/docs/api/admin/guides/3ds2.md).
+See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow:  [3DS2](/docs/api/admin/guides/3ds2.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [PayPal](/docs/api/admin/guides/paypal.md), [Klarna](/docs/api/admin/guides/klarna.md), [Twint](/docs/api/admin/guides/twint.md), [Bancontact](/docs/api/admin/guides/bancontact.md), and [SEPA](/docs/api/admin/guides/sepa-debit.md).
