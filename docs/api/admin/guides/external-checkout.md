@@ -132,17 +132,12 @@ The `ordersAddLineItemsCreate` API requires that the order initial **payment met
 ### Cart / Order / Upsell lines Detail
 Cart, Order, and Upsell line items represent the products the customer is purchasing. When an order is created, the product fulfillment location will be automatically chosen based on product stock records and inventory availability.
 
-**Acceptable Line Combinations for a Product**
-
-<Tabs>
-<TabItem value="parent" label="product_id + currency">
-
-```json
+```json title="Specify Line Items and Currency"
 
 {
     "lines": [
         {
-            "product_id": 1,
+            "product_id": 1, // ensure variant ID and not parent product ID
             "currency": "USD",
             "quantity": 1,
             "price": "33.44" // optional custom price
@@ -150,42 +145,9 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
 ]
 }
 ```
-</TabItem>
-<TabItem value="sku" label="sku + currency">
-
-:::warning Deprecation Notice
-Using `sku` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
+:::tip
+Ensure you use the variant product ID for order line items. **Single variant products still contain a variant product future product management to add additional variants.**
 :::
-
-```json
-"lines": [
-    {
-        "sku": "DEMO-SKU",
-        "currency": "USD",
-        "quantity": 1,
-        "price": "33.44" // optional custom price
-    }
-]
-```
-</TabItem>
-<TabItem value="stockrecord_id" label="stockrecord_id">
-
-:::warning Deprecation Notice
-Using `stockrecord_id` is deprecated and will be removed in the future, use `product_id` and `currency` instead.
-:::
-
-```json
-"lines": [
-    {
-        "stockrecord_id": 23,
-        "quantity": 1,
-        "price": 33.44 // optional
-    }
-]
-```
-</TabItem>
-</Tabs>
-
 
 #### Subscription Line Items
 
@@ -298,4 +260,16 @@ The example below uses a [Test Card Token](/docs/api/admin/guides/testing-guide.
 },
 ```
 
-See our other guides on creating orders with [Card Tokens](/docs/api/admin/guides/iframe-payment-form.md) or payment methods that use a redirect flow:  [3DS2](/docs/api/admin/guides/3ds2.md), [Apple Pay](/docs/api/admin/guides/apple-pay.md), [PayPal](/docs/api/admin/guides/paypal.md), [Klarna](/docs/api/admin/guides/klarna.md), [Twint](/docs/api/admin/guides/twint.md), [Bancontact](/docs/api/admin/guides/bancontact.md), and [SEPA](/docs/api/admin/guides/sepa-debit.md).
+See our other guides on creating orders below. 
+
+| Payment Method | Flow | Express | Upsells | Subscriptions |
+| --- | --- | --- | --- | --- | 
+| [`card_token`](/docs/api/admin/guides/iframe-payment-form.md) | Direct | Yes | Yes | Yes |
+| [`apple_pay`](/docs/api/admin/guides/apple-pay.md) | Direct | Yes | Yes | Yes |
+| [`google_pay`](/docs/api/admin/guides/google_pay.md) | Direct | Yes | Yes | Yes |
+| [`paypal`](/docs/api/admin/guides/paypal.md) | Direct | Yes | Yes | Yes |
+| [`klarna`](/docs/api/admin/guides/klarna.md) | Direct | Yes | Yes | Yes |
+| [`twint`](/docs/api/admin/guides/twint.md) | Direct | Yes | Yes | Yes |
+| [`bancontact`](/docs/api/admin/guides/bancontact.md) | Direct | Yes | Yes | Yes |
+| [`ideal`](/docs/api/admin/guides/ideal.md) | Direct | Yes | Yes | Yes |
+| [`sepa_direct`](/docs/api/admin/guides/sepa-direct.md) | Direct | Yes | Yes | Yes |
