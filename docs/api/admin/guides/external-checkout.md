@@ -266,10 +266,10 @@ See our other guides on creating orders below.
 | --- | --- | --- | --- | --- | 
 | [`card_token`](/docs/api/admin/guides/iframe-payment-form.md) | Direct | Yes | Yes | Yes |
 | [`apple_pay`](/docs/api/admin/guides/apple-pay.md) | Direct | Yes | Yes | Yes |
-| [`google_pay`](/docs/api/admin/guides/google_pay.md) | Direct | Yes | Yes | Yes |
+| [`google_pay`](/docs/api/admin/guides/google-pay.md) | Direct | Yes | Yes | Yes |
 | [`paypal`](/docs/api/admin/guides/paypal.md) | Direct | Yes | Yes | Yes |
 | [`klarna`](/docs/api/admin/guides/klarna.md) | Direct | Yes | Yes | Yes |
 | [`twint`](/docs/api/admin/guides/twint.md) | Direct | Yes | Yes | Yes |
 | [`bancontact`](/docs/api/admin/guides/bancontact.md) | Direct | Yes | Yes | Yes |
 | [`ideal`](/docs/api/admin/guides/ideal.md) | Direct | Yes | Yes | Yes |
-| [`sepa_direct`](/docs/api/admin/guides/sepa-direct.md) | Direct | Yes | Yes | Yes |
+| [`sepa_direct`](/docs/api/admin/guides/sepa-debit.md) | Direct | Yes | Yes | Yes |
