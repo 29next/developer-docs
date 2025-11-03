@@ -24,13 +24,9 @@ You should always test and verify your latest changes on your development store 
 :::
 
 
-```mdx-code-block
-
 import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 
 <DevelopmentStore name="Development Store Offer" />
-
-```
 
 ### Releases
 
