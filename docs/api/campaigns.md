@@ -7,17 +7,9 @@ The Campaigns App provides an easy to use CORS enabled API that follows the best
 ### Campaigns App API
 Campaigns App API is available through the **Campaigns App**. To enable, install the Campaigns App in your store from the Apps view.
 
-```mdx-code-block
-
 import Link from '@docusaurus/Link';
 
-<Link
-    className="button button--primary button--lg"
-    to="/docs/api/campaigns/reference/">
-    See Campaigns API Reference
-</Link>
-
-```
+<Link className="button button--primary button--lg" to="/docs/api/campaigns/reference/">See Campaigns API Reference</Link>
 
 ## Campaigns Overview
 

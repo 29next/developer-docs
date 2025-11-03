@@ -90,6 +90,7 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    routeBasePath: '/docs',
                     sidebarPath: require.resolve('./sidebars.js'),
                     include: ['**/*.md', '**/*.mdx'],
                     exclude: [
@@ -173,7 +174,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
-                additionalLanguages: ['django'],
+                additionalLanguages: ['python', 'markup-templating'],
             },
             mermaid: {
                 theme: {
@@ -193,8 +194,9 @@ const config = {
                 appId: 'GNSJUJD786',
                 apiKey: '384f2da9c9bcc8dad6907d70da1894e9',
                 indexName: 'docs',
-                searchParameters: {},
-                searchPagePath: 'search',
+                // contextualSearch: false,
+                // searchParameters: {},
+                // searchPagePath: 'search',
             },
         }),
 };

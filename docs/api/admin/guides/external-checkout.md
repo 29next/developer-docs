@@ -4,12 +4,11 @@ sidebar_position: 1
 tags:
  - Guide
 ---
-# External Checkout Flow
-
-``` mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-```
+
+# External Checkout Flow
+
 In this guide we'll cover the best practices when building an external checkout flow using the Next Commerce Admin API. Using the API gives you the most flexibility of data and functionality across the platform and external integrations.
 
 ```mermaid

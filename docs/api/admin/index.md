@@ -11,18 +11,9 @@ sidebar_position: 1
 At the core of Next Commerce is the Admin API, developers can manage store resources, integrate third-party services and build seamless external order flows.
 
 
-
-```mdx-code-block
-
 import Link from '@docusaurus/Link';
 
-<Link
-    className="button button--primary button--lg"
-    to="/docs/api/admin/reference/">
-    See Admin API Reference
-</Link>
-
-```
+<Link  className="button button--primary button--lg" to="/docs/api/admin/reference/">See Admin API Reference</Link>
 
 ### Authentication
 
