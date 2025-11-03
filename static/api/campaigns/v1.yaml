@@ -216,6 +216,12 @@ components:
             $ref: '#/components/schemas/PaymentMethod'
           readOnly: true
           type: array
+        available_shipping_countries:
+          description: List of available shipping countries for the campaign
+          items:
+            $ref: '#/components/schemas/Country'
+          readOnly: true
+          type: array
         currency:
           description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
             campaign currency if not provided
@@ -248,6 +254,7 @@ components:
       - available_currencies
       - available_express_payment_methods
       - available_payment_methods
+      - available_shipping_countries
       - currency
       - language
       - name
@@ -389,6 +396,18 @@ components:
       required:
       - id
       - quantity
+      type: object
+    Country:
+      properties:
+        code:
+          readOnly: true
+          type: string
+        label:
+          readOnly: true
+          type: string
+      required:
+      - code
+      - label
       type: object
     CreateOrder:
       properties:
