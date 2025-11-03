@@ -33,7 +33,7 @@ const guides: Guide[] = [
         title: 'Getting Started with Themes',
         icon: Layout,
         text: 'Learn how to build customized storefronts with Themes.',
-        link: '/docs/themes/',
+        link: '/docs/storefront/',
     },
     // {
     //     title: 'Getting Start with Apps',

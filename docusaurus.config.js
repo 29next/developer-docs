@@ -68,7 +68,8 @@ const config = {
     url: 'https://developers.29next.com',
     baseUrl: '/',
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'warn',
+    onBrokenAnchors: 'ignore',
+    // onBrokenMarkdownLinks: 'warn',
     favicon: 'img/logo-icon.png',
     trailingSlash: true,
     // GitHub pages deployment config.
@@ -83,7 +84,12 @@ const config = {
         defaultLocale: 'en',
         locales: ['en'],
     },
-
+    markdown: {
+        mermaid: true,
+        hooks: {
+            onBrokenMarkdownLinks: 'warn',
+        },
+    },
     presets: [
         [
             'classic',

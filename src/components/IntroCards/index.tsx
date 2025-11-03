@@ -21,7 +21,7 @@ const IntroCardsData = [
         icon: '🎯',
         title: 'Themes',
         description: 'Create unique brand experiences for customers with our theme framework.',
-        href: '/docs/themes/',
+        href: '/docs/storefront/',
     },
     {
         icon: '🧩',
