@@ -19,11 +19,11 @@ Storefront extensions are commonly used for but not limited to:
 
 2. Make sure you have access to a store you plan to use for development - you will use this in later steps.
 
-```mdx-code-block
 
 import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 
 <DevelopmentStore name="Development Store Offer" />
+
 
 
 ### App Layout Overview
