@@ -20,7 +20,7 @@ The `app_asset_url` tag is used to reference asset files included in app snippet
 
 ### app_hook
 
-The `app_hook` tag specifies a theme storefront location Apps can inject snippets into to extend storefront templates from Apps. Theme developers should ensure their templates include all available `app_hooks` to ensure compatability with all Apps.
+The `app_hook` tag specifies a theme storefront location Apps can inject snippets into to extend storefront templates from Apps. Theme developers should ensure their templates include all available `app_hooks` to ensure compatibility with all Apps.
 
 ```django
 {% app_hook 'global_header' %}
@@ -39,7 +39,7 @@ import AppHookLocations from '@site/_snippets/_app-hook-locations.mdx';
 ### boolean operators
 If tags may be used in combination with boolean operators for conditional control flow.
 
-| Operator     | Description                          |
+| Operator     | Description |
 | ----------- | ------------------------------------ |
 | `and`       | multiple conditions are true  |
 | `or`        | either condition is true |
@@ -52,13 +52,12 @@ If tags may be used in combination with boolean operators for conditional contro
 | `!=`       | inequality |
 | `<`       | less than |
 | `>`       | greater than |
-| `<=`       | less than or equal to |
-| `>=`       | greater than or equal to |
-
+| `<=`      | less than or equal to |
+| `>=`      | greater than or equal to |
 
 ### comment
 
-Ignores everything between {% comment %} and {% endcomment %}. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
+Ignores everything between `{% comment %}` and `{% endcomment %}`. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
 
 ```django
 <p>Rendered text with {{ pub_date|date:"c" }}</p>

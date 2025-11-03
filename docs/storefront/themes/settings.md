@@ -2,15 +2,21 @@
 sidebar_label: Settings
 sidebar_position: 3
 ---
+
+```mdx-code-block
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+```
+
 # Theme Settings
 
 ### Introduction
 
 Theme settings are the power behind the dashboard theme editor experience allowing users to customize the look and feel of their storefront without needing to know how to code.
 
-```mdx-code-block
-import useBaseUrl from '@docusaurus/useBaseUrl';
-```
 <img src={useBaseUrl('img/theme-customize-editor.jpg')} />
 
 ### Theme Settings Location
@@ -30,10 +36,6 @@ configs
 
 Settings are passed to templates settings context variable allowing you to access settings values by their name. See example below of changing the layout by conditionally adding a class based on a radio setting.
 
-```mdx-code-block
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-```
 
 <Tabs>
 <TabItem value="settings" label="Settings Schema">

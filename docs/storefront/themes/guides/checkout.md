@@ -183,7 +183,7 @@ To prevent your analytics from counting customers more than once, you can add th
 
 ```
 
-For example if you wanted to add a conversion action in Google Ads for tracking purchases (To set up Google Ads conversion tracking, follow the [Google Ads instructions](https://support.google.com/google-ads/answer/6095821){:target="_blank"} for creating a conversion action).
+For example if you wanted to add a conversion action in Google Ads for tracking purchases (To set up Google Ads conversion tracking, follow the [Google Ads instructions](https://support.google.com/google-ads/answer/6095821) for creating a conversion action).
 
 ``` django
 {% if send_analytics_event %}
