@@ -119,10 +119,12 @@ const config = {
                     ignorePatterns: ['/tags/**'],
                     filename: 'sitemap.xml',
                 },
-                gtag: {
-                    trackingID: 'G-PW101GSQMJ',
-                    anonymizeIP: true,
-                },
+                ...(process.env.NODE_ENV === 'production' && {
+                    gtag: {
+                        trackingID: 'G-PW101GSQMJ',
+                        anonymizeIP: true,
+                    },
+                }),
                 theme: {
                     customCss: [
                         require.resolve('./src/css/custom.css'),
@@ -163,6 +165,7 @@ const config = {
                             },
                         ],
                     },
+                    { to: '/docs/campaign-cart/', label: 'Campaign Cart', position: 'left' },
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
                     { to: '/docs/storefront/', label: 'Storefront', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
