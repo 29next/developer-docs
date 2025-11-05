@@ -199,7 +199,7 @@ const config = {
             algolia: {
                 appId: 'WDDPJKSDHF',
                 apiKey: '4299e5ff1b1a1278c60158fbba4d65c1',
-                indexName: 'Developer Docs Crawler',
+                indexName: 'docs',
                 askAi: 'YOUR_ALGOLIA_ASSISTANT_ID', 
                 // contextualSearch: false,
                 // searchParameters: {},
