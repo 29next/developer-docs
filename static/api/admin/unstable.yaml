@@ -907,6 +907,13 @@ components:
         message:
           type: string
       type: object
+    CollectPayment:
+      properties:
+        send_payment_notification:
+          default: false
+          description: Send payment notification to customer.
+          type: boolean
+      type: object
     ContactAddress:
       properties:
         city:
@@ -13935,6 +13942,49 @@ paths:
           enum:
           - unstable
           type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
+  /orders/{number}/collect-payment/:
+    post:
+      description: Collect payment for an order outstanding balance on the order.                      Requires
+        order original payment method to support merchant initiated transactions.
+      operationId: ordersCollectPaymentCreate
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          title: Order number
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: unstable
+          enum:
+          - unstable
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectPayment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CollectPayment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CollectPayment'
       responses:
         '200':
           content:
