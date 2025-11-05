@@ -340,6 +340,13 @@ html[data-theme='dark'] {
     border-color: transparent transparent transparent var(--docs-color-text-100) !important;
 }
 
+/* Mermaid fixes */
+
+[id^="mermaid-svg-"] .nodeLabel {
+    color: var(--docs-color-text) !important;
+}
+
+
 /* Search customization */
 
 .DocSearch-Button-Key {
@@ -395,3 +402,5 @@ html[data-theme='dark'] {
         transform: rotate(360deg);
     }
 }
+
+
