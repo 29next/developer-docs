@@ -4,7 +4,7 @@ from algoliasearch.search_client import SearchClient
 
 from config import SITE_DOMAIN, BASE_API_FILES_PATH
 
-APP_ID = 'GNSJUJD786'
+APP_ID = 'WDDPJKSDHF'
 API_KEY = os.environ['ALGOLIA_API_KEY']
 INDEX_NAME = 'docs'
 
