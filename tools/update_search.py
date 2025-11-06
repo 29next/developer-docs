@@ -4,9 +4,9 @@ from algoliasearch.search_client import SearchClient
 
 from config import SITE_DOMAIN, BASE_API_FILES_PATH
 
-APP_ID = 'WDDPJKSDHF'
+APP_ID = 'GNSJUJD786'
 API_KEY = os.environ['ALGOLIA_API_KEY']
-INDEX_NAME = 'Developer Docs Crawler'
+INDEX_NAME = 'docs'
 
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
