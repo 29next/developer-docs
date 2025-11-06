@@ -6,7 +6,7 @@ from config import SITE_DOMAIN, BASE_API_FILES_PATH
 
 APP_ID = 'WDDPJKSDHF'
 API_KEY = os.environ['ALGOLIA_API_KEY']
-INDEX_NAME = 'docs'
+INDEX_NAME = 'Developer Docs Crawler'
 
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
