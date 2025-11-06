@@ -200,7 +200,7 @@ const config = {
                 appId: 'WDDPJKSDHF',
                 apiKey: '4299e5ff1b1a1278c60158fbba4d65c1',
                 indexName: 'Developer Docs Crawler',
-                // askAi: 'VHZHmpbS15gW',
+                askAi: 'VHZHmpbS15gW',
             },
         }),
 };
