@@ -1,47 +1,57 @@
 import os
+import csv
 import yaml
 from algoliasearch.search_client import SearchClient
 
 from config import SITE_DOMAIN, BASE_API_FILES_PATH
 
 APP_ID = 'GNSJUJD786'
-API_KEY = os.environ['ALGOLIA_API_KEY']
+# API_KEY = os.environ['ALGOLIA_API_KEY']
 INDEX_NAME = 'docs'
-
+INDEX_CSV_DATA_PATH = '../static/api/data/index_data.csv'
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
     # object structure follow docusaurus algolia default structure
     url = SITE_DOMAIN + anchor
-    navigation = {
-        'lvl0': 'Documentation',
-        'lvl1': api_type_title,
-        'lvl2': tag,
-        'lvl3': object_id,
-        'lvl4': description,
-        'lvl5': None,
-        'lvl6': None
-    }
+    # navigation = {
+    #     'lvl0': 'Documentation',
+    #     'lvl1': api_type_title,
+    #     'lvl2': tag,
+    #     'lvl3': object_id,
+    #     'lvl4': description,
+    #     'lvl5': None,
+    #     'lvl6': None
+    # }
+    # object = {
+    #     'objectID': '{}-{}'.format(api_type, object_id),
+    #     'name': object_id,
+    #     'content': description,
+    #     'docusaurus_tag': 'docs-default-current',
+    #     'category': api_type_title,
+    #     'language': 'en',
+    #     'type': 'lvl4',
+    #     'anchor': anchor,
+    #     'url': url,
+    #     'url_without_variables': url,
+    #     'url_without_anchor': url,
+    #     'weight': {
+    #         'page_rank': 100,
+    #         'level': 100,
+    #         'position': 1
+    #     },
+    #     'hierarchy': navigation,
+    #     'hierarchy_radio': navigation,
+    #     'hierarchy_camel': [navigation],
+    #     'hierarchy_radio_camel': navigation
+    # }
     object = {
         'objectID': '{}-{}'.format(api_type, object_id),
-        'name': object_id,
-        'content': description,
-        'docusaurus_tag': 'docs-default-current',
+        'title': object_id,
+        'description': description,
         'category': api_type_title,
-        'language': 'en',
-        'type': 'lvl4',
+        'type': tag,
         'anchor': anchor,
-        'url': url,
-        'url_without_variables': url,
-        'url_without_anchor': url,
-        'weight': {
-            'page_rank': 100,
-            'level': 100,
-            'position': 1
-        },
-        'hierarchy': navigation,
-        'hierarchy_radio': navigation,
-        'hierarchy_camel': [navigation],
-        'hierarchy_radio_camel': navigation
+        'url': url
     }
 
     return object
@@ -120,4 +130,29 @@ def add_to_index():
     index.save_objects(webhook_objects)
 
 
-add_to_index()
+# add_to_index()
+
+def create_index_csv():
+    indexed_apis = [
+        {
+            'type': 'admin',
+            'type_title': 'Admin API',
+            'version': '2024-04-01'
+        },
+        {
+            'type': 'campaigns',
+            'type_title': 'Campaigns API',
+            'version': 'v1'
+        }
+    ]
+    objects = []
+    for each in indexed_apis:
+        objects.extend(generate_api_objects(each['type'], each['type_title'], each['version']))
+
+    with open(INDEX_CSV_DATA_PATH, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=objects[0].keys())
+        writer.writeheader()
+        writer.writerows(objects)
+
+
+create_index_csv()
