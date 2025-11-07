@@ -1,6 +1,6 @@
 ---
 sidebar_label: Cart System
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Cart System

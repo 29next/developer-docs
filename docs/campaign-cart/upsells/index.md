@@ -1,6 +1,6 @@
 ---
 sidebar_label: Upsells
-sidebar_position: 1
+sidebar_position: 4
 ---
 
 # Upsells

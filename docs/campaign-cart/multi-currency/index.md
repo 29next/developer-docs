@@ -1,6 +1,6 @@
 ---
 sidebar_label: Multi-Currency
-sidebar_position: 1
+sidebar_position: 10
 ---
 
 # Multi-Currency

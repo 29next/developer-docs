@@ -3,18 +3,244 @@ sidebar_label: Campaign Cart
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Campaign Cart JS SDK
 
 Welcome to the Next Commerce JS SDK documentation. This SDK enables developers to create e-commerce storefront experiences using HTML attributes, JavaScript, and CSS.
 
 ## Quick Start
 
-```html
-<!-- Load SDK -->
-<script src="https://campaign-cart-v2.pages.dev/loader.js"></script>
+### Option 1: Use Starter Template (Recommended)
 
-<!-- Campaign API Key -->
-<meta name="next-api-key" content="your-api-key-here">
+Get started quickly with our pre-configured starter template:
+
+**[🚀 Download Starter Template](https://github.com/NextCommerceCo/campaign-cart-starter)** - Clone or download a ready-to-use campaign flow (landing --> checkout --> upsell --> receipt) with Campaign Cart integrated.
+
+### Option 2: Manual Setup
+
+1. **Get Your API Key**
+   
+   Go to Next Commerce Dashboard, open the Campaigns app, select your campaign, click on Integration, and copy your API key.
+
+2. **Add SDK Script**
+   
+   Add these two lines to your HTML `<head>` section:
+
+   ```html
+   <!-- Path to Your Campaign Cart Configuration -->
+   <script src="js/config.js"></script>
+   
+   <!-- Campaign Cart SDK -->
+   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js" type="module"></script>
+   ```
+
+3. **Start Building**
+   
+   You can now use Campaign Cart attributes in your HTML!
+
+
+## Installation Methods
+
+<Tabs>
+  <TabItem value="cdn" label="CDN (Recommended)">
+```html
+<!-- Latest version -->
+<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js" type="module"></script>
+```
+  </TabItem>
+
+  <TabItem value="npm" label="NPM Package">
+```bash
+npm install @campaigncart/js-sdk
+```
+
+Then import in your JavaScript:
+
+```javascript
+import CampaignCart from '@campaigncart/js-sdk';
+
+CampaignCart.init({
+  apiKey: 'your-api-key-here'
+});
+```
+  </TabItem>
+
+  <TabItem value="self-hosted" label="Self-Hosted">
+```bash
+curl -o campaign-cart.js https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js
+```
+
+Host on your server:
+
+```html
+<script src="/js/campaign-cart.js"></script>
+```
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+:::tip
+Replace `your-api-key-here` with your actual Campaign API key from the dashboard.
+:::
+
+### JavaScript Configuration
+
+For more advanced configuration:
+
+#### Minimal Setup (Getting Started)
+
+```javascript
+// Configure before SDK loads
+window.dataLayer = window.dataLayer || [];
+window.nextReady = window.nextReady || [];
+
+window.nextConfig = {
+  apiKey: "your-api-key-here"
+};
+```
+
+#### Complete Example with Common Options
+
+```javascript
+// Configure before SDK loads
+window.dataLayer = window.dataLayer || [];
+window.nextReady = window.nextReady || [];
+
+window.nextConfig = {
+  // Required: Your Campaign Cart API key
+  apiKey: "your-api-key-here",
+  
+  // Currency behavior when country changes
+  currencyBehavior: 'auto', // 'auto' | 'manual'
+  
+  // Payment and checkout configuration
+  paymentConfig: {
+    expressCheckout: {
+      requireValidation: true,
+      requiredFields: ['email', 'fname', 'lname'],
+      methodOrder: ['paypal', 'apple_pay', 'google_pay']
+    }
+  },
+  
+  // Address and country configuration
+  addressConfig: {
+    defaultCountry: "US",
+    showCountries: ["US", "CA", "GB", "AU", "DE", "FR"],
+    dontShowStates: ["AS", "GU", "PR", "VI"]
+  },
+  
+  // Discount codes configuration
+  discounts: {
+    SAVE10: {
+      code: "SAVE10",
+      type: "percentage", // 'percentage' | 'fixed'
+      value: 10,
+      scope: "order", // 'package' | 'order'
+      description: "10% off entire order",
+      combinable: true
+    }
+  },
+  
+  // Google Maps integration (for address autocomplete)
+  googleMaps: {
+    apiKey: "your-google-maps-api-key",
+    region: "US",
+    enableAutocomplete: true
+  },
+  
+  // Tracking mode
+  tracking: "auto", // 'auto' | 'manual' | 'disabled'
+  
+  // Analytics providers configuration
+  analytics: {
+    enabled: true,
+    mode: 'auto', // 'auto' | 'manual' | 'disabled'
+    providers: {
+      nextCampaign: {
+        enabled: true
+      },
+      gtm: {
+        enabled: false,
+        settings: {
+          containerId: "GTM-XXXXXX",
+          dataLayerName: "dataLayer"
+        }
+      },
+      facebook: {
+        enabled: false,
+        settings: {
+          pixelId: "YOUR_PIXEL_ID"
+        }
+      }
+    }
+  },
+  
+  // UTM parameter transfer (preserve tracking params)
+  utmTransfer: {
+    enabled: true,
+    applyToExternalLinks: false,
+    debug: false,
+    excludedDomains: ['example.com'],
+    paramsToCopy: ['utm_source', 'utm_medium', 'utm_campaign']
+  }
+};
+```
+
+### Meta Tag Configuration
+
+Configure the SDK using meta tags in your HTML head:
+
+```html
+  <!-- Campaign API Key: Optional if you wish to override the config -->
+  <meta name="next-api-key" content="your-api-key-here">
+  
+  <!-- Page Type: product, checkout, upsell, or receipt -->
+  <meta name="next-page-type" content="product">
+  
+  <!-- Next URL: Redirect after order completion (for checkout pages) -->
+  <meta name="next-next-url" content="/upsell">
+  
+  <!-- Prevent Back Navigation: Usually on first upsell page -->
+  <meta name="next-prevent-back-navigation" content="true">
+  
+  <!-- Upsell URLs: For upsell pages -->
+  <meta name="next-upsell-accept-url" content="/receipt">
+  <meta name="next-upsell-decline-url" content="/receipt">
+```
+
+## HTML Setup Example
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- 1. First: Set configuration -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.nextReady = window.nextReady || [];  
+
+    window.nextConfig = {
+      apiKey: "your-api-key-here",
+    };
+  </script>
+
+  <!-- 2. Second: Metatag Configuration -->
+  
+  <!-- Page Type: product, checkout, upsell, or receipt -->
+  <meta name="next-page-type" content="product">
+  
+  <!-- Next URL: Redirect after order completion (for checkout pages) -->
+  <meta name="next-next-url" content="/upsell">
+  
+  <!-- 2. Then: Load the SDK -->
+ <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js" type="module"></script>
+</head>
+<body>
+  <!-- Your content here -->
+</body>
+</html>
 ```
 
 ## Features
@@ -25,29 +251,6 @@ Welcome to the Next Commerce JS SDK documentation. This SDK enables developers t
 - **Post-purchase upsells** - Maximize order value with upsell flows
 - **Dynamic content** - Display prices, totals, and product data
 - **Conversion tools** - FOMO notifications and exit intent popups
-
-## Documentation Sections
-
-### Getting Started
-Start here if you're new to Campaign Cart. Learn how to install, configure, and get your first cart working.
-
-- [Installation](/docs/campaign-cart/getting-started/installation) - Setup and configuration
-- [Quick Start](/docs/campaign-cart/getting-started/quick-start) - Basic examples
-- [Configuration](/docs/campaign-cart/getting-started/configuration) - Meta tags and options
-- [Troubleshooting](/docs/campaign-cart/getting-started/troubleshooting) - Common issues
-
-### Core Features
-
-- **[Cart System](/docs/campaign-cart/cart-system/overview)** - Cart management and controls
-- **[Upsells](/docs/campaign-cart/upsells/overview)** - Post-purchase upsell flows
-- **[Attributes](/docs/campaign-cart/attributes/overview)** - Display and conditional attributes
-- **[Utilities](/docs/campaign-cart/utilities/analytics)** - FOMO, exit intent, and analytics
-
-### Reference
-
-- **[API Reference](/docs/campaign-cart/api-reference/methods)** - JavaScript methods and events
-- **[Examples](/docs/campaign-cart/examples/basic-product-page)** - Complete implementations
-- **[Guides](/docs/campaign-cart/guides/best-practices)** - Best practices and optimization
 
 ## Quick Examples
 
@@ -78,6 +281,38 @@ Start here if you're new to Campaign Cart. Learn how to install, configure, and 
 <div data-next-show="cart.hasItems">
   <button onclick="checkout()">Proceed to Checkout</button>
 </div>
+```
+
+## Documentation Sections
+
+### Core Features
+
+- **[Cart System](/docs/campaign-cart/cart-system/overview)** - Cart management and controls
+- **[Upsells](/docs/campaign-cart/upsells/overview)** - Post-purchase upsell flows
+- **[Attributes](/docs/campaign-cart/attributes/overview)** - Display and conditional attributes
+- **[Utilities](/docs/campaign-cart/utilities/analytics)** - FOMO, exit intent, and analytics
+
+### Reference
+
+- **[API Reference](/docs/campaign-cart/api-reference/methods)** - JavaScript methods and events
+- **[Examples](/docs/campaign-cart/examples/basic-product-page)** - Complete implementations
+- **[Guides](/docs/campaign-cart/guides/best-practices)** - Best practices and optimization
+- **[Configuration](/docs/campaign-cart/getting-started/configuration)** - Advanced configuration options
+- **[Troubleshooting](/docs/campaign-cart/getting-started/troubleshooting)** - Common issues and solutions
+
+## Verification
+
+Verify the SDK loaded correctly by opening your browser console:
+
+```javascript
+// Check if SDK is loaded
+console.log(window.next ? 'SDK Loaded' : 'SDK Not Found');
+
+// Check SDK version
+if (window.next) {
+  console.log('SDK Version:', next.version);
+  console.log('Config:', next.getConfig());
+}
 ```
 
 ## Browser Support

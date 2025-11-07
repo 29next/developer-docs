@@ -1,6 +1,6 @@
 ---
 sidebar_label: Checkout
-sidebar_position: 1
+sidebar_position: 5
 ---
 
 # Checkout

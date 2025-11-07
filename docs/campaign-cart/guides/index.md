@@ -1,6 +1,6 @@
 ---
 sidebar_label: Guides
-sidebar_position: 1
+sidebar_position: 8
 ---
 
 # Guides
