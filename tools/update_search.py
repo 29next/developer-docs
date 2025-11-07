@@ -8,51 +8,52 @@ from config import SITE_DOMAIN, BASE_API_FILES_PATH
 APP_ID = 'GNSJUJD786'
 # API_KEY = os.environ['ALGOLIA_API_KEY']
 INDEX_NAME = 'docs'
-INDEX_CSV_DATA_PATH = '../static/api/data/index_data.csv'
+INDEX_HTML_DATA_PATH = '../static/api/index_data.html'
+INDEX_MD_DATA_PATH = '../docs/api/index_data.md'
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
     # object structure follow docusaurus algolia default structure
     url = SITE_DOMAIN + anchor
-    # navigation = {
-    #     'lvl0': 'Documentation',
-    #     'lvl1': api_type_title,
-    #     'lvl2': tag,
-    #     'lvl3': object_id,
-    #     'lvl4': description,
-    #     'lvl5': None,
-    #     'lvl6': None
-    # }
-    # object = {
-    #     'objectID': '{}-{}'.format(api_type, object_id),
-    #     'name': object_id,
-    #     'content': description,
-    #     'docusaurus_tag': 'docs-default-current',
-    #     'category': api_type_title,
-    #     'language': 'en',
-    #     'type': 'lvl4',
-    #     'anchor': anchor,
-    #     'url': url,
-    #     'url_without_variables': url,
-    #     'url_without_anchor': url,
-    #     'weight': {
-    #         'page_rank': 100,
-    #         'level': 100,
-    #         'position': 1
-    #     },
-    #     'hierarchy': navigation,
-    #     'hierarchy_radio': navigation,
-    #     'hierarchy_camel': [navigation],
-    #     'hierarchy_radio_camel': navigation
-    # }
+    navigation = {
+        'lvl0': 'Documentation',
+        'lvl1': api_type_title,
+        'lvl2': tag,
+        'lvl3': object_id,
+        'lvl4': description,
+        'lvl5': None,
+        'lvl6': None
+    }
     object = {
         'objectID': '{}-{}'.format(api_type, object_id),
-        'title': object_id,
-        'description': description,
+        'name': object_id,
+        'content': description,
+        'docusaurus_tag': 'docs-default-current',
         'category': api_type_title,
-        'type': tag,
+        'language': 'en',
+        'type': 'lvl4',
         'anchor': anchor,
-        'url': url
+        'url': url,
+        'url_without_variables': url,
+        'url_without_anchor': url,
+        'weight': {
+            'page_rank': 100,
+            'level': 100,
+            'position': 1
+        },
+        'hierarchy': navigation,
+        'hierarchy_radio': navigation,
+        'hierarchy_camel': [navigation],
+        'hierarchy_radio_camel': navigation
     }
+    # object = {
+    #     'objectID': '{}-{}'.format(api_type, object_id),
+    #     'title': object_id,
+    #     'description': description,
+    #     'category': api_type_title,
+    #     'type': tag,
+    #     'anchor': anchor,
+    #     'url': url
+    # }
 
     return object
 
@@ -132,7 +133,32 @@ def add_to_index():
 
 # add_to_index()
 
-def create_index_csv():
+# def create_index_csv():
+#     indexed_apis = [
+#         {
+#             'type': 'admin',
+#             'type_title': 'Admin API',
+#             'version': '2024-04-01'
+#         },
+#         {
+#             'type': 'campaigns',
+#             'type_title': 'Campaigns API',
+#             'version': 'v1'
+#         }
+#     ]
+#     objects = []
+#     for each in indexed_apis:
+#         objects.extend(generate_api_objects(each['type'], each['type_title'], each['version']))
+
+#     with open(INDEX_CSV_DATA_PATH, "w", newline="", encoding="utf-8") as f:
+#         writer = csv.DictWriter(f, fieldnames=objects[0].keys())
+#         writer.writeheader()
+#         writer.writerows(objects)
+
+
+# create_index_csv()
+
+def create_index_outputs():
     indexed_apis = [
         {
             'type': 'admin',
@@ -149,10 +175,76 @@ def create_index_csv():
     for each in indexed_apis:
         objects.extend(generate_api_objects(each['type'], each['type_title'], each['version']))
 
-    with open(INDEX_CSV_DATA_PATH, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=objects[0].keys())
-        writer.writeheader()
-        writer.writerows(objects)
+    webhook_objects = generate_webhook_objects()
+    objects.extend(webhook_objects)
 
+    if not objects:
+        return
 
-create_index_csv()
+    # with open(INDEX_HTML_DATA_PATH, "w", newline="", encoding="utf-8") as f:
+    #     writer = csv.DictWriter(f, fieldnames=objects[0].keys())
+    #     writer.writeheader()
+    #     writer.writerows(objects)
+
+    html_lines = [
+        "<!DOCTYPE html>",
+        "<html lang='en'>",
+        "<head>",
+        "  <meta charset='utf-8'/>",
+        "  <title>API Search Index</title>",
+        "  <style>body{font-family:sans-serif;} ul{list-style:none;padding:0;} li{margin-bottom:1.5rem;} .endpoint{font-weight:600;} .description{margin:0.25rem 0;} .link a{color:#2f81f7;}</style>",
+        "</head>",
+        "<body>",
+        "  <h1>API Documentation Reference</h1>",
+        "  <ul>",
+    ]
+    for obj in objects:
+        tag = obj['hierarchy']['lvl2']
+        html_lines.extend([
+            "    <li>",
+            f"      <div class='endpoint article h1'><a href='{obj['url']}'>{obj['hierarchy']['lvl3']}</a></div>",
+            f"      <div class='endpoint-meta'>{tag}</div>",
+            f"      <div class='description'>{obj['content']}</div>",
+            f"      <div class='link'><a href='{obj['url']}'>{obj['hierarchy']['lvl3']} Reference</a></div>",
+            "    </li>",
+        ])
+    html_lines.extend([
+        "  </ul>",
+        "</body>",
+        "</html>",
+    ])
+
+    print('Writing HTML index to {}...'.format(INDEX_HTML_DATA_PATH))
+    with open(INDEX_HTML_DATA_PATH, "w", encoding="utf-8") as f:
+        f.write("\n".join(html_lines))
+
+    markdown_lines = [
+        "---",
+        "id: index-data",
+        "title: API Search Index",
+        "description: Generated endpoints from OpenAPI specs and webhooks.",
+        "unlisted: true",
+        "---",
+        "# API Search Index",
+        "",
+        "Generated endpoints from OpenAPI specs and webhooks.",
+        "",
+    ]
+    for obj in objects:
+        name = obj['hierarchy']['lvl3']
+        tag = obj['hierarchy']['lvl2']
+        description = obj['content']
+        url = obj['url']
+        markdown_lines.extend([
+            f"## {name}",
+            "",
+            f"- **Tag:** `{tag}`",
+            f"- **Description:** {description or '—'}",
+            f"- **Reference:** [{url}]({url})",
+            "",
+        ])
+    print('Writing Markdown index to {}...'.format(INDEX_MD_DATA_PATH))
+    with open(INDEX_MD_DATA_PATH, "w", encoding="utf-8") as f:
+        f.write("\n".join(markdown_lines))
+
+create_index_outputs()
