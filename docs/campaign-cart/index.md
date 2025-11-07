@@ -16,7 +16,7 @@ Welcome to the Next Commerce JS SDK documentation. This SDK enables developers t
 
 Get started quickly with our pre-configured starter template:
 
-**[🚀 Download Starter Template](https://github.com/NextCommerceCo/campaign-cart-starter)** - Clone or download a ready-to-use campaign flow (landing --> checkout --> upsell --> receipt) with Campaign Cart integrated.
+**[🚀 Download Starter Template](https://github.com/29next/campaign-cart-example)** - Clone or download a ready-to-use campaign flow (landing --> checkout --> upsell --> receipt) with Campaign Cart integrated.
 
 ### Option 2: Manual Setup
 
