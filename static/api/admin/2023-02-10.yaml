@@ -25,6 +25,10 @@ components:
           type:
           - integer
           - 'null'
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
       type: object
     AddOrderShipmentTracking:
       properties:
@@ -5886,6 +5890,10 @@ components:
         save_card:
           default: true
           type: boolean
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
       type: object
     PaymentGateway:
       properties:
@@ -7685,6 +7693,10 @@ components:
           type:
           - integer
           - 'null'
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
       type: object
     SubscriptionTransaction:
       properties:
@@ -7755,6 +7767,10 @@ components:
           readOnly: true
         response_code:
           type: integer
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
         status:
           description: '* `succeeded` - Succeeded
 
@@ -8228,6 +8244,10 @@ components:
           readOnly: true
         response_code:
           type: integer
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
         status:
           description: '* `succeeded` - Succeeded
 
@@ -8411,6 +8431,10 @@ components:
           readOnly: true
         response_code:
           type: integer
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
         status:
           description: '* `succeeded` - Succeeded
 
@@ -21150,6 +21174,10 @@ webhooks:
                                   type: object
                                 response_code:
                                   type: integer
+                                statement_descriptor:
+                                  type:
+                                  - string
+                                  - 'null'
                                 status:
                                   description: '* `succeeded` - Succeeded
 
@@ -21554,6 +21582,10 @@ webhooks:
                             type: object
                           response_code:
                             type: integer
+                          statement_descriptor:
+                            type:
+                            - string
+                            - 'null'
                           status:
                             description: '* `succeeded` - Succeeded
 
@@ -22580,6 +22612,10 @@ webhooks:
                                   type: object
                                 response_code:
                                   type: integer
+                                statement_descriptor:
+                                  type:
+                                  - string
+                                  - 'null'
                                 status:
                                   description: '* `succeeded` - Succeeded
 
@@ -22984,6 +23020,10 @@ webhooks:
                             type: object
                           response_code:
                             type: integer
+                          statement_descriptor:
+                            type:
+                            - string
+                            - 'null'
                           status:
                             description: '* `succeeded` - Succeeded
 
@@ -26253,6 +26293,10 @@ webhooks:
                       type: object
                     response_code:
                       type: integer
+                    statement_descriptor:
+                      type:
+                      - string
+                      - 'null'
                     status:
                       description: '* `succeeded` - Succeeded
 
@@ -26624,6 +26668,10 @@ webhooks:
                       type: object
                     response_code:
                       type: integer
+                    statement_descriptor:
+                      type:
+                      - string
+                      - 'null'
                     status:
                       description: '* `succeeded` - Succeeded
 
