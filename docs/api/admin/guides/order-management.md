@@ -106,7 +106,7 @@ Below is an example POST request to the [ordersLinesCreate](/docs/api/admin/refe
 // -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
 
 {
-  "product_id": 184,
+  "product_id": 184, // product variant id
   "quantity": 1,
   "price": 89.99, // optional
   "reason": "product swap" // optional
@@ -153,7 +153,7 @@ Refunding specific items of an order is a 3-step process:
 Order Refund Calculate APIs are only available on `2024-04-01` version and newer. See [API Versioning](/docs/api/admin/#versioning) for how to specify a version in your requests.
 :::
 
-#### Retreieve Order Lines
+#### Retrieve Order Lines
 
 Below is an abreviated example request to [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to get the line items of the order.
 
