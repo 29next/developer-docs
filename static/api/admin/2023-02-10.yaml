@@ -26,6 +26,8 @@ components:
           - integer
           - 'null'
         statement_descriptor:
+          description: 'Statement descriptor supports up to 22 alphanumeric characters,
+            spaces, and these special characters: & , . - #.'
           type:
           - string
           - 'null'
@@ -791,7 +793,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -800,8 +806,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         type:
           description: 'Expected data type.
 
@@ -1779,6 +1787,10 @@ components:
           type:
           - string
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         slug:
           type:
           - string
@@ -2113,7 +2125,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -2122,8 +2138,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         type:
           description: 'Expected data type.
 
@@ -4244,6 +4262,10 @@ components:
           type:
           - string
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         slug:
           readOnly: true
           type: string
@@ -4785,6 +4807,10 @@ components:
           type:
           - string
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         slug:
           type:
           - string
@@ -5083,7 +5109,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -5092,8 +5122,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -5891,6 +5923,8 @@ components:
           default: true
           type: boolean
         statement_descriptor:
+          description: 'Statement descriptor supports up to 22 alphanumeric characters,
+            spaces, and these special characters: & , . - #.'
           type:
           - string
           - 'null'
@@ -7694,6 +7728,8 @@ components:
           - integer
           - 'null'
         statement_descriptor:
+          description: 'Statement descriptor supports up to 22 alphanumeric characters,
+            spaces, and these special characters: & , . - #.'
           type:
           - string
           - 'null'
@@ -8593,7 +8629,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -8602,8 +8642,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -12582,7 +12624,11 @@ paths:
 
           * `product` - Product
 
-          * `variant` - Variant'
+          * `variant` - Variant
+
+          * `blog` - Blog
+
+          * `page` - Page'
         explode: true
         in: query
         name: object
@@ -12590,14 +12636,16 @@ paths:
           items:
             enum:
             - attribution
+            - blog
             - customer
             - dispute
             - line
             - order
+            - page
             - product
             - variant
             type: string
-            x-spec-enum-id: 710fa42e3a1fe82c
+            x-spec-enum-id: 06e58adfbb02ad1f
           type: array
         style: form
       - description: Metadata Key
@@ -14027,6 +14075,11 @@ paths:
       description: Retrieve a list of pages.
       operationId: pagesList
       parameters:
+      - description: Title
+        in: query
+        name: title
+        schema:
+          type: string
       - description: The pagination cursor value.
         in: query
         name: cursor

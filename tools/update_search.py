@@ -8,7 +8,7 @@ from config import SITE_DOMAIN, BASE_API_FILES_PATH
 APP_ID = 'GNSJUJD786'
 # API_KEY = os.environ['ALGOLIA_API_KEY']
 INDEX_NAME = 'docs'
-INDEX_HTML_DATA_PATH = '../static/api/index_data.html'
+INDEX_HTML_DATA_PATH = '../docs/api/index_data.html'
 INDEX_MD_DATA_PATH = '../docs/api/index_data.md'
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
