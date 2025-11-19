@@ -148,6 +148,10 @@ def create_index_html():
     if not objects:
         return
 
+    # Sort objects to ensure correct grouping
+    # Hierarchy: lvl1 (API Title) -> lvl2 (Tag) -> lvl3 (Operation ID)
+    objects.sort(key=lambda x: (x['hierarchy']['lvl1'], x['hierarchy']['lvl2'], x['hierarchy']['lvl3']))
+
     html_lines = [
         "<!DOCTYPE html>",
         "<html lang='en'>",
@@ -163,16 +167,38 @@ def create_index_html():
         "      <h1>API Documentation</h1>",
         "    </header>",
     ]
+
+    current_lvl1 = None
+    current_lvl2 = None
+
     for obj in objects:
-        name = obj['hierarchy']['lvl3']
+        lvl1 = obj['hierarchy']['lvl1']
+        lvl2 = obj['hierarchy']['lvl2']
+        lvl3 = obj['hierarchy']['lvl3']
         description = obj['content'] or ''
         url = obj['url']
+        object_id = obj['objectID']
+
+        # Level 1: API Type Title (e.g., "Admin API")
+        if lvl1 != current_lvl1:
+            html_lines.append(f"    <h2>{lvl1}</h2>")
+            current_lvl1 = lvl1
+            current_lvl2 = None  # Reset lvl2 when lvl1 changes
+
+        # Level 2: Tag (e.g., "Users")
+        if lvl2 != current_lvl2:
+            html_lines.append(f"    <h3>{lvl2}</h3>")
+            current_lvl2 = lvl2
+
+        # Level 3: Operation / Endpoint (e.g., "get_users")
+        # We wrap the lowest level in an article or div to contain the content
         html_lines.extend([
-            f"<article id='{obj['objectID']}'>",
-            f"  <h3 name='docusaurus_tag' class='anchor'><a href='{url}'>API Reference: {name}</a></h3>",
-            f"  <p class='content'>{description}</p>",
-            "</article>",
+            f"    <article id='{object_id}'>",
+            f"      <h4 class='anchor'><a href='{url}'>{lvl3}</a></h4>",
+            f"      <p class='content'>{description}</p>",
+            "    </article>"
         ])
+
     html_lines.extend([
         "  </main>",
         "</body>",
