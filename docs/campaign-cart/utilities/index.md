@@ -1,6 +1,6 @@
 ---
 sidebar_label: Utilities
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 # Utilities
@@ -14,13 +14,12 @@ Additional tools and features for conversion optimization and debugging.
 
 ## Development Tools
 
-- [Analytics](/docs/campaign-cart/utilities/analytics) - Event tracking
 - [Debugger](/docs/campaign-cart/utilities/debugger) - Debug mode and overlay
 - [Loading States](/docs/campaign-cart/utilities/loading-states) - Loading skeletons
 
 ## Related
 
-- [Getting Started](/docs/campaign-cart/getting-started/installation) - Setup and configuration
-- [API Reference](/docs/campaign-cart/api-reference/methods) - JavaScript API
+- [Analytics Overview](/docs/campaign-cart/analytics/) - Analytics setup and configuration
+- [JavaScript API](/docs/campaign-cart/javascript-api/) - Complete JavaScript methods reference
 - [Guides - Best Practices](/docs/campaign-cart/guides/best-practices) - Recommended patterns
 

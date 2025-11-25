@@ -1,26 +1,27 @@
 ---
 sidebar_label: Guides
-sidebar_position: 8
+sidebar_position: 6
 ---
 
 # Guides
 
-Best practices, optimization tips, and advanced topics.
+Complete implementations and code examples for common use cases.
 
-## Best Practices
+## Product Pages
 
-- [Best Practices](/docs/campaign-cart/guides/best-practices) - Recommended patterns and approaches
-- [Performance](/docs/campaign-cart/guides/performance) - Optimization tips
-- [Accessibility](/docs/campaign-cart/guides/accessibility) - A11y considerations
+- [Basic Product Page](/docs/campaign-cart/guides/basic-product-page) - Simple product page
+- [Checkout Page](/docs/campaign-cart/guides/checkout-page) - Checkout implementation
 
-## Advanced Topics
+## Advanced Flows
 
-- [Profiles](/docs/campaign-cart/guides/profiles) - Dynamic package mapping system
-- [Migration](/docs/campaign-cart/guides/migration) - Upgrading from older versions
+- [Upsell Flow](/docs/campaign-cart/guides/upsell-flow) - Multi-step upsells
+- [Advanced Customization](/docs/campaign-cart/guides/advanced-customization) - Complex scenarios
+- [Tier Selector Implementation](/docs/campaign-cart/guides/tier-selector-implementation) - Tier selection patterns
+- [Quantity Package Swapper](/docs/campaign-cart/guides/quantity-package-swapper) - Quantity-based swapping
 
 ## Related
 
-- [Getting Started](/docs/campaign-cart/getting-started/installation) - Setup and configuration
-- [API Reference](/docs/campaign-cart/api-reference/methods) - Complete API documentation
-- [Examples](/docs/campaign-cart/examples/basic-product-page) - Implementation examples
+- [Analytics Overview](/docs/campaign-cart/analytics/) - Analytics setup
+- [Cart System](/docs/campaign-cart/cart-system/) - Cart management
+- [Upsells](/docs/campaign-cart/upsells/) - Upsell flows
 

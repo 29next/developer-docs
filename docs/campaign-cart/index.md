@@ -47,7 +47,7 @@ Get started quickly with our pre-configured starter template:
   <TabItem value="cdn" label="CDN (Recommended)">
 ```html
 <!-- Latest version -->
-<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
 ```
   </TabItem>
 
@@ -69,7 +69,7 @@ CampaignCart.init({
 
   <TabItem value="self-hosted" label="Self-Hosted">
 ```bash
-curl -o campaign-cart.js https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js
+curl -o campaign-cart.js https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js
 ```
 
 Host on your server:
@@ -119,12 +119,13 @@ window.nextConfig = {
   // Payment and checkout configuration
   paymentConfig: {
     expressCheckout: {
-      requireValidation: true,
-      requiredFields: ['email', 'fname', 'lname'],
-      methodOrder: ['paypal', 'apple_pay', 'google_pay']
+      enabled: true, // Enable/disable express checkout methods
+      requireValidation: false, // Require form validation before express checkout if radio option - not express buttons
+      requiredFields: ['email', 'fname', 'lname'], // Fields required for express checkout radio option
+      methodOrder: ['paypal', 'apple_pay', 'google_pay'] // Display order of express payment method buttons
     }
   },
-  
+
   // Address and country configuration
   addressConfig: {
     defaultCountry: "US",
@@ -134,15 +135,42 @@ window.nextConfig = {
   
   // Discount codes configuration
   discounts: {
-    SAVE10: {
-      code: "SAVE10",
-      type: "percentage", // 'percentage' | 'fixed'
-      value: 10,
-      scope: "order", // 'package' | 'order'
-      description: "10% off entire order",
-      combinable: true
-    }
+    // Example discount code
+    // SAVE10: {
+    //     code: "SAVE10",
+    //     type: "percentage", // 'percentage' | 'fixed'
+    //     value: 10,
+    //     scope: "order", // 'package' | 'order'
+    //     description: "10% off entire order",
+    //     combinable: true, // Can be combined with other discounts
+    //     // Optional: packageIds: [1, 2], // For package-specific discounts
+    //     // Optional: minOrderValue: 50, // Minimum order value
+    //     // Optional: maxDiscount: 20 // Maximum discount amount
+    // }
   },
+
+  profiles: {
+    // "regular": {
+    //     name: "Regular Pricing",
+    //     // No mappings needed - uses original package IDs
+    // },
+    
+    // Example: Exit intent save profile
+    // "SAVE_5": {
+    //     name: "Exit Save 5",
+    //     packageMappings: {
+    //         // Original ID -> EXIT PACKAGE ID
+    //         1: 9,
+    //         2: 10,
+    //         3: 11,
+    //         4: 12,
+    //         5: 13,
+    //     }
+    // },
+  },
+
+  // Default profile to use (if not specified, uses "regular")
+  defaultProfile: "regular",
   
   // Google Maps integration (for address autocomplete)
   googleMaps: {
@@ -151,28 +179,47 @@ window.nextConfig = {
     enableAutocomplete: true
   },
   
-  // Tracking mode
-  tracking: "auto", // 'auto' | 'manual' | 'disabled'
-  
   // Analytics providers configuration
   analytics: {
     enabled: true,
     mode: 'auto', // 'auto' | 'manual' | 'disabled'
     providers: {
+      // Next Campaign analytics (always enabled if analytics.enabled is true)
       nextCampaign: {
-        enabled: true
+          enabled: true
       },
+      // Google Tag Manager
       gtm: {
         enabled: false,
         settings: {
           containerId: "GTM-XXXXXX",
           dataLayerName: "dataLayer"
-        }
+        },
+        // Optional: blockedEvents: ["PageView"]
       },
+      // Facebook Pixel
       facebook: {
         enabled: false,
         settings: {
           pixelId: "YOUR_PIXEL_ID"
+        },
+        // Optional: blockedEvents: ["PageView"]
+      },
+      // RudderStack
+      rudderstack: {
+        enabled: false,
+        settings: {
+            // RudderStack configuration is handled by the RudderStack SDK itself
+            // This just enables the adapter
+        },
+        // Optional: blockedEvents: ["PageView"]
+      },
+      // Custom analytics endpoint
+      custom: {
+        enabled: false,
+        settings: {
+            endpoint: "https://your-analytics.com/track",
+            apiKey: "your-api-key"
         }
       }
     }
@@ -181,10 +228,10 @@ window.nextConfig = {
   // UTM parameter transfer (preserve tracking params)
   utmTransfer: {
     enabled: true,
-    applyToExternalLinks: false,
-    debug: false,
-    excludedDomains: ['example.com'],
-    paramsToCopy: ['utm_source', 'utm_medium', 'utm_campaign']
+    applyToExternalLinks: false, // Add UTM params to external links
+    debug: false, // Enable debug logging for UTM transfer
+    // Optional: excludedDomains: ['example.com', 'test.org'], // Domains to exclude
+    // Optional: paramsToCopy: ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid']
   }
 };
 ```
@@ -196,6 +243,9 @@ Configure the SDK using meta tags in your HTML head:
 ```html
   <!-- Campaign API Key: Optional if you wish to override the config -->
   <meta name="next-api-key" content="your-api-key-here">
+
+  <!-- Funnel Name -->
+  <meta name="next-funnel" content="Example Funnel">
   
   <!-- Page Type: product, checkout, upsell, or receipt -->
   <meta name="next-page-type" content="product">
@@ -235,7 +285,7 @@ Configure the SDK using meta tags in your HTML head:
   <meta name="next-next-url" content="/upsell">
   
   <!-- 2. Then: Load the SDK -->
- <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js" type="module"></script>
+ <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
 </head>
 <body>
   <!-- Your content here -->
@@ -287,18 +337,18 @@ Configure the SDK using meta tags in your HTML head:
 
 ### Core Features
 
-- **[Cart System](/docs/campaign-cart/cart-system/overview)** - Cart management and controls
-- **[Upsells](/docs/campaign-cart/upsells/overview)** - Post-purchase upsell flows
-- **[Attributes](/docs/campaign-cart/attributes/overview)** - Display and conditional attributes
-- **[Utilities](/docs/campaign-cart/utilities/analytics)** - FOMO, exit intent, and analytics
+- **[Cart System](/docs/campaign-cart/cart-system/)** - Cart management and controls
+- **[Upsells](/docs/campaign-cart/upsells/)** - Post-purchase upsell flows
+- **[JavaScript API](/docs/campaign-cart/javascript-api/)** - Complete JavaScript methods reference
+- **[Data Attributes](/docs/campaign-cart/data-attributes/)** - Complete attribute reference
+- **[Utilities](/docs/campaign-cart/utilities/)** - FOMO, exit intent, and debugging tools
 
 ### Reference
 
-- **[API Reference](/docs/campaign-cart/api-reference/methods)** - JavaScript methods and events
-- **[Examples](/docs/campaign-cart/examples/basic-product-page)** - Complete implementations
+- **[Events](/docs/campaign-cart/javascript-api/events)** - SDK event system
+- **[Examples](/docs/campaign-cart/guides/basic-product-page)** - Complete implementations
 - **[Guides](/docs/campaign-cart/guides/best-practices)** - Best practices and optimization
-- **[Configuration](/docs/campaign-cart/getting-started/configuration)** - Advanced configuration options
-- **[Troubleshooting](/docs/campaign-cart/getting-started/troubleshooting)** - Common issues and solutions
+- **[Analytics Configuration](/docs/campaign-cart/analytics/configuration/)** - Analytics configuration options
 
 ## Verification
 
