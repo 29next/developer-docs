@@ -25,6 +25,12 @@ components:
           type:
           - integer
           - 'null'
+        statement_descriptor:
+          description: 'Statement descriptor supports up to 22 alphanumeric characters,
+            spaces, and these special characters: & , . - #.'
+          type:
+          - string
+          - 'null'
       type: object
     AddOrderShipmentTracking:
       properties:
@@ -604,6 +610,13 @@ components:
         message:
           type: string
       type: object
+    CollectPayment:
+      properties:
+        send_payment_notification:
+          default: false
+          description: Send payment notification to customer.
+          type: boolean
+      type: object
     ContactAddress:
       properties:
         city:
@@ -780,7 +793,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -789,8 +806,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         type:
           description: 'Expected data type.
 
@@ -1768,6 +1787,10 @@ components:
           type:
           - string
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         slug:
           type:
           - string
@@ -2102,7 +2125,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -2111,8 +2138,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         type:
           description: 'Expected data type.
 
@@ -4233,6 +4262,10 @@ components:
           type:
           - string
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         slug:
           readOnly: true
           type: string
@@ -4774,6 +4807,10 @@ components:
           type:
           - string
           - 'null'
+        metadata:
+          oneOf:
+          - {}
+          - type: 'null'
         slug:
           type:
           - string
@@ -5072,7 +5109,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -5081,8 +5122,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -5879,6 +5922,12 @@ components:
         save_card:
           default: true
           type: boolean
+        statement_descriptor:
+          description: 'Statement descriptor supports up to 22 alphanumeric characters,
+            spaces, and these special characters: & , . - #.'
+          type:
+          - string
+          - 'null'
       type: object
     PaymentGateway:
       properties:
@@ -7678,6 +7727,12 @@ components:
           type:
           - integer
           - 'null'
+        statement_descriptor:
+          description: 'Statement descriptor supports up to 22 alphanumeric characters,
+            spaces, and these special characters: & , . - #.'
+          type:
+          - string
+          - 'null'
       type: object
     SubscriptionTransaction:
       properties:
@@ -7748,6 +7803,10 @@ components:
           readOnly: true
         response_code:
           type: integer
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
         status:
           description: '* `succeeded` - Succeeded
 
@@ -8221,6 +8280,10 @@ components:
           readOnly: true
         response_code:
           type: integer
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
         status:
           description: '* `succeeded` - Succeeded
 
@@ -8404,6 +8467,10 @@ components:
           readOnly: true
         response_code:
           type: integer
+        statement_descriptor:
+          type:
+          - string
+          - 'null'
         status:
           description: '* `succeeded` - Succeeded
 
@@ -8562,7 +8629,11 @@ components:
 
             * `product` - Product
 
-            * `variant` - Variant'
+            * `variant` - Variant
+
+            * `blog` - Blog
+
+            * `page` - Page'
           enum:
           - attribution
           - customer
@@ -8571,8 +8642,10 @@ components:
           - order
           - product
           - variant
+          - blog
+          - page
           type: string
-          x-spec-enum-id: 710fa42e3a1fe82c
+          x-spec-enum-id: 06e58adfbb02ad1f
         validations:
           items:
             $ref: '#/components/schemas/Validation'
@@ -12551,7 +12624,11 @@ paths:
 
           * `product` - Product
 
-          * `variant` - Variant'
+          * `variant` - Variant
+
+          * `blog` - Blog
+
+          * `page` - Page'
         explode: true
         in: query
         name: object
@@ -12559,14 +12636,16 @@ paths:
           items:
             enum:
             - attribution
+            - blog
             - customer
             - dispute
             - line
             - order
+            - page
             - product
             - variant
             type: string
-            x-spec-enum-id: 710fa42e3a1fe82c
+            x-spec-enum-id: 06e58adfbb02ad1f
           type: array
         style: form
       - description: Metadata Key
@@ -13484,6 +13563,49 @@ paths:
         - orders:write
       tags:
       - orders
+  /orders/{number}/collect-payment/:
+    post:
+      description: Collect payment for an order outstanding balance on the order.                      Requires
+        order original payment method to support merchant initiated transactions.
+      operationId: ordersCollectPaymentCreate
+      parameters:
+      - in: path
+        name: number
+        required: true
+        schema:
+          title: Order number
+          type: string
+      - in: header
+        name: X-29next-API-Version
+        required: true
+        schema:
+          default: '2023-02-10'
+          enum:
+          - '2023-02-10'
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectPayment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CollectPayment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CollectPayment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      security:
+      - oauth2:
+        - orders:write
+      tags:
+      - orders
   /orders/{number}/fulfillment-orders/:
     get:
       description: Retrieves a list of fulfillment orders for a specific order.
@@ -13953,6 +14075,11 @@ paths:
       description: Retrieve a list of pages.
       operationId: pagesList
       parameters:
+      - description: Title
+        in: query
+        name: title
+        schema:
+          type: string
       - description: The pagination cursor value.
         in: query
         name: cursor
@@ -21100,6 +21227,10 @@ webhooks:
                                   type: object
                                 response_code:
                                   type: integer
+                                statement_descriptor:
+                                  type:
+                                  - string
+                                  - 'null'
                                 status:
                                   description: '* `succeeded` - Succeeded
 
@@ -21504,6 +21635,10 @@ webhooks:
                             type: object
                           response_code:
                             type: integer
+                          statement_descriptor:
+                            type:
+                            - string
+                            - 'null'
                           status:
                             description: '* `succeeded` - Succeeded
 
@@ -22530,6 +22665,10 @@ webhooks:
                                   type: object
                                 response_code:
                                   type: integer
+                                statement_descriptor:
+                                  type:
+                                  - string
+                                  - 'null'
                                 status:
                                   description: '* `succeeded` - Succeeded
 
@@ -22934,6 +23073,10 @@ webhooks:
                             type: object
                           response_code:
                             type: integer
+                          statement_descriptor:
+                            type:
+                            - string
+                            - 'null'
                           status:
                             description: '* `succeeded` - Succeeded
 
@@ -26203,6 +26346,10 @@ webhooks:
                       type: object
                     response_code:
                       type: integer
+                    statement_descriptor:
+                      type:
+                      - string
+                      - 'null'
                     status:
                       description: '* `succeeded` - Succeeded
 
@@ -26574,6 +26721,10 @@ webhooks:
                       type: object
                     response_code:
                       type: integer
+                    statement_descriptor:
+                      type:
+                      - string
+                      - 'null'
                     status:
                       description: '* `succeeded` - Succeeded
 

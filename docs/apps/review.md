@@ -3,6 +3,7 @@ title: Submiting an App for Review
 sidebar_label: Review & Publishing
 sidebar_position: 8
 ---
+import Link from '@docusaurus/Link';
 
 Congratulations, you've built an app and now it's ready to publish to all Next Commerce customers. Before we publish your app, we need to ensure your app is ready to go.
 
@@ -27,14 +28,7 @@ Private apps can be shared with merchants and installed using the **Install Link
 Once you've completed all of your app functionality and the checklist items, you're now ready to submit your app for review. Use the link below to submit your app for review.
 
 ```mdx-code-block
-
-import Link from '@docusaurus/Link';
-
-<Link
-    className="button button--primary button--lg" style={{marginBottom : '1em' }}
-    to="https://forms.gle/RvBWo3r1Tc9JGcnF8">
-    App Review Form
-</Link>
+<Link className="button button--primary button--lg" style={{marginBottom : '1em' }} to="https://forms.gle/RvBWo3r1Tc9JGcnF8">App Review Form</Link>
 ```
 
 

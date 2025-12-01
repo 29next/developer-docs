@@ -255,11 +255,20 @@ The example below uses a [Test Card Token](/docs/api/admin/guides/testing-guide.
 ```json
 "payment_method": "card_token",
 "payment_details": {
-    "card_token": "test_card" // See iFrame Payment Form Guide
+    "card_token": "test_card", // See iFrame Payment Form Guide
+    "statement_descriptor": "BRANDNAME" // See details below
 },
 ```
+#### Statement Descriptor
 
-See our other guides on creating orders below. 
+Merchants have the option to pass a custom `statement_descriptor` on orders so the end customer will more easily recognize the charge on their card bank statement. Using this field will override all subsequent transactions for the bankcard, even across payment gateways. 
+
+:::info Statement Descriptor Validation
+Descriptors can be up to 22 alphanumeric characters, spaces, and these special characters: `& , . - #`.  Passing in an invalid statement descriptor will be ignored.
+:::
+
+#### Payment Method Guides
+See payment method specific guides on creating orders below. 
 
 | Payment Method | Flow | Express | Upsells | Subscriptions |
 | --- | --- | --- | --- | --- | 
@@ -272,3 +281,5 @@ See our other guides on creating orders below.
 | [`bancontact`](/docs/api/admin/guides/bancontact.md) | Redirect | No | No | No |
 | [`ideal`](/docs/api/admin/guides/ideal.md) | Redirect | No | No | No |
 | [`sepa_direct`](/docs/api/admin/guides/sepa-debit.md) | Redirect | No | No | No |
+
+

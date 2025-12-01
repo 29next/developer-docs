@@ -1,13 +1,15 @@
 import os
+import csv
 import yaml
 from algoliasearch.search_client import SearchClient
 
 from config import SITE_DOMAIN, BASE_API_FILES_PATH
 
 APP_ID = 'GNSJUJD786'
-API_KEY = os.environ['ALGOLIA_API_KEY']
+# API_KEY = os.environ['ALGOLIA_API_KEY']
 INDEX_NAME = 'docs'
-
+INDEX_HTML_DATA_PATH = '../docs/api/index_data.html'
+INDEX_MD_DATA_PATH = '../docs/api/index_data.md'
 
 def create_index_object(api_type, api_type_title, tag, object_id, description, anchor):
     # object structure follow docusaurus algolia default structure
@@ -120,4 +122,91 @@ def add_to_index():
     index.save_objects(webhook_objects)
 
 
-add_to_index()
+# add_to_index()
+
+
+def create_index_html():
+    indexed_apis = [
+        {
+            'type': 'admin',
+            'type_title': 'Admin API',
+            'version': '2024-04-01'
+        },
+        {
+            'type': 'campaigns',
+            'type_title': 'Campaigns API',
+            'version': 'v1'
+        }
+    ]
+    objects = []
+    for each in indexed_apis:
+        objects.extend(generate_api_objects(each['type'], each['type_title'], each['version']))
+
+    webhook_objects = generate_webhook_objects()
+    objects.extend(webhook_objects)
+
+    if not objects:
+        return
+
+    # Sort objects to ensure correct grouping
+    # Hierarchy: lvl1 (API Title) -> lvl2 (Tag) -> lvl3 (Operation ID)
+    objects.sort(key=lambda x: (x['hierarchy']['lvl1'], x['hierarchy']['lvl2'], x['hierarchy']['lvl3']))
+
+    html_lines = [
+        "<!DOCTYPE html>",
+        "<html lang='en'>",
+        "<head>",
+        "  <meta charset='utf-8'/>",
+        "  <title>API Search Index</title>",
+        "  <meta name='description' content='Generated endpoints from OpenAPI specs and webhooks.'/>",
+        "  <meta name='docsearch:docusaurus_tag' content='docs-default-current'/>",
+        "</head>",
+        "<body>",
+        "  <main>",
+        "    <header>",
+        "      <h1>API Documentation</h1>",
+        "    </header>",
+    ]
+
+    current_lvl1 = None
+    current_lvl2 = None
+
+    for obj in objects:
+        lvl1 = obj['hierarchy']['lvl1']
+        lvl2 = obj['hierarchy']['lvl2']
+        lvl3 = obj['hierarchy']['lvl3']
+        description = obj['content'] or ''
+        url = obj['url']
+        object_id = obj['objectID']
+
+        # Level 1: API Type Title (e.g., "Admin API")
+        if lvl1 != current_lvl1:
+            html_lines.append(f"    <h2>{lvl1}</h2>")
+            current_lvl1 = lvl1
+            current_lvl2 = None  # Reset lvl2 when lvl1 changes
+
+        # Level 2: Tag (e.g., "Users")
+        if lvl2 != current_lvl2:
+            html_lines.append(f"    <h3>{lvl2}</h3>")
+            current_lvl2 = lvl2
+
+        # Level 3: Operation / Endpoint (e.g., "get_users")
+        # We wrap the lowest level in an article or div to contain the content
+        html_lines.extend([
+            f"    <article id='{object_id}'>",
+            f"      <h4 class='anchor'><a href='{url}'>{lvl3}</a></h4>",
+            f"      <p class='content'>{description}</p>",
+            "    </article>"
+        ])
+
+    html_lines.extend([
+        "  </main>",
+        "</body>",
+        "</html>",
+    ])
+
+    print('Writing HTML index to {}...'.format(INDEX_HTML_DATA_PATH))
+    with open(INDEX_HTML_DATA_PATH, "w", encoding="utf-8") as f:
+        f.write("\n".join(html_lines))
+
+create_index_html()

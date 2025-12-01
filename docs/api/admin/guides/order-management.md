@@ -5,12 +5,128 @@ sidebar_position: 1
 tags:
  - Guide
 ---
+import MoveFulfillmentOrders from '@site/_snippets/_moving-fulfillment-orders.mdx';
 
 Order management operations can be automated through the Admin API for more efficient operations and bulk actions on large quanities of orders.
 
 Below are best practices and guides for common scenarios merchants and partners use to manage orders on the Admin API.
 
 
+### Order Items Editing
+
+Editing items on an order is common practice, such as swapping products purchased for a different size or color with the same value without needing to collect payment or create a refund. 
+
+:::info Only Available on 2024-04-01 API Version
+Order editing APIs are only available on 2024-04-01 API Version and above, if you are still using older versions we recommend you upgrade your integration.
+
+Order editing APIs also do not affect order payment within each request. To remove items with an associated refund, see [order refunds](#order-refunds). Using order edit APIs can result in the customer owing or the merchant owing to the customer.
+:::
+
+#### Line Item Quantities Explained
+
+Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle. 
+
+ - `quantity` - Item quantity total ever added to the order in this line.
+ - `current_quantity` - Current item quantity that have not yet been removed.
+ - `fulfillable_quantity` - Item quantity that have not yet been fulfilled, such as a partial fulfillment.
+ - `editable_quantity` - Item quantity that currently can be edited.
+
+```json title="Line Item Quantities Explained"
+"lines": [
+  {
+    ...
+    "quantity": 3, // quantity of items ever added
+    "current_quantity": 2, // current quantity that have not been removed
+    "fulfillable_quantity": 1, // quantity that have not yet been fulfilled 
+    "editable_quantity": 1, // quantity that can be edited
+    ...
+  }
+]
+```
+
+### Swap Items Flow
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    lines: Retrieve Order Lines
+    removeLine: Remove Unwanted Items
+    addLine: Add New Items
+    collectPayment: Collect Payment
+    lines --> removeLine
+    removeLine --> addLine
+    addLine --> collectPayment
+```
+
+Swapping Items on an order is a 4 step process:
+
+1. Retrieve order line items using the [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint and check `editable_quantity` is > 0.
+2. Update/Remove line items using the [ordersLinesPartialUpdate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesPartialUpdate) or [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint.
+3. Create new line item [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
+4.  [Collect payment for an outstanding](#collect-payment-for-outstanding-balance) balance using the [ordersCollectPaymentCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersCollectPaymentCreate) endpoint.
+
+
+#### Update Existing Line Item
+
+Below is an example API call to change the quantity of a line item to 1. If the existing quantity was 2, this would remove 1 quantity, can also be used to increase line item quantity. This endpoint only accepts quantity changes, to change the product or price, see [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
+
+```json title="Update Existing Line Item"
+// PATCH https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
+{
+  "quantity": 1, // change quantity to 1
+  "reason": "product swap" // optional
+}
+```
+
+#### Remove Full Line Item
+
+Below is an example DELETE request to the [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint to remove a line item. 
+
+```json title="Remove Line Item"
+// DELETE https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+```
+
+
+:::info Check Line Item Editable Quantity
+Line items have `editable_quantity` which represents the item quantity not already in process of being fulfilled, already fulfilled, or  already removed from the order. 
+
+**If `editable_quantity` is `0`, the line item cannot be edited.**
+:::
+
+
+#### Create New Line Item
+
+Below is an example POST request to the [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint to create a new line item. 
+
+```json title="Create New Line Item"
+// POST https://{store}.29next.store/api/admin/orders/{number}/lines/
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
+{
+  "product_id": 184, // product variant id
+  "quantity": 1,
+  "price": 89.99, // optional
+  "reason": "product swap" // optional
+}
+```
+
+#### Collect Payment for Outstanding Balance 
+
+Orders can have an outstanding balance owed by the customer as a result of changing items on the order. To collect the outstanding balance, use the [ordersCollectPaymentCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersCollectPaymentCreate) endpoint to initate a payment transaction with the order's initial payment method. 
+
+```json title="Collect Payment for Outstanding Balance"
+// POST https://{store}.29next.store/api/admin/orders/{number}/collect-payment/ 
+// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+
+{
+  "send_payment_notification": true // optionally send notificaiton to customer 
+}
+```
+
+::: 
 
 ### Order Refunds
 
@@ -37,7 +153,7 @@ Refunding specific items of an order is a 3-step process:
 Order Refund Calculate APIs are only available on `2024-04-01` version and newer. See [API Versioning](/docs/api/admin/#versioning) for how to specify a version in your requests.
 :::
 
-#### Retreieve Order Lines
+#### Retrieve Order Lines
 
 Below is an abreviated example request to [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to get the line items of the order.
 
@@ -152,104 +268,6 @@ Depending on the product type and status of the line items being refunded, there
 - If fulfilled, restock_type must be `no_restock`.
 :::
 
-### Order Items Editing
-
-Editing items on an order is common practice, such as swapping products purchased for a different size or color with the same value without needing to collect payment or create a refund. 
-
-:::info Only Available on 2024-04-01 API Version
-Order editing APIs are only available on 2024-04-01 API Version and above, if you are still using older versions we recommend you upgrade your integration.
-
-Order editing APIs also do not affect order payment within each request. To remove items with an associated refund, see [order refunds](#order-refunds). Using order edit APIs can result in the customer owing or the merchant owing to the customer.
-:::
-
-#### Line Item Quantities Explained
-
-Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle. 
-
- - `quantity` - Item quantity total ever added to the order in this line.
- - `current_quantity` - Current item quantity that have not yet been removed.
- - `fulfillable_quantity` - Item quantity that have not yet been fulfilled, such as a partial fulfillment.
- - `editable_quantity` - Item quantity that currently can be edited.
-
-```json title="Line Item Quantities Explained"
-"lines": [
-  {
-    ...
-    "quantity": 3, // quantity of items ever added
-    "current_quantity": 2, // current quantity that have not been removed
-    "fulfillable_quantity": 1, // quantity that have not yet been fulfilled 
-    "editable_quantity": 1, // quantity that can be edited
-    ...
-  }
-]
-```
-
-#### Swap Items Flow
-
-```mermaid
-stateDiagram-v2
-    direction LR
-    lines: Retrieve Order Lines
-    removeLine: Remove Unwanted Items
-    addLine: Add Line Item
-    lines --> removeLine
-    removeLine --> addLine
-```
-
-Swapping Items on an order is a 3-step process:
-1. Retrieve order line items using the [ordersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to obtain line items and check `editable_quantity` is > 0.
-2. Update/Remove line items using the [ordersLinesPartialUpdate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesPartialUpdate) or [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint.
-3. Create new line item [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
-
-
-#### Update Existing Line Item
-
-Below is an example API call to change the quantity of a line item to 1. If the existing quantity was 2, this would remove 1 quantity, can also be used to increase line item quantity. This endpoint only accepts quantity changes, to change the product or price, see [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint. 
-
-```json title="Update Existing Line Item"
-// PATCH https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
-{
-  "quantity": 1, // change quantity to 1
-  "reason": "product swap" // optional
-}
-```
-
-#### Remove Full Line Item
-
-Below is an example DELETE request to the [ordersLinesDestroy](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesDestroy) endpoint to remove a line item. 
-
-```json title="Remove Line Item"
-// DELETE https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-```
-
-
-:::info Check Line Item Editable Quantity
-Line items have `editable_quantity` which represents the item quantity not already in process of being fulfilled, already fulfilled, or  already removed from the order. 
-
-**If `editable_quantity` is `0`, the line item cannot be edited.**
-:::
-
-
-#### Create New Line Item
-
-Below is an example POST request to the [ordersLinesCreate](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint to create a new line item. 
-
-```json title="Create New Line Item"
-// POST https://{store}.29next.store/api/admin/orders/{number}/lines/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
-{
-  "product_id": 184,
-  "quantity": 1,
-  "price": 89.99, // optional
-  "reason": "product swap" // optional
-}
-```
-
-
 ### Update Shipping Address
 
 Updating an order shipping address is a common task that can be done with a PATCH request to the [ordersUpdate](/docs/api/admin/reference/#/operations/ordersUpdate) endpoint.
@@ -347,12 +365,7 @@ stateDiagram-v2
 
 ### Move Fulfillment Orders
 
-```mdx-code-block
-
-import MoveFulfillmentOrders from '@site/_snippets/_moving-fulfillment-orders.mdx';
-
 <MoveFulfillmentOrders />
-```
 
 ### Cancel Order
 
