@@ -21,5 +21,4 @@ Additional tools and features for conversion optimization and debugging.
 
 - [Analytics Overview](/docs/campaign-cart/analytics/) - Analytics setup and configuration
 - [JavaScript API](/docs/campaign-cart/javascript-api/) - Complete JavaScript methods reference
-- [Guides - Best Practices](/docs/campaign-cart/guides/best-practices) - Recommended patterns
 

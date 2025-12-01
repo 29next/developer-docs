@@ -450,4 +450,3 @@ next.on('cart:item-removed', (data) => {
 
 - [Cart Attributes](/docs/campaign-cart/data-attributes/display/#cart-summary) - Display cart data
 - [Upsells](/docs/campaign-cart/upsells/) - Post-purchase flows
-- [Examples](/docs/campaign-cart/guides/basic-product-page) - Complete implementations

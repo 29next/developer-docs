@@ -1,0 +1,878 @@
+# Custom Analytics Triggers
+
+This external script modifies when `add_to_cart` and `begin_checkout` events fire for GTM and Facebook Pixel, allowing you to customize the timing of these critical ecommerce events.
+
+## Overview
+
+This script changes **when** events fire, but uses the **same event format and data structure** as the SDK's default events:
+
+- **`dl_add_to_cart`**: Fires when the checkout page loads (instead of when items are added to cart)
+- **`dl_begin_checkout`**: Fires when:
+  - Prospect cart is created (when name/email input triggers `carts.create`)
+  - OR when express checkout option is clicked (PayPal, Apple Pay, Google Pay)
+
+## Changes Made
+
+- **`add_to_cart`**: Now fires when the checkout page loads (instead of when items are added to cart)
+- **`begin_checkout`**: Now fires when:
+  - Prospect cart is created (when name/email input triggers `carts.create`)
+  - OR when express checkout option is clicked (PayPal, Apple Pay, Google Pay)
+
+## Requirements
+
+- SDK must be loaded and initialized
+- GTM `dataLayer` must be available (for GTM events)
+- Facebook Pixel `fbq` must be available (for Facebook events)
+- Default SDK events must be blocked in configuration (see Setup below)
+
+## Setup
+
+### 1. Configuration Setup
+
+Add `blockedEvents` to both GTM and Facebook providers in your `config.js`:
+
+```javascript
+window.nextConfig = {
+  apiKey: 'your-api-key',
+  analytics: {
+    enabled: true,
+    providers: {
+      gtm: {
+        enabled: true,
+        settings: { ... },
+        blockedEvents: ['dl_add_to_cart', 'dl_begin_checkout']
+      },
+      facebook: {
+        enabled: true,
+        settings: { pixelId: 'xxx' },
+        blockedEvents: ['dl_add_to_cart', 'dl_begin_checkout']
+      }
+    }
+  }
+};
+```
+
+### 2. Include Script in HTML
+
+Include this script **after** the SDK loader but **before** the SDK initializes:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Your other head content -->
+  
+  <!-- Campaign Configuration -->
+  <script src="config.js"></script>
+  
+  <!-- Campaign Loader Script -->
+  <script src="https://campaign-cart-v2.pages.dev/loader.js"></script>
+  
+  <!-- Custom Analytics Triggers (include after loader) -->
+  <script src="custom-analytics-triggers.js"></script>
+</head>
+<body>
+  <!-- Your page content -->
+</body>
+</html>
+```
+
+### 3. Ensure Cart Has Items
+
+- Add items to cart before testing
+- Cart must not be empty for events to fire
+
+## How It Works
+
+### Checkout Page Detection
+
+The script detects checkout pages by:
+- Looking for checkout form elements (`form[data-next-checkout]` or `form[os-checkout-form]`)
+- Checking for `meta[name="next-page-type"]` with value `checkout`
+- Checking if URL contains "checkout" or "cart"
+
+### add_to_cart Trigger
+
+- Fires when checkout page loads
+- Also listens for `checkout:form-initialized` event
+- Only fires once per page load (duplicate prevention)
+
+### begin_checkout Triggers
+
+- Listens for `next:prospect-cart-created` DOM event (fired when name/email input creates prospect cart)
+- Listens for express checkout button clicks (PayPal, Apple Pay, Google Pay buttons)
+- Listens for `express-checkout:started` SDK event
+- Only fires once per checkout session (duplicate prevention)
+
+## Event Format
+
+The script formats events according to:
+- **GTM**: GA4 ecommerce event format with `ecommerce` object, using `dl_` prefix (Campaign Cart SDK's standard naming convention)
+- **Facebook Pixel**: Standard Facebook event parameters
+- Events are pushed to both `ElevarDataLayer` (for Elevar compatibility) and `dataLayer` (standard GTM)
+
+:::note About Event Naming
+The `dl_` prefix is Campaign Cart SDK's standard event naming convention (e.g., `dl_add_to_cart`, `dl_begin_checkout`). This follows data layer conventions and is used by the SDK for all events, not specific to Elevar.
+
+`ElevarDataLayer` is a separate data layer specifically for Elevar compatibility. If you're not using Elevar, you can remove the `ElevarDataLayer` references from the script - events will still work with standard GTM via `window.dataLayer`.
+:::
+
+## Complete Script
+
+Here's the complete JavaScript code for the custom analytics triggers:
+
+```javascript
+/**
+ * Custom Analytics Triggers for GTM and Facebook Pixel
+ * 
+ * This script modifies WHEN add_to_cart and begin_checkout events fire, but uses
+ * the SAME event format and data structure as the SDK's default events.
+ * 
+ * Changes:
+ * - dl_add_to_cart: Fires when checkout page loads (instead of when items are added)
+ * - dl_begin_checkout: Fires when carts.create fires (name/email input) OR when express checkout is clicked
+ * 
+ * The events use the same format as SDK defaults:
+ * - dl_ prefix (Campaign Cart SDK's standard naming convention)
+ * - Same ecommerce data structure
+ * - Pushed to both ElevarDataLayer (for Elevar compatibility) and dataLayer (standard GTM)
+ * 
+ * Usage: Include this script after the SDK loader, and block the default events
+ * in your config.js: blockedEvents: ['dl_add_to_cart', 'dl_begin_checkout']
+ */
+
+(function() {
+  'use strict';
+
+  // Flag to allow our script's InitiateCheckout events through
+  let isFiringFromOurScript = false;
+
+  // Wrap fbq immediately to block SDK's InitiateCheckout on page load
+  (function() {
+    const originalFbq = window.fbq;
+    
+    // Create wrapper function
+    window.fbq = function() {
+      const args = Array.from(arguments);
+      const command = args[0];
+      const eventName = args[1];
+      
+      // Block InitiateCheckout unless it's from our script
+      if (command === 'track' && eventName === 'InitiateCheckout' && !isFiringFromOurScript) {
+        console.log('🚫 Blocked SDK InitiateCheckout event (backup blocker)');
+        return;
+      }
+      
+      // Allow our script's events through
+      if (command === 'track' && eventName === 'InitiateCheckout' && isFiringFromOurScript) {
+        isFiringFromOurScript = false; // Reset flag after allowing
+      }
+      
+      // Call original fbq
+      if (typeof originalFbq === 'function') {
+        return originalFbq.apply(this, arguments);
+      }
+      
+      // If originalFbq wasn't available, queue to _fbq
+      window._fbq = window._fbq || [];
+      window._fbq.push(args);
+    };
+    
+    // Copy properties from original fbq if it exists
+    if (originalFbq) {
+      Object.keys(originalFbq).forEach(function(key) {
+        window.fbq[key] = originalFbq[key];
+      });
+    }
+  })();
+
+  // Track if events have been fired to prevent duplicates
+  let hasFiredAddToCart = false;
+  let hasFiredBeginCheckout = false;
+
+  /**
+   * Get cart data from SDK
+   */
+  function getCartData() {
+    try {
+      if (typeof window.next !== 'undefined' && window.next.getCartData) {
+        return window.next.getCartData();
+      }
+      
+      // Fallback: try to access stores via debug API if available
+      if (typeof window.nextDebug !== 'undefined' && window.nextDebug.stores) {
+        const cartStore = window.nextDebug.stores.cart;
+        const campaignStore = window.nextDebug.stores.campaign;
+        if (cartStore && campaignStore) {
+          return {
+            cartLines: cartStore.getState().enrichedItems || cartStore.getState().items,
+            cartTotals: cartStore.getState().totals,
+            campaignData: campaignStore.getState().data,
+            appliedCoupons: cartStore.getState().appliedCoupons || []
+          };
+        }
+      }
+      
+      return null;
+    } catch (error) {
+      console.warn('Could not get cart data:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Get campaign data for currency and package info
+   */
+  function getCampaignData() {
+    try {
+      if (typeof window.next !== 'undefined' && window.next.getCampaignData) {
+        return window.next.getCampaignData();
+      }
+      
+      // Fallback: try to access stores via debug API if available
+      if (typeof window.nextDebug !== 'undefined' && window.nextDebug.stores) {
+        const campaignStore = window.nextDebug.stores.campaign;
+        if (campaignStore) {
+          return campaignStore.getState().data;
+        }
+      }
+      
+      return null;
+    } catch (error) {
+      console.warn('Could not get campaign data:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Get package data by ID
+   */
+  function getPackage(packageId) {
+    try {
+      if (typeof window.next !== 'undefined' && window.next.getPackage) {
+        return window.next.getPackage(packageId);
+      }
+      
+      // Fallback: try to access stores via debug API if available
+      if (typeof window.nextDebug !== 'undefined' && window.nextDebug.stores) {
+        const campaignStore = window.nextDebug.stores.campaign;
+        if (campaignStore && campaignStore.getState().getPackage) {
+          return campaignStore.getState().getPackage(packageId);
+        }
+      }
+      
+      return null;
+    } catch (error) {
+      console.warn('Could not get package data:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Format cart items for analytics
+   */
+  function formatCartItems(cartData, campaignData) {
+    if (!cartData || !cartData.cartLines || cartData.cartLines.length === 0) {
+      return [];
+    }
+
+    const currency = campaignData?.currency || cartData.campaignData?.currency || 'USD';
+    
+    return cartData.cartLines.map((item, index) => {
+      // Extract packageId from enriched item (could be in different places)
+      const packageId = item.packageId || item.package_id || item.id;
+      
+      // Try to get package data
+      let packageData = null;
+      if (packageId) {
+        packageData = getPackage(packageId);
+      }
+
+      return {
+        item_id: packageData?.external_id?.toString() || item.external_id?.toString() || packageId?.toString() || String(packageId),
+        item_name: packageData?.name || item.name || item.title || `Package ${packageId}`,
+        price: parseFloat(packageData?.price_total || item.price_total || item.price || '0'),
+        quantity: item.quantity || 1,
+        item_category: campaignData?.name || cartData.campaignData?.name || 'Campaign',
+        item_variant: packageData?.product_variant_name || item.variant_name || packageData?.product?.variant?.name,
+        item_brand: packageData?.product_name || item.product_name || packageData?.product?.name,
+        item_sku: packageData?.product_sku || item.sku || packageData?.product?.variant?.sku,
+        ...(packageData?.image && { item_image: packageData.image }),
+        ...(item.image && { item_image: item.image }),
+        index: index
+      };
+    });
+  }
+
+  /**
+   * Fire add_to_cart event to GTM and Facebook
+   */
+  function fireAddToCart() {
+    if (hasFiredAddToCart) {
+      return;
+    }
+
+    const cartData = getCartData();
+    const campaignData = getCampaignData();
+    
+    if (!cartData || !cartData.cartLines || cartData.cartLines.length === 0) {
+      console.warn('Cannot fire add_to_cart: cart is empty');
+      return;
+    }
+
+    const items = formatCartItems(cartData, campaignData);
+    const currency = campaignData?.currency || cartData.campaignData?.currency || 'USD';
+    const totalValue = cartData.cartTotals?.total?.value || cartData.cartTotals?.total || 0;
+
+    // Calculate total value from items if not available
+    const calculatedValue = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const value = totalValue || calculatedValue;
+
+    // Fire to GTM (dataLayer) - using dl_ prefix (Campaign Cart SDK's standard naming convention)
+    if (typeof window.dataLayer !== 'undefined') {
+      // Ensure ElevarDataLayer exists (for Elevar compatibility - optional if not using Elevar)
+      window.ElevarDataLayer = window.ElevarDataLayer || [];
+      
+      // Create event in SDK format (dl_ prefix is Campaign Cart SDK's standard)
+      const event = {
+        event: 'dl_add_to_cart',
+        ecommerce: {
+          currency: currency,
+          value: value,
+          items: items
+        },
+        timestamp: new Date().toISOString()
+      };
+      
+      // Push to ElevarDataLayer first (for Elevar processing - optional if not using Elevar)
+      window.ElevarDataLayer.push(event);
+      
+      // Clear previous ecommerce data and push to standard dataLayer
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push(event);
+      
+      console.log('✅ Fired dl_add_to_cart to GTM');
+    }
+
+    // Fire to Facebook Pixel - simple direct call
+    if (typeof window.fbq !== 'undefined') {
+      const fbParams = {
+        content_type: 'product',
+        currency: currency,
+        value: value,
+        content_ids: items.map(item => item.item_id),
+        contents: items.map(item => ({
+          id: item.item_id,
+          quantity: item.quantity,
+          item_price: item.price
+        })),
+        content_name: items.map(item => item.item_name).join(', '),
+        num_items: items.reduce((sum, item) => sum + item.quantity, 0)
+      };
+      
+      window.fbq('track', 'AddToCart', fbParams);
+      console.log('✅ Fired add_to_cart to Facebook Pixel');
+    }
+
+    hasFiredAddToCart = true;
+  }
+
+  /**
+   * Fire begin_checkout event to GTM and Facebook
+   */
+  function fireBeginCheckout() {
+    if (hasFiredBeginCheckout) {
+      return;
+    }
+
+    const cartData = getCartData();
+    const campaignData = getCampaignData();
+    
+    if (!cartData || !cartData.cartLines || cartData.cartLines.length === 0) {
+      console.warn('Cannot fire begin_checkout: cart is empty');
+      return;
+    }
+
+    const items = formatCartItems(cartData, campaignData);
+    const currency = campaignData?.currency || cartData.campaignData?.currency || 'USD';
+    const totalValue = cartData.cartTotals?.total?.value || cartData.cartTotals?.total || 0;
+
+    // Calculate total value from items if not available
+    const calculatedValue = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const value = totalValue || calculatedValue;
+
+    // Get coupon if available
+    const coupon = cartData.appliedCoupons?.[0]?.code || (Array.isArray(cartData.appliedCoupons) && cartData.appliedCoupons.length > 0 ? cartData.appliedCoupons[0] : null) || null;
+
+    // Fire to GTM (dataLayer) - using dl_ prefix (Campaign Cart SDK's standard naming convention)
+    if (typeof window.dataLayer !== 'undefined') {
+      // Ensure ElevarDataLayer exists (for Elevar compatibility - optional if not using Elevar)
+      window.ElevarDataLayer = window.ElevarDataLayer || [];
+      
+      // Create event in SDK format (dl_ prefix is Campaign Cart SDK's standard)
+      const event = {
+        event: 'dl_begin_checkout',
+        ecommerce: {
+          currency: currency,
+          value: value,
+          items: items
+        },
+        cart_total: String(value),
+        timestamp: new Date().toISOString()
+      };
+      
+      if (coupon) {
+        event.ecommerce.coupon = coupon;
+      }
+      
+      // Push to ElevarDataLayer first (for Elevar processing - optional if not using Elevar)
+      window.ElevarDataLayer.push(event);
+      
+      // Clear previous ecommerce data and push to standard dataLayer
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push(event);
+      
+      console.log('✅ Fired dl_begin_checkout to GTM');
+    }
+
+    // Fire to Facebook Pixel - set flag to allow through wrapper
+    if (typeof window.fbq !== 'undefined') {
+      const fbParams = {
+        content_type: 'product',
+        currency: currency,
+        value: value,
+        content_ids: items.map(item => item.item_id),
+        contents: items.map(item => ({
+          id: item.item_id,
+          quantity: item.quantity,
+          item_price: item.price
+        })),
+        num_items: items.reduce((sum, item) => sum + item.quantity, 0)
+      };
+      
+      if (coupon) {
+        fbParams.coupon = coupon;
+      }
+      
+      // Set flag to allow our event through the wrapper
+      isFiringFromOurScript = true;
+      window.fbq('track', 'InitiateCheckout', fbParams);
+      console.log('✅ Fired begin_checkout to Facebook Pixel');
+    }
+
+    hasFiredBeginCheckout = true;
+  }
+
+  /**
+   * Check if we're on a checkout page
+   */
+  function isCheckoutPage() {
+    // Check for checkout form
+    const checkoutForm = document.querySelector('form[data-next-checkout], form[os-checkout-form]');
+    if (checkoutForm) {
+      return true;
+    }
+    
+    // Check for meta tag
+    const pageType = document.querySelector('meta[name="next-page-type"]');
+    if (pageType && pageType.getAttribute('content') === 'checkout') {
+      return true;
+    }
+    
+    // Check URL
+    const url = window.location.pathname.toLowerCase();
+    if (url.includes('checkout') || url.includes('cart')) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * Initialize the custom triggers
+   */
+  function initialize() {
+    // Wait for SDK to be ready
+    if (typeof window.nextReady !== 'undefined') {
+      window.nextReady.push(function() {
+        setupTriggers();
+      });
+    } else if (typeof window.next !== 'undefined') {
+      // SDK might already be loaded
+      setupTriggers();
+    } else {
+      // Wait for SDK initialization event
+      document.addEventListener('next:initialized', function() {
+        setupTriggers();
+      });
+    }
+  }
+
+  /**
+   * Setup event listeners for triggers
+   */
+  function setupTriggers() {
+    console.log('🔧 Setting up custom analytics triggers');
+
+    // 1. Fire add_to_cart when checkout page loads
+    if (isCheckoutPage()) {
+      // Wait a bit for cart to be populated
+      setTimeout(function() {
+        fireAddToCart();
+      }, 500);
+    }
+
+    // Also listen for checkout form initialization
+    document.addEventListener('checkout:form-initialized', function() {
+      if (isCheckoutPage()) {
+        setTimeout(function() {
+          fireAddToCart();
+        }, 100);
+      }
+    });
+
+    // 2. Fire begin_checkout when prospect cart is created (name/email input)
+    document.addEventListener('next:prospect-cart-created', function(event) {
+      // Check if form has user input (not page load)
+      const emailField = document.querySelector('[data-next-checkout-field="email"], [os-checkout-field="email"], input[type="email"]');
+      
+      if (emailField && emailField.value && emailField.value.trim().length > 0) {
+        console.log('✅ Prospect cart created (user input detected), firing begin_checkout');
+        setTimeout(function() {
+          fireBeginCheckout();
+        }, 100);
+      } else {
+        console.log('⚠️ Prospect cart created but no user input - ignoring (likely page load)');
+      }
+    });
+
+    // 3. Fire begin_checkout when express checkout is clicked
+    document.addEventListener('click', function(event) {
+      const target = event.target;
+      if (!target) return;
+
+      // Check if it's an express checkout button
+      const button = target.closest('[data-next-express-checkout], [os-express-checkout], button[data-next-payment="paypal"], button[data-next-payment="apple_pay"], button[data-next-payment="google_pay"]');
+      
+      if (button) {
+        console.log('✅ Express checkout clicked, firing begin_checkout');
+        setTimeout(function() {
+          fireBeginCheckout();
+        }, 100);
+      }
+    }, true); // Use capture phase to catch early
+
+    // Also listen for express checkout started event (if SDK emits it)
+    if (typeof window.next !== 'undefined' && window.next.on) {
+      window.next.on('express-checkout:started', function() {
+        console.log('✅ Express checkout started event, firing begin_checkout');
+        setTimeout(function() {
+          fireBeginCheckout();
+        }, 100);
+      });
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+  } else {
+    initialize();
+  }
+
+})();
+```
+
+## Testing
+
+### Setup Checklist
+
+1. ✅ **Config.js Setup** - Add `blockedEvents` to both GTM and Facebook providers
+2. ✅ **Include Script in HTML** - Script included after SDK loader
+3. ✅ **Ensure Cart Has Items** - Cart must not be empty for events to fire
+
+### Test `add_to_cart` Event (Checkout Page Load)
+
+**What to test:** Event fires when checkout page loads
+
+**Steps:**
+1. Add items to cart on product/selection page
+2. Navigate to checkout page
+3. Open browser console (F12)
+4. Look for console log: `"✅ Fired dl_add_to_cart to GTM"` and `"✅ Fired add_to_cart to Facebook Pixel"`
+
+**Verify in Browser Console:**
+```javascript
+// Check dataLayer
+console.log(window.dataLayer.filter(e => e.event === 'dl_add_to_cart'));
+
+// Check ElevarDataLayer
+console.log(window.ElevarDataLayer.filter(e => e.event === 'dl_add_to_cart'));
+
+// Should see event with:
+// - event: 'dl_add_to_cart'
+// - ecommerce.currency
+// - ecommerce.value
+// - ecommerce.items[] (array of cart items)
+```
+
+**Verify in GTM Preview Mode:**
+1. Open GTM Preview mode
+2. Navigate to checkout page
+3. Look for `dl_add_to_cart` event
+4. Check that event has:
+   - `ecommerce.currency`
+   - `ecommerce.value`
+   - `ecommerce.items[]` with item details
+
+**Verify in Facebook Events Manager:**
+1. Go to Facebook Events Manager
+2. Navigate to checkout page
+3. Check for `AddToCart` event
+4. Verify event parameters (value, currency, content_ids, etc.)
+
+**Expected Behavior:**
+- ✅ Event fires ONCE when checkout page loads
+- ✅ Event does NOT fire when items are added to cart (that's blocked)
+- ✅ Event includes all cart items
+- ✅ Event has correct currency and value
+
+### Test `begin_checkout` Event (Prospect Cart Created)
+
+**What to test:** Event fires when name/email input triggers cart creation
+
+**Steps:**
+1. Navigate to checkout page (with items in cart)
+2. Open browser console (F12)
+3. Enter email address in checkout form
+4. Enter first name
+5. Enter last name
+6. Look for console log: `"✅ Prospect cart created (user input detected), firing begin_checkout"`
+7. Then: `"✅ Fired dl_begin_checkout to GTM"` and `"✅ Fired begin_checkout to Facebook Pixel"`
+
+**Verify in Browser Console:**
+```javascript
+// Check dataLayer
+console.log(window.dataLayer.filter(e => e.event === 'dl_begin_checkout'));
+
+// Check ElevarDataLayer
+console.log(window.ElevarDataLayer.filter(e => e.event === 'dl_begin_checkout'));
+
+// Should see event with:
+// - event: 'dl_begin_checkout'
+// - ecommerce.currency
+// - ecommerce.value
+// - ecommerce.items[]
+// - cart_total (string)
+// - ecommerce.coupon (if coupon applied)
+```
+
+**Expected Behavior:**
+- ✅ Event fires when prospect cart is created (after email/name entry)
+- ✅ Event fires only ONCE per checkout session
+- ✅ Event includes all cart items
+- ✅ Event has correct currency, value, and coupon (if applicable)
+
+### Test `begin_checkout` Event (Express Checkout Click)
+
+**What to test:** Event fires when express checkout button is clicked
+
+**Steps:**
+1. Navigate to checkout page (with items in cart)
+2. Open browser console (F12)
+3. Click PayPal, Apple Pay, or Google Pay button
+4. Look for console log: `"✅ Express checkout clicked, firing begin_checkout"`
+5. Then: `"✅ Fired dl_begin_checkout to GTM"` and `"✅ Fired begin_checkout to Facebook Pixel"`
+
+**Verify:**
+- Same verification steps as above
+- Event should fire immediately when express checkout button is clicked
+- Event should NOT fire again if already fired (duplicate prevention)
+
+## Console Debugging
+
+### Check if Script Loaded
+```javascript
+// Should see in console when script initializes:
+"🔧 Setting up custom analytics triggers"
+```
+
+### Check Event Firing
+```javascript
+// Monitor all events
+window.dataLayer.forEach(e => {
+  if (e.event === 'dl_add_to_cart' || e.event === 'dl_begin_checkout') {
+    console.log('Event fired:', e);
+  }
+});
+```
+
+### Check if SDK Events are Blocked
+```javascript
+// If SDK events are properly blocked, you should NOT see:
+// - dl_add_to_cart when items are added to cart
+// - dl_begin_checkout when checkout form initializes
+
+// Only see:
+// - dl_add_to_cart when checkout page loads
+// - dl_begin_checkout when prospect cart created OR express checkout clicked
+```
+
+### Quick Test Script
+
+Add this to browser console for quick testing:
+
+```javascript
+// Test if script is working
+function testCustomTriggers() {
+  console.log('=== Custom Triggers Test ===');
+  
+  // Check if script loaded
+  console.log('Script loaded:', typeof window.dataLayer !== 'undefined');
+  
+  // Check SDK
+  console.log('SDK ready:', typeof window.next !== 'undefined');
+  
+  // Check cart
+  if (window.next) {
+    const cart = window.next.getCartData();
+    console.log('Cart items:', cart?.cartLines?.length || 0);
+    console.log('Cart total:', cart?.cartTotals?.total?.value || 0);
+  }
+  
+  // Check recent events
+  const recentEvents = window.dataLayer.slice(-10);
+  const customEvents = recentEvents.filter(e => 
+    e.event === 'dl_add_to_cart' || e.event === 'dl_begin_checkout'
+  );
+  console.log('Recent custom events:', customEvents);
+  
+  // Check if on checkout page
+  const isCheckout = document.querySelector('form[data-next-checkout], form[os-checkout-form]') !== null;
+  console.log('On checkout page:', isCheckout);
+}
+
+testCustomTriggers();
+```
+
+## GTM Preview Mode Testing
+
+1. **Open GTM Preview Mode**
+   - Go to GTM → Preview
+   - Enter your site URL
+
+2. **Test add_to_cart**
+   - Navigate to checkout page
+   - In GTM Preview, look for `dl_add_to_cart` event
+   - Click on event to see details
+   - Verify `ecommerce` object has correct data
+
+3. **Test begin_checkout**
+   - Enter email/name OR click express checkout
+   - In GTM Preview, look for `dl_begin_checkout` event
+   - Verify event data
+
+4. **Verify Events are Blocked**
+   - Add item to cart (should NOT see `dl_add_to_cart`)
+   - Load checkout page (SHOULD see `dl_add_to_cart`)
+   - Initialize checkout form (should NOT see `dl_begin_checkout` from SDK)
+
+## Facebook Events Manager Testing
+
+1. **Open Facebook Events Manager**
+   - Go to Events Manager → Test Events
+   - Enter your site URL
+
+2. **Test Events**
+   - Navigate checkout page → Should see `AddToCart`
+   - Enter email/name OR click express checkout → Should see `InitiateCheckout`
+
+3. **Verify Event Parameters**
+   - Check `value` matches cart total
+   - Check `currency` is correct
+   - Check `content_ids` has all product IDs
+   - Check `num_items` matches cart quantity
+
+## Troubleshooting
+
+### Issue: Events Not Firing
+
+**Check:**
+1. ✅ Script is included after SDK loader
+2. ✅ Cart has items (not empty)
+3. ✅ Console shows "🔧 Setting up custom analytics triggers"
+4. ✅ No JavaScript errors in console
+5. ✅ SDK is initialized (`window.next` exists)
+
+**Debug:**
+```javascript
+// Check if SDK is ready
+console.log('SDK ready:', typeof window.next !== 'undefined');
+
+// Check cart data
+if (window.next) {
+  const cart = window.next.getCartData();
+  console.log('Cart data:', cart);
+  console.log('Cart has items:', cart?.cartLines?.length > 0);
+}
+```
+
+### Issue: Events Firing Multiple Times
+
+**Check:**
+- Script should prevent duplicates with `hasFiredAddToCart` and `hasFiredBeginCheckout` flags
+- If seeing duplicates, check if script is included multiple times in HTML
+
+### Issue: Wrong Event Format
+
+**Check:**
+- Events should use `dl_` prefix (not `add_to_cart`, but `dl_add_to_cart`) - this is Campaign Cart SDK's standard naming convention
+- Events should be pushed to `dataLayer` (required for GTM)
+- Events can optionally be pushed to `ElevarDataLayer` if using Elevar
+- Events should have `ecommerce` object with `currency`, `value`, and `items`
+
+### Issue: Missing Data in Events
+
+**Check:**
+- Cart must have items before events fire
+- Campaign data must be loaded (for currency, package info)
+- Check console for warnings: `"Cannot fire add_to_cart: cart is empty"`
+
+## Success Criteria
+
+✅ **add_to_cart:**
+- Fires when checkout page loads
+- Does NOT fire when items added to cart
+- Includes all cart items
+- Has correct currency and value
+
+✅ **begin_checkout:**
+- Fires when prospect cart created (email/name entry)
+- Fires when express checkout clicked
+- Does NOT fire when checkout form initializes
+- Includes all cart items
+- Has correct currency, value, and coupon (if applicable)
+
+✅ **No Duplicates:**
+- Each event fires only once per session
+- SDK's default events are blocked
+- Only custom script events fire
+
+## Debugging
+
+The script logs to console when events are fired:
+- `✅ Fired dl_add_to_cart to GTM`
+- `✅ Fired add_to_cart to Facebook Pixel`
+- `✅ Fired dl_begin_checkout to GTM`
+- `✅ Fired begin_checkout to Facebook Pixel`
+
+Open browser console to see these messages and verify events are firing correctly.
+
+## Notes
+
+- Events are only fired once per page load (duplicate prevention)
+- Script waits for SDK to be ready before setting up listeners
+- Cart must have items for events to fire
+- Script gracefully handles missing SDK or analytics tools
+- Events use the same format as SDK defaults for consistency
+

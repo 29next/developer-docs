@@ -481,5 +481,4 @@ button[data-next-upsell-quantity="decrease"]:disabled {
 
 ## Related Documentation
 
-- [Examples - Upsell Flow](/docs/campaign-cart/guides/upsell-flow) - Complete upsell implementation
 - [Cart System](/docs/campaign-cart/cart-system/) - Cart management basics

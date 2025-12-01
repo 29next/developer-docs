@@ -346,8 +346,6 @@ Configure the SDK using meta tags in your HTML head:
 ### Reference
 
 - **[Events](/docs/campaign-cart/javascript-api/events)** - SDK event system
-- **[Examples](/docs/campaign-cart/guides/basic-product-page)** - Complete implementations
-- **[Guides](/docs/campaign-cart/guides/best-practices)** - Best practices and optimization
 - **[Analytics Configuration](/docs/campaign-cart/analytics/configuration/)** - Analytics configuration options
 
 ## Verification

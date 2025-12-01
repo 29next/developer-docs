@@ -101,6 +101,7 @@ Enable multiple providers to send analytics data to all required platforms. If o
 
 - **[Direct GA4 (No GTM)](/docs/campaign-cart/analytics/examples/direct-ga4/)** - Send events directly to Google Analytics 4 without GTM
 - **[Event Transformers](/docs/campaign-cart/analytics/examples/event-transformers/)** - Build custom transformers for any platform (TikTok, Snapchat, Pinterest, etc.)
+- **[Custom Analytics Triggers](/docs/campaign-cart/analytics/examples/custom-analytics-triggers/)** - Modify when `add_to_cart` and `begin_checkout` events fire
 
 ## Next Steps
 

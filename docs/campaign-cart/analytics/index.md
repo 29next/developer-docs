@@ -1,6 +1,6 @@
 ---
 sidebar_label: Analytics
-sidebar_position: 7
+sidebar_position: 6
 ---
 
 import Tabs from '@theme/Tabs';
