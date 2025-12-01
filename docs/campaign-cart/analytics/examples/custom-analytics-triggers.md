@@ -66,7 +66,7 @@ Include this script **after** the SDK loader but **before** the SDK initializes:
   <script src="config.js"></script>
   
   <!-- Campaign Loader Script -->
-  <script src="https://campaign-cart-v2.pages.dev/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
   
   <!-- Custom Analytics Triggers (include after loader) -->
   <script src="custom-analytics-triggers.js"></script>

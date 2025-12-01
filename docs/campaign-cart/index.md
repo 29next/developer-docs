@@ -3,9 +3,6 @@ sidebar_label: Campaign Cart
 sidebar_position: 1
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Campaign Cart JS SDK
 
 Welcome to the Next Commerce JS SDK documentation. This SDK enables developers to create e-commerce storefront experiences using HTML attributes, JavaScript, and CSS.
@@ -33,52 +30,17 @@ Get started quickly with our pre-configured starter template:
    <script src="js/config.js"></script>
    
    <!-- Campaign Cart SDK -->
-   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.7/dist/loader.js" type="module"></script>
+   <!-- Replace @v0.3.9 with the latest version from GitHub releases -->
+   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
    ```
+
+   :::tip Latest Version
+   Check the [GitHub releases](https://github.com/NextCommerceCo/campaign-cart/releases) for the latest stable version. For development, you can use `@latest`, but we recommend using a specific version (e.g., `@v0.3.9`) in production for stability.
+   :::
 
 3. **Start Building**
    
    You can now use Campaign Cart attributes in your HTML!
-
-
-## Installation Methods
-
-<Tabs>
-  <TabItem value="cdn" label="CDN (Recommended)">
-```html
-<!-- Latest version -->
-<script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
-```
-  </TabItem>
-
-  <TabItem value="npm" label="NPM Package">
-```bash
-npm install @campaigncart/js-sdk
-```
-
-Then import in your JavaScript:
-
-```javascript
-import CampaignCart from '@campaigncart/js-sdk';
-
-CampaignCart.init({
-  apiKey: 'your-api-key-here'
-});
-```
-  </TabItem>
-
-  <TabItem value="self-hosted" label="Self-Hosted">
-```bash
-curl -o campaign-cart.js https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js
-```
-
-Host on your server:
-
-```html
-<script src="/js/campaign-cart.js"></script>
-```
-  </TabItem>
-</Tabs>
 
 ## Configuration
 
@@ -285,6 +247,7 @@ Configure the SDK using meta tags in your HTML head:
   <meta name="next-next-url" content="/upsell">
   
   <!-- 2. Then: Load the SDK -->
+  <!-- Replace @v0.3.9 with the latest version from GitHub releases -->
  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
 </head>
 <body>
