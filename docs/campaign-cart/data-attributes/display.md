@@ -738,7 +738,6 @@ Enable debug mode to see:
 
 ## Related Documentation
 
-- [Actions](/docs/data-attributes/actions/) - Interactive elements
-- [State Management](/docs/data-attributes/state/) - Conditional logic
+- [Actions](/docs/campaign-cart/data-attributes/actions/) - Interactive elements
+- [State Management](/docs/campaign-cart/data-attributes/state/) - Conditional logic
 - [Events](/docs/campaign-cart/javascript-api/events/) - React to data changes
-- [Cart Display](/docs/building-blocks/cart-display/) - Complete cart UI patterns

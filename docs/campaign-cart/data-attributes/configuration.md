@@ -1032,7 +1032,7 @@ General utility attributes for common scenarios.
 
 ## Related Documentation
 
-- [Display Attributes](/docs/data-attributes/display/) - Dynamic data display
-- [Action Attributes](/docs/data-attributes/actions/) - Interactive elements
-- [State Attributes](/docs/data-attributes/state/) - Conditional logic
-- [Meta Tags](/docs/configuration/meta-tags/) - Page-level configuration
+- [Display Attributes](/docs/campaign-cart/data-attributes/display/) - Dynamic data display
+- [Action Attributes](/docs/campaign-cart/data-attributes/actions/) - Interactive elements
+- [State Attributes](/docs/campaign-cart/data-attributes/state/) - Conditional logic
+- [Meta Tags](/docs/campaign-cart/analytics/meta-tags/) - Page-level configuration

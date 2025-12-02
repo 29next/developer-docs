@@ -444,6 +444,6 @@ nextDebug.stores.parameter().hasParam('timer')
 
 ## Related Documentation
 
-- [State Attributes](/data-attributes/state/) - Conditional display logic
-- [Display Attributes](/data-attributes/display/) - Display dynamic data
-- [Configuration Attributes](/data-attributes/configuration/) - Advanced options
+- [State Attributes](/docs/campaign-cart/data-attributes/state/) - Conditional display logic
+- [Display Attributes](/docs/campaign-cart/data-attributes/display/) - Display dynamic data
+- [Configuration Attributes](/docs/campaign-cart/data-attributes/configuration/) - Advanced options

@@ -546,7 +546,7 @@ await next.addItem({ packageId: 123 });
 
 ## Related Documentation
 
-- [Display Attributes](/docs/data-attributes/display/) - Showing dynamic data
-- [Action Attributes](/docs/data-attributes/actions/) - Interactive elements
-- [CSS Classes](/docs/reference/css-classes/) - Styling state classes
+- [Display Attributes](/docs/campaign-cart/data-attributes/display/) - Showing dynamic data
+- [Action Attributes](/docs/campaign-cart/data-attributes/actions/) - Interactive elements
+- [CSS Classes](/docs/campaign-cart/data-attributes/css-classes/) - Styling state classes
 - [Events](/docs/campaign-cart/javascript-api/events/) - Responding to state changes

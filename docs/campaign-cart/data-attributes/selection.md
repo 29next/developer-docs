@@ -443,6 +443,6 @@ Show/hide content based on selection state:
 
 ## Related Documentation
 
-- [Display Attributes](/data-attributes/display/) - Display dynamic data
-- [Action Attributes](/data-attributes/actions/) - Add to cart actions
-- [State Attributes](/data-attributes/state/) - Conditional display
+- [Display Attributes](/docs/campaign-cart/data-attributes/display/) - Display dynamic data
+- [Action Attributes](/docs/campaign-cart/data-attributes/actions/) - Add to cart actions
+- [State Attributes](/docs/campaign-cart/data-attributes/state/) - Conditional display
