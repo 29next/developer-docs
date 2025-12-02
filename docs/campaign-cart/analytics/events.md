@@ -1,7 +1,7 @@
 ---
 title: Event Reference
 description: Complete reference of all analytics events with schemas, examples, and when they fire.
-sidebar_position: 9
+sidebar_position: 3
 ---
 
 

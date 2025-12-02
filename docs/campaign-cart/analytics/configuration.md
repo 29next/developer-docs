@@ -1,7 +1,7 @@
 ---
 title: Configuration & Modes
 description: Complete analytics configuration reference including tracking modes, provider settings, and runtime options.
-sidebar_position: 8
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';

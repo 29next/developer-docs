@@ -30,12 +30,12 @@ Get started quickly with our pre-configured starter template:
    <script src="js/config.js"></script>
    
    <!-- Campaign Cart SDK -->
-   <!-- Replace @v0.3.9 with the latest version from GitHub releases -->
-   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
+   <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
+   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.10/dist/loader.js" type="module"></script>
    ```
 
    :::tip Latest Version
-   Check the [GitHub releases](https://github.com/NextCommerceCo/campaign-cart/releases) for the latest stable version. For development, you can use `@latest`, but we recommend using a specific version (e.g., `@v0.3.9`) in production for stability.
+   Check the [GitHub releases](https://github.com/NextCommerceCo/campaign-cart/releases) for the latest stable version. For development, you can use `@latest`, but we recommend using a specific version (e.g., `@v0.3.10`) in production for stability.
    :::
 
 3. **Start Building**
@@ -247,8 +247,8 @@ Configure the SDK using meta tags in your HTML head:
   <meta name="next-next-url" content="/upsell">
   
   <!-- 2. Then: Load the SDK -->
-  <!-- Replace @v0.3.9 with the latest version from GitHub releases -->
- <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.9/dist/loader.js" type="module"></script>
+  <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
+ <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.10/dist/loader.js" type="module"></script>
 </head>
 <body>
   <!-- Your content here -->

@@ -68,7 +68,7 @@ window.nextReady.push(function() {
 });
 ```
 
-### next:initialized (DOM Event)
+### `next:initialized` (DOM Event)
 
 Fired when SDK is fully loaded and ready (DOM event):
 
@@ -83,7 +83,7 @@ document.addEventListener('next:initialized', function(event) {
 
 ## Cart Events
 
-### cart:updated
+### `cart:updated`
 
 Fired whenever cart contents change (most common event):
 
@@ -96,7 +96,7 @@ next.on('cart:updated', (cartState) => {
 });
 ```
 
-### cart:item-added
+### `cart:item-added`
 
 Fired when item is added to cart:
 
@@ -107,7 +107,7 @@ next.on('cart:item-added', (data) => {
 });
 ```
 
-### cart:item-removed
+### `cart:item-removed`
 
 Fired when item is removed from cart:
 
@@ -118,7 +118,7 @@ next.on('cart:item-removed', (data) => {
 });
 ```
 
-### cart:quantity-changed
+### `cart:quantity-changed`
 
 Fired when item quantity is updated:
 
@@ -129,7 +129,7 @@ next.on('cart:quantity-changed', (data) => {
 });
 ```
 
-### cart:package-swapped
+### `cart:package-swapped`
 
 Fired when a package is swapped for another:
 
@@ -142,7 +142,7 @@ next.on('cart:package-swapped', (data) => {
 
 ## Checkout & Order Events
 
-### checkout:started
+### `checkout:started`
 
 Fired when checkout process begins:
 
@@ -153,7 +153,7 @@ next.on('checkout:started', (data) => {
 });
 ```
 
-### checkout:form-initialized
+### `checkout:form-initialized`
 
 Fired when checkout form is ready:
 
@@ -164,7 +164,7 @@ next.on('checkout:form-initialized', () => {
 });
 ```
 
-### order:completed
+### `order:completed`
 
 Fired when order is successfully completed:
 
@@ -177,7 +177,7 @@ next.on('order:completed', (order) => {
 
 ## Payment Events
 
-### payment:tokenized
+### `payment:tokenized`
 
 Fired when payment is successfully tokenized:
 
@@ -188,7 +188,7 @@ next.on('payment:tokenized', (data) => {
 });
 ```
 
-### payment:error
+### `payment:error`
 
 Fired when payment processing fails:
 
@@ -199,7 +199,7 @@ next.on('payment:error', (error) => {
 });
 ```
 
-### express-checkout:started
+### `express-checkout:started`
 
 Fired when express checkout (PayPal, Apple Pay, etc.) begins:
 
@@ -212,7 +212,7 @@ next.on('express-checkout:started', (data) => {
 
 ## Campaign & Configuration Events
 
-### campaign:loaded
+### `campaign:loaded`
 
 Fired when campaign data is loaded:
 
@@ -223,7 +223,7 @@ next.on('campaign:loaded', (campaign) => {
 });
 ```
 
-### config:updated
+### `config:updated`
 
 Fired when SDK configuration changes:
 
@@ -236,7 +236,7 @@ next.on('config:updated', (config) => {
 
 ## Coupon Events
 
-### coupon:applied
+### `coupon:applied`
 
 Fired when coupon is successfully applied:
 
@@ -247,7 +247,7 @@ next.on('coupon:applied', (coupon) => {
 });
 ```
 
-### coupon:removed
+### `coupon:removed`
 
 Fired when coupon is removed:
 
@@ -260,7 +260,7 @@ next.on('coupon:removed', (code) => {
 
 ## Upsell Events
 
-### upsell:viewed
+### `upsell:viewed`
 
 Fired when upsell offer is displayed:
 
@@ -271,7 +271,7 @@ next.on('upsell:viewed', (data) => {
 });
 ```
 
-### upsell:accepted
+### `upsell:accepted`
 
 Fired when user accepts an upsell:
 
@@ -282,7 +282,7 @@ next.on('upsell:accepted', (data) => {
 });
 ```
 
-### upsell:added
+### `upsell:added`
 
 Fired when upsell is successfully added to order:
 
@@ -293,7 +293,7 @@ next.on('upsell:added', (data) => {
 });
 ```
 
-### upsell:skipped
+### `upsell:skipped`
 
 Fired when user skips/declines an upsell:
 
@@ -306,7 +306,7 @@ next.on('upsell:skipped', (data) => {
 
 ## User Events
 
-### user:logged-in
+### `user:logged-in`
 
 Fired when user logs in:
 
@@ -317,7 +317,7 @@ next.on('user:logged-in', (data) => {
 });
 ```
 
-### user:logged-out
+### `user:logged-out`
 
 Fired when user logs out:
 
@@ -329,7 +329,7 @@ next.on('user:logged-out', (data) => {
 
 ## Behavioral Events
 
-### fomo:shown
+### `fomo:shown`
 
 Fired when FOMO notification appears:
 
@@ -340,7 +340,7 @@ next.on('fomo:shown', (data) => {
 });
 ```
 
-### exit-intent:clicked
+### `exit-intent:clicked`
 
 Fired when user clicks on exit intent popup:
 
@@ -351,7 +351,7 @@ next.on('exit-intent:clicked', (data) => {
 });
 ```
 
-### exit-intent:dismissed
+### `exit-intent:dismissed`
 
 Fired when exit intent popup is dismissed:
 
@@ -362,7 +362,7 @@ next.on('exit-intent:dismissed', (data) => {
 });
 ```
 
-### exit-intent:closed
+### `exit-intent:closed`
 
 Fired when exit intent popup is closed:
 
@@ -373,7 +373,7 @@ next.on('exit-intent:closed', (data) => {
 });
 ```
 
-### exit-intent:action
+### `exit-intent:action`
 
 Fired when user takes an action on exit intent popup:
 
@@ -386,7 +386,7 @@ next.on('exit-intent:action', (data) => {
 
 ## Profile Events
 
-### profile:applied
+### `profile:applied`
 
 Fired when a profile is applied to the cart:
 
@@ -397,7 +397,7 @@ next.on('profile:applied', (data) => {
 });
 ```
 
-### profile:reverted
+### `profile:reverted`
 
 Fired when profile changes are reverted:
 
@@ -408,7 +408,7 @@ next.on('profile:reverted', (data) => {
 });
 ```
 
-### profile:switched
+### `profile:switched`
 
 Fired when switching between profiles:
 
@@ -419,7 +419,7 @@ next.on('profile:switched', (data) => {
 });
 ```
 
-### profile:registered
+### `profile:registered`
 
 Fired when a new profile is registered:
 
@@ -432,7 +432,7 @@ next.on('profile:registered', (data) => {
 
 ## System Events
 
-### route:changed
+### `route:changed`
 
 Fired when SDK detects route/page change:
 
@@ -443,7 +443,7 @@ next.on('route:changed', (route) => {
 });
 ```
 
-### sdk:route-invalidated
+### `sdk:route-invalidated`
 
 Fired when SDK route context is invalidated:
 
@@ -453,7 +453,7 @@ next.on('sdk:route-invalidated', (data) => {
 });
 ```
 
-### page:viewed
+### `page:viewed`
 
 Fired when page view is tracked:
 
@@ -464,7 +464,7 @@ next.on('page:viewed', (data) => {
 });
 ```
 
-### error:occurred
+### `error:occurred`
 
 Fired when SDK encounters an error:
 

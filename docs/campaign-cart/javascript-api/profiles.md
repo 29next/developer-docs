@@ -163,7 +163,7 @@ window.next.registerProfile({
 
 ## Events
 
-### profile:applied
+### `profile:applied`
 
 Fired when a profile is successfully applied.
 
@@ -183,7 +183,7 @@ window.next.on('profile:applied', (data) => {
 });
 ```
 
-### profile:reverted
+### `profile:reverted`
 
 Fired when a profile is reverted.
 
@@ -198,7 +198,7 @@ window.next.on('profile:reverted', (data) => {
 });
 ```
 
-### profile:switched
+### `profile:switched`
 
 Fired when switching between profiles.
 
@@ -207,7 +207,7 @@ Fired when switching between profiles.
 - `toProfileId` (string): New profile
 - `itemsAffected` (number): Number of items affected
 
-### profile:registered
+### `profile:registered`
 
 Fired when a new profile is registered.
 

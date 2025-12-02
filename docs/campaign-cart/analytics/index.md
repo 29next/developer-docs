@@ -195,6 +195,7 @@ console.log('Providers:', status.providers);
 
 ## Documentation Structure
 
+- **[Meta Tags](/docs/campaign-cart/analytics/meta-tags/)** - Declarative analytics configuration via HTML meta tags
 - **[Configuration & Modes](/docs/campaign-cart/analytics/configuration/)** - Detailed configuration options
 - **[Tracking API Reference](/docs/campaign-cart/analytics/tracking-api/)** - Complete API documentation
 - **[Examples](/docs/campaign-cart/analytics/examples/)** - Provider-specific setup guides
