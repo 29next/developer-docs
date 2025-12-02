@@ -32,4 +32,3 @@ Power deeper customizations, dynamic content loading, and headless experiences u
 - Create custom funcationality such as cart upsells.
 
 Learn how to [query your storefront data →](/docs/storefront/api.md)
-
