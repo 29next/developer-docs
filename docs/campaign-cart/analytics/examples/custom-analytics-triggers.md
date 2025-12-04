@@ -133,9 +133,9 @@ Here's the complete JavaScript code for the custom analytics triggers:
  * - dl_begin_checkout: Fires when carts.create fires (name/email input) OR when express checkout is clicked
  * 
  * The events use the same format as SDK defaults:
- * - dl_ prefix (Campaign Cart SDK's standard naming convention)
+ * - dl_ prefix for Elevar compatibility
  * - Same ecommerce data structure
- * - Pushed to both ElevarDataLayer (for Elevar compatibility) and dataLayer (standard GTM)
+ * - Pushed to both ElevarDataLayer and dataLayer
  * 
  * Usage: Include this script after the SDK loader, and block the default events
  * in your config.js: blockedEvents: ['dl_add_to_cart', 'dl_begin_checkout']
@@ -143,48 +143,6 @@ Here's the complete JavaScript code for the custom analytics triggers:
 
 (function() {
   'use strict';
-
-  // Flag to allow our script's InitiateCheckout events through
-  let isFiringFromOurScript = false;
-
-  // Wrap fbq immediately to block SDK's InitiateCheckout on page load
-  (function() {
-    const originalFbq = window.fbq;
-    
-    // Create wrapper function
-    window.fbq = function() {
-      const args = Array.from(arguments);
-      const command = args[0];
-      const eventName = args[1];
-      
-      // Block InitiateCheckout unless it's from our script
-      if (command === 'track' && eventName === 'InitiateCheckout' && !isFiringFromOurScript) {
-        console.log('🚫 Blocked SDK InitiateCheckout event (backup blocker)');
-        return;
-      }
-      
-      // Allow our script's events through
-      if (command === 'track' && eventName === 'InitiateCheckout' && isFiringFromOurScript) {
-        isFiringFromOurScript = false; // Reset flag after allowing
-      }
-      
-      // Call original fbq
-      if (typeof originalFbq === 'function') {
-        return originalFbq.apply(this, arguments);
-      }
-      
-      // If originalFbq wasn't available, queue to _fbq
-      window._fbq = window._fbq || [];
-      window._fbq.push(args);
-    };
-    
-    // Copy properties from original fbq if it exists
-    if (originalFbq) {
-      Object.keys(originalFbq).forEach(function(key) {
-        window.fbq[key] = originalFbq[key];
-      });
-    }
-  })();
 
   // Track if events have been fired to prevent duplicates
   let hasFiredAddToCart = false;
@@ -328,12 +286,12 @@ Here's the complete JavaScript code for the custom analytics triggers:
     const calculatedValue = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const value = totalValue || calculatedValue;
 
-    // Fire to GTM (dataLayer) - using dl_ prefix (Campaign Cart SDK's standard naming convention)
+    // Fire to GTM (dataLayer) - using dl_ prefix for Elevar compatibility
     if (typeof window.dataLayer !== 'undefined') {
-      // Ensure ElevarDataLayer exists (for Elevar compatibility - optional if not using Elevar)
+      // Ensure ElevarDataLayer exists
       window.ElevarDataLayer = window.ElevarDataLayer || [];
       
-      // Create event in SDK format (dl_ prefix is Campaign Cart SDK's standard)
+      // Create event in SDK format (dl_ prefix for Elevar)
       const event = {
         event: 'dl_add_to_cart',
         ecommerce: {
@@ -344,17 +302,17 @@ Here's the complete JavaScript code for the custom analytics triggers:
         timestamp: new Date().toISOString()
       };
       
-      // Push to ElevarDataLayer first (for Elevar processing - optional if not using Elevar)
+      // Push to ElevarDataLayer first (for Elevar processing)
       window.ElevarDataLayer.push(event);
       
       // Clear previous ecommerce data and push to standard dataLayer
       window.dataLayer.push({ ecommerce: null });
       window.dataLayer.push(event);
       
-      console.log('✅ Fired dl_add_to_cart to GTM');
+      console.log('Fired dl_add_to_cart to GTM (Elevar format)');
     }
 
-    // Fire to Facebook Pixel - simple direct call
+    // Fire to Facebook Pixel
     if (typeof window.fbq !== 'undefined') {
       const fbParams = {
         content_type: 'product',
@@ -371,7 +329,7 @@ Here's the complete JavaScript code for the custom analytics triggers:
       };
       
       window.fbq('track', 'AddToCart', fbParams);
-      console.log('✅ Fired add_to_cart to Facebook Pixel');
+      console.log('Fired add_to_cart to Facebook Pixel');
     }
 
     hasFiredAddToCart = true;
@@ -404,12 +362,12 @@ Here's the complete JavaScript code for the custom analytics triggers:
     // Get coupon if available
     const coupon = cartData.appliedCoupons?.[0]?.code || (Array.isArray(cartData.appliedCoupons) && cartData.appliedCoupons.length > 0 ? cartData.appliedCoupons[0] : null) || null;
 
-    // Fire to GTM (dataLayer) - using dl_ prefix (Campaign Cart SDK's standard naming convention)
+    // Fire to GTM (dataLayer) - using dl_ prefix for Elevar compatibility
     if (typeof window.dataLayer !== 'undefined') {
-      // Ensure ElevarDataLayer exists (for Elevar compatibility - optional if not using Elevar)
+      // Ensure ElevarDataLayer exists
       window.ElevarDataLayer = window.ElevarDataLayer || [];
       
-      // Create event in SDK format (dl_ prefix is Campaign Cart SDK's standard)
+      // Create event in SDK format (dl_ prefix for Elevar)
       const event = {
         event: 'dl_begin_checkout',
         ecommerce: {
@@ -425,17 +383,17 @@ Here's the complete JavaScript code for the custom analytics triggers:
         event.ecommerce.coupon = coupon;
       }
       
-      // Push to ElevarDataLayer first (for Elevar processing - optional if not using Elevar)
+      // Push to ElevarDataLayer first (for Elevar processing)
       window.ElevarDataLayer.push(event);
       
       // Clear previous ecommerce data and push to standard dataLayer
       window.dataLayer.push({ ecommerce: null });
       window.dataLayer.push(event);
       
-      console.log('✅ Fired dl_begin_checkout to GTM');
+      console.log('Fired dl_begin_checkout to GTM (Elevar format)');
     }
 
-    // Fire to Facebook Pixel - set flag to allow through wrapper
+    // Fire to Facebook Pixel
     if (typeof window.fbq !== 'undefined') {
       const fbParams = {
         content_type: 'product',
@@ -454,10 +412,8 @@ Here's the complete JavaScript code for the custom analytics triggers:
         fbParams.coupon = coupon;
       }
       
-      // Set flag to allow our event through the wrapper
-      isFiringFromOurScript = true;
       window.fbq('track', 'InitiateCheckout', fbParams);
-      console.log('✅ Fired begin_checkout to Facebook Pixel');
+      console.log('Fired begin_checkout to Facebook Pixel');
     }
 
     hasFiredBeginCheckout = true;
@@ -512,7 +468,7 @@ Here's the complete JavaScript code for the custom analytics triggers:
    * Setup event listeners for triggers
    */
   function setupTriggers() {
-    console.log('🔧 Setting up custom analytics triggers');
+    console.log('Setting up custom analytics triggers');
 
     // 1. Fire add_to_cart when checkout page loads
     if (isCheckoutPage()) {
@@ -533,20 +489,14 @@ Here's the complete JavaScript code for the custom analytics triggers:
 
     // 2. Fire begin_checkout when prospect cart is created (name/email input)
     document.addEventListener('next:prospect-cart-created', function(event) {
-      // Check if form has user input (not page load)
-      const emailField = document.querySelector('[data-next-checkout-field="email"], [os-checkout-field="email"], input[type="email"]');
-      
-      if (emailField && emailField.value && emailField.value.trim().length > 0) {
-        console.log('✅ Prospect cart created (user input detected), firing begin_checkout');
-        setTimeout(function() {
-          fireBeginCheckout();
-        }, 100);
-      } else {
-        console.log('⚠️ Prospect cart created but no user input - ignoring (likely page load)');
-      }
+      console.log('Prospect cart created, firing begin_checkout');
+      setTimeout(function() {
+        fireBeginCheckout();
+      }, 100);
     });
 
     // 3. Fire begin_checkout when express checkout is clicked
+    // Listen for express checkout button clicks
     document.addEventListener('click', function(event) {
       const target = event.target;
       if (!target) return;
@@ -555,7 +505,7 @@ Here's the complete JavaScript code for the custom analytics triggers:
       const button = target.closest('[data-next-express-checkout], [os-express-checkout], button[data-next-payment="paypal"], button[data-next-payment="apple_pay"], button[data-next-payment="google_pay"]');
       
       if (button) {
-        console.log('✅ Express checkout clicked, firing begin_checkout');
+        console.log('Express checkout clicked, firing begin_checkout');
         setTimeout(function() {
           fireBeginCheckout();
         }, 100);
@@ -565,7 +515,7 @@ Here's the complete JavaScript code for the custom analytics triggers:
     // Also listen for express checkout started event (if SDK emits it)
     if (typeof window.next !== 'undefined' && window.next.on) {
       window.next.on('express-checkout:started', function() {
-        console.log('✅ Express checkout started event, firing begin_checkout');
+        console.log('Express checkout started event, firing begin_checkout');
         setTimeout(function() {
           fireBeginCheckout();
         }, 100);
