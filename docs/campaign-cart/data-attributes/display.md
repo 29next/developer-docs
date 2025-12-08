@@ -572,86 +572,324 @@ Use `.raw` suffix for numeric calculations:
 | `{item.finalPrice.raw}` | Numeric final price |
 | `{item.finalLineTotal.raw}` | Numeric final line total |
 
-## Package Subscription Fields
+## Package Display Attributes
 
-Display subscription and recurring billing information for packages.
+Display data for specific packages using `package.[id].*` syntax. Replace `[id]` with your package ID (e.g., `package.123.price`).
 
-### Package ID Fields
+### Shorthand Syntax
+
+If the element is inside a container with `data-next-package-id="3"`, for example, then you can use `package.price` instead of `package.3.price`. The system resolves the package ID from the parent context.
 
 ```html
-<!-- Package reference ID -->
-<span data-next-display="package.123.ref_id">Internal ID</span>
+<!-- Using full syntax -->
+<div>
+  <span data-next-display="package.123.price">$29.99</span>
+  <span data-next-display="package.123.name">Product Name</span>
+</div>
 
-<!-- External package ID -->
-<span data-next-display="package.123.external_id">External ID</span>
+<!-- Using shorthand syntax with parent context -->
+<div data-next-package-id="123">
+  <span data-next-display="package.price">$29.99</span>
+  <span data-next-display="package.name">Product Name</span>
+</div>
 ```
 
-| Property | Description | Type |
-|----------|-------------|------|
-| `package.ref_id` | Internal reference ID | Number |
-| `package.external_id` | External system ID | Number |
+This shorthand is especially useful when building reusable product card components or when iterating over multiple packages.
 
-### Recurring Properties
+### Basic Properties
+
+Display core package information:
 
 ```html
-<!-- Show subscription info -->
-<div data-next-show="package.123.is_recurring">
+<!-- Package name and image -->
+<h3 data-next-display="package.123.name">Product Name</h3>
+<img data-next-display="package.123.image" alt="Product image">
+
+<!-- Package identifiers -->
+<span data-next-display="package.123.ref_id">123</span>
+<span data-next-display="package.123.external_id">456</span>
+```
+
+| Variable | Description | Type | Example |
+|----------|-------------|------|---------|
+| `package.[id].name` | Package display name | String | "Premium Bundle" |
+| `package.[id].image` | Package image URL | String | "https://..." |
+| `package.[id].ref_id` | Internal reference ID | Number | 123 |
+| `package.[id].external_id` | External system ID | Number | 456 |
+
+### Pricing Properties
+
+#### Base Prices
+
+```html
+<!-- Per-unit price -->
+<span data-next-display="package.123.price">$29.99</span>
+
+<!-- Total package price -->
+<span data-next-display="package.123.price_total">$89.97</span>
+
+<!-- Alias for price_total -->
+<span data-next-display="package.123.packageTotal">$89.97</span>
+
+<!-- Alias for price -->
+<span data-next-display="package.123.unitPrice">$29.99</span>
+```
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `package.[id].price` | Per-unit price | Currency |
+| `package.[id].price_total` | Total package price | Currency |
+| `package.[id].packageTotal` | Alias for `price_total` | Currency |
+| `package.[id].unitPrice` | Alias for `price` | Currency |
+
+#### Retail/Compare Prices
+
+```html
+<!-- Per-unit retail price -->
+<span data-next-display="package.123.price_retail">$39.99</span>
+
+<!-- Total retail price -->
+<span data-next-display="package.123.price_retail_total">$119.97</span>
+
+<!-- Aliases for retail prices -->
+<span data-next-display="package.123.unitRetailPrice">$39.99</span>
+<span data-next-display="package.123.comparePrice">$119.97</span>
+<span data-next-display="package.123.compareTotal">$119.97</span>
+```
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `package.[id].price_retail` | Per-unit retail price | Currency |
+| `package.[id].price_retail_total` | Total retail price | Currency |
+| `package.[id].unitRetailPrice` | Calculated unit retail price | Currency |
+| `package.[id].comparePrice` | Alias for `price_retail_total` | Currency |
+| `package.[id].compareTotal` | Alias for `price_retail_total` | Currency |
+
+### Savings Properties
+
+Display savings information:
+
+```html
+<!-- Savings amount -->
+<span data-next-display="package.123.savingsAmount">$30.00</span>
+
+<!-- Savings percentage -->
+<span data-next-display="package.123.savingsPercentage">25</span>%
+
+<!-- Unit savings -->
+<span data-next-display="package.123.unitSavings">$10.00</span>
+<span data-next-display="package.123.unitSavingsPercentage">25</span>%
+
+<!-- Check if has savings -->
+<div data-next-show="package.123.hasSavings">
+  <span class="badge">On Sale!</span>
+</div>
+```
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `package.[id].savingsAmount` | Total savings amount | Currency |
+| `package.[id].savingsPercentage` | Savings percentage | Percentage |
+| `package.[id].unitSavings` | Savings per unit | Currency |
+| `package.[id].unitSavingsPercentage` | Savings percentage per unit | Percentage |
+| `package.[id].hasSavings` | Whether package has savings | Boolean |
+
+#### Raw Values (for calculations)
+
+```html
+<!-- Raw numeric values for calculations -->
+<span data-next-display="package.123.savingsAmount.raw">30.00</span>
+<span data-next-display="package.123.savingsPercentage.raw">25</span>
+<span data-next-display="package.123.unitPrice.raw">29.99</span>
+<span data-next-display="package.123.unitRetailPrice.raw">39.99</span>
+```
+
+### Discount Properties (Cart Context Required)
+
+These properties require cart context to check for applied coupons/discounts. They work even if no coupons are applied (they'll return the regular price or zero).
+
+```html
+<!-- Discount-adjusted prices -->
+<span data-next-display="package.123.discountedPrice">$24.99</span>
+<span data-next-display="package.123.discountedPriceTotal">$74.97</span>
+
+<!-- Discount amount -->
+<span data-next-display="package.123.discountAmount">$5.00</span>
+
+<!-- Final prices (after discounts) -->
+<span data-next-display="package.123.finalPrice">$24.99</span>
+<span data-next-display="package.123.finalPriceTotal">$74.97</span>
+
+<!-- Check if has discount -->
+<div data-next-show="package.123.hasDiscount">
+  <span class="badge">Discount Applied!</span>
+</div>
+```
+
+| Variable | Description | Type | Notes |
+|----------|-------------|------|-------|
+| `package.[id].discountedPrice` | Unit price after discounts | Currency | Requires cart context |
+| `package.[id].discountedPriceTotal` | Total price after discounts | Currency | Requires cart context |
+| `package.[id].discountAmount` | Discount amount applied | Currency | Requires cart context |
+| `package.[id].hasDiscount` | Whether package has discount | Boolean | Requires cart context |
+| `package.[id].finalPrice` | Final unit price (same as `discountedPrice`) | Currency | Requires cart context |
+| `package.[id].finalPriceTotal` | Final total price (same as `discountedPriceTotal`) | Currency | Requires cart context |
+
+### Total Savings (Retail + Discounts)
+
+Combines retail savings with cart discounts:
+
+```html
+<!-- Total savings including discounts -->
+<span data-next-display="package.123.totalSavingsAmount">$35.00</span>
+<span data-next-display="package.123.totalSavingsPercentage">30</span>%
+
+<!-- Aliases -->
+<span data-next-display="package.123.totalSavingsWithDiscounts">$35.00</span>
+<span data-next-display="package.123.totalSavingsPercentageWithDiscounts">30</span>%
+
+<!-- Check if has any savings -->
+<div data-next-show="package.123.hasTotalSavings">
+  <span>You're saving money!</span>
+</div>
+```
+
+| Variable | Description | Type | Notes |
+|----------|-------------|------|-------|
+| `package.[id].totalSavingsAmount` | Total savings (retail + discounts) | Currency | Requires cart context |
+| `package.[id].totalSavingsPercentage` | Total savings percentage | Percentage | Requires cart context |
+| `package.[id].totalSavingsWithDiscounts` | Alias for `totalSavingsAmount` | Currency | Requires cart context |
+| `package.[id].totalSavingsPercentageWithDiscounts` | Alias for `totalSavingsPercentage` | Percentage | Requires cart context |
+| `package.[id].hasTotalSavings` | Whether package has any savings | Boolean | Requires cart context |
+
+### Quantity & Bundle Properties
+
+```html
+<!-- Units in package -->
+<span data-next-display="package.123.qty">3</span> units
+<span data-next-display="package.123.unitsInPackage">3</span> units
+
+<!-- Check if bundle -->
+<div data-next-show="package.123.isBundle">
+  <span class="badge">Multi-Pack Deal</span>
+</div>
+```
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `package.[id].qty` | Number of units in package | Number |
+| `package.[id].unitsInPackage` | Alias for `qty` | Number |
+| `package.[id].isBundle` | Whether package is a bundle (qty > 1) | Boolean |
+
+### Subscription & Recurring Properties
+
+Display subscription and recurring billing information:
+
+```html
+<!-- Check if subscription -->
+<div data-next-show="package.123.isRecurring">
   <p>Subscription Product</p>
-  <p>Delivered every <span data-next-display="package.123.interval">month</span></p>
+  <p>
+    Billed every 
+    <span data-next-display="package.123.interval_count">1</span>
+    <span data-next-display="package.123.interval">month</span>
+  </p>
+  <p class="price" data-next-display="package.123.price_recurring">$29.99</p>
 </div>
 
 <!-- One-time purchase -->
 <div data-next-show="package.123.isOneTime">
   <p>One-time purchase</p>
+  <p class="price" data-next-display="package.123.price">$99.00</p>
 </div>
 ```
 
-| Property | Description | Type | Values |
+| Variable | Description | Type | Values |
 |----------|-------------|------|--------|
-| `package.is_recurring` | Is subscription product | Boolean | true/false |
-| `package.interval` | Billing interval | String | "day", "month", null |
-| `package.interval_count` | Interval count | Number | 1, 2, 3, etc. |
-| `package.isRecurring` | Is subscription (alias) | Boolean | true/false |
-| `package.isOneTime` | Is one-time purchase | Boolean | true/false |
+| `package.[id].is_recurring` | Is subscription product | Boolean | true/false |
+| `package.[id].isRecurring` | Is subscription (alias) | Boolean | true/false |
+| `package.[id].isOneTime` | Is one-time purchase | Boolean | true/false |
+| `package.[id].interval` | Billing interval | String | "day", "month", null |
+| `package.[id].interval_count` | Interval count | Number | 1, 2, 3, etc. |
+| `package.[id].price_recurring` | Recurring price per billing cycle | Currency | "$29.99" |
+| `package.[id].price_recurring_total` | Total recurring price for all units | Currency | "$89.97" |
 
-### Recurring Pricing
-
-```html
-<!-- Recurring price -->
-<span data-next-display="package.123.price_recurring">$29.99/month</span>
-
-<!-- Total recurring price -->
-<span data-next-display="package.123.price_recurring_total">$89.97</span>
-```
-
-| Property | Description | Type |
-|----------|-------------|------|
-| `package.price_recurring` | Recurring price per billing cycle | Currency |
-| `package.price_recurring_total` | Total recurring price for all units | Currency |
-
-### Subscription Display Example
+### Complete Product Card Example
 
 ```html
-<div class="product-card" data-package-id="123">
-  <h3 data-next-display="package.123.name">Product Name</h3>
+<div class="product-card" data-next-package-id="123">
+  <!-- Product info -->
+  <h3 data-next-display="package.name">Product Name</h3>
+  <img data-next-display="package.image" alt="Product image">
 
-  <!-- One-time price -->
-  <div data-next-show="package.123.isOneTime">
-    <p class="price" data-next-display="package.123.price">$99.00</p>
-    <p>One-time purchase</p>
+  <!-- Pricing -->
+  <div class="pricing">
+    <!-- Regular price (no savings) -->
+    <div data-next-hide="package.hasSavings">
+      <p class="price" data-next-display="package.price">$99.00</p>
+    </div>
+
+    <!-- Sale price with savings -->
+    <div data-next-show="package.hasSavings">
+      <s data-next-display="package.price_retail">$149.00</s>
+      <p class="price" data-next-display="package.price">$99.00</p>
+      <span class="savings">
+        Save <span data-next-display="package.savingsAmount">$50.00</span>
+        (<span data-next-display="package.savingsPercentage">33</span>%)
+      </span>
+    </div>
+
+    <!-- One-time price -->
+    <div data-next-show="package.isOneTime">
+      <p>One-time purchase</p>
+    </div>
+
+    <!-- Subscription price -->
+    <div data-next-show="package.isRecurring">
+      <p class="price" data-next-display="package.price_recurring">$29.99</p>
+      <p>
+        Billed every
+        <span data-next-display="package.interval_count">1</span>
+        <span data-next-display="package.interval">month</span>
+      </p>
+    </div>
+
+    <!-- Bundle indicator -->
+    <div data-next-show="package.isBundle">
+      <span class="badge">
+        <span data-next-display="package.qty">3</span> Pack Deal
+      </span>
+    </div>
   </div>
 
-  <!-- Subscription price -->
-  <div data-next-show="package.123.isRecurring">
-    <p class="price" data-next-display="package.123.price_recurring">$29.99</p>
-    <p>
-      Billed every
-      <span data-next-display="package.123.interval_count">1</span>
-      <span data-next-display="package.123.interval">month</span>
-    </p>
+  <!-- Discount info (if cart has coupons) -->
+  <div data-next-show="package.hasDiscount" class="discount-badge">
+    <span>Extra Discount: <span data-next-display="package.discountAmount">$5.00</span></span>
+    <span>Final Price: <span data-next-display="package.finalPriceTotal">$94.00</span></span>
+  </div>
+
+  <!-- Package identifiers (for debugging) -->
+  <div class="package-info" style="display: none;">
+    <small>
+      ID: <span data-next-display="package.ref_id">123</span> |
+      External: <span data-next-display="package.external_id">456</span>
+    </small>
   </div>
 </div>
 ```
+
+### Checking Cart Quantity
+
+To check if a package is in the cart and get its quantity, use conditional attributes:
+
+```html
+<!-- Check if package is in cart -->
+<div data-next-show="cart.hasItem(123)">
+  <span>In Cart: <span data-next-display="cart.items[123].quantity">0</span></span>
+</div>
+```
+
+Note: `cart.hasItem(123)` works in conditional attributes (`data-next-show`/`data-next-hide`), not in display attributes.
 
 ## Performance Tips
 
