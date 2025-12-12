@@ -288,8 +288,6 @@ The current session active request context.
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
-| `user` | Object | Current authenticated user, see [user](#user). |
-| `cart` | Object | Current cart for the current session, see [cart](#cart). |
 | `get_host` | String | Current host domain. |
 | `path` | String | Current url path. |
 | `COUNTRY_CODE` | String | Current active geo country code, see [geo](#geo). |
@@ -446,55 +444,6 @@ Store branding properties accessed through the [store](#store) object to leverag
 | `primary_color` | String | Store branding primary color, returns a HEX code. |
 | `accent_color` | String | Store branding accent color, returns a HEX code.  |
 
-### cart
-
-Cart object that contains all of the information about the users currently active cart.
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `all_lines` | List | Returns a list of all cart line items. |
-| `num_items` | Integer | Returns the count of the items in the cart. |
-| `is_empty` | Boolean | Returns true/false if the cart is empty or not. |
-| `currency` | Object | Returns the currency of the cart as an object, see [currency](#currency). |
-| `vouchers` | List | Returns a list of vouchers attached to the cart, see [voucher](#voucher).  |
-| `is_tax_known` | Boolean | Returns true/false if the cart tax is known yet or not. |
-| `total_incl_tax` | String | Returns the cart total including tax.|
-| `total_excl_tax` | String | Returns the cart total excluding tax.|
-
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
-<script>
-    dataLayer.push({ ecommerce: null });
-    dataLayer.push({
-        event: 'begin_checkout',
-        ecommerce: {
-            currency: '{{ cart.currency }}',
-            value: '{{ cart.total_incl_tax }}',
-            coupon: '{{ cart.vouchers.first.code }}',
-            items: [
-                {% for line in cart.all_lines %}
-                {
-                    index: {{ forloop.counter0 }},
-                    item_id: '{{ line.product.id|escapejs }}',
-                    item_name: '{{ line.product.get_title|escapejs }}',
-                    item_brand: '{{ store.name|escapejs }}',
-                    item_category:  '{{ line.product.categories.first.name|safe }}',
-                    price:  '{{ line.unit_price_incl_tax_incl_discount|unlocalize|escapejs }}',
-                    quantity: {{ line.quantity | escapejs }}
-                }{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            ]
-        }
-    });
-</script>
-```
-
-</div>
-</details>
 
 ### currency
 
@@ -618,76 +567,8 @@ Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 neste
 | `name` | String | Represents the display name of the current menu item. |
 | `url` | String | Denotes the URL path for the menu item's href link. |
 
-### order
-
-Order object available on the order confirmation view, typically used in tandem with javascript conversion snippets through apps or custom theme implementations, see example usage below. Only available in the `confirmation` step in the `checkout/checkout.html` template, see [Checkout Customization](/docs/storefront/themes/guides/checkout.md).
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
-<script>
-    dataLayer.push({ ecommerce: null });
-    dataLayer.push({
-        event: 'purchase',
-         ecommerce: {
-            transaction_id: '{{ order.number|escapejs }}',
-            value: {{ order.total_incl_tax | unlocalize | escapejs }},
-            tax: {{ order.total_tax|unlocalize|escapejs }},
-            shipping: '{{ order.shipping_incl_tax|unlocalize|escapejs }}',
-            currency: '{{ order.currency|escapejs }}',
-            coupon: '{% if order.voucherapplication_set.first.voucher.code %}{{ order.voucherapplication_set.first.voucher.code }}{% endif %}',
-            items: [
-                {% for line in order.lines.all %}
-                {
-                    index: {{ forloop.counter0 }},
-                    item_id: '{{ line.product.id|escapejs }}',
-                    item_name: '{{ line.title|escapejs }}',
-                    affiliation: '{{ store_name|escapejs }}',
-                    category: '{{ line.product.categories.first|default:'Uncategorised'|escapejs }}',
-                    price: '{{ line.unit_price_incl_tax_incl_discount|unlocalize|escapejs }}',
-                    quantity: {{ line.quantity | escapejs }}
-                }{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            ]
-         }
-    });
-</script>
-```
-
-</div>
-</details>
 
 
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `number` | String | Order number. |
-| `currency` | String | Order currency. |
-| `lines` | List | List of order line items, see [order line](#order-line). |
-| `user` | Object | The order customer, see [user](#user). |
-| `total_excl_tax` | String | Order total excluding tax. |
-| `total_incl_tax` | String | Order total including tax. |
-| `total_tax` | String | Order total tax. |
-| `shipping_incl_tax` | String | Order shipping including tax. |
-| `shipping_excl_tax` | String | Order shipping excluding tax. |
-| `voucherapplication_set` | List | Order voucher discounts applied, see [voucher](#voucher). |
-| `shipping_address` | Object | Order shipping address, see [address](#address). |
-| `billing_address` | Object | Order billing address, see [address](#address). |
-
-
-### order line
-
-Order line object details accessed through an order. See [order](#order) for example usage.
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `product` | Object | Line item product, see [product](#product). |
-| `title` | String | The order line title, full product name at time of sale. |
-| `quantity` | String | Product quantity. |
-| `unit_price_incl_tax_incl_discount` | String | Per unit price including tax, including discounts. |
-| `unit_price_excl_tax` | String | Per unit price excluding tax. |
-| `unit_price_incl_tax` | String | Per unit price including tax. |
 
 ### page
 
@@ -832,22 +713,6 @@ Product review object.
 | `score` | Integer | Review score. |
 | `user` | Object | The customer that created the review, see [user](#user). |
 
-
-### user
-
-User in storefront context is the same as "customer".
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `id` | String | Customer's unique id. |
-| `first_name` | String | Customer's first name. |
-| `last_name` | String | Customer's last name. |
-| `email` | String | Customer's email address. |
-| `phone_number` | String | Customer's phone number in e.164 format. |
-| `language` | String |  Customer's preferred communication language. |
-| `accepts_marketing` | String | Wether or not the customer accepts marketing communications. |
-| `ip` | String | Customer's most recently used IP address. |
-| `user_agent` | String | Customer's most recently used user agent String. |
 
 ### voucher
 
