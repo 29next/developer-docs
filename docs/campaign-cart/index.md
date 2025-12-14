@@ -213,7 +213,7 @@ Configure the SDK using meta tags in your HTML head:
   <meta name="next-page-type" content="product">
   
   <!-- Next URL: Redirect after order completion (for checkout pages) -->
-  <meta name="next-next-url" content="/upsell">
+  <meta name="next-success-url" content="/upsell">
   
   <!-- Prevent Back Navigation: Usually on first upsell page -->
   <meta name="next-prevent-back-navigation" content="true">
@@ -244,7 +244,7 @@ Configure the SDK using meta tags in your HTML head:
   <meta name="next-page-type" content="product">
   
   <!-- Next URL: Redirect after order completion (for checkout pages) -->
-  <meta name="next-next-url" content="/upsell">
+  <meta name="next-success-url" content="/upsell">
   
   <!-- 2. Then: Load the SDK -->
   <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
