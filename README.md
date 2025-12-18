@@ -7,7 +7,7 @@
   <p align="center">
     Next Commerce's developer documentation portal, built with Docusaurus and Stoplight.
     <br />
-    <a href="https://developers.29next.com/"><strong>Explore the Docs »</strong></a>
+    <a href="https://developers.nextcommerce.com/"><strong>Explore the Docs »</strong></a>
   </p>
 </p>
 
@@ -50,7 +50,7 @@ npm start
 
 ## Update API Docs
 
-API Reference docs for [Admin API](https://developers.29next.com/docs/api/admin/reference/) and [Campaigns API](https://developers.29next.com/docs/api/campaigns/reference/#/) use Open API Spec files downloaded from their respective apps.
+API Reference docs for [Admin API](https://developers.nextcommerce.com/docs/api/admin/reference/) and [Campaigns API](https://developers.nextcommerce.com/docs/api/campaigns/reference/#/) use Open API Spec files downloaded from their respective apps.
 
 ### Update Script
 
