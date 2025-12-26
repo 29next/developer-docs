@@ -1263,6 +1263,8 @@ components:
 
             * `klarna` - Klarna
 
+            * `link` - Link
+
             * `sepa_debit` - SEPA Direct Debit
 
             * `sofort` - Sofort
@@ -1279,6 +1281,7 @@ components:
           - giropay
           - ideal
           - klarna
+          - link
           - sepa_debit
           - sofort
           - twint
@@ -1286,7 +1289,7 @@ components:
           type:
           - string
           - 'null'
-          x-spec-enum-id: 2a6b8428fa1a986f
+          x-spec-enum-id: 36b5ec16a868dd3d
         send_receipt:
           default: true
           type: boolean
@@ -17234,10 +17237,26 @@ paths:
         name: phone_number
         schema:
           type: string
-      - description: Language
+      - description: "Language\n\n* `en` - English\n* `fr` - Fran\xE7ais\n* `th` -\
+          \ \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n* `sv` -\
+          \ Svenska\n* `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1ol\n* `nl`\
+          \ - Nederlands\n* `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi` - Suomi"
         in: query
         name: language
         schema:
+          enum:
+          - da
+          - de
+          - en
+          - es
+          - fi
+          - fr
+          - it
+          - nl
+          - 'no'
+          - pt
+          - sv
+          - th
           title: Preferred language
           type:
           - string

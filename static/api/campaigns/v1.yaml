@@ -695,6 +695,11 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
+        statement_descriptor:
+          description: 'Statement descriptor allows up to  20 alphanumeric characters,
+            spaces, and these special characters: ., -, *.'
+          nullable: true
+          type: string
         supports_post_purchase_upsells:
           description: Indicates whether upsells are allowed for this order
           readOnly: true
