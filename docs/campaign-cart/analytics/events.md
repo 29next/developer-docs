@@ -444,7 +444,7 @@ Package swap (replace one item with another).
 
 **When it fires:** When user swaps one package for another
 
-**Auto-tracked:** No (manual tracking required)
+**Auto-tracked:** Yes (when using selector with swap mode)
 
 **Example:**
 
@@ -472,13 +472,69 @@ Package swap (replace one item with another).
 
 ---
 
+### dl_viewed_upsell
+
+Upsell page view.
+
+**When it fires:** When an upsell page is viewed
+
+**Auto-tracked:** Yes (in auto mode, when upsell page loads)
+
+**Example:**
+
+```javascript
+{
+  event: 'dl_viewed_upsell',
+  ecommerce: {
+    currency: 'USD',
+    value: 29.99,
+    items: [{
+      item_id: 'UPSELL-789',
+      item_name: 'Upsell Package',
+      price: 29.99,
+      quantity: 1
+    }]
+  }
+}
+```
+
+---
+
+### dl_skipped_upsell
+
+Upsell declined/skipped.
+
+**When it fires:** When user declines or skips an upsell offer
+
+**Auto-tracked:** Yes (in auto mode, when upsell is declined)
+
+**Example:**
+
+```javascript
+{
+  event: 'dl_skipped_upsell',
+  ecommerce: {
+    currency: 'USD',
+    value: 29.99,
+    items: [{
+      item_id: 'UPSELL-789',
+      item_name: 'Upsell Package',
+      price: 29.99,
+      quantity: 1
+    }]
+  }
+}
+```
+
+---
+
 ### dl_upsell_purchase
 
 Upsell accepted (post-purchase).
 
 **When it fires:** When user accepts an upsell offer
 
-**Auto-tracked:** No (manual tracking required)
+**Auto-tracked:** Yes (in auto mode, when upsell is accepted)
 
 **Example:**
 
@@ -629,8 +685,10 @@ All events follow this GA4-compliant structure:
 | `dl_add_shipping_info` | Shipping entered | Yes | Manual |
 | `dl_add_payment_info` | Payment entered | Yes | Manual |
 | `dl_purchase` | Order complete | Yes | `next.trackPurchase()` (optional) |
-| `dl_package_swapped` | Package swap | No | Manual |
-| `dl_upsell_purchase` | Upsell accepted | No | Manual |
+| `dl_package_swapped` | Package swap | Yes | Manual |
+| `dl_viewed_upsell` | Upsell page view | Yes | Manual |
+| `dl_skipped_upsell` | Upsell declined | Yes | Manual |
+| `dl_upsell_purchase` | Upsell accepted | Yes | Manual |
 | `dl_view_search_results` | Search results | No | Manual |
 
 ## Event Validation
