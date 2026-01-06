@@ -9,6 +9,11 @@ components:
           type: array
         payment_detail:
           $ref: '#/components/schemas/PaymentDetail'
+        vouchers:
+          description: Array of voucher codes
+          items:
+            type: string
+          type: array
       required:
       - lines
       type: object
@@ -196,6 +201,45 @@ components:
           nullable: true
           type: string
       type: object
+    Benefit:
+      properties:
+        description:
+          description: Description of the benefit
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/BenefitTypeEnum'
+          description: 'Type of benefit
+
+
+            * `package_percentage` - Apply a percentage off the packages that meet
+            the criteria.
+
+            * `shipping_percentage` - Apply a percentage off shipping price.
+
+            * `order_percentage` - Apply a percentage off the entire order.'
+        value:
+          description: Value of the benefit
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+      required:
+      - description
+      - type
+      - value
+      type: object
+    BenefitTypeEnum:
+      description: '* `package_percentage` - Apply a percentage off the packages that
+        meet the criteria.
+
+        * `shipping_percentage` - Apply a percentage off shipping price.
+
+        * `order_percentage` - Apply a percentage off the entire order.'
+      enum:
+      - package_percentage
+      - shipping_percentage
+      - order_percentage
+      type: string
     Campaign:
       properties:
         available_currencies:
@@ -235,6 +279,12 @@ components:
           description: Campaign name used internally for reference
           maxLength: 200
           type: string
+        offers:
+          description: List of conditional offers associated with the campaign
+          items:
+            $ref: '#/components/schemas/Offer'
+          readOnly: true
+          type: array
         packages:
           description: List of packages available in the campaign
           items:
@@ -258,6 +308,7 @@ components:
       - currency
       - language
       - name
+      - offers
       - packages
       - shipping_methods
       type: object
@@ -337,7 +388,7 @@ components:
         user:
           $ref: '#/components/schemas/UserCreateCart'
         vouchers:
-          description: Array of voucher codes
+          description: Campaign offer codes or store coupon code
           items:
             type: string
           type: array
@@ -456,7 +507,7 @@ components:
           - $ref: '#/components/schemas/OrderUser'
           nullable: true
         vouchers:
-          description: Array of voucher codes
+          description: Campaign offer codes or store coupon code
           items:
             type: string
           type: array
@@ -599,6 +650,177 @@ components:
     NullEnum:
       enum:
       - null
+    Offer:
+      properties:
+        benefit:
+          allOf:
+          - $ref: '#/components/schemas/Benefit'
+          description: Benefit details of the offer
+        code:
+          description: Voucher code associated with the offer
+          type: string
+        condition:
+          allOf:
+          - $ref: '#/components/schemas/OfferCondition'
+          description: Condition details of the offer
+        name:
+          description: Offer name
+          type: string
+        packages:
+          description: List of packages associated with the offer
+          items:
+            $ref: '#/components/schemas/OfferPackage'
+          readOnly: true
+          type: array
+        ref_id:
+          description: Offer reference ID
+          type: integer
+        shipping_methods:
+          description: List of shipping methods associated with the offer
+          items:
+            $ref: '#/components/schemas/OfferShippingMethod'
+          readOnly: true
+          type: array
+        type:
+          allOf:
+          - $ref: '#/components/schemas/OfferTypeEnum'
+          description: 'Type of the offer
+
+
+            * `offer` - Offer - Always apply when the order meets the criteria.
+
+            * `voucher` - Code - Apply only when the code is used.'
+      required:
+      - benefit
+      - condition
+      - name
+      - packages
+      - ref_id
+      - shipping_methods
+      type: object
+    OfferCondition:
+      properties:
+        description:
+          description: Description of the condition
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/OfferConditionTypeEnum'
+          description: 'Type of condition
+
+
+            * `any` - Any criteria, can always apply.
+
+            * `count` - Package quantity greater than or equal to.'
+        value:
+          description: Value of the condition
+          type: integer
+      required:
+      - description
+      - type
+      - value
+      type: object
+    OfferConditionTypeEnum:
+      description: '* `any` - Any criteria, can always apply.
+
+        * `count` - Package quantity greater than or equal to.'
+      enum:
+      - any
+      - count
+      type: string
+    OfferPackage:
+      properties:
+        package_id:
+          description: Package reference ID
+          type: integer
+        package_image:
+          description: Package image
+          format: uri
+          nullable: true
+          readOnly: true
+          type: string
+        package_name:
+          description: Package name
+          type: string
+        package_price:
+          description: Total price of the package when purchased
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        package_price_before_discount:
+          description: Total price of the package before discount
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        package_unit_qty:
+          description: Quantity of product variant in the package
+          type: integer
+        product_name:
+          description: Product name
+          type: string
+        product_variant_name:
+          description: Product variant name
+          type: string
+        unit_price:
+          description: Price per product unit in the package
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        unit_price_before_discount:
+          description: Price per product unit before discount
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+      required:
+      - package_id
+      - package_image
+      - package_name
+      - package_price
+      - package_price_before_discount
+      - package_unit_qty
+      - product_name
+      - product_variant_name
+      - unit_price
+      - unit_price_before_discount
+      type: object
+    OfferShippingMethod:
+      properties:
+        code:
+          description: Shipping method code
+          type: string
+        price:
+          description: Shipping method price
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        price_before_discount:
+          description: Shipping method price before discount
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          type: string
+        ref_id:
+          description: Shipping method reference ID
+          type: integer
+      required:
+      - code
+      - price
+      - price_before_discount
+      - ref_id
+      type: object
+    OfferTypeEnum:
+      description: '* `offer` - Offer - Always apply when the order meets the criteria.
+
+        * `voucher` - Code - Apply only when the code is used.'
+      enum:
+      - offer
+      - voucher
+      type: string
     Order:
       properties:
         attribution:

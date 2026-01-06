@@ -6694,9 +6694,6 @@ components:
         id:
           readOnly: true
           type: integer
-        product:
-          readOnly: true
-          type: integer
         src:
           description: URL of the image to fetch and associate with the product
           format: uri
@@ -6704,13 +6701,8 @@ components:
           - string
           - 'null'
           writeOnly: true
-        variants:
-          items:
-            type: integer
-          type: array
       required:
       - id
-      - product
       type: object
     ProductList:
       properties:
@@ -24197,8 +24189,6 @@ webhooks:
                             writeOnly: true
                           id:
                             type: integer
-                          product:
-                            type: integer
                           src:
                             description: URL of the image to fetch and associate with
                               the product
@@ -24207,13 +24197,8 @@ webhooks:
                             - string
                             - 'null'
                             writeOnly: true
-                          variants:
-                            items:
-                              type: integer
-                            type: array
                         required:
                         - id
-                        - product
                         type: object
                       type: array
                     interval:
@@ -24718,8 +24703,6 @@ webhooks:
                             writeOnly: true
                           id:
                             type: integer
-                          product:
-                            type: integer
                           src:
                             description: URL of the image to fetch and associate with
                               the product
@@ -24728,13 +24711,8 @@ webhooks:
                             - string
                             - 'null'
                             writeOnly: true
-                          variants:
-                            items:
-                              type: integer
-                            type: array
                         required:
                         - id
-                        - product
                         type: object
                       type: array
                     interval:
