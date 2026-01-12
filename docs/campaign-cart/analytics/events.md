@@ -395,9 +395,11 @@ Shipping information entered.
 
 Payment information entered.
 
-**When it fires:** When payment method is selected
+**When it fires:**
+- When a user clicks an express payment button (PayPal, Apple Pay, Google Pay, etc.)
+- When all credit card fields are complete and valid
 
-**Auto-tracked:** Yes (when payment form is submitted)
+**Auto-tracked:** Yes
 
 **Example:**
 
