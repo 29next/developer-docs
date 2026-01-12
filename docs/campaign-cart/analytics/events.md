@@ -297,6 +297,43 @@ Cart page view.
 
 ---
 
+### dl_cart_updated
+
+Cart state changed (generic cart update event).
+
+**When it fires:** When cart contents change (add, remove, quantity change, package swap, coupon application, etc.)
+
+**Auto-tracked:** Yes (fires on every cart state change)
+
+**Note:** This is a high-frequency event that fires on any cart modification. It provides a cart summary rather than detailed item information. For specific add/remove actions, see `dl_add_to_cart` and `dl_remove_from_cart`.
+
+**Example:**
+
+```javascript
+{
+  event: 'dl_cart_updated',
+  cart: {
+    total_value: 199.99,
+    total_items: 2,
+    currency: 'USD',
+    items: [
+      {
+        package_id: 123,
+        quantity: 1,
+        price: 99.99
+      },
+      {
+        package_id: 456,
+        quantity: 1,
+        price: 99.99
+      }
+    ]
+  }
+}
+```
+
+---
+
 ### dl_begin_checkout
 
 Checkout process initiation.
@@ -681,6 +718,7 @@ All events follow this GA4-compliant structure:
 | `dl_add_to_cart` | Add to cart | Yes | `next.trackAddToCart()` |
 | `dl_remove_from_cart` | Remove from cart | Yes | `next.trackRemoveFromCart()` |
 | `dl_view_cart` | Cart page view | No | Manual |
+| `dl_cart_updated` | Cart state changed | Yes | Manual |
 | `dl_begin_checkout` | Checkout start | Yes | `next.trackBeginCheckout()` |
 | `dl_add_shipping_info` | Shipping entered | Yes | Manual |
 | `dl_add_payment_info` | Payment entered | Yes | Manual |
