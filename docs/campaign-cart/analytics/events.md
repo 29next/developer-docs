@@ -421,13 +421,15 @@ Payment information entered.
 
 Order completion.
 
-**When it fires:** When order is completed
+**When it fires:** On the confirmation or upsell page after redirect (event is queued when order completes)
 
 **Auto-tracked:** Yes
 
 **Event Queue:**
 
-Purchase events are queued to `sessionStorage` when the order completes, then automatically fired on the confirmation page after redirect. This prevents event loss during navigation.
+Purchase events are queued to `sessionStorage` when the order completes, then automatically fired on the confirmation or upsell page after redirect. This prevents event loss during navigation.
+
+
 
 **Manual tracking (optional):**
 
