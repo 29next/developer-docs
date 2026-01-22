@@ -7,6 +7,76 @@ sidebar_position: 1
 
 Learn how to manage shopping carts with Campaign Cart JS SDK using HTML attributes.
 
+## Force Package ID
+
+The `forcePackageId` parameter allows you to pre-populate the cart with specific packages. This is useful for direct marketing campaigns, quick-buy links, and pre-filling carts programmatically.
+
+**Important**: `forcePackageId` is processed during SDK initialization. To use it programmatically, you need to either:
+1. Set it and reload the page to trigger initialization
+2. Set it before navigating to a new page (it will be processed on the next page load)
+
+### Format
+
+The `forcePackageId` parameter supports several formats:
+
+- **Single Package**: `"1"` - Adds package ID 1 with quantity 1
+- **Single Package with Quantity**: `"1:3"` - Adds package ID 1 with quantity 3
+- **Multiple Packages**: `"1:2,3:1,5:3"` - Adds multiple packages with their quantities
+
+### Usage Examples
+
+#### URL Parameter
+
+Add packages directly via URL query string:
+
+```html
+<!-- Single package -->
+https://yoursite.com/?forcePackageId=1
+
+<!-- Single package with quantity -->
+https://yoursite.com/?forcePackageId=1:3
+
+<!-- Multiple packages -->
+https://yoursite.com/?forcePackageId=1:2,3:1,5:3
+```
+
+#### Programmatic Usage
+
+Set the parameter before SDK initialization:
+
+```javascript
+// Set parameter before SDK loads
+window.nextConfig = window.nextConfig || {};
+window.nextConfig.forcePackageId = "1:2,3:1";
+
+// Or set via URL parameter API
+next.setParam('forcePackageId', '1:2,3:1');
+window.location.reload(); // Reload to trigger initialization
+```
+
+#### Use Cases
+
+**Direct Marketing Links:**
+```html
+<!-- Email campaign link -->
+<a href="/checkout?forcePackageId=5:1">Buy Now - Special Offer</a>
+```
+
+**Quick-Buy Buttons:**
+```html
+<!-- Pre-fill cart and redirect to checkout -->
+<a href="/checkout?forcePackageId=2:3">Buy 3x Package</a>
+```
+
+**A/B Testing:**
+```html
+<!-- Variant A: Package 1 -->
+<a href="/?forcePackageId=1&variant=a">Variant A</a>
+
+<!-- Variant B: Package 2 -->
+<a href="/?forcePackageId=2&variant=b">Variant B</a>
+```
+
 ## Cart Selectors
 
 Cart selectors allow users to choose products before adding them to cart. The SDK supports multiple selection patterns.
