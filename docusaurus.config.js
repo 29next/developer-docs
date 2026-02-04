@@ -165,7 +165,7 @@ const config = {
                             },
                         ],
                     },
-                    { to: '/docs/campaign-cart/', label: 'Campaign Cart', position: 'left' },
+                    { to: '/docs/campaign-cart/', label: 'Campaigns', position: 'left' },
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
                     { to: '/docs/storefront/', label: 'Storefront', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
