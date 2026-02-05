@@ -1,5 +1,5 @@
 ---
-sidebar_label: Campaign Cart
+sidebar_label: Campaigns
 sidebar_position: 1
 ---
 

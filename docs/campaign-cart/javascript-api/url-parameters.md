@@ -30,7 +30,13 @@ next.setParam('banner', 'n');
 
 // Enable debug mode
 next.setParam('debug', 'true');
+
+// Pre-populate cart with package (requires page reload)
+next.setParam('forcePackageId', '1:2');
+window.location.reload();
 ```
+
+**Note:** Some parameters like `forcePackageId` are processed during SDK initialization and require a page reload to take effect. See [Force Package ID](#force-package-id) for details.
 
 ### setParams(params)
 
@@ -292,6 +298,115 @@ trackCampaign('email', 'newsletter', 'summer_sale_2024');
 // Get campaign info
 const campaign = getCampaignInfo();
 ```
+
+### Force Package ID
+
+The `forcePackageId` parameter allows you to pre-populate the cart with specific packages. This is useful for direct marketing campaigns, quick-buy links, and pre-filling carts programmatically.
+
+**Important**: `forcePackageId` is processed during SDK initialization. To use it programmatically, you need to either:
+1. Set it and reload the page to trigger initialization
+2. Set it before navigating to a new page (it will be processed on the next page load)
+
+#### Format
+
+The `forcePackageId` parameter supports several formats:
+
+- **Single Package**: `"1"` - Adds package ID 1 with quantity 1
+- **Single Package with Quantity**: `"1:3"` - Adds package ID 1 with quantity 3
+- **Multiple Packages**: `"1:2,3:1,5:3"` - Adds multiple packages with their quantities
+
+#### Usage Examples
+
+**Set and Reload for Immediate Effect:**
+
+```javascript
+// Set forcePackageId and reload to trigger cart population
+next.setParam('forcePackageId', '1');
+window.location.reload();
+
+// Or with quantity
+next.setParam('forcePackageId', '1:3');
+window.location.reload();
+
+// Or with multiple packages
+next.setParam('forcePackageId', '1:2,3:1,5:3');
+window.location.reload();
+```
+
+**Prepare for Next Page Navigation:**
+
+```javascript
+// Set parameter before navigation - will be processed on next page
+next.setParam('forcePackageId', '15');
+
+// Navigate to checkout page
+window.location.href = '/checkout';
+// Cart will be populated with package 15 on the checkout page
+```
+
+**Dynamic Quick-Buy Function:**
+
+```javascript
+function quickBuy(packageId, quantity = 1) {
+  // Set the forcePackageId parameter
+  next.setParam('forcePackageId', `${packageId}:${quantity}`);
+  
+  // Navigate to checkout (or reload current page)
+  window.location.href = '/checkout';
+}
+
+// Usage
+quickBuy(123);        // Add package 123 with quantity 1
+quickBuy(456, 3);     // Add package 456 with quantity 3
+```
+
+**Bundle Purchase Helper:**
+
+```javascript
+function addBundle(packages) {
+  // packages: [{ id: 1, qty: 2 }, { id: 3, qty: 1 }]
+  const packageString = packages
+    .map(p => `${p.id}:${p.qty || 1}`)
+    .join(',');
+  
+  next.setParam('forcePackageId', packageString);
+  window.location.href = '/checkout';
+}
+
+// Usage
+addBundle([
+  { id: 1, qty: 2 },
+  { id: 3, qty: 1 },
+  { id: 5, qty: 3 }
+]);
+```
+
+**Check if forcePackageId is Set:**
+
+```javascript
+// Check if forcePackageId parameter exists
+if (next.hasParam('forcePackageId')) {
+  const value = next.getParam('forcePackageId');
+  console.log('Cart will be populated with:', value);
+}
+
+// Clear forcePackageId if needed
+next.clearParam('forcePackageId');
+```
+
+#### Behavior
+
+- **Cart Clearing**: When `forcePackageId` is processed, the existing cart is cleared before adding the specified packages
+- **Validation**: Invalid package IDs are skipped with a warning logged
+- **Campaign Loading**: Packages are added after campaign data is loaded to ensure validity
+- **One-time Effect**: The parameter is processed once during SDK initialization
+
+#### Notes
+
+- Setting `forcePackageId` via the JavaScript API stores it in sessionStorage, but it only takes effect when the SDK initializes (on page load)
+- To trigger it immediately, reload the page after setting it
+- The parameter format must match: `"id"`, `"id:quantity"`, or `"id1:qty1,id2:qty2,..."`
+- Invalid package IDs or quantities are skipped with warnings
 
 ## Integration with Conditional Display
 
