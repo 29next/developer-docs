@@ -40,16 +40,6 @@ The assets directory is used to upload static asset files used in the theme such
 {{ 'css/style.css'|asset_url }}
 ```
 
-### Checkout
-The checkout is used to add a customized `checkout.html` template to override the built in checkout template.
-
-```shell title="Checkout Directory"
-checkout
-  └── checkout.html
-```
-
-[See Checkout Customization Guide](/docs/storefront/themes/guides/checkout.md)
-
 ### Configs
 The configs directory is used to store your theme settings options and also the settings data as they should be configured with the theme.
 
