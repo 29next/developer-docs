@@ -321,7 +321,8 @@ When accessing a `product` setting value in a template, it returns a product obj
     "name": "hero_product",
     "label": "Hero Product",
     "type": "product",
-    "help_text": "Hero product on homepage banner."
+    "help_text": "Hero product on homepage banner.",
+    "required": false
 }
 
 ```
