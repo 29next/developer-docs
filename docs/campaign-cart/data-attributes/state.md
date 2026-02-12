@@ -546,6 +546,7 @@ await next.addItem({ packageId: 123 });
 
 ## Related Documentation
 
+- [Cart Summary Checkout](/docs/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
 - [Display Attributes](/docs/campaign-cart/data-attributes/display/) - Showing dynamic data
 - [Action Attributes](/docs/campaign-cart/data-attributes/actions/) - Interactive elements
 - [CSS Classes](/docs/campaign-cart/data-attributes/css-classes/) - Styling state classes

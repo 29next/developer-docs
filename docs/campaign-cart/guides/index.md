@@ -7,6 +7,10 @@ sidebar_position: 7
 
 Complete implementations and code examples for common use cases.
 
+## Checkout & Cart Summary
+
+- [Cart Summary Checkout](/docs/campaign-cart/guides/cart-summary-checkout) - Cart and item data attributes reference for checkout summary UI
+
 ## Advanced Flows
 
 - [Advanced Customization](/docs/campaign-cart/guides/advanced-customization) - Complex scenarios

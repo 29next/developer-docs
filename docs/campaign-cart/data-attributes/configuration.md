@@ -1032,6 +1032,7 @@ General utility attributes for common scenarios.
 
 ## Related Documentation
 
+- [Cart Summary Checkout](/docs/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
 - [Display Attributes](/docs/campaign-cart/data-attributes/display/) - Dynamic data display
 - [Action Attributes](/docs/campaign-cart/data-attributes/actions/) - Interactive elements
 - [State Attributes](/docs/campaign-cart/data-attributes/state/) - Conditional logic

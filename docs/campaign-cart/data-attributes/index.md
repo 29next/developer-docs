@@ -306,6 +306,7 @@ Always provide fallback content for progressive enhancement:
 
 ## Related Documentation
 
+- [Cart Summary Checkout](/docs/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
 - [JavaScript API](/docs/campaign-cart/javascript-api/) - JavaScript methods reference
 - [Events](/docs/campaign-cart/javascript-api/events/) - Responding to SDK events
 - [CSS Classes](/docs/campaign-cart/data-attributes/css-classes/) - Styling enhanced elements
