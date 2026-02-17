@@ -41,6 +41,7 @@ The primary attribute for showing dynamic values from cart, campaign, and order 
 | `cart.discount` | Discount amount | "-$10.00" |
 | `cart.totalQuantity` | Total items in cart | "5" |
 | `cart.itemCount` | Unique items in cart | "3" |
+| `cart.currency` | Active currency for the cart | "USD" |
 | `cart.isEmpty` | Cart empty state | "true" or "false" |
 | `package.[id].price` | Package price | "$29.99" |
 | `package.[id].name` | Package display name | "Premium Bundle" |

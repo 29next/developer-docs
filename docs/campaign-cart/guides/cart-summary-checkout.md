@@ -17,6 +17,7 @@ Use on elements that should show a live cart value. Value updates when the cart 
 | `cart.itemCount` | Number of distinct line items | `"3"` |
 | `cart.quantity` | Total quantity across all items | `"5"` |
 | `cart.count` | Alias for `cart.quantity` | `"5"` |
+| `cart.currency` | Active currency for the cart | `"USD"` |
 | `cart.discountCode` | First/single discount code | `"SAVE10"` |
 | `cart.discountCodes` | All discount codes | `"SAVE10, EXTRA"` |
 | `cart.couponCount` | Number of coupons applied | `"1"` |
@@ -260,6 +261,7 @@ Use this example as a starting point for a full checkout/cart summary UI that wi
     <p>Item count: <span data-next-display="cart.itemCount" data-format="integer">0</span></p>
     <p>Total quantity: <span data-next-display="cart.quantity" data-format="integer">0</span></p>
     <p>Count (alias): <span data-next-display="cart.count" data-format="integer">0</span></p>
+    <p>Currency: <span data-next-display="cart.currency">USD</span></p>
     <p>Discount code: <span data-next-display="cart.discountCode">-</span></p>
     <p>Discount codes: <span data-next-display="cart.discountCodes">-</span></p>
     <p>Coupons applied: <span data-next-display="cart.couponCount" data-format="integer">0</span></p>
@@ -318,7 +320,7 @@ Use this example as a starting point for a full checkout/cart summary UI that wi
       <span data-next-display="cart.discounts">-$0.00</span>
     </div>
     <div class="line-item total">
-      <span>Total:</span>
+      <span>Total (<span data-next-display="cart.currency">USD</span>):</span>
       <span data-next-display="cart.total" data-format="currency">$0.00</span>
     </div>
     <div class="line-item">
