@@ -576,6 +576,8 @@ components:
 
             * `disputed_cancel_recurring` - Disputed cancel recurring
 
+            * `schedule_ended` - Subscription schedule ended
+
             * `other` - Other'
           enum:
           - not_satisfied_with_product
@@ -584,9 +586,10 @@ components:
           - unwanted_subscription
           - recurring_payment_declined
           - disputed_cancel_recurring
+          - schedule_ended
           - other
           type: string
-          x-spec-enum-id: 5231bb14ef0f67ff
+          x-spec-enum-id: f4552e8661c0211b
         cancel_reason_other_message:
           type:
           - string
@@ -1008,7 +1011,6 @@ components:
           type: boolean
         email:
           format: email
-          title: Email address
           type:
           - string
           - 'null'
@@ -1025,10 +1027,11 @@ components:
           - string
           - 'null'
         language:
-          description: "* `en` - English\n* `fr` - Fran\xE7ais\n* `th` - \u0E20\u0E32\
-            \u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n*\
-            \ `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1ol\n* `nl` - Nederlands\n\
-            * `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi` - Suomi"
+          description: "required : E164\n\n* `en` - English\n* `fr` - Fran\xE7ais\n\
+            * `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n\
+            * `sv` - Svenska\n* `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1\
+            ol\n* `nl` - Nederlands\n* `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi`\
+            \ - Suomi"
           enum:
           - en
           - fr
@@ -1042,6 +1045,7 @@ components:
           - pt
           - da
           - fi
+          - ''
           - null
           type:
           - string
@@ -1055,7 +1059,6 @@ components:
           - {}
           - type: 'null'
         phone_number:
-          description: 'required : E164'
           type:
           - string
           - 'null'
@@ -2256,7 +2259,6 @@ components:
           type: boolean
         email:
           format: email
-          title: Email address
           type:
           - string
           - 'null'
@@ -2273,10 +2275,11 @@ components:
           - string
           - 'null'
         language:
-          description: "* `en` - English\n* `fr` - Fran\xE7ais\n* `th` - \u0E20\u0E32\
-            \u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n*\
-            \ `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1ol\n* `nl` - Nederlands\n\
-            * `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi` - Suomi"
+          description: "required : E164\n\n* `en` - English\n* `fr` - Fran\xE7ais\n\
+            * `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n\
+            * `sv` - Svenska\n* `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1\
+            ol\n* `nl` - Nederlands\n* `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi`\
+            \ - Suomi"
           enum:
           - en
           - fr
@@ -2290,6 +2293,7 @@ components:
           - pt
           - da
           - fi
+          - ''
           - null
           type:
           - string
@@ -2303,7 +2307,6 @@ components:
           - {}
           - type: 'null'
         phone_number:
-          description: 'required : E164'
           type:
           - string
           - 'null'
@@ -6149,7 +6152,6 @@ components:
           default: false
           type: boolean
         language:
-          default: en
           description: "required : E164\n\n* `en` - English\n* `fr` - Fran\xE7ais\n\
             * `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n\
             * `sv` - Svenska\n* `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1\
@@ -6168,7 +6170,11 @@ components:
           - pt
           - da
           - fi
-          type: string
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
           x-spec-enum-id: 70ceea9c8488568b
         last_name:
           maxLength: 255
@@ -6301,6 +6307,30 @@ components:
           type:
           - string
           - 'null'
+        language:
+          description: "* `en` - English\n* `fr` - Fran\xE7ais\n* `th` - \u0E20\u0E32\
+            \u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n*\
+            \ `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1ol\n* `nl` - Nederlands\n\
+            * `pt` - Portugu\xEAs\n* `da` - Dansk\n* `fi` - Suomi"
+          enum:
+          - en
+          - fr
+          - th
+          - de
+          - sv
+          - 'no'
+          - it
+          - es
+          - nl
+          - pt
+          - da
+          - fi
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
+          x-spec-enum-id: 70ceea9c8488568b
         payment_gateway:
           type:
           - integer
@@ -9698,7 +9728,6 @@ components:
           default: false
           type: boolean
         language:
-          default: en
           description: "required : E164\n\n* `en` - English\n* `fr` - Fran\xE7ais\n\
             * `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n\
             * `sv` - Svenska\n* `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1\
@@ -9717,7 +9746,11 @@ components:
           - pt
           - da
           - fi
-          type: string
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
           x-spec-enum-id: 70ceea9c8488568b
         last_name:
           maxLength: 255
@@ -9801,7 +9834,6 @@ components:
           default: false
           type: boolean
         language:
-          default: en
           description: "required : E164\n\n* `en` - English\n* `fr` - Fran\xE7ais\n\
             * `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\n* `de` - Deutsch\n\
             * `sv` - Svenska\n* `no` - Norsk\n* `it` - Italiano\n* `es` - Espa\xF1\
@@ -9820,7 +9852,11 @@ components:
           - pt
           - da
           - fi
-          type: string
+          - ''
+          - null
+          type:
+          - string
+          - 'null'
           x-spec-enum-id: 70ceea9c8488568b
         last_name:
           maxLength: 255
@@ -19169,7 +19205,6 @@ webhooks:
                       default: false
                       type: boolean
                     language:
-                      default: en
                       description: "required : E164\n\n* `en` - English\n* `fr` -\
                         \ Fran\xE7ais\n* `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\
                         \u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n* `no` - Norsk\n\
@@ -19188,7 +19223,11 @@ webhooks:
                       - pt
                       - da
                       - fi
-                      type: string
+                      - ''
+                      - null
+                      type:
+                      - string
+                      - 'null'
                       x-spec-enum-id: 70ceea9c8488568b
                     last_name:
                       maxLength: 255
@@ -19401,7 +19440,6 @@ webhooks:
                       default: false
                       type: boolean
                     language:
-                      default: en
                       description: "required : E164\n\n* `en` - English\n* `fr` -\
                         \ Fran\xE7ais\n* `th` - \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\
                         \u0E22\n* `de` - Deutsch\n* `sv` - Svenska\n* `no` - Norsk\n\
@@ -19420,7 +19458,11 @@ webhooks:
                       - pt
                       - da
                       - fi
-                      type: string
+                      - ''
+                      - null
+                      type:
+                      - string
+                      - 'null'
                       x-spec-enum-id: 70ceea9c8488568b
                     last_name:
                       maxLength: 255

@@ -19,63 +19,43 @@ components:
       type: object
     Address:
       properties:
-        country:
-          description: The address country code
+        city:
+          description: City or locality name.
           maxLength: 225
           type: string
-        first_name:
-          description: The first name of the address
-          maxLength: 255
+        country:
+          description: Full country name, e.g. 'United States'.
+          maxLength: 225
           type: string
-        is_default_for_billing:
-          default: false
-          description: Set this address as the customer's default billing address
-          type: boolean
-        is_default_for_shipping:
-          default: false
-          description: Set this address as the customer's default shipping address
-          type: boolean
-        last_name:
-          description: The last name of the address
-          maxLength: 255
+        country_code:
+          description: Two-letter ISO 3166-1 alpha-2 country code, e.g. 'US'.
+          maxLength: 2
           type: string
         line1:
-          description: The first line of the address
+          description: Primary street address, e.g. house number and street name.
           maxLength: 225
           type: string
         line2:
-          description: Optional second line of of the address
+          description: Additional address info such as apartment, suite, unit, building,
+            or floor.
           maxLength: 225
           type: string
         line3:
-          description: Optional third line of of the address
-          maxLength: 225
-          type: string
-        line4:
-          description: City of the address
-          maxLength: 225
-          type: string
-        notes:
-          maxLength: 225
-          type: string
-        phone_number:
-          description: The address phone number
+          description: Extra address line, e.g. district or sub-locality.
           maxLength: 225
           type: string
         postcode:
-          description: The address post code or zip code
+          description: Postal or ZIP code.
           maxLength: 64
           type: string
         state:
-          description: The address state/province
+          description: Full name or code of the state, province, or region.
           maxLength: 225
           type: string
-      required:
-      - country
-      - first_name
-      - last_name
-      - line1
-      - line4
+        state_code:
+          description: Abbreviated state or province code, e.g. 'CA', 'NY'.
+          maxLength: 64
+          type: string
       type: object
     AddressCart:
       properties:
@@ -96,11 +76,12 @@ components:
           maxLength: 225
           type: string
         line2:
-          description: Optional second line of of the address
+          description: Additional address info such as apartment, suite, unit, building,
+            or floor.
           maxLength: 225
           type: string
         line3:
-          description: Optional third line of of the address
+          description: Extra address line, e.g. district or sub-locality.
           maxLength: 225
           type: string
         line4:
@@ -115,11 +96,11 @@ components:
           maxLength: 225
           type: string
         postcode:
-          description: The address post code or zip code
+          description: Postal or ZIP code.
           maxLength: 64
           type: string
         state:
-          description: The address state/province
+          description: Full name or code of the state, province, or region.
           maxLength: 225
           type: string
       required:
@@ -147,9 +128,7 @@ components:
           nullable: true
           type: string
         metadata:
-          additionalProperties: {}
           description: Additional attribution metadata
-          type: object
         subaffiliate1:
           description: Sub-affiliate identifier 1
           maxLength: 225
@@ -465,7 +444,7 @@ components:
         attribution:
           $ref: '#/components/schemas/Attribution'
         billing_address:
-          $ref: '#/components/schemas/Address'
+          $ref: '#/components/schemas/UserAddress'
         billing_same_as_shipping_address:
           default: false
           description: Use the shipping address as the billing address
@@ -486,7 +465,7 @@ components:
           description: Redirect user to this url if payment is unsuccessful
           type: string
         shipping_address:
-          $ref: '#/components/schemas/Address'
+          $ref: '#/components/schemas/UserAddress'
         shipping_method:
           description: Shipping method ID for order shipping
           type: integer
@@ -592,10 +571,8 @@ components:
           nullable: true
           type: string
         metadata:
-          additionalProperties: {}
           description: Additional attribution metadata
           nullable: true
-          type: object
         subaffiliate1:
           description: Sub-affiliate identifier 1
           maxLength: 225
@@ -978,11 +955,12 @@ components:
           maxLength: 225
           type: string
         line2:
-          description: Optional second line of of the address
+          description: Additional address info such as apartment, suite, unit, building,
+            or floor.
           maxLength: 225
           type: string
         line3:
-          description: Optional third line of of the address
+          description: Extra address line, e.g. district or sub-locality.
           maxLength: 225
           type: string
         line4:
@@ -997,11 +975,11 @@ components:
           maxLength: 225
           type: string
         postcode:
-          description: The address post code or zip code
+          description: Postal or ZIP code.
           maxLength: 64
           type: string
         state:
-          description: The address state/province
+          description: Full name or code of the state, province, or region.
           maxLength: 225
           type: string
       required:
@@ -1202,9 +1180,7 @@ components:
           nullable: true
           type: string
         product_variant_attribute_values:
-          additionalProperties: {}
           description: Product variant atrribute values
-          type: object
         product_variant_id:
           description: ID of the product variant linked to the package
           type: integer
@@ -1375,6 +1351,29 @@ components:
       - available
       - unavailable
       type: string
+    ResultAddressAutocomplete:
+      properties:
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: Structured address broken down into individual fields.
+        label:
+          description: Formatted full address string for display.
+          maxLength: 512
+          type: string
+      required:
+      - address
+      - label
+      type: object
+    ResultsAddressAutocomplete:
+      properties:
+        results:
+          description: List of matching address suggestions returned by the autocomplete
+            lookup.
+          items:
+            $ref: '#/components/schemas/ResultAddressAutocomplete'
+          type: array
+      type: object
     ShippingOption:
       properties:
         code:
@@ -1428,6 +1427,67 @@ components:
           description: Customer user agent
           nullable: true
           type: string
+      type: object
+    UserAddress:
+      properties:
+        country:
+          description: The address country code
+          maxLength: 225
+          type: string
+        first_name:
+          description: The first name of the address
+          maxLength: 255
+          type: string
+        is_default_for_billing:
+          default: false
+          description: Set this address as the customer's default billing address
+          type: boolean
+        is_default_for_shipping:
+          default: false
+          description: Set this address as the customer's default shipping address
+          type: boolean
+        last_name:
+          description: The last name of the address
+          maxLength: 255
+          type: string
+        line1:
+          description: The first line of the address
+          maxLength: 225
+          type: string
+        line2:
+          description: Additional address info such as apartment, suite, unit, building,
+            or floor.
+          maxLength: 225
+          type: string
+        line3:
+          description: Extra address line, e.g. district or sub-locality.
+          maxLength: 225
+          type: string
+        line4:
+          description: City of the address
+          maxLength: 225
+          type: string
+        notes:
+          maxLength: 225
+          type: string
+        phone_number:
+          description: The address phone number
+          maxLength: 225
+          type: string
+        postcode:
+          description: Postal or ZIP code.
+          maxLength: 64
+          type: string
+        state:
+          description: Full name or code of the state, province, or region.
+          maxLength: 225
+          type: string
+      required:
+      - country
+      - first_name
+      - last_name
+      - line1
+      - line4
       type: object
     UserCreateCart:
       properties:
@@ -1546,6 +1606,38 @@ info:
     url: https://d1w87fp8j98gad.cloudfront.net/static/images/logo/campaigns-logo.png
 openapi: 3.0.3
 paths:
+  /api/v1/addresses/autocomplete/:
+    get:
+      description: Autocomplete address suggestions based on partial input.
+      operationId: addressAutocomplete
+      parameters:
+      - description: Optional country code to filter results.
+        in: query
+        name: country
+        schema:
+          type: string
+      - description: Optional language code for the results.
+        in: query
+        name: language
+        schema:
+          type: string
+      - description: Partial address input to search for suggestions.
+        in: query
+        name: query_text
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultsAddressAutocomplete'
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - address
   /api/v1/campaigns/:
     get:
       description: Retrieve campaign details.
