@@ -41,6 +41,7 @@ The primary attribute for showing dynamic values from cart, campaign, and order 
 | `cart.discount` | Discount amount | "-$10.00" |
 | `cart.totalQuantity` | Total items in cart | "5" |
 | `cart.itemCount` | Unique items in cart | "3" |
+| `cart.currency` | Active currency for the cart | "USD" |
 | `cart.isEmpty` | Cart empty state | "true" or "false" |
 | `package.[id].price` | Package price | "$29.99" |
 | `package.[id].name` | Package display name | "Premium Bundle" |
@@ -283,6 +284,8 @@ Timer format options:
   </div>
 </div>
 ```
+
+For a complete list of cart and item attributes plus a full checkout summary example, see [Cart Summary Checkout](/docs/campaign-cart/guides/cart-summary-checkout).
 
 ### Product Card with Dynamic Pricing
 
@@ -976,6 +979,7 @@ Enable debug mode to see:
 
 ## Related Documentation
 
+- [Cart Summary Checkout](/docs/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
 - [Actions](/docs/campaign-cart/data-attributes/actions/) - Interactive elements
 - [State Management](/docs/campaign-cart/data-attributes/state/) - Conditional logic
 - [Events](/docs/campaign-cart/javascript-api/events/) - React to data changes
