@@ -32,7 +32,7 @@ https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_
 |`response_type`| Must be `code`, which only authorization flow supported at this time. |
 |`client_id`| Your app `client_id` found in in your partner account.|
 |`redirect_uri`|The url you want to receive the Authorization Code in your app. **Must be listed in your app Redirect URLs setting**. |
-|`scope`| A space separated list of scopes such as `orders:read orders:write users:read users:write`. [See list of all available scopes](/api/admin/permissions.md). |
+|`scope`| A space separated list of scopes such as `orders:read orders:write users:read users:write`. [See list of all available scopes](/docs/admin-api/permissions.md). |
 
 
 ### Step 3: Confirm Installation
@@ -80,7 +80,7 @@ A successful request will have the following response.
 }
 ```
 
-Save the `access_token` to your app to use with requests to the [Admin API](/api/admin/index.md) for the store. :clap:
+Save the `access_token` to your app to use with requests to the [Admin API](/docs/admin-api/index.md) for the store. :clap:
 
 :::info
 To see this in action, see the [Example App](https://github.com/29next/example-app) on Github.

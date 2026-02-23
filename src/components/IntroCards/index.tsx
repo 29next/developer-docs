@@ -9,13 +9,13 @@ const IntroCardsData = [
         icon: '⚡️',
         title: 'Admin API',
         description: 'Use our APIs to create new sales channels and extend core functionality with custom business logic.',
-        href: '/docs/api/admin/',
+        href: '/docs/admin-api/',
     },
     {
         icon: '🚀',
-        title: 'Campaigns API',
-        description: 'Headless APIs to integrate your campaign funnels, no server required.',
-        href: '/docs/api/campaigns/',
+        title: 'Campaigns',
+        description: 'Build and integrate your campaign funnels with our Campaigns App.',
+        href: '/docs/campaigns/',
     },
     {
         icon: '🎯',
@@ -50,7 +50,7 @@ function IntroCard({ item }): JSX.Element {
         <Link
             href={item.href}
             className={clsx('card padding--lg', styles.cardContainer)}>
-           <Heading
+            <Heading
                 as="h2"
                 className={clsx('text--truncate', styles.cardTitle)}
                 title={item.title}>

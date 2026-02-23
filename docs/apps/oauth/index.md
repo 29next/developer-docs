@@ -44,7 +44,7 @@ sequenceDiagram
 5. Store redirects to the Redirect URL with an [Authorization Code](https://oauth.net/2/grant-types/authorization-code/), a temporary credential representing the authorization, [see authorization code example](/apps/oauth/getting-started.md#step-3-confirm-installation).
 6. The app requests an Access Token using the Authorization Code, [see example access token request](/apps/oauth/getting-started.md#step-4-retrieve-access-token).
 7. Store returns an Access Token, [see example access token response](/apps/oauth/getting-started.md#step-4-retrieve-access-token).
-8. The app can now access the Admin API using the Access Token, [see Admin API examples](/api/admin/index.md#basic-examples).
+8. The app can now access the Admin API using the Access Token, [see Admin API examples](/docs/admin-api/index.md#basic-examples).
 
 
 ### Oauth Guides

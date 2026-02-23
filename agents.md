@@ -101,7 +101,7 @@ The Admin API supports a complete order creation flow with payment processing, e
 - **Auth:** Campaign API key
 - **Capabilities:** Cart creation, order creation, upsell creation, order retrieval, session tracking, shipping options
 - **OpenAPI spec:** `static/api/campaigns/v1.yaml`
-- **Docs:** `docs/api/campaigns.md`
+- **Docs:** `docs/campaigns/api.md`
 
 ### Admin API
 - **Type:** REST
@@ -113,7 +113,7 @@ The Admin API supports a complete order creation flow with payment processing, e
   - `unstable` — development
 - **Capabilities:** Full CRUD on all store resources (orders, products, customers, subscriptions, fulfillments, gateways, webhooks, etc.)
 - **OpenAPI specs:** `static/api/admin/2023-02-10.yaml`, `static/api/admin/2024-04-01.yaml`, `static/api/admin/unstable.yaml`
-- **Docs:** `docs/api/admin/` (overview, permissions, 15 feature guides)
+- **Docs:** `docs/admin-api/` (overview, permissions, 15 feature guides)
 
 **Admin API guides focus areas:**
 - Payment methods: Apple Pay, Google Pay, PayPal, Klarna, Bancontact, iDEAL, SEPA Debit, TWINT, 3DS2
@@ -162,14 +162,10 @@ Apps extend platform functionality by combining Admin API, Webhooks, and Storefr
 ```
 docs/
 ├── index.md                    → Getting Started landing page
-├── api/
-│   ├── index.md                → APIs overview
-│   ├── campaigns.md            → Campaigns API overview + endpoints
-│   ├── checkout-links.md       → Checkout Links feature
-│   └── admin/
-│       ├── index.md            → Admin API overview + auth
-│       ├── permissions.md      → OAuth permission scopes
-│       └── guides/             → 15 feature guides (payments, orders, subscriptions)
+├── admin-api/
+│   ├── index.md                → Admin API overview + auth
+│   ├── permissions.md          → OAuth permission scopes
+│   └── guides/                 → 15 feature guides (payments, orders, subscriptions)
 ├── apps/
 │   ├── index.md                → Apps overview
 │   ├── app-kit.md              → App development framework
@@ -183,15 +179,16 @@ docs/
 │   ├── oauth/                  → OAuth flows (4 files)
 │   └── guides/                 → App pattern guides (4 files)
 ├── campaigns/
-│   └── index.md                → Campaign concepts + getting started
-├── campaign-cart/              → Campaign Cart SDK (largest section, ~48 files)
-│   ├── index.md                → Quick start + configuration
-│   ├── data-attributes/        → HTML attribute reference (8 files)
-│   ├── javascript-api/         → JS API reference (5 files)
-│   ├── analytics/              → Analytics integrations (9+ files)
-│   ├── guides/                 → Implementation guides
-│   ├── utilities/              → FOMO, exit intent, loading, debugger
-│   └── upsells/                → Post-purchase upsell flows
+│   ├── index.md                → Campaign concepts + getting started
+│   ├── api.md                  → Campaigns API overview + endpoints
+│   └── campaign-cart/          → Campaign Cart SDK (largest section, ~48 files)
+│       ├── index.md            → Quick start + configuration
+│       ├── data-attributes/    → HTML attribute reference (8 files)
+│       ├── javascript-api/     → JS API reference (5 files)
+│       ├── analytics/          → Analytics integrations (9+ files)
+│       ├── guides/             → Implementation guides
+│       ├── utilities/          → FOMO, exit intent, loading, debugger
+│       └── upsells/            → Post-purchase upsell flows
 ├── storefront/
 │   ├── index.md                → Storefront overview
 │   ├── api.md                  → Storefront GraphQL API
@@ -219,6 +216,17 @@ static/api/
 
 ## Documentation Conventions
 
+### Navbar (Left)
+
+| Label | Path |
+|-------|------|
+| Getting Started | `/docs/` |
+| Campaigns | `/docs/campaigns/` |
+| Storefront | `/docs/storefront/` |
+| Apps | `/docs/apps/` |
+| Admin API | `/docs/admin-api/` |
+| Webhooks | `/docs/webhooks/` |
+
 ### Tooling
 - **Docusaurus** with MDX support
 - **Stoplight Elements** for rendering OpenAPI specs inline
@@ -233,7 +241,7 @@ static/api/
 - **Code examples:** JavaScript, Python, cURL — fenced with language + optional `title="..."`
 - **Tables:** Markdown tables for comparisons, event lists, attribute references
 - **Cross-links:** Relative markdown links (`[text](/docs/path/to/file.md)`)
-- **API references:** Link to Stoplight-rendered specs (`/docs/api/admin/reference/#/...`)
+- **API references:** Link to Stoplight-rendered specs (`/docs/admin-api/reference/#/...`)
 - **MDX components:** `DocCardList`, `IntroCards` for auto-generated navigation cards
 
 ### URL Structure
@@ -241,7 +249,7 @@ All published docs follow: `https://developers.29next.com/docs/{section}/{path}`
 
 Key redirects configured in `docusaurus.config.js`:
 - `/api/` → `/docs/api`
-- `/api/admin` → `/docs/api/admin/`
+- `/docs/admin-api` → `/docs/admin-api/`
 - `/themes` → `/docs/storefront/themes`
 - `/webhooks` → `/docs/webhooks`
 

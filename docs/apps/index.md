@@ -13,7 +13,7 @@ Apps allow you to extend built-in functionality of the Next Commerce platform to
 
 #### Extend Core Functionality
 
-Use [Webhooks](/webhooks.md) to subscribe to events and the [Admin API](/api/admin/index.md) to add new logic and integrations, see the [Server to Server Guide](/docs/apps/guides/server-to-server-apps/).
+Use [Webhooks](/webhooks.md) to subscribe to events and the [Admin API](/docs/admin-api/index.md) to add new logic and integrations, see the [Server to Server Guide](/docs/apps/guides/server-to-server-apps/).
 
 #### Extend Storefront Themes
 Use [Event Tracking](/docs/apps/event-tracking.md) or [App Snippets](#app-snippets) to extend storefront themes, see the [Storefront Extension Guide](/docs/apps/guides/storefront-extension/).
@@ -26,7 +26,7 @@ We have full featured open source example apps that provide full code examples f
 | ------ | ------ | ----- |
 | Example S2S App | Server to Server demonstration of [OAuth Flow](/apps/oauth/index.md), [Session Tokens](/apps/oauth/session-auth.md), [Remote Settings](/apps/settings.md), [Webhook Setup](/webhooks.md) and [Verification](/webhooks.md#verifying-webhook-requests) | [View](https://github.com/29next/example-app) |
 | Google Analytics 4 | Demonstrates [Snippets](/docs/apps/snippets.md) and [Event Tracking](/docs/apps/event-tracking.md) to add javascript events to storefronts. | [View](https://github.com/29next/google-analytics-4) |
-| Fulfillment Service App | Demonstrates demonstration of [OAuth Flow](/apps/oauth/index.md) and the [Fulfillment Flow](/docs/apps/guides/fulfillment-service/#fulfillment-flow-overview) using the [Fulfillment APIs](/docs/api/admin/reference/#tag/fulfillment). | [View](https://github.com/29next/demo-fulfillment-service-app) |
+| Fulfillment Service App | Demonstrates demonstration of [OAuth Flow](/apps/oauth/index.md) and the [Fulfillment Flow](/docs/apps/guides/fulfillment-service/#fulfillment-flow-overview) using the [Fulfillment APIs](/docs/admin-api/reference/#tag/fulfillment). | [View](https://github.com/29next/demo-fulfillment-service-app) |
 
 
 ```mdx-code-block
