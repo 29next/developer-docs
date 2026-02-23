@@ -59,16 +59,22 @@ A campaign funnel guides customers through a series of pages, each backed by the
 
 ```mermaid
 graph LR
-    A[Presale] --> B[Landing] --> C[Checkout] --> D[Upsell 1] --> E[Upsell 2] --> F[Receipt]
+    A[Landing] --> C[Checkout] --> D[Upsell 1] --> E[Upsell 2] --> F[Receipt]
 ```
 
-- **Presale** — Marketing page that drives traffic to the campaign
-- **Landing** — Customer selects a package
-- **Checkout** — Customer enters shipping, billing, and payment details
+- **Landing** — Marketing page that drives traffic to the campaign
+- **Checkout** — Customer selects package, enters shipping, billing, and payment details
 - **Upsells** — Post-purchase offers to increase order value
 - **Receipt** — Order confirmation with details
 
 Session tracking is available to monitor performance across all these steps — page views, cart creation, orders, and upsells all flow into real-time campaign performance reports.
+
+:::info
+
+This is a simplified example of a campaign flow. You can customize the flow to meet your specific needs.
+
+:::
+
 
 ### How It All Fits Together
 
