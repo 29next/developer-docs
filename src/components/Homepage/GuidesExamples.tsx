@@ -26,8 +26,8 @@ const guides: Guide[] = [
     {
         title: 'Campaigns API Checkout Flow',
         icon: Code,
-        text: 'Implement a campaign flow using our headless Campaigns API',
-        link: '/docs/api/campaigns/',
+        text: 'Implement a campaign flow using our headless Campaigns App',
+        link: '/docs/campaigns/',
     },
     {
         title: 'Getting Started with Themes',
@@ -45,7 +45,7 @@ const guides: Guide[] = [
         title: 'Testing Guide',
         icon: CheckSquare,
         text: 'Use test cards to test your external checkout flow.',
-        link: '/docs/api/admin/guides/testing-guide/',
+        link: '/docs/admin-api/guides/testing-guide/',
     },
 ];
 

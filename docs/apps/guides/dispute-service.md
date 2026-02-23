@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 Dispute service apps are integrations that manage the processing of payment disputes (alerts and chargebacks) on behalf of merchants seamlessly within the platform.
 
 :::info
-Dispute Service Apps are [Server to Server Apps](/docs/apps/guides/server-to-server-apps.md) that use the Oauth flow to obtain API Access and then use the [Admin APIs](/api/admin/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
+Dispute Service Apps are [Server to Server Apps](/docs/apps/guides/server-to-server-apps.md) that use the Oauth flow to obtain API Access and then use the [Admin APIs](/docs/admin-api/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
 :::
 
 ### Disputes
@@ -62,7 +62,7 @@ Transaction `parent_id` will show the related transaction in the following cases
 
 Your app can also subscribe to `order.created` and `order.updated` events to receive more detailed order information such as items purchased, fulfillment tracking numbers, and items that have already been refunded.
 
-Create your webhook after the app is installed using the [webhooksCreate](/docs/api/admin/reference/#/operations/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
+Create your webhook after the app is installed using the [webhooksCreate](/docs/admin-api/reference/#/operations/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
 
 
 #### Step 3 - Dispute service receives transaction dispute
@@ -71,12 +71,12 @@ At this stage, the dispute service is responsible for receiving disputes from th
 
 #### Step 4 - Dispute service creates dispute (alert or chargeback) in store
 
-When disputes are identified as belonging to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/api/admin/reference/#/operations/disputesCreate) Admin API.
+When disputes are identified as belonging to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/admin-api/reference/#/operations/disputesCreate) Admin API.
 
 
 #### Step 5 - Dispute service matches dispute to transaction
 
-Disputes created in the store need to be matched to the transaction in the store to associate it with the order/customer. Disputes can be matched by passing the `transaction` parameter when creating or with update using the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) Admin API. See example below in [Match a Dispute](#matching-disputes).
+Disputes created in the store need to be matched to the transaction in the store to associate it with the order/customer. Disputes can be matched by passing the `transaction` parameter when creating or with update using the [disputesUpdate](/docs/admin-api/reference/#/operations/disputesUpdate) Admin API. See example below in [Match a Dispute](#matching-disputes).
 
 
 #### Step 6 - Customer is added to block lists
@@ -86,7 +86,7 @@ Merchants can configure their store to automatically add customers to block list
 
 #### Step 7 - Dispute service creates refund
 
-Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/api/admin/reference/#/operations/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-disputes) detail below.
+Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/admin-api/reference/#/operations/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-disputes) detail below.
 
 
 #### Step 8 - Cancel Order / Cancel Fulfillment 
@@ -96,15 +96,15 @@ If the order is not yet fulfilled, it may be ideal to cancel the order or cancel
 
 #### Step 9 - Dispute service resolves dispute
 
-Once the dispute is resolved, the dispute service should set the dispute resolution using the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) Admin API. See [Dispute Resolutions](#dispute-resolutions) and [Resolve a Dispute](#resolving-disputes) detail below.
+Once the dispute is resolved, the dispute service should set the dispute resolution using the [disputesUpdate](/docs/admin-api/reference/#/operations/disputesUpdate) Admin API. See [Dispute Resolutions](#dispute-resolutions) and [Resolve a Dispute](#resolving-disputes) detail below.
 
 
 ### Creating Disputes
 
-To create a dispute in the store using the [disputesCreate](/docs/api/admin/reference/#/operations/disputesCreate) Admin API, see example below:
+To create a dispute in the store using the [disputesCreate](/docs/admin-api/reference/#/operations/disputesCreate) Admin API, see example below:
 
 ```json title="Create dispute"
-// POST https://{store}.29next.store/api/admin/disputes/
+// POST https://{store}.29next.store/docs/admin-api/disputes/
 {
   "type": "alert", // dispute type
   "arn": "string", // optional
@@ -117,10 +117,10 @@ To create a dispute in the store using the [disputesCreate](/docs/api/admin/refe
 
 ### Matching Disputes
 
-To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/api/admin/reference/#/operations/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
+To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/admin-api/reference/#/operations/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
 
 ```json title="Match dispute"
-// PUT https://{store}.29next.store/api/admin/disputes/{id}/
+// PUT https://{store}.29next.store/docs/admin-api/disputes/{id}/
 {
   "transaction": 7388
 }
@@ -128,10 +128,10 @@ To match a dispute to a transaction, pass the `transaction` id to the [disputesU
 
 ### Creating Refunds
 
-To create a refund for a transaction as part of the dispute resolution process, you can use the [transactionsRefundCreate](/docs/api/admin/reference/#/operations/transactionsRefundCreate) Admin API.
+To create a refund for a transaction as part of the dispute resolution process, you can use the [transactionsRefundCreate](/docs/admin-api/reference/#/operations/transactionsRefundCreate) Admin API.
 
 ```json title="Create a Refund"
-// POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
+// POST https://{store}.29next.store/docs/admin-api/transactions/{id}/refund/
 {
     "amount": "XX.XX", // refund amount
 }
@@ -142,17 +142,17 @@ To create a refund for a transaction as part of the dispute resolution process, 
 It's desirable to cancel fulfillment for orders that have not shipped yet when they are disputed to prevent additional losses for the merchant.
 
 :::info
-To retrieve a list of all fulfillment orders and their status, use the [ordersFulfillmentOrdersRetrieve](/docs/api/admin/reference/?v=2024-04-01#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
+To retrieve a list of all fulfillment orders and their status, use the [ordersFulfillmentOrdersRetrieve](/docs/admin-api/reference/?v=2024-04-01#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
 :::
 
 <Tabs>
 <TabItem value="fulfillment_status-unfulfilled" label="Fulfillment Status - Unfulfilled">
 
-If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fulfillment using the [fulfillmentOrdersHold](/docs/api/admin/reference/?v=2024-04-01#/operations/fulfillmentOrdersHold) endpoint.
+If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fulfillment using the [fulfillmentOrdersHold](/docs/admin-api/reference/?v=2024-04-01#/operations/fulfillmentOrdersHold) endpoint.
 
 
 ```json title="Hold Fulfillment"
-// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
+// POST https://{store}.29next.store/docs/admin-api/fulfillment-orders/{id}/hold/
 
 {
   "reason": "other",
@@ -163,10 +163,10 @@ If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fu
 </TabItem>
 <TabItem value="fulfillment_status-processing" label="Fulifllment Status - Processing">
 
-If order `fulfilmlent_status` is `processing` your dispute service can request processing fulfillment orders be canceled with the fulfillment locations with the [cancellationRequestSend](/docs/api/admin/reference/#/operations/cancellationRequestSend?v=2024-04-01) endpoint.
+If order `fulfilmlent_status` is `processing` your dispute service can request processing fulfillment orders be canceled with the fulfillment locations with the [cancellationRequestSend](/docs/admin-api/reference/#/operations/cancellationRequestSend?v=2024-04-01) endpoint.
 
 ```json title="Request Fulfillment Cancel"
-// POST https://{store}.29next.store/api/admin/orders/{number}/cancel/
+// POST https://{store}.29next.store/docs/admin-api/orders/{number}/cancel/
 {
   "message": "Order disputed by customer" // Fulfillment cancel reason
 }
@@ -181,12 +181,12 @@ Fulfillment locations need to accept the cancelation request to confirm they wer
 
 ### RDR Alerts
 
-RDR Alerts are automatically refunded with the gateway, dispute services should log an external refund for the transaction using the [transactionsRefundCreate](/docs/api/admin/reference/#/operations/transactionsRefundCreate) Admin API.
+RDR Alerts are automatically refunded with the gateway, dispute services should log an external refund for the transaction using the [transactionsRefundCreate](/docs/admin-api/reference/#/operations/transactionsRefundCreate) Admin API.
 
 Setting `is_external: true` on a refund will create the refund without attempting the refund with the gateway.
 
 ```json title="Create an External Refund"
-// POST https://{store}.29next.store/api/admin/transactions/{id}/refund/
+// POST https://{store}.29next.store/docs/admin-api/transactions/{id}/refund/
 {
     "amount": "XX.XX", // refund amount
     "is_external": true // set for external refunds
@@ -218,7 +218,7 @@ Setting `is_external: true` on a refund will create the refund without attemptin
 To resolve a dispute, update the dispute with the appropriate [resolution](#dispute-resolutions) for the dispute type.
 
 ```json title="Resolve a dispute"
-// POST https://{store}.29next.store/api/admin/disputes/{id}/
+// POST https://{store}.29next.store/docs/admin-api/disputes/{id}/
 {
   "resolution": "issued_full_refund"
 }

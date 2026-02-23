@@ -5,17 +5,17 @@ import Link from '@docusaurus/Link';
 const REQUESTS = [
     {
         title: 'Create Cart',
-        link: '/docs/api/campaigns/#create-cart',
+        link: '/docs/campaigns/api/#create-cart',
         text: 'Capture customer and product interest.',
     },
     {
         title: 'Create Order',
-        link: '/docs/api/campaigns/#create-order',
+        link: '/docs/campaigns/api/#create-order',
         text: 'Create and order with full payment details.',
     },
     {
         title: 'Add Upsell',
-        link: '/docs/api/campaigns/#adding-upsells',
+        link: '/docs/campaigns/api/#adding-upsells',
         text: 'Add an upsell to the order.',
     },
 ];
@@ -53,7 +53,7 @@ export default function APIReferenceSection() {
                         Use our developer-friendly Campaign APIs and integrate your headless campaign funnel order flow.
                     </p>
                     <Link
-                        href="/docs/api/campaigns/"
+                        href="/docs/campaigns/api/"
                         className="font-semibold"
                     >
                         Get started with 29 Next Campaigns APIs &rarr;

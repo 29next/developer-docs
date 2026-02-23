@@ -11,14 +11,14 @@ import clsx from 'clsx';
 
 const PRODUCTS = [
     {
-        title: 'Campaigns API',
-        link: '/docs/api/campaigns/',
+        title: 'Campaigns',
+        link: '/docs/campaigns/',
         icon: Code,
-        text: 'Headless APIs to integrate your campaign funnels, no server required.',
+        text: 'Build and integrate your campaign funnels with our Campaigns App.',
     },
     {
         title: 'Admin API',
-        link: '/docs/api/admin/',
+        link: '/docs/admin-api/',
         icon: Terminal,
         text: 'REST APIs to create new sales channels and extend core functionality with custom business logic.',
     },
@@ -77,7 +77,7 @@ export default function HeroSection() {
                     </p>
                     <Link
                         className="text-lg font-bold flex"
-                        to="/docs/"> Explore Docs <ArrowRight className='mx-2' />
+                        to="/docs/"> Get Started <ArrowRight className='mx-2' />
                     </Link>
                 </div>
             </section>

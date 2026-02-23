@@ -1,5 +1,5 @@
 ---
-sidebar_label: Introduction
+sidebar_label: Campaigns
 sidebar_position: 1
 title: Introduction to Campaigns
 ---
@@ -111,8 +111,8 @@ There are two ways to build your campaign frontend:
 
 | Approach | Best For | Description |
 | --- | --- | --- |
-| [**Campaign Cart SDK**](/docs/campaign-cart/) | Fastest development | An attribute-driven HTML/JS SDK. Build cart, checkout, and upsell flows using `data-next-*` attributes — no custom JavaScript required. |
-| [**Campaigns API**](/docs/api/campaigns/) | Full control | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
+| [**Campaign Cart SDK**](/docs/campaigns/campaign-cart/) | Fastest development | An attribute-driven HTML/JS SDK. Build cart, checkout, and upsell flows using `data-next-*` attributes — no custom JavaScript required. |
+| [**Campaigns API**](/docs/campaigns/api/) | Full control | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
 
 :::tip Starter Template
 The fastest way to get started is with the [Campaign Cart Starter Template](https://github.com/29next/campaign-cart-example) — a ready-to-use campaign flow with landing page, checkout, upsell, and receipt pages pre-configured.

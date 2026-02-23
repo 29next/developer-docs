@@ -5,7 +5,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
 const { webpackPlugin } = require('./plugins/webpack-plugin.cjs');
-const tailwindPlugin  = require('./plugins/tailwind-plugin.cjs');
+const tailwindPlugin = require('./plugins/tailwind-plugin.cjs');
 
 const plugins = [
     tailwindPlugin,
@@ -14,47 +14,33 @@ const plugins = [
         '@docusaurus/plugin-client-redirects',
         /** @type {import('@docusaurus/plugin-client-redirects').Options} */
         ({
+            // Pattern-based redirects: called for every valid destination path in the build.
+            // Return the old path(s) that should redirect to existingPath.
+            createRedirects(existingPath) {
+                // /docs/api/admin/* → /docs/admin-api/*
+                if (existingPath.startsWith('/docs/admin-api/')) {
+                    return existingPath.replace('/docs/admin-api/', '/docs/api/admin/');
+                }
+                // /docs/campaign-cart/* → /docs/campaigns/campaign-cart/*
+                if (existingPath.startsWith('/docs/campaigns/campaign-cart/')) {
+                    return existingPath.replace('/docs/campaigns/campaign-cart/', '/docs/campaign-cart/');
+                }
+                // /docs/api/campaigns/* → /docs/campaigns/api/*
+                if (existingPath.startsWith('/docs/campaigns/api/')) {
+                    return existingPath.replace('/docs/campaigns/api/', '/docs/api/campaigns/');
+                }
+                return undefined;
+            },
+            // Explicit one-off redirects for short/legacy URLs
             redirects: [
-                {
-                    from: '/api/',
-                    to: '/docs/api',
-                },
-                {
-                    from: '/api/admin',
-                    to: '/docs/api/admin',
-                },
-                {
-                    from: '/api/checkout-links',
-                    to: '/docs/api/checkout-links',
-                },
-                {
-                    from: '/apps/oauth',
-                    to: '/docs/apps/oauth',
-                },
-                {
-                    from: '/apps/app-development-flow',
-                    to: '/docs/apps/app-development-flow'
-                },
-                {
-                    from: '/apps',
-                    to: '/docs/apps',
-                },
-                {
-                    from: '/docs/themes/event-tracking',
-                    to: '/docs/storefront/event-tracking',
-                },
-                {
-                    from: '/themes',
-                    to: '/docs/storefront/themes',
-                },
-                {
-                    from: '/docs/themes',
-                    to: '/docs/storefront/themes',
-                },
-                {
-                    from: '/webhooks',
-                    to: '/docs/webhooks',
-                },
+                { from: '/api/admin',                   to: '/docs/admin-api' },
+                { from: '/apps/oauth',                  to: '/docs/apps/oauth' },
+                { from: '/apps/app-development-flow',   to: '/docs/apps/app-development-flow' },
+                { from: '/apps',                        to: '/docs/apps' },
+                { from: '/themes',                      to: '/docs/storefront/themes' },
+                { from: '/docs/themes',                 to: '/docs/storefront/themes' },
+                { from: '/docs/themes/event-tracking',  to: '/docs/storefront/event-tracking' },
+                { from: '/webhooks',                    to: '/docs/webhooks' },
             ],
         }),
     ]
@@ -150,24 +136,10 @@ const config = {
                     srcDark: 'img/logo-dark.png',
                 },
                 items: [
-                    {
-                        type: 'dropdown',
-                        label: 'APIs',
-                        position: 'left',
-                        items: [
-                            {
-                                label: 'Campaigns API',
-                                href: '/docs/api/campaigns/',
-                            },
-                            {
-                                label: 'Admin API',
-                                href: '/docs/api/admin/',
-                            },
-                        ],
-                    },
-                    { to: '/docs/campaign-cart/', label: 'Campaigns', position: 'left' },
-                    { to: '/docs/apps/', label: 'Apps', position: 'left' },
+                    { to: '/docs/campaigns/', label: 'Campaigns', position: 'left' },
                     { to: '/docs/storefront/', label: 'Storefront', position: 'left' },
+                    { to: '/docs/apps/', label: 'Apps', position: 'left' },
+                    { to: '/docs/admin-api/', label: 'Admin API', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
                     { href: 'https://github.com/29next/', position: 'right', className: 'header-github-link' },
                 ],

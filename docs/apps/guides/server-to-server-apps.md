@@ -7,7 +7,7 @@ tags:
 
 # Building Server to Server Apps
 
-Server to Server apps are those that leverage the [Oauth flow](/apps/oauth/index.md) to obtain API Access and then use the [Admin APIs](/api/admin/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
+Server to Server apps are those that leverage the [Oauth flow](/apps/oauth/index.md) to obtain API Access and then use the [Admin APIs](/docs/admin-api/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
 
 
 :::info
