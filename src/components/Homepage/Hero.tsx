@@ -1,19 +1,19 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import {
+    Layers,
     Terminal,
-    Code,
-    Layout,
-    Radio,
+    LayoutTemplate,
+    Webhook,
     ArrowRight
-} from 'react-feather';
+} from 'lucide-react';
 import clsx from 'clsx';
 
 const PRODUCTS = [
     {
         title: 'Campaigns',
         link: '/docs/campaigns/',
-        icon: Code,
+        icon: Layers,
         text: 'Build and integrate your campaign funnels with our Campaigns App.',
     },
     {
@@ -25,13 +25,13 @@ const PRODUCTS = [
     {
         title: 'Storefront Themes',
         link: '/docs/storefront/themes/',
-        icon: Layout,
+        icon: LayoutTemplate,
         text: 'Create unique branded storefronts for customers with our theme framework.',
     },
     {
         title: 'Webhooks',
         link: '/docs/webhooks/',
-        icon: Radio,
+        icon: Webhook,
         text: 'Use webhooks to create event subscriptions to notify external applications.',
     }
 ];
@@ -55,7 +55,7 @@ function HeroProduct({
         >
             <div className="p-6 !pb-0">
                 <h3 className="mb-1.5 flex items-center gap-3 group-hover:text-primary">
-                    <Icon className={`h-7 w-7`} />
+                    <Icon className={`h-7 w-7`} strokeWidth={2.5} />
                     {title}
                 </h3>
                 <p className=" text-sm text-zinc-400">{text}</p>

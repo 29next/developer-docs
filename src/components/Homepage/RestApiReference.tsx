@@ -56,7 +56,7 @@ export default function APIReferenceSection() {
                         href="/docs/campaigns/api/"
                         className="font-semibold"
                     >
-                        Get started with 29 Next Campaigns APIs &rarr;
+                        Get started with Next Campaigns APIs &rarr;
                     </Link>
 
                 </div>

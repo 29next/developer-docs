@@ -2,62 +2,66 @@ import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import { Layers, Terminal, LayoutTemplate, Package, Webhook } from 'lucide-react';
 import styles from './styles.module.css';
 
 const IntroCardsData = [
     {
-        icon: '⚡️',
-        title: 'Admin API',
-        description: 'Use our APIs to create new sales channels and extend core functionality with custom business logic.',
-        href: '/docs/admin-api/',
-    },
-    {
-        icon: '🚀',
+        icon: Layers,
         title: 'Campaigns',
-        description: 'Build and integrate your campaign funnels with our Campaigns App.',
+        description: 'Build external checkout funnels — landing pages, checkout, upsell flows, and receipts.',
         href: '/docs/campaigns/',
     },
     {
-        icon: '🎯',
-        title: 'Themes',
-        description: 'Create unique brand experiences for customers with our theme framework.',
-        href: '/docs/storefront/',
+        icon: Terminal,
+        title: 'Admin API',
+        description: 'Manage orders, subscriptions, products, customers, and fulfillment via REST API.',
+        href: '/docs/admin-api/',
     },
     {
-        icon: '🧩',
+        icon: Package,
         title: 'Apps',
-        description: 'Build Apps to bundle your integration into an installable App that can be easily installed on many stores.',
+        description: 'Package integrations as installable units that work across multiple stores.',
         href: '/docs/apps/',
     },
     {
-        icon: '🔗',
+        icon: LayoutTemplate,
+        title: 'Storefront',
+        description: 'Customize your storefront theme — product pages, catalog, cart, and checkout.',
+        href: '/docs/storefront/',
+    },
+    {
+        icon: Webhook,
         title: 'Webhooks',
-        description: 'Use webhooks to create event subscriptions to notify external applications.',
+        description: 'Subscribe to store events and notify external systems in real time.',
         href: '/docs/webhooks/',
     },
-]
+];
 
-
-interface Props {
+interface CardItem {
     href: string;
-    icon: string;
+    icon: React.ComponentType<{ size?: number; className?: string }>;
     title: string;
     description: string;
 }
 
-function IntroCard({ item }): JSX.Element {
+function IntroCard({ item }: { item: CardItem }): JSX.Element {
+    const Icon = item.icon;
     return (
         <Link
             href={item.href}
             className={clsx('card padding--lg', styles.cardContainer)}>
-            <Heading
-                as="h2"
-                className={clsx('text--truncate', styles.cardTitle)}
-                title={item.title}>
-                {item.icon} {item.title}
-            </Heading>
+            <div className={styles.cardHeader}>
+                <Icon size={26} strokeWidth={2.5} className={styles.cardIcon} />
+                <Heading
+                    as="h2"
+                    className={clsx('text--truncate', styles.cardTitle)}
+                    title={item.title}>
+                    {item.title}
+                </Heading>
+            </div>
             <p
-                className={clsx('text--truncate', styles.cardDescription)}
+                className={clsx(styles.cardDescription)}
                 title={item.description}>
                 {item.description}
             </p>
@@ -65,7 +69,7 @@ function IntroCard({ item }): JSX.Element {
     );
 }
 
-export default function IntroCards(props: Props): JSX.Element {
+export default function IntroCards(): JSX.Element {
     return (
         <section className={clsx('row')}>
             {IntroCardsData.map((item, index) => (
