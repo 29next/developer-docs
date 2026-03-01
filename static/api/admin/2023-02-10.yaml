@@ -1588,6 +1588,7 @@ components:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
           type: array
+          writeOnly: true
       required:
       - variant_attribute_values
       type: object
@@ -5595,6 +5596,7 @@ components:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
           type: array
+          writeOnly: true
       type: object
     PatchedUpdateSubscription:
       properties:
@@ -9173,6 +9175,7 @@ components:
           items:
             $ref: '#/components/schemas/ProductVariantAttributeValue'
           type: array
+          writeOnly: true
       required:
       - stockrecords
       - variant_attribute_values
