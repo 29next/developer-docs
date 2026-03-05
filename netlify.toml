@@ -2,7 +2,7 @@
 
 [build]
   # The command to build your Docusaurus site
-  command = "npm run build"
+  command = "npm install && npm run build"
   
   # The directory that contains the deploy-ready static files
   publish = "build"
