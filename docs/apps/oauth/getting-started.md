@@ -83,5 +83,5 @@ A successful request will have the following response.
 Save the `access_token` to your app to use with requests to the [Admin API](/docs/admin-api/index.md) for the store. :clap:
 
 :::info
-To see this in action, see the [Example App](https://github.com/29next/example-app) on Github.
+To see this in action, see the [Example App](https://github.com/NextCommerceCo/example-app) on Github.
 :::

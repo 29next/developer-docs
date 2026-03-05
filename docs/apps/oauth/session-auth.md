@@ -57,5 +57,5 @@ sequenceDiagram
 ```
 
 :::tip
-To see this in action, see the [Example App](https://github.com/29next/example-app) on Github.
+To see this in action, see the [Example App](https://github.com/NextCommerceCo/example-app) on Github.
 :::

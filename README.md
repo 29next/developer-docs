@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://nextcommerce.com">
-    <img src="https://github.com/29next/developer-docs/blob/main/static/img/next-logo-stroked.png" alt="Logo" width="240">
+    <img src="https://github.com/NextCommerceCo/developer-docs/blob/main/static/img/next-logo-stroked.png" alt="Logo" width="240">
   </a>
   <h2 align="center">Next Commerce Developer Docs</h3>
 

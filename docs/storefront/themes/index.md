@@ -6,7 +6,7 @@ sidebar_position: 0
 # Getting Started with Themes
 
 :::tip
-We highly recommend using Theme Kit to manage your store theme for the best developer experience from your favorite IDE. [Install Theme Kit](https://github.com/29next/theme-kit)
+We highly recommend using Theme Kit to manage your store theme for the best developer experience from your favorite IDE. [Install Theme Kit](https://github.com/NextCommerceCo/theme-kit)
 :::
 
 ```mdx-code-block
@@ -136,7 +136,7 @@ Sass files are not automatically compiled in the platform and must be compiled t
 
 ### Theme Kit
 
-[Theme Kit](https://github.com/29next/theme-kit) is a command line tool for developers to build an maintain storefront themes programmatically, allowing theme developers to:
+[Theme Kit](https://github.com/NextCommerceCo/theme-kit) is a command line tool for developers to build an maintain storefront themes programmatically, allowing theme developers to:
 
 - Work on theme templates and assets using their local code editor or favorite IDE.
 - Use git version control to work on a theme collectively with many theme collaborators.
@@ -145,5 +145,5 @@ Sass files are not automatically compiled in the platform and must be compiled t
 
 :::tip
 
-See Theme Kit installation instructions on [Github](https://github.com/29next/theme-kit).
+See Theme Kit installation instructions on [Github](https://github.com/NextCommerceCo/theme-kit).
 :::

@@ -115,5 +115,5 @@ There are two ways to build your campaign frontend:
 | [**Campaigns API**](/docs/campaigns/api/) | Full control | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
 
 :::tip Starter Template
-The fastest way to get started is with the [Campaign Cart Starter Template](https://github.com/29next/campaign-cart-example) — a ready-to-use campaign flow with landing page, checkout, upsell, and receipt pages pre-configured.
+The fastest way to get started is with the [Campaign Cart Starter Template](https://github.com/NextCommerceCo/campaign-cart-example) — a ready-to-use campaign flow with landing page, checkout, upsell, and receipt pages pre-configured.
 :::

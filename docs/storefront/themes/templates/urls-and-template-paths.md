@@ -14,7 +14,7 @@ import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
 ```
 
 :::caution
-Ensure your template paths match with expected template paths for built-in storefront views. Use the public themes on [Github](https://github.com/29next/) as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
+Ensure your template paths match with expected template paths for built-in storefront views. Use the public themes on [Github](https://github.com/NextCommerceCo/) as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
 :::
 
 

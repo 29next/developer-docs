@@ -9,7 +9,7 @@ tags:
 Custom off-site checkouts can reduce their PCI compliance scope by leveraging our iFrame payment form to tokenize credit cards before submitting them on the Admin API.
 
 :::info
-View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/) to see all of the concepts in action. The demo source code is also available on [Github](https://github.com/29next/demo-iframe-payment-form/blob/main/index.html).
+View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/) to see all of the concepts in action. The demo source code is also available on [Github](https://github.com/NextCommerceCo/demo-iframe-payment-form/blob/main/index.html).
 :::
 
 ### Overview
@@ -160,7 +160,7 @@ Spreedly.on('errors', function(errors) {
 
 ### Customizing the iFrame Fields
 
-The iFrame fields can be customized the style to match your site styles. See the [demo](https://github.com/29next/demo-iframe-payment-form/blob/main/index.html) for a full example of how to customize the iframe fields.
+The iFrame fields can be customized the style to match your site styles. See the [demo](https://github.com/NextCommerceCo/demo-iframe-payment-form/blob/main/index.html) for a full example of how to customize the iframe fields.
 
 #### setField Type
 

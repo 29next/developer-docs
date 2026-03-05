@@ -35,7 +35,7 @@ Use campaigns to build external checkout experiences that run outside the storef
 1. In your dashboard, install the **Campaigns App** and create a campaign
 2. Add packages linked to product variants in your catalog
 3. Get your **API Key** from the campaign's **Integration** tab
-4. Clone the [Campaign Cart Starter Template](https://github.com/29next/campaign-cart-example) — a pre-built landing page, checkout, upsell, and receipt flow ready to customize
+4. Clone the [Campaign Cart Starter Template](https://github.com/NextCommerceCo/campaign-cart-example) — a pre-built landing page, checkout, upsell, and receipt flow ready to customize
 
 **Resources**
 - [Campaigns overview](/docs/campaigns/) — campaign structure and funnel flow
@@ -52,7 +52,7 @@ Use themes to control the appearance and behavior of your storefront — product
 **Get started**
 
 1. Install [Theme Kit](/docs/storefront/themes/theme-kit.md), the CLI for local theme development
-2. Start from the [Intro](https://github.com/29next/intro) or [Intro Bootstrap](https://github.com/29next/intro-bootstrap) starter theme
+2. Start from [Intro Bootstrap](https://github.com/NextCommerceCo/intro-bootstrap) starter theme
 3. Run `theme pull` to sync files locally, make changes, then `theme push` to deploy
 
 **Resources**
@@ -102,9 +102,9 @@ Use apps to package an integration as an installable unit that works across mult
 
 | App | What it covers |
 | --- | --- |
-| [Example S2S App](https://github.com/29next/example-app) | OAuth flow, session tokens, remote settings, webhooks |
-| [Google Analytics 4](https://github.com/29next/google-analytics-4) | Snippets and event tracking in storefronts |
-| [Fulfillment Service](https://github.com/29next/demo-fulfillment-service-app) | OAuth flow and fulfillment API integration |
+| [Example S2S App](https://github.com/NextCommerceCo/example-app) | OAuth flow, session tokens, remote settings, webhooks |
+| [Google Analytics 4](https://github.com/NextCommerceCo/google-analytics-4) | Snippets and event tracking in storefronts |
+| [Fulfillment Service](https://github.com/NextCommerceCo/demo-fulfillment-service-app) | OAuth flow and fulfillment API integration |
 
 **Resources**
 - [Apps overview](/docs/apps/)

@@ -59,22 +59,22 @@ const samples: Sample[] = [
     {
         title: 'Theme Kit',
         category: 'Tools',
-        source: 'https://github.com/29next/theme-kit'
+        source: 'https://github.com/NextCommerceCo/theme-kit'
     },
     {
         title: 'Intro Bootstrap Theme',
         category: 'Theme',
-        source: 'https://github.com/29next/intro-bootstrap'
+        source: 'https://github.com/NextCommerceCo/intro-bootstrap'
     },
     {
         title: 'Google Analytics 4 App',
         category: 'Apps',
-        source: 'https://github.com/29next/google-analytics-4'
+        source: 'https://github.com/NextCommerceCo/google-analytics-4'
     },
     {
         title: 'Example Fulfillment App',
         category: 'Apps',
-        source: 'https://github.com/29next/demo-fulfillment-service-app'
+        source: 'https://github.com/NextCommerceCo/demo-fulfillment-service-app'
     },
 ];
 
@@ -157,7 +157,7 @@ export default function GuidesAndSamples() {
                     <h3 className="m-0">Tools, Themes & Apps</h3>
 
                     <Link
-                        to="https://github.com/29next"
+                        to="https://github.com/NextCommerceCo"
                         className=" text-sm font-semibold"
                     >
                         All Examples <ArrowRightFilled className="ml-1" />

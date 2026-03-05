@@ -14,7 +14,7 @@ App Kit is only required for Apps that extend to the storefront with App Snippet
 
 
 :::info
-[See Full Instructions on Github](https://github.com/29next/app-kit) or [Install App Kit from PyPi](https://pypi.org/project/next-app-kit/)
+[See Full Instructions on Github](https://github.com/NextCommerceCo/app-kit) or [Install App Kit from PyPi](https://pypi.org/project/next-app-kit/)
 :::
 
 ## Installation

@@ -15,7 +15,7 @@ Fulfillment service apps are integrations that manage fulfillment of physical pr
 
 
 :::info
-View a fully functional [Demo Fulfillment Service App](https://github.com/29next/demo-fulfillment-service-app) to see all of the concepts in action with detailed code examples.
+View a fully functional [Demo Fulfillment Service App](https://github.com/NextCommerceCo/demo-fulfillment-service-app) to see all of the concepts in action with detailed code examples.
 :::
 
 

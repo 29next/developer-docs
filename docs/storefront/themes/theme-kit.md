@@ -6,13 +6,13 @@ tags:
 ---
 # Theme Kit
 
-[Theme Kit](https://github.com/29next/theme-kit) is a command line tool for developers to build an maintain storefront themes programmatically, allowing theme developers to:
+[Theme Kit](https://github.com/NextCommerceCo/theme-kit) is a command line tool for developers to build an maintain storefront themes programmatically, allowing theme developers to:
 
 - Work on theme templates and assets using their local code editor or favorite IDE.
 - Use git version control to work on a theme collectively with many theme collaborators.
 - Use a pipeline to manage deployments of theme updates.
 
-[See Full Instructions on Github](https://github.com/29next/theme-kit) or [Install Theme Kit from PyPi](https://pypi.org/project/next-theme-kit/)
+[See Full Instructions on Github](https://github.com/NextCommerceCo/theme-kit) or [Install Theme Kit from PyPi](https://pypi.org/project/next-theme-kit/)
 
 
 ### Installation

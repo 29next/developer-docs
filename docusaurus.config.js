@@ -141,7 +141,7 @@ const config = {
                     { to: '/docs/apps/', label: 'Apps', position: 'left' },
                     { to: '/docs/admin-api/', label: 'Admin API', position: 'left' },
                     { to: '/docs/webhooks/', label: 'Webhooks', position: 'left' },
-                    { href: 'https://github.com/29next/', position: 'right', className: 'header-github-link' },
+                    { href: 'https://github.com/NextCommerceCo/', position: 'right', className: 'header-github-link' },
                 ],
             },
             colorMode: {
