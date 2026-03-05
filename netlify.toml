@@ -10,7 +10,7 @@
 [build.environment]
   # Sets the Node.js version to 22 (LTS as of early 2026)
   # This ensures the build environment matches your local setup
-  NODE_VERSION = "22"
+  NODE_VERSION = "20"
   
   # Optional: Increase memory if your docs grow very large
   # NODE_OPTIONS = "--max-old-space-size=4096"
