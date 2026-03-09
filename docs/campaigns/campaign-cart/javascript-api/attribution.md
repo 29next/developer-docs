@@ -183,7 +183,6 @@ The SDK automatically collects these metadata fields:
   
   // Everflow tracking (when available)
   everflow_transaction_id?: string;
-  sg_evclid?: string;
 }
 ```
 
@@ -526,21 +525,6 @@ https://yoursite.com/offer?evclid=123456789
 - Everflow affiliate network tracking
 - Performance marketing attribution
 - Stored as `everflow_transaction_id` in metadata
-
-#### SG Everflow Click ID
-
-Secondary Everflow tracking identifier (SG variant).
-
-**Parameter:** `sg_evclid`
-
-**Example:**
-```
-https://yoursite.com/offer?sg_evclid=987654321
-```
-
-**Usage:**
-- Alternate Everflow tracking
-- Multi-channel Everflow campaigns
 
 #### Generic Click ID
 
