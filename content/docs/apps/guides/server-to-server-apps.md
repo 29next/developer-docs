@@ -10,10 +10,9 @@ tags:
 Server to Server apps are those that leverage the [Oauth flow](/apps/oauth/index.md) to obtain API Access and then use the [Admin APIs](/docs/admin-api/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
 
 
-:::info
+<Callout type="info">
 Server to Server apps don't need to upload any "code" or files to Next Commerce, their apps are fully external and simply use Oauth to obtain Admin API access.
-:::
-
+</Callout>
 In this guide, we'll show you how to create your first app to get you up and running and familiar with many of the concepts.
 
 ### Preparation

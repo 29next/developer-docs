@@ -44,10 +44,9 @@ description: "Integrate Facebook Pixel with automatic event mapping and purchase
 
 
 
-:::tip
+<Callout type="idea">
 Make sure to replace `YOUR_PIXEL_ID` with your actual Facebook Pixel ID from your Meta Business Manager account.
-:::
-
+</Callout>
 ## Event Mapping
 
 SDK events are automatically mapped to Facebook standard events:
@@ -84,10 +83,9 @@ fbq('track', 'Purchase', {
 - Required for server-side API deduplication
 - Without it, deduplication may fail
 
-:::caution
+<Callout type="warn">
 The `storeName` configuration is required for Facebook Pixel purchase deduplication. Without it, Facebook may count the same purchase multiple times across your sales channels (web, mobile, server-side events). Set `storeName` to a unique identifier for your store before deploying to production.
-:::
-
+</Callout>
 ## Event Format Example
 
 Facebook Pixel events are formatted with these properties:

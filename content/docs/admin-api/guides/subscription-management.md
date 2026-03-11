@@ -8,10 +8,9 @@ tags:
 
 Subscriptions management can be done through Admin API to automate business processes and perform bulk operations.
 
-:::info
+<Callout type="info">
 Subscription management actions most often times will only affect future renewals orders/charges of the subscription.
-:::
-
+</Callout>
 ### Create Subscription
 
 Subscriptions can be created directly through the [subscriptionsCreate](/docs/admin-api/reference/#/operations/subscriptionsCreate) Admin API endpoint for scenarios such as custom order flows or importing subcriptions from another platform.
@@ -84,10 +83,9 @@ To remove a product from a subscription, send a DELETE request to the [subscript
 // DELETE https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/
 ```
 
-:::caution
+<Callout type="warn">
 Subscriptions must have at least one line item with a product, you can alternatively cancel the subscription to stop all future renewals.
-:::
-
+</Callout>
 ### Updating Renewal Schedule
 
 Changing the renewal schedule of a subscription can be achived with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint with a new `interval` and `interval_count`, ie 30 days.
@@ -112,10 +110,9 @@ Changing the next renewal date of a subscription can be achieved through updatin
 }
 ```
 
-:::tip
+<Callout type="idea">
 If you would like to immediately renew the subscription, you can pass a date from the past and the subscription will process a renewal attempt within the next 30 minutes.
-:::
-
+</Callout>
 ### Updating Payment Details
 
 Updating the Payment Gateway of a subscription can done through the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint.
@@ -137,12 +134,11 @@ To change the payment gateway used for bankcard payments of a subscription, send
 
 To change the bankcard on a subscription, pass a new `card_token` with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint.
 
-:::info
+<Callout type="info">
 To update a bankcard on a subscription, you must use the **[iFrame to tokenize](/docs/admin-api/guides/iframe-payment-form.md)** the bankcard and use the `card_token` when updating the subscription itself.
 
 The new bankcard will be automatically verfied with a `verify` request to a payment gateway to ensure the new bankcard is valid and can be used for future renewals. If the bankcard cannot be verified, the update request will fail and return an error.
-:::
-
+</Callout>
 **New Bankcard Payment Method Flow**
 ```mermaid
 stateDiagram-v2
@@ -187,10 +183,9 @@ Subscriptions that are `past_due` status can be attemted to retry the renewal, o
 }
 ```
 
-:::tip
+<Callout type="idea">
 The subscription retry endpoint is useful for custom recovery logic when attempting to recover failing subscriptions.
-:::
-
+</Callout>
 ### Cancel
 
 To cancel a subscription, use the [subscriptionsCancelCreate](/docs/admin-api/reference/#/operations/subscriptionsCancelCreate) endpoint to stop all future renewals.

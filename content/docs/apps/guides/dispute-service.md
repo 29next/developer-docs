@@ -11,10 +11,9 @@ import TabItem from '@theme/TabItem';
 
 Dispute service apps are integrations that manage the processing of payment disputes (alerts and chargebacks) on behalf of merchants seamlessly within the platform.
 
-:::info
+<Callout type="info">
 Dispute Service Apps are [Server to Server Apps](/docs/apps/guides/server-to-server-apps.md) that use the Oauth flow to obtain API Access and then use the [Admin APIs](/docs/admin-api/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
-:::
-
+</Callout>
 ### Disputes
 
 Disputes are complaints initiated by the customer against the merchant pertaining to their orders and are categorized into two broad groups by type, Alerts and Chargebacks, see below.
@@ -53,13 +52,12 @@ Orders typically have many associated transactions for the payments and refunds.
 #### Step 2 - `transaction.created` webhook event
 Dispute service apps should subscribe to the `transaction.created` webhook event to be notified of all payment transaction events on a store so that your app is aware of new payments, refunds, and can handle disputes properly.
 
-:::info Use `parent_id` to associate related transactions
+<Callout type="info" title="Use `parent_id` to associate related transactions">
 Transaction `parent_id` will show the related transaction in the following cases:
 - `refund` transactions - the parent is the debit transaction.
 - `capture` transactions - the parent is the authorization transaction.
 - `void` transactions - the parent is the authorization transaction.
-:::
-
+</Callout>
 Your app can also subscribe to `order.created` and `order.updated` events to receive more detailed order information such as items purchased, fulfillment tracking numbers, and items that have already been refunded.
 
 Create your webhook after the app is installed using the [webhooksCreate](/docs/admin-api/reference/#/operations/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
@@ -141,10 +139,9 @@ To create a refund for a transaction as part of the dispute resolution process, 
 
 It's desirable to cancel fulfillment for orders that have not shipped yet when they are disputed to prevent additional losses for the merchant.
 
-:::info
+<Callout type="info">
 To retrieve a list of all fulfillment orders and their status, use the [ordersFulfillmentOrdersRetrieve](/docs/admin-api/reference/?v=2024-04-01#/operations/ordersFulfillmentOrdersRetrieve) endpoint.
-:::
-
+</Callout>
 <Tabs>
 <TabItem value="fulfillment_status-unfulfilled" label="Fulfillment Status - Unfulfilled">
 
@@ -172,10 +169,9 @@ If order `fulfilmlent_status` is `processing` your dispute service can request p
 }
 ```
 
-:::caution
+<Callout type="warn">
 Fulfillment locations need to accept the cancelation request to confirm they were able to stop fulfillment on their end at. It is possible that the fulfillment order was already shipped and the fulfillment could not be stopped.
-:::
-
+</Callout>
 </TabItem>
 </Tabs>
 

@@ -178,10 +178,9 @@ analytics: {
 | `settings.pixelId` | string | **Required** - Facebook Pixel ID |
 | `blockedEvents` | string[] | Events to exclude from Facebook |
 
-:::caution
+<Callout type="warn">
 Always set `storeName` in your config when using Facebook Pixel to ensure proper purchase deduplication with server-side events.
-:::
-
+</Callout>
 See [Facebook Pixel Setup](/docs/campaigns/campaign-cart/analytics/examples/facebook-pixel/) for event mapping and deduplication details.
 
 ### RudderStack

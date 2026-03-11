@@ -22,10 +22,9 @@ The first step to adding variant support is adding the Variant Attribute Selecto
 
 ```
 
-:::tip
+<Callout type="idea">
 Using the choice fields from the template is entirely optional. Theme developers can create their own custom choice selectors using the `product.data` json object for a more customized user experience.
-:::
-
+</Callout>
 ### Map Choices to Variants
 
 With the variant choices now available in the template, it is now necessary to map choices from the `variant_form` choices to variant product IDs.

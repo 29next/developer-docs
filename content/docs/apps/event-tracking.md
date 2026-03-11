@@ -9,10 +9,9 @@ Apps can install an [Event Tracker](/docs/storefront/event-tracking.md) to add s
 App installed event trackers simplifies the setup flow and makes using your app easy for merchants requiring fewer manual setup steps with easy configuration through the dashboard.
 
 
-:::caution
+<Callout type="warn">
 Event trackers and App snippets are not cross compatible as Event Trackers are loaded in their own sandboxed environment for greater security.
-:::
-
+</Callout>
 ### Add Event Tracker to Manifest
 
 When building your app, map a javascript file to be installed as an [Event Tracker](/docs/storefront/event-tracking.md).

@@ -50,6 +50,6 @@ This strategy will simplify the creation and management of custom page templates
 On your page of choice, select your newly created template as the **Theme Template** to activate the template for your page in the storefront.
 
 
-:::tip
+<Callout type="idea">
 You are not limited to overriding the existing template blocks in the default page template. You can create and add your own to the default template to overide in your custom template. For example, adding `{% block my_custom_block %}{% endblock %}` to page.html, around any area you wish to customize, will allow you to overide it in the custom template
-:::
+</Callout>

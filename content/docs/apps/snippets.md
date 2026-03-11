@@ -20,10 +20,9 @@ import GoogleTagManager from '@site/_snippets/_view-google-tag-manager.mdx';
 
 Theme's on the Next Commerce platform support `app_hooks` which are locations within storefront themes your app can target to include your snippets without needing the customize the theme itself.
 
-:::info
+<Callout type="info">
 To upload your snippets and manifest.json, install [App Kit](/docs/apps/app-kit.md) to zip your snippet files and push them to Next Commerce.
-:::
-
+</Callout>
 ```mdx-code-block
 
 import AppHookLocations from '@site/_snippets/_app-hook-locations.mdx';

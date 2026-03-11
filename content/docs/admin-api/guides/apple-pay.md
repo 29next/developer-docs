@@ -10,10 +10,9 @@ tags:
 
 For custom checkouts using the Admin API, there are two flows available -- the standard method where a user enters their shipping address, chooses products, and then checks out via Apple Pay; and the "One-Click" method, where the user is not required to enter shipping information before being redirected to Apple Pay checkout.
 
-:::info
+<Callout type="info">
 Your store must have a Apple Pay setup and enabled with a gateway to use the Apple Pay payment method. The user device must also be an Apple Device with Touch ID enabled. See more on [displaying Apple Pay buttons](https://developer.apple.com/documentation/apple_pay_on_the_web/displaying_apple_pay_buttons_using_css) or the [Apple Pay Demo](https://applepaydemo.apple.com/).
-:::
-
+</Callout>
 ### API Payment Redirect Flow
 
 ```mdx-code-block

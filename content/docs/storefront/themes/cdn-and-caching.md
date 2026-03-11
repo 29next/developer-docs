@@ -6,10 +6,9 @@ title: Storefront CDN & Caching
 
 Storefront leverages CDNs and many caching strategies to ensure fast performant user experiences for your end customers. 
 
-:::info Use Network Domain while Building Themes
+<Callout type="info" title="Use Network Domain while Building Themes">
 Always use the store network domain `{store}.29next.store` when developing themes to bypass full page caching and preview your latest updates.
-:::
-
+</Callout>
 ### Asset CDN
 
 All merchant uploaded media assets and theme assets are loaded from our CDN for the fastest performance. 
@@ -26,10 +25,9 @@ All pages on storefront are cached for 5 minutes to ensure popular pages are as 
 - Page is not dynamic, ie `/cart/`, `/checkout/`, `/accounts/` do not use full page caching. 
 
 
-:::tip
+<Callout type="idea">
 To skip the cache, you can append a unique querystring such as `?skip_cache` to skip existing cache and see the latest. 
-:::
-
+</Callout>
 ### Template Caching
 
 Themes use many templates ie `layouts`, `partials`, and `assets` that when compiled together create amazing customer experiences. Templates are cached in memory to reduce database queries when compiling templates into the full html response. 
@@ -37,8 +35,8 @@ Themes use many templates ie `layouts`, `partials`, and `assets` that when compi
 Updating a template through the dashboard or [Theme Kit](/docs/storefront/themes/theme-kit.md) should automatically purge the cache for you to see your latest changes on the network domain, see notes above. 
 
 
-:::warning
+<Callout type="warn">
 There are a few cases wherein a form on the frontend needs to use a `{% csrf_token %}` field to secure submission to the backend. The platform core JS will automatically replace `{% csrf_token %}` that are in cached versions of pages to ensure the forms still work. 
 
 **It is advisable to not implement custom templates that require `{% csrf_token %}`, we recommend to [Storefront API](/docs/storefront/api.md) instead.**
-:::
+</Callout>

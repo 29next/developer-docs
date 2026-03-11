@@ -116,10 +116,9 @@ Allows you to access a menu's items by it's code to iterate over to generate a m
 {% endfor %}
 ```
 
-:::tip
+<Callout type="idea">
 Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 nested menu item levels, see child and grandchild above.
-:::
-
+</Callout>
   </div>
 </details>
 
@@ -549,10 +548,9 @@ A menu `item` has properties to support creating dynamic menus configured throug
 {% endfor %}
 ```
 
-:::tip
+<Callout type="idea">
 Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 nested menu item levels, see child and grandchild above.
-:::
-
+</Callout>
   </div>
 </details>
 

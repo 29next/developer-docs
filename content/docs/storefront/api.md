@@ -11,6 +11,6 @@ The Storefront API reference documentation is available at `https://<storedomain
 Storefront API is most commonly used to control the current user's cart with available mutations such as `creatCart`, `addCartLines`, `removeCartLines`. See the `/api/graphql/` on your store for all available queries and mutations.
 
 
-:::info
+<Callout type="info">
 The Storefront API is currently only available within the context of the storefront on a storefront domain, external access will be available in future iterations.
-:::
+</Callout>

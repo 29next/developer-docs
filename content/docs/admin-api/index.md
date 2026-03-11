@@ -34,12 +34,11 @@ curl -X GET "https://{store}.29next.store/api/admin/" \
 -H "X-29Next-Api-Version: 2024-04-01"
 ```
 
-:::caution Do NOT publish or share Admin API authentication tokens
+<Callout type="warn" title="Do NOT publish or share Admin API authentication tokens">
 Admin API tokens provide full access to your system, including the ability to perform destructive actions like deleting data or users. These tokens should never be shared publicly or exposed in client-side code.
 
 **Always keep your Admin API tokens private and secure.**
-:::
-
+</Callout>
 ### Versioning
 
 API versioning allows Next Commerce to continuously evolve the platform while maintaining predictable behavior for existing APIs with a path for upgrades and deprecations.
@@ -57,11 +56,9 @@ API versioning allows Next Commerce to continuously evolve the platform while ma
 
 To specify a version, pass the `X-29Next-Api-Version` header with your desired API version.
 
-:::warning
+<Callout type="warn">
 It is **highly recommended** to specify your version on your API requests to ensure consistency for your integration.
-:::
-
-
+</Callout>
 ### Rate Limits
 
 Admin APIs are rate-limited to maintain the stability and equity of our platform for all users. We employ a number of methods to enforce rate limits.
@@ -70,9 +67,7 @@ Admin APIs are rate-limited to maintain the stability and equity of our platform
 | ---- | ---- | ---- |
 | Admin API | Request-based | 4 requests/second |
 
-:::info
+<Callout type="info">
 Once you reach API rate limits you'll then receive a 429 Too Many Requests response, and a message that a throttle has been applied.
-:::
-
-
+</Callout>
 We recommend API users to appropriately limit calls, cache results, and retry requests using strategies that are considered industry best practices,to avoid hitting getting rate limit errors

@@ -19,11 +19,9 @@ When developing your app, you'll be using App Kit to `nak build` and `nak push` 
 This is to ensure developers have a safe path add new features, test on your development store, and [create a release once](#releases) you're ready. :handshake:
 
 
-:::caution
+<Callout type="warn">
 You should always test and verify your latest changes on your development store to make sure that everything is working as expected before creating a release.
-:::
-
-
+</Callout>
 import DevelopmentStore from '@site/_snippets/_offer-development-store.mdx';
 
 <DevelopmentStore name="Development Store Offer" />

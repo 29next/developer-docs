@@ -17,11 +17,9 @@ In order to add `my-app.js` to every page of the store, we'll add it to a snippe
 <script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
 ```
 
-:::caution
+<Callout type="warn">
 All assets are loaded from a CDN which does not support local file imports from another file. It's a best practice to compile and minify your assets into self contained single files.
-:::
-
-
+</Callout>
 In order to configure the snippet to load into a theme `app_hook` we'll add it to the app manifest `locations:storefront` configured with the desired location.
 
 ```json title="Example Manifest.json"

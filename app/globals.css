@@ -1,11 +1,21 @@
-@import 'fumadocs-ui/style.css';
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+@import 'fumadocs-openapi/css/preset.css';
 
-@layer base {
-  :root {
-    --font-sans: 'Inter', sans-serif;
-    --font-mono: 'Fira Code', monospace;
-  }
+@source "../lib/source.ts";
+
+#nd-docs-layout {
+  --fd-layout-width: 1600px !important;
+  --fd-sidebar-width: 320px !important;
+  --fd-toc-width: 320px !important;
+}
+
+/* Full-width pages (API reference): collapse TOC column and cap content at 1400px */
+#nd-docs-layout:has(article[data-full="true"]) {
+  --fd-toc-width: 0px !important;
+}
+
+#nd-docs-layout article[data-full="true"] {
+  max-width: 1400px !important;
 }

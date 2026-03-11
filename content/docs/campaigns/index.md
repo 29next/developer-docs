@@ -69,13 +69,11 @@ graph LR
 
 Session tracking is available to monitor performance across all these steps — page views, cart creation, orders, and upsells all flow into real-time campaign performance reports.
 
-:::info
+<Callout type="info">
 
 This is a simplified example of a campaign flow. You can customize the flow to meet your specific needs.
 
-:::
-
-
+</Callout>
 ### How It All Fits Together
 
 Each campaign is an isolated sales channel with its own packages, offers, and checkout flow. Traffic sources drive customers into campaign funnels, and all resulting orders flow into the merchant's Next Commerce store.
@@ -114,6 +112,6 @@ There are two ways to build your campaign frontend:
 | [**Campaign Cart SDK**](/docs/campaigns/campaign-cart/) | Fastest development | An attribute-driven HTML/JS SDK. Build cart, checkout, and upsell flows using `data-next-*` attributes — no custom JavaScript required. |
 | [**Campaigns API**](/docs/campaigns/api/) | Full control | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
 
-:::tip Starter Template
+<Callout type="idea" title="Starter Template">
 The fastest way to get started is with the [Campaign Cart Starter Template](https://github.com/NextCommerceCo/campaign-cart-example) — a ready-to-use campaign flow with landing page, checkout, upsell, and receipt pages pre-configured.
-:::
+</Callout>

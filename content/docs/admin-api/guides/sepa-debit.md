@@ -37,11 +37,10 @@ When creating a new order using SEPA Direct Debit using the orders_create API me
 }
 ```
 
-:::tip
+<Callout type="idea">
 You can optionally provide a `payment_gateway` when creating the order to use a SEPA Direct Debit account connected to a specific gateway. 
 
-:::
-
+</Callout>
 ### Redirect Customer to SEPA Direct Debit
 The response when creating the order will provide a `payment_complete_url`. Your application should redirect the customer to this URL for completing the payment on SEPA Direct Debit.
 

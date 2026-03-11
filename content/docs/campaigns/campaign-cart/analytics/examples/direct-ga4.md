@@ -8,10 +8,9 @@ description: "Send events directly to Google Analytics 4 without using Google Ta
 
 This guide shows how to send Campaign Cart SDK events directly to Google Analytics 4 **without using Google Tag Manager** by using an event transformer script.
 
-:::tip
+<Callout type="idea">
 This is a specific implementation of the general [Event Transformers](/docs/campaigns/campaign-cart/analytics/examples/event-transformers/) pattern. You can use the same approach for TikTok, Snapchat, Pinterest, or any other platform.
-:::
-
+</Callout>
 ## When to Use This
 
 Use the GA4 Bridge when:
@@ -20,10 +19,9 @@ Use the GA4 Bridge when:
 - You need simpler setup with fewer moving parts
 - You want to avoid GTM's additional layer
 
-:::tip
+<Callout type="idea">
 If you're using Google Tag Manager, you don't need this script - the SDK already pushes events to `window.dataLayer` that GTM can consume.
-:::
-
+</Callout>
 ## Setup
 
 1. **Add Google Analytics 4**
@@ -122,10 +120,9 @@ The bridge automatically converts SDK events to GA4 standard events:
 | `dl_viewed_upsell` | `view_item` | Upsell viewed as product view |
 | `dl_accepted_upsell` | `purchase` | **Upsell converted to purchase with same transaction_id** |
 
-:::caution
+<Callout type="warn">
 Upsell events are converted to `purchase` events using the **same transaction_id** as the original purchase. This allows GA4 to track upsells as additional revenue on the same order.
-:::
-
+</Callout>
 ### User Events
 
 | SDK Event | GA4 Event |

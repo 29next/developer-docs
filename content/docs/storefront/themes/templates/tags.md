@@ -165,10 +165,9 @@ Loads a template and renders it with the current context. This is a way of inclu
 </html>
 ```
 
-:::caution
+<Callout type="warn">
 A word of caution, multi-level inclusion inside of iterative loops can create performance penalties while rendering a page html for site visitors. Use **includes** sparingly when working inside iterative loops.
-:::
-
+</Callout>
 ### image_thumbnail
 The `image_thumbnail` tag is used to resize images dynamically in templates. The tag accepts arguments that control how the image is resized.
 

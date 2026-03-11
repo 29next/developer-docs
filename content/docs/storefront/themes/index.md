@@ -5,10 +5,9 @@ sidebar_position: 0
 ---
 # Getting Started with Themes
 
-:::tip
+<Callout type="idea">
 We highly recommend using Theme Kit to manage your store theme for the best developer experience from your favorite IDE. [Install Theme Kit](https://github.com/NextCommerceCo/theme-kit)
-:::
-
+</Callout>
 ```mdx-code-block
 
 import IntroTheme from '@site/_snippets/_view-intro-theme.mdx';
@@ -130,10 +129,9 @@ templates
 
 The sass directory accepts scss files for use in in a theme. See Theme Kit for more details on local sass compiling.
 
-:::caution
+<Callout type="warn">
 Sass files are not automatically compiled in the platform and must be compiled to css files locally for use in templates from the assets directory.
-:::
-
+</Callout>
 ### Theme Kit
 
 [Theme Kit](https://github.com/NextCommerceCo/theme-kit) is a command line tool for developers to build an maintain storefront themes programmatically, allowing theme developers to:
@@ -143,7 +141,7 @@ Sass files are not automatically compiled in the platform and must be compiled t
 - Use a pipeline to manage deployments of theme updates.
 
 
-:::tip
+<Callout type="idea">
 
 See Theme Kit installation instructions on [Github](https://github.com/NextCommerceCo/theme-kit).
-:::
+</Callout>

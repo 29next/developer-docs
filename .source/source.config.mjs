@@ -1,9 +1,52 @@
 // source.config.ts
-import { defineConfig, defineDocs } from "fumadocs-mdx/config";
+import { defineDocs, defineConfig, frontmatterSchema } from "fumadocs-mdx/config";
+import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins/remark-mdx-mermaid";
+import { z } from "zod";
+import { visit } from "unist-util-visit";
+var LANG_ALIASES = {
+  django: "jinja",
+  shell: "bash"
+};
+function remarkDocusaurusCompat() {
+  return (tree) => {
+    visit(tree, "code", (node, index, parent) => {
+      if (node.lang === "mdx-code-block") {
+        if (index !== void 0 && parent) {
+          parent.children.splice(index, 1, {
+            type: "mdxjsEsm",
+            value: node.value,
+            data: { estree: null }
+          });
+        }
+        return;
+      }
+      if (node.lang) {
+        const firstWord = node.lang.split(/\s/)[0];
+        if (firstWord.startsWith("title=") || firstWord.startsWith("{")) {
+          node.meta = node.lang;
+          node.lang = null;
+        } else {
+          node.meta = node.lang.slice(firstWord.length).trim() || node.meta;
+          node.lang = LANG_ALIASES[firstWord] ?? firstWord;
+        }
+      }
+    });
+  };
+}
 var docs = defineDocs({
-  dir: "content/docs"
+  dir: "content/docs",
+  docs: {
+    schema: frontmatterSchema.extend({
+      title: z.string().optional().default(""),
+      full: z.boolean().optional()
+    })
+  }
 });
-var source_config_default = defineConfig();
+var source_config_default = defineConfig({
+  mdxOptions: {
+    remarkPlugins: [remarkDocusaurusCompat, remarkMdxMermaid]
+  }
+});
 export {
   source_config_default as default,
   docs

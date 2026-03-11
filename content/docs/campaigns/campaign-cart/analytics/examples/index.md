@@ -84,10 +84,9 @@ analytics: {
 }
 ```
 
-:::tip
+<Callout type="idea">
 Enable multiple providers to send analytics data to all required platforms. If one service fails, others continue operating.
-:::
-
+</Callout>
 ## Provider Setup Guides
 
 ### Built-in Providers

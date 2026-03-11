@@ -41,11 +41,9 @@ Each campaign can have multiple "Packages" configured to set quantity based pric
 - Package 3 - 5x Widget at 30.00
 - Package 4 - 1x Widget at 8.00 Recurring Every 30 Days
 
-:::info
+<Callout type="info">
 Package total price needs to be divisible to two digits by the quantity as the total price is sent on a per item level to the store Orders API.
-:::
-
-
+</Callout>
 ### Shipping Options
 Campaigns can have custom shipping prices to optimize shipping fees and methods available on your campaign to override the default pricing configured globally in the store.
 
@@ -112,11 +110,9 @@ console.log(result); // Show result in console
 ### Create Order
 Creating an order is the core method in an external checkout flow, see the example below to familiarize yourself with the payload data required.
 
-:::info The `success_url` Explained
+<Callout type="info" title="The `success_url` Explained">
 All orders require a `success_url` to handle payments requiring a redirect flow. The `success_url` should be the absolute URL of the "Next Page" in your campaign flow. In most cases, this should be your first upsell page, see more below in [Adding Upsells](#adding-upsells) on retrieving order details and handling payment methods that support upsells.
-:::
-
-
+</Callout>
 ```javascript title="Create an Order"
 var payload = {
     "user": {
@@ -166,21 +162,18 @@ const response = await fetch('https://campaigns.apps.29next.com/api/v1/orders/',
 const result = await response.json();
 console.log(result); // Show result in console
 ```
-:::info iFrame Payment Form
+<Callout type="info" title="iFrame Payment Form">
 Bankcard payments require using the [iFrame Payment Form](/docs/admin-api/guides/iframe-payment-form.md) and passing the generated `card_token` for secure transfer of the payment method details. View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/).
-:::
-
-:::caution You Must Handle the Order Create Response
+</Callout>
+<Callout type="warn" title="You Must Handle the Order Create Response">
 - If response data has a `number`, order was successfully created, you can redirect to the next page.
 - If response data has a `payment_complete_url`, redirect the user to this page. After payment, user will come back to your `success_url` or `payment_failed_url`.
-:::
-
-:::tip Handle APM Redirect Flow Declines
+</Callout>
+<Callout type="idea" title="Handle APM Redirect Flow Declines">
 If an APM redirect flow declines or is canceled, by default the user is redirected back to the HTTP referrer with contexual querystings, ie `?payment_failed=true&payment_method=paypal`.
 
 Pass `payment_failed_url` to more explicitly control the decline handling for APM redirect flows.
-:::
-
+</Callout>
 ### Adding Upsells
 To add an upsell to an existing order, first you should check to see if the order payment method `supports_post_purchase_upsells` is `True` in the `orderRetrieve` response.
 

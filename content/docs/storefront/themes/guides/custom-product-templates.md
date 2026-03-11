@@ -59,7 +59,7 @@ This strategy will simplify the creation and management of custom product templa
 On your product of choice, select your newly created template as the Product Template to activate the template on your product in the storefront.
 
 
-:::tip
+<Callout type="idea">
 
 You are not limited to overriding the existing template blocks in the default product template. You can create and add your own to the default template to overide in your custom template. For example, adding `{% block my_custom_block %}{% endblock %}` to product.html, around any area you wish to customize, will allow you to overide it in the custom template
-:::
+</Callout>

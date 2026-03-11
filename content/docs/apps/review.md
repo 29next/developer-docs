@@ -7,10 +7,9 @@ import Link from '@docusaurus/Link';
 
 Congratulations, you've built an app and now it's ready to publish to all Next Commerce customers. Before we publish your app, we need to ensure your app is ready to go.
 
-:::tip
+<Callout type="idea">
 Private apps can be shared with merchants and installed using the **Install Link** feature available on your app dashboard. Use install links to install and validate your app with merchants before submitting for review.
-:::
-
+</Callout>
 ### App Review Checklist
 
 - Your app is currently live and on more than 3 merchant stores.

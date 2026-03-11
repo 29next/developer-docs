@@ -7,10 +7,9 @@ sidebar_position: 1
 
 The storefront theme templates language is designed to be both powerful and easy to use. If you have any exposure to working with other text-based template languages such as Jinja2 or Liquid, you should feel right at home.
 
-:::tip
+<Callout type="idea">
 The storefront theme template system provides **tags, filters** and **variables** for control flow logic inside of a template.
-:::
-
+</Callout>
 ### Variables
 
 Variables look like this: `{{ variable }}`  and contain the content the template uses to render to the page. Variables contain a dictionary structure of content and use . notation to access attributes.

@@ -111,12 +111,11 @@ The script formats events according to:
 - **Facebook Pixel**: Standard Facebook event parameters
 - Events are pushed to both `ElevarDataLayer` (for Elevar compatibility) and `dataLayer` (standard GTM)
 
-:::note About Event Naming
+<Callout type="info" title="About Event Naming">
 The `dl_` prefix is Campaign Cart SDK's standard event naming convention (e.g., `dl_add_to_cart`, `dl_begin_checkout`). This follows data layer conventions and is used by the SDK for all events, not specific to Elevar.
 
 `ElevarDataLayer` is a separate data layer specifically for Elevar compatibility. If you're not using Elevar, you can remove the `ElevarDataLayer` references from the script - events will still work with standard GTM via `window.dataLayer`.
-:::
-
+</Callout>
 ## Complete Script
 
 Here's the complete JavaScript code for the custom analytics triggers:

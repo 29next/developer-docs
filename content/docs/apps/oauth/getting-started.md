@@ -13,15 +13,13 @@ To get started, make sure that you have your Apps' `client_id` and `client_secre
 
 During the App installation flow, Apps that have `oauth` configured will be redirected to the Oauth App URL from thee App Settings.
 
-:::caution
+<Callout type="warn">
 
 Your app should redirect the user back to the store authorization view configured with the scope permissions your app requires.
-:::
-
-:::info
+</Callout>
+<Callout type="info">
 At every stage in the Oauth flow you'll receive a querystring variable `store` with the network domain of the store that is installing the app. **You should use this in your app logic as the unique identifier for the store.**
-:::
-
+</Callout>
 ``` title="Authorization Link Format"
 https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scopes}
 ```
@@ -53,9 +51,9 @@ https://yourapp.com/setup/authorize/?store={network_domain}&code={authorization_
 After you have the `authorization_code`, you then need to retrieve the access token to gain access to the Admin API.
 
 **Send a POST Request to `https://{network_domain}/oauth2/token/` to retrieve your access token**
-:::info
+<Callout type="info">
 Post request must be sent as `application/x-www-form-urlencoded` format.
-:::
+</Callout>
 ```json title="Post Request to Retrieve Access Token"
 {
     "grant_type": "authorization_code",
@@ -82,6 +80,6 @@ A successful request will have the following response.
 
 Save the `access_token` to your app to use with requests to the [Admin API](/docs/admin-api/index.md) for the store. :clap:
 
-:::info
+<Callout type="info">
 To see this in action, see the [Example App](https://github.com/NextCommerceCo/example-app) on Github.
-:::
+</Callout>

@@ -3,10 +3,9 @@ title: Apps
 sidebar_title: Apps
 ---
 
-:::info
+<Callout type="info">
 Apps and supporting tools are in Public Beta, if you have questions or run into any issues, don't hesitate to reach out to support@29next.com. More documentation, more examples, and more tools are on the way.
-:::
-
+</Callout>
 Apps allow you to extend built-in functionality of the Next Commerce platform to solve merchant challenges and create new functionality all wrapped into an easily installed App.
 
 ### Apps Allow You To

@@ -8,10 +8,9 @@ tags:
 
 Custom off-site checkouts can reduce their PCI compliance scope by leveraging our iFrame payment form to tokenize credit cards before submitting them on the Admin API.
 
-:::info
+<Callout type="info">
 View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/) to see all of the concepts in action. The demo source code is also available on [Github](https://github.com/NextCommerceCo/demo-iframe-payment-form/blob/main/index.html).
-:::
-
+</Callout>
 ### Overview
 
 The iframe payment form is pure js library that provides managed fields for the card number and security to safely collect sensitive credit card information. The fields can be styled to match the styles on your external checkout HTML pages to achieve a seamless end user experience.
@@ -30,10 +29,9 @@ Before you get started, grab your Payments Environment Key available from your s
 5. Retrieve the card token.
 
 
-:::info
+<Callout type="info">
 We have partnered with [Spreedly](https://docs.spreedly.com/reference/iframe/v1/#setfieldtype) for all bankcard payments, this guide leverages their iFrame payment documentation and how to use the iFrame JS with our platform.
-:::
-
+</Callout>
 ```html title="Example Payment Form HTML"
 
 <form id="payment-form" action="https://yoursite.com/checkout"
@@ -70,10 +68,9 @@ Spreedly.init("<STORE PAYMENT ENVIRONMENT KEY>", {
 });
 </script>
 ```
-:::info
+<Callout type="info">
 Note how the `numberEl` and `cvvEl` map to div element ids in the form for render the managed fields.
-:::
-
+</Callout>
 ### Style iFrame Fields
 
 For the best end-user experience, it's recommended to customize the iFrame form fields so they blend in with your native form fields.
@@ -244,10 +241,9 @@ Spreedly.on("ready", function() {
   Spreedly.setStyle("cvv", "width:60px;  height:35px;");
 });
 ```
-:::caution
+<Callout type="warn">
 Importing external fonts or images is not supported due to CORS restrictions.
-:::
-
+</Callout>
 #### transferFocus
 
 Set the cursor focus to one of the iFrame fields. This is useful if you want to load your form with the card number field already in focus, or if you want to auto-focus one of the iFrame fields if they contain an input error.

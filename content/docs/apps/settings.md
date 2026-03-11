@@ -51,10 +51,9 @@ if (app.settings.custom_app_id_enabled) {
 }
 ```
 
-:::info
+<Callout type="info">
 For Sever to Server Apps with access to the Admin API, you can update the app settings values stored in the database on the Admin API allowing you to configure the app from your external application.
-:::
-
+</Callout>
 ### Reference
 
 | Attribute       | Required         | Description               |

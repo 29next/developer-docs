@@ -36,11 +36,10 @@ When creating a new order using Klarna using the orders_create API method, you m
 }
 ```
 
-:::tip
+<Callout type="idea">
 You can optionally provide a `payment_gateway` when creating the order to use a Klarna account connected to a specific gateway. 
 
-:::
-
+</Callout>
 ### Redirect Customer to Klarna
 The response when creating the order will provide a `payment_complete_url`. Your application should redirect the customer to this URL for completing the payment on Klarna.
 

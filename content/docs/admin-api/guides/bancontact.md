@@ -38,11 +38,10 @@ When creating a new order using Bancontact using the orders_create API method, y
 }
 ```
 
-:::tip
+<Callout type="idea">
 You can optionally provide a `payment_gateway` when creating the order to use a Bancontact account connected to a specific gateway. 
 
-:::
-
+</Callout>
 ### Redirect Customer to Bancontact
 The response when creating the order will provide a `payment_complete_url`. Your application should redirect the customer to this URL for completing the payment on Bancontact.
 

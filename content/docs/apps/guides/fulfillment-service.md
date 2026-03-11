@@ -14,11 +14,9 @@ import Link from '@docusaurus/Link';
 Fulfillment service apps are integrations that manage fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the Next Commerce dashboard.
 
 
-:::info
+<Callout type="info">
 View a fully functional [Demo Fulfillment Service App](https://github.com/NextCommerceCo/demo-fulfillment-service-app) to see all of the concepts in action with detailed code examples.
-:::
-
-
+</Callout>
 ### Fulfillment Flow Overview
 
 Below is a high-level overview of the fulfillment flow for fulfillment services to accept and process assigned fulfillment orders.
@@ -86,10 +84,9 @@ When new orders are created, the fulfillment orders are assigned to the location
 #### Location Callback
 The location `callback` is a URL the store will send `Fulfillment Request` webhooks to notify them of a new fulfillment assigned. Fulfillment Services need to query their [Assigned Fulfillment Orders](#assigned-fulfillment-orders) to retrieve the fulfillment order details.
 
-:::caution
+<Callout type="warn">
 Fulfullment Requests are sent to the location `callback` + `/fulfillment-order-notification/`.
-:::
-
+</Callout>
 **Fulfillment assignment request types are:**
 
 - `fulfillment_requested` - when a new fulfillment order has been requested to be fulfilled.
@@ -116,18 +113,15 @@ Fulfullment Requests are sent to the location `callback` + `/fulfillment-order-n
 
 </Tabs>
 
-:::tip
+<Callout type="idea">
 The webhook request has a `X-29Next-Store` header that indicates which store the request is from if you have a global callback url.
-:::
-
-
+</Callout>
 ### Assigned Fulfillment Orders
 The [Assigned Fulfillment Orders](/docs/admin-api/reference/#/operations/assignedFulfillmentOrdersList) will return a list of all fulfillment orders assigned to your locations. Your app is recommended to call this API in response to receiving a notification to the location callback, and you may also want to poll this endpoint occasionally (ie once per hour) to ensure you've actioned everything requested.
 
-:::info
+<Callout type="info">
 Use the appropriate `assignment_status` parameter to filter the fulfillment orders to those that require action.
-:::
-
+</Callout>
 <Tabs>
 <TabItem value="fulfillment_requested" label="Fulfillment Requests">
 
@@ -149,12 +143,11 @@ GET https://{store}.29next.store/docs/admin-api/assigned-fulfillment-orders/?ass
 
 </Tabs>
 
-:::tip
+<Callout type="idea">
 Requests to the location callback indicate the request `type` that should be passed to the [Assigned Fulfillment Orders](/docs/admin-api/reference/#/operations/assignedFulfillmentOrdersList) API as the `assignment_status` querystring value to filter fulfillment orders to those for the flow.
 
 For example, to see new fulfillment requests pending acceptance, pass `assignment_status=fulfillment_requested` to the Assigned Fulfillment Orders API, `fulfillment_requested` was passed as `type` to the callback.
-:::
-
+</Callout>
 ### Accepting Fulfillment Requests
 
 To `Accept` a Fulfillment Request assignment, send a POST request to the [Fulfillment Request Accept](/docs/admin-api/reference/#/operations/fulfillmentRequestAccept) Endpoint. The Fulfillment Order will show as **Accepted** in the dashboard and the Order will transition fulfillment_status to processing.

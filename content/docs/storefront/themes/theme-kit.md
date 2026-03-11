@@ -34,10 +34,9 @@ See how to install `python` and `pip` with [HomeBrew](https://docs.brew.sh/Homeb
 
 * **Option 2** - Installing `python` in Windows natively can be done with through the [Windows App Store](https://apps.microsoft.com/store/detail/python-39/9P7QFQMJRFP7?hl=en-us&gl=us). Recommend using [Windows Powershell](https://apps.microsoft.com/store/detail/powershell/9MZ1SNWT0N5D?hl=en-us&gl=us). This route is a little more tricky and some knowledge on how to manage python in windows will be required.
 
-:::tip
+<Callout type="idea">
 **Use Python Virtual Environments** - For Mac, Windows, and Linux, it's a best practice to use a Python Virtual Environment to isolate python packages and dependecies to reduce potential conflicts or errors, [more on creating a Python Virutal Environment](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/).
-:::
-
+</Callout>
 ### Generate an API Key
 Store authentication uses [Oauth](https://auth0.com/intro-to-iam/what-is-oauth-2/) and requires creating a store Oauth App with `theme:read` and `theme:write` permissions.
 
@@ -49,10 +48,9 @@ Store authentication uses [Oauth](https://auth0.com/intro-to-iam/what-is-oauth-2
 ### Usage
 With the package installed, you can now use the commands inside your theme directory and work on a storefront theme.
 
-:::tip
+<Callout type="idea">
 You must pass the `apikey` and `store` parameters for all commands **if** there is not an existing `config.yml` file in your current directory.
-:::
-
+</Callout>
 | Command      | Description                          |
 | ----------- | ------------------------------------ |
 | `ntk init`       | Initialize a new theme  |
@@ -67,10 +65,9 @@ You must pass the `apikey` and `store` parameters for all commands **if** there 
 ### Sass Processing
 Theme kit includes support for Sass processing via [Python Libsass](https://sass.github.io/libsass-python/). Sass processing includes support for variables, imports, nesting, mixins, inheritance, custom functions, and more.
 
-:::caution
+<Callout type="warn">
 Sass processing is only supported on local, files in the `sass` directory are uploaded to your store for storage but cannot be edited in the store theme editor.
-:::
-
+</Callout>
 **How it works**
 
 1. Put `scss` files in top level `sass` directory.

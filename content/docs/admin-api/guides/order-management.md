@@ -16,12 +16,11 @@ Below are best practices and guides for common scenarios merchants and partners 
 
 Editing items on an order is common practice, such as swapping products purchased for a different size or color with the same value without needing to collect payment or create a refund. 
 
-:::info Only Available on 2024-04-01 API Version
+<Callout type="info" title="Only Available on 2024-04-01 API Version">
 Order editing APIs are only available on 2024-04-01 API Version and above, if you are still using older versions we recommend you upgrade your integration.
 
 Order editing APIs also do not affect order payment within each request. To remove items with an associated refund, see [order refunds](#order-refunds). Using order edit APIs can result in the customer owing or the merchant owing to the customer.
-:::
-
+</Callout>
 #### Line Item Quantities Explained
 
 Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle. 
@@ -90,13 +89,11 @@ Below is an example DELETE request to the [ordersLinesDestroy](/docs/admin-api/r
 ```
 
 
-:::info Check Line Item Editable Quantity
+<Callout type="info" title="Check Line Item Editable Quantity">
 Line items have `editable_quantity` which represents the item quantity not already in process of being fulfilled, already fulfilled, or  already removed from the order. 
 
 **If `editable_quantity` is `0`, the line item cannot be edited.**
-:::
-
-
+</Callout>
 #### Create New Line Item
 
 Below is an example POST request to the [ordersLinesCreate](/docs/admin-api/reference/?v=2024-04-01#/operations/ordersLinesCreate) endpoint to create a new line item. 
@@ -126,8 +123,6 @@ Orders can have an outstanding balance owed by the customer as a result of chang
 }
 ```
 
-::: 
-
 ### Order Refunds
 
 Order management actions that require refunding and removing items from an order can be done through the refund flow. The refund flow is espcially useful when creating partial refunds or creating refunds for items that have already shipped to the customer.
@@ -149,10 +144,9 @@ Refunding specific items of an order is a 3-step process:
 3. Create the refund using the [ordersRefundCreate](/docs/admin-api/reference/?v=2024-04-01#/operations/ordersRefundCreate) endpoint.
 
 
-:::info
+<Callout type="info">
 Order Refund Calculate APIs are only available on `2024-04-01` version and newer. See [API Versioning](/docs/admin-api/#versioning) for how to specify a version in your requests.
-:::
-
+</Callout>
 #### Retrieve Order Lines
 
 Below is an abreviated example request to [ordersRetrieve](/docs/admin-api/reference/?v=2024-04-01#/operations/ordersRetrieve) endpoint to get the line items of the order.
@@ -169,10 +163,9 @@ Below is an abreviated example request to [ordersRetrieve](/docs/admin-api/refer
   ]
 }
 ```
-:::caution Order Payments Must Be Captured
+<Callout type="warn" title="Order Payments Must Be Captured">
 Order payments must be captured in order to create partial refunds, uncaptured payments cannot be partially refunded.
-:::
-
+</Callout>
 #### Calculate Refund
 
 Call the [ordersRefundCalculateCreate](/docs/admin-api/reference/?v=2024-04-01#/operations/ordersRefundCalculateCreate) endpoint with your line items to calculate the refund and see which initial payment transactions will be refunded.
@@ -256,7 +249,7 @@ We're now ready to create a refund using the [ordersRefundCreate](/docs/admin-ap
   ]
 }
 ```
-:::info Restock Actions
+<Callout type="info" title="Restock Actions">
 Depending on the product type and status of the line items being refunded, there are differen't restock actions available.
 
 **Physical Product**
@@ -266,8 +259,7 @@ Depending on the product type and status of the line items being refunded, there
 **Digital Product**
 - If unfulfilled, restock_type must be `cancel`.
 - If fulfilled, restock_type must be `no_restock`.
-:::
-
+</Callout>
 ### Update Shipping Address
 
 Updating an order shipping address is a common task that can be done with a PATCH request to the [ordersUpdate](/docs/admin-api/reference/#/operations/ordersUpdate) endpoint.
@@ -287,12 +279,10 @@ Updating an order shipping address is a common task that can be done with a PATC
   }
 }
 ```
-:::info Before Fulfillment Processing
+<Callout type="info" title="Before Fulfillment Processing">
 
 Updating an order shipping address should be done **before** the order is sent to a fulfillment location for fulfillment. If the order has already been accepted and processing, send a a [cancellationRequestSend](/docs/admin-api/reference/#/operations/cancellationRequestSend) request and then [fulfillmentRequestSend](/docs/admin-api/reference/#/operations/fulfillmentRequestSend) after you've updated the shipping address. 
-:::
-
-
+</Callout>
 ### Request Fulfillment
 
 Fulfillment can be requested immediately through the [fulfillmentRequestSend](/docs/admin-api/reference/#/operations/fulfillmentRequestSend) for cases that you'd like to immediately send the fulfillment order to the fulfillment location for fulfillment. 

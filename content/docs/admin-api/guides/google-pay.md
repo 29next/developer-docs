@@ -10,10 +10,9 @@ tags:
 
 For custom checkouts using the Admin API, there are two flows available -- the standard method where a user enters their shipping address, chooses products, and then checks out via Google Pay; and the "One-Click" method, where the user is not required to enter shipping information before being redirected to Google Pay checkout.
 
-:::info
+<Callout type="info">
 Your store must have a Google Pay setup and enabled with a gateway to use the Google Pay payment method and the user device must use Chrome browser or Android with Google Pay setup.
-:::
-
+</Callout>
 ### API Payment Redirect Flow
 
 ```mdx-code-block
@@ -38,10 +37,9 @@ When creating a new order using Google Pay, you’ll need to specify the `paymen
 }
 ```
 
-:::tip
+<Callout type="idea">
 To test Google Pay as a payment method, you can use the `test` gateway with your real credit card in your Google Pay account, your card will not be charged.
-:::
-
+</Callout>
 ### Redirect Customer to Payment Complete URL
 The response when creating the order will provide a payment_complete_url. Your application should redirect the customer to this URL for completing the payment on the store's Google Pay Checkout page.
 

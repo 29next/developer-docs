@@ -30,14 +30,13 @@ Common use cases include but not limited to:
 
 You can register new Webhooks through **Settings > Webhooks** or on the Admin API to send event data to your application endpoint. For each webhook, you can subscribe to All Events or select specific events to send to your endpoint. See a list of all events and example event data below.
 
-:::caution
+<Callout type="warn">
 Webhook target endpoints must accept JSON data and respond with a `200` response code. If we do not receive a `200` response, we will retry up to 10 times over a several day period on an exponential back off schedule.
 
 **Failing webhooks will trigger email notifications to all store admins and will be eventually deactivated.**
 
 Returning a `410` response code indicates the target resource is no longer available and will automatically disable the webhook.
-:::
-
+</Callout>
 ### Webhook Events
 
 | Event                     | Description                          | Reference |
@@ -153,8 +152,8 @@ def webhook_payload_validator(request):
 
 As shown above, we can verify the data by generating the same signature with the webhook secret.
 
-:::tip
+<Callout type="idea">
 
 When creating webhooks on the API, you can provide your own signing secret to simplify the signature verification process for webhook payloads.
 
-:::
+</Callout>

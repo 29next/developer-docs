@@ -10,7 +10,8 @@
  */
 
 import { generateFiles } from 'fumadocs-openapi';
-import { readdirSync, statSync, writeFileSync, mkdirSync, readFileSync, rmSync, existsSync } from 'fs';
+import { createOpenAPI } from 'fumadocs-openapi/server';
+import { readdirSync, writeFileSync, mkdirSync, readFileSync, rmSync, existsSync } from 'fs';
 import { join } from 'path';
 
 // Remove stale directories from previous generation layout
@@ -38,7 +39,6 @@ function collectMethods(dir, urlBase, map = {}) {
       collectMethods(fullPath, `${urlBase}/${entry.name}`, map);
     } else if (entry.name.endsWith('.mdx')) {
       const content = readFileSync(fullPath, 'utf8');
-      // Extract method from _openapi frontmatter block
       const match = content.match(/^_openapi:\s*\n(?:[ \t]+\S[^\n]*\n)*?[ \t]+method:\s*(\w+)/m);
       if (match) {
         const slug = entry.name.replace(/\.mdx$/, '');
@@ -50,13 +50,11 @@ function collectMethods(dir, urlBase, map = {}) {
 }
 
 const specs = [
-  // Default (stable) version — output directly to reference/, no version subfolder in sidebar
   {
     input: ['public/api/admin/2024-04-01.yaml'],
     output: 'content/docs/admin-api/reference',
     urlBase: '/docs/admin-api/reference',
   },
-  // Older versions — output to versioned subfolders, hidden from sidebar
   {
     input: ['public/api/admin/2023-02-10.yaml'],
     output: 'content/docs/admin-api/reference/2023-02-10',
@@ -69,7 +67,6 @@ const specs = [
     urlBase: '/docs/admin-api/reference/unstable',
     hidden: true,
   },
-  // Campaigns API — single version, output directly to reference/
   {
     input: ['public/api/campaigns/v1.yaml'],
     output: 'content/docs/campaigns/api/reference',
@@ -81,21 +78,17 @@ const allMethods = {};
 
 for (const spec of specs) {
   console.log(`Generating API docs from ${spec.input[0]}...`);
+  const openapi = createOpenAPI({ input: spec.input });
   await generateFiles({
-    input: spec.input,
+    input: openapi,
     output: spec.output,
-    per: 'operation',
-    groupBy: 'tag',
   });
   console.log(`  → ${spec.output}`);
 
-  // Collect method data from generated files
   collectMethods(spec.output, spec.urlBase, allMethods);
-
 }
 
 // For the default admin-api reference dir, write a meta.json with root:true
-// listing only tag folders (not versioned subfolders) so sidebar stays clean.
 const refDir = 'content/docs/admin-api/reference';
 const tagFolders = readdirSync(refDir, { withFileTypes: true })
   .filter(e => e.isDirectory() && !VERSION_SUBFOLDERS.includes(e.name))
@@ -103,12 +96,11 @@ const tagFolders = readdirSync(refDir, { withFileTypes: true })
   .sort();
 writeFileSync(
   join(refDir, 'meta.json'),
-  JSON.stringify({ root: true, pages: tagFolders }, null, 2),
+  JSON.stringify({ pages: tagFolders }, null, 2),
 );
 console.log(`Wrote reference/meta.json with tag folders: ${tagFolders.join(', ')}`);
 
-// For each versioned subfolder, write a meta.json with root:true so the
-// sidebar switches context when navigating to a versioned URL.
+// For each versioned subfolder, write a meta.json listing tag folders
 for (const version of VERSION_SUBFOLDERS) {
   const versionDir = join(refDir, version);
   if (!existsSync(versionDir)) continue;
@@ -118,9 +110,9 @@ for (const version of VERSION_SUBFOLDERS) {
     .sort();
   writeFileSync(
     join(versionDir, 'meta.json'),
-    JSON.stringify({ root: true, pages: versionTagFolders }, null, 2),
+    JSON.stringify({ pages: versionTagFolders }, null, 2),
   );
-  console.log(`Wrote reference/${version}/meta.json with root:true`);
+  console.log(`Wrote reference/${version}/meta.json`);
 }
 
 // Write the URL → method map for the sidebar badges

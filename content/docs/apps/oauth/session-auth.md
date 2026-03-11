@@ -56,6 +56,6 @@ sequenceDiagram
   App->>User: App loads an authenticated view for user.
 ```
 
-:::tip
+<Callout type="idea">
 To see this in action, see the [Example App](https://github.com/NextCommerceCo/example-app) on Github.
-:::
+</Callout>

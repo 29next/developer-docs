@@ -686,10 +686,9 @@ if (window.location.search.includes('debug=true')) {
 
 ## Legacy Lifecycle Callbacks
 
-:::warning Legacy Feature
+<Callout type="warn" title="Legacy Feature">
 Lifecycle callbacks (`next.registerCallback`) are a legacy feature primarily for backwards compatibility. For new code, use the [event system](#cart-events) instead.
-:::
-
+</Callout>
 The SDK supports lifecycle callbacks for specific operations. These are less flexible than events but may be needed for legacy integrations.
 
 ### Available Callback Types

@@ -6,11 +6,9 @@ sidebar_position: 3
 
 App manifest.json is used for apps extending the storefront to configure HTML snippets that can be injected into storefront themes through [app_hooks](/storefront/themes/templates/tags.md#app_hook). You can also add settings that can generate a settings page in the store dashboard to configure your app in the case your app only extends the storefront and doesn't have a server side integration.
 
-:::info
+<Callout type="info">
 To upload your snippets and manifest.json, install [App Kit](/docs/apps/app-kit.md) to zip your snippet files and push them to Next Commerce.
-:::
-
-
+</Callout>
 ## Manifest Reference
 The manifest.json file is used to configure your app.
 
@@ -68,11 +66,9 @@ Specifies and maps App Snippets that extend Storefront theme templates. See Them
 }
 ```
 
-:::caution
+<Callout type="warn">
 App Hook Locations are limited to only extending a themes header and do not have access to tracking events, consider using an [Event Tracker](/docs/storefront/event-tracking.md) instead.
-:::
-
-
+</Callout>
 ### settings_schema
 
 Specifies the settings schema used for storing local settings data within the app that can be referenced in snippets. The settings schema will generate a form available to store admins to add settings for their store. Server side apps also will have access to an App Settings API that can be used to push settings values directly to stores.
