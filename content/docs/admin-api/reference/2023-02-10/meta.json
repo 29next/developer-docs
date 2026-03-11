@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "pages": [
+    "apps",
+    "carts",
+    "customers",
+    "fulfillment",
+    "gift-cards",
+    "metadata",
+    "orders",
+    "payments",
+    "products",
+    "store",
+    "storefront",
+    "subscriptions",
+    "support",
+    "webhooks"
+  ]
+}

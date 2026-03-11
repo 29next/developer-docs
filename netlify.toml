@@ -1,14 +1,12 @@
 # Netlify Configuration File
 
 [build]
-  # The command to build your Docusaurus site
   command = "npm run build"
-  
-  # The directory that contains the deploy-ready static files
-  publish = "build"
+  publish = ".next"
 
 [build.environment]
-  # Sets the Node.js version to 22 (LTS as of early 2026)
-  # This ensures the build environment matches your local setup
   NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
