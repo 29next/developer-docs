@@ -96,11 +96,11 @@ const tagFolders = readdirSync(refDir, { withFileTypes: true })
   .sort();
 writeFileSync(
   join(refDir, 'meta.json'),
-  JSON.stringify({ pages: tagFolders }, null, 2),
+  JSON.stringify({ title: 'Admin API', root: true, pages: tagFolders }, null, 2),
 );
 console.log(`Wrote reference/meta.json with tag folders: ${tagFolders.join(', ')}`);
 
-// For each versioned subfolder, write a meta.json listing tag folders
+// For each versioned subfolder, write a meta.json with root:true listing tag folders
 for (const version of VERSION_SUBFOLDERS) {
   const versionDir = join(refDir, version);
   if (!existsSync(versionDir)) continue;
@@ -110,7 +110,7 @@ for (const version of VERSION_SUBFOLDERS) {
     .sort();
   writeFileSync(
     join(versionDir, 'meta.json'),
-    JSON.stringify({ pages: versionTagFolders }, null, 2),
+    JSON.stringify({ title: 'Admin API', root: true, pages: versionTagFolders }, null, 2),
   );
   console.log(`Wrote reference/${version}/meta.json`);
 }
