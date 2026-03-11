@@ -1,6 +1,5 @@
 {
   "title": "Admin API",
-  "root": true,
   "pages": [
     "apps",
     "carts",
@@ -15,6 +14,8 @@
     "storefront",
     "subscriptions",
     "support",
-    "webhooks"
+    "webhooks",
+    "2023-02-10",
+    "unstable"
   ]
 }

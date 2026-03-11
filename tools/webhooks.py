@@ -3,6 +3,46 @@ import copy
 from config import WEBHOOKS, CUSTOM_WEBHOOK_EVENT_PAYLOADS
 
 
+def generate_example(schema, depth=0):
+    """Recursively build a JSON example value from a schema."""
+    if not isinstance(schema, dict) or depth > 4:
+        return None
+    schema_type = schema.get("type", "object")
+    # Use explicit example/examples if provided
+    if "example" in schema:
+        return schema["example"]
+    if "examples" in schema and schema["examples"]:
+        return schema["examples"][0]
+    if schema_type == "object" or "properties" in schema:
+        props = schema.get("properties", {})
+        return {k: generate_example(v, depth + 1) for k, v in props.items()} if props else {}
+    if schema_type == "array":
+        item = generate_example(schema.get("items", {}), depth + 1)
+        return [item] if item is not None else []
+    if schema_type == "integer":
+        return schema.get("default", 0)
+    if schema_type == "number":
+        return schema.get("default", 0.0)
+    if schema_type == "boolean":
+        return schema.get("default", False)
+    if schema_type == "string":
+        fmt = schema.get("format", "")
+        if fmt == "date-time":
+            return "2024-01-01T00:00:00Z"
+        if fmt == "date":
+            return "2024-01-01"
+        if fmt == "uuid":
+            return "a7a26ff2-e851-45b6-9634-d595f45458b7"
+        if fmt == "uri":
+            return "https://example.com"
+        if fmt == "email":
+            return "user@example.com"
+        if fmt == "decimal":
+            return "0.00"
+        return schema.get("default", "string")
+    return None
+
+
 def get_schema(spec, ref):
     name = ref.split("/")[3]
     schema = copy.deepcopy(spec["components"]["schemas"][name])
@@ -73,6 +113,25 @@ def webhook_schema_generator(spec):
         else:
             cleaned_data_schema = get_custom_webhook_event_payloads(each["event"])
 
+        # Ensure the data schema has type: object
+        if isinstance(cleaned_data_schema, dict) and "type" not in cleaned_data_schema:
+            cleaned_data_schema["type"] = "object"
+
+        # Build a complete example payload for the code sample panel
+        payload_example = {
+            "api_version": version,
+            "object": each["object"],
+            "data": generate_example(cleaned_data_schema),
+            "event_id": "a7a26ff2-e851-45b6-9634-d595f45458b7",
+            "event_type": each["event"],
+            "webhook": {
+                "id": 1,
+                "store": "example",
+                "events": [each["event"]],
+                "target": "https://example.com/webhook/",
+            },
+        }
+
         webhook_schema[each["event"]] = {
             "post": {
                 "tags": [each["tag"]],
@@ -81,26 +140,28 @@ def webhook_schema_generator(spec):
                 "requestBody": {
                     "content": {
                         "application/json": {
+                            "example": payload_example,
                             "schema": {
+                                "type": "object",
                                 "properties": {
                                     "api_version": {
-                                        "type": ["string"],
+                                        "type": "string",
                                         "examples": [version],
                                         "description": "API Version of the object data schema.",
                                     },
                                     "object": {
-                                        "type": ["string"],
+                                        "type": "string",
                                         "examples": [each["object"]],
                                         "description": "Object data type.",
                                     },
                                     "data": cleaned_data_schema,
                                     "event_id": {
-                                        "type": ["string"],
-                                        "format": ["uuid"],
+                                        "type": "string",
+                                        "format": "uuid",
                                         "description": "Unique id associated with this webhook event.",
                                     },
                                     "event_type": {
-                                        "type": ["string"],
+                                        "type": "string",
                                         "examples": [each["event"]],
                                         "description": "Webhook event type of the current event.",
                                     },
@@ -112,13 +173,14 @@ def webhook_schema_generator(spec):
                                                 "description": "The webhook sending the event.",
                                             },
                                             "store": {
-                                                "type": ["string", "null"],
+                                                "type": "string",
+                                                "nullable": True,
                                                 "examples": ["example"],
                                                 "description": "The store identifier.",
                                             },
                                             "events": {
                                                 "description": "See webhook docs for available events.",
-                                                "items": {"type": ["string", "null"]},
+                                                "items": {"type": "string"},
                                                 "type": "array",
                                             },
                                             "target": {
@@ -135,14 +197,14 @@ def webhook_schema_generator(spec):
                         }
                     },
                 },
-            },
-            "responses": {
-                "200": {
-                    "description": "Return a 200 status to indicate that the data was received successfully."
+                "responses": {
+                    "200": {
+                        "description": "Return a 200 status to indicate that the data was received successfully."
+                    },
+                    "410": {
+                        "description": "Indicates the webhook target is no longer available and will be disabled."
+                    }
                 },
-                "410": {
-                    "description": "Indicates the webhook target is no longer available and will be disabled."
-                }
             },
         }
 

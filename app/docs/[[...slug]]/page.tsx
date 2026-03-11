@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { VersionSelector } from '@/components/version-selector';
+import { AutoExpandBody } from '@/components/auto-expand-body';
 import type { Metadata } from 'next';
 
 export default async function Page(props: {
@@ -28,6 +29,7 @@ export default async function Page(props: {
       </div>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
+        <AutoExpandBody />
         <MDX
           components={getMDXComponents({
             a: createRelativeLink(source, page),

@@ -39,6 +39,16 @@ const SECTIONS: SectionConfig[] = [
       { slug: '', label: 'v1', description: 'Current' },
     ],
   },
+  {
+    showPrefix: '/docs/webhooks',
+    referencePrefix: '/docs/webhooks/reference',
+    versionSlugs: ['2023-02-10', 'unstable'],
+    versions: [
+      { slug: '',           label: '2024-04-01', description: 'Stable'   },
+      { slug: '2023-02-10', label: '2023-02-10', description: 'Legacy'   },
+      { slug: 'unstable',   label: 'unstable',   description: 'Unstable' },
+    ],
+  },
 ];
 
 function parseSection(pathname: string): { section: SectionConfig; slug: string; relativePath: string } | null {

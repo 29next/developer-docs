@@ -1,4 +1,7 @@
-# Webhooks
+---
+title: Webhooks
+description: Use webhooks to be notified about events that happen in your store.
+---
 
 Use webhooks to be notified about events that happen in your store.
 
