@@ -6,8 +6,8 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <Image src="/logo-light.png" alt="Next Commerce" width={140} height={28} className="dark:hidden" />
-          <Image src="/logo-dark.png" alt="Next Commerce" width={140} height={28} className="hidden dark:block" />
+          <Image src="/logo-light.png" alt="Next Commerce" width={105} height={21} className="dark:hidden" />
+          <Image src="/logo-dark.png" alt="Next Commerce" width={105} height={21} className="hidden dark:block" />
         </>
       ),
     },

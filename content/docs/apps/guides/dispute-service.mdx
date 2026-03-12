@@ -12,14 +12,14 @@ Dispute service apps are integrations that manage the processing of payment disp
 <Callout type="info">
 Dispute Service Apps are [Server to Server Apps](/docs/apps/guides/server-to-server-apps) that use the Oauth flow to obtain API Access and then use the [Admin APIs](/docs/admin-api) and [Webhooks](/docs/webhooks) to subscribe to store event activity.
 </Callout>
-### Disputes
+## Disputes
 
 Disputes are complaints initiated by the customer against the merchant pertaining to their orders and are categorized into two broad groups by type, Alerts and Chargebacks, see below.
 
 - **Alerts** - disputes that are not yet a chargeback, ie TC40, SAFE, and RDR alerts.
 - **Chargeback** - disputes that are registered as a chargeback with the acquiring bank.
 
-### Dispute Flow Overview
+## Dispute Flow Overview
 
 Below is a high-level overview of a typical flow for a dispute service app to handle transaction disputes.
 
@@ -37,9 +37,9 @@ sequenceDiagram
   Dispute Service->>Store: Resolve dispute
 ```
 
-### Dispute Flow Detail
+## Dispute Flow Detail
 
-#### Step 1 - New Transaction Created
+### Step 1 - New Transaction Created
 There are several scenarios that create new payment transactions:
 - Order created - nearly all new orders start with a new payment transaction.
 - Upsell created - adding an upsell creates a new payment transaction.
@@ -47,7 +47,7 @@ There are several scenarios that create new payment transactions:
 
 Orders typically have many associated transactions for the payments and refunds.
 
-#### Step 2 - `transaction.created` webhook event
+### Step 2 - `transaction.created` webhook event
 Dispute service apps should subscribe to the `transaction.created` webhook event to be notified of all payment transaction events on a store so that your app is aware of new payments, refunds, and can handle disputes properly.
 
 <Callout type="info" title="Use `parent_id` to associate related transactions">
@@ -61,41 +61,41 @@ Your app can also subscribe to `order.created` and `order.updated` events to rec
 Create your webhook after the app is installed using the [webhooksCreate](/docs/admin-api/reference/webhooks/webhooksCreate) Admin API and pass the `transaction.created, order.created, order.updated` to subscribe to these events.
 
 
-#### Step 3 - Dispute service receives transaction dispute
+### Step 3 - Dispute service receives transaction dispute
 
 At this stage, the dispute service is responsible for receiving disputes from their integration partners.
 
-#### Step 4 - Dispute service creates dispute (alert or chargeback) in store
+### Step 4 - Dispute service creates dispute (alert or chargeback) in store
 
 When disputes are identified as belonging to a store, the dispute service should create a new dispute using the [disputesCreate](/docs/admin-api/reference/payments/disputesCreate) Admin API.
 
 
-#### Step 5 - Dispute service matches dispute to transaction
+### Step 5 - Dispute service matches dispute to transaction
 
 Disputes created in the store need to be matched to the transaction in the store to associate it with the order/customer. Disputes can be matched by passing the `transaction` parameter when creating or with update using the [disputesUpdate](/docs/admin-api/reference/payments/disputesUpdate) Admin API. See example below in [Match a Dispute](#matching-disputes).
 
 
-#### Step 6 - Customer is added to block lists
+### Step 6 - Customer is added to block lists
 
 Merchants can configure their store to automatically add customers to block lists when any of their transactions have been disputed to mitigate future risk from the customer and associated payment methods. See [Block Lists](https://docs.29next.com/features/payments/block-lists) guide in our user docs.
 
 
-#### Step 7 - Dispute service creates refund
+### Step 7 - Dispute service creates refund
 
 Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/admin-api/reference/payments/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-disputes) detail below.
 
 
-#### Step 8 - Cancel Order / Cancel Fulfillment 
+### Step 8 - Cancel Order / Cancel Fulfillment 
 
 If the order is not yet fulfilled, it may be ideal to cancel the order or cancel fulfillment to stop the order from being shipped to the customer. See [Canceling Fulfillment](#canceling-fulfillment) detail below.
 
 
-#### Step 9 - Dispute service resolves dispute
+### Step 9 - Dispute service resolves dispute
 
 Once the dispute is resolved, the dispute service should set the dispute resolution using the [disputesUpdate](/docs/admin-api/reference/payments/disputesUpdate) Admin API. See [Dispute Resolutions](#dispute-resolutions) and [Resolve a Dispute](#resolving-disputes) detail below.
 
 
-### Creating Disputes
+## Creating Disputes
 
 To create a dispute in the store using the [disputesCreate](/docs/admin-api/reference/payments/disputesCreate) Admin API, see example below:
 
@@ -111,7 +111,7 @@ To create a dispute in the store using the [disputesCreate](/docs/admin-api/refe
 }
 ```
 
-### Matching Disputes
+## Matching Disputes
 
 To match a dispute to a transaction, pass the `transaction` id to the [disputesUpdate](/docs/admin-api/reference/payments/disputesUpdate) API. Matching the dispute to the transaction will match the associated order and customer.
 
@@ -122,7 +122,7 @@ To match a dispute to a transaction, pass the `transaction` id to the [disputesU
 }
 ```
 
-### Creating Refunds
+## Creating Refunds
 
 To create a refund for a transaction as part of the dispute resolution process, you can use the [transactionsRefundCreate](/docs/admin-api/reference/payments/transactionsRefundCreate) Admin API.
 
@@ -133,7 +133,7 @@ To create a refund for a transaction as part of the dispute resolution process, 
 }
 ```
 
-### Canceling Fulfillment
+## Canceling Fulfillment
 
 It's desirable to cancel fulfillment for orders that have not shipped yet when they are disputed to prevent additional losses for the merchant.
 
@@ -173,7 +173,7 @@ Fulfillment locations need to accept the cancelation request to confirm they wer
 </Tab>
 </Tabs>
 
-### RDR Alerts
+## RDR Alerts
 
 RDR Alerts are automatically refunded with the gateway, dispute services should log an external refund for the transaction using the [transactionsRefundCreate](/docs/admin-api/reference/payments/transactionsRefundCreate) Admin API.
 
@@ -188,7 +188,7 @@ Setting `is_external: true` on a refund will create the refund without attemptin
 ```
 
 
-### Dispute Resolutions
+## Dispute Resolutions
 
 **Alert Resolutions**
 
@@ -207,7 +207,7 @@ Setting `is_external: true` on a refund will create the refund without attemptin
 - `lost` - The chargeback representment process was unsuccessful.
 
 
-### Resolving Disputes
+## Resolving Disputes
 
 To resolve a dispute, update the dispute with the appropriate [resolution](#dispute-resolutions) for the dispute type.
 
