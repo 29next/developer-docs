@@ -1,4 +1,6 @@
-# Quantity-Based Package Swapper (Standalone)
+---
+title: Quantity-Based Package Swapper (Standalone)
+---
 
 A fully standalone script that handles quantity controls and package swapping. **No SDK selector enhancer needed** - this script manages everything directly.
 

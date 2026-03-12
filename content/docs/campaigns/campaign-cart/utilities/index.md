@@ -1,9 +1,8 @@
 ---
+title: Utilities
 sidebar_label: Utilities
 sidebar_position: 10
 ---
-
-# Utilities
 
 Additional tools and features for conversion optimization and debugging.
 

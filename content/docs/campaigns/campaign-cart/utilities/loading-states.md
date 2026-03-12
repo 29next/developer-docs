@@ -1,4 +1,6 @@
-# Loading States
+---
+title: Loading States
+---
 
 The SDK provides loading states for better UX.
 

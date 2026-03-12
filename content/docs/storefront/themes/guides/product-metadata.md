@@ -1,10 +1,9 @@
 ---
+title: Product Metadata
 sidebar_label: Product Metadata
 tags:
  - Guide
 ---
-
-# Product Metadata
 
 Product metadata lets you add custom data for products to use in theme templates. This provides a robust structured way for theme developers to customize products display in the storefront. [See our user guide on adding custom metadata fields](https://docs.29next.com/build-a-store/technical-settings/metadata-fields).
 

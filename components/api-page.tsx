@@ -19,6 +19,7 @@ const twoColumnLayout = (left: React.ReactNode, right: React.ReactNode) => (
 );
 
 export const APIPage = createAPIPage(openapi, {
+  generateTypeScriptDefinitions: () => undefined,
   content: {
     renderOperationLayout(slots) {
       return twoColumnLayout(

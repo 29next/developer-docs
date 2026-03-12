@@ -1,4 +1,6 @@
-# Profile-Based Package Mapping System
+---
+title: Profile-Based Package Mapping System
+---
 
 The Profile System enables dynamic package ID swapping across your entire e-commerce implementation. This powerful feature allows you to maintain multiple pricing tiers, seasonal promotions, and customer-specific offers without duplicating your frontend code.
 

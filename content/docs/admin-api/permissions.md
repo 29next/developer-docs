@@ -1,9 +1,8 @@
 ---
+title: Permissions
 sidebar_label: Permissions
 sidebar_position: 2
 ---
-# Permissions
-
 Admin API access is controlled granularly by Scopes that are associated with each OAuth App and associated Access Tokens.
 
 | Scope | Detail |

@@ -8,11 +8,13 @@
 :root {
   --color-fd-primary: hsl(217, 91%, 60%);
   --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-idea: oklch(65% 0.2 145);
 }
 
 .dark {
   --color-fd-primary: hsl(217, 91%, 60%);
   --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-idea: oklch(65% 0.2 145);
 }
 
 @media (min-width: 1024px) {
@@ -70,4 +72,23 @@
 /* Remove max-height on code blocks inside API example/request panels so content doesn't scroll */
 [data-api-requests] .fd-scroll-container {
   max-height: none !important;
+}
+
+/* Docusaurus-style callouts: transparent colorized backgrounds */
+div[style*="--callout-color"] {
+  background-color: color-mix(in oklch, var(--callout-color) 12%, transparent) !important;
+  border-color: color-mix(in oklch, var(--callout-color) 40%, transparent) !important;
+  box-shadow: none !important;
+}
+
+/* Callout icons: standard lucide stroke style (not filled circles) */
+div[style*="--callout-color"] > svg {
+  fill: transparent !important;
+  color: var(--callout-color) !important;
+  flex-shrink: 0;
+}
+
+/* Remove inner left bar from callouts */
+div[style*="--callout-color"] > div[role="none"] {
+  display: none !important;
 }

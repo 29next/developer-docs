@@ -1,4 +1,6 @@
-# Debug Mode
+---
+title: Debug Mode
+---
 
 The Next Commerce JS SDK includes a comprehensive debug overlay system that helps developers inspect state, monitor events, and troubleshoot issues during development.
 

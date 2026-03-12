@@ -1,9 +1,8 @@
 ---
+title: Cart System
 sidebar_label: Cart System
 sidebar_position: 1
 ---
-
-# Cart System
 
 Learn how to manage shopping carts with Campaign Cart JS SDK using HTML attributes.
 

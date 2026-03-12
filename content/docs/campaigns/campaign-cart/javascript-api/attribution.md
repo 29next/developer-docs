@@ -3,8 +3,6 @@ title: Attribution API
 sidebar_position: 4
 ---
 
-# Attribution API
-
 The SDK provides comprehensive attribution tracking capabilities, including support for custom metadata that can be passed with orders.
 
 ## Simple API via window.next

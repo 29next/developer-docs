@@ -1,4 +1,6 @@
-# Tier Selector Implementation with Profiles
+---
+title: Tier Selector Implementation with Profiles
+---
 
 This guide shows how to implement a pricing tier selector (Buy 1, Buy 2, Buy 3) using profiles combined with the variant system.
 

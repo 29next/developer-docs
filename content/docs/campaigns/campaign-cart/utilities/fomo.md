@@ -1,4 +1,6 @@
-# FOMO Script
+---
+title: FOMO Script
+---
 
 Create social proof with fake purchase notifications.
 

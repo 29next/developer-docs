@@ -3,8 +3,6 @@ title: Profiles API
 sidebar_position: 5
 ---
 
-# Profile API Reference
-
 The Profile System provides methods for managing dynamic package mappings through the `window.next` API.
 
 ## Methods

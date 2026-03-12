@@ -1,8 +1,7 @@
 ---
+title: Install Flows
 sidebar_position: 6
 ---
-
-# Install Flows
 
 
 ### Private Apps

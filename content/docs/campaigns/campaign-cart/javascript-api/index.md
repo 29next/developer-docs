@@ -1,9 +1,8 @@
 ---
+title: JavaScript API
 sidebar_label: JavaScript API
 sidebar_position: 4
 ---
-
-# JavaScript API
 
 Complete reference for all JavaScript methods available in the Campaign Cart SDK.
 

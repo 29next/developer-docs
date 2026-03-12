@@ -1,4 +1,6 @@
-# Cart and Item Data Attributes – Full Reference
+---
+title: Cart and Item Data Attributes – Full Reference
+---
 
 Complete list of cart- and item-related data attributes for campaign cart display (e.g. checkout summary).
 

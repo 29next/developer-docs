@@ -1,4 +1,6 @@
-# Advanced Customization Examples
+---
+title: Advanced Customization Examples
+---
 
 Complex scenarios and edge cases with the Next Commerce JS SDK.
 

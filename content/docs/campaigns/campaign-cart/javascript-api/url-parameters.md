@@ -3,8 +3,6 @@ title: URL Parameters API
 sidebar_position: 6
 ---
 
-# URL Parameters API
-
 The SDK provides a comprehensive API for managing URL parameters programmatically. These methods allow you to control parameter-based visibility and behavior without relying solely on URL query strings.
 
 ## Overview

@@ -1,9 +1,8 @@
 ---
+title: JavaScript API Methods
 sidebar_label: Methods
 sidebar_position: 2
 ---
-
-# JavaScript API Methods
 
 Complete reference for all JavaScript methods available in the Campaign Cart SDK.
 

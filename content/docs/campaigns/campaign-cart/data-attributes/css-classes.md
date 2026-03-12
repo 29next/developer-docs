@@ -4,8 +4,6 @@ description: Automatic CSS classes applied by the SDK based on element state
 sidebar_position: 12
 ---
 
-# CSS Classes
-
 The Next Commerce JS SDK automatically applies CSS classes to elements based on their state.
 
 ## State Classes

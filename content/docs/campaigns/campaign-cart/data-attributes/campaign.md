@@ -4,8 +4,6 @@ description: Display campaign-level information like name, currency, and languag
 sidebar_position: 11
 ---
 
-# Campaign Attributes
-
 Display campaign-level information like name, currency, and language.
 
 ## Available Attributes

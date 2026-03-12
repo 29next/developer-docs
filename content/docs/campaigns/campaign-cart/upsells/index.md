@@ -1,9 +1,8 @@
 ---
+title: Upsells
 sidebar_label: Upsells
 sidebar_position: 2
 ---
-
-# Upsells
 
 Maximize order value with post-purchase upsell flows using flexible patterns for presenting additional offers after checkout.
 

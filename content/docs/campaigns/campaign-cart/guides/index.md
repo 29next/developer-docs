@@ -1,9 +1,8 @@
 ---
+title: Guides
 sidebar_label: Guides
 sidebar_position: 7
 ---
-
-# Guides
 
 Complete implementations and code examples for common use cases.
 

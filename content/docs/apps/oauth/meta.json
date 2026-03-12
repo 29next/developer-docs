@@ -1,4 +1,4 @@
 {
   "title": "OAuth",
-  "pages": ["getting-started", "session-auth", "install-flows"]
+  "pages": ["index", "getting-started", "session-auth"]
 }

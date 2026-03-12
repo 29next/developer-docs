@@ -4,8 +4,6 @@ description: Display and control profile-based behavior and pricing
 sidebar_position: 10
 ---
 
-# Profile Attributes
-
 Complete reference for profile-related HTML attributes and display properties.
 
 ## Profile Display Properties

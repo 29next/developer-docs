@@ -1,4 +1,6 @@
-# Exit Intent Popup
+---
+title: Exit Intent Popup
+---
 
 Show popups when users try to leave the page. Supports both simple image popups and custom HTML templates.
 
