@@ -41,15 +41,14 @@ Below is the equivalent expressed as a javascript function to create and append 
 ```
 We can now use this to include the Google Analytics javascript in our event tracker.
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 ## Init
 
 Init is utility method to produce context of the current request/session with details of a `cart`, `store`, or `user` as a JSON object. Use the init method to add context to event tracking integrations.
 
-<Tabs>
-<TabItem value="initCart" label="Init Cart (init.cart)">
+<Tabs items={['Init Cart (init.cart)', 'Init Store (init.store)', 'Init User (init.user)']}>
+<Tab value="Init Cart (init.cart)">
 
 Use `init.cart` to load context of the current cart data as a JSON object.
 
@@ -130,8 +129,8 @@ console.log(init.cart);
 </div>
 </details>
 
-</TabItem>
-<TabItem value="initStore" label="Init Store (init.store)">
+</Tab>
+<Tab value="Init Store (init.store)">
 
 Use `init.store` to load context of the store public data as a JSON object.
 
@@ -189,8 +188,8 @@ console.log(init.store);
 </div>
 </details>
 
-</TabItem>
-<TabItem value="initUser" label="Init User (init.user)">
+</Tab>
+<Tab value="Init User (init.user)">
 
 Use `init.user` to load context of the current authenticated user as a JSON object.
 
@@ -245,7 +244,7 @@ console.log(init.user);
 </div>
 </details>
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Context

@@ -3,8 +3,7 @@ title: Custom Events & Advanced Tracking
 description: Create custom analytics events and implement advanced tracking patterns with transform functions.
 sidebar_position: 10
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 
 
@@ -39,8 +38,8 @@ You don't need to add these manually - they're included automatically.
 
 ### Common Custom Event Examples
 
-<Tabs>
-<TabItem value="newsletter">
+<Tabs items={['Newsletter', 'Video', 'Form', 'Feature']}>
+<Tab value="Newsletter">
 
 ```javascript
 // Newsletter subscription
@@ -52,8 +51,8 @@ window.NextAnalytics.track({
 });
 ```
 
-</TabItem>
-<TabItem value="video">
+</Tab>
+<Tab value="Video">
 
 ```javascript
 // Video engagement
@@ -71,8 +70,8 @@ window.NextAnalytics.track({
 });
 ```
 
-</TabItem>
-<TabItem value="form">
+</Tab>
+<Tab value="Form">
 
 ```javascript
 // Form submission
@@ -84,8 +83,8 @@ window.NextAnalytics.track({
 });
 ```
 
-</TabItem>
-<TabItem value="feature">
+</Tab>
+<Tab value="Feature">
 
 ```javascript
 // Feature usage
@@ -97,7 +96,7 @@ window.NextAnalytics.track({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## E-commerce Custom Events
@@ -123,8 +122,8 @@ window.NextAnalytics.track({
 
 ### Custom E-commerce Examples
 
-<Tabs>
-<TabItem value="wishlist">
+<Tabs items={['Wishlist', 'Comparison', 'Quick View']}>
+<Tab value="Wishlist">
 
 ```javascript
 function trackWishlistAdd(item) {
@@ -145,8 +144,8 @@ function trackWishlistAdd(item) {
 }
 ```
 
-</TabItem>
-<TabItem value="comparison">
+</Tab>
+<Tab value="Comparison">
 
 ```javascript
 function trackProductComparison(products) {
@@ -168,8 +167,8 @@ function trackProductComparison(products) {
 }
 ```
 
-</TabItem>
-<TabItem value="quick-view">
+</Tab>
+<Tab value="Quick View">
 
 ```javascript
 function trackQuickView(item) {
@@ -191,7 +190,7 @@ function trackQuickView(item) {
 }
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Transform Functions
@@ -240,8 +239,8 @@ This runs before the configured transform function.
 
 ### Transform Function Use Cases
 
-<Tabs>
-<TabItem value="enrich-events">
+<Tabs items={['Enrich Events', 'Filter Events', 'Privacy', 'Multi-Region']}>
+<Tab value="Enrich Events">
 
 ```javascript
 window.NextDataLayerTransformFn = function(event) {
@@ -260,8 +259,8 @@ window.NextDataLayerTransformFn = function(event) {
 };
 ```
 
-</TabItem>
-<TabItem value="filter-events">
+</Tab>
+<Tab value="Filter Events">
 
 ```javascript
 window.NextDataLayerTransformFn = function(event) {
@@ -280,8 +279,8 @@ window.NextDataLayerTransformFn = function(event) {
 };
 ```
 
-</TabItem>
-<TabItem value="privacy">
+</Tab>
+<Tab value="Privacy">
 
 ```javascript
 window.NextDataLayerTransformFn = function(event) {
@@ -298,8 +297,8 @@ window.NextDataLayerTransformFn = function(event) {
 };
 ```
 
-</TabItem>
-<TabItem value="multi-region">
+</Tab>
+<Tab value="Multi-Region">
 
 ```javascript
 window.NextDataLayerTransformFn = function(event) {
@@ -318,7 +317,7 @@ window.NextDataLayerTransformFn = function(event) {
 };
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Advanced Event Patterns

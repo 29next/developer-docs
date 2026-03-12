@@ -3,6 +3,7 @@ title: Templates
 sidebar_position: 1
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 ### Introduction
 
@@ -15,24 +16,21 @@ The storefront theme template system provides **tags, filters** and **variables*
 
 Variables look like this: `{{ variable }}`  and contain the content the template uses to render to the page. Variables contain a dictionary structure of content and use . notation to access attributes.
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'Result']}>
+<Tab value="Template">
 
 ```django
 <h1>Hello {{ customer.name }} !</h1>
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
 ```html
 <h1>Hello John!</h1>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Filters
@@ -40,21 +38,21 @@ import TabItem from '@theme/TabItem';
 Filters allow you to modify the output of a variables and look like this `{{ customer.name|title }}`. This would display the value of `{{ customer.name }}` after being filtered there the title filter to make format the string to title case.  See built-in filter reference.
 
 
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'Result']}>
+<Tab value="Template">
 
 ```django
 <h1>Hello {{ customer.name|title }}!</h1>
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
-``` html
+```html
 <h1>Hello John!</h1>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 
@@ -62,8 +60,8 @@ Filters allow you to modify the output of a variables and look like this `{{ cus
 
 Tags can do many things such as control flow, iterations, template inheritance, and theme translations. Tags look like this `{% tag %}` . [See built-in tag reference](/docs/storefront/themes/templates/tags).
 
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'Result']}>
+<Tab value="Template">
 
 ```django
 <ul>
@@ -77,10 +75,10 @@ Tags can do many things such as control flow, iterations, template inheritance, 
 </ul>
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
-``` html
+```html
 <ul>
     <li>Product A</li>
     <li>Product B</li>
@@ -88,7 +86,7 @@ Tags can do many things such as control flow, iterations, template inheritance, 
 </ul>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 Using these core building blocks you can create fully customized shopping experiences for customers.

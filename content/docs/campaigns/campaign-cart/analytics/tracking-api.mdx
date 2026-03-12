@@ -3,8 +3,7 @@ title: Tracking API Reference
 description: Complete reference for tracking e-commerce events using the simple next.* API or advanced window.NextAnalytics methods.
 sidebar_position: 11
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 
 
@@ -12,8 +11,8 @@ The SDK provides two complementary APIs for tracking analytics events. Choose th
 
 ## API Overview
 
-<Tabs>
-<TabItem value="simple-api-(next.*)">
+<Tabs items={['Simple API (next.*)', 'Advanced API (NextAnalytics)']}>
+<Tab value="Simple API (next.*)">
 
 **Best for:** Quick implementations, minimal code
 
@@ -31,8 +30,8 @@ next.trackPurchase(orderData);
 - Works before SDK fully loads (queued)
 - Ideal for most use cases
 
-</TabItem>
-<TabItem value="advanced-api-(nextanalytics)">
+</Tab>
+<Tab value="Advanced API (NextAnalytics)">
 
 **Best for:** Advanced tracking, custom events, full control
 
@@ -50,7 +49,7 @@ window.NextAnalytics.setDebugMode(true);
 - Debug and status methods
 - Direct analytics engine access
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ---
@@ -61,8 +60,8 @@ window.NextAnalytics.setDebugMode(true);
 
 Track when items are added to the cart.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track with package ID and quantity
@@ -80,8 +79,8 @@ next.trackAddToCart('456', 2);
 - Using `data-next-action="add-to-cart"` attributes
 - Calling cart methods like `next.addToCart()`
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 // With full item data
@@ -113,15 +112,15 @@ window.NextAnalytics.trackAddToCart({
 - `listId` (string, optional) - Product list ID for attribution
 - `listName` (string, optional) - Product list name for attribution
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Remove from Cart
 
 Track when items are removed from the cart.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track removal
@@ -132,8 +131,8 @@ next.trackRemoveFromCart('123', 1);
 - `packageId` (string|number) - Product identifier
 - `quantity` (number, optional) - Quantity removed
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 // Using EcommerceEvents helper
@@ -147,15 +146,15 @@ dataLayer.push(event);
 **Auto-tracked when:**
 - Using cart removal methods
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### View Item
 
 Track product detail page views.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track product view
@@ -170,8 +169,8 @@ next.trackViewItem('123');
 - Selected items in `data-next-selection-mode="select"` selectors
 - Selected items in `data-next-selection-mode="swap"` selectors
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 // With full product data
@@ -190,15 +189,15 @@ window.NextAnalytics.trackViewItem({
   - `title` (string) - Product name
   - `price` (number) - Price
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### View Item List
 
 Track product list/collection views.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track list view
@@ -218,8 +217,8 @@ next.trackViewItemList(
 - URL matches collection/category patterns
 - Page type detected as product list
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 window.NextAnalytics.trackViewItemList(items, listId, listName);
@@ -230,15 +229,15 @@ window.NextAnalytics.trackViewItemList(items, listId, listName);
 - `listId` (string) - List identifier
 - `listName` (string) - List display name
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Begin Checkout
 
 Track when checkout process starts.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track checkout start
@@ -250,8 +249,8 @@ next.trackBeginCheckout();
 **Auto-tracked when:**
 - Checkout page loads (in auto mode)
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 window.NextAnalytics.trackBeginCheckout();
@@ -263,15 +262,15 @@ Automatically includes:
 - Currency
 - User properties
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Purchase
 
 Track completed orders.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Minimal purchase tracking
@@ -308,8 +307,8 @@ next.trackPurchase({
   - `shipping` (number, optional) - Shipping cost
   - `items` (array, optional) - Order line items
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 // Full order data from backend
@@ -352,7 +351,7 @@ window.NextAnalytics.trackPurchase({
     - Automatically transforms to GA4 format
     - Includes user properties, items, transaction details
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Auto-tracked:** Yes (queued and fired on confirmation page)
@@ -386,8 +385,8 @@ next.trackPurchase({
 
 Track user registration.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track registration
@@ -397,8 +396,8 @@ next.trackSignUp('user@example.com');
 **Parameters:**
 - `email` (string) - User email address
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 window.NextAnalytics.trackSignUp('user@example.com');
@@ -410,15 +409,15 @@ Automatically includes:
 - Session data
 - Attribution
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Login
 
 Track user login.
 
-<Tabs>
-<TabItem value="simple">
+<Tabs items={['Simple', 'Advanced']}>
+<Tab value="Simple">
 
 ```javascript
 // Track login
@@ -428,14 +427,14 @@ next.trackLogin('user@example.com');
 **Parameters:**
 - `email` (string) - User email address
 
-</TabItem>
-<TabItem value="advanced">
+</Tab>
+<Tab value="Advanced">
 
 ```javascript
 window.NextAnalytics.trackLogin('user@example.com');
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ---

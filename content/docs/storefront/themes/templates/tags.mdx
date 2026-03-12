@@ -4,8 +4,7 @@ sidebar_label: Tag Reference
 sidebar_position: 1
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 Template tags enable theme developers to include and extend templates and blocks, add logical operators, query and filter data, and much more. See all available template tags below.
 
@@ -79,8 +78,8 @@ This tag is used for CSRF protection and required on any template with a form th
 
 Extends and block tags allow you to define blocks of content in a base template that can be overridden by templates that extend from it for template inheritance.
 
-<Tabs>
-<TabItem value="parent" label="Parent Template">
+<Tabs items={['Parent Template', 'Child Template']}>
+<Tab value="Parent Template">
 
 ```django title="layouts/base.html"
 <!DOCTYPE html>
@@ -106,8 +105,8 @@ Extends and block tags allow you to define blocks of content in a base template 
 </body>
 </html>
 ```
-</TabItem>
-<TabItem value="child" label="Child Template">
+</Tab>
+<Tab value="Child Template">
 
 ```django title="templates/blog.html"
 {% extends "layouts/base.html" %}
@@ -122,7 +121,7 @@ Extends and block tags allow you to define blocks of content in a base template 
 {% endblock %}
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### for

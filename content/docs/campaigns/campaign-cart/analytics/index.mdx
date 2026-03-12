@@ -4,8 +4,7 @@ sidebar_label: Analytics
 sidebar_position: 6
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 Track e-commerce events across Google Analytics 4, Facebook Pixel, RudderStack, and custom platforms.
 
@@ -26,8 +25,8 @@ Events follow GA4 specification and can be tracked automatically or manually usi
 
 The SDK captures e-commerce events using two APIs:
 
-<Tabs>
-  <TabItem value="simple" label="Simple API">
+<Tabs items={['Simple API', 'Advanced API']}>
+  <Tab value="Simple API">
 
 ```javascript
 // Simple tracking methods
@@ -39,8 +38,8 @@ next.trackPurchase(orderData);
 
 Works immediately, handles async loading automatically.
 
-  </TabItem>
-  <TabItem value="advanced" label="Advanced API">
+  </Tab>
+  <Tab value="Advanced API">
 
 ```javascript
 // Advanced tracking with full control
@@ -51,7 +50,7 @@ window.NextAnalytics.track({ event: 'custom_event', data: '...' });
 
 Direct access to analytics engine with advanced features.
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 ### 2. Events Are Stored
@@ -123,8 +122,8 @@ All events follow GA4-compliant format:
 
 ### Enable Debug Mode
 
-<Tabs>
-  <TabItem value="config" label="Configuration">
+<Tabs items={['Configuration', 'Runtime']}>
+  <Tab value="Configuration">
 
 ```javascript
 analytics: {
@@ -132,8 +131,8 @@ analytics: {
 }
 ```
 
-  </TabItem>
-  <TabItem value="runtime" label="Runtime">
+  </Tab>
+  <Tab value="Runtime">
 
 ```javascript
 // Enable at runtime
@@ -144,7 +143,7 @@ const status = window.NextAnalytics.getStatus();
 console.log(status);
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 ### Disable Tracking Temporarily

@@ -10,18 +10,17 @@ Theme templates can be fully localized with translations so that your store visi
 
 The `t` tag accepts an initial argument that is the key reference to the translation string in a locale file.
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'en.default.json', 'Result']}>
+<Tab value="Template">
 
 ```django
 <h2>{% t 'customer.orders.order_history' %}</h2>
 ```
 
-</TabItem>
-<TabItem value="locale" label="en.default.json">
+</Tab>
+<Tab value="en.default.json">
 
 ```json
 {
@@ -31,14 +30,14 @@ import TabItem from '@theme/TabItem';
 }
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
 ```html
 <h2>Order History</h2>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 
@@ -46,15 +45,15 @@ import TabItem from '@theme/TabItem';
 
 You can pass multiple named arguments to translations through the `t` tag used in the translation.
 
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'en.default.json', 'Result']}>
+<Tab value="Template">
 
 ```django
 <h2>{% t 'customer.profile.welcome_msg' with name=request.user.first_name %}</h2>
 ```
 
-</TabItem>
-<TabItem value="locale" label="en.default.json">
+</Tab>
+<Tab value="en.default.json">
 
 ```json
 {
@@ -64,14 +63,14 @@ You can pass multiple named arguments to translations through the `t` tag used i
 }
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
 ```html
 <h2>Hi John, welcome to your account!</h2>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 
@@ -94,15 +93,15 @@ Pluralization rules follow [Unicode CLDR](https://github.com/unicode-org/cldr) s
 
 Cardinal pluralization can be used to display different translations based on the value passed to `count`.
 
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'en.default.json', 'Result']}>
+<Tab value="Template">
 
 ```django
 <h2>{% t 'customer.notifcations.total' with count=notification.count %}</h2>
 ```
 
-</TabItem>
-<TabItem value="locale" label="en.default.json">
+</Tab>
+<Tab value="en.default.json">
 
 ```json
 {
@@ -116,8 +115,8 @@ Cardinal pluralization can be used to display different translations based on th
 }
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
 ```html
 {/* Count is 1 */}
@@ -130,7 +129,7 @@ Cardinal pluralization can be used to display different translations based on th
 <h2>You don't have any notifications.</h2>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 
@@ -138,15 +137,15 @@ Cardinal pluralization can be used to display different translations based on th
 
 Ordinal pluralization can be used to display different translations based on the index value to display the ordering of an object.
 
-<Tabs>
-<TabItem value="template" label="Template">
+<Tabs items={['Template', 'en.default.json', 'Result']}>
+<Tab value="Template">
 
 ```django
 <h2>{% t 'customer.orders.orders_msg' with index=customer.orders.count %}</h2>
 ```
 
-</TabItem>
-<TabItem value="locale" label="en.default.json">
+</Tab>
+<Tab value="en.default.json">
 
 ```json
 {
@@ -161,8 +160,8 @@ Ordinal pluralization can be used to display different translations based on the
 }
 ```
 
-</TabItem>
-<TabItem value="result" label="Result">
+</Tab>
+<Tab value="Result">
 
 ```html
 {/* Count is 1 */}
@@ -178,5 +177,5 @@ Ordinal pluralization can be used to display different translations based on the
 <h2>Congrats on your 4th order!</h2>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>

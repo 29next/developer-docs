@@ -74,6 +74,14 @@
   padding-bottom: 0.5rem !important;
 }
 
+/* Cards: strip fumadocs' own icon wrapper so custom colorized icon divs show cleanly */
+[data-card] > .not-prose {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
 /* Remove max-height on code blocks inside API example/request panels so content doesn't scroll */
 [data-api-requests] .fd-scroll-container {
   max-height: none !important;

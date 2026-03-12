@@ -4,9 +4,7 @@ description: Complete analytics configuration reference including tracking modes
 sidebar_position: 2
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 Configure the analytics system through `window.nextConfig` to control tracking behavior, enable providers, and set operational modes.
 
@@ -281,8 +279,8 @@ providers: {
 
 ### Enable Debug Mode
 
-<Tabs>
-  <TabItem value="config" label="Configuration">
+<Tabs items={['Configuration', 'Runtime']}>
+  <Tab value="Configuration">
 
 ```javascript
 analytics: {
@@ -290,8 +288,8 @@ analytics: {
 }
 ```
 
-  </TabItem>
-  <TabItem value="runtime" label="Runtime">
+  </Tab>
+  <Tab value="Runtime">
 
 ```javascript
 // Enable at runtime
@@ -301,7 +299,7 @@ window.NextAnalytics.setDebugMode(true);
 window.NextAnalytics.setDebugMode(false);
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 ### Check Analytics Status

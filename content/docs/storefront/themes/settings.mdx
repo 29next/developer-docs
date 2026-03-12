@@ -5,8 +5,7 @@ sidebar_position: 3
 ---
 
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 
 ### Introduction
@@ -33,8 +32,8 @@ configs
 Settings are passed to templates settings context variable allowing you to access settings values by their name. See example below of changing the layout by conditionally adding a class based on a radio setting.
 
 
-<Tabs>
-<TabItem value="settings" label="Settings Schema">
+<Tabs items={['Settings Schema', 'Template']}>
+<Tab value="Settings Schema">
 
 ```json
 {
@@ -71,8 +70,8 @@ Settings are passed to templates settings context variable allowing you to acces
 }
 ```
 
-</TabItem>
-<TabItem value="template" label="Template">
+</Tab>
+<Tab value="Template">
 
 ```html
 <div class="{% if settings.layout == 'boxed' %}container{% endif %}">
@@ -81,7 +80,7 @@ Settings are passed to templates settings context variable allowing you to acces
 </div>
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 

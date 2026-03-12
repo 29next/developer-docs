@@ -2,8 +2,7 @@
 title: "Debugging & Testing"
 description: "Test analytics implementation, troubleshoot issues, and verify event tracking across all providers."
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 
 
@@ -15,8 +14,8 @@ This guide provides debugging tools and troubleshooting strategies for testing y
 
 Debug mode provides console logging of analytics events and provider interactions.
 
-<Tabs>
-<TabItem value="configuration">
+<Tabs items={['Configuration', 'Runtime']}>
+<Tab value="Configuration">
 
 Enable debug mode in your analytics configuration:
 
@@ -26,8 +25,8 @@ analytics: {
 }
 ```
 
-</TabItem>
-<TabItem value="runtime">
+</Tab>
+<Tab value="Runtime">
 
 Enable or check debug mode at runtime via the browser console:
 
@@ -40,7 +39,7 @@ const status = window.NextAnalytics.getStatus();
 console.log(status);
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 When debug mode is enabled, you'll see detailed console output for every event tracked, including which providers received the event and any transformations applied.
@@ -162,8 +161,8 @@ next.trackAddToCart('123', 1);
 
 ### Test Each Provider
 
-<Tabs>
-<TabItem value="gtm">
+<Tabs items={['GTM', 'Facebook', 'RudderStack', 'Custom Webhook']}>
+<Tab value="GTM">
 
 **Google Tag Manager Debugging**
 
@@ -190,8 +189,8 @@ console.log(window.ElevarDataLayer);
 - Missing custom variables in GTM
 - Events firing after GTM container loads
 
-</TabItem>
-<TabItem value="facebook">
+</Tab>
+<Tab value="Facebook">
 
 **Facebook Pixel Debugging**
 
@@ -216,8 +215,8 @@ if (window.fbq) {
 - Events not matching Facebook's standard event names
 - Pixel events firing but not converting in Ads Manager
 
-</TabItem>
-<TabItem value="rudderstack">
+</Tab>
+<Tab value="RudderStack">
 
 **RudderStack Debugging**
 
@@ -246,8 +245,8 @@ if (window.rudderanalytics) {
 - Invalid schema causing events to be rejected
 - Missing user identification for conversion tracking
 
-</TabItem>
-<TabItem value="custom-webhook">
+</Tab>
+<Tab value="Custom Webhook">
 
 **Custom Endpoint Debugging**
 
@@ -282,7 +281,7 @@ transformFunction: (event) => {
 - Events arriving in wrong order: Adjust batching configuration
 - Server returning 400/500 errors: Validate event schema against your API spec
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Common Issues and Solutions

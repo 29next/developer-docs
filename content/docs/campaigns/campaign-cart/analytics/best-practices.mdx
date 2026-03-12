@@ -3,8 +3,7 @@ title: Best Practices
 description: Patterns and recommendations for implementing Campaign Cart analytics including configuration strategies, event naming conventions, tracking patterns, and optimization techniques.
 sidebar_position: 12
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 
 
@@ -127,8 +126,8 @@ Adopt a consistent naming convention across all custom events. Use snake_case (l
 
 Follow these naming patterns to make event names self-documenting:
 
-<Tabs>
-<TabItem value="action-+-object">
+<Tabs items={['Action + Object', 'Object + Status', 'Object + Action + Context']}>
+<Tab value="Action + Object">
 
 ```javascript
 // Format: [verb]_[noun]
@@ -140,8 +139,8 @@ Follow these naming patterns to make event names self-documenting:
 'payment_process'
 ```
 
-</TabItem>
-<TabItem value="object-+-status">
+</Tab>
+<Tab value="Object + Status">
 
 ```javascript
 // Format: [noun]_[status]
@@ -152,8 +151,8 @@ Follow these naming patterns to make event names self-documenting:
 'sync_failed'
 ```
 
-</TabItem>
-<TabItem value="object-+-action-+-context">
+</Tab>
+<Tab value="Object + Action + Context">
 
 ```javascript
 // Format: [noun]_[verb]_[context]
@@ -164,7 +163,7 @@ Follow these naming patterns to make event names self-documenting:
 'checkout_error_payment'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Tracking Patterns
@@ -607,8 +606,8 @@ if (process.env.NODE_ENV === 'development') {
 
 ### Google Tag Manager
 
-<Tabs>
-<TabItem value="configuration">
+<Tabs items={['Configuration', 'Best Practices']}>
+<Tab value="Configuration">
 
 ```javascript
 window.nextConfig = {
@@ -623,8 +622,8 @@ window.nextConfig = {
 };
 ```
 
-</TabItem>
-<TabItem value="best-practices">
+</Tab>
+<Tab value="Best Practices">
 
 1. **Test in GTM Preview Mode**: Always test events in GTM's preview mode before publishing containers.
 
@@ -643,13 +642,13 @@ window.NextAnalytics.track({
 
 3. **Version Control Containers**: Use GTM's version history feature to manage changes.
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Facebook Pixel
 
-<Tabs>
-<TabItem value="configuration">
+<Tabs items={['Configuration', 'Best Practices']}>
+<Tab value="Configuration">
 
 ```javascript
 window.nextConfig = {
@@ -667,8 +666,8 @@ window.nextConfig = {
 };
 ```
 
-</TabItem>
-<TabItem value="best-practices">
+</Tab>
+<Tab value="Best Practices">
 
 1. **Set storeName**: Required for purchase deduplication across web and app.
 
@@ -698,13 +697,13 @@ window.nextConfig = {
 
 4. **Verify in Pixel Helper**: Use Facebook's Pixel Helper browser extension to verify events.
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### RudderStack
 
-<Tabs>
-<TabItem value="configuration">
+<Tabs items={['Configuration', 'Best Practices']}>
+<Tab value="Configuration">
 
 ```javascript
 window.nextConfig = {
@@ -722,8 +721,8 @@ window.nextConfig = {
 };
 ```
 
-</TabItem>
-<TabItem value="best-practices">
+</Tab>
+<Tab value="Best Practices">
 
 1. **Identify Users**: Set user context for better tracking.
 
@@ -752,13 +751,13 @@ window.NextAnalytics.track({
 
 3. **Monitor Transformations**: Use RudderStack's transformations for event routing.
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Custom Webhooks
 
-<Tabs>
-<TabItem value="configuration">
+<Tabs items={['Configuration', 'Best Practices']}>
+<Tab value="Configuration">
 
 ```javascript
 window.nextConfig = {
@@ -777,8 +776,8 @@ window.nextConfig = {
 };
 ```
 
-</TabItem>
-<TabItem value="best-practices">
+</Tab>
+<Tab value="Best Practices">
 
 1. **Implement Retry Logic**: Handle failed requests gracefully.
 
@@ -823,7 +822,7 @@ const signature = crypto
 }
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Testing Strategies
@@ -942,8 +941,8 @@ console.assert(
 
 Before deploying analytics to production, verify:
 
-<Tabs>
-<TabItem value="configuration">
+<Tabs items={['Configuration', 'Implementation', 'Testing', 'Monitoring', 'Documentation']}>
+<Tab value="Configuration">
 
 - [ ] Analytics enabled in production config
 - [ ] Debug mode disabled (set based on environment)
@@ -953,8 +952,8 @@ Before deploying analytics to production, verify:
 - [ ] All required providers enabled
 - [ ] Custom webhook endpoints verified if using custom provider
 
-</TabItem>
-<TabItem value="implementation">
+</Tab>
+<Tab value="Implementation">
 
 - [ ] All purchase tracking implemented on confirmation page
 - [ ] All custom events use consistent snake_case naming
@@ -964,8 +963,8 @@ Before deploying analytics to production, verify:
 - [ ] Event validation enabled in development
 - [ ] No PII tracked (emails, phone numbers) in non-critical events
 
-</TabItem>
-<TabItem value="testing">
+</Tab>
+<Tab value="Testing">
 
 - [ ] Tested with GTM Debug View (if using GTM)
 - [ ] Tested with Facebook Pixel Helper (if using Facebook)
@@ -976,8 +975,8 @@ Before deploying analytics to production, verify:
 - [ ] Cross-browser testing completed
 - [ ] Mobile testing completed
 
-</TabItem>
-<TabItem value="monitoring">
+</Tab>
+<Tab value="Monitoring">
 
 - [ ] Set up alerting for tracking failures
 - [ ] Monitor event delivery rates
@@ -987,8 +986,8 @@ Before deploying analytics to production, verify:
 - [ ] Monitor error event rates
 - [ ] Set up weekly data quality checks
 
-</TabItem>
-<TabItem value="documentation">
+</Tab>
+<Tab value="Documentation">
 
 - [ ] Document all custom events and their parameters
 - [ ] Document any event transform functions
@@ -998,7 +997,7 @@ Before deploying analytics to production, verify:
 - [ ] Document provider credentials location
 - [ ] Keep change log of analytics modifications
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Common Patterns and Examples

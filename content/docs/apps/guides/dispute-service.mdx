@@ -5,8 +5,7 @@ tags:
  - Guide
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 Dispute service apps are integrations that manage the processing of payment disputes (alerts and chargebacks) on behalf of merchants seamlessly within the platform.
 
@@ -141,8 +140,8 @@ It's desirable to cancel fulfillment for orders that have not shipped yet when t
 <Callout type="info">
 To retrieve a list of all fulfillment orders and their status, use the [ordersFulfillmentOrdersRetrieve](/docs/admin-api/reference/orders/ordersFulfillmentOrdersRetrieve) endpoint.
 </Callout>
-<Tabs>
-<TabItem value="fulfillment_status-unfulfilled" label="Fulfillment Status - Unfulfilled">
+<Tabs items={['Fulfillment Status - Unfulfilled', 'Fulifllment Status - Processing']}>
+<Tab value="Fulfillment Status - Unfulfilled">
 
 If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fulfillment using the [fulfillmentOrdersHold](/docs/admin-api/reference/fulfillment/fulfillmentOrdersHold) endpoint.
 
@@ -156,8 +155,8 @@ If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fu
 }
 ```
 
-</TabItem>
-<TabItem value="fulfillment_status-processing" label="Fulifllment Status - Processing">
+</Tab>
+<Tab value="Fulifllment Status - Processing">
 
 If order `fulfilmlent_status` is `processing` your dispute service can request processing fulfillment orders be canceled with the fulfillment locations with the [cancellationRequestSend](/docs/admin-api/reference/fulfillment/cancellationRequestSend) endpoint.
 
@@ -171,7 +170,7 @@ If order `fulfilmlent_status` is `processing` your dispute service can request p
 <Callout type="warn">
 Fulfillment locations need to accept the cancelation request to confirm they were able to stop fulfillment on their end at. It is possible that the fulfillment order was already shipped and the fulfillment could not be stopped.
 </Callout>
-</TabItem>
+</Tab>
 </Tabs>
 
 ### RDR Alerts

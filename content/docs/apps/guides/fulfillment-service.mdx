@@ -5,10 +5,8 @@ tags:
  - Guide
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 import Link from 'next/link';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 Fulfillment service apps are integrations that manage fulfillment of physical products for merchants by enabling transparent communication between fulfillment providers and merchants using the Next Commerce dashboard.
 
@@ -91,16 +89,16 @@ Fulfullment Requests are sent to the location `callback` + `/fulfillment-order-n
 - `fulfillment_requested` - when a new fulfillment order has been requested to be fulfilled.
 - `cancellation_requested`- when an already processing fulfillment order has been requested to cancel fulfillment.
 
-<Tabs>
-<TabItem value="fulfillment_requested" label="Fulfillment Request">
+<Tabs items={['Fulfillment Request', 'Cancellation Request']}>
+<Tab value="Fulfillment Request">
 
 ```json  title="Example Fulfillment Request Payload"
 {
   "type": "fulfillment_requested"
 }
 ```
-</TabItem>
-<TabItem value="cancellation_requested" label="Cancellation Request">
+</Tab>
+<Tab value="Cancellation Request">
 
 ```json  title="Example Cancellation Request Payload"
 {
@@ -108,7 +106,7 @@ Fulfullment Requests are sent to the location `callback` + `/fulfillment-order-n
 }
 ```
 
-</TabItem>
+</Tab>
 
 </Tabs>
 
@@ -121,16 +119,16 @@ The [Assigned Fulfillment Orders](/docs/admin-api/reference/fulfillment/assigned
 <Callout type="info">
 Use the appropriate `assignment_status` parameter to filter the fulfillment orders to those that require action.
 </Callout>
-<Tabs>
-<TabItem value="fulfillment_requested" label="Fulfillment Requests">
+<Tabs items={['Fulfillment Requests', 'Cancellation Requests']}>
+<Tab value="Fulfillment Requests">
 
 Retrieve all pending Fulfillment Requests
 
 ```json
 GET https://{store}.29next.store/docs/admin-api/assigned-fulfillment-orders/?assignment_status=fulfillment_requested
 ```
-</TabItem>
-<TabItem value="cancellation_requested" label="Cancellation Requests">
+</Tab>
+<Tab value="Cancellation Requests">
 
 Retrieve all pending Cancellation Requests
 
@@ -138,7 +136,7 @@ Retrieve all pending Cancellation Requests
 GET https://{store}.29next.store/docs/admin-api/assigned-fulfillment-orders/?assignment_status=cancellation_requested
 ```
 
-</TabItem>
+</Tab>
 
 </Tabs>
 
