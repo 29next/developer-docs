@@ -14,7 +14,7 @@ Subscription management actions most often times will only affect future renewal
 </Callout>
 ### Create Subscription
 
-Subscriptions can be created directly through the [subscriptionsCreate](/docs/admin-api/reference/#/operations/subscriptionsCreate) Admin API endpoint for scenarios such as custom order flows or importing subcriptions from another platform.
+Subscriptions can be created directly through the [subscriptionsCreate](/docs/admin-api/reference/subscriptionsCreate) Admin API endpoint for scenarios such as custom order flows or importing subcriptions from another platform.
 
 ```json title="Create Subscription"
 {
@@ -47,11 +47,11 @@ Subscriptions can be created directly through the [subscriptionsCreate](/docs/ad
 
 ### Updating Products & Pricing
 
-Updating subscription recurring items and pricing can be done through [subscriptionLinesCreate](/docs/admin-api/reference/#/operations/subscriptionsLinesCreate), [subscriptionLinesUpdate](/docs/admin-api/reference/#/operations/subscriptionsLinesUpdate), and [subscriptionsLinesDestroy](/docs/admin-api/reference/#/operations/subscriptionsLinesDestroy) endpoints.
+Updating subscription recurring items and pricing can be done through [subscriptionLinesCreate](/docs/admin-api/reference/subscriptionsLinesCreate), [subscriptionLinesUpdate](/docs/admin-api/reference/subscriptionsLinesUpdate), and [subscriptionsLinesDestroy](/docs/admin-api/reference/subscriptionsLinesDestroy) endpoints.
 
 **Adding an Additional Product**
 
-To add a new product to a subscription, use the [subscriptionLinesCreate](/docs/admin-api/reference/#/operations/subscriptionsLinesCreate) Admin API endpoint with the product, price, and quanity details.
+To add a new product to a subscription, use the [subscriptionLinesCreate](/docs/admin-api/reference/subscriptionsLinesCreate) Admin API endpoint with the product, price, and quanity details.
 
 ```json title="Adding an Additional Product"
 // POST https://{store}.29next.store/api/admin/subscriptions/{id}/lines/
@@ -65,7 +65,7 @@ To add a new product to a subscription, use the [subscriptionLinesCreate](/docs/
 
 **Updating an Existing Line Item Product Price**
 
-To update and existing product price and quantity on a subscription line, use the [subscriptionsLinesUpdate](/docs/admin-api/reference/#/operations/subscriptionsLinesUpdate) Admin API endpoint with the new price, and new quanity details.
+To update and existing product price and quantity on a subscription line, use the [subscriptionsLinesUpdate](/docs/admin-api/reference/subscriptionsLinesUpdate) Admin API endpoint with the new price, and new quanity details.
 
 ```json title="Updating an Existing Product"
 // PUT https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/
@@ -78,7 +78,7 @@ To update and existing product price and quantity on a subscription line, use th
 
 **Removing a Product**
 
-To remove a product from a subscription, send a DELETE request to the [subscriptionsLinesDestroy](/docs/admin-api/reference/#/operations/subscriptionsLinesDestroy) endpoint to remove the line item (ie the product) from future renewal orders created from the subscription.
+To remove a product from a subscription, send a DELETE request to the [subscriptionsLinesDestroy](/docs/admin-api/reference/subscriptionsLinesDestroy) endpoint to remove the line item (ie the product) from future renewal orders created from the subscription.
 
 ```json title="Remove an Existing Product"
 // DELETE https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/
@@ -89,7 +89,7 @@ Subscriptions must have at least one line item with a product, you can alternati
 </Callout>
 ### Updating Renewal Schedule
 
-Changing the renewal schedule of a subscription can be achived with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint with a new `interval` and `interval_count`, ie 30 days.
+Changing the renewal schedule of a subscription can be achived with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptionsPartialUpdate) endpoint with a new `interval` and `interval_count`, ie 30 days.
 
 ```json title="Update Subscription Renewal Schedule"
 // PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
@@ -102,7 +102,7 @@ Changing the renewal schedule of a subscription can be achived with a PATCH requ
 
 ### Changing Next Renewal Date
 
-Changing the next renewal date of a subscription can be achieved through updating the `next_renewal_date` key on the subscription object with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint with your new renewal date and time.
+Changing the next renewal date of a subscription can be achieved through updating the `next_renewal_date` key on the subscription object with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptionsPartialUpdate) endpoint with your new renewal date and time.
 
 ```json title="Update Next Renewal Date"
 // PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
@@ -116,11 +116,11 @@ If you would like to immediately renew the subscription, you can pass a date fro
 </Callout>
 ### Updating Payment Details
 
-Updating the Payment Gateway of a subscription can done through the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint.
+Updating the Payment Gateway of a subscription can done through the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptionsPartialUpdate) endpoint.
 
 **Changing Payment Gateway**
 
-To change the payment gateway used for bankcard payments of a subscription, send a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint with the new `payment_gateway`.
+To change the payment gateway used for bankcard payments of a subscription, send a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptionsPartialUpdate) endpoint with the new `payment_gateway`.
 
 ```json title="Update Payment Gateway"
 // PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
@@ -133,10 +133,10 @@ To change the payment gateway used for bankcard payments of a subscription, send
 
 **Updating Bankcard Payment Method**
 
-To change the bankcard on a subscription, pass a new `card_token` with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/#/operations/subscriptionsPartialUpdate) endpoint.
+To change the bankcard on a subscription, pass a new `card_token` with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptionsPartialUpdate) endpoint.
 
 <Callout type="info">
-To update a bankcard on a subscription, you must use the **[iFrame to tokenize](/docs/admin-api/guides/iframe-payment-form.md)** the bankcard and use the `card_token` when updating the subscription itself.
+To update a bankcard on a subscription, you must use the **[iFrame to tokenize](/docs/admin-api/guides/iframe-payment-form)** the bankcard and use the `card_token` when updating the subscription itself.
 
 The new bankcard will be automatically verfied with a `verify` request to a payment gateway to ensure the new bankcard is valid and can be used for future renewals. If the bankcard cannot be verified, the update request will fail and return an error.
 </Callout>
@@ -174,7 +174,7 @@ stateDiagram-v2
 
 ### Retrying Renewal
 
-Subscriptions that are `past_due` status can be attemted to retry the renewal, often combined with a new `payment_gateway`, by using the [subscriptionsRetryCreate](/docs/admin-api/reference/#/operations/subscriptionsRetryCreate) endpoint.
+Subscriptions that are `past_due` status can be attemted to retry the renewal, often combined with a new `payment_gateway`, by using the [subscriptionsRetryCreate](/docs/admin-api/reference/subscriptionsRetryCreate) endpoint.
 
 ```json title="Retry Subscription Renewal"
 // POST https://{store}.29next.store/api/admin/subscriptions/{id}/retry/
@@ -189,7 +189,7 @@ The subscription retry endpoint is useful for custom recovery logic when attempt
 </Callout>
 ### Cancel
 
-To cancel a subscription, use the [subscriptionsCancelCreate](/docs/admin-api/reference/#/operations/subscriptionsCancelCreate) endpoint to stop all future renewals.
+To cancel a subscription, use the [subscriptionsCancelCreate](/docs/admin-api/reference/subscriptionsCancelCreate) endpoint to stop all future renewals.
 
 
 ```json title="Cancel Subscription"

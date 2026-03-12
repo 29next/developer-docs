@@ -12,7 +12,7 @@ Themes allow you to fully control the look and feel of your storefront using mod
 - Easily manage theme assets (CSS, JS, images)
 - Customize themes via the dashboard or CLI (Theme Kit)
 
-Learn how to [build and manage your theme →](/docs/storefront/themes/index.md)
+Learn how to [build and manage your theme →](/docs/storefront/themes)
 
 
 ### Event Tracking
@@ -23,7 +23,7 @@ Capture user behavior, conversion events, and key storefront interactions with b
 - Hook into page views, checkout events, and custom triggers
 - Integrate storefronte events with external platforms
 
-Learn how to [implement tracking for your storefront →](/docs/storefront/event-tracking.md)
+Learn how to [implement tracking for your storefront →](/docs/storefront/event-tracking)
 
 
 ### Storefront GraphQL API
@@ -33,4 +33,4 @@ Power deeper customizations, dynamic content loading, and headless experiences u
 - Fetch products, cart data, and more in real-time.
 - Create custom funcationality such as cart upsells.
 
-Learn how to [query your storefront data →](/docs/storefront/api.md)
+Learn how to [query your storefront data →](/docs/storefront/api)

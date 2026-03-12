@@ -677,7 +677,7 @@ next.on('cart:updated', cartHandler);
 next.off('cart:updated', cartHandler);
 ```
 
-For a complete list of all 34 available events, event data structures, initialization callbacks, and best practices, see the [Events Reference](/docs/campaigns/campaign-cart/javascript-api/events/).
+For a complete list of all 34 available events, event data structures, initialization callbacks, and best practices, see the [Events Reference](/docs/campaigns/campaign-cart/javascript-api/events).
 
 ## Utility Methods
 
@@ -860,10 +860,10 @@ const isVisible = nextDebug.overlay.isVisible();
 
 ## Related Documentation
 
-- **[Utilities](/docs/campaigns/campaign-cart/utilities/)** - FOMO, exit intent, and debugging tools
+- **[Utilities](/docs/campaigns/campaign-cart/utilities)** - FOMO, exit intent, and debugging tools
 - **[Events](/docs/campaigns/campaign-cart/javascript-api/events)** - Complete event system documentation
 - **[Profiles API](/docs/campaigns/campaign-cart/javascript-api/profiles)** - Profile-based package mapping
 - **[Attribution API](/docs/campaigns/campaign-cart/javascript-api/attribution)** - Attribution tracking
 - **[URL Parameters API](/docs/campaigns/campaign-cart/javascript-api/url-parameters)** - URL parameter management
-- **[Data Attributes](/docs/campaigns/campaign-cart/data-attributes/)** - HTML attribute reference
+- **[Data Attributes](/docs/campaigns/campaign-cart/data-attributes)** - HTML attribute reference
 

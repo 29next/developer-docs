@@ -18,6 +18,6 @@ Additional tools and features for conversion optimization and debugging.
 
 ## Related
 
-- [Analytics Overview](/docs/campaigns/campaign-cart/analytics/) - Analytics setup and configuration
-- [JavaScript API](/docs/campaigns/campaign-cart/javascript-api/) - Complete JavaScript methods reference
+- [Analytics Overview](/docs/campaigns/campaign-cart/analytics) - Analytics setup and configuration
+- [JavaScript API](/docs/campaigns/campaign-cart/javascript-api) - Complete JavaScript methods reference
 

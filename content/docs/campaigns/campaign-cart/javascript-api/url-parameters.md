@@ -455,6 +455,6 @@ Parameters set via the JavaScript API work seamlessly with the conditional displ
 
 ## See Also
 
-- [URL Parameters (Attributes)](/docs/campaigns/campaign-cart/data-attributes/url-parameters/) - Using parameters with HTML attributes
-- [Conditionals](/docs/campaigns/campaign-cart/data-attributes/state/) - Show/hide elements based on conditions
-- [Events](/docs/campaigns/campaign-cart/javascript-api/events/) - Parameter-related events
+- [URL Parameters (Attributes)](/docs/campaigns/campaign-cart/data-attributes/url-parameters) - Using parameters with HTML attributes
+- [Conditionals](/docs/campaigns/campaign-cart/data-attributes/state) - Show/hide elements based on conditions
+- [Events](/docs/campaigns/campaign-cart/javascript-api/events) - Parameter-related events

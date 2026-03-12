@@ -744,7 +744,7 @@ Display checkout information for review:
 
 ## Related Documentation
 
-- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display/) - Show dynamic data
-- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state/) - Conditional visibility
-- [Events](/docs/campaigns/campaign-cart/javascript-api/events/) - Respond to action events
-- [JavaScript API](/docs/campaigns/campaign-cart/javascript-api/methods/) - Programmatic cart control
+- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display) - Show dynamic data
+- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state) - Conditional visibility
+- [Events](/docs/campaigns/campaign-cart/javascript-api/events) - Respond to action events
+- [JavaScript API](/docs/campaigns/campaign-cart/javascript-api/methods) - Programmatic cart control

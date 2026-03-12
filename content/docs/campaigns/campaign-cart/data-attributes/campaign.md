@@ -66,6 +66,6 @@ Display campaign-level information like name, currency, and language.
 
 ## Related Documentation
 
-- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display/) - Display campaign data
-- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state/) - Conditional display based on campaign
+- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display) - Display campaign data
+- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state) - Conditional display based on campaign
 

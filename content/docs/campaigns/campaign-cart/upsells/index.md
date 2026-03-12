@@ -480,4 +480,4 @@ button[data-next-upsell-quantity="decrease"]:disabled {
 
 ## Related Documentation
 
-- [Cart System](/docs/campaigns/campaign-cart/cart-system/) - Cart management basics
+- [Cart System](/docs/campaigns/campaign-cart/cart-system) - Cart management basics

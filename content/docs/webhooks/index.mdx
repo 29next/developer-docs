@@ -45,28 +45,28 @@ Returning a `410` response code indicates the target resource is no longer avail
 
 | Event                     | Description                          | Reference |
 | -----------               | ------------------------------------ | ----- |
-| `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*| [View Example](/docs/admin-api/reference/#/webhooks/app.uninstalled/post) |
-| `cart.abandoned`          | Triggers when a cart is marked as abandoned. | [View Example](/docs/admin-api/reference/#/webhooks/cart.abandoned/post) |
-| `customer.created`        | Triggers when a new customer is created. | [View Example](/docs/admin-api/reference/#/webhooks/customer.created/post) |
-| `customer.updated`        | Triggers when an existing customer is updated. | [View Example](/docs/admin-api/reference/#/webhooks/customer.updated/post) |
-| `dispute.created`         | Triggers when a new dispute is created. | [View Example](/docs/admin-api/reference/#/webhooks/dispute.created/post) |
-| `dispute.updated`         | Triggers when a dispute is updated. | [View Example](/docs/admin-api/reference/#/webhooks/dispute.updated/post) |
-| `gateway.created`         | Triggers when a new gateway is created. | [View Example](/docs/admin-api/reference/#/webhooks/gateway.created/post) |
-| `gateway.updated`         | Triggers when a gateway is updated. | [View Example](/docs/admin-api/reference/#/webhooks/gateway.updated/post) |
-| `fulfillment.created`     | Triggers when a new fulfillment is created. | [View Example](/docs/admin-api/reference/#/webhooks/fulfillment.created/post) |
-| `fulfillment.updated`     | Triggers when a fulfillment is updated. | [View Example](/docs/admin-api/reference/#/webhooks/fulfillment.updated/post) |
-| `order.created`           | Triggers when an order is created. | [View Example](/docs/admin-api/reference/#/webhooks/order.created/post) |
-| `order.updated`           | Triggers when an existing order is updated. | [View Example](/docs/admin-api/reference/#/webhooks/order.updated/post) |
-| `product.created`         | Triggers when a product is created. | [View Example](/docs/admin-api/reference/#/webhooks/product.created/post) |
-| `product.deleted`         | Triggers when an existing product is deleted. | [View Example](/docs/admin-api/reference/#/webhooks/product.deleted/post) |
-| `product.updated`         | Triggers when an existing product is updated. | [View Example](/docs/admin-api/reference/#/webhooks/product.updated/post) |
-| `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/admin-api/reference/#/webhooks/transaction.created/post) |
-| `transaction.updated`     | Triggers when a payment transaction is updated. | [View Example](/docs/admin-api/reference/#/webhooks/transaction.updated/post) |
-| `subscription.created`    | Triggers when a new subscription is created. | [View Example](/docs/admin-api/reference/#/webhooks/subscription.created/post) |
-| `subscription.updated`    | Triggers when an existing subscription is updated. | [View Example](/docs/admin-api/reference/#/webhooks/subscription.updated/post) |
-| `store.updated`           | Triggers when store settings are updated. | [View Example](/docs/admin-api/reference/#/webhooks/store.updated/post) |
-| `ticket.created`          | Triggers a new support ticket is created. |  [View Example](/docs/admin-api/reference/#/webhooks/ticket.created/post) |
-| `ticket.updated`          | Triggers when an existing support ticket is updated. | [View Example](/docs/admin-api/reference/#/webhooks/ticket.updated/post) |
+| `app.uninstalled`         | Triggers when an app is uninstalled. *Only available for apps.*| [View Example](/docs/webhooks/reference/apps/app.uninstalled) |
+| `cart.abandoned`          | Triggers when a cart is marked as abandoned. | [View Example](/docs/webhooks/reference/carts/cart.abandoned) |
+| `customer.created`        | Triggers when a new customer is created. | [View Example](/docs/webhooks/reference/customers/customer.created) |
+| `customer.updated`        | Triggers when an existing customer is updated. | [View Example](/docs/webhooks/reference/customers/customer.updated) |
+| `dispute.created`         | Triggers when a new dispute is created. | [View Example](/docs/webhooks/reference/payments/dispute.created) |
+| `dispute.updated`         | Triggers when a dispute is updated. | [View Example](/docs/webhooks/reference/payments/dispute.updated) |
+| `gateway.created`         | Triggers when a new gateway is created. | [View Example](/docs/webhooks/reference/payments/gateway.created) |
+| `gateway.updated`         | Triggers when a gateway is updated. | [View Example](/docs/webhooks/reference/payments/gateway.updated) |
+| `fulfillment.created`     | Triggers when a new fulfillment is created. | [View Example](/docs/webhooks/reference/fulfillment/fulfillment.created) |
+| `fulfillment.updated`     | Triggers when a fulfillment is updated. | [View Example](/docs/webhooks/reference/fulfillment/fulfillment.updated) |
+| `order.created`           | Triggers when an order is created. | [View Example](/docs/webhooks/reference/orders/order.created) |
+| `order.updated`           | Triggers when an existing order is updated. | [View Example](/docs/webhooks/reference/orders/order.updated) |
+| `product.created`         | Triggers when a product is created. | [View Example](/docs/webhooks/reference/products/product.created) |
+| `product.deleted`         | Triggers when an existing product is deleted. | [View Example](/docs/webhooks/reference/products/product.deleted) |
+| `product.updated`         | Triggers when an existing product is updated. | [View Example](/docs/webhooks/reference/products/product.updated) |
+| `transaction.created`     | Triggers when a payment transaction is created. | [View Example](/docs/webhooks/reference/payments/transaction.created) |
+| `transaction.updated`     | Triggers when a payment transaction is updated. | [View Example](/docs/webhooks/reference/payments/transaction.updated) |
+| `subscription.created`    | Triggers when a new subscription is created. | [View Example](/docs/webhooks/reference/subscriptions/subscription.created) |
+| `subscription.updated`    | Triggers when an existing subscription is updated. | [View Example](/docs/webhooks/reference/subscriptions/subscription.updated) |
+| `store.updated`           | Triggers when store settings are updated. | [View Example](/docs/webhooks/reference/store/store.updated) |
+| `ticket.created`          | Triggers a new support ticket is created. |  [View Example](/docs/webhooks/reference/support/ticket.created) |
+| `ticket.updated`          | Triggers when an existing support ticket is updated. | [View Example](/docs/webhooks/reference/support/ticket.updated) |
 
 ### Webhook Data Structure
 
@@ -123,7 +123,7 @@ Below is a full example of a webhook payload for a `customer.created` event to d
 
 ### Webhook API Versions
 
-Webhook object data structure follows the [Admin API](/docs/admin-api/index.md) and Admin API versioning to ensure predictable data structure for existing webhook receiver endpoints with a path for upgrades.
+Webhook object data structure follows the [Admin API](/docs/admin-api) and Admin API versioning to ensure predictable data structure for existing webhook receiver endpoints with a path for upgrades.
 
 **Handling Webhook API Versions**
 

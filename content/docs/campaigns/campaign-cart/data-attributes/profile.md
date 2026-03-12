@@ -278,7 +278,7 @@ window.next.on('profile:switched', (data) => {
 
 ## Related Documentation
 
-- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state/) - Profile conditionals
-- [Configuration Attributes](/docs/campaigns/campaign-cart/data-attributes/configuration/) - Profile switcher configuration
-- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display/) - Display profile data
+- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state) - Profile conditionals
+- [Configuration Attributes](/docs/campaigns/campaign-cart/data-attributes/configuration) - Profile switcher configuration
+- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display) - Display profile data
 

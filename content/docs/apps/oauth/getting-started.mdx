@@ -4,7 +4,7 @@ sidebar_position: 1
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Server-side Apps that use Stores' Admin API must obtain authorization using OAuth 2.0 ([see overview](/apps/oauth/index.md)). This guide shows you how to authorize your app and retrieve your Access Token to access the Admin API.
+Server-side Apps that use Stores' Admin API must obtain authorization using OAuth 2.0 ([see overview](/docs/apps/oauth)). This guide shows you how to authorize your app and retrieve your Access Token to access the Admin API.
 
 ### Step 1: Retrieve API Credentials
 
@@ -31,7 +31,7 @@ https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_
 |`response_type`| Must be `code`, which only authorization flow supported at this time. |
 |`client_id`| Your app `client_id` found in in your partner account.|
 |`redirect_uri`|The url you want to receive the Authorization Code in your app. **Must be listed in your app Redirect URLs setting**. |
-|`scope`| A space separated list of scopes such as `orders:read orders:write users:read users:write`. [See list of all available scopes](/docs/admin-api/permissions.md). |
+|`scope`| A space separated list of scopes such as `orders:read orders:write users:read users:write`. [See list of all available scopes](/docs/admin-api/permissions). |
 
 
 ### Step 3: Confirm Installation
@@ -79,7 +79,7 @@ A successful request will have the following response.
 }
 ```
 
-Save the `access_token` to your app to use with requests to the [Admin API](/docs/admin-api/index.md) for the store. :clap:
+Save the `access_token` to your app to use with requests to the [Admin API](/docs/admin-api) for the store. :clap:
 
 <Callout type="info">
 To see this in action, see the [Example App](https://github.com/NextCommerceCo/example-app) on Github.

@@ -18,7 +18,7 @@ Complete implementations and code examples for common use cases.
 
 ## Related
 
-- [Analytics Overview](/docs/campaigns/campaign-cart/analytics/) - Analytics setup
-- [Cart System](/docs/campaigns/campaign-cart/cart-system/) - Cart management
-- [Upsells](/docs/campaigns/campaign-cart/upsells/) - Upsell flows
+- [Analytics Overview](/docs/campaigns/campaign-cart/analytics) - Analytics setup
+- [Cart System](/docs/campaigns/campaign-cart/cart-system) - Cart management
+- [Upsells](/docs/campaigns/campaign-cart/upsells) - Upsell flows
 

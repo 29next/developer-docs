@@ -321,5 +321,5 @@ If migrating from another analytics setup to GTM with Campaign Cart SDK:
 
 - [Google Tag Manager Documentation](https://support.google.com/tagmanager)
 - [GA4 Event Schema](https://support.google.com/analytics/answer/11137820)
-- [Campaign Cart Analytics Documentation](/docs/campaigns/campaign-cart/analytics/)
-- [Event Reference](/docs/campaigns/campaign-cart/analytics/events/)
+- [Campaign Cart Analytics Documentation](/docs/campaigns/campaign-cart/analytics)
+- [Event Reference](/docs/campaigns/campaign-cart/analytics/events)

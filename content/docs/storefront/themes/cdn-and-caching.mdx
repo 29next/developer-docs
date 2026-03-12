@@ -15,7 +15,7 @@ Always use the store network domain `{store}.29next.store` when developing theme
 All merchant uploaded media assets and theme assets are loaded from our CDN for the fastest performance. 
 
 - **Media** - Links to uploaded media should always use the `cdn.29next.store`
-- **Theme Assets** - Theme assets should use the [asset_url](/docs/storefront/themes/templates/filters.md#asset_url) in templates which always generates a full CDN link on the storefront.
+- **Theme Assets** - Theme assets should use the [asset_url](/docs/storefront/themes/templates/filters#asset_url) in templates which always generates a full CDN link on the storefront.
 
 ### Full Page Caching
 
@@ -33,11 +33,11 @@ To skip the cache, you can append a unique querystring such as `?skip_cache` to 
 
 Themes use many templates ie `layouts`, `partials`, and `assets` that when compiled together create amazing customer experiences. Templates are cached in memory to reduce database queries when compiling templates into the full html response. 
 
-Updating a template through the dashboard or [Theme Kit](/docs/storefront/themes/theme-kit.md) should automatically purge the cache for you to see your latest changes on the network domain, see notes above. 
+Updating a template through the dashboard or [Theme Kit](/docs/storefront/themes/theme-kit) should automatically purge the cache for you to see your latest changes on the network domain, see notes above. 
 
 
 <Callout type="warn">
 There are a few cases wherein a form on the frontend needs to use a `{% csrf_token %}` field to secure submission to the backend. The platform core JS will automatically replace `{% csrf_token %}` that are in cached versions of pages to ensure the forms still work. 
 
-**It is advisable to not implement custom templates that require `{% csrf_token %}`, we recommend to [Storefront API](/docs/storefront/api.md) instead.**
+**It is advisable to not implement custom templates that require `{% csrf_token %}`, we recommend to [Storefront API](/docs/storefront/api) instead.**
 </Callout>

@@ -980,6 +980,6 @@ Enable debug mode to see:
 ## Related Documentation
 
 - [Cart Summary Checkout](/docs/campaigns/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
-- [Actions](/docs/campaigns/campaign-cart/data-attributes/actions/) - Interactive elements
-- [State Management](/docs/campaigns/campaign-cart/data-attributes/state/) - Conditional logic
-- [Events](/docs/campaigns/campaign-cart/javascript-api/events/) - React to data changes
+- [Actions](/docs/campaigns/campaign-cart/data-attributes/actions) - Interactive elements
+- [State Management](/docs/campaigns/campaign-cart/data-attributes/state) - Conditional logic
+- [Events](/docs/campaigns/campaign-cart/javascript-api/events) - React to data changes

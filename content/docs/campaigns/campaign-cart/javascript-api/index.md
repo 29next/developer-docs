@@ -30,6 +30,6 @@ The JavaScript API is organized into the following categories:
 - **[Profiles API](/docs/campaigns/campaign-cart/javascript-api/profiles)** - Profile-based package mapping
 - **[Attribution API](/docs/campaigns/campaign-cart/javascript-api/attribution)** - Attribution tracking
 - **[URL Parameters API](/docs/campaigns/campaign-cart/javascript-api/url-parameters)** - URL parameter management
-- **[Data Attributes](/docs/campaigns/campaign-cart/data-attributes/)** - HTML attribute reference
-- **[Utilities](/docs/campaigns/campaign-cart/utilities/)** - FOMO, exit intent, and debugging tools
+- **[Data Attributes](/docs/campaigns/campaign-cart/data-attributes)** - HTML attribute reference
+- **[Utilities](/docs/campaigns/campaign-cart/utilities)** - FOMO, exit intent, and debugging tools
 

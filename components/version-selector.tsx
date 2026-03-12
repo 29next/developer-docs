@@ -119,7 +119,7 @@ export function VersionSelector() {
                   <span className="text-sm font-medium leading-none">{v.label}</span>
                   <span className="text-sm text-fd-muted-foreground">{v.description}</span>
                 </div>
-                <Check className={`shrink-0 ms-auto size-3.5 text-fd-primary ${isActive ? '' : 'invisible'}`} />
+                <Check className={`shrink-0 ms-auto size-3.5 text-green-500 ${isActive ? '' : 'invisible'}`} />
               </button>
             );
           })}

@@ -7,7 +7,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 Campaigns App opens up new possibilities for frontend developers to easily create complex external campaign flows using Javascript, **no backend server-side integration required**.
 
-The Campaigns App provides an easy to use CORS enabled API that follows the best practices for integrating to our Admin API for an [External Checkout Flow](/docs/admin-api/guides/external-checkout.md).
+The Campaigns App provides an easy to use CORS enabled API that follows the best practices for integrating to our Admin API for an [External Checkout Flow](/docs/admin-api/guides/external-checkout).
 
 ### Campaigns App API
 Campaigns App API is available through the **Campaigns App**. To enable, install the Campaigns App in your store from the Apps view.
@@ -163,7 +163,7 @@ const result = await response.json();
 console.log(result); // Show result in console
 ```
 <Callout type="info" title="iFrame Payment Form">
-Bankcard payments require using the [iFrame Payment Form](/docs/admin-api/guides/iframe-payment-form.md) and passing the generated `card_token` for secure transfer of the payment method details. View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/).
+Bankcard payments require using the [iFrame Payment Form](/docs/admin-api/guides/iframe-payment-form) and passing the generated `card_token` for secure transfer of the payment method details. View a fully functional [Demo](https://29next.github.io/demo-iframe-payment-form/).
 </Callout>
 <Callout type="warn" title="You Must Handle the Order Create Response">
 - If response data has a `number`, order was successfully created, you can redirect to the next page.

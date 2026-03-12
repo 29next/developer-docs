@@ -351,7 +351,7 @@ nextDebug.reinitialize()
 For debugging purposes, you may also use:
 - `?debugger=true` - Enable debug mode and overlay
 
-For functional URL parameters like `forcePackageId` and `ref_id`, see [URL Parameters](/docs/campaigns/campaign-cart/javascript-api/url-parameters/).
+For functional URL parameters like `forcePackageId` and `ref_id`, see [URL Parameters](/docs/campaigns/campaign-cart/javascript-api/url-parameters).
 
 ## Meta Tag Configuration
 

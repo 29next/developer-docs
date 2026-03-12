@@ -1033,7 +1033,7 @@ General utility attributes for common scenarios.
 ## Related Documentation
 
 - [Cart Summary Checkout](/docs/campaigns/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
-- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display/) - Dynamic data display
-- [Action Attributes](/docs/campaigns/campaign-cart/data-attributes/actions/) - Interactive elements
-- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state/) - Conditional logic
-- [Meta Tags](/docs/campaigns/campaign-cart/analytics/meta-tags/) - Page-level configuration
+- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display) - Dynamic data display
+- [Action Attributes](/docs/campaigns/campaign-cart/data-attributes/actions) - Interactive elements
+- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state) - Conditional logic
+- [Meta Tags](/docs/campaigns/campaign-cart/analytics/meta-tags) - Page-level configuration

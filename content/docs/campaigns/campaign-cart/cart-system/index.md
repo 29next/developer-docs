@@ -518,5 +518,5 @@ next.on('cart:item-removed', (data) => {
 ## Related Documentation
 
 - [Cart Summary Checkout](/docs/campaigns/campaign-cart/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
-- [Cart Attributes](/docs/campaigns/campaign-cart/data-attributes/display/#cart-summary) - Display cart data
-- [Upsells](/docs/campaigns/campaign-cart/upsells/) - Post-purchase flows
+- [Cart Attributes](/docs/campaigns/campaign-cart/data-attributes/display#cart-summary) - Display cart data
+- [Upsells](/docs/campaigns/campaign-cart/upsells) - Post-purchase flows

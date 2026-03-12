@@ -785,6 +785,6 @@ Display error messages when orders fail to load:
 
 ## Related Documentation
 
-- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display/) - Display dynamic data
-- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state/) - Conditional display logic
-- [Configuration Attributes](/docs/campaigns/campaign-cart/data-attributes/configuration/) - Formatting options
+- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display) - Display dynamic data
+- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state) - Conditional display logic
+- [Configuration Attributes](/docs/campaigns/campaign-cart/data-attributes/configuration) - Formatting options

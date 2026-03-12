@@ -667,15 +667,15 @@ Complete working example for TikTok Pixel:
 ## Download Example Scripts
 
 Get ready-to-use transformer scripts:
-- **[Analytics Overview](/docs/campaigns/campaign-cart/analytics/)** - Analytics setup and configuration
+- **[Analytics Overview](/docs/campaigns/campaign-cart/analytics)** - Analytics setup and configuration
 - **TikTok Transformer** - Copy from example above
 - **Snapchat Transformer** - Copy from example above
 - **Pinterest Transformer** - Copy from example above
 
 ## Related Documentation
 
-- [Analytics Overview](/docs/campaigns/campaign-cart/analytics/) - Main analytics documentation
-- [Custom Events](/docs/campaigns/campaign-cart/analytics/custom-events/) - Creating custom events
-- [Examples](/docs/campaigns/campaign-cart/analytics/examples/) - Built-in provider integrations
-- [Configuration](/docs/campaigns/campaign-cart/analytics/configuration/) - SDK configuration options
+- [Analytics Overview](/docs/campaigns/campaign-cart/analytics) - Main analytics documentation
+- [Custom Events](/docs/campaigns/campaign-cart/analytics/custom-events) - Creating custom events
+- [Examples](/docs/campaigns/campaign-cart/analytics/examples) - Built-in provider integrations
+- [Configuration](/docs/campaigns/campaign-cart/analytics/configuration) - SDK configuration options
 

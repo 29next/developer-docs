@@ -762,5 +762,5 @@ console.log('API Attribution:', window.NextAttributionStore.getAttributionForApi
 
 ## See Also
 
-- [URL Parameters API](/docs/campaigns/campaign-cart/javascript-api/url-parameters/) - General URL parameter management
-- [Data Attributes - URL Parameters](/docs/campaigns/campaign-cart/data-attributes/url-parameters/) - Using parameters with HTML attributes
+- [URL Parameters API](/docs/campaigns/campaign-cart/javascript-api/url-parameters) - General URL parameter management
+- [Data Attributes - URL Parameters](/docs/campaigns/campaign-cart/data-attributes/url-parameters) - Using parameters with HTML attributes

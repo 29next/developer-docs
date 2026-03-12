@@ -482,6 +482,6 @@ Combine different format types in one review section:
 
 ## Related Documentation
 
-- [Action Attributes](/docs/campaigns/campaign-cart/data-attributes/actions/) - Checkout form actions
-- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display/) - Display dynamic data
-- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state/) - Conditional display logic
+- [Action Attributes](/docs/campaigns/campaign-cart/data-attributes/actions) - Checkout form actions
+- [Display Attributes](/docs/campaigns/campaign-cart/data-attributes/display) - Display dynamic data
+- [State Attributes](/docs/campaigns/campaign-cart/data-attributes/state) - Conditional display logic

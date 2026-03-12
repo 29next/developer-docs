@@ -755,6 +755,6 @@ console.log(schemas);
 
 ## Related Documentation
 
-- [Analytics Overview](/docs/campaigns/campaign-cart/analytics/) - Main analytics documentation
-- [Custom Events](/docs/campaigns/campaign-cart/analytics/custom-events/) - Creating custom events
-- [Examples](/docs/campaigns/campaign-cart/analytics/examples/) - Provider integration guides
+- [Analytics Overview](/docs/campaigns/campaign-cart/analytics) - Main analytics documentation
+- [Custom Events](/docs/campaigns/campaign-cart/analytics/custom-events) - Creating custom events
+- [Examples](/docs/campaigns/campaign-cart/analytics/examples) - Provider integration guides

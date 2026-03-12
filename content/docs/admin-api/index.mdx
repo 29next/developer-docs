@@ -21,7 +21,7 @@ import Link from 'next/link';
 
 The Admin API uses Oauth 2 authorization protocol to manage access to your store's resources. Oauth Apps (and associated access tokens) can be tailored with object-level permission to ensure that each integrated service only has access to necessary objects.
 
-Before using the Admin API, you'll need to create a store and create an OAuth App necessary for API access. To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permissions](permissions.md) to retrieve your **Access Token**.  It is recommended to create unique Oauth Apps per external system so that you can revoke as needed.
+Before using the Admin API, you'll need to create a store and create an OAuth App necessary for API access. To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permissions](/docs/admin-api/permissions) to retrieve your **Access Token**.  It is recommended to create unique Oauth Apps per external system so that you can revoke as needed.
 
 ```shell title="Admin API Path"
 https://{store}.29next.store/api/admin/
@@ -48,9 +48,9 @@ API versioning allows Next Commerce to continuously evolve the platform while ma
 
 | Version | Status | Docs |
 | ---- | ---- | ---- |
-| `2023-02-10` | Stable | [View Reference](/docs/admin-api/reference/?v=2023-02-10) |
-| `2024-04-01` | Stable (recommended) | [View Reference](/docs/admin-api/reference/?v=2024-04-01) |
-| `unstable` | Unstable | [View Reference](/docs/admin-api/reference/?v=unstable) |
+| `2023-02-10` | Stable | [View Reference](/docs/admin-api/reference/2023-02-10/ordersCreate) |
+| `2024-04-01` | Stable (recommended) | [View Reference](/docs/admin-api/reference/ordersCreate) |
+| `unstable` | Unstable | [View Reference](/docs/admin-api/reference/unstable/ordersCreate) |
 
 
 **Specify an API Version**

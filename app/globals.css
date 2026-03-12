@@ -36,6 +36,11 @@
   max-width: 1400px !important;
 }
 
+/* Section switcher: green checkmark on active item */
+.fd-scroll-container > a svg.lucide-check {
+  color: oklch(72% 0.2 145) !important;
+}
+
 /* Section switcher: larger icon containers — trigger (in sidebar) and dropdown items (portalled) */
 #nd-sidebar button[class*="text-start"] > div:first-child,
 .fd-scroll-container > a > div:first-child {
@@ -79,6 +84,8 @@ div[style*="--callout-color"] {
   background-color: color-mix(in oklch, var(--callout-color) 12%, transparent) !important;
   border-color: color-mix(in oklch, var(--callout-color) 40%, transparent) !important;
   box-shadow: none !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
 }
 
 /* Callout icons: standard lucide stroke style (not filled circles) */

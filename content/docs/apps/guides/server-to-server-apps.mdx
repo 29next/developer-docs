@@ -6,7 +6,7 @@ tags:
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Server to Server apps are those that leverage the [Oauth flow](/apps/oauth/index.md) to obtain API Access and then use the [Admin APIs](/docs/admin-api/index.md) and [Webhooks](/webhooks.md) to subscribe to store event activity.
+Server to Server apps are those that leverage the [Oauth flow](/docs/apps/oauth) to obtain API Access and then use the [Admin APIs](/docs/admin-api) and [Webhooks](/docs/webhooks) to subscribe to store event activity.
 
 
 <Callout type="info">
@@ -30,12 +30,12 @@ import DevelopmentStore from '../../../_snippets/_offer-development-store.mdx';
 
 1. Inside your Partner Account, navigate to Apps and then Create App. Follow the form to create your first app, don't worry about the App name and details, you can change this later.
 
-2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` and `Client Secret` which are used in the [OAuth flow](/apps/oauth/index.md) to retrieve an API Access Token during the [App Install flow](/docs/apps/oauth/getting-started.md).
+2. After creating your App, you'll be able to see your App details. Take note of your `Client ID` and `Client Secret` which are used in the [OAuth flow](/docs/apps/oauth) to retrieve an API Access Token during the [App Install flow](/docs/apps/oauth/getting-started).
 
 
 ### Configure App Oauth
 
-Server-to-Server apps use follow the [OAuth flow](/apps/oauth/index.md) to get and Admin API Access Token, let's add the [Oauth 2.0 <debugger/>](https://oauthdebugger.com/) urls to our app to simulate the install flow.
+Server-to-Server apps use follow the [OAuth flow](/docs/apps/oauth) to get and Admin API Access Token, let's add the [Oauth 2.0 <debugger/>](https://oauthdebugger.com/) urls to our app to simulate the install flow.
 
 1. In **App > Settings** add `https://oauthdebugger.com/debug` as your App URL and Redirect URL to configure you app to use oauth debugger.
 
