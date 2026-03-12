@@ -23,3 +23,8 @@
 #nd-docs-layout article[data-full="true"] {
   max-width: 1400px !important;
 }
+
+/* Remove max-height on code blocks inside API example/request panels so content doesn't scroll */
+[data-api-requests] .fd-scroll-container {
+  max-height: none !important;
+}

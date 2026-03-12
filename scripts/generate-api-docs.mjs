@@ -15,8 +15,9 @@
  * Versioning strategy (consistent across Admin API, Campaigns, Webhooks):
  *   - Stable content lives directly in the base output dir (reference/ or api/)
  *   - Each additional version gets its own subdir with root:true in meta.json
- *   - The stable dir lists version subdirs in its meta.json pages array so
- *     fumadocs can traverse into them (keeps sidebar scoped to the right version)
+ *   - root:true version subdirs are discovered automatically by fumadocs — they
+ *     are NOT listed in the parent pages array (that would make them appear as
+ *     duplicate sidebar items)
  *   - DocsLayout sidebar.tabs.transform filters version roots from the section dropdown
  */
 
@@ -208,6 +209,15 @@ for (const spec of specs) {
       files.splice(0, files.length, ...keep);
     },
   });
+  // Remove any stale webhook files (dot-separated names) left over from previous runs
+  function removeWebhookFiles(dir) {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) removeWebhookFiles(full);
+      else if (entry.name.endsWith('.mdx') && isWebhookFile(entry.name.replace('.mdx', ''))) rmSync(full);
+    }
+  }
+  if (existsSync(spec.output)) removeWebhookFiles(spec.output);
   console.log(`  → ${spec.output}`);
 
   collectMethods(spec.output, spec.urlBase, allMethods);
@@ -253,10 +263,8 @@ for (const wspec of WEBHOOK_SPECS) {
     .filter(e => e.isDirectory())
     .map(e => e.name)
     .sort();
-  // The stable reference dir also needs version subdirs listed so fumadocs can find versioned pages
-  const pages = wspec.output === webhookOutput
-    ? [...tagFolders, ...VERSION_SUBFOLDERS]
-    : tagFolders;
+  // root:true version subdirs are discovered automatically by fumadocs — don't add to pages array
+  const pages = tagFolders;
   // Version subdirectories get root:true so fumadocs treats them as separate section roots
   const metaObj = wspec.output === webhookOutput
     ? { title: 'Webhook Event Reference', pages }
@@ -274,10 +282,10 @@ const tagFolders = readdirSync(refDir, { withFileTypes: true })
   .filter(e => e.isDirectory() && !VERSION_SUBFOLDERS.includes(e.name))
   .map(e => e.name)
   .sort();
-// Include version subdirs so fumadocs can traverse into them (keeps sidebar scoped to version)
+// root:true version subdirs are discovered automatically — don't add to pages array
 writeFileSync(
   join(refDir, 'meta.json'),
-  JSON.stringify({ title: 'API Reference', pages: [...tagFolders, ...VERSION_SUBFOLDERS] }, null, 2),
+  JSON.stringify({ title: 'API Reference', pages: tagFolders }, null, 2),
 );
 console.log(`Wrote reference/meta.json with tag folders: ${tagFolders.join(', ')}`);
 
@@ -302,10 +310,10 @@ const campaignsTagFolders = readdirSync(campaignsApiDir, { withFileTypes: true }
   .filter(e => e.isDirectory() && !CAMPAIGNS_VERSION_SUBFOLDERS.includes(e.name))
   .map(e => e.name)
   .sort();
-// Include version subdirs so fumadocs can traverse into them when versions are added
+// root:true version subdirs are discovered automatically — don't add to pages array
 writeFileSync(
   join(campaignsApiDir, 'meta.json'),
-  JSON.stringify({ title: 'API Reference', pages: [...campaignsTagFolders, ...CAMPAIGNS_VERSION_SUBFOLDERS] }, null, 2),
+  JSON.stringify({ title: 'API Reference', pages: campaignsTagFolders }, null, 2),
 );
 console.log(`Wrote campaigns/api/meta.json with tag folders: ${campaignsTagFolders.join(', ')}`);
 

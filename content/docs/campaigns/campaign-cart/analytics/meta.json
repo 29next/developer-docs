@@ -1,0 +1,4 @@
+{
+  "title": "Analytics",
+  "pages": ["index", "configuration", "events", "meta-tags", "custom-events", "tracking-api", "best-practices", "examples"]
+}
