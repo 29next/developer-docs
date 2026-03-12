@@ -144,6 +144,36 @@ function isWebhookFile(filename) {
 }
 
 /**
+ * Extract the tag order from an OpenAPI spec by first-appearance in paths.
+ * Returns an array of tag names in spec order.
+ */
+function getTagOrder(specPath) {
+  const raw = readFileSync(specPath, 'utf8');
+  const spec = yaml.load(raw);
+  if (spec.tags?.length) return spec.tags.map(t => t.name);
+  const seen = [];
+  for (const methods of Object.values(spec.paths ?? {})) {
+    for (const op of Object.values(methods)) {
+      if (!op || typeof op !== 'object') continue;
+      for (const tag of op.tags ?? []) {
+        if (!seen.includes(tag)) seen.push(tag);
+      }
+    }
+  }
+  return seen;
+}
+
+/**
+ * Sort tag folders to match spec order; any folders not in spec go at the end alphabetically.
+ */
+function sortBySpecOrder(folders, specOrder) {
+  return [
+    ...specOrder.filter(t => folders.includes(t)),
+    ...folders.filter(t => !specOrder.includes(t)).sort(),
+  ];
+}
+
+/**
  * Scan generated MDX files and return a map of URL path → HTTP method.
  * urlBase is the /docs/... prefix for this output directory.
  */
@@ -293,10 +323,13 @@ for (const wspec of WEBHOOK_SPECS) {
 
 // For the default admin-api reference dir, write a meta.json listing tag folders
 const refDir = 'content/docs/admin-api/reference';
-const tagFolders = readdirSync(refDir, { withFileTypes: true })
-  .filter(e => e.isDirectory() && !VERSION_SUBFOLDERS.includes(e.name))
-  .map(e => e.name)
-  .sort();
+const stableTagOrder = getTagOrder(specs[0].input[0]);
+const tagFolders = sortBySpecOrder(
+  readdirSync(refDir, { withFileTypes: true })
+    .filter(e => e.isDirectory() && !VERSION_SUBFOLDERS.includes(e.name))
+    .map(e => e.name),
+  stableTagOrder,
+);
 // root:true version subdirs are discovered automatically — don't add to pages array
 writeFileSync(
   join(refDir, 'meta.json'),
@@ -308,10 +341,14 @@ console.log(`Wrote reference/meta.json with tag folders: ${tagFolders.join(', ')
 for (const version of VERSION_SUBFOLDERS) {
   const versionDir = join(refDir, version);
   if (!existsSync(versionDir)) continue;
-  const versionTagFolders = readdirSync(versionDir, { withFileTypes: true })
-    .filter(e => e.isDirectory())
-    .map(e => e.name)
-    .sort();
+  const versionSpecPath = specs.find(s => s.output === versionDir)?.input[0] ?? specs[0].input[0];
+  const versionTagOrder = getTagOrder(versionSpecPath);
+  const versionTagFolders = sortBySpecOrder(
+    readdirSync(versionDir, { withFileTypes: true })
+      .filter(e => e.isDirectory())
+      .map(e => e.name),
+    versionTagOrder,
+  );
   writeFileSync(
     join(versionDir, 'meta.json'),
     JSON.stringify({ root: true, title: 'API Reference', pages: versionTagFolders }, null, 2),
@@ -321,10 +358,13 @@ for (const version of VERSION_SUBFOLDERS) {
 
 // For the campaigns api dir, write a meta.json listing tag folders (same pattern as admin-api)
 const campaignsApiDir = 'content/docs/campaigns/api';
-const campaignsTagFolders = readdirSync(campaignsApiDir, { withFileTypes: true })
-  .filter(e => e.isDirectory() && !CAMPAIGNS_VERSION_SUBFOLDERS.includes(e.name))
-  .map(e => e.name)
-  .sort();
+const campaignsTagOrder = getTagOrder(specs.find(s => s.output === campaignsApiDir).input[0]);
+const campaignsTagFolders = sortBySpecOrder(
+  readdirSync(campaignsApiDir, { withFileTypes: true })
+    .filter(e => e.isDirectory() && !CAMPAIGNS_VERSION_SUBFOLDERS.includes(e.name))
+    .map(e => e.name),
+  campaignsTagOrder,
+);
 // root:true version subdirs are discovered automatically — don't add to pages array
 writeFileSync(
   join(campaignsApiDir, 'meta.json'),

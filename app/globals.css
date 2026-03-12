@@ -99,3 +99,8 @@ div[style*="--callout-color"] > svg {
 div[style*="--callout-color"] > div[role="none"] {
   display: none !important;
 }
+
+/* Callout description uses text-fd-muted-foreground — override it to full foreground */
+div[style*="--callout-color"] {
+  --color-fd-muted-foreground: var(--color-fd-foreground);
+}
