@@ -5,15 +5,19 @@
 
 @source "../lib/source.ts";
 
-#nd-docs-layout {
-  --fd-layout-width: 1600px !important;
-  --fd-sidebar-width: 320px !important;
-  --fd-toc-width: 320px !important;
+@media (min-width: 1024px) {
+  #nd-docs-layout {
+    --fd-layout-width: 1600px !important;
+    --fd-sidebar-width: 320px !important;
+    --fd-toc-width: 320px !important;
+  }
 }
 
 /* Full-width pages (API reference): collapse TOC column and cap content at 1400px */
-#nd-docs-layout:has(article[data-full="true"]) {
-  --fd-toc-width: 0px !important;
+@media (min-width: 1024px) {
+  #nd-docs-layout:has(article[data-full="true"]) {
+    --fd-toc-width: 0px !important;
+  }
 }
 
 #nd-docs-layout article[data-full="true"] {

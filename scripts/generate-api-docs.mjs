@@ -6,8 +6,18 @@
  *   admin-api/reference/             ← 2024-04-01 (stable, REST endpoints only)
  *   admin-api/reference/2023-02-10/  ← REST endpoints only
  *   admin-api/reference/unstable/    ← REST endpoints only
- *   campaigns/api/reference/         ← v1 (only version)
+ *   campaigns/api/                   ← stable (current version)
+ *   campaigns/api/<version>/         ← future versioned releases
  *   webhooks/reference/              ← webhook events from 2024-04-01, grouped by tag
+ *   webhooks/reference/2023-02-10/   ← webhook events, legacy version
+ *   webhooks/reference/unstable/     ← webhook events, unstable version
+ *
+ * Versioning strategy (consistent across Admin API, Campaigns, Webhooks):
+ *   - Stable content lives directly in the base output dir (reference/ or api/)
+ *   - Each additional version gets its own subdir with root:true in meta.json
+ *   - The stable dir lists version subdirs in its meta.json pages array so
+ *     fumadocs can traverse into them (keeps sidebar scoped to the right version)
+ *   - DocsLayout sidebar.tabs.transform filters version roots from the section dropdown
  */
 
 import { generateFiles } from 'fumadocs-openapi';
@@ -119,7 +129,12 @@ for (const dir of STALE_DIRS) {
   }
 }
 
+// Admin API + Webhooks share date-based versioning (2023-02-10, unstable)
 const VERSION_SUBFOLDERS = ['2023-02-10', 'unstable'];
+
+// Campaigns version subfolders — empty now (v1 is the stable/base), add future versions here
+// e.g. ['2025-01-01', 'unstable'] when a new version is introduced
+const CAMPAIGNS_VERSION_SUBFOLDERS = [];
 
 // Webhook event file names (dot-separated) to exclude from REST reference generation
 // and redirect to the webhooks section instead
@@ -168,8 +183,8 @@ const specs = [
   },
   {
     input: ['public/api/campaigns/v1.yaml'],
-    output: 'content/docs/campaigns/api/reference',
-    urlBase: '/docs/campaigns/api/reference',
+    output: 'content/docs/campaigns/api',
+    urlBase: '/docs/campaigns/api',
   },
 ];
 
@@ -242,9 +257,13 @@ for (const wspec of WEBHOOK_SPECS) {
   const pages = wspec.output === webhookOutput
     ? [...tagFolders, ...VERSION_SUBFOLDERS]
     : tagFolders;
+  // Version subdirectories get root:true so fumadocs treats them as separate section roots
+  const metaObj = wspec.output === webhookOutput
+    ? { title: 'Webhook Event Reference', pages }
+    : { root: true, title: 'Webhook Event Reference', pages };
   writeFileSync(
     join(wspec.output, 'meta.json'),
-    JSON.stringify({ title: 'Webhook Event Reference', pages }, null, 2),
+    JSON.stringify(metaObj, null, 2),
   );
   console.log(`Wrote ${wspec.output}/meta.json with tags: ${tagFolders.join(', ')}`);
 }
@@ -255,14 +274,14 @@ const tagFolders = readdirSync(refDir, { withFileTypes: true })
   .filter(e => e.isDirectory() && !VERSION_SUBFOLDERS.includes(e.name))
   .map(e => e.name)
   .sort();
-// Include version subdirs so fumadocs searchPath can find versioned pages (keeps sidebar scoped)
+// Include version subdirs so fumadocs can traverse into them (keeps sidebar scoped to version)
 writeFileSync(
   join(refDir, 'meta.json'),
-  JSON.stringify({ title: 'Admin API', pages: [...tagFolders, ...VERSION_SUBFOLDERS] }, null, 2),
+  JSON.stringify({ title: 'API Reference', pages: [...tagFolders, ...VERSION_SUBFOLDERS] }, null, 2),
 );
 console.log(`Wrote reference/meta.json with tag folders: ${tagFolders.join(', ')}`);
 
-// For each versioned subfolder, write a meta.json listing tag folders
+// For each admin-api versioned subfolder, write a meta.json with root:true
 for (const version of VERSION_SUBFOLDERS) {
   const versionDir = join(refDir, version);
   if (!existsSync(versionDir)) continue;
@@ -272,9 +291,37 @@ for (const version of VERSION_SUBFOLDERS) {
     .sort();
   writeFileSync(
     join(versionDir, 'meta.json'),
-    JSON.stringify({ title: 'Admin API', pages: versionTagFolders }, null, 2),
+    JSON.stringify({ root: true, title: 'API Reference', pages: versionTagFolders }, null, 2),
   );
   console.log(`Wrote reference/${version}/meta.json`);
+}
+
+// For the campaigns api dir, write a meta.json listing tag folders (same pattern as admin-api)
+const campaignsApiDir = 'content/docs/campaigns/api';
+const campaignsTagFolders = readdirSync(campaignsApiDir, { withFileTypes: true })
+  .filter(e => e.isDirectory() && !CAMPAIGNS_VERSION_SUBFOLDERS.includes(e.name))
+  .map(e => e.name)
+  .sort();
+// Include version subdirs so fumadocs can traverse into them when versions are added
+writeFileSync(
+  join(campaignsApiDir, 'meta.json'),
+  JSON.stringify({ title: 'API Reference', pages: [...campaignsTagFolders, ...CAMPAIGNS_VERSION_SUBFOLDERS] }, null, 2),
+);
+console.log(`Wrote campaigns/api/meta.json with tag folders: ${campaignsTagFolders.join(', ')}`);
+
+// For each campaigns versioned subfolder, write a meta.json with root:true
+for (const version of CAMPAIGNS_VERSION_SUBFOLDERS) {
+  const versionDir = join(campaignsApiDir, version);
+  if (!existsSync(versionDir)) continue;
+  const versionTagFolders = readdirSync(versionDir, { withFileTypes: true })
+    .filter(e => e.isDirectory())
+    .map(e => e.name)
+    .sort();
+  writeFileSync(
+    join(versionDir, 'meta.json'),
+    JSON.stringify({ root: true, title: 'API Reference', pages: versionTagFolders }, null, 2),
+  );
+  console.log(`Wrote campaigns/api/${version}/meta.json`);
 }
 
 // Write the URL → method map for the sidebar badges

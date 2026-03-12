@@ -56,6 +56,23 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
+    providerImportSource: '@/components/mdx',
     remarkPlugins: [remarkDocusaurusCompat, remarkMdxMermaid],
+    rehypeCodeOptions: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      langs: [
+        'python',
+        'bash',
+        'json',
+        'yaml',
+        'javascript',
+        'typescript',
+        'jsx',
+        'tsx',
+        'html',
+        'css',
+        'sql',
+      ],
+    },
   },
 });

@@ -44,7 +44,24 @@ var docs = defineDocs({
 });
 var source_config_default = defineConfig({
   mdxOptions: {
-    remarkPlugins: [remarkDocusaurusCompat, remarkMdxMermaid]
+    providerImportSource: "@/components/mdx",
+    remarkPlugins: [remarkDocusaurusCompat, remarkMdxMermaid],
+    rehypeCodeOptions: {
+      themes: { light: "github-light", dark: "github-dark" },
+      langs: [
+        "python",
+        "bash",
+        "json",
+        "yaml",
+        "javascript",
+        "typescript",
+        "jsx",
+        "tsx",
+        "html",
+        "css",
+        "sql"
+      ]
+    }
   }
 });
 export {

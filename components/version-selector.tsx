@@ -22,7 +22,7 @@ interface SectionConfig {
 
 const SECTIONS: SectionConfig[] = [
   {
-    showPrefix: '/docs/admin-api',
+    showPrefix: '/docs/admin-api/reference',
     referencePrefix: '/docs/admin-api/reference',
     versionSlugs: ['2023-02-10', 'unstable'],
     versions: [
@@ -32,15 +32,15 @@ const SECTIONS: SectionConfig[] = [
     ],
   },
   {
-    showPrefix: '/docs/campaigns/api/reference',
-    referencePrefix: '/docs/campaigns/api/reference',
+    showPrefix: '/docs/campaigns/api',
+    referencePrefix: '/docs/campaigns/api',
     versionSlugs: [],
     versions: [
       { slug: '', label: 'v1', description: 'Current' },
     ],
   },
   {
-    showPrefix: '/docs/webhooks',
+    showPrefix: '/docs/webhooks/reference',
     referencePrefix: '/docs/webhooks/reference',
     versionSlugs: ['2023-02-10', 'unstable'],
     versions: [

@@ -1,5 +1,6 @@
 {
-  "title": "Admin API",
+  "root": true,
+  "title": "API Reference",
   "pages": [
     "apps",
     "carts",
