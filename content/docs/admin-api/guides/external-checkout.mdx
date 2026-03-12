@@ -58,10 +58,10 @@ Carts are the starting point for all orders, carts are essentially draft orders 
 <Callout type="info" title="Notes">
 - The carts create API accepts a user object that will `get or create` the user by their email address making it is safe to use for both new and existing users.
 - Attribution added to a cart is carried over to the Orders and Subscriptions created on the users next order, you do not need to pass this data on the order request.
-- If you need to capture an address with the cart, use the [usersAddressesCreate](/docs/admin-api/reference/usersAddressesCreate) endpoint which will create a default address for the user.
+- If you need to capture an address with the cart, use the [usersAddressesCreate](/docs/admin-api/reference/customers/usersAddressesCreate) endpoint which will create a default address for the user.
 </Callout>
 ### Create Order
-Creating an order is the core resource in an external checkout flow, see the example below to familiarize yourself with the [ordersCreate](/docs/admin-api/reference/ordersCreate) API endpoint.
+Creating an order is the core resource in an external checkout flow, see the example below to familiarize yourself with the [ordersCreate](/docs/admin-api/reference/orders/ordersCreate) API endpoint.
 
 ```json title="Request"
 // POST https://{store}.29next.store/api/admin/orders/
@@ -106,7 +106,7 @@ Creating an order is the core resource in an external checkout flow, see the exa
 </Callout>
 ### Add Upsells
 
-Add additional products (line items) to the original order through the [ordersAddLineItemsCreate](/docs/admin-api/reference/ordersAddLineItemsCreate) API. Adding items to the order will automatically re-use the order's initial payment method to collect payment for the additional products.
+Add additional products (line items) to the original order through the [ordersAddLineItemsCreate](/docs/admin-api/reference/orders/ordersAddLineItemsCreate) API. Adding items to the order will automatically re-use the order's initial payment method to collect payment for the additional products.
 
 ``` json title="Request"
 // POST https://{store}.29next.store/api/admin/orders/<NUMBER>/add-line-items/
@@ -213,7 +213,7 @@ Cart and Order `attribution` object sets the [marketing attribution](https://doc
 The `shipping_code` is an optional field to specify the Shipping Method to be used for the order, **if not passed, the cheapest Shipping Method will be used**.  `shipping_price` is also optional and provides a way to override the configured price for the Shipping Method of the order allowing you to discount or charge an upsell for shipping on the order.
 
 ### Order Addresses Detail
-The `shipping_address` object on the order represents the address where the order will be shipped, and similarly for the `billing_address`. The first `shipping_address` and `billing_address` created for a user is automatically set as their default shipping and billing address, [see API Reference](/docs/admin-api/reference/ordersCreate).
+The `shipping_address` object on the order represents the address where the order will be shipped, and similarly for the `billing_address`. The first `shipping_address` and `billing_address` created for a user is automatically set as their default shipping and billing address, [see API Reference](/docs/admin-api/reference/orders/ordersCreate).
 
 <Callout type="idea">
 Use `billing_same_as_shipping_address` to forego having to pass a full duplicate address for `billing_address`.

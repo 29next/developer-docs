@@ -197,27 +197,42 @@ for (const adminSpec of ['public/api/admin/2024-04-01.yaml', 'public/api/admin/2
 
 const allMethods = {};
 
-// Generate REST endpoint docs (excluding webhook event files)
+// Pre-clean admin-api reference dirs before regeneration so stale flat camelCase
+// files from old generator runs don't linger alongside the tag-grouped subfolders.
+function cleanRefDir(dir, keepSubdirs = []) {
+  if (!existsSync(dir)) return;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (!keepSubdirs.includes(entry.name)) rmSync(full, { recursive: true });
+    } else if (entry.name.endsWith('.mdx') || entry.name === 'meta.json') {
+      rmSync(full);
+    }
+  }
+}
+
+// Clean stable reference dir (preserve versioned subdirs; they're regenerated separately)
+cleanRefDir(specs[0].output, VERSION_SUBFOLDERS);
+// Clean versioned subdirs entirely (regenerated fresh below)
+for (const version of VERSION_SUBFOLDERS) {
+  const vdir = join(specs[0].output, version);
+  if (existsSync(vdir)) rmSync(vdir, { recursive: true });
+  mkdirSync(vdir, { recursive: true });
+}
+
+// Generate REST endpoint docs (excluding webhook event files), grouped by tag
 for (const spec of specs) {
   console.log(`Generating API docs from ${spec.input[0]}...`);
   const openapi = createOpenAPI({ input: spec.input });
   await generateFiles({
     input: openapi,
     output: spec.output,
+    groupBy: 'tag',
     beforeWrite(files) {
       const keep = files.filter(f => !isWebhookFile(f.path.split('/').pop().replace('.mdx', '')));
       files.splice(0, files.length, ...keep);
     },
   });
-  // Remove any stale webhook files (dot-separated names) left over from previous runs
-  function removeWebhookFiles(dir) {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      const full = join(dir, entry.name);
-      if (entry.isDirectory()) removeWebhookFiles(full);
-      else if (entry.name.endsWith('.mdx') && isWebhookFile(entry.name.replace('.mdx', ''))) rmSync(full);
-    }
-  }
-  if (existsSync(spec.output)) removeWebhookFiles(spec.output);
   console.log(`  → ${spec.output}`);
 
   collectMethods(spec.output, spec.urlBase, allMethods);

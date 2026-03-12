@@ -44,11 +44,16 @@ export default function Layout({ children }: { children: ReactNode }) {
             const url = option.url ?? '';
             if (/\/(?:\d{4}-\d{2}-\d{2}|unstable)\//.test(url)) return null;
 
+            // Drop the urls Set so fumadocs falls back to prefix matching,
+            // which correctly activates the section tab for versioned sub-paths
+            // like /docs/admin-api/reference/2023-02-10/... that aren't in the tree.
+            const { urls: _urls, ...rest } = option;
+
             const match = Object.entries(sectionMeta).find(([path]) => url.startsWith(path));
             if (match) {
               const [, { icon, description, color }] = match;
               return {
-                ...option,
+                ...rest,
                 icon: (
                   <div className={`size-full rounded-md flex items-center justify-center [&_svg]:size-4 ${color}`}>
                     {icon}
@@ -57,7 +62,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 description,
               };
             }
-            return option;
+            return rest;
           },
         },
       }}
