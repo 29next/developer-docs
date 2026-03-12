@@ -27,11 +27,26 @@ function MermaidContent({ chart }: { chart: string }) {
     cachePromise('mermaid', () => import('mermaid')),
   );
 
+  const isDark = resolvedTheme === 'dark';
+  const textColor = isDark ? '#e5e7eb' : '#111111';
   mermaid.initialize({
     startOnLoad: false,
     securityLevel: 'loose',
     fontFamily: 'inherit',
-    theme: resolvedTheme === 'dark' ? 'dark' : 'default',
+    theme: 'base',
+    themeVariables: {
+      primaryColor: 'transparent',
+      primaryTextColor: textColor,
+      primaryBorderColor: 'hsl(217, 91%, 60%)',
+      lineColor: 'hsl(217, 91%, 60%)',
+      background: 'transparent',
+      mainBkg: 'transparent',
+      nodeBorder: 'hsl(217, 91%, 60%)',
+      clusterBkg: 'transparent',
+      titleColor: textColor,
+      edgeLabelBackground: isDark ? '#1a1a1a' : '#ffffff',
+      tertiaryColor: 'transparent',
+    },
   });
 
   const { svg, bindFunctions } = use(
