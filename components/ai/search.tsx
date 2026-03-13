@@ -1,5 +1,4 @@
 'use client';
-import { usePathname } from 'next/navigation';
 import {
   type ComponentProps,
   createContext,
@@ -292,19 +291,10 @@ function Message({ message, ...props }: { message: UIMessage } & ComponentProps<
 
 export function AISearch({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const pathnameRef = useRef(pathname);
-  pathnameRef.current = pathname;
 
   const chat = useChat({
     id: 'search',
-    transport: new DefaultChatTransport({
-      api: '/api/chat',
-      prepareSendMessagesRequest: (options) => ({
-        ...options,
-        body: { ...options.body, pageUrl: pathnameRef.current },
-      }),
-    }),
+    transport: new DefaultChatTransport({ api: '/api/chat' }),
   });
 
   return (

@@ -1,71 +1,48 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { convertToModelMessages, streamText, tool, type UIMessage } from 'ai';
 import { z } from 'zod';
-import { source } from '@/lib/source';
-import { Document, type DocumentData } from 'flexsearch';
-import apiEndpoints from '@/lib/generated/api-endpoints.json';
+import { liteClient } from 'algoliasearch/lite';
 
-interface CustomDocument extends DocumentData {
-  url: string;
-  title: string;
-  description: string;
-  content: string;
+const algolia = liteClient(
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY!,
+);
+
+const STOP_WORDS = new Set([
+  'a','an','the','is','are','was','were','be','been','being','have','has','had',
+  'do','does','did','will','would','could','should','may','might','shall','can',
+  'i','you','he','she','it','we','they','what','which','who','how','when','where',
+  'why','and','or','but','not','in','on','at','to','for','of','with','by','from',
+  'this','that','these','those','my','your','his','her','its','our','their',
+]);
+
+function buildSearchQuery(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[?!.,;:]/g, '')
+    .split(/\s+/)
+    .filter((w) => w.length > 1 && !STOP_WORDS.has(w))
+    .join(' ');
 }
 
-const searchServer = createSearchServer();
-
-async function createSearchServer() {
-  const search = new Document<CustomDocument>({
-    document: {
-      id: 'url',
-      index: ['title', 'description', 'content'],
-      store: true,
-    },
+async function runSearch(query: string, limit = 8) {
+  const searchQuery = buildSearchQuery(query);
+  const { results } = await algolia.search({
+    requests: [
+      {
+        indexName: process.env.NEXT_PUBLIC_ALGOLIA_INDEX!,
+        query: searchQuery,
+        hitsPerPage: limit,
+      },
+    ],
   });
 
-  const docs = await chunkedAll(
-    source.getPages().map(async (page) => {
-      if (!('getText' in page.data)) return null;
-
-      return {
-        title: page.data.title,
-        description: page.data.description,
-        url: page.url,
-        content: await page.data.getText('processed'),
-      } as CustomDocument;
-    }),
-  );
-
-  for (const doc of docs) {
-    if (doc) search.add(doc);
-  }
-
-  for (const ep of apiEndpoints) {
-    search.add(ep as CustomDocument);
-  }
-
-  return search;
-}
-
-async function chunkedAll<O>(promises: Promise<O>[]): Promise<O[]> {
-  const SIZE = 50;
-  const out: O[] = [];
-  for (let i = 0; i < promises.length; i += SIZE) {
-    out.push(...(await Promise.all(promises.slice(i, i + SIZE))));
-  }
-  return out;
-}
-
-async function runSearch(query: string, limit = 8): Promise<CustomDocument[]> {
-  const search = await searchServer;
-  const results = await search.searchAsync(query, { limit, merge: true, enrich: true });
-  return (results as any[])
-    .flatMap((r) => r.result ?? [])
-    .map((d) => ({
-      ...d.doc,
-      content: d.doc?.content?.slice(0, 1200) ?? '',
-    }))
-    .filter((d) => d.url);
+  return ((results[0] as any).hits ?? []).map((hit: any) => ({
+    url: hit.url ?? hit.objectID,
+    title: hit.title ?? '',
+    section: hit.section ?? '',
+    content: hit.content ?? '',
+  }));
 }
 
 const openrouter = createOpenRouter({
@@ -86,7 +63,6 @@ export async function POST(req: Request) {
   const reqJson: { messages?: UIMessage[] } = await req.json();
   const messages = reqJson.messages ?? [];
 
-  // Extract latest user question and search server-side — don't rely on model to call tools
   const lastUserText = messages
     .filter((m) => m.role === 'user')
     .at(-1)
@@ -99,11 +75,14 @@ export async function POST(req: Request) {
   const contextBlock =
     docs.length > 0
       ? 'Relevant documentation:\n\n' +
-        docs.map((d) => `### [${d.title}](${d.url})\n${d.description ? d.description + '\n' : ''}${d.content}`).join('\n\n---\n\n')
-      : 'No relevant documentation found.';
+        docs
+          .map((d: any) => `### [${d.title}${d.section ? ` — ${d.section}` : ''}](${d.url})\n${d.content}`)
+          .join('\n\n---\n\n')
+      : 'No relevant documentation found for this query.';
 
   const result = streamText({
     model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
+    maxOutputTokens: 1024,
     messages: [
       { role: 'system', content: `${systemPrompt}\n\n${contextBlock}` },
       ...(await convertToModelMessages(messages)),
@@ -113,15 +92,12 @@ export async function POST(req: Request) {
   return result.toUIMessageStreamResponse();
 }
 
-// Keep tool definition so the UI type import still works
+// Kept for UI type compatibility
 const searchTool = tool({
-  description: 'Search the docs content and return raw JSON results.',
-  inputSchema: z.object({
-    query: z.string(),
-    limit: z.number().int().min(1).max(20).default(8),
-  }),
-  async execute({ query, limit }) {
-    return runSearch(query, limit);
+  description: 'Search the docs.',
+  inputSchema: z.object({ query: z.string() }),
+  async execute({ query }) {
+    return runSearch(query);
   },
 });
 
