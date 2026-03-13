@@ -16,6 +16,10 @@ const STOP_WORDS = new Set([
   'this','that','these','those','my','your','his','her','its','our','their',
   'about','other','another','also','too','more','any','some','just','even',
   'still','like','else','same','different','similar','related','using','use',
+  'cool','great','awesome','nice','good','bad','okay','ok','yes','no','sure',
+  'hey','hi','hello','thanks','thank','please','help','tell','show','explain',
+  'want','need','trying','try','get','make','know','think','see','look','find',
+  'works','working','work','thing','things','way','ways','go','going','got',
 ]);
 
 function buildSearchQuery(text: string): string {
@@ -35,6 +39,7 @@ async function runSearch(query: string, maxPages = 8) {
         indexName: process.env.NEXT_PUBLIC_ALGOLIA_INDEX!,
         query: searchQuery,
         hitsPerPage: 60,
+        removeWordsIfNoResults: 'allOptional',
       },
     ],
   });

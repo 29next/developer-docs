@@ -238,6 +238,7 @@ const roleName: Record<string, string> = {
 };
 
 function Message({ message, ...props }: { message: UIMessage } & ComponentProps<'div'>) {
+  const { setOpen } = useAISearchContext();
   let markdown = '';
   const searchCalls: UIToolInvocation<SearchTool>[] = [];
 
@@ -266,7 +267,12 @@ function Message({ message, ...props }: { message: UIMessage } & ComponentProps<
       >
         {roleName[message.role] ?? 'unknown'}
       </p>
-      <div className="prose text-sm">
+      <div
+        className="prose text-sm"
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest('a')) setOpen(false);
+        }}
+      >
         <Markdown text={markdown} />
       </div>
 
@@ -355,7 +361,7 @@ export function AISearchPanel() {
       <Presence present={open}>
         <div
           className={cn(
-            'fixed top-0 end-0 z-30 h-dvh overflow-hidden bg-fd-card text-fd-card-foreground border-s shadow-xl w-full sm:w-150 2xl:w-172.5',
+            'fixed top-0 end-0 z-50 h-dvh overflow-hidden bg-fd-card text-fd-card-foreground border-s shadow-xl w-full sm:w-150 2xl:w-172.5',
             open
               ? 'animate-[ask-ai-open_200ms]'
               : 'animate-[ask-ai-close_200ms]',
