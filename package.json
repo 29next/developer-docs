@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/mdx": "^2",
+    "algoliasearch": "^5.49.2",
     "fumadocs-core": "latest",
     "fumadocs-mdx": "latest",
     "fumadocs-openapi": "latest",

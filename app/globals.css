@@ -82,9 +82,9 @@
   box-shadow: none !important;
 }
 
-/* Remove max-height on code blocks inside API example/request panels so content doesn't scroll */
+/* Cap max-height on code blocks inside API example/request panels */
 [data-api-requests] .fd-scroll-container {
-  max-height: none !important;
+  max-height: 1200px !important;
 }
 
 /* Docusaurus-style callouts: transparent colorized backgrounds */

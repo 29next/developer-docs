@@ -33,7 +33,7 @@ export const APIPage = createAPIPage(openapi, {
           {slots.responses}
           {slots.callbacks}
         </>,
-        slots.apiExample,
+        <div data-api-requests>{slots.apiExample}</div>,
       );
     },
     renderWebhookLayout(slots) {
