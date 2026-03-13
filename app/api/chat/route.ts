@@ -1,5 +1,5 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
-import { convertToModelMessages, streamText, tool, type UIMessage } from 'ai';
+import { streamText, tool, type UIMessage } from 'ai';
 import { z } from 'zod';
 import { liteClient } from 'algoliasearch/lite';
 
@@ -85,7 +85,16 @@ export async function POST(req: Request) {
     maxOutputTokens: 1024,
     messages: [
       { role: 'system', content: `${systemPrompt}\n\n${contextBlock}` },
-      ...(await convertToModelMessages(messages)),
+      ...messages
+        .filter((m) => m.role === 'user' || m.role === 'assistant')
+        .map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content:
+            m.parts
+              ?.filter((p: any) => p.type === 'text')
+              .map((p: any) => p.text as string)
+              .join('') ?? '',
+        })),
     ],
   });
 
