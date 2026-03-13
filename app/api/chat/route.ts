@@ -76,7 +76,6 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
-    maxTokens: 4096,
     stopWhen: stepCountIs(5),
     tools: {
       search: searchTool,
