@@ -25,24 +25,32 @@ function buildSearchQuery(text: string): string {
     .join(' ');
 }
 
-async function runSearch(query: string, limit = 8) {
+async function runSearch(query: string, maxPages = 8) {
   const searchQuery = buildSearchQuery(query);
   const { results } = await algolia.search({
     requests: [
       {
         indexName: process.env.NEXT_PUBLIC_ALGOLIA_INDEX!,
         query: searchQuery,
-        hitsPerPage: limit,
+        hitsPerPage: 40,
       },
     ],
   });
 
-  return ((results[0] as any).hits ?? []).map((hit: any) => ({
-    url: hit.url ?? hit.objectID,
-    title: hit.title ?? '',
-    section: hit.section ?? '',
-    content: hit.content ?? '',
-  }));
+  const seen = new Set<string>();
+  const hits: { url: string; title: string; section: string; content: string }[] = [];
+
+  for (const hit of (results[0] as any).hits ?? []) {
+    const url = hit.url ?? hit.objectID;
+    const content = (hit.content ?? '') as string;
+    if (content.length < 40) continue; // skip table cell fragments
+    if (seen.has(url)) continue; // one chunk per page
+    seen.add(url);
+    hits.push({ url, title: hit.title ?? '', section: hit.section ?? '', content });
+    if (hits.length >= maxPages) break;
+  }
+
+  return hits;
 }
 
 const openrouter = createOpenRouter({
@@ -63,14 +71,13 @@ export async function POST(req: Request) {
   const reqJson: { messages?: UIMessage[] } = await req.json();
   const messages = reqJson.messages ?? [];
 
-  const lastUserText = messages
-    .filter((m) => m.role === 'user')
-    .at(-1)
-    ?.parts?.filter((p: any) => p.type === 'text')
-    .map((p: any) => p.text as string)
-    .join(' ') ?? '';
+  const userMessages = messages.filter((m) => m.role === 'user');
+  const recentUserText = userMessages
+    .slice(-3)
+    .flatMap((m) => m.parts?.filter((p: any) => p.type === 'text').map((p: any) => p.text as string) ?? [])
+    .join(' ');
 
-  const docs = lastUserText ? await runSearch(lastUserText) : [];
+  const docs = recentUserText ? await runSearch(recentUserText) : [];
 
   const contextBlock =
     docs.length > 0
