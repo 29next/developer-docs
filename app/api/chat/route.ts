@@ -30,7 +30,7 @@ async function createSearchServer() {
         title: page.data.title,
         description: page.data.description,
         url: page.url,
-        content: await page.data.getText('raw'),
+        content: await page.data.getText('processed'),
       } as CustomDocument;
     }),
   );
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
   if (reqJson.pageUrl) {
     const page = source.getPages().find((p) => p.url === reqJson.pageUrl);
     if (page && 'getText' in page.data) {
-      const content = await page.data.getText('raw');
+      const content = await page.data.getText('processed');
       contextPrompt += `\n\nThe user is currently viewing the page "${page.data.title}" (${reqJson.pageUrl}). Here is its content for context:\n\n${content}`;
     }
   }
