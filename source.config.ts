@@ -52,6 +52,9 @@ export const docs = defineDocs({
       full: z.boolean().optional(),
     }),
   },
+  mdxOptions: {
+    includeProcessedMarkdown: true,
+  },
 });
 
 export default defineConfig({

@@ -10,17 +10,30 @@
     "validate-links": "node scripts/validate-links.mjs"
   },
   "dependencies": {
+    "@ai-sdk/react": "^3.0.118",
+    "@openrouter/ai-sdk-provider": "^2.3.0",
+    "@radix-ui/react-presence": "^1.1.5",
     "@types/mdx": "^2",
+    "ai": "^6.0.116",
     "algoliasearch": "^5.49.2",
+    "class-variance-authority": "^0.7.1",
+    "flexsearch": "^0.8.212",
     "fumadocs-core": "^16.6.14",
     "fumadocs-mdx": "^14.2.9",
     "fumadocs-openapi": "^10.3.17",
     "fumadocs-ui": "^16.6.14",
+    "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^0.575.0",
     "mermaid": "^11.13.0",
     "next": "^16",
     "react": "^19.1",
-    "react-dom": "^19.1"
+    "react-dom": "^19.1",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-rehype": "^11.1.2",
+    "tailwind-merge": "^3.5.0",
+    "unist-util-visit": "^5.1.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
