@@ -527,6 +527,7 @@
   "/docs/campaigns/api/campaigns/campaign-retrieve": "GET",
   "/docs/campaigns/api/campaigns/campaignRetrieve": "GET",
   "/docs/campaigns/api/carts/carts-create": "POST",
+  "/docs/campaigns/api/carts/cartsCalculate": "POST",
   "/docs/campaigns/api/carts/cartsCreate": "POST",
   "/docs/campaigns/api/cartsCreate": "POST",
   "/docs/campaigns/api/orderRetrieve": "GET",

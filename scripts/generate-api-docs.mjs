@@ -392,4 +392,63 @@ mkdirSync('lib/generated', { recursive: true });
 writeFileSync('lib/generated/api-methods.json', JSON.stringify(allMethods, null, 2));
 console.log(`Wrote lib/generated/api-methods.json (${Object.keys(allMethods).length} endpoints)`);
 
+// Collect endpoint data for AI search indexing (stable specs only — no duplicates from old versions)
+function collectEndpointData(spec, urlBase) {
+  const endpoints = [];
+  for (const [path, methods] of Object.entries(spec.paths ?? {})) {
+    for (const [method, op] of Object.entries(methods)) {
+      if (!op || typeof op !== 'object' || !op.operationId) continue;
+      // Skip webhook events (dot-separated operationIds)
+      if (op.operationId.includes('.')) continue;
+      const tag = op.tags?.[0];
+      if (!tag) continue;
+
+      const url = `${urlBase}/${tag}/${op.operationId}`;
+
+      // Query/path parameters (skip generic header params)
+      const params = (op.parameters ?? [])
+        .filter(p => p.in !== 'header')
+        .map(p => `${p.name} (${p.in})${p.description ? ': ' + p.description.split('\n')[0].slice(0, 80) : ''}`);
+
+      // Request body fields (shallow — resolve one level of $ref)
+      const bodyFields = [];
+      const bodyContent = op.requestBody?.content;
+      if (bodyContent) {
+        const schema = bodyContent['application/json']?.schema ?? bodyContent['multipart/form-data']?.schema;
+        if (schema) {
+          let resolved = schema;
+          if (schema.$ref) {
+            const schemaName = schema.$ref.split('/').pop();
+            resolved = spec.components?.schemas?.[schemaName] ?? {};
+          }
+          for (const [fieldName, fieldDef] of Object.entries(resolved.properties ?? {})) {
+            const desc = fieldDef.description ? ': ' + fieldDef.description.split('\n')[0].slice(0, 80) : '';
+            bodyFields.push(`${fieldName}${desc}`);
+          }
+        }
+      }
+
+      const contentParts = [`${method.toUpperCase()} ${path}`, op.description || op.summary || ''];
+      if (params.length) contentParts.push(`Parameters: ${params.join(', ')}`);
+      if (bodyFields.length) contentParts.push(`Request fields: ${bodyFields.join(', ')}`);
+
+      endpoints.push({
+        url,
+        title: `${method.toUpperCase()} ${path}`,
+        description: op.description || op.summary || '',
+        content: contentParts.join('\n'),
+      });
+    }
+  }
+  return endpoints;
+}
+
+const allEndpoints = [];
+for (const spec of specs.filter(s => !s.hidden)) {
+  const specData = yaml.load(readFileSync(spec.input[0], 'utf8'));
+  allEndpoints.push(...collectEndpointData(specData, spec.urlBase));
+}
+writeFileSync('lib/generated/api-endpoints.json', JSON.stringify(allEndpoints, null, 2));
+console.log(`Wrote lib/generated/api-endpoints.json (${allEndpoints.length} endpoints)`);
+
 console.log('API docs generation complete.');

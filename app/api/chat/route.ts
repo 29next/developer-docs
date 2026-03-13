@@ -3,6 +3,7 @@ import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage }
 import { z } from 'zod';
 import { source } from '@/lib/source';
 import { Document, type DocumentData } from 'flexsearch';
+import apiEndpoints from '@/lib/generated/api-endpoints.json';
 
 interface CustomDocument extends DocumentData {
   url: string;
@@ -39,6 +40,10 @@ async function createSearchServer() {
     if (doc) search.add(doc);
   }
 
+  for (const ep of apiEndpoints) {
+    search.add(ep as CustomDocument);
+  }
+
   return search;
 }
 
@@ -67,30 +72,22 @@ const systemPrompt = [
 ].join('\n');
 
 export async function POST(req: Request) {
-  const reqJson: { messages?: UIMessage[]; pageUrl?: string } = await req.json();
-
-  let contextPrompt = systemPrompt;
-  if (reqJson.pageUrl) {
-    const page = source.getPages().find((p) => p.url === reqJson.pageUrl);
-    if (page) {
-      contextPrompt += `\n\nThe user is currently viewing the page "${page.data.title}" (${reqJson.pageUrl}). Use this to prioritize relevant search results.`;
-    }
-  }
+  const reqJson: { messages?: UIMessage[] } = await req.json();
 
   const result = streamText({
     model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
+    maxTokens: 4096,
     stopWhen: stepCountIs(5),
     tools: {
       search: searchTool,
     },
     messages: [
-      { role: 'system', content: contextPrompt },
+      { role: 'system', content: systemPrompt },
       ...(await convertToModelMessages(reqJson.messages ?? [])),
     ],
-    prepareStep: ({ stepNumber }) =>
-      stepNumber === 0 && reqJson.messages?.length === 1
-        ? { toolChoice: 'required' }
-        : { toolChoice: 'auto' },
+    prepareStep: ({ stepNumber }) => ({
+      toolChoice: stepNumber === 0 ? 'required' : 'auto',
+    }),
   });
 
   return result.toUIMessageStreamResponse();
@@ -100,11 +97,21 @@ const searchTool = tool({
   description: 'Search the docs content and return raw JSON results.',
   inputSchema: z.object({
     query: z.string(),
-    limit: z.number().int().min(1).max(100).default(10),
+    limit: z.number().int().min(1).max(20).default(5),
   }),
   async execute({ query, limit }) {
     const search = await searchServer;
-    return await search.searchAsync(query, { limit, merge: true, enrich: true });
+    const results = await search.searchAsync(query, { limit, merge: true, enrich: true });
+    // Truncate content to avoid flooding the context window
+    return results.map((r: any) => ({
+      ...r,
+      result: r.result?.map((doc: any) => ({
+        ...doc,
+        doc: doc.doc
+          ? { ...doc.doc, content: doc.doc.content?.slice(0, 1500) }
+          : doc.doc,
+      })),
+    }));
   },
 });
 

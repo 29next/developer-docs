@@ -375,6 +375,29 @@ components:
       - lines
       - user
       type: object
+    CartCalculateSummary:
+      properties:
+        currency:
+          description: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the
+            campaign currency if not provided
+          nullable: true
+          type: string
+        lines:
+          description: Array of package IDs
+          items:
+            $ref: '#/components/schemas/LineWithUpsell'
+          type: array
+        shipping_method:
+          description: Selected shipping method ID
+          type: integer
+        vouchers:
+          description: Campaign offer codes or store coupon code
+          items:
+            type: string
+          type: array
+      required:
+      - lines
+      type: object
     CartLine:
       properties:
         id:
@@ -426,6 +449,48 @@ components:
       required:
       - id
       - quantity
+      type: object
+    CartSummary:
+      properties:
+        currency:
+          description: Cart currency in ISO 4217 format (e.g., USD, EUR, GBP)
+          maxLength: 3
+          type: string
+        lines:
+          items:
+            $ref: '#/components/schemas/SummaryLine'
+          type: array
+        offer_discounts:
+          description: Array of offer discounts applied to the cart
+          items:
+            $ref: '#/components/schemas/Discount'
+          type: array
+        shipping_method:
+          allOf:
+          - $ref: '#/components/schemas/SummaryShippingMethod'
+          description: Selected shipping method details
+        subtotal:
+          description: Cart subtotal before discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total:
+          description: Cart total after discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_discount:
+          description: Total discount applied to the cart
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        voucher_discounts:
+          description: Array of voucher discounts applied to the cart
+          items:
+            $ref: '#/components/schemas/Discount'
+          type: array
+      required:
+      - currency
       type: object
     Country:
       properties:
@@ -511,15 +576,24 @@ components:
     Discount:
       properties:
         amount:
+          description: Discount amount
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
         description:
-          maxLength: 255
+          description: Description of the discount
           type: string
         name:
-          maxLength: 255
+          description: Name of the discount
           type: string
+        offer_id:
+          description: ID of the applied offer
+          type: integer
+      required:
+      - amount
+      - description
+      - name
+      - offer_id
       type: object
     IntervalEnum:
       enum:
@@ -1402,6 +1476,98 @@ components:
       required:
       - price
       type: object
+    SummaryLine:
+      properties:
+        discounts:
+          description: Array of discounts applied to the line
+          items:
+            $ref: '#/components/schemas/Discount'
+          type: array
+        original_package_price:
+          description: Package price before discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        original_unit_price:
+          description: Unit price before discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        package_id:
+          description: Package ID of products to add to the order
+          type: integer
+        package_price:
+          description: Package price after discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        quantity:
+          description: Package quantity
+          type: integer
+        subtotal:
+          description: Line total before discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total:
+          description: Line total after discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        total_discount:
+          description: Total discount applied to the line
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        unit_price:
+          description: Unit price after discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+      required:
+      - original_package_price
+      - original_unit_price
+      - package_id
+      - package_price
+      - quantity
+      - subtotal
+      - total
+      - total_discount
+      - unit_price
+      type: object
+    SummaryShippingMethod:
+      properties:
+        code:
+          description: Shipping method code
+          type: string
+        discounts:
+          description: Array of discounts applied to the shipping method
+          items:
+            $ref: '#/components/schemas/Discount'
+          type: array
+        id:
+          description: Shipping method ID
+          type: integer
+        name:
+          description: Shipping method name
+          type: string
+        original_price:
+          description: Shipping price before discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+        price:
+          description: Shipping price after discounts
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          type: string
+      required:
+      - code
+      - id
+      - name
+      - original_price
+      - price
+      type: object
     User:
       properties:
         accepts_marketing:
@@ -1653,21 +1819,12 @@ paths:
     get:
       description: Retrieve campaign details.
       operationId: campaignRetrieve
-      parameters:
-      - description: ISO 4217 currency code (e.g., USD, EUR, GBP) used to filter available
-          packages and shipping methods in the campaign
-        in: query
-        name: currency
-        schema:
-          type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Campaign'
-                type: array
+                $ref: '#/components/schemas/Campaign'
           description: ''
       security:
       - API Authentication: []
@@ -1695,6 +1852,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
+          description: ''
+      security:
+      - API Authentication: []
+      tags:
+      - carts
+  /api/v1/carts/calculate/:
+    post:
+      description: Calculate cart summary.
+      operationId: cartsCalculate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartCalculateSummary'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartCalculateSummary'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartCalculateSummary'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartSummary'
           description: ''
       security:
       - API Authentication: []

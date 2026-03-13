@@ -1,0 +1,1100 @@
+[
+  {
+    "url": "/docs/admin-api/reference/apps/appsRetrieve",
+    "title": "GET /apps/{clientId}/",
+    "description": "Retrieve a object of app.",
+    "content": "GET /apps/{clientId}/\nRetrieve a object of app.\nParameters: clientId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/apps/appsSettingsDestroy",
+    "title": "DELETE /apps/{clientId}/settings/",
+    "description": "Delete an existing app settings.",
+    "content": "DELETE /apps/{clientId}/settings/\nDelete an existing app settings.\nParameters: clientId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/apps/appsSettingsRetrieve",
+    "title": "GET /apps/{clientId}/settings/",
+    "description": "Retrieve a object of all app settings.",
+    "content": "GET /apps/{clientId}/settings/\nRetrieve a object of all app settings.\nParameters: clientId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/apps/appsSettingsPartialUpdate",
+    "title": "PATCH /apps/{clientId}/settings/",
+    "description": "Partially update an existing app settings.",
+    "content": "PATCH /apps/{clientId}/settings/\nPartially update an existing app settings.\nParameters: clientId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/apps/appsSettingsUpdate",
+    "title": "PUT /apps/{clientId}/settings/",
+    "description": "Update an existing app settings.",
+    "content": "PUT /apps/{clientId}/settings/\nUpdate an existing app settings.\nParameters: clientId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/assignedFulfillmentOrdersList",
+    "title": "GET /assigned-fulfillment-orders/",
+    "description": "Retrieve assigned fulfillment order requests",
+    "content": "GET /assigned-fulfillment-orders/\nRetrieve assigned fulfillment order requests\nParameters: location_id (query): Location ID, assignment_status (query): Assignment Status, date_created_from (query): YYYY-MM-DD, date_created_to (query): YYYY-MM-DD, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/carts/cartsList",
+    "title": "GET /carts/",
+    "description": "Retrieve a list of all open carts.",
+    "content": "GET /carts/\nRetrieve a list of all open carts.\nParameters: product (query), date_created_from (query): YYYY-MM-DD, date_created_to (query): YYYY-MM-DD, abandoned (query), currency (query): Currency, funnels (query): Funnels, utm_source (query): UTM Source, utm_campaign (query): UTM Campaign, utm_term (query): UTM Term, utm_content (query): UTM Content, affiliate (query): Affiliate, subaffiliate1 (query): Sub-Affiliate 1, subaffiliate2 (query): Sub-Affiliate 2, subaffiliate3 (query): Sub-Affiliate 3, subaffiliate4 (query): Sub-Affiliate 4, subaffiliate5 (query): Sub-Affiliate 5, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/carts/cartsCreate",
+    "title": "POST /carts/",
+    "description": "Create a new cart.",
+    "content": "POST /carts/\nCreate a new cart.\nRequest fields: attribution, currency, lines, metadata, user, vouchers"
+  },
+  {
+    "url": "/docs/admin-api/reference/carts/cartsDestroy",
+    "title": "DELETE /carts/{id}/",
+    "description": "Delete an existing cart.",
+    "content": "DELETE /carts/{id}/\nDelete an existing cart.\nParameters: id (path): A unique integer value identifying this Cart."
+  },
+  {
+    "url": "/docs/admin-api/reference/carts/cartsRetrieve",
+    "title": "GET /carts/{id}/",
+    "description": "Retrieve a cart.",
+    "content": "GET /carts/{id}/\nRetrieve a cart.\nParameters: id (path): A unique integer value identifying this Cart."
+  },
+  {
+    "url": "/docs/admin-api/reference/carts/cartsUpdate",
+    "title": "PUT /carts/{id}/",
+    "description": "Update an existing cart.",
+    "content": "PUT /carts/{id}/\nUpdate an existing cart.\nParameters: id (path): A unique integer value identifying this Cart.\nRequest fields: attribution, id, lines, metadata, vouchers"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/categoriesList",
+    "title": "GET /categories/",
+    "description": "Retrieve a list of categories.",
+    "content": "GET /categories/\nRetrieve a list of categories.\nParameters: cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/categoriesCreate",
+    "title": "POST /categories/",
+    "description": "Create a new category.",
+    "content": "POST /categories/\nCreate a new category.\nRequest fields: description, external_tax_code: Tax code to be used with external tax systems such as Avalara, Taxjar., id, image: URL of the image to fetch and associate with the category, is_public: Show this category in search results and catalogue listings., meta_description, meta_title, name, slug, template: Use a custom template from your theme to customize the category display."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/categoriesRetrieve",
+    "title": "GET /categories/{id}/",
+    "description": "Retrieve a category.",
+    "content": "GET /categories/{id}/\nRetrieve a category.\nParameters: id (path): A unique integer value identifying this Category."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/categoriesUpdate",
+    "title": "PUT /categories/{id}/",
+    "description": "Update an existing category.",
+    "content": "PUT /categories/{id}/\nUpdate an existing category.\nParameters: id (path): A unique integer value identifying this Category.\nRequest fields: description, external_tax_code: Tax code to be used with external tax systems such as Avalara, Taxjar., id, image: URL of the image to fetch and associate with the category, is_public: Show this category in search results and catalogue listings., meta_description, meta_title, name, slug, template: Use a custom template from your theme to customize the category display."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesList",
+    "title": "GET /disputes/",
+    "description": "Retrieve a list of disputes.",
+    "content": "GET /disputes/\nRetrieve a list of disputes.\nParameters: id (query): ID, type (query): * `alert` - Alert, status (query): * `new` - New, order_number (query): Order Number, transaction_id (query): Transaction ID, auth_code (query): Auth Code, network_transaction_id (query): Network Transaction ID, card_type (query): Card Brand, card_first_six (query): Card First Six, card_last_four (query): Card Last Four, case_number (query): Case Number, gateway_id (query): Gateway ID, payment_method (query): Payment Method, resolution (query): * `could_not_find_order` - Transaction Not found, dispute_date_from (query): YYYY-MM-DD, dispute_date_to (query): YYYY-MM-DD, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesCreate",
+    "title": "POST /disputes/",
+    "description": "Create a new dispute.",
+    "content": "POST /disputes/\nCreate a new dispute.\nRequest fields: amount, arn, case_number, currency, date_created, happened_at, id, metadata, order, report_amount, report_currency, resolution: * `could_not_find_order` - Transaction Not found, resolution_other_message, status: * `new` - New, transaction, type: * `alert` - Alert"
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesDestroy",
+    "title": "DELETE /disputes/{id}/",
+    "description": "Delete an existing dispute.",
+    "content": "DELETE /disputes/{id}/\nDelete an existing dispute.\nParameters: id (path): A unique integer value identifying this Dispute."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesRetrieve",
+    "title": "GET /disputes/{id}/",
+    "description": "Retrieve a dispute.",
+    "content": "GET /disputes/{id}/\nRetrieve a dispute.\nParameters: id (path): A unique integer value identifying this Dispute."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesPartialUpdate",
+    "title": "PATCH /disputes/{id}/",
+    "description": "Partial update an existing dispute.",
+    "content": "PATCH /disputes/{id}/\nPartial update an existing dispute.\nParameters: id (path): A unique integer value identifying this Dispute.\nRequest fields: amount, arn, case_number, currency, date_created, happened_at, id, metadata, order, report_amount, report_currency, resolution: * `could_not_find_order` - Transaction Not found, resolution_other_message, status: * `new` - New, transaction, type: * `alert` - Alert"
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesUpdate",
+    "title": "PUT /disputes/{id}/",
+    "description": "Update an existing dispute.",
+    "content": "PUT /disputes/{id}/\nUpdate an existing dispute.\nParameters: id (path): A unique integer value identifying this Dispute.\nRequest fields: amount, arn, case_number, currency, date_created, happened_at, id, metadata, order, report_amount, report_currency, resolution: * `could_not_find_order` - Transaction Not found, resolution_other_message, status: * `new` - New, transaction, type: * `alert` - Alert"
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesNotesList",
+    "title": "GET /disputes/{id}/notes/",
+    "description": "Retrieve a list of all dispute notes in an existing dispute.",
+    "content": "GET /disputes/{id}/notes/\nRetrieve a list of all dispute notes in an existing dispute.\nParameters: id (path): A unique integer value identifying this Dispute., cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesNotesCreate",
+    "title": "POST /disputes/{id}/notes/",
+    "description": "Create an dispute note in an existing dispute.",
+    "content": "POST /disputes/{id}/notes/\nCreate an dispute note in an existing dispute.\nParameters: id (path): A unique integer value identifying this Dispute.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/disputesResolveCreate",
+    "title": "POST /disputes/{id}/resolve/",
+    "description": "Resolve a dispute with a resolution and optional external refund.",
+    "content": "POST /disputes/{id}/resolve/\nResolve a dispute with a resolution and optional external refund.\nParameters: id (path): A unique integer value identifying this Dispute.\nRequest fields: create_external_refund, resolution: * `could_not_find_order` - Transaction Not found, resolution_other_message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersList",
+    "title": "GET /fulfillment-orders/",
+    "description": "Retrieve a list of fulfillment orders.",
+    "content": "GET /fulfillment-orders/\nRetrieve a list of fulfillment orders.\nParameters: order_number (query): Order Number, location_id (query): Location ID, status (query): Status, request_status (query): Request Status, fulfillment_order_id (query): Fulfillment Order  Id, shipping_method (query): Shipping Method, date_created_from (query): YYYY-MM-DD, date_created_to (query): YYYY-MM-DD, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersRetrieve",
+    "title": "GET /fulfillment-orders/{id}/",
+    "description": "Retrieve a fulfillment order.",
+    "content": "GET /fulfillment-orders/{id}/\nRetrieve a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/availableLocationsRetrieve",
+    "title": "GET /fulfillment-orders/{id}/available-locations/",
+    "description": "Retrieve available locations for a Fulfillment Order.",
+    "content": "GET /fulfillment-orders/{id}/available-locations/\nRetrieve available locations for a Fulfillment Order.\nParameters: id (path): A unique integer value identifying this fulfillment order."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersCancel",
+    "title": "POST /fulfillment-orders/{id}/cancel/",
+    "description": "Cancel fulfillment order",
+    "content": "POST /fulfillment-orders/{id}/cancel/\nCancel fulfillment order\nParameters: id (path): A unique integer value identifying this fulfillment order."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/cancellationRequestSend",
+    "title": "POST /fulfillment-orders/{id}/cancellation-request/",
+    "description": "Sends a fulfillment cancellation request to the fulfillment service.",
+    "content": "POST /fulfillment-orders/{id}/cancellation-request/\nSends a fulfillment cancellation request to the fulfillment service.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/cancellationRequestAccept",
+    "title": "POST /fulfillment-orders/{id}/cancellation-request/accept/",
+    "description": "Accepts a fulfillment cancellation request sent to a fulfillment service for a fulfillment order.",
+    "content": "POST /fulfillment-orders/{id}/cancellation-request/accept/\nAccepts a fulfillment cancellation request sent to a fulfillment service for a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/cancellationRequestCancel",
+    "title": "POST /fulfillment-orders/{id}/cancellation-request/cancel/",
+    "description": "Cancel a requested fulfillment cancellation request.",
+    "content": "POST /fulfillment-orders/{id}/cancellation-request/cancel/\nCancel a requested fulfillment cancellation request.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/cancellationRequestReject",
+    "title": "POST /fulfillment-orders/{id}/cancellation-request/reject/",
+    "description": "Rejects a fulfillment cancellation request sent to a fulfillment service for a fulfillment order.",
+    "content": "POST /fulfillment-orders/{id}/cancellation-request/reject/\nRejects a fulfillment cancellation request sent to a fulfillment service for a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersClose",
+    "title": "POST /fulfillment-orders/{id}/close/",
+    "description": "Marks an processing fulfillment order as incomplete",
+    "content": "POST /fulfillment-orders/{id}/close/\nMarks an processing fulfillment order as incomplete\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentRequestSend",
+    "title": "POST /fulfillment-orders/{id}/fulfillment-request/",
+    "description": "Sends a fulfillment request to the fulfillment service of a fulfillment order.",
+    "content": "POST /fulfillment-orders/{id}/fulfillment-request/\nSends a fulfillment request to the fulfillment service of a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: fulfillment_order_line_items, message, notify"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentRequestAccept",
+    "title": "POST /fulfillment-orders/{id}/fulfillment-request/accept/",
+    "description": "Accepts a fulfillment request sent to a fulfillment service for a fulfillment order.",
+    "content": "POST /fulfillment-orders/{id}/fulfillment-request/accept/\nAccepts a fulfillment request sent to a fulfillment service for a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentRequestCancel",
+    "title": "POST /fulfillment-orders/{id}/fulfillment-request/cancel/",
+    "description": "Cancel Requested Fulfillment Order.",
+    "content": "POST /fulfillment-orders/{id}/fulfillment-request/cancel/\nCancel Requested Fulfillment Order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentRequestReject",
+    "title": "POST /fulfillment-orders/{id}/fulfillment-request/reject/",
+    "description": "Rejects a fulfillment request sent to a fulfillment service for a fulfillment order.",
+    "content": "POST /fulfillment-orders/{id}/fulfillment-request/reject/\nRejects a fulfillment request sent to a fulfillment service for a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: message, rejected_reason: * `incorrect_address` - Incorrect Address"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentsRetrieve",
+    "title": "GET /fulfillment-orders/{id}/fulfillments/",
+    "description": "Retrieve Fulfillments for a Fulfillment Order.",
+    "content": "GET /fulfillment-orders/{id}/fulfillments/\nRetrieve Fulfillments for a Fulfillment Order.\nParameters: id (path): A unique integer value identifying this fulfillment order."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentsCreate",
+    "title": "POST /fulfillment-orders/{id}/fulfillments/",
+    "description": "Create Fulfillments for a Fulfillment Order.",
+    "content": "POST /fulfillment-orders/{id}/fulfillments/\nCreate Fulfillments for a Fulfillment Order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: fulfillment_order_line_items, notify, tracking_info"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersHold",
+    "title": "POST /fulfillment-orders/{id}/hold/",
+    "description": "Hold Fulfillment.",
+    "content": "POST /fulfillment-orders/{id}/hold/\nHold Fulfillment.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: reason: * `address_incorrect` - Address incorrect, reason_message"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersMove",
+    "title": "POST /fulfillment-orders/{id}/move/",
+    "description": "Move location of a fulfillment order.",
+    "content": "POST /fulfillment-orders/{id}/move/\nMove location of a fulfillment order.\nParameters: id (path): A unique integer value identifying this fulfillment order.\nRequest fields: fulfillment_order_line_items, new_location_id"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/fulfillmentOrdersReleaseHold",
+    "title": "POST /fulfillment-orders/{id}/release-hold/",
+    "description": "Release On Hold Fulfillment.",
+    "content": "POST /fulfillment-orders/{id}/release-hold/\nRelease On Hold Fulfillment.\nParameters: id (path): A unique integer value identifying this fulfillment order."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/gatewayGroupsList",
+    "title": "GET /gateway-groups/",
+    "description": "Retrieve a list of gatway groups.",
+    "content": "GET /gateway-groups/\nRetrieve a list of gatway groups.\nParameters: cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/gatewayGroupsRetrieve",
+    "title": "GET /gateway-groups/{id}/",
+    "description": "Retrieve a gatway group.",
+    "content": "GET /gateway-groups/{id}/\nRetrieve a gatway group.\nParameters: id (path): A unique integer value identifying this Gateway Group."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/gatewaysList",
+    "title": "GET /gateways/",
+    "description": "Retrieve a list of gateways.",
+    "content": "GET /gateways/\nRetrieve a list of gateways.\nParameters: cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/gatewaysRetrieve",
+    "title": "GET /gateways/{id}/",
+    "description": "Retrieve a gateway.",
+    "content": "GET /gateways/{id}/\nRetrieve a gateway.\nParameters: id (path): A unique integer value identifying this Payment Gateway."
+  },
+  {
+    "url": "/docs/admin-api/reference/gift-cards/giftCardsList",
+    "title": "GET /gift-cards/",
+    "description": "Retrieve a list of gift cards.",
+    "content": "GET /gift-cards/\nRetrieve a list of gift cards.\nParameters: search_text (query): Generic search by code, name, email., created_from (query): YYYY-MM-DD, created_to (query): YYYY-MM-DD, customer (query): Customer, status (query): Status, currency (query): Currency, amount_from (query): Amount From, amount_to (query): Amount To, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/gift-cards/giftCardsCreate",
+    "title": "POST /gift-cards/",
+    "description": "Create a gift card.",
+    "content": "POST /gift-cards/\nCreate a gift card.\nRequest fields: currency, expired_at, initial, user"
+  },
+  {
+    "url": "/docs/admin-api/reference/gift-cards/giftCardsRetrieve",
+    "title": "GET /gift-cards/{id}/",
+    "description": "Retrieve a gift card.",
+    "content": "GET /gift-cards/{id}/\nRetrieve a gift card.\nParameters: id (path): A unique integer value identifying this gift card."
+  },
+  {
+    "url": "/docs/admin-api/reference/gift-cards/giftCardsPartialUpdate",
+    "title": "PATCH /gift-cards/{id}/",
+    "description": "Update a gift card.",
+    "content": "PATCH /gift-cards/{id}/\nUpdate a gift card.\nParameters: id (path): A unique integer value identifying this gift card.\nRequest fields: expired_at, user"
+  },
+  {
+    "url": "/docs/admin-api/reference/gift-cards/giftCardsDeactivate",
+    "title": "POST /gift-cards/{id}/deactivate/",
+    "description": "Deactivate a gift card.",
+    "content": "POST /gift-cards/{id}/deactivate/\nDeactivate a gift card.\nParameters: id (path): A unique integer value identifying this gift card."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/locationsList",
+    "title": "GET /locations/",
+    "description": "Retrieve a list of all configured fulfillment locations.",
+    "content": "GET /locations/\nRetrieve a list of all configured fulfillment locations.\nParameters: cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/locationsCreate",
+    "title": "POST /locations/",
+    "description": "Create a new fulfillment location.",
+    "content": "POST /locations/\nCreate a new fulfillment location.\nRequest fields: accept_return, address, callback_url, id, name"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/locationsDestroy",
+    "title": "DELETE /locations/{id}/",
+    "description": "",
+    "content": "DELETE /locations/{id}/\n\nParameters: id (path): A unique integer value identifying this partner."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/locationsRetrieve",
+    "title": "GET /locations/{id}/",
+    "description": "Retrieve an existing fulfillment location.",
+    "content": "GET /locations/{id}/\nRetrieve an existing fulfillment location.\nParameters: id (path): A unique integer value identifying this partner."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/locationsUpdate",
+    "title": "PUT /locations/{id}/",
+    "description": "Update an existing fulfillment location.",
+    "content": "PUT /locations/{id}/\nUpdate an existing fulfillment location.\nParameters: id (path): A unique integer value identifying this partner.\nRequest fields: accept_return, address, callback_url, id, name"
+  },
+  {
+    "url": "/docs/admin-api/reference/metadata/metadataList",
+    "title": "GET /metadata/",
+    "description": "Retrieve a list of metadata definitions.",
+    "content": "GET /metadata/\nRetrieve a list of metadata definitions.\nParameters: name (query): Name, object (query): Object, metadata_key (query): Metadata Key, type (query): Type, enable_export (query): Export, enable_filter (query): Search Filter, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/metadata/metadataCreate",
+    "title": "POST /metadata/",
+    "description": "Create a new metadata definition.",
+    "content": "POST /metadata/\nCreate a new metadata definition.\nRequest fields: enable_export, enable_filter, key, name, object: Source object this metadata is linked to., type: Expected data type., validations"
+  },
+  {
+    "url": "/docs/admin-api/reference/metadata/metadataDestroy",
+    "title": "DELETE /metadata/{id}/",
+    "description": "Delete an existing metadata definition.",
+    "content": "DELETE /metadata/{id}/\nDelete an existing metadata definition.\nParameters: id (path): A unique integer value identifying this definition."
+  },
+  {
+    "url": "/docs/admin-api/reference/metadata/metadataRetrieve",
+    "title": "GET /metadata/{id}/",
+    "description": "Retrieve a metadata definition.",
+    "content": "GET /metadata/{id}/\nRetrieve a metadata definition.\nParameters: id (path): A unique integer value identifying this definition."
+  },
+  {
+    "url": "/docs/admin-api/reference/metadata/metadataPartialUpdate",
+    "title": "PATCH /metadata/{id}/",
+    "description": "Partial update an existing metadata definition.",
+    "content": "PATCH /metadata/{id}/\nPartial update an existing metadata definition.\nParameters: id (path): A unique integer value identifying this definition.\nRequest fields: enable_export, enable_filter, name, object: Source object this metadata is linked to., validations"
+  },
+  {
+    "url": "/docs/admin-api/reference/metadata/metadataUpdate",
+    "title": "PUT /metadata/{id}/",
+    "description": "Update an existing metadata definition.",
+    "content": "PUT /metadata/{id}/\nUpdate an existing metadata definition.\nParameters: id (path): A unique integer value identifying this definition.\nRequest fields: enable_export, enable_filter, name, object: Source object this metadata is linked to., validations"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersList",
+    "title": "GET /orders/",
+    "description": "Retrieve a list of orders.",
+    "content": "GET /orders/\nRetrieve a list of orders.\nParameters: search_text (query), address (query), order_number (query): Order Number, name (query), product (query), location_id (query), sku (query): SKU, status (query): Status, payment_method (query): Payment Method, currency (query), fulfillment_status (query): Fulfillment Status, delivery_status (query): Delivery Status, payment_status (query): Payment Status, subscription_lifecycle (query): Subscription Lifecycle, date_placed_from (query): YYYY-MM-DD, date_placed_to (query): YYYY-MM-DD, coupon_code (query): Coupon code, tags (query): Tags, offers (query): Offers, countries (query), funnels (query): Funnels, sources (query): Source, agents (query): Agents, utm_source (query): UTM Source, utm_campaign (query): UTM Campaign, utm_term (query): UTM Term, utm_content (query): UTM Content, affiliate (query): Affiliate, subaffiliate1 (query): Sub-Affiliate 1, subaffiliate2 (query): Sub-Affiliate 2, subaffiliate3 (query): Sub-Affiliate 3, subaffiliate4 (query): Sub-Affiliate 4, subaffiliate5 (query): Sub-Affiliate 5, is_disputed (query), has_outstanding_balance (query), has_split_fulfillment (query), is_test (query): Is Test Order, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersCreate",
+    "title": "POST /orders/",
+    "description": "Create a new order.",
+    "content": "POST /orders/\nCreate a new order.\nRequest fields: attribution, billing_address, billing_same_as_shipping_address, currency, date_placed, lines, metadata, offers, payment_details, payment_method: * `card_token` - Card Token, send_receipt, shipping_address, shipping_code, shipping_price, status: * `open` - open, tags, use_default_billing_address, use_default_shipping_address, user, vouchers"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersRetrieve",
+    "title": "GET /orders/{number}/",
+    "description": "Retrieve a order.",
+    "content": "GET /orders/{number}/\nRetrieve a order.\nParameters: number (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersPartialUpdate",
+    "title": "PATCH /orders/{number}/",
+    "description": "Partial update an existing order.",
+    "content": "PATCH /orders/{number}/\nPartial update an existing order.\nParameters: number (path)\nRequest fields: attribution, billing_address, created_at, currency, date_placed, display_taxes, fulfillment_status: The order's status in terms of fulfillment., fulfillments, is_test, lines, metadata: Additional order metadata., number, offer_discounts, order_status_url, original_shipping_excl_tax, original_shipping_incl_tax, original_total_excl_tax, original_total_incl_tax, payment_status: * `pending` - Payment Pending, refunds, report_values, shipping_address, shipping_code, shipping_excl_tax, shipping_incl_tax, shipping_method, shipping_tax, shipping_tax_lines, source, status: The order's overall status., subscription_lifecycle, subscriptions, supports_post_purchase_upsells, tags: An array of tags associated with the order., tax_lines, total_cost, total_excl_tax, total_incl_tax, total_tax, transactions, updated_at, user, voucher_discounts"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersUpdate",
+    "title": "PUT /orders/{number}/",
+    "description": "Update an existing order.",
+    "content": "PUT /orders/{number}/\nUpdate an existing order.\nParameters: number (path)\nRequest fields: attribution, billing_address, created_at, currency, date_placed, display_taxes, fulfillment_status: The order's status in terms of fulfillment., fulfillments, is_test, lines, metadata: Additional order metadata., number, offer_discounts, order_status_url, original_shipping_excl_tax, original_shipping_incl_tax, original_total_excl_tax, original_total_incl_tax, payment_status: * `pending` - Payment Pending, refunds, report_values, shipping_address, shipping_code, shipping_excl_tax, shipping_incl_tax, shipping_method, shipping_tax, shipping_tax_lines, source, status: The order's overall status., subscription_lifecycle, subscriptions, supports_post_purchase_upsells, tags: An array of tags associated with the order., tax_lines, total_cost, total_excl_tax, total_incl_tax, total_tax, transactions, updated_at, user, voucher_discounts"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersAddLineItemsCreate",
+    "title": "POST /orders/{number}/add-line-items/",
+    "description": "Add additional items to the order and charge the initial order payment method.",
+    "content": "POST /orders/{number}/add-line-items/\nAdd additional items to the order and charge the initial order payment method.\nParameters: number (path)\nRequest fields: lines, payment_details"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersCancelCreate",
+    "title": "POST /orders/{number}/cancel/",
+    "description": "Cancel an existing order.",
+    "content": "POST /orders/{number}/cancel/\nCancel an existing order.\nParameters: number (path)\nRequest fields: cancel_reason, full_refund, send_cancel_notification"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersCaptureCreate",
+    "title": "POST /orders/{number}/capture/",
+    "description": "Captures the total amount of the previously authorized funds for this order.",
+    "content": "POST /orders/{number}/capture/\nCaptures the total amount of the previously authorized funds for this order.\nParameters: number (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersCollectPaymentCreate",
+    "title": "POST /orders/{number}/collect-payment/",
+    "description": "Collect payment for an order outstanding balance on the order.                      Requires order original payment method to support merchant initiated transactions.",
+    "content": "POST /orders/{number}/collect-payment/\nCollect payment for an order outstanding balance on the order.                      Requires order original payment method to support merchant initiated transactions.\nParameters: number (path)\nRequest fields: send_payment_notification: Send payment notification to customer."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentOrdersRetrieve",
+    "title": "GET /orders/{number}/fulfillment-orders/",
+    "description": "Retrieves a list of fulfillment orders for a specific order.",
+    "content": "GET /orders/{number}/fulfillment-orders/\nRetrieves a list of fulfillment orders for a specific order.\nParameters: number (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentsRetrieve",
+    "title": "GET /orders/{number}/fulfillments/",
+    "description": "Retrieve order fulfillments.",
+    "content": "GET /orders/{number}/fulfillments/\nRetrieve order fulfillments.\nParameters: number (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentsCreate",
+    "title": "POST /orders/{number}/fulfillments/",
+    "description": "Add shipment order for separate line.",
+    "content": "POST /orders/{number}/fulfillments/\nAdd shipment order for separate line.\nParameters: number (path)\nRequest fields: carrier: * `amazon` - amazon, date_created, lines, reference, send_shipped_notification, tracking_code, tracking_link"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentRetrieve",
+    "title": "GET /orders/{number}/fulfillments/{fulfillmentId}/",
+    "description": "Retrieve an existing order fulfillment.",
+    "content": "GET /orders/{number}/fulfillments/{fulfillmentId}/\nRetrieve an existing order fulfillment.\nParameters: number (path), fulfillmentId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentsEventsList",
+    "title": "GET /orders/{number}/fulfillments/{fulfillmentId}/events/",
+    "description": "Retrieve a list of fulfillment events of a order fulfillment.",
+    "content": "GET /orders/{number}/fulfillments/{fulfillmentId}/events/\nRetrieve a list of fulfillment events of a order fulfillment.\nParameters: number (path), fulfillmentId (path): A unique integer value identifying this fulfillment."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentsEventsCreate",
+    "title": "POST /orders/{number}/fulfillments/{fulfillmentId}/events/",
+    "description": "Create a fulfillment event in an existing order fulfillment.",
+    "content": "POST /orders/{number}/fulfillments/{fulfillmentId}/events/\nCreate a fulfillment event in an existing order fulfillment.\nParameters: number (path), fulfillmentId (path): A unique integer value identifying this fulfillment.\nRequest fields: city: City of the address., country: The address country code., estimated_delivery_at, happened_at, latitude, line1: The first line of the address., line2: Optional second line of of the address., longitude, message, postcode: The address post code or zip code., state: The address state/province., status: Expected statuses."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentsEventsDestroy",
+    "title": "DELETE /orders/{number}/fulfillments/{fulfillmentId}/events/{eventId}/",
+    "description": "Delete an existing fulfillment event.",
+    "content": "DELETE /orders/{number}/fulfillments/{fulfillmentId}/events/{eventId}/\nDelete an existing fulfillment event.\nParameters: number (path), fulfillmentId (path): A unique integer value identifying this fulfillment., eventId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersFulfillmentsEventsRetrieve",
+    "title": "GET /orders/{number}/fulfillments/{fulfillmentId}/events/{eventId}/",
+    "description": "Retrieve a fulfillment event.",
+    "content": "GET /orders/{number}/fulfillments/{fulfillmentId}/events/{eventId}/\nRetrieve a fulfillment event.\nParameters: number (path), fulfillmentId (path): A unique integer value identifying this fulfillment., eventId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersLinesCreate",
+    "title": "POST /orders/{number}/lines/",
+    "description": "Add a new line item to an existing order.",
+    "content": "POST /orders/{number}/lines/\nAdd a new line item to an existing order.\nParameters: number (path)\nRequest fields: metadata, price: Set custom price for this item., product_id, quantity, reason: Reason for adding this item."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersLinesDestroy",
+    "title": "DELETE /orders/{number}/lines/{lineId}/",
+    "description": "Remove a line item from an existing order.",
+    "content": "DELETE /orders/{number}/lines/{lineId}/\nRemove a line item from an existing order.\nParameters: number (path), lineId (path): A unique integer value identifying this Order Line."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersLinesPartialUpdate",
+    "title": "PATCH /orders/{number}/lines/{lineId}/",
+    "description": "Update an existing line item in an order.",
+    "content": "PATCH /orders/{number}/lines/{lineId}/\nUpdate an existing line item in an order.\nParameters: number (path), lineId (path): A unique integer value identifying this Order Line.\nRequest fields: metadata, quantity, reason: Reason for editing this item."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersMarkAsPaidCreate",
+    "title": "POST /orders/{number}/mark-as-paid/",
+    "description": "Marks an order as paid. You can only mark an order as paid if it isn't already fully paid.",
+    "content": "POST /orders/{number}/mark-as-paid/\nMarks an order as paid. You can only mark an order as paid if it isn't already fully paid.\nParameters: number (path)\nRequest fields: external_payment_method"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersNotesList",
+    "title": "GET /orders/{number}/notes/",
+    "description": "Retrieve a list of all order notes in an existing order.",
+    "content": "GET /orders/{number}/notes/\nRetrieve a list of all order notes in an existing order.\nParameters: number (path), cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersNotesCreate",
+    "title": "POST /orders/{number}/notes/",
+    "description": "Create an order note in an existing order.",
+    "content": "POST /orders/{number}/notes/\nCreate an order note in an existing order.\nParameters: number (path)\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersRefundCreate",
+    "title": "POST /orders/{number}/refund/",
+    "description": "Refund an existing order.",
+    "content": "POST /orders/{number}/refund/\nRefund an existing order.\nParameters: number (path)\nRequest fields: note, refund_lines, refund_shipping, send_refund_notification, transactions"
+  },
+  {
+    "url": "/docs/admin-api/reference/orders/ordersRefundCalculateCreate",
+    "title": "POST /orders/{number}/refund/calculate/",
+    "description": "",
+    "content": "POST /orders/{number}/refund/calculate/\n\nParameters: number (path)\nRequest fields: refund_lines, refund_shipping"
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/pagesList",
+    "title": "GET /pages/",
+    "description": "Retrieve a list of pages.",
+    "content": "GET /pages/\nRetrieve a list of pages.\nParameters: title (query): Title, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/pagesCreate",
+    "title": "POST /pages/",
+    "description": "Create a new page.",
+    "content": "POST /pages/\nCreate a new page.\nRequest fields: content, meta_description, meta_title, metadata, slug, template: Custom template name from your theme, ie pages/page.{custom_name}.html, title"
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/pagesDestroy",
+    "title": "DELETE /pages/{id}/",
+    "description": "Delete an existing page.",
+    "content": "DELETE /pages/{id}/\nDelete an existing page.\nParameters: id (path): A unique integer value identifying this flat page."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/pagesRetrieve",
+    "title": "GET /pages/{id}/",
+    "description": "Retrieve a page.",
+    "content": "GET /pages/{id}/\nRetrieve a page.\nParameters: id (path): A unique integer value identifying this flat page."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/pagesPartialUpdate",
+    "title": "PATCH /pages/{id}/",
+    "description": "Partially update an existing page.",
+    "content": "PATCH /pages/{id}/\nPartially update an existing page.\nParameters: id (path): A unique integer value identifying this flat page.\nRequest fields: content, meta_description, meta_title, metadata, slug, template: Custom template name from your theme, ie pages/page.{custom_name}.html, title"
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/pagesUpdate",
+    "title": "PUT /pages/{id}/",
+    "description": "Update an existing page.",
+    "content": "PUT /pages/{id}/\nUpdate an existing page.\nParameters: id (path): A unique integer value identifying this flat page.\nRequest fields: content, meta_description, meta_title, metadata, slug, template: Custom template name from your theme, ie pages/page.{custom_name}.html, title"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsList",
+    "title": "GET /products/",
+    "description": "Retrieve a list of all products.",
+    "content": "GET /products/\nRetrieve a list of all products.\nParameters: title (query), category (query), range (query), is_public (query): Is Public, is_gift_card (query): Is Gift Card, sku (query), cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsCreate",
+    "title": "POST /products/",
+    "description": "Create a new product.",
+    "content": "POST /products/\nCreate a new product.\nRequest fields: categories, date_created, date_updated, description, enable_subscription, external_tax_code: Tax code to be used with external tax systems such as Avalara, TaxJar., id, images, interval: * `day` - Day, interval_counts: Choose a predefined value or type to enter custom value(s)., is_discountable: This flag indicates if this product can be used in an offer or not, is_public: Show this product in search results and catalogue listings., meta_description, meta_title, metadata, ranking: The highest ranking are shown first, rating, recommended_products, slug, template: Custom template name from your theme, ie catalogue/product.{custom_name}.html, title, url, variant_attributes, variants"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsVariantsDestroy",
+    "title": "DELETE /products/variants/{id}/",
+    "description": "",
+    "content": "DELETE /products/variants/{id}/\n\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsVariantsRetrieve",
+    "title": "GET /products/variants/{id}/",
+    "description": "",
+    "content": "GET /products/variants/{id}/\n\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsVariantsPartialUpdate",
+    "title": "PATCH /products/variants/{id}/",
+    "description": "",
+    "content": "PATCH /products/variants/{id}/\n\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: allow_backorders: Continue selling when out of stock., image, metadata, prices, requires_shipping, sku: Stock Keeping Unit, stockrecords, track_stock: Track inventory quantities at fulfillment locations., unit_cost, upc: Universal Product Code, variant_attribute_values"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsVariantsUpdate",
+    "title": "PUT /products/variants/{id}/",
+    "description": "",
+    "content": "PUT /products/variants/{id}/\n\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: allow_backorders: Continue selling when out of stock., image, metadata, prices, requires_shipping, sku: Stock Keeping Unit, stockrecords, track_stock: Track inventory quantities at fulfillment locations., unit_cost, upc: Universal Product Code, variant_attribute_values"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsDestroy",
+    "title": "DELETE /products/{id}/",
+    "description": "Delete an existing product.",
+    "content": "DELETE /products/{id}/\nDelete an existing product.\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsRetrieve",
+    "title": "GET /products/{id}/",
+    "description": "Retrieve a product.",
+    "content": "GET /products/{id}/\nRetrieve a product.\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsPartialUpdate",
+    "title": "PATCH /products/{id}/",
+    "description": "Partially update an existing product.",
+    "content": "PATCH /products/{id}/\nPartially update an existing product.\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: categories, date_created, date_updated, description, enable_subscription, external_tax_code: Tax code to be used with external tax systems such as Avalara, TaxJar., id, images, interval: * `day` - Day, interval_counts: Choose a predefined value or type to enter custom value(s)., is_discountable: This flag indicates if this product can be used in an offer or not, is_public: Show this product in search results and catalogue listings., meta_description, meta_title, metadata, ranking: The highest ranking are shown first, rating, recommended_products, slug, template: Custom template name from your theme, ie catalogue/product.{custom_name}.html, title, url, variant_attributes, variants"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsUpdate",
+    "title": "PUT /products/{id}/",
+    "description": "Update an existing product.",
+    "content": "PUT /products/{id}/\nUpdate an existing product.\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: categories, date_created, date_updated, description, enable_subscription, external_tax_code: Tax code to be used with external tax systems such as Avalara, TaxJar., id, images, interval: * `day` - Day, interval_counts: Choose a predefined value or type to enter custom value(s)., is_discountable: This flag indicates if this product can be used in an offer or not, is_public: Show this product in search results and catalogue listings., meta_description, meta_title, metadata, ranking: The highest ranking are shown first, rating, recommended_products, slug, template: Custom template name from your theme, ie catalogue/product.{custom_name}.html, title, url, variant_attributes, variants"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsImageList",
+    "title": "GET /products/{id}/images/",
+    "description": "Retrieve a list of all images from a product.",
+    "content": "GET /products/{id}/images/\nRetrieve a list of all images from a product.\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsImageCreate",
+    "title": "POST /products/{id}/images/",
+    "description": "Create a new image in an existing product.",
+    "content": "POST /products/{id}/images/\nCreate a new image in an existing product.\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: attachment: The base64 string file to upload (image attachment)., caption, display_order: An image with a display order of zero will be the primary image for a product, file_name, id, src: URL of the image to fetch and associate with the product"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsImageDelete",
+    "title": "DELETE /products/{id}/images/{imageId}/",
+    "description": "Delete an image of the product.",
+    "content": "DELETE /products/{id}/images/{imageId}/\nDelete an image of the product.\nParameters: id (path): A unique integer value identifying this Product., imageId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsImageDetail",
+    "title": "GET /products/{id}/images/{imageId}/",
+    "description": "Retrieve the details of an image from a product.",
+    "content": "GET /products/{id}/images/{imageId}/\nRetrieve the details of an image from a product.\nParameters: id (path): A unique integer value identifying this Product., imageId (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsImageUpdate",
+    "title": "PATCH /products/{id}/images/{imageId}/",
+    "description": "Update details of an existing product image.",
+    "content": "PATCH /products/{id}/images/{imageId}/\nUpdate details of an existing product image.\nParameters: id (path): A unique integer value identifying this Product., imageId (path)\nRequest fields: caption, display_order: An image with a display order of zero will be the primary image for a product, id, variants"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsPricesList",
+    "title": "GET /products/{id}/prices/",
+    "description": "Retrieve a list of all prices from a product.",
+    "content": "GET /products/{id}/prices/\nRetrieve a list of all prices from a product.\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsPricesCreate",
+    "title": "POST /products/{id}/prices/",
+    "description": "Create a product price in an existing product.",
+    "content": "POST /products/{id}/prices/\nCreate a product price in an existing product.\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: currency, price, retail, subscription, subscription_suggested_downsell"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsPricesDestroy",
+    "title": "DELETE /products/{id}/prices/{currency}/",
+    "description": "Delete a price in an existing product.",
+    "content": "DELETE /products/{id}/prices/{currency}/\nDelete a price in an existing product.\nParameters: id (path): A unique integer value identifying this Price., currency (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsPricesRetrieve",
+    "title": "GET /products/{id}/prices/{currency}/",
+    "description": "Retrieve a price in an existing product.",
+    "content": "GET /products/{id}/prices/{currency}/\nRetrieve a price in an existing product.\nParameters: id (path): A unique integer value identifying this Price., currency (path)"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsPricesPartialUpdate",
+    "title": "PATCH /products/{id}/prices/{currency}/",
+    "description": "Update details of an existing product price.",
+    "content": "PATCH /products/{id}/prices/{currency}/\nUpdate details of an existing product price.\nParameters: id (path): A unique integer value identifying this Price., currency (path)\nRequest fields: price, retail, subscription, subscription_suggested_downsell"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsVariantList",
+    "title": "GET /products/{id}/variants/",
+    "description": "Retrieve a list of variant products for a product.",
+    "content": "GET /products/{id}/variants/\nRetrieve a list of variant products for a product.\nParameters: id (path): A unique integer value identifying this Product."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/productsVariantCreate",
+    "title": "POST /products/{id}/variants/",
+    "description": "Create a variant product in an existing product.",
+    "content": "POST /products/{id}/variants/\nCreate a variant product in an existing product.\nParameters: id (path): A unique integer value identifying this Product.\nRequest fields: allow_backorders: Continue selling when out of stock., image, metadata, prices, requires_shipping, sku: Stock Keeping Unit, stockrecords, track_stock: Track inventory quantities at fulfillment locations., unit_cost, upc: Universal Product Code, variant_attribute_values"
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/shippingMethodsList",
+    "title": "GET /shipping-methods/",
+    "description": "Retrieve a list of all configured shipping methods.",
+    "content": "GET /shipping-methods/\nRetrieve a list of all configured shipping methods.\nParameters: cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/fulfillment/shippingMethodsRetrieve",
+    "title": "GET /shipping-methods/{id}/",
+    "description": "Retrieve an existing shipping method.",
+    "content": "GET /shipping-methods/{id}/\nRetrieve an existing shipping method.\nParameters: id (path): A unique integer value identifying this Order and Item Charge."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/stockrecordsList",
+    "title": "GET /stockrecords/",
+    "description": "Retrieve a list of stockrecords.",
+    "content": "GET /stockrecords/\nRetrieve a list of stockrecords.\nParameters: search_text (query): Generic search by product name or SKU., location_id (query): Location, sku (query): SKU, inventory_availability (query): Inventory Availability, purchase_availability (query): Purchase Availability, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/stockrecordsCreate",
+    "title": "POST /stockrecords/",
+    "description": "Create a new stockrecord.",
+    "content": "POST /stockrecords/\nCreate a new stockrecord.\nRequest fields: date_created, date_updated, id, location_id, low_stock_threshold, num_in_stock, product, sku"
+  },
+  {
+    "url": "/docs/admin-api/reference/products/stockrecordsDestroy",
+    "title": "DELETE /stockrecords/{id}/",
+    "description": "Delete an existing stockrecord.",
+    "content": "DELETE /stockrecords/{id}/\nDelete an existing stockrecord.\nParameters: id (path): A unique integer value identifying this Stock record."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/stockrecordsRetrieve",
+    "title": "GET /stockrecords/{id}/",
+    "description": "Retrieve a stockrecord.",
+    "content": "GET /stockrecords/{id}/\nRetrieve a stockrecord.\nParameters: id (path): A unique integer value identifying this Stock record."
+  },
+  {
+    "url": "/docs/admin-api/reference/products/stockrecordsPartialUpdate",
+    "title": "PATCH /stockrecords/{id}/",
+    "description": "Partial update an existing stockrecord.",
+    "content": "PATCH /stockrecords/{id}/\nPartial update an existing stockrecord.\nParameters: id (path): A unique integer value identifying this Stock record.\nRequest fields: date_created, date_updated, id, location_id, low_stock_threshold, num_in_stock, product, sku"
+  },
+  {
+    "url": "/docs/admin-api/reference/store/storeDetail",
+    "title": "GET /store/",
+    "description": "Retrieve general business information and store settings.",
+    "content": "GET /store/\nRetrieve general business information and store settings."
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsList",
+    "title": "GET /subscriptions/",
+    "description": "Retrieve a list of subscriptions.",
+    "content": "GET /subscriptions/\nRetrieve a list of subscriptions.\nParameters: search_text (query), address (query), date_from (query): YYYY-MM-DD, date_to (query): YYYY-MM-DD, status (query): Status, product (query), sku (query): SKU, gateway (query): Gateway, card_type (query): Card Brand, order_number (query): Order Number, customer_email (query): Customer Email, customer_phone_number (query): Customer phone number, cancel_reason (query): Cancel Reason, next_renewal_date_from (query): YYYY-MM-DD, next_renewal_date_to (query): YYYY-MM-DD, cancel_date_from (query): YYYY-MM-DD, cancel_date_to (query): YYYY-MM-DD, recoveries_source (query): Recovery Source, recoveries_date_from (query): YYYY-MM-DD, recoveries_date_to (query): YYYY-MM-DD, funnels (query): Funnels, agents (query): Agents, utm_source (query): UTM Source, utm_campaign (query): UTM Campaign, utm_term (query): UTM Term, utm_content (query): UTM Content, affiliate (query): Affiliate, subaffiliate1 (query): Sub-Affiliate 1, subaffiliate2 (query): Sub-Affiliate 2, subaffiliate3 (query): Sub-Affiliate 3, subaffiliate4 (query): Sub-Affiliate 4, subaffiliate5 (query): Sub-Affiliate 5, is_test (query): Is Test Subscription, payment_method (query): Payment Method, gateway_status (query): Gateway Status, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsCreate",
+    "title": "POST /subscriptions/",
+    "description": "Create a new subscription.",
+    "content": "POST /subscriptions/\nCreate a new subscription.\nRequest fields: attribution, billing_address, billing_same_as_shipping_address, currency, interval: * `day` - Day, interval_count, lines, next_renewal_date: format: YYYY-MM-DDThh:mm:ss #eg. 2021-12-07T12:04:45, payment_details, payment_method: * `card_token` - Card Token, shipping_address, shipping_code, shipping_price, use_default_billing_address, use_default_shipping_address, user"
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsRetrieve",
+    "title": "GET /subscriptions/{id}/",
+    "description": "Retrieve a subscription.",
+    "content": "GET /subscriptions/{id}/\nRetrieve a subscription.\nParameters: id (path): A unique integer value identifying the Subscription."
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsPartialUpdate",
+    "title": "PATCH /subscriptions/{id}/",
+    "description": "Partial update an existing subscription.",
+    "content": "PATCH /subscriptions/{id}/\nPartial update an existing subscription.\nParameters: id (path): A unique integer value identifying the Subscription.\nRequest fields: attribution, billing_address, cancel_reason, cancel_reason_other_message, currency, date_created, frequency, id, interval: * `day` - Day, interval_count, is_tax_known, is_test, lines, next_renewal_date, num_lines, num_orders, orders, payment_details, payment_method, shipping_address, shipping_code, shipping_price, status: * `active` - Active, total, user"
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsCancelCreate",
+    "title": "POST /subscriptions/{id}/cancel/",
+    "description": "Cancel an existing subscription.",
+    "content": "POST /subscriptions/{id}/cancel/\nCancel an existing subscription.\nParameters: id (path): A unique integer value identifying this Subscription.\nRequest fields: cancel_reason: * `not_satisfied_with_product` - Not satisfied with product quality, cancel_reason_other_message, send_cancel_notification"
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsLinesCreate",
+    "title": "POST /subscriptions/{id}/lines/",
+    "description": "Create a new subscription line.",
+    "content": "POST /subscriptions/{id}/lines/\nCreate a new subscription line.\nParameters: id (path): A unique integer value identifying the Subscription.\nRequest fields: metadata, price, product_id, quantity"
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsLinesDestroy",
+    "title": "DELETE /subscriptions/{id}/lines/{lineId}/",
+    "description": "Delete a subscription line in an existing subscription line.",
+    "content": "DELETE /subscriptions/{id}/lines/{lineId}/\nDelete a subscription line in an existing subscription line.\nParameters: id (path): A unique integer value identifying the Subscription., lineId (path): A unique integer value identifying the Subscription line."
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsLinesUpdate",
+    "title": "PUT /subscriptions/{id}/lines/{lineId}/",
+    "description": "Update an existing subscription line.",
+    "content": "PUT /subscriptions/{id}/lines/{lineId}/\nUpdate an existing subscription line.\nParameters: id (path): A unique integer value identifying the Subscription., lineId (path): A unique integer value identifying the Subscription line.\nRequest fields: metadata, price, quantity"
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsRenewCreate",
+    "title": "POST /subscriptions/{id}/renew/",
+    "description": "Trigger a subscription renewal order.",
+    "content": "POST /subscriptions/{id}/renew/\nTrigger a subscription renewal order.\nParameters: id (path): A unique integer value identifying this Subscription."
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsRetryCreate",
+    "title": "POST /subscriptions/{id}/retry/",
+    "description": "Trigger a renewal payment retry for a subscription.",
+    "content": "POST /subscriptions/{id}/retry/\nTrigger a renewal payment retry for a subscription.\nParameters: id (path): A unique integer value identifying this Subscription.\nRequest fields: payment_gateway"
+  },
+  {
+    "url": "/docs/admin-api/reference/subscriptions/subscriptionsTransactionsList",
+    "title": "GET /subscriptions/{id}/transactions/",
+    "description": "Retrieve a list of transactions in an existing subscription.",
+    "content": "GET /subscriptions/{id}/transactions/\nRetrieve a list of transactions in an existing subscription.\nParameters: id (path): A unique integer value identifying this Subscription., cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesList",
+    "title": "GET /themes/",
+    "description": "Retrieve a list of themes.",
+    "content": "GET /themes/\nRetrieve a list of themes.\nParameters: cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesCreate",
+    "title": "POST /themes/",
+    "description": "Create a new theme.",
+    "content": "POST /themes/\nCreate a new theme.\nRequest fields: active, id, name"
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesDestroy",
+    "title": "DELETE /themes/{id}/",
+    "description": "Delete an existing theme.",
+    "content": "DELETE /themes/{id}/\nDelete an existing theme.\nParameters: id (path): A unique integer value identifying this theme."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesRetrieve",
+    "title": "GET /themes/{id}/",
+    "description": "Retrieve a theme.",
+    "content": "GET /themes/{id}/\nRetrieve a theme.\nParameters: id (path): A unique integer value identifying this theme."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesTemplatesDestroy",
+    "title": "DELETE /themes/{id}/templates/",
+    "description": "Delete an existing template in an existing theme.",
+    "content": "DELETE /themes/{id}/templates/\nDelete an existing template in an existing theme.\nParameters: id (path): A unique integer value identifying this theme."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesTemplatesRetrieve",
+    "title": "GET /themes/{id}/templates/",
+    "description": "Retrieve a list of templates in an existing theme.",
+    "content": "GET /themes/{id}/templates/\nRetrieve a list of templates in an existing theme.\nParameters: id (path): A unique integer value identifying this theme."
+  },
+  {
+    "url": "/docs/admin-api/reference/storefront/themesTemplatesCreate",
+    "title": "POST /themes/{id}/templates/",
+    "description": "Create a new template in an existing theme.",
+    "content": "POST /themes/{id}/templates/\nCreate a new template in an existing theme.\nParameters: id (path): A unique integer value identifying this theme.\nRequest fields: content, file, name: Example: 'flatpages/default.html', theme"
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsList",
+    "title": "GET /tickets/",
+    "description": "Retrieve a list of tickets.",
+    "content": "GET /tickets/\nRetrieve a list of tickets.\nParameters: filter_text (query): Generic search by ticket id, subject, or requester email., id (query), subject (query): Subject, status (query): * `new` - New, requester (query): Requester, assignee (query): Assignee, order_number (query): Order Number, product (query), tags (query): Tags, ticket_type (query), priority (query): * `high` - High, channel (query): * `customer_account` - Customer account, created_from (query): Created From, created_to (query): Created To, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsCreate",
+    "title": "POST /tickets/",
+    "description": "Create a new ticket.",
+    "content": "POST /tickets/\nCreate a new ticket.\nRequest fields: assignee, comment: An object that adds a comment to the ticket., created_at, from_email: In case user contact from email and user does not in system yet., id, order, priority: * `high` - High, products, requester, status: * `new` - New, subject, tags, ticket_type, updated_at"
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsAttachmentsCreate",
+    "title": "POST /tickets/attachments/",
+    "description": "Attach new files in an existing ticket.",
+    "content": "POST /tickets/attachments/\nAttach new files in an existing ticket.\nRequest fields: files"
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsRetrieve",
+    "title": "GET /tickets/{id}/",
+    "description": "Retrieve a ticket.",
+    "content": "GET /tickets/{id}/\nRetrieve a ticket.\nParameters: id (path): A unique integer value identifying this Ticket."
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsPartialUpdate",
+    "title": "PATCH /tickets/{id}/",
+    "description": "Partial update an existing ticket.",
+    "content": "PATCH /tickets/{id}/\nPartial update an existing ticket.\nParameters: id (path): A unique integer value identifying this Ticket.\nRequest fields: assignee, comment: An object that adds a comment to the ticket., created_at, from_email: In case user contact from email and user does not in system yet., id, order, priority: * `high` - High, products, requester, status: * `new` - New, subject, tags, ticket_type, updated_at"
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsUpdate",
+    "title": "PUT /tickets/{id}/",
+    "description": "Update an existing ticket.",
+    "content": "PUT /tickets/{id}/\nUpdate an existing ticket.\nParameters: id (path): A unique integer value identifying this Ticket.\nRequest fields: assignee, comment: An object that adds a comment to the ticket., created_at, from_email: In case user contact from email and user does not in system yet., id, order, priority: * `high` - High, products, requester, status: * `new` - New, subject, tags, ticket_type, updated_at"
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsCommentsRetrieve",
+    "title": "GET /tickets/{id}/comments/",
+    "description": "Retrieve a list of comments in an existing ticket.",
+    "content": "GET /tickets/{id}/comments/\nRetrieve a list of comments in an existing ticket.\nParameters: id (path): A unique integer value identifying this Ticket."
+  },
+  {
+    "url": "/docs/admin-api/reference/support/ticketsCommentsCreate",
+    "title": "POST /tickets/{id}/comments/",
+    "description": "Create a new comment in an existing ticket.",
+    "content": "POST /tickets/{id}/comments/\nCreate a new comment in an existing ticket.\nParameters: id (path): A unique integer value identifying this Ticket.\nRequest fields: attachments, author, body, from_email: In case user contact from email and user does not in system yet., id, is_public"
+  },
+  {
+    "url": "/docs/admin-api/reference/support/tickettypesList",
+    "title": "GET /tickettypes/",
+    "description": "Retrieve a list of ticket types.",
+    "content": "GET /tickettypes/\nRetrieve a list of ticket types.\nParameters: name (query), cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/support/tickettypesRetrieve",
+    "title": "GET /tickettypes/{id}/",
+    "description": "Retrieve a ticket type.",
+    "content": "GET /tickettypes/{id}/\nRetrieve a ticket type.\nParameters: id (path): A unique integer value identifying this ticket type."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/transactionsList",
+    "title": "GET /transactions/",
+    "description": "Retrieve a list of transactions.",
+    "content": "GET /transactions/\nRetrieve a list of transactions.\nParameters: external_id (query): External ID, date_created_from (query): YYYY-MM-DD, date_created_to (query): YYYY-MM-DD, type (query): Transaction Type, card_type (query): Card Brand, bankcard_first_six (query): Bankcard First Six, bankcard_last_four (query): Bankcard Last Four, gateway_id (query): Gateway ID, payment_method (query): Payment Method, amount_min (query): Amount Min, amount_max (query): Amount Max, currency (query), core_transaction_code (query): Transaction Code, status (query): Status, auth_code (query): Auth Code, network_transaction_id (query): Network Transaction ID, is_3ds (query), optimized_3ds (query), is_initial_retry (query), subscription_life_cycle (query): * `recurring` - Recurring, funnels (query): Funnels, is_external (query), is_test (query), utm_source (query): UTM Source, utm_campaign (query): UTM Campaign, utm_content (query): UTM Content, utm_term (query): UTM Term, affiliate (query): Affiliate, subaffiliate1 (query): Sub-Affiliate 1, subaffiliate2 (query): Sub-Affiliate 2, subaffiliate3 (query): Sub-Affiliate 3, subaffiliate4 (query): Sub-Affiliate 4, subaffiliate5 (query): Sub-Affiliate 5, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/transactionsVerifyCreate",
+    "title": "POST /transactions/verify/",
+    "description": "Verify a card token.",
+    "content": "POST /transactions/verify/\nVerify a card token.\nRequest fields: card_token, currency, payment_gateway, payment_gateway_group, user"
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/transactionsRetrieve",
+    "title": "GET /transactions/{id}/",
+    "description": "Retrieve a transaction.",
+    "content": "GET /transactions/{id}/\nRetrieve a transaction.\nParameters: id (path): A unique integer value identifying this Transaction."
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/transactionsCaptureCreate",
+    "title": "POST /transactions/{id}/capture/",
+    "description": "Capture an existing transaction.",
+    "content": "POST /transactions/{id}/capture/\nCapture an existing transaction.\nParameters: id (path): A unique integer value identifying this Transaction.\nRequest fields: amount: "
+  },
+  {
+    "url": "/docs/admin-api/reference/payments/transactionsRefundCreate",
+    "title": "POST /transactions/{id}/refund/",
+    "description": "Refund an existing transaction.",
+    "content": "POST /transactions/{id}/refund/\nRefund an existing transaction.\nParameters: id (path): A unique integer value identifying this Transaction.\nRequest fields: amount, is_external, send_refund_notification"
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersList",
+    "title": "GET /users/",
+    "description": "Retrieve a list of customers.",
+    "content": "GET /users/\nRetrieve a list of customers.\nParameters: email (query): Email, name (query): Name, phone_number (query), language (query): Language, user_type (query), date_joined_from (query): YYYY-MM-DD, date_joined_to (query): YYYY-MM-DD, is_blocked (query), accepts_marketing (query), cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersCreate",
+    "title": "POST /users/",
+    "description": "Create a new customer.",
+    "content": "POST /users/\nCreate a new customer.\nRequest fields: accepts_marketing, addresses, date_joined, email, first_name, id, ip, is_blocked, language: required : E164, last_name, metadata, orders_count, phone_number, subscriptions_count, tags, total_spent, user_agent, user_type: Available values : customer, lead, dashboard"
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersRetrieve",
+    "title": "GET /users/{id}/",
+    "description": "Retrieve a customer.",
+    "content": "GET /users/{id}/\nRetrieve a customer.\nParameters: id (path): A unique integer value identifying this User."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersPartialUpdate",
+    "title": "PATCH /users/{id}/",
+    "description": "Partial update an existing customer.",
+    "content": "PATCH /users/{id}/\nPartial update an existing customer.\nParameters: id (path): A unique integer value identifying this User.\nRequest fields: accepts_marketing, addresses, date_joined, email, first_name, id, ip, is_blocked, language: required : E164, last_name, metadata, orders_count, phone_number, subscriptions_count, tags, total_spent, user_agent, user_type: Available values : customer, lead, dashboard"
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersUpdate",
+    "title": "PUT /users/{id}/",
+    "description": "Update an existing customer.",
+    "content": "PUT /users/{id}/\nUpdate an existing customer.\nParameters: id (path): A unique integer value identifying this User.\nRequest fields: accepts_marketing, addresses, date_joined, email, first_name, id, ip, is_blocked, language: required : E164, last_name, metadata, orders_count, phone_number, subscriptions_count, tags, total_spent, user_agent, user_type: Available values : customer, lead, dashboard"
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersAddressesList",
+    "title": "GET /users/{id}/addresses/",
+    "description": "Retrieve a list of addresses in an existing customer.",
+    "content": "GET /users/{id}/addresses/\nRetrieve a list of addresses in an existing customer.\nParameters: id (path): A unique integer value identifying this User address., cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersAddressesCreate",
+    "title": "POST /users/{id}/addresses/",
+    "description": "",
+    "content": "POST /users/{id}/addresses/\n\nParameters: id (path): A unique integer value identifying this User address.\nRequest fields: country: The address country code., first_name: The first name of the address., id, is_default_for_billing: Use this address as the default billing address., is_default_for_shipping: Use this address as the default shipping address., last_name: The last name of the address., line1: The first line of the address., line2: Optional second line of of the address., line3: Optional third line of of the address., line4: City of the address., notes: Tell us anything we should know when delivering your order., phone_number: The address phone number., postcode: The address post code or zip code., state: The address state/province."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersAddressesDestroy",
+    "title": "DELETE /users/{id}/addresses/{addressId}/",
+    "description": "Delete an address in an existing customer.",
+    "content": "DELETE /users/{id}/addresses/{addressId}/\nDelete an address in an existing customer.\nParameters: id (path): A unique integer value identifying this User address., addressId (path): A unique integer value identifying this User address."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersAddressesRetrieve",
+    "title": "GET /users/{id}/addresses/{addressId}/",
+    "description": "Retrieve an address of an existing customer.",
+    "content": "GET /users/{id}/addresses/{addressId}/\nRetrieve an address of an existing customer.\nParameters: id (path): A unique integer value identifying this User address., addressId (path): A unique integer value identifying this User address."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersAddressesUpdate",
+    "title": "PUT /users/{id}/addresses/{addressId}/",
+    "description": "Update an address in an existing customer.",
+    "content": "PUT /users/{id}/addresses/{addressId}/\nUpdate an address in an existing customer.\nParameters: id (path): A unique integer value identifying this User address., addressId (path): A unique integer value identifying this User address.\nRequest fields: country: The address country code., first_name: The first name of the address., id, is_default_for_billing: Use this address as the default billing address., is_default_for_shipping: Use this address as the default shipping address., last_name: The last name of the address., line1: The first line of the address., line2: Optional second line of of the address., line3: Optional third line of of the address., line4: City of the address., notes: Tell us anything we should know when delivering your order., phone_number: The address phone number., postcode: The address post code or zip code., state: The address state/province."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersNotesList",
+    "title": "GET /users/{id}/notes/",
+    "description": "Retrieve a list of notes in an existing customer.",
+    "content": "GET /users/{id}/notes/\nRetrieve a list of notes in an existing customer.\nParameters: id (path): A unique integer value identifying this User., cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersNotesCreate",
+    "title": "POST /users/{id}/notes/",
+    "description": "Create a new note in an existing customer.",
+    "content": "POST /users/{id}/notes/\nCreate a new note in an existing customer.\nParameters: id (path): A unique integer value identifying this User.\nRequest fields: message"
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersOrdersRetrieve",
+    "title": "GET /users/{id}/orders/",
+    "description": "Retrieve a list of orders in an existing customer.",
+    "content": "GET /users/{id}/orders/\nRetrieve a list of orders in an existing customer.\nParameters: id (path): A unique integer value identifying this User."
+  },
+  {
+    "url": "/docs/admin-api/reference/customers/usersSubscriptionsRetrieve",
+    "title": "GET /users/{id}/subscriptions/",
+    "description": "Retrieve a list of subscriptions in an existing customer.",
+    "content": "GET /users/{id}/subscriptions/\nRetrieve a list of subscriptions in an existing customer.\nParameters: id (path): A unique integer value identifying this User."
+  },
+  {
+    "url": "/docs/admin-api/reference/webhooks/webhooksList",
+    "title": "GET /webhooks/",
+    "description": "Retrieve a list of webhooks.",
+    "content": "GET /webhooks/\nRetrieve a list of webhooks.\nParameters: name (query): Name, events (query): Event Triggers, active (query): Is Active?, cursor (query): The pagination cursor value."
+  },
+  {
+    "url": "/docs/admin-api/reference/webhooks/webhooksCreate",
+    "title": "POST /webhooks/",
+    "description": "Create a new webhook.",
+    "content": "POST /webhooks/\nCreate a new webhook.\nRequest fields: active, api_version, created_at, events: See dashboard for webhooks for available events., id, name, next_check_date, secret_key, target: Full url for your webhook receiver endpoint., updated_at, warning_count"
+  },
+  {
+    "url": "/docs/admin-api/reference/webhooks/webhooksDestroy",
+    "title": "DELETE /webhooks/{id}/",
+    "description": "Delete an existing webhook.",
+    "content": "DELETE /webhooks/{id}/\nDelete an existing webhook.\nParameters: id (path): A unique integer value identifying this webhook."
+  },
+  {
+    "url": "/docs/admin-api/reference/webhooks/webhooksRetrieve",
+    "title": "GET /webhooks/{id}/",
+    "description": "Retrieve a webhook.",
+    "content": "GET /webhooks/{id}/\nRetrieve a webhook.\nParameters: id (path): A unique integer value identifying this webhook."
+  },
+  {
+    "url": "/docs/admin-api/reference/webhooks/webhooksPartialUpdate",
+    "title": "PATCH /webhooks/{id}/",
+    "description": "Partial update an existing webhook.",
+    "content": "PATCH /webhooks/{id}/\nPartial update an existing webhook.\nParameters: id (path): A unique integer value identifying this webhook.\nRequest fields: active, api_version, created_at, events: See dashboard for webhooks for available events., id, name, next_check_date, secret_key, target: Full url for your webhook receiver endpoint., updated_at, warning_count"
+  },
+  {
+    "url": "/docs/admin-api/reference/webhooks/webhooksUpdate",
+    "title": "PUT /webhooks/{id}/",
+    "description": "Update an existing webhook.",
+    "content": "PUT /webhooks/{id}/\nUpdate an existing webhook.\nParameters: id (path): A unique integer value identifying this webhook.\nRequest fields: active, api_version, created_at, events: See dashboard for webhooks for available events., id, name, next_check_date, secret_key, target: Full url for your webhook receiver endpoint., updated_at, warning_count"
+  },
+  {
+    "url": "/docs/campaigns/api/address/addressAutocomplete",
+    "title": "GET /api/v1/addresses/autocomplete/",
+    "description": "Autocomplete address suggestions based on partial input.",
+    "content": "GET /api/v1/addresses/autocomplete/\nAutocomplete address suggestions based on partial input.\nParameters: country (query): Optional country code to filter results., language (query): Optional language code for the results., query_text (query): Partial address input to search for suggestions."
+  },
+  {
+    "url": "/docs/campaigns/api/campaigns/campaignRetrieve",
+    "title": "GET /api/v1/campaigns/",
+    "description": "Retrieve campaign details.",
+    "content": "GET /api/v1/campaigns/\nRetrieve campaign details."
+  },
+  {
+    "url": "/docs/campaigns/api/carts/cartsCreate",
+    "title": "POST /api/v1/carts/",
+    "description": "Create a new cart.",
+    "content": "POST /api/v1/carts/\nCreate a new cart.\nRequest fields: address: Set default shipping and billing address for the user, attribution, currency: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the campaign currency , lines: Array of package IDs, user, vouchers: Campaign offer codes or store coupon code"
+  },
+  {
+    "url": "/docs/campaigns/api/carts/cartsCalculate",
+    "title": "POST /api/v1/carts/calculate/",
+    "description": "Calculate cart summary.",
+    "content": "POST /api/v1/carts/calculate/\nCalculate cart summary.\nRequest fields: currency: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the campaign currency , lines: Array of package IDs, shipping_method: Selected shipping method ID, vouchers: Campaign offer codes or store coupon code"
+  },
+  {
+    "url": "/docs/campaigns/api/orders/ordersCreate",
+    "title": "POST /api/v1/orders/",
+    "description": "Create a new order.",
+    "content": "POST /api/v1/orders/\nCreate a new order.\nRequest fields: attribution, billing_address, billing_same_as_shipping_address: Use the shipping address as the billing address, currency: ISO 4217 currency code (e.g., USD, EUR, GBP), defaults to the campaign currency , lines: Array of package IDs, payment_detail, payment_failed_url: Redirect user to this url if payment is unsuccessful, shipping_address, shipping_method: Shipping method ID for order shipping, success_url: Fully qualified url that payment redirect flows will redirect to, use_default_billing_address: Use the customer's default billing address for this order, use_default_shipping_address: Use the customer's default shipping address for this order, user, vouchers: Campaign offer codes or store coupon code"
+  },
+  {
+    "url": "/docs/campaigns/api/orders/orderRetrieve",
+    "title": "GET /api/v1/orders/{ref_id}/",
+    "description": "Retrieve specific order details.",
+    "content": "GET /api/v1/orders/{ref_id}/\nRetrieve specific order details.\nParameters: ref_id (path): Order reference ID"
+  },
+  {
+    "url": "/docs/campaigns/api/orders/ordersUpsellCreate",
+    "title": "POST /api/v1/orders/{ref_id}/upsells/",
+    "description": "Add an upsell to an existing order.",
+    "content": "POST /api/v1/orders/{ref_id}/upsells/\nAdd an upsell to an existing order.\nParameters: ref_id (path): Order reference ID\nRequest fields: lines: Array of package IDs, payment_detail, vouchers: Array of voucher codes"
+  }
+]
