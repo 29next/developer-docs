@@ -7549,6 +7549,10 @@ components:
           allOf:
             - $ref: '#/components/schemas/MarketingAttribution'
           readOnly: true
+        auth_code:
+          type:
+            - string
+            - 'null'
         currency:
           type:
             - string
@@ -7575,6 +7579,10 @@ components:
         is_test:
           type:
             - boolean
+            - 'null'
+        network_transaction_id:
+          type:
+            - string
             - 'null'
         order:
           type:
@@ -7997,6 +8005,10 @@ components:
           allOf:
             - $ref: '#/components/schemas/MarketingAttribution'
           readOnly: true
+        auth_code:
+          type:
+            - string
+            - 'null'
         currency:
           type:
             - string
@@ -8023,6 +8035,10 @@ components:
         is_test:
           type:
             - boolean
+            - 'null'
+        network_transaction_id:
+          type:
+            - string
             - 'null'
         order:
           type:
@@ -8104,6 +8120,10 @@ components:
           allOf:
             - $ref: '#/components/schemas/MarketingAttribution'
           readOnly: true
+        auth_code:
+          type:
+            - string
+            - 'null'
         currency:
           type:
             - string
@@ -8127,6 +8147,10 @@ components:
           type: boolean
         is_external:
           type: boolean
+        network_transaction_id:
+          type:
+            - string
+            - 'null'
         order:
           type:
             - string
@@ -8189,6 +8213,10 @@ components:
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           type: string
+        auth_code:
+          type:
+            - string
+            - 'null'
         currency:
           type:
             - string
@@ -8215,6 +8243,10 @@ components:
         is_test:
           type:
             - boolean
+            - 'null'
+        network_transaction_id:
+          type:
+            - string
             - 'null'
         parent_id:
           description: |2-
@@ -10538,6 +10570,16 @@ paths:
         - description: Transaction ID
           in: query
           name: transaction_id
+          schema:
+            type: string
+        - description: Auth Code
+          in: query
+          name: auth_code
+          schema:
+            type: string
+        - description: Network Transaction ID
+          in: query
+          name: network_transaction_id
           schema:
             type: string
         - description: |-
@@ -15640,6 +15682,37 @@ paths:
             - subscriptions:write
       tags:
         - subscriptions
+  /subscriptions/{id}/renew/:
+    post:
+      description: Trigger a subscription renewal order.
+      operationId: subscriptionsRenewCreate
+      parameters:
+        - description: A unique integer value identifying this Subscription.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: X-29next-API-Version
+          required: true
+          schema:
+            default: '2023-02-10'
+            enum:
+              - '2023-02-10'
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDetail'
+          description: ''
+      security:
+        - oauth2:
+            - subscriptions:write
+      tags:
+        - subscriptions
   /subscriptions/{id}/retry/:
     post:
       description: Trigger a renewal payment retry for a subscription.
@@ -16526,6 +16599,16 @@ paths:
               - succeeded
             type: string
             x-spec-enum-id: a6661c405ff6d2ee
+        - description: Auth Code
+          in: query
+          name: auth_code
+          schema:
+            type: string
+        - description: Network Transaction ID
+          in: query
+          name: network_transaction_id
+          schema:
+            type: string
         - in: query
           name: is_3ds
           schema:
@@ -17630,6 +17713,24 @@ webhooks:
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                client_id: null
+                created_at: '2024-01-01T00:00:00Z'
+                name: string
+                settings: {}
+                updated_at: '2024-01-01T00:00:00Z'
+                version: null
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: app.uninstalled
+              object: app
+              webhook:
+                events:
+                  - app.uninstalled
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -17689,6 +17790,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -17698,38 +17800,109 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: app
-              data:
-                client_id: string
-                created_at: '2024-01-01T00:00:00Z'
-                name: string
-                settings: null
-                updated_at: '2024-01-01T00:00:00Z'
-                version: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: app.uninstalled
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - app.uninstalled
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - apps
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - apps
   cart.abandoned:
     post:
       description: Triggers when a cart is marked as abandoned.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                abandoned: false
+                attribution:
+                  affiliate: null
+                  agent:
+                    email: null
+                    first_name: string
+                    id: 0
+                    last_name: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
+                checkout_url: https://example.com
+                currency: string
+                date_created: '2024-01-01T00:00:00Z'
+                id: 0
+                is_tax_known: false
+                lines:
+                  - attributes:
+                      - option: null
+                        value: null
+                    id: 0
+                    is_upsell: false
+                    metadata: {}
+                    price_currency: string
+                    product:
+                      categories: []
+                      id: 0
+                      images: []
+                      title: string
+                      upc: null
+                      url: https://example.com
+                    quantity: 0
+                    stockrecord:
+                      id: 0
+                      low_stock_threshold: 0
+                      num_allocated: null
+                      num_in_stock: null
+                      partner_sku: null
+                      price: null
+                      price_currency: null
+                      price_retail: null
+                metadata: {}
+                status: string
+                total_excl_tax: '0.00'
+                total_excl_tax_excl_discounts: '0.00'
+                total_incl_tax: '0.00'
+                total_incl_tax_excl_discounts: '0.00'
+                total_tax: '0.00'
+                user:
+                  accepts_marketing: false
+                  email: null
+                  first_name: string
+                  id: 0
+                  ip: null
+                  language: null
+                  last_name: string
+                  phone_number: null
+                  user_agent: null
+                voucher_discounts:
+                  - amount: '0.00'
+                    description: string
+                    name: string
+                    voucher:
+                      code: string
+                      end_datetime: '2024-01-01T00:00:00Z'
+                      name: string
+                      start_datetime: '2024-01-01T00:00:00Z'
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: cart.abandoned
+              object: cart
+              webhook:
+                events:
+                  - cart.abandoned
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -18104,6 +18277,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -18113,109 +18287,64 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: cart
-              data:
-                abandoned: false
-                attribution:
-                  affiliate: string
-                  agent:
-                    email: user@example.com
-                    first_name: string
-                    id: 0
-                    last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
-                checkout_url: https://example.com
-                currency: string
-                date_created: '2024-01-01T00:00:00Z'
-                id: 0
-                is_tax_known: false
-                lines:
-                  - attributes:
-                      - option: null
-                        value: null
-                    id: 0
-                    is_upsell: false
-                    metadata: null
-                    price_currency: string
-                    product:
-                      categories: []
-                      id: 0
-                      images: []
-                      title: string
-                      upc: string
-                      url: https://example.com
-                    quantity: 0
-                    stockrecord:
-                      id: 0
-                      low_stock_threshold: 0
-                      num_allocated: 0
-                      num_in_stock: 0
-                      partner_sku: string
-                      price: '0.00'
-                      price_currency: string
-                      price_retail: '0.00'
-                metadata: null
-                status: string
-                total_excl_tax: '0.00'
-                total_excl_tax_excl_discounts: '0.00'
-                total_incl_tax: '0.00'
-                total_incl_tax_excl_discounts: '0.00'
-                total_tax: '0.00'
-                user:
-                  accepts_marketing: false
-                  email: user@example.com
-                  first_name: string
-                  id: 0
-                  ip: string
-                  language: string
-                  last_name: string
-                  phone_number: string
-                  user_agent: string
-                voucher_discounts:
-                  - amount: '0.00'
-                    description: string
-                    name: string
-                    voucher:
-                      code: string
-                      end_datetime: '2024-01-01T00:00:00Z'
-                      name: string
-                      start_datetime: '2024-01-01T00:00:00Z'
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: cart.abandoned
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - cart.abandoned
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - carts
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - carts
   customer.created:
     post:
       description: Triggers when a new customer is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                accepts_marketing: false
+                addresses:
+                  - country: string
+                    first_name: string
+                    id: 0
+                    is_default_for_billing: false
+                    is_default_for_shipping: false
+                    last_name: string
+                    line1: string
+                    line2: string
+                    line3: string
+                    line4: string
+                    notes: string
+                    phone_number: string
+                    postcode: string
+                    state: string
+                date_joined: '2024-01-01T00:00:00Z'
+                email: user@example.com
+                first_name: string
+                id: 0
+                ip: null
+                is_blocked: false
+                language: null
+                last_name: string
+                metadata: {}
+                orders_count: 0
+                phone_number: null
+                subscriptions_count: 0
+                tags: []
+                total_spent: '0.00'
+                user_agent: null
+                user_type: string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: customer.created
+              object: customer
+              webhook:
+                events:
+                  - customer.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -18417,6 +18546,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -18426,9 +18556,22 @@ webhooks:
                       type: string
                   type: object
               type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - customers
+  customer.updated:
+    post:
+      description: Triggers when a customer is updated.
+      requestBody:
+        content:
+          application/json:
             example:
               api_version: '2023-02-10'
-              object: customer
               data:
                 accepts_marketing: false
                 addresses:
@@ -18450,41 +18593,27 @@ webhooks:
                 email: user@example.com
                 first_name: string
                 id: 0
-                ip: string
+                ip: null
                 is_blocked: false
-                language: string
+                language: null
                 last_name: string
-                metadata: null
+                metadata: {}
                 orders_count: 0
-                phone_number: string
+                phone_number: null
                 subscriptions_count: 0
-                tags:
-                  - string
+                tags: []
                 total_spent: '0.00'
-                user_agent: string
+                user_agent: null
                 user_type: string
               event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: customer.created
+              event_type: customer.updated
+              object: customer
               webhook:
+                events:
+                  - customer.updated
                 id: 1
                 store: example
-                events:
-                  - customer.created
                 target: https://example.com/webhook/
-      security: []
-      tags:
-        - customers
-      responses:
-        '200':
-          description: Return a 200 status to indicate that the data was received successfully.
-        '410':
-          description: Indicates the webhook target is no longer available and will be disabled.
-  customer.updated:
-    post:
-      description: Triggers when a customer is updated.
-      requestBody:
-        content:
-          application/json:
             schema:
               properties:
                 api_version:
@@ -18686,6 +18815,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -18695,65 +18825,48 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: customer
-              data:
-                accepts_marketing: false
-                addresses:
-                  - country: string
-                    first_name: string
-                    id: 0
-                    is_default_for_billing: false
-                    is_default_for_shipping: false
-                    last_name: string
-                    line1: string
-                    line2: string
-                    line3: string
-                    line4: string
-                    notes: string
-                    phone_number: string
-                    postcode: string
-                    state: string
-                date_joined: '2024-01-01T00:00:00Z'
-                email: user@example.com
-                first_name: string
-                id: 0
-                ip: string
-                is_blocked: false
-                language: string
-                last_name: string
-                metadata: null
-                orders_count: 0
-                phone_number: string
-                subscriptions_count: 0
-                tags:
-                  - string
-                total_spent: '0.00'
-                user_agent: string
-                user_type: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: customer.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - customer.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - customers
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - customers
   dispute.created:
     post:
       description: Triggers when a new dispute is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                amount: null
+                arn: null
+                case_number: null
+                currency: null
+                date_created: '2024-01-01T00:00:00Z'
+                happened_at: '2024-01-01T00:00:00Z'
+                id: 0
+                metadata: {}
+                order: null
+                report_amount: null
+                report_currency: null
+                resolution: null
+                resolution_other_message: null
+                status: string
+                transaction: null
+                type: string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: dispute.created
+              object: dispute
+              webhook:
+                events:
+                  - dispute.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -18887,6 +19000,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -18896,48 +19010,48 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: dispute
-              data:
-                amount: '0.00'
-                arn: string
-                case_number: string
-                currency: string
-                date_created: '2024-01-01T00:00:00Z'
-                happened_at: '2024-01-01T00:00:00Z'
-                id: 0
-                metadata: null
-                order: 0
-                report_amount: '0.00'
-                report_currency: string
-                resolution: string
-                resolution_other_message: string
-                status: string
-                transaction: 0
-                type: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: dispute.created
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - dispute.created
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - payments
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - payments
   dispute.updated:
     post:
       description: Triggers when a dispute is updated.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                amount: null
+                arn: null
+                case_number: null
+                currency: null
+                date_created: '2024-01-01T00:00:00Z'
+                happened_at: '2024-01-01T00:00:00Z'
+                id: 0
+                metadata: {}
+                order: null
+                report_amount: null
+                report_currency: null
+                resolution: null
+                resolution_other_message: null
+                status: string
+                transaction: null
+                type: string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: dispute.updated
+              object: dispute
+              webhook:
+                events:
+                  - dispute.updated
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -19071,6 +19185,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -19080,48 +19195,83 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: dispute
-              data:
-                amount: '0.00'
-                arn: string
-                case_number: string
-                currency: string
-                date_created: '2024-01-01T00:00:00Z'
-                happened_at: '2024-01-01T00:00:00Z'
-                id: 0
-                metadata: null
-                order: 0
-                report_amount: '0.00'
-                report_currency: string
-                resolution: string
-                resolution_other_message: string
-                status: string
-                transaction: 0
-                type: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: dispute.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - dispute.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - payments
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - payments
   fulfillment.created:
     post:
       description: Triggers when a fulfillment is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                created_at: '2024-01-01T00:00:00Z'
+                delivery_status: {}
+                id: 0
+                last_event_date: null
+                line_items:
+                  - currency: string
+                    fulfilled_quantity: string
+                    fulfillment_service: string
+                    id: 0
+                    is_gift_card: false
+                    order_line_id: 0
+                    price_excl_tax: '0.00'
+                    price_excl_tax_excl_discounts: '0.00'
+                    price_incl_tax: '0.00'
+                    price_incl_tax_excl_discounts: '0.00'
+                    product_id: 0
+                    product_image: https://example.com
+                    product_title: string
+                    quantity: 0
+                    requires_shipping: false
+                    returnable_quantity: string
+                    returned_quantity: string
+                    sku: string
+                    tax_lines:
+                      - amount: null
+                        currency: null
+                        rate: null
+                        report_values: null
+                        source: null
+                        tax_id: null
+                        tax_title: null
+                location_id: 0
+                order_number: string
+                origin_address:
+                  country: string
+                  line1: string
+                  line2: string
+                  line3: string
+                  line4: string
+                  phone_number: string
+                  postcode: string
+                  state: string
+                requires_shipping: false
+                shipping_method: string
+                status: string
+                tracking_carrier: string
+                tracking_carriers: string
+                tracking_code: string
+                tracking_codes: string
+                tracking_link: string
+                tracking_links: https://example.com
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: fulfillment.created
+              object: fulfillment
+              webhook:
+                events:
+                  - fulfillment.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -19394,6 +19544,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -19403,14 +19554,27 @@ webhooks:
                       type: string
                   type: object
               type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - fulfillment
+  fulfillment.updated:
+    post:
+      description: Triggers when a fulfillment is updated.
+      requestBody:
+        content:
+          application/json:
             example:
               api_version: '2023-02-10'
-              object: fulfillment
               data:
                 created_at: '2024-01-01T00:00:00Z'
-                delivery_status: null
+                delivery_status: {}
                 id: 0
-                last_event_date: '2024-01-01T00:00:00Z'
+                last_event_date: null
                 line_items:
                   - currency: string
                     fulfilled_quantity: string
@@ -19459,27 +19623,14 @@ webhooks:
                 tracking_link: string
                 tracking_links: https://example.com
               event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: fulfillment.created
+              event_type: fulfillment.updated
+              object: fulfillment
               webhook:
+                events:
+                  - fulfillment.updated
                 id: 1
                 store: example
-                events:
-                  - fulfillment.created
                 target: https://example.com/webhook/
-      security: []
-      tags:
-        - fulfillment
-      responses:
-        '200':
-          description: Return a 200 status to indicate that the data was received successfully.
-        '410':
-          description: Indicates the webhook target is no longer available and will be disabled.
-  fulfillment.updated:
-    post:
-      description: Triggers when a fulfillment is updated.
-      requestBody:
-        content:
-          application/json:
             schema:
               properties:
                 api_version:
@@ -19752,6 +19903,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -19761,83 +19913,52 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: fulfillment
-              data:
-                created_at: '2024-01-01T00:00:00Z'
-                delivery_status: null
-                id: 0
-                last_event_date: '2024-01-01T00:00:00Z'
-                line_items:
-                  - currency: string
-                    fulfilled_quantity: string
-                    fulfillment_service: string
-                    id: 0
-                    is_gift_card: false
-                    order_line_id: 0
-                    price_excl_tax: '0.00'
-                    price_excl_tax_excl_discounts: '0.00'
-                    price_incl_tax: '0.00'
-                    price_incl_tax_excl_discounts: '0.00'
-                    product_id: 0
-                    product_image: https://example.com
-                    product_title: string
-                    quantity: 0
-                    requires_shipping: false
-                    returnable_quantity: string
-                    returned_quantity: string
-                    sku: string
-                    tax_lines:
-                      - amount: null
-                        currency: null
-                        rate: null
-                        report_values: null
-                        source: null
-                        tax_id: null
-                        tax_title: null
-                location_id: 0
-                order_number: string
-                origin_address:
-                  country: string
-                  line1: string
-                  line2: string
-                  line3: string
-                  line4: string
-                  phone_number: string
-                  postcode: string
-                  state: string
-                requires_shipping: false
-                shipping_method: string
-                status: string
-                tracking_carrier: string
-                tracking_carriers: string
-                tracking_code: string
-                tracking_codes: string
-                tracking_link: string
-                tracking_links: https://example.com
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: fulfillment.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - fulfillment.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - fulfillment
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - fulfillment
   gateway.created:
     post:
       description: Triggers when a new gateway is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                active: false
+                auto_capture_on_fulfillment: false
+                card_types:
+                  - code: string
+                    label: string
+                currencies:
+                  - code: string
+                    label: string
+                delayed_capture_days: null
+                enable_3ds2: false
+                gateway_groups:
+                  - id: 0
+                    name: string
+                    weight: 0
+                gateway_type: string
+                id: 0
+                merchant_profile: null
+                name: string
+                optimized_3ds: false
+                payment_flow: string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: gateway.created
+              object: gateway
+              webhook:
+                events:
+                  - gateway.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -19965,6 +20086,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -19974,9 +20096,22 @@ webhooks:
                       type: string
                   type: object
               type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - payments
+  gateway.updated:
+    post:
+      description: Triggers when a gateway is updated.
+      requestBody:
+        content:
+          application/json:
             example:
               api_version: '2023-02-10'
-              object: gateway
               data:
                 active: false
                 auto_capture_on_fulfillment: false
@@ -19986,7 +20121,7 @@ webhooks:
                 currencies:
                   - code: string
                     label: string
-                delayed_capture_days: 0
+                delayed_capture_days: null
                 enable_3ds2: false
                 gateway_groups:
                   - id: 0
@@ -19994,32 +20129,19 @@ webhooks:
                     weight: 0
                 gateway_type: string
                 id: 0
-                merchant_profile: 0
+                merchant_profile: null
                 name: string
                 optimized_3ds: false
                 payment_flow: string
               event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: gateway.created
+              event_type: gateway.updated
+              object: gateway
               webhook:
+                events:
+                  - gateway.updated
                 id: 1
                 store: example
-                events:
-                  - gateway.created
                 target: https://example.com/webhook/
-      security: []
-      tags:
-        - payments
-      responses:
-        '200':
-          description: Return a 200 status to indicate that the data was received successfully.
-        '410':
-          description: Indicates the webhook target is no longer available and will be disabled.
-  gateway.updated:
-    post:
-      description: Triggers when a gateway is updated.
-      requestBody:
-        content:
-          application/json:
             schema:
               properties:
                 api_version:
@@ -20147,6 +20269,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -20156,52 +20279,295 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: gateway
-              data:
-                active: false
-                auto_capture_on_fulfillment: false
-                card_types:
-                  - code: string
-                    label: string
-                currencies:
-                  - code: string
-                    label: string
-                delayed_capture_days: 0
-                enable_3ds2: false
-                gateway_groups:
-                  - id: 0
-                    name: string
-                    weight: 0
-                gateway_type: string
-                id: 0
-                merchant_profile: 0
-                name: string
-                optimized_3ds: false
-                payment_flow: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: gateway.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - gateway.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - payments
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - payments
   order.created:
     post:
       description: Triggers when an new order is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                attribution:
+                  affiliate: null
+                  agent:
+                    email: null
+                    first_name: string
+                    id: 0
+                    last_name: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
+                billing_address:
+                  country: string
+                  first_name: string
+                  id: 0
+                  last_name: string
+                  line1: string
+                  line2: string
+                  line3: string
+                  line4: string
+                  phone_number: string
+                  postcode: string
+                  state: string
+                created_at: '2024-01-01T00:00:00Z'
+                currency: string
+                date_placed: '2024-01-01T00:00:00Z'
+                display_taxes: string
+                fulfillment_status: string
+                fulfillments:
+                  - carrier: string
+                    date_created: '2024-01-01T00:00:00Z'
+                    id: 0
+                    last_event_date: '2024-01-01T00:00:00Z'
+                    lines: string
+                    reference: string
+                    requires_shipping: false
+                    status: string
+                    tracking_code: string
+                    tracking_link: string
+                is_test: false
+                lines:
+                  - created_at: null
+                    id: 0
+                    is_gift_card: false
+                    is_upsell: false
+                    metadata: {}
+                    price_currency: string
+                    price_excl_tax: '0.00'
+                    price_excl_tax_excl_discounts: '0.00'
+                    price_incl_tax: '0.00'
+                    price_incl_tax_excl_discounts: '0.00'
+                    product:
+                      categories: []
+                      id: 0
+                      images: []
+                      title: string
+                      upc: null
+                      url: https://example.com
+                    quantity: 0
+                    stockrecord:
+                      id: 0
+                      low_stock_threshold: 0
+                      num_allocated: null
+                      num_in_stock: null
+                      partner_sku: null
+                      price: null
+                      price_currency: null
+                      price_retail: null
+                    tax_lines:
+                      - amount: null
+                        currency: null
+                        rate: null
+                        report_values: null
+                        source: null
+                        tax_id: null
+                        tax_title: null
+                    total_cost: '0.00'
+                    unit_cost: '0.00'
+                    updated_at: null
+                metadata: {}
+                number: string
+                offer_discounts:
+                  - amount: '0.00'
+                    description: string
+                    name: string
+                order_status_url: https://example.com
+                original_shipping_excl_tax: '0.00'
+                original_shipping_incl_tax: '0.00'
+                original_total_excl_tax: '0.00'
+                original_total_incl_tax: '0.00'
+                payment_status: string
+                refunds:
+                  - adjustments:
+                      - amount_excl_tax: null
+                        amount_incl_tax: null
+                        id: null
+                        report_values: null
+                        type: null
+                    created_at: '2024-01-01T00:00:00Z'
+                    id: 0
+                    note: null
+                    order_number: string
+                    refund_line_items:
+                      - amount_excl_tax: null
+                        amount_incl_tax: null
+                        id: null
+                        line_item_id: null
+                        location_id: null
+                        quantity: null
+                        report_values: null
+                        restock_type: null
+                    report_values:
+                      currency: string
+                      total_refund_amount: '0.00'
+                      total_return_excl_tax: '0.00'
+                      total_return_incl_tax: '0.00'
+                    total_refund_amount: '0.00'
+                    total_return_excl_tax: '0.00'
+                    total_return_incl_tax: '0.00'
+                    transactions:
+                      - amount: null
+                        auth_code: null
+                        currency: null
+                        date_created: null
+                        external_id: null
+                        id: null
+                        is_disputed: null
+                        is_external: null
+                        is_initial_retry: null
+                        is_test: null
+                        network_transaction_id: null
+                        parent_id: null
+                        payment_details: null
+                        payment_method: null
+                        report_values: null
+                        response_code: null
+                        statement_descriptor: null
+                        status: null
+                        type: null
+                    user_id: 0
+                report_values:
+                  currency: string
+                  original_shipping_excl_tax: '0.00'
+                  original_shipping_incl_tax: '0.00'
+                  original_total_excl_tax: '0.00'
+                  original_total_incl_tax: '0.00'
+                  shipping_excl_tax: '0.00'
+                  shipping_incl_tax: '0.00'
+                  total_cost: '0.00'
+                  total_excl_tax: '0.00'
+                  total_incl_tax: '0.00'
+                shipping_address:
+                  country: string
+                  first_name: string
+                  id: 0
+                  last_name: string
+                  line1: string
+                  line2: string
+                  line3: string
+                  line4: string
+                  notes: string
+                  phone_number: string
+                  postcode: string
+                  state: string
+                shipping_code: string
+                shipping_excl_tax: '0.00'
+                shipping_incl_tax: '0.00'
+                shipping_method: string
+                shipping_tax: '0.00'
+                shipping_tax_lines:
+                  - amount: '0.00'
+                    currency: string
+                    rate: 0
+                    report_values:
+                      amount: '0.00'
+                      currency: string
+                    source: string
+                    tax_id: 0
+                    tax_title: string
+                source: string
+                status: string
+                subscription_lifecycle: string
+                subscriptions:
+                  - billing_cycle: 0
+                    id: 0
+                supports_post_purchase_upsells: false
+                tags: []
+                tax_lines:
+                  - amount: '0.00'
+                    currency: null
+                    id: 0
+                    rate: 0
+                    report_values:
+                      amount: '0.00'
+                      currency: string
+                    source: null
+                    tax_title: string
+                total_cost: '0.00'
+                total_excl_tax: '0.00'
+                total_incl_tax: '0.00'
+                total_tax: '0.00'
+                transactions:
+                  - amount: '0.00'
+                    auth_code: null
+                    currency: null
+                    date_created: '2024-01-01T00:00:00Z'
+                    external_id: null
+                    id: 0
+                    is_disputed: false
+                    is_external: false
+                    is_initial_retry: null
+                    is_test: null
+                    network_transaction_id: null
+                    parent_id: null
+                    payment_details:
+                      bankcard_first_six: null
+                      bankcard_last_four: null
+                      card_token: string
+                      gateway:
+                        id: null
+                        name: null
+                        type: null
+                      is_3ds: false
+                      optimized_3ds: false
+                      paypal_vault_id: string
+                      sca_flow: string
+                    payment_method: null
+                    report_values:
+                      amount: '0.00'
+                      currency: string
+                    response_code: 0
+                    statement_descriptor: null
+                    status: string
+                    type: string
+                updated_at: '2024-01-01T00:00:00Z'
+                user:
+                  accepts_marketing: false
+                  email: null
+                  first_name: string
+                  id: 0
+                  ip: null
+                  language: null
+                  last_name: string
+                  phone_number: null
+                  user_agent: null
+                voucher_discounts:
+                  - amount: '0.00'
+                    description: string
+                    name: string
+                    voucher:
+                      code: string
+                      end_datetime: '2024-01-01T00:00:00Z'
+                      name: string
+                      start_datetime: '2024-01-01T00:00:00Z'
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: order.created
+              object: order
+              webhook:
+                events:
+                  - order.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -20843,6 +21209,8 @@ webhooks:
                                   format: decimal
                                   pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                                   type: string
+                                auth_code:
+                                  type: string
                                 currency:
                                   type: string
                                 date_created:
@@ -20860,6 +21228,8 @@ webhooks:
                                   type: boolean
                                 is_test:
                                   type: boolean
+                                network_transaction_id:
+                                  type: string
                                 parent_id:
                                   description: |2-
 
@@ -21227,6 +21597,8 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          auth_code:
+                            type: string
                           currency:
                             type: string
                           date_created:
@@ -21244,6 +21616,8 @@ webhooks:
                             type: boolean
                           is_test:
                             type: boolean
+                          network_transaction_id:
+                            type: string
                           parent_id:
                             description: |2-
 
@@ -21474,6 +21848,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -21483,30 +21858,43 @@ webhooks:
                       type: string
                   type: object
               type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - orders
+  order.updated:
+    post:
+      description: Triggers when an order is updated.
+      requestBody:
+        content:
+          application/json:
             example:
               api_version: '2023-02-10'
-              object: order
               data:
                 attribution:
-                  affiliate: string
+                  affiliate: null
                   agent:
-                    email: user@example.com
+                    email: null
                     first_name: string
                     id: 0
                     last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
                 billing_address:
                   country: string
                   first_name: string
@@ -21537,11 +21925,11 @@ webhooks:
                     tracking_link: string
                 is_test: false
                 lines:
-                  - created_at: '2024-01-01T00:00:00Z'
+                  - created_at: null
                     id: 0
                     is_gift_card: false
                     is_upsell: false
-                    metadata: null
+                    metadata: {}
                     price_currency: string
                     price_excl_tax: '0.00'
                     price_excl_tax_excl_discounts: '0.00'
@@ -21552,18 +21940,18 @@ webhooks:
                       id: 0
                       images: []
                       title: string
-                      upc: string
+                      upc: null
                       url: https://example.com
                     quantity: 0
                     stockrecord:
                       id: 0
                       low_stock_threshold: 0
-                      num_allocated: 0
-                      num_in_stock: 0
-                      partner_sku: string
-                      price: '0.00'
-                      price_currency: string
-                      price_retail: '0.00'
+                      num_allocated: null
+                      num_in_stock: null
+                      partner_sku: null
+                      price: null
+                      price_currency: null
+                      price_retail: null
                     tax_lines:
                       - amount: null
                         currency: null
@@ -21574,8 +21962,8 @@ webhooks:
                         tax_title: null
                     total_cost: '0.00'
                     unit_cost: '0.00'
-                    updated_at: '2024-01-01T00:00:00Z'
-                metadata: null
+                    updated_at: null
+                metadata: {}
                 number: string
                 offer_discounts:
                   - amount: '0.00'
@@ -21596,7 +21984,7 @@ webhooks:
                         type: null
                     created_at: '2024-01-01T00:00:00Z'
                     id: 0
-                    note: string
+                    note: null
                     order_number: string
                     refund_line_items:
                       - amount_excl_tax: null
@@ -21617,6 +22005,7 @@ webhooks:
                     total_return_incl_tax: '0.00'
                     transactions:
                       - amount: null
+                        auth_code: null
                         currency: null
                         date_created: null
                         external_id: null
@@ -21625,6 +22014,7 @@ webhooks:
                         is_external: null
                         is_initial_retry: null
                         is_test: null
+                        network_transaction_id: null
                         parent_id: null
                         payment_details: null
                         payment_method: null
@@ -21680,17 +22070,16 @@ webhooks:
                   - billing_cycle: 0
                     id: 0
                 supports_post_purchase_upsells: false
-                tags:
-                  - string
+                tags: []
                 tax_lines:
                   - amount: '0.00'
-                    currency: string
+                    currency: null
                     id: 0
                     rate: 0
                     report_values:
                       amount: '0.00'
                       currency: string
-                    source: string
+                    source: null
                     tax_title: string
                 total_cost: '0.00'
                 total_excl_tax: '0.00'
@@ -21698,18 +22087,20 @@ webhooks:
                 total_tax: '0.00'
                 transactions:
                   - amount: '0.00'
-                    currency: string
+                    auth_code: null
+                    currency: null
                     date_created: '2024-01-01T00:00:00Z'
-                    external_id: string
+                    external_id: null
                     id: 0
                     is_disputed: false
                     is_external: false
-                    is_initial_retry: false
-                    is_test: false
-                    parent_id: 0
+                    is_initial_retry: null
+                    is_test: null
+                    network_transaction_id: null
+                    parent_id: null
                     payment_details:
-                      bankcard_first_six: string
-                      bankcard_last_four: string
+                      bankcard_first_six: null
+                      bankcard_last_four: null
                       card_token: string
                       gateway:
                         id: null
@@ -21719,25 +22110,25 @@ webhooks:
                       optimized_3ds: false
                       paypal_vault_id: string
                       sca_flow: string
-                    payment_method: string
+                    payment_method: null
                     report_values:
                       amount: '0.00'
                       currency: string
                     response_code: 0
-                    statement_descriptor: string
+                    statement_descriptor: null
                     status: string
                     type: string
                 updated_at: '2024-01-01T00:00:00Z'
                 user:
                   accepts_marketing: false
-                  email: user@example.com
+                  email: null
                   first_name: string
                   id: 0
-                  ip: string
-                  language: string
+                  ip: null
+                  language: null
                   last_name: string
-                  phone_number: string
-                  user_agent: string
+                  phone_number: null
+                  user_agent: null
                 voucher_discounts:
                   - amount: '0.00'
                     description: string
@@ -21748,27 +22139,14 @@ webhooks:
                       name: string
                       start_datetime: '2024-01-01T00:00:00Z'
               event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: order.created
+              event_type: order.updated
+              object: order
               webhook:
+                events:
+                  - order.updated
                 id: 1
                 store: example
-                events:
-                  - order.created
                 target: https://example.com/webhook/
-      security: []
-      tags:
-        - orders
-      responses:
-        '200':
-          description: Return a 200 status to indicate that the data was received successfully.
-        '410':
-          description: Indicates the webhook target is no longer available and will be disabled.
-  order.updated:
-    post:
-      description: Triggers when an order is updated.
-      requestBody:
-        content:
-          application/json:
             schema:
               properties:
                 api_version:
@@ -22410,6 +22788,8 @@ webhooks:
                                   format: decimal
                                   pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                                   type: string
+                                auth_code:
+                                  type: string
                                 currency:
                                   type: string
                                 date_created:
@@ -22427,6 +22807,8 @@ webhooks:
                                   type: boolean
                                 is_test:
                                   type: boolean
+                                network_transaction_id:
+                                  type: string
                                 parent_id:
                                   description: |2-
 
@@ -22794,6 +23176,8 @@ webhooks:
                             format: decimal
                             pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
                             type: string
+                          auth_code:
+                            type: string
                           currency:
                             type: string
                           date_created:
@@ -22811,6 +23195,8 @@ webhooks:
                             type: boolean
                           is_test:
                             type: boolean
+                          network_transaction_id:
+                            type: string
                           parent_id:
                             description: |2-
 
@@ -23041,6 +23427,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -23050,292 +23437,107 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: order
-              data:
-                attribution:
-                  affiliate: string
-                  agent:
-                    email: user@example.com
-                    first_name: string
-                    id: 0
-                    last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
-                billing_address:
-                  country: string
-                  first_name: string
-                  id: 0
-                  last_name: string
-                  line1: string
-                  line2: string
-                  line3: string
-                  line4: string
-                  phone_number: string
-                  postcode: string
-                  state: string
-                created_at: '2024-01-01T00:00:00Z'
-                currency: string
-                date_placed: '2024-01-01T00:00:00Z'
-                display_taxes: string
-                fulfillment_status: string
-                fulfillments:
-                  - carrier: string
-                    date_created: '2024-01-01T00:00:00Z'
-                    id: 0
-                    last_event_date: '2024-01-01T00:00:00Z'
-                    lines: string
-                    reference: string
-                    requires_shipping: false
-                    status: string
-                    tracking_code: string
-                    tracking_link: string
-                is_test: false
-                lines:
-                  - created_at: '2024-01-01T00:00:00Z'
-                    id: 0
-                    is_gift_card: false
-                    is_upsell: false
-                    metadata: null
-                    price_currency: string
-                    price_excl_tax: '0.00'
-                    price_excl_tax_excl_discounts: '0.00'
-                    price_incl_tax: '0.00'
-                    price_incl_tax_excl_discounts: '0.00'
-                    product:
-                      categories: []
-                      id: 0
-                      images: []
-                      title: string
-                      upc: string
-                      url: https://example.com
-                    quantity: 0
-                    stockrecord:
-                      id: 0
-                      low_stock_threshold: 0
-                      num_allocated: 0
-                      num_in_stock: 0
-                      partner_sku: string
-                      price: '0.00'
-                      price_currency: string
-                      price_retail: '0.00'
-                    tax_lines:
-                      - amount: null
-                        currency: null
-                        rate: null
-                        report_values: null
-                        source: null
-                        tax_id: null
-                        tax_title: null
-                    total_cost: '0.00'
-                    unit_cost: '0.00'
-                    updated_at: '2024-01-01T00:00:00Z'
-                metadata: null
-                number: string
-                offer_discounts:
-                  - amount: '0.00'
-                    description: string
-                    name: string
-                order_status_url: https://example.com
-                original_shipping_excl_tax: '0.00'
-                original_shipping_incl_tax: '0.00'
-                original_total_excl_tax: '0.00'
-                original_total_incl_tax: '0.00'
-                payment_status: string
-                refunds:
-                  - adjustments:
-                      - amount_excl_tax: null
-                        amount_incl_tax: null
-                        id: null
-                        report_values: null
-                        type: null
-                    created_at: '2024-01-01T00:00:00Z'
-                    id: 0
-                    note: string
-                    order_number: string
-                    refund_line_items:
-                      - amount_excl_tax: null
-                        amount_incl_tax: null
-                        id: null
-                        line_item_id: null
-                        location_id: null
-                        quantity: null
-                        report_values: null
-                        restock_type: null
-                    report_values:
-                      currency: string
-                      total_refund_amount: '0.00'
-                      total_return_excl_tax: '0.00'
-                      total_return_incl_tax: '0.00'
-                    total_refund_amount: '0.00'
-                    total_return_excl_tax: '0.00'
-                    total_return_incl_tax: '0.00'
-                    transactions:
-                      - amount: null
-                        currency: null
-                        date_created: null
-                        external_id: null
-                        id: null
-                        is_disputed: null
-                        is_external: null
-                        is_initial_retry: null
-                        is_test: null
-                        parent_id: null
-                        payment_details: null
-                        payment_method: null
-                        report_values: null
-                        response_code: null
-                        statement_descriptor: null
-                        status: null
-                        type: null
-                    user_id: 0
-                report_values:
-                  currency: string
-                  original_shipping_excl_tax: '0.00'
-                  original_shipping_incl_tax: '0.00'
-                  original_total_excl_tax: '0.00'
-                  original_total_incl_tax: '0.00'
-                  shipping_excl_tax: '0.00'
-                  shipping_incl_tax: '0.00'
-                  total_cost: '0.00'
-                  total_excl_tax: '0.00'
-                  total_incl_tax: '0.00'
-                shipping_address:
-                  country: string
-                  first_name: string
-                  id: 0
-                  last_name: string
-                  line1: string
-                  line2: string
-                  line3: string
-                  line4: string
-                  notes: string
-                  phone_number: string
-                  postcode: string
-                  state: string
-                shipping_code: string
-                shipping_excl_tax: '0.00'
-                shipping_incl_tax: '0.00'
-                shipping_method: string
-                shipping_tax: '0.00'
-                shipping_tax_lines:
-                  - amount: '0.00'
-                    currency: string
-                    rate: 0
-                    report_values:
-                      amount: '0.00'
-                      currency: string
-                    source: string
-                    tax_id: 0
-                    tax_title: string
-                source: string
-                status: string
-                subscription_lifecycle: string
-                subscriptions:
-                  - billing_cycle: 0
-                    id: 0
-                supports_post_purchase_upsells: false
-                tags:
-                  - string
-                tax_lines:
-                  - amount: '0.00'
-                    currency: string
-                    id: 0
-                    rate: 0
-                    report_values:
-                      amount: '0.00'
-                      currency: string
-                    source: string
-                    tax_title: string
-                total_cost: '0.00'
-                total_excl_tax: '0.00'
-                total_incl_tax: '0.00'
-                total_tax: '0.00'
-                transactions:
-                  - amount: '0.00'
-                    currency: string
-                    date_created: '2024-01-01T00:00:00Z'
-                    external_id: string
-                    id: 0
-                    is_disputed: false
-                    is_external: false
-                    is_initial_retry: false
-                    is_test: false
-                    parent_id: 0
-                    payment_details:
-                      bankcard_first_six: string
-                      bankcard_last_four: string
-                      card_token: string
-                      gateway:
-                        id: null
-                        name: null
-                        type: null
-                      is_3ds: false
-                      optimized_3ds: false
-                      paypal_vault_id: string
-                      sca_flow: string
-                    payment_method: string
-                    report_values:
-                      amount: '0.00'
-                      currency: string
-                    response_code: 0
-                    statement_descriptor: string
-                    status: string
-                    type: string
-                updated_at: '2024-01-01T00:00:00Z'
-                user:
-                  accepts_marketing: false
-                  email: user@example.com
-                  first_name: string
-                  id: 0
-                  ip: string
-                  language: string
-                  last_name: string
-                  phone_number: string
-                  user_agent: string
-                voucher_discounts:
-                  - amount: '0.00'
-                    description: string
-                    name: string
-                    voucher:
-                      code: string
-                      end_datetime: '2024-01-01T00:00:00Z'
-                      name: string
-                      start_datetime: '2024-01-01T00:00:00Z'
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: order.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - order.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - orders
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - orders
   product.created:
     post:
       description: Triggers when a new product is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                categories:
+                  - id: 0
+                    name: string
+                    slug: string
+                children:
+                  - allow_backorders: false
+                    date_created: '2024-01-01T00:00:00Z'
+                    date_updated: '2024-01-01T00:00:00Z'
+                    id: 0
+                    images: string
+                    inventory_availability: null
+                    metadata: {}
+                    prices:
+                      - currency: null
+                        price: null
+                        retail: null
+                        subscription: null
+                        subscription_suggested_downsell: null
+                    product_id: 0
+                    purchase_availability: null
+                    requires_shipping: false
+                    sku: null
+                    stockrecords:
+                      - id: null
+                        location_id: null
+                        low_stock_threshold: null
+                        num_allocated: null
+                        num_in_stock: null
+                        price: null
+                        price_currency: null
+                        price_retail: null
+                        sku: null
+                    structure: string
+                    title: string
+                    track_stock: false
+                    unit_cost: '0.00'
+                    upc: null
+                    variant_attribute_values:
+                      - code: null
+                        name: null
+                        value: null
+                date_created: '2024-01-01T00:00:00Z'
+                date_updated: '2024-01-01T00:00:00Z'
+                description: string
+                enable_subscription: false
+                external_tax_code: null
+                id: 0
+                images:
+                  - attachment: null
+                    caption: string
+                    display_order: 0
+                    file_name: string
+                    id: 0
+                    src: null
+                interval: null
+                interval_counts: null
+                is_discountable: false
+                is_public: false
+                meta_description: null
+                meta_title: null
+                metadata: {}
+                ranking: 0
+                rating: null
+                recommended_products:
+                  - 0
+                slug: string
+                structure: string
+                template: null
+                title: string
+                url: https://example.com
+                variant_attributes:
+                  - code: string
+                    name: string
+                    values:
+                      - string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: product.created
+              object: product
+              webhook:
+                events:
+                  - product.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -23723,6 +23925,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -23732,108 +23935,33 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: product
-              data:
-                categories:
-                  - id: 0
-                    name: string
-                    slug: string
-                children:
-                  - allow_backorders: false
-                    date_created: '2024-01-01T00:00:00Z'
-                    date_updated: '2024-01-01T00:00:00Z'
-                    id: 0
-                    images: string
-                    inventory_availability: string
-                    metadata: null
-                    prices:
-                      - currency: null
-                        price: null
-                        retail: null
-                        subscription: null
-                        subscription_suggested_downsell: null
-                    product_id: 0
-                    purchase_availability: string
-                    requires_shipping: false
-                    sku: string
-                    stockrecords:
-                      - id: null
-                        location_id: null
-                        low_stock_threshold: null
-                        num_allocated: null
-                        num_in_stock: null
-                        price: null
-                        price_currency: null
-                        price_retail: null
-                        sku: null
-                    structure: string
-                    title: string
-                    track_stock: false
-                    unit_cost: '0.00'
-                    upc: string
-                    variant_attribute_values:
-                      - code: null
-                        name: null
-                        value: null
-                date_created: '2024-01-01T00:00:00Z'
-                date_updated: '2024-01-01T00:00:00Z'
-                description: string
-                enable_subscription: false
-                external_tax_code: string
-                id: 0
-                images:
-                  - attachment: string
-                    caption: string
-                    display_order: 0
-                    file_name: string
-                    id: 0
-                    src: https://example.com
-                interval: string
-                interval_counts:
-                  - 0
-                is_discountable: false
-                is_public: false
-                meta_description: string
-                meta_title: string
-                metadata: null
-                ranking: 0
-                rating: 0
-                recommended_products:
-                  - 0
-                slug: string
-                structure: string
-                template: string
-                title: string
-                url: https://example.com
-                variant_attributes:
-                  - code: string
-                    name: string
-                    values:
-                      - string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: product.created
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - product.created
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - products
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - products
   product.deleted:
     post:
       description: Triggers when a product is deleted.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                id: 0
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: product.deleted
+              object: product
+              webhook:
+                events:
+                  - product.deleted
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -23875,6 +24003,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -23884,33 +24013,107 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: product
-              data:
-                id: 0
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: product.deleted
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - product.deleted
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - products
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - products
   product.updated:
     post:
       description: Triggers when a product is updated.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                categories:
+                  - id: 0
+                    name: string
+                    slug: string
+                children:
+                  - allow_backorders: false
+                    date_created: '2024-01-01T00:00:00Z'
+                    date_updated: '2024-01-01T00:00:00Z'
+                    id: 0
+                    images: string
+                    inventory_availability: null
+                    metadata: {}
+                    prices:
+                      - currency: null
+                        price: null
+                        retail: null
+                        subscription: null
+                        subscription_suggested_downsell: null
+                    product_id: 0
+                    purchase_availability: null
+                    requires_shipping: false
+                    sku: null
+                    stockrecords:
+                      - id: null
+                        location_id: null
+                        low_stock_threshold: null
+                        num_allocated: null
+                        num_in_stock: null
+                        price: null
+                        price_currency: null
+                        price_retail: null
+                        sku: null
+                    structure: string
+                    title: string
+                    track_stock: false
+                    unit_cost: '0.00'
+                    upc: null
+                    variant_attribute_values:
+                      - code: null
+                        name: null
+                        value: null
+                date_created: '2024-01-01T00:00:00Z'
+                date_updated: '2024-01-01T00:00:00Z'
+                description: string
+                enable_subscription: false
+                external_tax_code: null
+                id: 0
+                images:
+                  - attachment: null
+                    caption: string
+                    display_order: 0
+                    file_name: string
+                    id: 0
+                    src: null
+                interval: null
+                interval_counts: null
+                is_discountable: false
+                is_public: false
+                meta_description: null
+                meta_title: null
+                metadata: {}
+                ranking: 0
+                rating: null
+                recommended_products:
+                  - 0
+                slug: string
+                structure: string
+                template: null
+                title: string
+                url: https://example.com
+                variant_attributes:
+                  - code: string
+                    name: string
+                    values:
+                      - string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: product.updated
+              object: product
+              webhook:
+                events:
+                  - product.updated
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -24298,6 +24501,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -24307,108 +24511,62 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: product
-              data:
-                categories:
-                  - id: 0
-                    name: string
-                    slug: string
-                children:
-                  - allow_backorders: false
-                    date_created: '2024-01-01T00:00:00Z'
-                    date_updated: '2024-01-01T00:00:00Z'
-                    id: 0
-                    images: string
-                    inventory_availability: string
-                    metadata: null
-                    prices:
-                      - currency: null
-                        price: null
-                        retail: null
-                        subscription: null
-                        subscription_suggested_downsell: null
-                    product_id: 0
-                    purchase_availability: string
-                    requires_shipping: false
-                    sku: string
-                    stockrecords:
-                      - id: null
-                        location_id: null
-                        low_stock_threshold: null
-                        num_allocated: null
-                        num_in_stock: null
-                        price: null
-                        price_currency: null
-                        price_retail: null
-                        sku: null
-                    structure: string
-                    title: string
-                    track_stock: false
-                    unit_cost: '0.00'
-                    upc: string
-                    variant_attribute_values:
-                      - code: null
-                        name: null
-                        value: null
-                date_created: '2024-01-01T00:00:00Z'
-                date_updated: '2024-01-01T00:00:00Z'
-                description: string
-                enable_subscription: false
-                external_tax_code: string
-                id: 0
-                images:
-                  - attachment: string
-                    caption: string
-                    display_order: 0
-                    file_name: string
-                    id: 0
-                    src: https://example.com
-                interval: string
-                interval_counts:
-                  - 0
-                is_discountable: false
-                is_public: false
-                meta_description: string
-                meta_title: string
-                metadata: null
-                ranking: 0
-                rating: 0
-                recommended_products:
-                  - 0
-                slug: string
-                structure: string
-                template: string
-                title: string
-                url: https://example.com
-                variant_attributes:
-                  - code: string
-                    name: string
-                    values:
-                      - string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: product.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - product.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - products
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - products
   store.updated:
     post:
       description: Triggers when store settings are updated.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                available_currencies:
+                  - code: string
+                    label: string
+                available_languages:
+                  - code: string
+                    label: string
+                contact_address:
+                  city: string
+                  company_name: string
+                  country: string
+                  line1: string
+                  line2: string
+                  phone_number: string
+                  postcode: string
+                  state: string
+                name: string
+                payments:
+                  available_express_payment_methods:
+                    - code: string
+                      label: string
+                  available_payment_methods:
+                    - code: string
+                      label: string
+                      supported_currencies: []
+                  certificate_token: string
+                  environment_key: string
+                primary_domain: string
+                tagline: string
+                tax_id: string
+                timezone: string
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: store.updated
+              object: store
+              webhook:
+                events:
+                  - store.updated
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -24568,6 +24726,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -24577,62 +24736,130 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: store
-              data:
-                available_currencies:
-                  - code: string
-                    label: string
-                available_languages:
-                  - code: string
-                    label: string
-                contact_address:
-                  city: string
-                  company_name: string
-                  country: string
-                  line1: string
-                  line2: string
-                  phone_number: string
-                  postcode: string
-                  state: string
-                name: string
-                payments:
-                  available_express_payment_methods:
-                    - code: string
-                      label: string
-                  available_payment_methods:
-                    - code: string
-                      label: string
-                      supported_currencies: []
-                  certificate_token: string
-                  environment_key: string
-                primary_domain: string
-                tagline: string
-                tax_id: string
-                timezone: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: store.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - store.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - store
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - store
   subscription.created:
     post:
       description: Triggers when a new subscription is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                attribution:
+                  affiliate: null
+                  agent:
+                    email: null
+                    first_name: string
+                    id: 0
+                    last_name: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
+                billing_address:
+                  country: string
+                  first_name: string
+                  id: 0
+                  last_name: string
+                  line1: string
+                  line2: string
+                  line3: string
+                  line4: string
+                  phone_number: string
+                  postcode: string
+                  state: string
+                cancel_reason: string
+                cancel_reason_other_message: null
+                currency: string
+                date_created: '2024-01-01T00:00:00Z'
+                frequency: string
+                id: 0
+                interval: string
+                interval_count: 0
+                is_tax_known: false
+                is_test: false
+                lines:
+                  - id: 0
+                    metadata: {}
+                    price: '0.00'
+                    product:
+                      categories: []
+                      id: 0
+                      images: []
+                      title: string
+                      upc: null
+                      url: https://example.com
+                    quantity: 0
+                    stockrecord:
+                      id: 0
+                      low_stock_threshold: 0
+                      num_allocated: null
+                      num_in_stock: null
+                      partner_sku: null
+                      price: null
+                      price_currency: null
+                      price_retail: null
+                next_renewal_date: null
+                num_lines: 0
+                num_orders: 0
+                orders:
+                  - billing_cycle: 0
+                    order_number: string
+                payment_details: {}
+                payment_method: string
+                shipping_address:
+                  country: string
+                  first_name: string
+                  id: 0
+                  last_name: string
+                  line1: string
+                  line2: string
+                  line3: string
+                  line4: string
+                  notes: string
+                  phone_number: string
+                  postcode: string
+                  state: string
+                shipping_code: string
+                shipping_price: string
+                status: string
+                total: '0.00'
+                user:
+                  accepts_marketing: false
+                  email: null
+                  first_name: string
+                  id: 0
+                  ip: null
+                  language: null
+                  last_name: string
+                  phone_number: null
+                  user_agent: null
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: subscription.created
+              object: subscription
+              webhook:
+                events:
+                  - subscription.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -25112,6 +25339,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -25121,30 +25349,43 @@ webhooks:
                       type: string
                   type: object
               type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - subscriptions
+  subscription.updated:
+    post:
+      description: Triggers when a subscription is updated.
+      requestBody:
+        content:
+          application/json:
             example:
               api_version: '2023-02-10'
-              object: subscription
               data:
                 attribution:
-                  affiliate: string
+                  affiliate: null
                   agent:
-                    email: user@example.com
+                    email: null
                     first_name: string
                     id: 0
                     last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
                 billing_address:
                   country: string
                   first_name: string
@@ -25158,7 +25399,7 @@ webhooks:
                   postcode: string
                   state: string
                 cancel_reason: string
-                cancel_reason_other_message: string
+                cancel_reason_other_message: null
                 currency: string
                 date_created: '2024-01-01T00:00:00Z'
                 frequency: string
@@ -25169,26 +25410,26 @@ webhooks:
                 is_test: false
                 lines:
                   - id: 0
-                    metadata: null
+                    metadata: {}
                     price: '0.00'
                     product:
                       categories: []
                       id: 0
                       images: []
                       title: string
-                      upc: string
+                      upc: null
                       url: https://example.com
                     quantity: 0
                     stockrecord:
                       id: 0
                       low_stock_threshold: 0
-                      num_allocated: 0
-                      num_in_stock: 0
-                      partner_sku: string
-                      price: '0.00'
-                      price_currency: string
-                      price_retail: '0.00'
-                next_renewal_date: '2024-01-01T00:00:00Z'
+                      num_allocated: null
+                      num_in_stock: null
+                      partner_sku: null
+                      price: null
+                      price_currency: null
+                      price_retail: null
+                next_renewal_date: null
                 num_lines: 0
                 num_orders: 0
                 orders:
@@ -25215,36 +25456,23 @@ webhooks:
                 total: '0.00'
                 user:
                   accepts_marketing: false
-                  email: user@example.com
+                  email: null
                   first_name: string
                   id: 0
-                  ip: string
-                  language: string
+                  ip: null
+                  language: null
                   last_name: string
-                  phone_number: string
-                  user_agent: string
+                  phone_number: null
+                  user_agent: null
               event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: subscription.created
+              event_type: subscription.updated
+              object: subscription
               webhook:
+                events:
+                  - subscription.updated
                 id: 1
                 store: example
-                events:
-                  - subscription.created
                 target: https://example.com/webhook/
-      security: []
-      tags:
-        - subscriptions
-      responses:
-        '200':
-          description: Return a 200 status to indicate that the data was received successfully.
-        '410':
-          description: Indicates the webhook target is no longer available and will be disabled.
-  subscription.updated:
-    post:
-      description: Triggers when a subscription is updated.
-      requestBody:
-        content:
-          application/json:
             schema:
               properties:
                 api_version:
@@ -25724,6 +25952,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -25733,130 +25962,59 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: subscription
-              data:
-                attribution:
-                  affiliate: string
-                  agent:
-                    email: user@example.com
-                    first_name: string
-                    id: 0
-                    last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
-                billing_address:
-                  country: string
-                  first_name: string
-                  id: 0
-                  last_name: string
-                  line1: string
-                  line2: string
-                  line3: string
-                  line4: string
-                  phone_number: string
-                  postcode: string
-                  state: string
-                cancel_reason: string
-                cancel_reason_other_message: string
-                currency: string
-                date_created: '2024-01-01T00:00:00Z'
-                frequency: string
-                id: 0
-                interval: string
-                interval_count: 0
-                is_tax_known: false
-                is_test: false
-                lines:
-                  - id: 0
-                    metadata: null
-                    price: '0.00'
-                    product:
-                      categories: []
-                      id: 0
-                      images: []
-                      title: string
-                      upc: string
-                      url: https://example.com
-                    quantity: 0
-                    stockrecord:
-                      id: 0
-                      low_stock_threshold: 0
-                      num_allocated: 0
-                      num_in_stock: 0
-                      partner_sku: string
-                      price: '0.00'
-                      price_currency: string
-                      price_retail: '0.00'
-                next_renewal_date: '2024-01-01T00:00:00Z'
-                num_lines: 0
-                num_orders: 0
-                orders:
-                  - billing_cycle: 0
-                    order_number: string
-                payment_details: {}
-                payment_method: string
-                shipping_address:
-                  country: string
-                  first_name: string
-                  id: 0
-                  last_name: string
-                  line1: string
-                  line2: string
-                  line3: string
-                  line4: string
-                  notes: string
-                  phone_number: string
-                  postcode: string
-                  state: string
-                shipping_code: string
-                shipping_price: string
-                status: string
-                total: '0.00'
-                user:
-                  accepts_marketing: false
-                  email: user@example.com
-                  first_name: string
-                  id: 0
-                  ip: string
-                  language: string
-                  last_name: string
-                  phone_number: string
-                  user_agent: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: subscription.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - subscription.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - subscriptions
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - subscriptions
   ticket.created:
     post:
       description: Triggers a new support ticket is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                assignee: null
+                channel: string
+                comments:
+                  - attachments:
+                      - file: null
+                        file_name: null
+                        id: null
+                    author: null
+                    body: null
+                    created_at: '2024-01-01T00:00:00Z'
+                    from_email: null
+                    id: 0
+                    is_public: false
+                created_at: '2024-01-01T00:00:00Z'
+                from_email: null
+                id: 0
+                order: string
+                priority: string
+                products:
+                  - 0
+                requester: null
+                status: string
+                subject: string
+                tags:
+                  - string
+                ticket_type: null
+                updated_at: '2024-01-01T00:00:00Z'
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: ticket.created
+              object: ticket
+              webhook:
+                events:
+                  - ticket.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -26014,6 +26172,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -26023,59 +26182,59 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: ticket
-              data:
-                assignee: 0
-                channel: string
-                comments:
-                  - attachments:
-                      - file: null
-                        file_name: null
-                        id: null
-                    author: 0
-                    body: string
-                    created_at: '2024-01-01T00:00:00Z'
-                    from_email: user@example.com
-                    id: 0
-                    is_public: false
-                created_at: '2024-01-01T00:00:00Z'
-                from_email: user@example.com
-                id: 0
-                order: string
-                priority: string
-                products:
-                  - 0
-                requester: 0
-                status: string
-                subject: string
-                tags:
-                  - string
-                ticket_type: 0
-                updated_at: '2024-01-01T00:00:00Z'
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: ticket.created
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - ticket.created
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - support
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - support
   ticket.updated:
     post:
       description: Triggers a support ticket is updated.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                assignee: null
+                channel: string
+                comments:
+                  - attachments:
+                      - file: null
+                        file_name: null
+                        id: null
+                    author: null
+                    body: null
+                    created_at: '2024-01-01T00:00:00Z'
+                    from_email: null
+                    id: 0
+                    is_public: false
+                created_at: '2024-01-01T00:00:00Z'
+                from_email: null
+                id: 0
+                order: string
+                priority: string
+                products:
+                  - 0
+                requester: null
+                status: string
+                subject: string
+                tags:
+                  - string
+                ticket_type: null
+                updated_at: '2024-01-01T00:00:00Z'
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: ticket.updated
+              object: ticket
+              webhook:
+                events:
+                  - ticket.updated
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -26233,6 +26392,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -26242,59 +26402,103 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: ticket
-              data:
-                assignee: 0
-                channel: string
-                comments:
-                  - attachments:
-                      - file: null
-                        file_name: null
-                        id: null
-                    author: 0
-                    body: string
-                    created_at: '2024-01-01T00:00:00Z'
-                    from_email: user@example.com
-                    id: 0
-                    is_public: false
-                created_at: '2024-01-01T00:00:00Z'
-                from_email: user@example.com
-                id: 0
-                order: string
-                priority: string
-                products:
-                  - 0
-                requester: 0
-                status: string
-                subject: string
-                tags:
-                  - string
-                ticket_type: 0
-                updated_at: '2024-01-01T00:00:00Z'
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: ticket.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - ticket.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - support
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - support
   transaction.created:
     post:
       description: Triggers when a payment transaction is created.
       requestBody:
         content:
           application/json:
+            example:
+              api_version: '2023-02-10'
+              data:
+                amount: '0.00'
+                amount_available_for_refund: '0.00'
+                attribution:
+                  affiliate: null
+                  agent:
+                    email: null
+                    first_name: string
+                    id: 0
+                    last_name: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
+                auth_code: null
+                currency: null
+                date_created: '2024-01-01T00:00:00Z'
+                external_id: null
+                id: 0
+                initiator:
+                  email: null
+                  first_name: string
+                  id: 0
+                  last_name: string
+                is_disputed: false
+                is_external: false
+                is_test: null
+                network_transaction_id: null
+                order: null
+                parent_id: null
+                payment_details:
+                  bankcard_first_six: null
+                  bankcard_last_four: null
+                  card_token: string
+                  gateway:
+                    id: 0
+                    name: string
+                    type: string
+                  is_3ds: false
+                  optimized_3ds: false
+                  paypal_vault_id: string
+                  sca_flow: string
+                payment_method: null
+                report_values:
+                  amount: '0.00'
+                  currency: string
+                response_code: 0
+                statement_descriptor: null
+                status: string
+                subscription:
+                  billing_cycle: null
+                  id: 0
+                type: string
+                user:
+                  accepts_marketing: false
+                  email: null
+                  first_name: string
+                  id: 0
+                  ip: null
+                  language: null
+                  last_name: string
+                  phone_number: null
+                  user_agent: null
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: transaction.created
+              object: transaction
+              webhook:
+                events:
+                  - transaction.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
             schema:
               properties:
                 api_version:
@@ -26381,6 +26585,8 @@ webhooks:
                       required:
                         - agent
                       type: object
+                    auth_code:
+                      type: string
                     currency:
                       type: string
                     date_created:
@@ -26413,6 +26619,8 @@ webhooks:
                       type: boolean
                     is_test:
                       type: boolean
+                    network_transaction_id:
+                      type: string
                     order:
                       type: string
                     parent_id:
@@ -26576,6 +26784,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -26585,49 +26794,64 @@ webhooks:
                       type: string
                   type: object
               type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - payments
+  transaction.updated:
+    post:
+      description: Triggers when a payment transaction is updated.
+      requestBody:
+        content:
+          application/json:
             example:
               api_version: '2023-02-10'
-              object: transaction
               data:
                 amount: '0.00'
                 amount_available_for_refund: '0.00'
                 attribution:
-                  affiliate: string
+                  affiliate: null
                   agent:
-                    email: user@example.com
+                    email: null
                     first_name: string
                     id: 0
                     last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
-                currency: string
+                  funnel: null
+                  gclid: null
+                  metadata: {}
+                  subaffiliate1: null
+                  subaffiliate2: null
+                  subaffiliate3: null
+                  subaffiliate4: null
+                  subaffiliate5: null
+                  utm_campaign: null
+                  utm_content: null
+                  utm_medium: null
+                  utm_source: null
+                  utm_term: null
+                auth_code: null
+                currency: null
                 date_created: '2024-01-01T00:00:00Z'
-                external_id: string
+                external_id: null
                 id: 0
                 initiator:
-                  email: user@example.com
+                  email: null
                   first_name: string
                   id: 0
                   last_name: string
                 is_disputed: false
                 is_external: false
-                is_test: false
-                order: string
-                parent_id: 0
+                is_test: null
+                network_transaction_id: null
+                order: null
+                parent_id: null
                 payment_details:
-                  bankcard_first_six: string
-                  bankcard_last_four: string
+                  bankcard_first_six: null
+                  bankcard_last_four: null
                   card_token: string
                   gateway:
                     id: 0
@@ -26637,49 +26861,36 @@ webhooks:
                   optimized_3ds: false
                   paypal_vault_id: string
                   sca_flow: string
-                payment_method: string
+                payment_method: null
                 report_values:
                   amount: '0.00'
                   currency: string
                 response_code: 0
-                statement_descriptor: string
+                statement_descriptor: null
                 status: string
                 subscription:
-                  billing_cycle: 0
+                  billing_cycle: null
                   id: 0
                 type: string
                 user:
                   accepts_marketing: false
-                  email: user@example.com
+                  email: null
                   first_name: string
                   id: 0
-                  ip: string
-                  language: string
+                  ip: null
+                  language: null
                   last_name: string
-                  phone_number: string
-                  user_agent: string
+                  phone_number: null
+                  user_agent: null
               event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: transaction.created
+              event_type: transaction.updated
+              object: transaction
               webhook:
+                events:
+                  - transaction.updated
                 id: 1
                 store: example
-                events:
-                  - transaction.created
                 target: https://example.com/webhook/
-      security: []
-      tags:
-        - payments
-      responses:
-        '200':
-          description: Return a 200 status to indicate that the data was received successfully.
-        '410':
-          description: Indicates the webhook target is no longer available and will be disabled.
-  transaction.updated:
-    post:
-      description: Triggers when a payment transaction is updated.
-      requestBody:
-        content:
-          application/json:
             schema:
               properties:
                 api_version:
@@ -26766,6 +26977,8 @@ webhooks:
                       required:
                         - agent
                       type: object
+                    auth_code:
+                      type: string
                     currency:
                       type: string
                     date_created:
@@ -26798,6 +27011,8 @@ webhooks:
                       type: boolean
                     is_test:
                       type: boolean
+                    network_transaction_id:
+                      type: string
                     order:
                       type: string
                     parent_id:
@@ -26961,6 +27176,7 @@ webhooks:
                       description: The store identifier.
                       examples:
                         - example
+                      nullable: true
                       type: string
                     target:
                       description: Full url for your webhook receiver endpoint.
@@ -26970,92 +27186,11 @@ webhooks:
                       type: string
                   type: object
               type: object
-            example:
-              api_version: '2023-02-10'
-              object: transaction
-              data:
-                amount: '0.00'
-                amount_available_for_refund: '0.00'
-                attribution:
-                  affiliate: string
-                  agent:
-                    email: user@example.com
-                    first_name: string
-                    id: 0
-                    last_name: string
-                  funnel: string
-                  gclid: string
-                  metadata: null
-                  subaffiliate1: string
-                  subaffiliate2: string
-                  subaffiliate3: string
-                  subaffiliate4: string
-                  subaffiliate5: string
-                  utm_campaign: string
-                  utm_content: string
-                  utm_medium: string
-                  utm_source: string
-                  utm_term: string
-                currency: string
-                date_created: '2024-01-01T00:00:00Z'
-                external_id: string
-                id: 0
-                initiator:
-                  email: user@example.com
-                  first_name: string
-                  id: 0
-                  last_name: string
-                is_disputed: false
-                is_external: false
-                is_test: false
-                order: string
-                parent_id: 0
-                payment_details:
-                  bankcard_first_six: string
-                  bankcard_last_four: string
-                  card_token: string
-                  gateway:
-                    id: 0
-                    name: string
-                    type: string
-                  is_3ds: false
-                  optimized_3ds: false
-                  paypal_vault_id: string
-                  sca_flow: string
-                payment_method: string
-                report_values:
-                  amount: '0.00'
-                  currency: string
-                response_code: 0
-                statement_descriptor: string
-                status: string
-                subscription:
-                  billing_cycle: 0
-                  id: 0
-                type: string
-                user:
-                  accepts_marketing: false
-                  email: user@example.com
-                  first_name: string
-                  id: 0
-                  ip: string
-                  language: string
-                  last_name: string
-                  phone_number: string
-                  user_agent: string
-              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
-              event_type: transaction.updated
-              webhook:
-                id: 1
-                store: example
-                events:
-                  - transaction.updated
-                target: https://example.com/webhook/
-      security: []
-      tags:
-        - payments
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully.
         '410':
           description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - payments

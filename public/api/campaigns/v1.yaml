@@ -860,6 +860,8 @@ components:
 
             * `twint` - Twint
 
+            * `link` - Link
+
             * `external` - External'
           nullable: true
           oneOf:
@@ -1230,6 +1232,10 @@ components:
           description: External payment method code
           nullable: true
           type: string
+        language:
+          description: Language code for the payment gateway interface
+          nullable: true
+          type: string
         payment_gateway:
           description: Specify a payment gateway to be used for order payment
           nullable: true
@@ -1265,6 +1271,8 @@ components:
             * `sepa_debit` - SEPA Direct Debit
 
             * `twint` - Twint
+
+            * `link` - Link
 
             * `external` - External'
       required:
@@ -1314,6 +1322,8 @@ components:
 
         * `twint` - Twint
 
+        * `link` - Link
+
         * `external` - External'
       enum:
       - apple_pay
@@ -1327,6 +1337,7 @@ components:
       - sofort
       - sepa_debit
       - twint
+      - link
       - external
       type: string
     ProductInventoryAvailabilityEnum:

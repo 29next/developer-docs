@@ -3,7 +3,6 @@ import { sync } from 'fumadocs-core/search/algolia';
 import { algoliasearch } from 'algoliasearch';
 
 export const runtime = 'nodejs';
-// Disable caching so re-index always runs fresh
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {

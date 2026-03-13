@@ -28,7 +28,7 @@ export default async function Page(props: {
         <DocsTitle>{page.data.title}</DocsTitle>
         <div className="flex items-center gap-2">
           <ViewOptionsPopover
-            className="p-2 text-sm h-auto"
+            className="flex items-center gap-2 rounded-lg p-2 border bg-fd-secondary/50 text-sm text-fd-secondary-foreground transition-colors hover:bg-fd-accent h-auto"
             markdownUrl={`/docs-raw/${(params.slug ?? []).join('/')}`}
             githubUrl={`https://github.com/29next/developer-docs/blob/main/content/docs/${page.path}`}
           />
