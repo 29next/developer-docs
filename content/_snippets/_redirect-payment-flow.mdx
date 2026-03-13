@@ -1,0 +1,14 @@
+import { Mermaid } from '@/components/mdx/mermaid';
+
+Below is a high-level overview of the user flow when creating orders on the Admin API that utilize the payment method redirect flow.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  User->>External Checkout: User initiates payment
+  External Checkout->>Store: Create order/redirect to "payment_complete_url"
+  Store->>Payment Provider: User completes payment
+  Payment Provider->>Store: Store processes payment
+  Store->>External Checkout: Store POSTs order data to "payment_return_url"
+  External Checkout->>User: Receive data/show order details
+```

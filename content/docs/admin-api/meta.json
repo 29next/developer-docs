@@ -1,0 +1,1 @@
+{ "root": true, "title": "Admin API", "icon": "ChevronsLeftRightEllipsis", "description": "Store management API", "pages": ["index", "permissions", "guides", "reference"] }

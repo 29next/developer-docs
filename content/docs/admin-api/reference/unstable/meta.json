@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "title": "API Reference",
+  "pages": [
+    "apps",
+    "fulfillment",
+    "carts",
+    "products",
+    "payments",
+    "gift-cards",
+    "metadata",
+    "orders",
+    "storefront",
+    "store",
+    "subscriptions",
+    "support",
+    "customers",
+    "webhooks"
+  ]
+}

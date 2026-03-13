@@ -8,9 +8,13 @@ venv
 # Production
 /build
 
+# Next.js
+.next/
+
 # Generated files
 .docusaurus
 .cache-loader
+/.source
 
 # Misc
 .DS_Store

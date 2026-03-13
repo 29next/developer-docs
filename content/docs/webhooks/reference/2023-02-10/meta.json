@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "title": "Webhook Event Reference",
+  "pages": [
+    "apps",
+    "carts",
+    "customers",
+    "fulfillment",
+    "orders",
+    "payments",
+    "products",
+    "store",
+    "subscriptions",
+    "support"
+  ]
+}

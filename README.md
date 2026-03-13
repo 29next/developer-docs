@@ -1,71 +1,41 @@
-<p align="center">
-    <a href="https://nextcommerce.com">
-    <img src="https://github.com/NextCommerceCo/developer-docs/blob/main/static/img/next-logo-stroked.png" alt="Logo" width="240">
-  </a>
-  <h2 align="center">Next Commerce Developer Docs</h3>
+# 29 Next Developer Docs
 
-  <p align="center">
-    Next Commerce's developer documentation portal, built with Docusaurus and Stoplight.
-    <br />
-    <a href="https://developers.nextcommerce.com/"><strong>Explore the Docs »</strong></a>
-  </p>
-</p>
+Developer documentation for the 29 Next platform, built with [Fumadocs](https://fumadocs.vercel.app) and [Next.js](https://nextjs.org).
 
-### Built With
+## Stack
 
-- [Docusaurus](https://docusaurus.io/)
-- [Stoplight Elements](https://stoplight.io/open-source/elements)
-- [Algolia](https://www.algolia.com/)
-- [Tailwind](https://tailwindcss.com/)
+- **[Fumadocs](https://fumadocs.vercel.app)** — docs framework (UI, MDX processing, OpenAPI rendering)
+- **[Next.js](https://nextjs.org)** — framework
+- **[Algolia DocSearch](https://docsearch.algolia.com)** — site search, indexed via GitHub Actions on push to `main`
 
+## Development
 
-## Getting Started
+Install dependencies:
 
-This section describes how you can get our documentation portal up and running on your machine.
-
-### Prerequisites
-
-- [node](https://nodejs.org/en/)
-- [npm](https://www.npmjs.com/)
-
-### Installation
-
-**Clone the repo**
-
-```sh
-git clone git@github.com:29next/developer-docs.git
-```
-
-**Install NPM packages**
-
-```sh
+```bash
 npm install
 ```
 
-**Run the app**
+Run the dev server (also generates API reference docs from OpenAPI specs):
 
-```sh
-npm start
+```bash
+npm run dev
 ```
 
-## Update API Docs
+## Validate Links
 
-API Reference docs for [Admin API](https://developers.nextcommerce.com/docs/api/admin/reference/) and [Campaigns API](https://developers.nextcommerce.com/docs/api/campaigns/reference/#/) use Open API Spec files downloaded from their respective apps.
+Check for broken internal links:
 
-### Update Script
-
-Included in the docs is a python script to automatically fetch the latest versions of the Open API Spec files and update them for the developer docs portal usage.
-
-**Install Dependenceis**
-
-```sh
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
+```bash
+node scripts/validate-links.mjs
 ```
 
-**Run Update**
-```sh
-cd tools/
-python update_api_docs.py
+## Search Index
+
+The Algolia search index is updated automatically via the `Build Search Index` GitHub Actions workflow on every push to `main`. It uses the `algolia.json` config and requires `ALGOLIA_APPLICATION_ID` and `ALGOLIA_API_KEY` secrets.
+
+## Build
+
+```bash
+npm run build
 ```

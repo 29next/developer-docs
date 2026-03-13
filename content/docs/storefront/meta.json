@@ -1,0 +1,1 @@
+{ "root": true, "title": "Storefront", "icon": "ShoppingBag", "description": "Themes & storefronts", "pages": ["index", "api", "checkout-links", "event-tracking", "themes"] }

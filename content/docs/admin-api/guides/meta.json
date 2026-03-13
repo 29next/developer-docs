@@ -1,0 +1,19 @@
+{
+  "title": "Guides",
+  "pages": [
+    "external-checkout",
+    "order-management",
+    "subscription-management",
+    "testing-guide",
+    "iframe-payment-form",
+    "3ds2",
+    "apple-pay",
+    "google-pay",
+    "paypal",
+    "klarna",
+    "bancontact",
+    "ideal",
+    "sepa-debit",
+    "twint"
+  ]
+}

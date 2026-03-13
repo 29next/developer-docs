@@ -1,0 +1,148 @@
+---
+title: Getting Started
+sidebar_position: 0
+---
+
+import { ChevronsLeftRightEllipsis, Megaphone, ShoppingBag, Puzzle, Webhook } from 'lucide-react';
+
+Next Commerce is an ecommerce platform for DTC merchants. It includes a full storefront, checkout, payments, and order management — plus a headless campaigns layer for building custom checkout funnels. Use this guide to find the right starting point for what you're building.
+
+## Platform Overview
+
+Campaigns and storefronts are the customer-facing layer — both produce orders in your Next Commerce store. The Admin API gives you programmatic access to all store data. Apps are how you package and distribute integrations across multiple stores.
+
+
+<Cards>
+  <Card
+    href="/docs/campaigns"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-orange-500/15 text-orange-500"><Megaphone className="size-4" /></div>}
+    title="Campaigns"
+    description="Build campaign funnels and custom checkout experiences with the Campaign Cart SDK or Campaigns API."
+  />
+  <Card
+    href="/docs/admin-api"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-blue-500/15 text-blue-500"><ChevronsLeftRightEllipsis className="size-4" /></div>}
+    title="Admin API"
+    description="Manage store data programmatically — orders, subscriptions, products, customers, and fulfillment."
+  />
+  <Card
+    href="/docs/storefront"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-green-500/15 text-green-500"><ShoppingBag className="size-4" /></div>}
+    title="Storefront"
+    description="Customize your storefront theme, templates, and checkout flow using Theme Kit and the Storefront API."
+  />
+  <Card
+    href="/docs/apps"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-purple-500/15 text-purple-500"><Puzzle className="size-4" /></div>}
+    title="Apps"
+    description="Package and distribute integrations across multiple stores with OAuth-based install flows."
+  />
+  <Card
+    href="/docs/webhooks"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-pink-500/15 text-pink-500"><Webhook className="size-4" /></div>}
+    title="Webhooks"
+    description="Subscribe to store events and trigger real-time workflows in your integrations."
+  />
+</Cards>
+
+
+
+
+## What Are You Building?
+
+---
+
+### Build a Campaign Funnel
+
+Use campaigns to build external checkout experiences that run outside the storefront — landing pages, checkout, upsell flows, and receipt pages. 
+
+**Choose your approach**
+
+| Approach | Best for | Description |
+| --- | --- | --- |
+| [Campaign Cart SDK](/docs/campaigns/campaign-cart) | Fastest path | HTML/JS SDK using `data-next-*` attributes — no custom JavaScript required |
+| [Campaigns API](/docs/campaigns/api) | Full control | Headless JS API for custom checkout implementations |
+
+**Get started**
+
+1. In your dashboard, install the **Campaigns App** and create a campaign
+2. Add packages linked to product variants in your catalog
+3. Get your **API Key** from the campaign's **Integration** tab
+4. Clone the [Campaign Cart Starter Template](https://github.com/NextCommerceCo/campaign-cart-example) — a pre-built landing page, checkout, upsell, and receipt flow ready to customize
+
+**Resources**
+- [Campaigns overview](/docs/campaigns) — campaign structure and funnel flow
+- [Campaign Cart SDK](/docs/campaigns/campaign-cart) — data attributes, JS API, and utilities
+- [Campaigns API](/docs/campaigns/api) — REST API reference
+- [Analytics](/docs/campaigns/campaign-cart/analytics) — session tracking, custom events, and third-party integrations
+
+---
+
+### Customize a Storefront Theme
+
+Use themes to control the appearance and behavior of your storefront — product pages, catalog, cart, and storefront checkout flow. Themes use HTML, CSS, JavaScript, and a liquid-like template language with access to storefront objects and a GraphQL API.
+
+**Get started**
+
+1. Install [Theme Kit](/docs/storefront/themes/theme-kit), the CLI for local theme development
+2. Start from [Intro Bootstrap](https://github.com/NextCommerceCo/intro-bootstrap) starter theme
+3. Run `theme pull` to sync files locally, make changes, then `theme push` to deploy
+
+**Resources**
+- [Themes overview](/docs/storefront/themes) — theme structure and Theme Kit
+- [Template reference](/docs/storefront/themes/templates) — tags, objects, filters, and URL routing
+- [Theme guides](/docs/storefront/themes/guides/custom-page-templates) — custom page templates, product templates, and variants
+- [Storefront GraphQL API](/docs/storefront/api) — fetch products, cart data, and more
+- [Event tracking](/docs/storefront/event-tracking) — track storefront events and conversions
+
+---
+
+### Integrate with the Admin API
+
+Use the Admin API to manage store data and build backend integrations — orders, subscriptions, products, customers, and fulfillment. All requests authenticate with OAuth 2.
+
+**Get started**
+
+1. In your dashboard, go to **Settings > API Access** and create an OAuth App
+2. Select the [permissions](/docs/admin-api/permissions) your integration needs to get an Access Token
+
+**Resources**
+- [Admin API overview](/docs/admin-api) — authentication, versioning, and rate limits
+- [API reference](/docs/admin-api/reference/orders/ordersCreate) — full endpoint reference
+- [Order management](/docs/admin-api/guides/order-management) — create and manage orders
+- [Subscription management](/docs/admin-api/guides/subscription-management) — recurring billing
+- [Payment integrations](/docs/admin-api/guides/external-checkout) — Apple Pay, Google Pay, PayPal, Klarna, and more
+
+---
+
+### Build an App
+
+Use apps to package an integration as an installable unit that works across multiple stores. An app can combine the Admin API, Webhooks, and storefront extensions, with an OAuth-based install flow that merchants complete in one click.
+
+**When to build an app vs. a direct integration**
+
+- You're distributing your integration to multiple merchants
+- Your integration spans both backend logic (Admin API, Webhooks) and storefront UI (snippets, event tracking)
+- You need per-store OAuth tokens that merchants can grant and revoke
+
+**Get started**
+
+1. Review the [example apps](#example-apps) to understand the full pattern before writing any code
+2. Define your [App Manifest](/docs/apps/manifest)
+3. Implement the [OAuth install flow](/docs/apps/oauth/getting-started)
+
+**Example apps**
+
+| App | What it covers |
+| --- | --- |
+| [Example S2S App](https://github.com/NextCommerceCo/example-app) | OAuth flow, session tokens, remote settings, webhooks |
+| [Google Analytics 4](https://github.com/NextCommerceCo/google-analytics-4) | Snippets and event tracking in storefronts |
+| [Fulfillment Service](https://github.com/NextCommerceCo/demo-fulfillment-service-app) | OAuth flow and fulfillment API integration |
+
+**Resources**
+- [Apps overview](/docs/apps)
+- [OAuth & install flows](/docs/apps/oauth)
+- [Server-to-server guide](/docs/apps/guides/server-to-server-apps)
+- [Storefront extension guide](/docs/apps/guides/storefront-extension)
+- [Webhooks](/docs/webhooks)
+

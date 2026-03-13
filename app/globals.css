@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/black.css';
+@import 'fumadocs-ui/css/preset.css';
+@import 'fumadocs-openapi/css/preset.css';
+
+@source "../lib/source.ts";
+
+:root {
+  --color-fd-primary: hsl(217, 91%, 60%);
+  --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-idea: oklch(65% 0.2 145);
+}
+
+.dark {
+  --color-fd-primary: hsl(217, 91%, 60%);
+  --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-idea: oklch(65% 0.2 145);
+}
+
+@media (min-width: 1024px) {
+  #nd-docs-layout {
+    --fd-layout-width: 1600px !important;
+    --fd-sidebar-width: 320px !important;
+    --fd-toc-width: 320px !important;
+  }
+}
+
+/* Full-width pages (API reference): collapse TOC column and cap content at 1400px */
+@media (min-width: 1024px) {
+  #nd-docs-layout:has(article[data-full="true"]) {
+    --fd-toc-width: 0px !important;
+  }
+}
+
+#nd-docs-layout article[data-full="true"] {
+  max-width: 1400px !important;
+}
+
+/* Section switcher: green checkmark on active item */
+.fd-scroll-container > a svg.lucide-check {
+  color: oklch(72% 0.2 145) !important;
+}
+
+/* Section switcher: larger icon containers — trigger (in sidebar) and dropdown items (portalled) */
+#nd-sidebar button[class*="text-start"] > div:first-child,
+.fd-scroll-container > a > div:first-child {
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+/* Section switcher: show description in the trigger button on desktop */
+#nd-sidebar button[class*="text-start"] p[class*="muted-foreground"] {
+  display: block !important;
+}
+
+/* Section switcher: tighten text spacing to match icon height */
+#nd-sidebar button[class*="text-start"] > div:nth-child(2),
+.fd-scroll-container > a > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 2rem;
+  gap: 0.125rem;
+}
+#nd-sidebar button[class*="text-start"] > div:nth-child(2) p,
+.fd-scroll-container > a > div:nth-child(2) p {
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Section switcher: vertical padding on trigger */
+#nd-sidebar button[class*="text-start"] {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+/* Cards: strip fumadocs' own icon wrapper so custom colorized icon divs show cleanly */
+[data-card] > .not-prose {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Cap max-height on code blocks inside API example/request panels */
+[data-api-requests] .fd-scroll-container {
+  max-height: 1200px !important;
+}
+
+/* Docusaurus-style callouts: transparent colorized backgrounds */
+div[style*="--callout-color"] {
+  background-color: color-mix(in oklch, var(--callout-color) 12%, transparent) !important;
+  border-color: color-mix(in oklch, var(--callout-color) 40%, transparent) !important;
+  box-shadow: none !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+/* Callout icons: standard lucide stroke style (not filled circles) */
+div[style*="--callout-color"] > svg {
+  fill: transparent !important;
+  color: var(--callout-color) !important;
+  flex-shrink: 0;
+}
+
+/* Remove inner left bar from callouts */
+div[style*="--callout-color"] > div[role="none"] {
+  display: none !important;
+}
+
+/* Callout description uses text-fd-muted-foreground — override it to full foreground */
+div[style*="--callout-color"] {
+  --color-fd-muted-foreground: var(--color-fd-foreground);
+}

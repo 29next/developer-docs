@@ -1,0 +1,3 @@
+{
+  "pages": ["index", "admin-api", "campaigns", "storefront", "apps", "webhooks"]
+}

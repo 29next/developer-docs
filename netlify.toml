@@ -1,14 +1,64 @@
-# Netlify Configuration File
-
 [build]
-  # The command to build your Docusaurus site
   command = "npm run build"
-  
-  # The directory that contains the deploy-ready static files
-  publish = "build"
+  publish = ".next"
 
 [build.environment]
-  # Sets the Node.js version to 22 (LTS as of early 2026)
-  # This ensures the build environment matches your local setup
   NODE_VERSION = "22"
 
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/api/admin"
+  to = "/docs/admin-api"
+  status = 301
+
+[[redirects]]
+  from = "/apps/oauth"
+  to = "/docs/apps/oauth"
+  status = 301
+
+[[redirects]]
+  from = "/apps/app-development-flow"
+  to = "/docs/apps/app-development-flow"
+  status = 301
+
+[[redirects]]
+  from = "/apps"
+  to = "/docs/apps"
+  status = 301
+
+[[redirects]]
+  from = "/themes"
+  to = "/docs/storefront/themes"
+  status = 301
+
+[[redirects]]
+  from = "/docs/themes"
+  to = "/docs/storefront/themes"
+  status = 301
+
+[[redirects]]
+  from = "/docs/themes/event-tracking"
+  to = "/docs/storefront/event-tracking"
+  status = 301
+
+[[redirects]]
+  from = "/webhooks"
+  to = "/docs/webhooks"
+  status = 301
+
+[[redirects]]
+  from = "/docs/api/admin/:path"
+  to = "/docs/admin-api/:path"
+  status = 301
+
+[[redirects]]
+  from = "/docs/campaign-cart/:path"
+  to = "/docs/campaigns/campaign-cart/:path"
+  status = 301
+
+[[redirects]]
+  from = "/docs/api/campaigns/:path"
+  to = "/docs/campaigns/api/:path"
+  status = 301

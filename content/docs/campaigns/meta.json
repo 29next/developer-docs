@@ -1,0 +1,1 @@
+{ "root": true, "title": "Campaigns", "icon": "Megaphone", "description": "Campaign funnels & checkout", "pages": ["index", "campaign-cart", "api"] }
