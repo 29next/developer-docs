@@ -14,6 +14,8 @@ const STOP_WORDS = new Set([
   'i','you','he','she','it','we','they','what','which','who','how','when','where',
   'why','and','or','but','not','in','on','at','to','for','of','with','by','from',
   'this','that','these','those','my','your','his','her','its','our','their',
+  'about','other','another','also','too','more','any','some','just','even',
+  'still','like','else','same','different','similar','related','using','use',
 ]);
 
 function buildSearchQuery(text: string): string {
@@ -32,25 +34,32 @@ async function runSearch(query: string, maxPages = 8) {
       {
         indexName: process.env.NEXT_PUBLIC_ALGOLIA_INDEX!,
         query: searchQuery,
-        hitsPerPage: 40,
+        hitsPerPage: 60,
       },
     ],
   });
 
-  const seen = new Set<string>();
-  const hits: { url: string; title: string; section: string; content: string }[] = [];
+  // Group all chunks by url+section, preserving rank order of first appearance
+  const groups = new Map<string, { url: string; title: string; section: string; parts: string[] }>();
+  const order: string[] = [];
 
   for (const hit of (results[0] as any).hits ?? []) {
     const url = hit.url ?? hit.objectID;
+    const section = (hit.section ?? '') as string;
     const content = (hit.content ?? '') as string;
-    if (content.length < 40) continue; // skip table cell fragments
-    if (seen.has(url)) continue; // one chunk per page
-    seen.add(url);
-    hits.push({ url, title: hit.title ?? '', section: hit.section ?? '', content });
-    if (hits.length >= maxPages) break;
+    if (!content.trim()) continue;
+    const key = `${url}|${section}`;
+    if (!groups.has(key)) {
+      groups.set(key, { url, title: hit.title ?? '', section, parts: [] });
+      order.push(key);
+    }
+    groups.get(key)!.parts.push(content);
   }
 
-  return hits;
+  return order.slice(0, maxPages).map((key) => {
+    const g = groups.get(key)!;
+    return { url: g.url, title: g.title, section: g.section, content: g.parts.join(' | ') };
+  });
 }
 
 const openrouter = createOpenRouter({
@@ -71,13 +80,16 @@ export async function POST(req: Request) {
   const reqJson: { messages?: UIMessage[] } = await req.json();
   const messages = reqJson.messages ?? [];
 
-  const userMessages = messages.filter((m) => m.role === 'user');
-  const recentUserText = userMessages
-    .slice(-3)
-    .flatMap((m) => m.parts?.filter((p: any) => p.type === 'text').map((p: any) => p.text as string) ?? [])
-    .join(' ');
+  const lastUserMessage = messages.filter((m) => m.role === 'user').at(-1);
+  const lastUserText =
+    lastUserMessage?.parts
+      ?.filter((p: any) => p.type === 'text')
+      .map((p: any) => p.text as string)
+      .join(' ') ?? '';
 
-  const docs = recentUserText ? await runSearch(recentUserText) : [];
+  console.log('[chat] searching for:', lastUserText);
+  const docs = lastUserText ? await runSearch(lastUserText) : [];
+  console.log('[chat] got', docs.length, 'results:', docs.map(d => `${d.url} [${d.section}] "${d.content.slice(0, 80)}""`));
 
   const contextBlock =
     docs.length > 0
@@ -91,7 +103,7 @@ export async function POST(req: Request) {
     model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
     maxOutputTokens: 1024,
     messages: [
-      { role: 'system', content: `${systemPrompt}\n\n${contextBlock}` },
+      { role: 'system', content: `${systemPrompt}\n\n${contextBlock}\n\nCurrent question: ${lastUserText}` },
       ...messages
         .filter((m) => m.role === 'user' || m.role === 'assistant')
         .map((m) => ({
