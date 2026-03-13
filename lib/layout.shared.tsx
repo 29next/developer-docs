@@ -11,6 +11,6 @@ export function baseOptions(): BaseLayoutProps {
         </>
       ),
     },
-    githubUrl: 'https://github.com/29next/developer-docs',
+    githubUrl: 'https://github.com/NextCommerceCo/developer-docs',
   };
 }
