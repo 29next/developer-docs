@@ -1,5 +1,5 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
-import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
+import { convertToModelMessages, streamText, tool, type UIMessage } from 'ai';
 import { z } from 'zod';
 import { source } from '@/lib/source';
 import { Document, type DocumentData } from 'flexsearch';
@@ -56,61 +56,72 @@ async function chunkedAll<O>(promises: Promise<O>[]): Promise<O[]> {
   return out;
 }
 
+async function runSearch(query: string, limit = 8): Promise<CustomDocument[]> {
+  const search = await searchServer;
+  const results = await search.searchAsync(query, { limit, merge: true, enrich: true });
+  return (results as any[])
+    .flatMap((r) => r.result ?? [])
+    .map((d) => ({
+      ...d.doc,
+      content: d.doc?.content?.slice(0, 1200) ?? '',
+    }))
+    .filter((d) => d.url);
+}
+
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 });
 
 const systemPrompt = [
   'You are a helpful technical assistant for Next Commerce developer documentation.',
-  'Your job is to answer developer questions clearly and concisely based on the documentation.',
-  'Always use the `search` tool first to find relevant documentation before answering.',
-  'Base your answers on the search results. Cite sources as markdown links using the document `url` field.',
+  'Your job is to answer developer questions clearly and concisely based on the documentation provided in context.',
+  'Base your answers on the documentation context below. Cite sources as markdown links using the document URL.',
   'When writing code examples, use the language shown in the documentation.',
-  'If the search results do not contain enough information to answer the question, say so honestly.',
+  'If the documentation context does not contain enough information to answer the question, say so honestly.',
   'Do not make up API endpoints, parameters, or behaviours that are not in the documentation.',
   'Keep answers focused and practical. Avoid lengthy preambles — get straight to the answer.',
 ].join('\n');
 
 export async function POST(req: Request) {
   const reqJson: { messages?: UIMessage[] } = await req.json();
+  const messages = reqJson.messages ?? [];
+
+  // Extract latest user question and search server-side — don't rely on model to call tools
+  const lastUserText = messages
+    .filter((m) => m.role === 'user')
+    .at(-1)
+    ?.parts?.filter((p: any) => p.type === 'text')
+    .map((p: any) => p.text as string)
+    .join(' ') ?? '';
+
+  const docs = lastUserText ? await runSearch(lastUserText) : [];
+
+  const contextBlock =
+    docs.length > 0
+      ? 'Relevant documentation:\n\n' +
+        docs.map((d) => `### [${d.title}](${d.url})\n${d.description ? d.description + '\n' : ''}${d.content}`).join('\n\n---\n\n')
+      : 'No relevant documentation found.';
 
   const result = streamText({
     model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
-    stopWhen: stepCountIs(5),
-    tools: {
-      search: searchTool,
-    },
     messages: [
-      { role: 'system', content: systemPrompt },
-      ...(await convertToModelMessages(reqJson.messages ?? [])),
+      { role: 'system', content: `${systemPrompt}\n\n${contextBlock}` },
+      ...(await convertToModelMessages(messages)),
     ],
-    prepareStep: ({ stepNumber }) => ({
-      toolChoice: stepNumber === 0 ? 'required' : 'auto',
-    }),
   });
 
   return result.toUIMessageStreamResponse();
 }
 
+// Keep tool definition so the UI type import still works
 const searchTool = tool({
   description: 'Search the docs content and return raw JSON results.',
   inputSchema: z.object({
     query: z.string(),
-    limit: z.number().int().min(1).max(20).default(5),
+    limit: z.number().int().min(1).max(20).default(8),
   }),
   async execute({ query, limit }) {
-    const search = await searchServer;
-    const results = await search.searchAsync(query, { limit, merge: true, enrich: true });
-    // Truncate content to avoid flooding the context window
-    return results.map((r: any) => ({
-      ...r,
-      result: r.result?.map((doc: any) => ({
-        ...doc,
-        doc: doc.doc
-          ? { ...doc.doc, content: doc.doc.content?.slice(0, 1500) }
-          : doc.doc,
-      })),
-    }));
+    return runSearch(query, limit);
   },
 });
 
