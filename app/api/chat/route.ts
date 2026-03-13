@@ -56,10 +56,14 @@ const openrouter = createOpenRouter({
 });
 
 const systemPrompt = [
-  'You are an AI assistant for a documentation site.',
-  'Use the `search` tool to retrieve relevant docs context before answering when needed.',
-  'The `search` tool returns raw JSON results from documentation. Use those results to ground your answer and cite sources as markdown links using the document `url` field when available.',
-  'If you cannot find the answer in search results, say you do not know and suggest a better search query.',
+  'You are a helpful technical assistant for Next Commerce developer documentation.',
+  'Your job is to answer developer questions clearly and concisely based on the documentation.',
+  'Always use the `search` tool first to find relevant documentation before answering.',
+  'Base your answers on the search results. Cite sources as markdown links using the document `url` field.',
+  'When writing code examples, use the language shown in the documentation.',
+  'If the search results do not contain enough information to answer the question, say so honestly.',
+  'Do not make up API endpoints, parameters, or behaviours that are not in the documentation.',
+  'Keep answers focused and practical. Avoid lengthy preambles — get straight to the answer.',
 ].join('\n');
 
 export async function POST(req: Request) {
@@ -68,9 +72,8 @@ export async function POST(req: Request) {
   let contextPrompt = systemPrompt;
   if (reqJson.pageUrl) {
     const page = source.getPages().find((p) => p.url === reqJson.pageUrl);
-    if (page && 'getText' in page.data) {
-      const content = await page.data.getText('processed');
-      contextPrompt += `\n\nThe user is currently viewing the page "${page.data.title}" (${reqJson.pageUrl}). Here is its content for context:\n\n${content}`;
+    if (page) {
+      contextPrompt += `\n\nThe user is currently viewing the page "${page.data.title}" (${reqJson.pageUrl}). Use this to prioritize relevant search results.`;
     }
   }
 
