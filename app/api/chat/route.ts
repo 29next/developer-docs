@@ -87,7 +87,10 @@ export async function POST(req: Request) {
       { role: 'system', content: contextPrompt },
       ...(await convertToModelMessages(reqJson.messages ?? [])),
     ],
-    toolChoice: 'auto',
+    prepareStep: ({ stepNumber }) =>
+      stepNumber === 0 && reqJson.messages?.length === 1
+        ? { toolChoice: 'required' }
+        : { toolChoice: 'auto' },
   });
 
   return result.toUIMessageStreamResponse();
