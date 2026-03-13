@@ -4,6 +4,7 @@ import {
   DocsDescription,
   DocsPage,
   DocsTitle,
+  ViewOptionsPopover,
 } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
@@ -23,9 +24,16 @@ export default async function Page(props: {
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full} tableOfContent={{ style: 'clerk' }}>
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <DocsTitle>{page.data.title}</DocsTitle>
-        <VersionSelector />
+        <div className="flex items-center gap-2">
+          <ViewOptionsPopover
+            className="p-2 text-sm h-auto"
+            markdownUrl={`/docs-raw/${(params.slug ?? []).join('/')}`}
+            githubUrl={`https://github.com/29next/developer-docs/blob/main/content/docs/${page.path}`}
+          />
+          <VersionSelector />
+        </div>
       </div>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
