@@ -3,7 +3,7 @@ import { baseOptions } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
 import type { ReactNode } from 'react';
 import { ChevronsLeftRightEllipsis, Megaphone, ShoppingBag, Puzzle, Webhook } from 'lucide-react';
-import type { SidebarTab } from 'fumadocs-ui/components/sidebar/tabs';
+import type { SidebarTab } from 'fumadocs-ui/utils/get-sidebar-tabs';
 
 const sectionMeta: Record<string, { icon: ReactNode; description: string; color: string }> = {
   '/docs/admin-api': {
