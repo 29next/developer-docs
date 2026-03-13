@@ -63,7 +63,16 @@ const systemPrompt = [
 ].join('\n');
 
 export async function POST(req: Request) {
-  const reqJson: { messages?: UIMessage[] } = await req.json();
+  const reqJson: { messages?: UIMessage[]; pageUrl?: string } = await req.json();
+
+  let contextPrompt = systemPrompt;
+  if (reqJson.pageUrl) {
+    const page = source.getPages().find((p) => p.url === reqJson.pageUrl);
+    if (page && 'getText' in page.data) {
+      const content = await page.data.getText('raw');
+      contextPrompt += `\n\nThe user is currently viewing the page "${page.data.title}" (${reqJson.pageUrl}). Here is its content for context:\n\n${content}`;
+    }
+  }
 
   const result = streamText({
     model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
@@ -72,7 +81,7 @@ export async function POST(req: Request) {
       search: searchTool,
     },
     messages: [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: contextPrompt },
       ...(await convertToModelMessages(reqJson.messages ?? [])),
     ],
     toolChoice: 'auto',

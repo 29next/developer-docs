@@ -1,4 +1,5 @@
 'use client';
+import { usePathname } from 'next/navigation';
 import {
   type ComponentProps,
   createContext,
@@ -291,10 +292,18 @@ function Message({ message, ...props }: { message: UIMessage } & ComponentProps<
 
 export function AISearch({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
+
   const chat = useChat({
     id: 'search',
     transport: new DefaultChatTransport({
       api: '/api/chat',
+      prepareSendMessagesRequest: (options) => ({
+        ...options,
+        body: { ...options.body, pageUrl: pathnameRef.current },
+      }),
     }),
   });
 
@@ -346,17 +355,17 @@ export function AISearchPanel() {
         }
         @keyframes ask-ai-close {
           from {
-            width: var(--ai-chat-width);
+            translate: 0 0;
           }
           to {
-            width: 0px;
+            translate: 100% 0;
           }
         }`}
       </style>
       <Presence present={open}>
         <div
           className={cn(
-            'fixed top-0 end-0 z-30 h-dvh overflow-hidden bg-fd-card text-fd-card-foreground border-s shadow-xl w-[600px] 2xl:w-[690px]',
+            'fixed top-0 end-0 z-30 h-dvh overflow-hidden bg-fd-card text-fd-card-foreground border-s shadow-xl w-full sm:w-150 2xl:w-172.5',
             open
               ? 'animate-[ask-ai-open_200ms]'
               : 'animate-[ask-ai-close_200ms]',

@@ -39,10 +39,10 @@ var docs = defineDocs({
     schema: frontmatterSchema.extend({
       title: z.string().optional().default(""),
       full: z.boolean().optional()
-    })
-  },
-  mdxOptions: {
-    includeProcessedMarkdown: true
+    }),
+    postprocess: {
+      includeProcessedMarkdown: true
+    }
   }
 });
 var source_config_default = defineConfig({

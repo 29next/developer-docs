@@ -2,8 +2,16 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import { AlgoliaDialog } from '@/components/search';
 import { AISearch, AISearchPanel, AISearchTrigger } from '@/components/ai/search';
 import { MessageCircleIcon } from 'lucide-react';
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Developers | Next Commerce',
+    default: 'Developers | Next Commerce',
+  },
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
