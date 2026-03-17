@@ -1,6 +1,7 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
+import { AlgoliaDocSearch, AlgoliaDocSearchMobile } from '@/components/search';
 import type { ReactNode } from 'react';
 import { ChevronsLeftRightEllipsis, Megaphone, ShoppingBag, Puzzle, Webhook } from 'lucide-react';
 import type { SidebarTab } from 'fumadocs-ui/utils/get-sidebar-tabs';
@@ -38,6 +39,10 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       {...baseOptions()}
       tree={source.getPageTree()}
+      searchToggle={{
+        enabled: true,
+        components: { lg: <AlgoliaDocSearch />, sm: <AlgoliaDocSearchMobile /> },
+      }}
       sidebar={{
         tabs: {
           transform(option: SidebarTab) {

@@ -11,13 +11,12 @@
     "validate-links": "node scripts/validate-links.mjs"
   },
   "dependencies": {
-    "@ai-sdk/react": "^3.0.118",
+    "@docsearch/css": "^4.6.0",
+    "@docsearch/react": "^4.6.0",
     "@graphql-markdown/cli": "^0.7.0",
     "@graphql-tools/url-loader": "^9.0.6",
-    "@openrouter/ai-sdk-provider": "^2.3.0",
     "@radix-ui/react-presence": "^1.1.5",
     "@types/mdx": "^2",
-    "ai": "^6.0.116",
     "algoliasearch": "^5.49.2",
     "class-variance-authority": "^0.7.1",
     "flexsearch": "^0.8.212",
