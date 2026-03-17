@@ -8,12 +8,12 @@
         "guides",
         "oauth",
         "app-development-flow",
-        "manifest",
-        "assets",
-        "event-tracking",
-        "snippets",
-        "settings",
         "app-kit",
+        "manifest",
+        "settings",
+        "assets",
+        "snippets",
+        "event-tracking",
         "review"
     ]
 }
