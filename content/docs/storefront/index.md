@@ -33,4 +33,4 @@ Power deeper customizations, dynamic content loading, and headless experiences u
 - Fetch products, cart data, and more in real-time.
 - Create custom funcationality such as cart upsells.
 
-Learn how to [query your storefront data →](/docs/storefront/api)
+Learn how to [query your storefront data →](/docs/storefront/graphql)
