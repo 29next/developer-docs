@@ -1,0 +1,18 @@
+---
+id: token-auth
+title: tokenAuth
+full: true
+---
+
+import { GraphQLOperation } from '@/components/graphql-operation';
+
+<GraphQLOperation
+  type="mutation"
+  name="tokenAuth"
+  description={"Obtain JSON web token for given user."}
+  signature={"mutation TokenAuth($input: ObtainJSONWebTokenInput!) {\n  tokenAuth(input: $input) {\n    payload\n    refreshExpiresIn\n    success\n    errors\n    clientMutationId\n    token\n  }\n}"}
+  variablesExample={"{\n  \"input\": {\n    \"clientMutationId\": \"<your-value>\",\n    \"email\": \"<your-value>\",\n    \"password\": \"<your-value>\"\n  }\n}"}
+  args={[{"name":"input","type":"ObtainJSONWebTokenInput!","badges":["non-null"],"fields":[{"name":"clientMutationId","type":"String","badges":[]},{"name":"email","type":"String!","badges":["non-null"]},{"name":"password","type":"String!","badges":["non-null"]}]}]}
+  returnType="ObtainJSONWebTokenPayload"
+  returnFields={[{"name":"payload","type":"GenericScalar!","badges":["non-null"]},{"name":"refreshExpiresIn","type":"Int!","badges":["non-null"]},{"name":"success","type":"Boolean","badges":[]},{"name":"errors","type":"ExpectedErrorType","badges":[]},{"name":"user","type":"UserNode","badges":[],"fields":[{"name":"id","type":"ID!","description":"The ID of the object","badges":["non-null"]},{"name":"lastLogin","type":"DateTime","badges":[]},{"name":"isActive","type":"Boolean!","description":"Designates whether this user should be treated as active. Unselect this instead of deleting accounts.","badges":["non-null"]},{"name":"email","type":"String","badges":[]},{"name":"phoneNumber","type":"String","badges":[]},{"name":"firstName","type":"String!","badges":["non-null"]},{"name":"lastName","type":"String!","badges":["non-null"]},{"name":"ip","type":"String","badges":[]},{"name":"language","type":"String","badges":[]},{"name":"isBlocked","type":"Boolean!","badges":["non-null"]},{"name":"userType","type":"UserUserUserTypeChoices!","badges":["non-null"]},{"name":"acceptsMarketing","type":"Boolean!","badges":["non-null"]},{"name":"metadata","type":"GenericScalar","badges":[]},{"name":"userAgent","type":"String","badges":[]},{"name":"firstPurchaseDate","type":"DateTime","badges":[]},{"name":"lastPurchaseDate","type":"DateTime","badges":[]},{"name":"dateJoined","type":"DateTime!","badges":["non-null"]},{"name":"agentMarketingAttributions","type":"[AttributionNode!]!","badges":["non-null","list"],"fields":[{"name":"id","type":"ID!","badges":["non-null"]},{"name":"utmSource","type":"String","badges":[]},{"name":"utmMedium","type":"String","badges":[]},{"name":"utmCampaign","type":"String","badges":[]},{"name":"utmTerm","type":"String","badges":[]},{"name":"utmContent","type":"String","badges":[]},{"name":"gclid","type":"String","badges":[]},{"name":"campaign","type":"String","badges":[]},{"name":"metadata","type":"GenericScalar","badges":[]},{"name":"affiliate","type":"String","badges":[]},{"name":"subaffiliate1","type":"String","badges":[]},{"name":"subaffiliate2","type":"String","badges":[]},{"name":"subaffiliate3","type":"String","badges":[]},{"name":"subaffiliate4","type":"String","badges":[]},{"name":"subaffiliate5","type":"String","badges":[]}]},{"name":"pk","type":"Int","badges":[]}]},{"name":"clientMutationId","type":"String","badges":[]},{"name":"token","type":"String!","badges":["non-null"]}]}
+/>

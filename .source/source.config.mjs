@@ -62,7 +62,8 @@ var source_config_default = defineConfig({
         "tsx",
         "html",
         "css",
-        "sql"
+        "sql",
+        "graphql"
       ]
     }
   }

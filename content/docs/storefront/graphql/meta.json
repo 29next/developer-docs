@@ -1,0 +1,8 @@
+{
+  "title": "GraphQL Reference",
+  "pages": [
+    "index",
+    "queries",
+    "mutations"
+  ]
+}

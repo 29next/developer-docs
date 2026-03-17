@@ -75,6 +75,7 @@ export default defineConfig({
         'html',
         'css',
         'sql',
+        'graphql',
       ],
     },
   },

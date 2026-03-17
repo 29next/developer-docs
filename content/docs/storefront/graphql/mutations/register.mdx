@@ -1,0 +1,18 @@
+---
+id: register
+title: register
+full: true
+---
+
+import { GraphQLOperation } from '@/components/graphql-operation';
+
+<GraphQLOperation
+  type="mutation"
+  name="register"
+  description={"Register a user"}
+  signature={"mutation Register($input: RegisterInput!) {\n  register(input: $input) {\n    success\n    errors\n    token\n    clientMutationId\n  }\n}"}
+  variablesExample={"{\n  \"input\": {\n    \"email\": \"<your-value>\",\n    \"password\": \"<your-value>\",\n    \"firstName\": \"<your-value>\",\n    \"lastName\": \"<your-value>\",\n    \"phoneNumber\": \"<your-value>\",\n    \"acceptsMarketing\": true,\n    \"language\": \"en\",\n    \"metadata\": {},\n    \"clientMutationId\": \"<your-value>\"\n  }\n}"}
+  args={[{"name":"input","type":"RegisterInput!","badges":["non-null"],"fields":[{"name":"email","type":"String!","badges":["non-null"]},{"name":"password","type":"String!","badges":["non-null"]},{"name":"firstName","type":"String","badges":[]},{"name":"lastName","type":"String","badges":[]},{"name":"phoneNumber","type":"String","badges":[]},{"name":"acceptsMarketing","type":"Boolean","badges":[]},{"name":"language","type":"LanguageEnum","badges":[]},{"name":"metadata","type":"GenericScalar","badges":[]},{"name":"clientMutationId","type":"String","badges":[]}]}]}
+  returnType="RegisterPayload"
+  returnFields={[{"name":"success","type":"Boolean","badges":[]},{"name":"errors","type":"ExpectedErrorType","badges":[]},{"name":"token","type":"String","badges":[]},{"name":"clientMutationId","type":"String","badges":[]}]}
+/>
