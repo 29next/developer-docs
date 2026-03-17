@@ -4,8 +4,8 @@ import {
   DocsDescription,
   DocsPage,
   DocsTitle,
-  ViewOptionsPopover,
 } from 'fumadocs-ui/layouts/docs/page';
+import { ViewOptions } from '@/components/view-options';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
@@ -28,8 +28,7 @@ export default async function Page(props: {
       <div className="flex flex-wrap items-start justify-between gap-2">
         <DocsTitle>{page.data.title}</DocsTitle>
         <div className="flex items-center gap-2">
-          <ViewOptionsPopover
-            key={(params.slug ?? []).join('/')}
+          <ViewOptions
             className="flex items-center gap-2 rounded-lg p-2 border bg-fd-secondary/50 text-sm text-fd-secondary-foreground transition-colors hover:bg-fd-accent h-auto"
             markdownUrl={`/docs-raw/${(params.slug ?? []).join('/')}`}
             githubUrl={`${siteConfig.githubContentUrl}/${page.path}`}
