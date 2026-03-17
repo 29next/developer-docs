@@ -11,7 +11,6 @@ import { getMDXComponents } from '@/components/mdx';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { VersionSelector } from '@/components/version-selector';
 import { AutoExpandBody } from '@/components/auto-expand-body';
-import { siteConfig } from '@/lib/config';
 import type { Metadata } from 'next';
 
 export default async function Page(props: {
@@ -30,8 +29,6 @@ export default async function Page(props: {
         <div className="flex items-center gap-2">
           <ViewOptions
             className="flex items-center gap-2 rounded-lg p-2 border bg-fd-secondary/50 text-sm text-fd-secondary-foreground transition-colors hover:bg-fd-accent h-auto"
-            markdownUrl={`/docs-raw/${(params.slug ?? []).join('/')}`}
-            githubUrl={`${siteConfig.githubContentUrl}/${page.path}`}
           />
           <VersionSelector />
         </div>
