@@ -7,21 +7,23 @@ from webhooks import webhook_schema_generator
 
 def download_and_update_spec_file(type, source, version, description, additions):
     api_file = BASE_API_FILES_PATH + "/{}/{}.yaml".format(type, version)
+
     response = requests.get(source, {"version": version})
+    response.raise_for_status()
 
     with open(api_file, "wb") as f:
         f.write(response.content)
-    f.close()
 
-    with open(api_file, "r+") as f:
+    with open(api_file, "r") as f:
         spec = yaml.safe_load(f.read())
-        spec["info"]["description"] = description
-        if type == "admin":
-            spec["webhooks"] = webhook_schema_generator(spec)
-        spec.update(additions)
-        f.seek(0)  # find first line to replace content
+
+    spec["info"]["description"] = description
+    if type == "admin":
+        spec["webhooks"] = webhook_schema_generator(spec)
+    spec.update(additions)
+
+    with open(api_file, "w") as f:
         yaml.safe_dump(spec, f)
-    f.close()
 
 
 def update_api_spec():

@@ -29,6 +29,7 @@ export default async function Page(props: {
         <DocsTitle>{page.data.title}</DocsTitle>
         <div className="flex items-center gap-2">
           <ViewOptionsPopover
+            key={(params.slug ?? []).join('/')}
             className="flex items-center gap-2 rounded-lg p-2 border bg-fd-secondary/50 text-sm text-fd-secondary-foreground transition-colors hover:bg-fd-accent h-auto"
             markdownUrl={`/docs-raw/${(params.slug ?? []).join('/')}`}
             githubUrl={`${siteConfig.githubContentUrl}/${page.path}`}

@@ -24,19 +24,34 @@
 import { generateFiles } from 'fumadocs-openapi';
 import { createOpenAPI } from 'fumadocs-openapi/server';
 import { readdirSync, writeFileSync, mkdirSync, readFileSync, rmSync, existsSync } from 'fs';
-import { join } from 'path';
+import { join, resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { tmpdir } from 'os';
 import yaml from 'js-yaml';
 
+// ── Paths anchored to project root ──────────────────────────────────────────
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+
+function rootPath(...segments) {
+  return join(ROOT, ...segments);
+}
+
+// ── Webhook schema fixup (in-memory, no source mutation) ────────────────────
+
 /**
- * Fix webhook schemas in admin API YAML files so fumadocs-openapi renders them correctly.
- * The Python webhooks.py tool historically generated schemas without `type: object` on the
- * root and used array-style types like `["string"]` instead of `"string"`.
+ * Fix webhook schemas in an OpenAPI spec object so fumadocs-openapi renders
+ * them correctly. Returns a temp file path with the fixed spec.
+ *
+ * Does NOT mutate the source YAML on disk — writes to a temp file instead.
  */
 function fixWebhookSchemas(specPath) {
   const raw = readFileSync(specPath, 'utf8');
   const spec = yaml.load(raw);
-  if (!spec.webhooks) return;
+  if (!spec.webhooks) return specPath; // nothing to fix, use original
   const version = spec.info?.version ?? '';
+
+  let modified = false;
 
   for (const [eventName, pathItem] of Object.entries(spec.webhooks)) {
     const post = pathItem.post;
@@ -46,6 +61,7 @@ function fixWebhookSchemas(specPath) {
     if (pathItem.responses && !post.responses) {
       post.responses = pathItem.responses;
       delete pathItem.responses;
+      modified = true;
     }
 
     const contentJson = post.requestBody?.content?.['application/json'];
@@ -54,10 +70,13 @@ function fixWebhookSchemas(specPath) {
     if (!schema) continue;
 
     // Add missing type: object to root schema
-    if (!schema.type) schema.type = 'object';
+    if (!schema.type) {
+      schema.type = 'object';
+      modified = true;
+    }
 
     // Recursively fix type arrays → strings
-    fixTypes(schema);
+    if (fixTypes(schema)) modified = true;
 
     // Generate example payload if not already present
     if (!contentJson.example) {
@@ -76,12 +95,22 @@ function fixWebhookSchemas(specPath) {
           target: 'https://example.com/webhook/',
         },
       };
+      modified = true;
     }
   }
 
-  writeFileSync(specPath, yaml.dump(spec, { lineWidth: -1 }));
+  if (!modified) return specPath;
+
+  // Write fixed spec to a temp file so we don't mutate the source
+  const tempPath = join(tmpdir(), `fixed-${specPath.split('/').pop()}`);
+  writeFileSync(tempPath, yaml.dump(spec, { lineWidth: -1 }));
+  return tempPath;
 }
 
+/**
+ * Generate a JSON example value from an OpenAPI schema.
+ * Shared format constants match tools/webhooks.py generate_example().
+ */
 function generateExample(schema, depth) {
   if (!schema || typeof schema !== 'object' || depth > 4) return null;
   const t = Array.isArray(schema.type) ? schema.type.filter(x => x !== 'null')[0] : schema.type;
@@ -108,20 +137,31 @@ function generateExample(schema, depth) {
   return null;
 }
 
+/** Recursively fix array-style types to plain strings. Returns true if any changes were made. */
 function fixTypes(obj) {
-  if (!obj || typeof obj !== 'object') return;
-  if (Array.isArray(obj)) { obj.forEach(fixTypes); return; }
+  if (!obj || typeof obj !== 'object') return false;
+  if (Array.isArray(obj)) { let changed = false; obj.forEach(v => { if (fixTypes(v)) changed = true; }); return changed; }
+  let changed = false;
   if (Array.isArray(obj.type)) {
     obj.type = obj.type.filter(t => t !== 'null')[0] ?? 'string';
+    changed = true;
   }
-  if (Array.isArray(obj.format)) obj.format = obj.format[0];
-  for (const val of Object.values(obj)) fixTypes(val);
+  if (Array.isArray(obj.format)) {
+    obj.format = obj.format[0];
+    changed = true;
+  }
+  for (const val of Object.values(obj)) {
+    if (fixTypes(val)) changed = true;
+  }
+  return changed;
 }
+
+// ── Configuration ───────────────────────────────────────────────────────────
 
 // Remove stale directories from previous generation layout
 const STALE_DIRS = [
-  'content/docs/admin-api/reference/2024-04-01',
-  'content/docs/campaigns/api/reference/v1',
+  rootPath('content/docs/admin-api/reference/2024-04-01'),
+  rootPath('content/docs/campaigns/api/reference/v1'),
 ];
 for (const dir of STALE_DIRS) {
   if (existsSync(dir)) {
@@ -134,18 +174,15 @@ for (const dir of STALE_DIRS) {
 const VERSION_SUBFOLDERS = ['2023-02-10', 'unstable'];
 
 // Campaigns version subfolders — empty now (v1 is the stable/base), add future versions here
-// e.g. ['2025-01-01', 'unstable'] when a new version is introduced
 const CAMPAIGNS_VERSION_SUBFOLDERS = [];
 
 // Webhook event file names (dot-separated) to exclude from REST reference generation
-// and redirect to the webhooks section instead
 function isWebhookFile(filename) {
   return filename.includes('.');
 }
 
 /**
  * Extract the tag order from an OpenAPI spec by first-appearance in paths.
- * Returns an array of tag names in spec order.
  */
 function getTagOrder(specPath) {
   const raw = readFileSync(specPath, 'utf8');
@@ -175,7 +212,6 @@ function sortBySpecOrder(folders, specOrder) {
 
 /**
  * Scan generated MDX files and return a map of URL path → HTTP method.
- * urlBase is the /docs/... prefix for this output directory.
  */
 function collectMethods(dir, urlBase, map = {}) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -194,41 +230,53 @@ function collectMethods(dir, urlBase, map = {}) {
   return map;
 }
 
+// ── Spec definitions ────────────────────────────────────────────────────────
+
+const ADMIN_SPECS = [
+  rootPath('public/api/admin/2024-04-01.yaml'),
+  rootPath('public/api/admin/2023-02-10.yaml'),
+  rootPath('public/api/admin/unstable.yaml'),
+];
+
+// Fix webhook schemas in-memory and get paths to use for generation
+// (temp files for fixed specs, original paths for clean specs)
+const fixedSpecPaths = {};
+for (const specPath of ADMIN_SPECS) {
+  const fixedPath = fixWebhookSchemas(specPath);
+  fixedSpecPaths[specPath] = fixedPath;
+  if (fixedPath !== specPath) {
+    console.log(`Fixed webhook schemas in ${specPath} (temp: ${fixedPath})`);
+  }
+}
+
 const specs = [
   {
-    input: ['public/api/admin/2024-04-01.yaml'],
-    output: 'content/docs/admin-api/reference',
+    input: [fixedSpecPaths[ADMIN_SPECS[0]]],
+    output: rootPath('content/docs/admin-api/reference'),
     urlBase: '/docs/admin-api/reference',
   },
   {
-    input: ['public/api/admin/2023-02-10.yaml'],
-    output: 'content/docs/admin-api/reference/2023-02-10',
+    input: [fixedSpecPaths[ADMIN_SPECS[1]]],
+    output: rootPath('content/docs/admin-api/reference/2023-02-10'),
     urlBase: '/docs/admin-api/reference/2023-02-10',
     hidden: true,
   },
   {
-    input: ['public/api/admin/unstable.yaml'],
-    output: 'content/docs/admin-api/reference/unstable',
+    input: [fixedSpecPaths[ADMIN_SPECS[2]]],
+    output: rootPath('content/docs/admin-api/reference/unstable'),
     urlBase: '/docs/admin-api/reference/unstable',
     hidden: true,
   },
   {
-    input: ['public/api/campaigns/v1.yaml'],
-    output: 'content/docs/campaigns/api',
+    input: [rootPath('public/api/campaigns/v1.yaml')],
+    output: rootPath('content/docs/campaigns/api'),
     urlBase: '/docs/campaigns/api',
   },
 ];
 
-// Fix webhook schemas in admin API YAML files before generating MDX
-for (const adminSpec of ['public/api/admin/2024-04-01.yaml', 'public/api/admin/2023-02-10.yaml', 'public/api/admin/unstable.yaml']) {
-  fixWebhookSchemas(adminSpec);
-  console.log(`Fixed webhook schemas in ${adminSpec}`);
-}
-
 const allMethods = {};
 
-// Pre-clean admin-api reference dirs before regeneration so stale flat camelCase
-// files from old generator runs don't linger alongside the tag-grouped subfolders.
+// Pre-clean admin-api reference dirs before regeneration
 function cleanRefDir(dir, keepSubdirs = []) {
   if (!existsSync(dir)) return;
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -250,7 +298,9 @@ for (const version of VERSION_SUBFOLDERS) {
   mkdirSync(vdir, { recursive: true });
 }
 
-// Generate REST endpoint docs (excluding webhook event files), grouped by tag
+// ── Generate REST endpoint docs ─────────────────────────────────────────────
+// Excluding webhook event files, grouped by tag
+
 for (const spec of specs) {
   console.log(`Generating API docs from ${spec.input[0]}...`);
   const openapi = createOpenAPI({ input: spec.input });
@@ -268,15 +318,16 @@ for (const spec of specs) {
   collectMethods(spec.output, spec.urlBase, allMethods);
 }
 
-// Generate webhook docs for all API versions, grouped by tag
+// ── Generate webhook docs ───────────────────────────────────────────────────
+
 const WEBHOOK_SPECS = [
-  { input: 'public/api/admin/2024-04-01.yaml', output: 'content/docs/webhooks/reference' },
-  { input: 'public/api/admin/2023-02-10.yaml', output: 'content/docs/webhooks/reference/2023-02-10' },
-  { input: 'public/api/admin/unstable.yaml',   output: 'content/docs/webhooks/reference/unstable' },
+  { input: fixedSpecPaths[ADMIN_SPECS[0]], output: rootPath('content/docs/webhooks/reference') },
+  { input: fixedSpecPaths[ADMIN_SPECS[1]], output: rootPath('content/docs/webhooks/reference/2023-02-10') },
+  { input: fixedSpecPaths[ADMIN_SPECS[2]], output: rootPath('content/docs/webhooks/reference/unstable') },
 ];
 
-// Clean up stable output dir before regenerating; versioned dirs cleaned per-run below
-const webhookOutput = 'content/docs/webhooks/reference';
+// Clean up stable output dir before regenerating
+const webhookOutput = rootPath('content/docs/webhooks/reference');
 if (existsSync(webhookOutput)) rmSync(webhookOutput, { recursive: true });
 mkdirSync(webhookOutput, { recursive: true });
 
@@ -284,7 +335,7 @@ function webhookBeforeWrite(files) {
   // Keep only webhook event files (dot-separated names like cart.abandoned.mdx)
   const keep = files.filter(f => isWebhookFile(f.path.split('/').pop().replace('.mdx', '')));
   files.splice(0, files.length, ...keep);
-  // Replace generated title (e.g. "Created") with the full event name (e.g. "gateway.created")
+  // Replace generated title with the full event name
   for (const file of files) {
     const eventName = file.path.split('/').pop().replace('.mdx', '');
     file.content = file.content.replace(/^title:.*$/m, `title: ${eventName}`);
@@ -308,12 +359,9 @@ for (const wspec of WEBHOOK_SPECS) {
     .filter(e => e.isDirectory())
     .map(e => e.name)
     .sort();
-  // root:true version subdirs are discovered automatically by fumadocs — don't add to pages array
-  const pages = tagFolders;
-  // Version subdirectories get root:true so fumadocs treats them as separate section roots
   const metaObj = wspec.output === webhookOutput
-    ? { title: 'Webhook Event Reference', pages }
-    : { root: true, title: 'Webhook Event Reference', pages };
+    ? { title: 'Webhook Event Reference', pages: tagFolders }
+    : { root: true, title: 'Webhook Event Reference', pages: tagFolders };
   writeFileSync(
     join(wspec.output, 'meta.json'),
     JSON.stringify(metaObj, null, 2),
@@ -321,27 +369,28 @@ for (const wspec of WEBHOOK_SPECS) {
   console.log(`Wrote ${wspec.output}/meta.json with tags: ${tagFolders.join(', ')}`);
 }
 
-// For the default admin-api reference dir, write a meta.json listing tag folders
-const refDir = 'content/docs/admin-api/reference';
-const stableTagOrder = getTagOrder(specs[0].input[0]);
+// ── Write meta.json files for tag ordering ──────────────────────────────────
+
+// Admin API reference
+const refDir = rootPath('content/docs/admin-api/reference');
+const stableTagOrder = getTagOrder(ADMIN_SPECS[0]);
 const tagFolders = sortBySpecOrder(
   readdirSync(refDir, { withFileTypes: true })
     .filter(e => e.isDirectory() && !VERSION_SUBFOLDERS.includes(e.name))
     .map(e => e.name),
   stableTagOrder,
 );
-// root:true version subdirs are discovered automatically — don't add to pages array
 writeFileSync(
   join(refDir, 'meta.json'),
   JSON.stringify({ title: 'API Reference', pages: tagFolders }, null, 2),
 );
 console.log(`Wrote reference/meta.json with tag folders: ${tagFolders.join(', ')}`);
 
-// For each admin-api versioned subfolder, write a meta.json with root:true
+// Admin API versioned subdirs
 for (const version of VERSION_SUBFOLDERS) {
   const versionDir = join(refDir, version);
   if (!existsSync(versionDir)) continue;
-  const versionSpecPath = specs.find(s => s.output === versionDir)?.input[0] ?? specs[0].input[0];
+  const versionSpecPath = specs.find(s => s.output === versionDir)?.input[0] ?? ADMIN_SPECS[0];
   const versionTagOrder = getTagOrder(versionSpecPath);
   const versionTagFolders = sortBySpecOrder(
     readdirSync(versionDir, { withFileTypes: true })
@@ -356,8 +405,8 @@ for (const version of VERSION_SUBFOLDERS) {
   console.log(`Wrote reference/${version}/meta.json`);
 }
 
-// For the campaigns api dir, write a meta.json listing tag folders (same pattern as admin-api)
-const campaignsApiDir = 'content/docs/campaigns/api';
+// Campaigns API
+const campaignsApiDir = rootPath('content/docs/campaigns/api');
 const campaignsTagOrder = getTagOrder(specs.find(s => s.output === campaignsApiDir).input[0]);
 const campaignsTagFolders = sortBySpecOrder(
   readdirSync(campaignsApiDir, { withFileTypes: true })
@@ -365,14 +414,13 @@ const campaignsTagFolders = sortBySpecOrder(
     .map(e => e.name),
   campaignsTagOrder,
 );
-// root:true version subdirs are discovered automatically — don't add to pages array
 writeFileSync(
   join(campaignsApiDir, 'meta.json'),
   JSON.stringify({ title: 'API Reference', pages: campaignsTagFolders }, null, 2),
 );
 console.log(`Wrote campaigns/api/meta.json with tag folders: ${campaignsTagFolders.join(', ')}`);
 
-// For each campaigns versioned subfolder, write a meta.json with root:true
+// Campaigns versioned subdirs
 for (const version of CAMPAIGNS_VERSION_SUBFOLDERS) {
   const versionDir = join(campaignsApiDir, version);
   if (!existsSync(versionDir)) continue;
@@ -387,30 +435,29 @@ for (const version of CAMPAIGNS_VERSION_SUBFOLDERS) {
   console.log(`Wrote campaigns/api/${version}/meta.json`);
 }
 
-// Write the URL → method map for the sidebar badges
-mkdirSync('lib/generated', { recursive: true });
-writeFileSync('lib/generated/api-methods.json', JSON.stringify(allMethods, null, 2));
-console.log(`Wrote lib/generated/api-methods.json (${Object.keys(allMethods).length} endpoints)`);
+// ── Write method map & endpoint data for sidebar/search ─────────────────────
 
-// Collect endpoint data for AI search indexing (stable specs only — no duplicates from old versions)
+const generatedDir = rootPath('lib/generated');
+mkdirSync(generatedDir, { recursive: true });
+writeFileSync(join(generatedDir, 'api-methods.json'), JSON.stringify(allMethods, null, 2));
+console.log(`Wrote api-methods.json (${Object.keys(allMethods).length} endpoints)`);
+
+// Collect endpoint data for AI search indexing (stable specs only)
 function collectEndpointData(spec, urlBase) {
   const endpoints = [];
   for (const [path, methods] of Object.entries(spec.paths ?? {})) {
     for (const [method, op] of Object.entries(methods)) {
       if (!op || typeof op !== 'object' || !op.operationId) continue;
-      // Skip webhook events (dot-separated operationIds)
       if (op.operationId.includes('.')) continue;
       const tag = op.tags?.[0];
       if (!tag) continue;
 
       const url = `${urlBase}/${tag}/${op.operationId}`;
 
-      // Query/path parameters (skip generic header params)
       const params = (op.parameters ?? [])
         .filter(p => p.in !== 'header')
         .map(p => `${p.name} (${p.in})${p.description ? ': ' + p.description.split('\n')[0].slice(0, 80) : ''}`);
 
-      // Request body fields (shallow — resolve one level of $ref)
       const bodyFields = [];
       const bodyContent = op.requestBody?.content;
       if (bodyContent) {
@@ -448,7 +495,7 @@ for (const spec of specs.filter(s => !s.hidden)) {
   const specData = yaml.load(readFileSync(spec.input[0], 'utf8'));
   allEndpoints.push(...collectEndpointData(specData, spec.urlBase));
 }
-writeFileSync('lib/generated/api-endpoints.json', JSON.stringify(allEndpoints, null, 2));
-console.log(`Wrote lib/generated/api-endpoints.json (${allEndpoints.length} endpoints)`);
+writeFileSync(join(generatedDir, 'api-endpoints.json'), JSON.stringify(allEndpoints, null, 2));
+console.log(`Wrote api-endpoints.json (${allEndpoints.length} endpoints)`);
 
 console.log('API docs generation complete.');

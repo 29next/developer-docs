@@ -1,8 +1,9 @@
 /**
  * Generates Storefront GraphQL API reference docs using @graphql-markdown/cli,
  * then post-processes the output for fumadocs compatibility:
- *   - Renames generated.md → index.md with a clean landing page
- *   - Adds meta.json for sidebar ordering
+ *   - Flattens operations/ to just queries/ and mutations/
+ *   - Removes types/ and directives/ (all types are inline)
+ *   - Preserves hand-written index.mdx and meta.json
  *   - Replaces operation pages with structured two-column layout
  *
  * Run before `next build` — wired into the "build" and "dev" npm scripts.
@@ -12,37 +13,56 @@
 
 import { execSync } from 'child_process';
 import {
-  writeFileSync, renameSync, existsSync, rmSync,
+  writeFileSync, renameSync, existsSync, rmSync, mkdirSync,
   readFileSync, readdirSync,
 } from 'fs';
-import { join } from 'path';
+import { join, resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const GRAPHQL_DIR = 'content/docs/storefront/graphql';
+// ── Paths anchored to project root ──────────────────────────────────────────
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const GRAPHQL_DIR = join(ROOT, 'content/docs/storefront/graphql');
 const SCHEMA_URL = 'https://aptest.29next.store/api/graphql/';
-const LINK_ROOT = '/docs/storefront/graphql';
 
-// ── Step 1: Clean & generate ────────────────────────────────────────────────
+// ── Step 1: Preserve hand-written files ─────────────────────────────────────
 
-// Preserve hand-written files (index.mdx, meta.json) during regeneration
-const preserveFiles = ['index.mdx', 'meta.json'];
+const PRESERVE_FILES = ['index.mdx', 'meta.json'];
 const preserved = {};
-for (const file of preserveFiles) {
+for (const file of PRESERVE_FILES) {
   const p = join(GRAPHQL_DIR, file);
   if (existsSync(p)) {
     preserved[file] = readFileSync(p, 'utf8');
   }
 }
 
-if (existsSync(GRAPHQL_DIR)) {
-  rmSync(GRAPHQL_DIR, { recursive: true });
+// ── Step 2: Generate to temp dir, then swap ─────────────────────────────────
+
+const TEMP_DIR = join(ROOT, 'content/docs/storefront/.graphql-tmp');
+
+// Clean temp dir
+if (existsSync(TEMP_DIR)) rmSync(TEMP_DIR, { recursive: true });
+
+// gqlmd reads rootPath from graphql.config.mjs — we need to temporarily
+// point it at the temp dir. Instead, generate to the normal dir then move.
+// First clean the target.
+if (existsSync(GRAPHQL_DIR)) rmSync(GRAPHQL_DIR, { recursive: true });
+
+try {
+  execSync('npx gqlmd graphql-to-doc', { stdio: 'inherit', cwd: ROOT });
+} catch (err) {
+  // Restore preserved files so the site still has a GraphQL section
+  console.error('gqlmd failed:', err.message);
+  mkdirSync(GRAPHQL_DIR, { recursive: true });
+  for (const [file, content] of Object.entries(preserved)) {
+    writeFileSync(join(GRAPHQL_DIR, file), content);
+  }
+  console.warn('Restored preserved files. GraphQL reference pages will be missing until schema is available.');
+  process.exit(0);
 }
 
-execSync('npx gqlmd graphql-to-doc', { stdio: 'inherit' });
+// ── Step 3: Post-process — flatten to just queries & mutations ──────────────
 
-// ── Step 2: Post-process — flatten to just queries & mutations ──────────────
-
-// Remove everything gqlmd generated (types, directives, operations wrapper)
-// and keep only the query/mutation MDX files which we'll rewrite anyway.
 const opsDir = join(GRAPHQL_DIR, 'operations');
 
 // Move queries/ and mutations/ up from operations/ to graphql/
@@ -55,7 +75,7 @@ for (const sub of ['queries', 'mutations']) {
   }
 }
 
-// Remove the now-empty operations/, types/, and directives dirs
+// Remove the now-empty operations/, types/ dirs
 for (const dir of ['operations', 'types']) {
   const p = join(GRAPHQL_DIR, dir);
   if (existsSync(p)) rmSync(p, { recursive: true });
@@ -70,7 +90,7 @@ for (const [file, content] of Object.entries(preserved)) {
   writeFileSync(join(GRAPHQL_DIR, file), content);
 }
 
-// ── Step 3: Introspect schema ───────────────────────────────────────────────
+// ── Step 4: Introspect schema ───────────────────────────────────────────────
 
 async function introspectSchema() {
   const query = `{
@@ -97,6 +117,7 @@ async function introspectSchema() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),
   });
+  if (!res.ok) throw new Error(`Schema introspection failed: ${res.status} ${res.statusText}`);
   const json = await res.json();
   return json.data.__schema;
 }
@@ -130,23 +151,6 @@ function toKebabCase(name) {
   return name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-/** Map a type name to its docs URL (for types we generate pages for). */
-function typeUrl(typeName, typeMap) {
-  const typeDef = typeMap[typeName];
-  if (!typeDef || typeName.startsWith('__')) return undefined;
-
-  const kindToDir = {
-    OBJECT: 'types/objects',
-    INPUT_OBJECT: 'types/inputs',
-    ENUM: 'types/enums',
-    SCALAR: 'types/scalars',
-    INTERFACE: 'types/interfaces',
-  };
-  const dir = kindToDir[typeDef.kind];
-  if (!dir) return undefined;
-  return `${LINK_ROOT}/${dir}/${toKebabCase(typeName)}`;
-}
-
 /** Compute badge labels for a type reference. */
 function typeBadges(typeRef) {
   const badges = [];
@@ -157,9 +161,8 @@ function typeBadges(typeRef) {
     t = t.ofType;
   }
   const named = unwrapType(typeRef);
-  const namedKind = named.kind?.toLowerCase();
-  if (['scalar', 'enum', 'object', 'input_object', 'interface'].includes(named.kind)) {
-    const label = named.kind === 'INPUT_OBJECT' ? 'input' : namedKind;
+  if (['SCALAR', 'ENUM', 'OBJECT', 'INPUT_OBJECT', 'INTERFACE'].includes(named.kind)) {
+    const label = named.kind === 'INPUT_OBJECT' ? 'input' : named.kind.toLowerCase();
     badges.push(label);
   }
   return badges;
@@ -198,22 +201,23 @@ function buildFieldData(fieldDef, typeMap, seen = new Set()) {
 
 // ── Example value generation ────────────────────────────────────────────────
 
+const SCALAR_EXAMPLES = {
+  String: '<your-value>',
+  Int: 1,
+  Float: 1.0,
+  Boolean: true,
+  ID: '<id>',
+  DateTime: '2026-01-01T00:00:00Z',
+  Date: '2026-01-01',
+  GenericScalar: {},
+  JSONString: '{}',
+  UUID: '550e8400-e29b-41d4-a716-446655440000',
+  Decimal: '10.00',
+  PositiveDecimal: '10.00',
+};
+
 function scalarExample(name) {
-  const scalars = {
-    String: '<your-value>',
-    Int: 1,
-    Float: 1.0,
-    Boolean: true,
-    ID: '<id>',
-    DateTime: '2026-01-01T00:00:00Z',
-    Date: '2026-01-01',
-    GenericScalar: {},
-    JSONString: '{}',
-    UUID: '550e8400-e29b-41d4-a716-446655440000',
-    Decimal: '10.00',
-    PositiveDecimal: '10.00',
-  };
-  return scalars[name];
+  return SCALAR_EXAMPLES[name];
 }
 
 function exampleValue(typeRef, typeMap, depth = 0) {
@@ -364,7 +368,7 @@ function buildOperationExample(operationField, operationType, typeMap) {
   };
 }
 
-// ── Step 4: Rewrite operation pages ─────────────────────────────────────────
+// ── Step 5: Rewrite operation pages ─────────────────────────────────────────
 
 async function injectExamples() {
   let schema;

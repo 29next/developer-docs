@@ -13,7 +13,7 @@ import { GraphQLOperation } from '@/components/graphql-operation';
   signature={"mutation VerifyToken($input: VerifyTokenInput!) {\n  verifyToken(input: $input) {\n    payload\n    success\n    errors\n    clientMutationId\n  }\n}"}
   variablesExample={"{\n  \"input\": {\n    \"token\": \"<your-value>\",\n    \"clientMutationId\": \"<your-value>\"\n  }\n}"}
   responseExample={"{\n  \"data\": {\n    \"verifyToken\": {\n      \"payload\": {},\n      \"success\": true,\n      \"errors\": null,\n      \"clientMutationId\": \"<your-value>\"\n    }\n  }\n}"}
-  args={[{"name":"input","type":"VerifyTokenInput!","badges":["non-null"],"fields":[{"name":"token","type":"String!","badges":["non-null"]},{"name":"clientMutationId","type":"String","badges":[]}]}]}
+  args={[{"name":"input","type":"VerifyTokenInput!","badges":["non-null","input"],"fields":[{"name":"token","type":"String!","badges":["non-null","scalar"]},{"name":"clientMutationId","type":"String","badges":["scalar"]}]}]}
   returnType="VerifyTokenPayload"
-  returnFields={[{"name":"payload","type":"GenericScalar!","badges":["non-null"]},{"name":"success","type":"Boolean","badges":[]},{"name":"errors","type":"ExpectedErrorType","badges":[]},{"name":"clientMutationId","type":"String","badges":[]}]}
+  returnFields={[{"name":"payload","type":"GenericScalar!","badges":["non-null","scalar"]},{"name":"success","type":"Boolean","badges":["scalar"]},{"name":"errors","type":"ExpectedErrorType","badges":["scalar"]},{"name":"clientMutationId","type":"String","badges":["scalar"]}]}
 />

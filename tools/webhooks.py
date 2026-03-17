@@ -49,45 +49,88 @@ def get_schema(spec, ref):
     return schema
 
 
+def _merge_resolved(value, resolved):
+    """
+    Merge a resolved schema into a field dict, preserving sibling metadata
+    (description, title, nullable, etc.) that was on the original value.
+    """
+    # Save sibling metadata keys that aren't schema-structural
+    sibling_keys = {"description", "title", "nullable", "deprecated", "readOnly", "writeOnly", "example", "examples"}
+    saved = {k: v for k, v in value.items() if k in sibling_keys}
+
+    value.clear()
+    value.update(resolved)
+
+    # Restore sibling metadata (original takes precedence over resolved)
+    for k, v in saved.items():
+        if k not in value:
+            value[k] = v
+
+
 def webhook_data_schema_handler(spec, data_schema):
 
-    for key, value in data_schema["properties"].items():
+    for key, value in data_schema.get("properties", {}).items():
 
         # remove readOnly from all properties
         if value.get("readOnly"):
             del value["readOnly"]
 
         # nested items array
-        if type(value) is dict and value.get("items", {}).get("$ref"):
+        if isinstance(value, dict) and value.get("items", {}).get("$ref"):
             nested_schema = get_schema(spec, value["items"]["$ref"])
             webhook_data_schema_handler(spec, nested_schema)
             value["items"].clear()
             value["items"].update(nested_schema)
 
         # $ref
-        elif type(value) is dict and value.get("$ref"):
+        elif isinstance(value, dict) and value.get("$ref"):
             nested_schema = get_schema(spec, value["$ref"])
             webhook_data_schema_handler(spec, nested_schema)
-            value.clear()
-            value.update(nested_schema)
+            _merge_resolved(value, nested_schema)
 
         # allOf
-        elif type(value) is dict and value.get("allOf", {}):
-            nested_schema = get_schema(spec, value["allOf"][0]["$ref"])
-            webhook_data_schema_handler(spec, nested_schema)
-            value.clear()
-            value.update(nested_schema)
+        elif isinstance(value, dict) and value.get("allOf"):
+            all_of = value["allOf"]
+            # Merge all allOf entries (resolve $ref entries, merge plain schemas)
+            merged = {}
+            for entry in all_of:
+                if entry.get("$ref"):
+                    nested_schema = get_schema(spec, entry["$ref"])
+                    webhook_data_schema_handler(spec, nested_schema)
+                    # Merge properties from each allOf entry
+                    for prop_key, prop_val in nested_schema.get("properties", {}).items():
+                        merged.setdefault("properties", {})[prop_key] = prop_val
+                    if "type" in nested_schema:
+                        merged["type"] = nested_schema["type"]
+                else:
+                    # Plain schema fragment (e.g. additional properties)
+                    for prop_key, prop_val in entry.get("properties", {}).items():
+                        merged.setdefault("properties", {})[prop_key] = prop_val
+                    if "type" in entry:
+                        merged["type"] = entry["type"]
+            if "type" not in merged:
+                merged["type"] = "object"
+            _merge_resolved(value, merged)
 
-        # oneOf
+        # oneOf — resolve all variants, merge their properties
         elif (
-            type(value) is dict
-            and value.get("oneOf", {})
-            and value.get("oneOf", {})[0].get("$ref")
+            isinstance(value, dict)
+            and value.get("oneOf")
+            and isinstance(value["oneOf"], list)
         ):
-            nested_schema = get_schema(spec, value["oneOf"][0]["$ref"])
-            webhook_data_schema_handler(spec, nested_schema)
-            value.clear()
-            value.update(nested_schema)
+            one_of = value["oneOf"]
+            merged = {}
+            for entry in one_of:
+                if entry.get("$ref"):
+                    nested_schema = get_schema(spec, entry["$ref"])
+                    webhook_data_schema_handler(spec, nested_schema)
+                    for prop_key, prop_val in nested_schema.get("properties", {}).items():
+                        merged.setdefault("properties", {})[prop_key] = prop_val
+                    if "type" in nested_schema:
+                        merged["type"] = nested_schema["type"]
+            if "type" not in merged:
+                merged["type"] = "object"
+            _merge_resolved(value, merged)
 
     return data_schema
 
@@ -103,7 +146,6 @@ def get_custom_webhook_event_payloads(event):
 
 
 def webhook_schema_generator(spec):
-    webhooks = {}
     version = spec["info"]["version"]
     webhook_schema = {}
     for each in WEBHOOKS:
