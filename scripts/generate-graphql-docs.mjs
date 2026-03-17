@@ -246,6 +246,64 @@ function exampleValue(typeRef, typeMap, depth = 0) {
   return isList ? [] : null;
 }
 
+/**
+ * Generate an example response value for output types (OBJECT fields).
+ * Similar to exampleValue but expands OBJECT types instead of INPUT_OBJECT.
+ */
+function exampleResponseValue(typeRef, typeMap, depth = 0, seen = new Set()) {
+  if (!typeRef) return null;
+  const isList = typeRef.kind === 'LIST' || (typeRef.kind === 'NON_NULL' && typeRef.ofType?.kind === 'LIST');
+  const named = unwrapType(typeRef);
+
+  if (depth > 3) return '...';
+
+  const scalar = scalarExample(named.name);
+  if (scalar !== undefined) return isList ? [scalar] : scalar;
+
+  const typeDef = typeMap[named.name];
+  if (!typeDef) return null;
+
+  if (typeDef.kind === 'ENUM') {
+    const val = typeDef.enumValues?.[0]?.name ?? 'VALUE';
+    return isList ? [val] : val;
+  }
+
+  // Cycle detection
+  if (seen.has(named.name)) return isList ? [] : null;
+  const nextSeen = new Set(seen);
+  nextSeen.add(named.name);
+
+  if (typeDef.kind === 'OBJECT' && typeDef.fields) {
+    const obj = {};
+    for (const field of typeDef.fields) {
+      obj[field.name] = exampleResponseValue(field.type, typeMap, depth + 1, nextSeen);
+    }
+    return isList ? [obj] : obj;
+  }
+
+  if (typeDef.kind === 'INPUT_OBJECT' && typeDef.inputFields) {
+    const obj = {};
+    for (const field of typeDef.inputFields) {
+      obj[field.name] = exampleResponseValue(field.type, typeMap, depth + 1, nextSeen);
+    }
+    return isList ? [obj] : obj;
+  }
+
+  return isList ? [] : null;
+}
+
+/**
+ * Build a sample JSON response for an operation, wrapping in { "data": { operationName: ... } }.
+ */
+function buildExampleResponse(operationField, typeMap) {
+  const responseValue = exampleResponseValue(operationField.type, typeMap);
+  return {
+    data: {
+      [operationField.name]: responseValue,
+    },
+  };
+}
+
 // ── Operation example builder ───────────────────────────────────────────────
 
 function buildOperationExample(operationField, operationType, typeMap) {
@@ -293,6 +351,9 @@ function buildOperationExample(operationField, operationType, typeMap) {
   // Structured return type data
   const returnFields = returnTypeDef?.fields?.map(f => buildFieldData(f, typeMap)) ?? [];
 
+  // Example response JSON
+  const exampleResponse = buildExampleResponse(operationField, typeMap);
+
   return {
     signature,
     variables,
@@ -300,6 +361,7 @@ function buildOperationExample(operationField, operationType, typeMap) {
     returnFields,
     returnTypeName: returnNamed.name,
     description: operationField.description || '',
+    exampleResponse,
   };
 }
 
@@ -339,10 +401,11 @@ async function injectExamples() {
 
       const {
         signature, variables, argsData, returnFields,
-        returnTypeName, description,
+        returnTypeName, description, exampleResponse,
       } = buildOperationExample(field, kind, typeMap);
 
       const variablesJson = JSON.stringify(variables, null, 2);
+      const responseJson = JSON.stringify(exampleResponse, null, 2);
       const argsJson = JSON.stringify(argsData);
       const returnFieldsJson = JSON.stringify(returnFields);
 
@@ -362,6 +425,7 @@ import { GraphQLOperation } from '@/components/graphql-operation';
   description={${JSON.stringify(description || `${capitalize(kind)} for ${title}`)}}
   signature={${JSON.stringify(signature)}}
   variablesExample={${JSON.stringify(variablesJson)}}
+  responseExample={${JSON.stringify(responseJson)}}
   args={${argsJson}}
   returnType="${returnTypeName}"
   returnFields={${returnFieldsJson}}

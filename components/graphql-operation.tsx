@@ -20,10 +20,10 @@ interface GraphQLOperationProps {
   name: string;
   signature: string;
   variablesExample?: string;
+  responseExample?: string;
   args?: GraphQLField[];
   returnFields?: GraphQLField[];
   returnType?: string;
-
   description?: string;
   children?: React.ReactNode;
 }
@@ -91,10 +91,10 @@ export function GraphQLOperation({
   name,
   signature,
   variablesExample,
+  responseExample,
   args,
   returnFields,
   returnType,
-
   description,
   children,
 }: GraphQLOperationProps) {
@@ -167,6 +167,16 @@ export function GraphQLOperation({
               code={variablesExample}
               codeblock={{
                 title: 'Variables',
+              }}
+            />
+          )}
+
+          {responseExample && (
+            <DynamicCodeBlock
+              lang="json"
+              code={responseExample}
+              codeblock={{
+                title: 'JSON Response',
               }}
             />
           )}

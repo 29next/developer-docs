@@ -12,6 +12,7 @@ import { GraphQLOperation } from '@/components/graphql-operation';
   description={"Update a user"}
   signature={"mutation UpdateAccount($input: UpdateAccountInput!) {\n  updateAccount(input: $input) {\n    success\n    errors\n    clientMutationId\n  }\n}"}
   variablesExample={"{\n  \"input\": {\n    \"email\": \"<your-value>\",\n    \"firstName\": \"<your-value>\",\n    \"lastName\": \"<your-value>\",\n    \"phoneNumber\": \"<your-value>\",\n    \"acceptsMarketing\": true,\n    \"language\": \"en\",\n    \"metadata\": {},\n    \"clientMutationId\": \"<your-value>\"\n  }\n}"}
+  responseExample={"{\n  \"data\": {\n    \"updateAccount\": {\n      \"success\": true,\n      \"errors\": null,\n      \"clientMutationId\": \"<your-value>\"\n    }\n  }\n}"}
   args={[{"name":"input","type":"UpdateAccountInput!","badges":["non-null"],"fields":[{"name":"email","type":"String","badges":[]},{"name":"firstName","type":"String","badges":[]},{"name":"lastName","type":"String","badges":[]},{"name":"phoneNumber","type":"String","badges":[]},{"name":"acceptsMarketing","type":"Boolean","badges":[]},{"name":"language","type":"LanguageEnum","badges":[]},{"name":"metadata","type":"GenericScalar","badges":[]},{"name":"clientMutationId","type":"String","badges":[]}]}]}
   returnType="UpdateAccountPayload"
   returnFields={[{"name":"success","type":"Boolean","badges":[]},{"name":"errors","type":"ExpectedErrorType","badges":[]},{"name":"clientMutationId","type":"String","badges":[]}]}
