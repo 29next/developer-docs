@@ -1,4 +1,0 @@
-{
-  "title": "Orders",
-  "pages": ["order-retrieve", "orders-create", "orders-upsell-create"]
-}
