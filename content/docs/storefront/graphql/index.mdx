@@ -1,0 +1,141 @@
+---
+title: Storefront GraphQL API
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+Build custom sidecarts, upsell flows, and dynamic storefront experiences with the Storefront GraphQL API. Query products, manage carts, apply vouchers, and handle user accounts — all from your theme's JavaScript or any client-side application.
+
+## API Endpoint
+
+Every store exposes a GraphQL endpoint at:
+
+```
+POST https://{store}.29next.store/api/graphql/
+```
+
+All requests must be `POST` with `Content-Type: application/json`. Replace `{store}` with your store's subdomain.
+
+## Authentication
+
+The Storefront API is available within the context of your storefront on a storefront domain. Requests made from your theme's JavaScript automatically inherit the user's session — no API keys or tokens needed.
+
+<Callout type="info">
+External access to the Storefront API (outside of the storefront context) will be available in future iterations.
+</Callout>
+
+
+## Interactive Explorer (GraphiQL)
+
+Every store includes a built-in **GraphiQL IDE** — an in-browser tool for writing, validating, and testing GraphQL queries directly against your store's schema. Navigate to `/api/graphql/` on your store to open it.
+
+GraphiQL lets you:
+
+- **Explore the schema** — browse all available queries, mutations, types, and their fields using the documentation sidebar
+- **Build queries visually** — use the explorer panel to construct queries by selecting fields, without writing GraphQL by hand
+- **Test in real-time** — run queries and mutations against your store and see the JSON response instantly
+- **Validate syntax** — get inline error highlighting and autocomplete as you type
+
+```
+https://{store}.29next.store/api/graphql/
+```
+
+This is the fastest way to learn what the API offers and prototype queries before adding them to your theme code.
+
+
+## API Reference
+
+### Queries
+
+- [`cart`](/docs/storefront/graphql/queries/cart) — Retrieve a cart by ID
+- [`me`](/docs/storefront/graphql/queries/me) — Get the current authenticated user
+- [`product`](/docs/storefront/graphql/queries/product) — Fetch a single product
+- [`products`](/docs/storefront/graphql/queries/products) — Query the product catalog
+
+### Mutations
+
+- [`createCart`](/docs/storefront/graphql/mutations/create-cart) — Create a new cart
+- [`addCartLines`](/docs/storefront/graphql/mutations/add-cart-lines) — Add line items to a cart
+- [`updateCartLines`](/docs/storefront/graphql/mutations/update-cart-lines) — Update quantities on existing cart lines
+- [`removeCartLines`](/docs/storefront/graphql/mutations/remove-cart-lines) — Remove line items from a cart
+- [`emptyCart`](/docs/storefront/graphql/mutations/empty-cart) — Remove all items from a cart
+- [`addVoucher`](/docs/storefront/graphql/mutations/add-voucher) — Apply a voucher code to a cart
+- [`removeVoucher`](/docs/storefront/graphql/mutations/remove-voucher) — Remove a voucher from a cart
+- [`updateCartAttribution`](/docs/storefront/graphql/mutations/update-cart-attribution) — Set UTM and affiliate attribution on a cart
+- [`updateCartMetadata`](/docs/storefront/graphql/mutations/update-cart-metadata) — Update custom metadata on a cart
+- [`register`](/docs/storefront/graphql/mutations/register) — Register a new customer account
+- [`tokenAuth`](/docs/storefront/graphql/mutations/token-auth) — Authenticate and obtain a token
+- [`verifyToken`](/docs/storefront/graphql/mutations/verify-token) — Verify an authentication token
+- [`updateAccount`](/docs/storefront/graphql/mutations/update-account) — Update the current user's account details
+
+
+## Quick start
+
+Fetch the current cart to build a custom sidecart UI:
+
+```bash title="Example: Query the cart"
+curl -X POST https://yourstore.29next.store/api/graphql/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "query Cart($id: ID!) { cart(id: $id) { id numItems totalInclTax currency lines { edges { node { id quantity product { title } linePriceInclTax } } } } }",
+    "variables": { "id": "<cart-id>" }
+  }'
+```
+
+```json title="Response"
+{
+  "data": {
+    "cart": {
+      "id": "Q2FydE5vZGU6MTIz",
+      "numItems": 2,
+      "totalInclTax": "59.98",
+      "currency": "USD",
+      "lines": {
+        "edges": [
+          {
+            "node": {
+              "id": "Q2FydExpbmVOb2RlOjE=",
+              "quantity": 1,
+              "product": { "title": "Premium Supplement" },
+              "linePriceInclTax": "29.99"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+## Common use cases
+
+### Custom sidecarts
+
+The most common use of the Storefront API is building custom sidecart experiences. Use `cart` queries to fetch the current cart state and render a fully custom cart drawer with your own markup, animations, and styling.
+
+### Upsells and cross-sells
+
+Add upsell products to the cart dynamically using mutations like `addCartLines`. Query the product catalog with `products` to find related items, then present them in your sidecart or on product pages.
+
+```graphql title="Add an upsell to the cart"
+mutation AddUpsell($input: AddCartLinesInput!) {
+  addCartLines(input: $input) {
+    success
+    cart {
+      numItems
+      totalInclTax
+    }
+  }
+}
+```
+
+### User accounts
+
+Handle customer registration and authentication directly from your storefront with `register`, `tokenAuth`, and `updateAccount` mutations.
+
+### Vouchers and discounts
+
+Apply and remove voucher codes from carts using `addVoucher` and `removeVoucher` mutations, enabling custom promo code UIs.
+
+
+

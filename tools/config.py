@@ -1,4 +1,4 @@
-SITE_DOMAIN = "https://developers.29next.com"
+SITE_DOMAIN = "https://developers.nextcommerce.com"
 BASE_API_FILES_PATH = "../public/api/"
 
 CAMPAIGNS_API_SPEC_SOURCE = "https://campaigns.apps.29next.com/api/schema/"

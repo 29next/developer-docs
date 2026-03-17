@@ -1,7 +1,6 @@
 {
-  "title": "GraphQL Reference",
+  "title": "GraphQL API",
   "pages": [
-    "index",
     "queries",
     "mutations"
   ]

@@ -68,7 +68,7 @@ Browse all available [Queries](/docs/storefront/graphql/queries) and [Mutations]
 
 writeFileSync(join(GRAPHQL_DIR, 'meta.json'), JSON.stringify({
   title: 'GraphQL Reference',
-  pages: ['index', 'queries', 'mutations'],
+  pages: ['queries', 'mutations'],
 }, null, 2) + '\n');
 
 // ── Step 3: Introspect schema ───────────────────────────────────────────────
