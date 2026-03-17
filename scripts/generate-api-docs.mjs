@@ -26,32 +26,31 @@ import { createOpenAPI } from 'fumadocs-openapi/server';
 import { readdirSync, writeFileSync, mkdirSync, readFileSync, rmSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { tmpdir } from 'os';
 import yaml from 'js-yaml';
 
 // ── Paths anchored to project root ──────────────────────────────────────────
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
+// Ensure CWD is the project root so relative paths in generated MDX match api-page.tsx
+process.chdir(ROOT);
+
 function rootPath(...segments) {
   return join(ROOT, ...segments);
 }
 
-// ── Webhook schema fixup (in-memory, no source mutation) ────────────────────
+// ── Webhook schema fixup ────────────────────────────────────────────────────
 
 /**
- * Fix webhook schemas in an OpenAPI spec object so fumadocs-openapi renders
- * them correctly. Returns a temp file path with the fixed spec.
- *
- * Does NOT mutate the source YAML on disk — writes to a temp file instead.
+ * Fix webhook schemas in admin API YAML files so fumadocs-openapi renders them
+ * correctly. Writes fixes back to the source file so the document path in
+ * generated MDX matches what createOpenAPI expects in api-page.tsx.
  */
 function fixWebhookSchemas(specPath) {
   const raw = readFileSync(specPath, 'utf8');
   const spec = yaml.load(raw);
-  if (!spec.webhooks) return specPath; // nothing to fix, use original
+  if (!spec.webhooks) return;
   const version = spec.info?.version ?? '';
-
-  let modified = false;
 
   for (const [eventName, pathItem] of Object.entries(spec.webhooks)) {
     const post = pathItem.post;
@@ -61,7 +60,6 @@ function fixWebhookSchemas(specPath) {
     if (pathItem.responses && !post.responses) {
       post.responses = pathItem.responses;
       delete pathItem.responses;
-      modified = true;
     }
 
     const contentJson = post.requestBody?.content?.['application/json'];
@@ -70,13 +68,10 @@ function fixWebhookSchemas(specPath) {
     if (!schema) continue;
 
     // Add missing type: object to root schema
-    if (!schema.type) {
-      schema.type = 'object';
-      modified = true;
-    }
+    if (!schema.type) schema.type = 'object';
 
     // Recursively fix type arrays → strings
-    if (fixTypes(schema)) modified = true;
+    fixTypes(schema);
 
     // Generate example payload if not already present
     if (!contentJson.example) {
@@ -95,16 +90,10 @@ function fixWebhookSchemas(specPath) {
           target: 'https://example.com/webhook/',
         },
       };
-      modified = true;
     }
   }
 
-  if (!modified) return specPath;
-
-  // Write fixed spec to a temp file so we don't mutate the source
-  const tempPath = join(tmpdir(), `fixed-${specPath.split('/').pop()}`);
-  writeFileSync(tempPath, yaml.dump(spec, { lineWidth: -1 }));
-  return tempPath;
+  writeFileSync(specPath, yaml.dump(spec, { lineWidth: -1 }));
 }
 
 /**
@@ -232,43 +221,40 @@ function collectMethods(dir, urlBase, map = {}) {
 
 // ── Spec definitions ────────────────────────────────────────────────────────
 
+// Relative paths for spec inputs — these get embedded in generated MDX document props
+// and must match the paths in components/api-page.tsx createOpenAPI({ input: [...] })
 const ADMIN_SPECS = [
-  rootPath('public/api/admin/2024-04-01.yaml'),
-  rootPath('public/api/admin/2023-02-10.yaml'),
-  rootPath('public/api/admin/unstable.yaml'),
+  'public/api/admin/2024-04-01.yaml',
+  'public/api/admin/2023-02-10.yaml',
+  'public/api/admin/unstable.yaml',
 ];
 
-// Fix webhook schemas in-memory and get paths to use for generation
-// (temp files for fixed specs, original paths for clean specs)
-const fixedSpecPaths = {};
+// Fix webhook schemas in admin API YAML files before generating MDX
 for (const specPath of ADMIN_SPECS) {
-  const fixedPath = fixWebhookSchemas(specPath);
-  fixedSpecPaths[specPath] = fixedPath;
-  if (fixedPath !== specPath) {
-    console.log(`Fixed webhook schemas in ${specPath} (temp: ${fixedPath})`);
-  }
+  fixWebhookSchemas(specPath);
+  console.log(`Fixed webhook schemas in ${specPath}`);
 }
 
 const specs = [
   {
-    input: [fixedSpecPaths[ADMIN_SPECS[0]]],
+    input: [ADMIN_SPECS[0]],
     output: rootPath('content/docs/admin-api/reference'),
     urlBase: '/docs/admin-api/reference',
   },
   {
-    input: [fixedSpecPaths[ADMIN_SPECS[1]]],
+    input: [ADMIN_SPECS[1]],
     output: rootPath('content/docs/admin-api/reference/2023-02-10'),
     urlBase: '/docs/admin-api/reference/2023-02-10',
     hidden: true,
   },
   {
-    input: [fixedSpecPaths[ADMIN_SPECS[2]]],
+    input: [ADMIN_SPECS[2]],
     output: rootPath('content/docs/admin-api/reference/unstable'),
     urlBase: '/docs/admin-api/reference/unstable',
     hidden: true,
   },
   {
-    input: [rootPath('public/api/campaigns/v1.yaml')],
+    input: ['public/api/campaigns/v1.yaml'],
     output: rootPath('content/docs/campaigns/api'),
     urlBase: '/docs/campaigns/api',
   },
@@ -321,9 +307,9 @@ for (const spec of specs) {
 // ── Generate webhook docs ───────────────────────────────────────────────────
 
 const WEBHOOK_SPECS = [
-  { input: fixedSpecPaths[ADMIN_SPECS[0]], output: rootPath('content/docs/webhooks/reference') },
-  { input: fixedSpecPaths[ADMIN_SPECS[1]], output: rootPath('content/docs/webhooks/reference/2023-02-10') },
-  { input: fixedSpecPaths[ADMIN_SPECS[2]], output: rootPath('content/docs/webhooks/reference/unstable') },
+  { input: ADMIN_SPECS[0], output: rootPath('content/docs/webhooks/reference') },
+  { input: ADMIN_SPECS[1], output: rootPath('content/docs/webhooks/reference/2023-02-10') },
+  { input: ADMIN_SPECS[2], output: rootPath('content/docs/webhooks/reference/unstable') },
 ];
 
 // Clean up stable output dir before regenerating
