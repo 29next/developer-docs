@@ -232,9 +232,11 @@ function Input(props: ComponentProps<'textarea'>) {
   );
 }
 
+import { siteConfig } from '@/lib/config';
+
 const roleName: Record<string, string> = {
   user: 'you',
-  assistant: 'Next Commerce AI',
+  assistant: `${siteConfig.companyName} AI`,
 };
 
 function Message({ message, ...props }: { message: UIMessage } & ComponentProps<'div'>) {

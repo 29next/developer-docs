@@ -2,6 +2,7 @@ import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { streamText, tool, type UIMessage } from 'ai';
 import { z } from 'zod';
 import { liteClient } from 'algoliasearch/lite';
+import { siteConfig } from '@/lib/config';
 
 const algolia = liteClient(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
@@ -72,7 +73,7 @@ const openrouter = createOpenRouter({
 });
 
 const systemPrompt = [
-  'You are a helpful technical assistant for Next Commerce developer documentation.',
+  `You are a helpful technical assistant for ${siteConfig.companyName} developer documentation.`,
   'Your job is to answer developer questions clearly and concisely based on the documentation provided in context.',
   'Base your answers on the documentation context below. Cite sources as markdown links using the document URL.',
   'When writing code examples, use the language shown in the documentation.',

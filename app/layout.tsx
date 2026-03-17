@@ -2,14 +2,15 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import { AlgoliaDialog } from '@/components/search';
 import { AISearch, AISearchPanel, AISearchTrigger } from '@/components/ai/search';
 import { MessageCircleIcon } from 'lucide-react';
+import { siteConfig } from '@/lib/config';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Developers | Next Commerce',
-    default: 'Developers | Next Commerce',
+    template: `%s | Developers | ${siteConfig.companyName}`,
+    default: `Developers | ${siteConfig.companyName}`,
   },
 };
 
