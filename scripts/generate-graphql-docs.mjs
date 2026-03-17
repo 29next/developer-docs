@@ -23,6 +23,16 @@ const LINK_ROOT = '/docs/storefront/graphql';
 
 // ── Step 1: Clean & generate ────────────────────────────────────────────────
 
+// Preserve hand-written files (index.mdx, meta.json) during regeneration
+const preserveFiles = ['index.mdx', 'meta.json'];
+const preserved = {};
+for (const file of preserveFiles) {
+  const p = join(GRAPHQL_DIR, file);
+  if (existsSync(p)) {
+    preserved[file] = readFileSync(p, 'utf8');
+  }
+}
+
 if (existsSync(GRAPHQL_DIR)) {
   rmSync(GRAPHQL_DIR, { recursive: true });
 }
@@ -51,25 +61,14 @@ for (const dir of ['operations', 'types']) {
   if (existsSync(p)) rmSync(p, { recursive: true });
 }
 
-// Remove the generated landing page
+// Remove the generated landing page (we maintain a custom index.mdx)
 const generatedPath = join(GRAPHQL_DIR, 'generated.md');
 if (existsSync(generatedPath)) rmSync(generatedPath);
 
-// Write clean index
-const indexPath = join(GRAPHQL_DIR, 'index.md');
-writeFileSync(indexPath, `---
-title: GraphQL Reference
----
-
-The Storefront GraphQL API reference documentation, automatically generated from the schema.
-
-Browse all available [Queries](/docs/storefront/graphql/queries) and [Mutations](/docs/storefront/graphql/mutations).
-`);
-
-writeFileSync(join(GRAPHQL_DIR, 'meta.json'), JSON.stringify({
-  title: 'GraphQL Reference',
-  pages: ['queries', 'mutations'],
-}, null, 2) + '\n');
+// Restore hand-written files that were preserved before the clean
+for (const [file, content] of Object.entries(preserved)) {
+  writeFileSync(join(GRAPHQL_DIR, file), content);
+}
 
 // ── Step 3: Introspect schema ───────────────────────────────────────────────
 
