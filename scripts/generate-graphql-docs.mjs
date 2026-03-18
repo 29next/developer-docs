@@ -23,7 +23,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const GRAPHQL_DIR = join(ROOT, 'content/docs/storefront/graphql');
-const SCHEMA_URL = 'https://aptest.29next.store/api/graphql/';
+const SCHEMA_URL = 'https://sandbox.29next.store/api/graphql/';
 
 // ── Step 1: Preserve hand-written files ─────────────────────────────────────
 
