@@ -1,12 +1,14 @@
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "22"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+[[redirects]]
+  from = "/"
+  to = "/docs"
+  status = 301
 
 [[redirects]]
   from = "/api/admin"

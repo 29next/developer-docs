@@ -1,6 +1,8 @@
 import { source } from '@/lib/source';
 import type { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 const BASE_URL = 'https://developers.nextcommerce.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {

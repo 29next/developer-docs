@@ -10,6 +10,7 @@ venv
 
 # Next.js
 .next/
+out/
 
 # Generated files
 .docusaurus
