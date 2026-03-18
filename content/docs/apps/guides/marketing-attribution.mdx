@@ -1,0 +1,275 @@
+---
+title: Marketing Attribution Apps
+sidebar_position: 3
+tags:
+ - Guide
+---
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Marketing attribution apps enable ad platforms to attribute orders across all commerce channels — storefront, campaigns, Admin API, and subscription renewals — back to the ads and campaigns that drove them.
+
+To provide full attribution coverage, apps need to handle two complementary flows:
+
+1. **Storefront Order Attribution** — Use [Event Tracking](/docs/apps/event-tracking) and the [GraphQL Storefront API](/docs/storefront/graphql) to capture platform-specific identifiers from the visitor's browser and store them as attribution metadata on the cart.
+2. **Campaigns & API Order Attribution** — Subscribe to [Webhooks](/docs/webhooks) to receive order events server-side and extract the stored attribution metadata for conversion tracking.
+
+
+## Attribution Flow Overview
+
+``` mermaid
+sequenceDiagram
+  autonumber
+  participant Visitor
+  participant Storefront
+  participant App
+
+  Note over Visitor, Storefront: Storefront Order Attribution
+  Visitor->>Storefront: Lands on storefront from ad
+  App->>Storefront: Event tracker captures platform IDs
+  App->>Storefront: Stores IDs as cart attribution metadata (GraphQL)
+
+  Note over Storefront, App: Campaigns & API Order Attribution
+  Visitor->>Storefront: Completes checkout
+  Storefront->>App: Sends order.created webhook
+  App->>App: Extracts attribution metadata from order
+```
+
+## Storefront Order Attribution
+
+Storefront order attribution runs in the visitor's browser via an [Event Tracker](/docs/apps/event-tracking) installed through your app's manifest. The event tracker needs to do three things:
+
+1. **Capture platform identifiers** from browser cookies and URL parameters.
+2. **Store identifiers as cart attribution metadata** using the [GraphQL Storefront API](/docs/storefront/graphql) so they persist through to the completed order.
+3. **Fire client-side pixel events** by subscribing to [Storefront Events](/docs/storefront/event-tracking) for real-time browser-side tracking.
+
+### App Setup
+
+<Callout type="info" title="Getting Started with Apps">
+If you haven't already, create your app on [Next Commerce Accounts](https://accounts.29next.com) and install [App Kit](/docs/apps/guides/storefront-extension#app-kit) to build and push your app files.
+</Callout>
+
+Your app's [manifest](/docs/apps/manifest) defines the storefront integration. Map a javascript file as the `storefront_event_tracker`, use `settings_schema` to allow merchants to configure platform-specific IDs, and add an [App Snippet](/docs/apps/snippets) to inject the ad platform's pixel script into the storefront.
+
+```json title="manifest.json"
+{
+  "storefront_event_tracker": "tracking.js",
+  "settings_schema": [
+    {
+      "name": "pixel_id",
+      "type": "text",
+      "label": "Pixel ID",
+      "default": "",
+      "required": 1,
+      "help_text": "Your ad platform pixel identifier.",
+      "max_length": 250
+    }
+  ],
+  "locations": {
+    "storefront": {
+      "global_header": "snippets/global_header.html"
+    }
+  }
+}
+```
+
+<Callout type="idea" title="Manage Settings via API">
+Apps can programmatically manage the merchant's settings values (e.g. Pixel ID) through the [appsSettingsUpdate](/docs/admin-api/reference/apps/appsSettingsUpdate) Admin API endpoint, allowing you to populate configuration from your own app dashboard.
+</Callout>
+
+The `global_header` snippet is where you load the ad platform's pixel script so that it sets the necessary browser cookies (e.g. `_fbp` for Facebook). The event tracker then reads these cookies and stores them on the cart.
+
+```html title="snippets/global_header.html"
+{% if app.settings.pixel_id %}
+<!-- Ad Platform Pixel Script -->
+<script>
+  // Load your ad platform's pixel script here
+  // This sets cookies like _fbp, _fbc that the event tracker will capture
+</script>
+{% endif %}
+```
+
+### Event Tracker
+
+When your app is installed, the event tracker is automatically created with the content of `tracking.js`. The merchant's settings are accessible via `app.settings` and the [GraphQL Storefront API](/docs/storefront/graphql) is available at `/api/graphql/`.
+
+Below is a complete example event tracker that captures platform identifiers, stores them as cart attribution metadata via the `createCart` and `updateCartAttribution` GraphQL mutations, and subscribes to storefront events for client-side pixel tracking.
+
+<Callout type="info" title="Cookie Timing">
+Ad platform pixel scripts set cookies asynchronously after page load. Your event tracker should wait for the relevant cookies to be set before attempting to read them. A timeout of ~5 seconds is typically sufficient.
+</Callout>
+
+```javascript title="tracking.js"
+if (app.settings.pixel_id) {
+
+    // --- Helpers ---
+
+    function getCookie(name) {
+        return document.cookie
+            .split(";")
+            .find(c => c.trim().startsWith(`${name}=`))
+            ?.split("=")[1];
+    }
+
+    function waitForCookie(name, timeout = 5000, interval = 500) {
+        return new Promise((resolve, reject) => {
+            const start = Date.now();
+            const check = setInterval(() => {
+                if (getCookie(name)) {
+                    clearInterval(check);
+                    resolve(getCookie(name));
+                } else if (Date.now() - start >= timeout) {
+                    clearInterval(check);
+                    reject(new Error(`Timeout waiting for cookie: ${name}`));
+                }
+            }, interval);
+        });
+    }
+
+    function queryGraphql(query, variables = {}) {
+        return fetch("/api/graphql/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query, variables })
+        }).then(r => r.json());
+    }
+
+    // --- GraphQL Mutations ---
+
+    const CREATE_CART = `mutation createCart {
+        createCart(input: {}) {
+            success
+            errors
+            cart { id, pk, attribution { metadata } }
+        }
+    }`;
+
+    const UPDATE_CART_ATTRIBUTION = `mutation updateCartAttrMetadata(
+        $cartId: String, $metadata: GenericScalar
+    ) {
+        updateCartAttribution(
+            input: {cartId: $cartId, attribution: {metadata: $metadata}}
+        ) {
+            success
+            errors
+            cart { id, pk, attribution { metadata } }
+        }
+    }`;
+
+    // --- Attribution Capture ---
+
+    async function captureAttribution() {
+        // 1. Create a cart
+        const cartData = await queryGraphql(CREATE_CART);
+        const cart = cartData.data?.createCart?.cart;
+        if (!cart) return;
+
+        // 2. Wait for ad platform cookies to be set
+        try {
+            await waitForCookie("your_cookie_name");
+        } catch (e) {
+            console.error(e);
+        }
+
+        // 3. Capture identifiers and store as cart attribution metadata
+        const metadata = cart.attribution?.metadata || {};
+        const browserId = getCookie("your_cookie_name");
+        const clickId = getCookie("your_click_cookie_name");
+        if (browserId) metadata.your_browser_id = browserId;
+        if (clickId) metadata.your_click_id = clickId;
+        metadata.pixel_id = app.settings.pixel_id;
+
+        await queryGraphql(UPDATE_CART_ATTRIBUTION, {
+            cartId: cart.id,
+            metadata: metadata
+        });
+    }
+
+    captureAttribution();
+
+    // --- Client-Side Pixel Events ---
+
+    analytics.subscribe("page_viewed", event => {
+        // Fire page view event on your ad platform
+    });
+
+    analytics.subscribe("product_viewed", event => {
+        // Fire view content event with event.data product details
+    });
+
+    analytics.subscribe("product_added_to_cart", event => {
+        // Fire add to cart event with event.data line item details
+    });
+
+    analytics.subscribe("checkout_started", event => {
+        // Fire initiate checkout event with event.data cart details
+    });
+
+    analytics.subscribe("checkout_completed", event => {
+        // Fire purchase/conversion event with event.data order details
+    });
+}
+```
+
+See [Storefront Event Tracking](/docs/storefront/event-tracking) for the full list of available events and their data structures.
+
+<Callout type="info" title="Attribution Metadata Persists to Orders">
+Attribution metadata stored on the cart is automatically carried over to the order when the customer completes checkout. This is what makes the webhook-based conversion flow possible — the identifiers captured in the browser are available in the `order.created` webhook payload.
+</Callout>
+
+
+## Campaigns & API Order Attribution
+
+Not all orders originate from the storefront. Orders created through [Campaigns](/docs/campaigns), the [Admin API](/docs/admin-api), and recurring [Subscription](/docs/admin-api/guides/subscription-management) renewals bypass the storefront entirely — [Webhooks](/docs/webhooks) are the way to capture attribution data for these conversions.
+
+### Subscribe to Webhooks
+
+Subscribe to the `order.created` webhook event using the [webhooksCreate](/docs/admin-api/reference/webhooks/webhooksCreate) Admin API endpoint. Your app should do this during the OAuth installation flow. Always [verify the webhook signature](/docs/webhooks#verifying-webhook-requests) before processing incoming events.
+
+```json title="Create Webhook Subscription" http-method="POST" http-target="https://{store}.29next.store/api/admin/webhooks/"
+{
+    "target": "https://your-app.example.com/webhooks/",
+    "events": ["order.created"],
+    "signing_secret": "your-signing-secret"
+}
+```
+
+### Extract Attribution Metadata from Order
+
+The `order.created` webhook payload contains the full order data, including the `attribution` object with the metadata your event tracker stored on the cart.
+
+```json title="order.created Webhook Payload (abbreviated)"
+{
+    "event_type": "order.created",
+    "object": "order",
+    "data": {
+        ...
+        "number": "109659",
+        "source": "storefront",
+        "total_incl_tax": "84.98",
+        "total_excl_tax": "84.98",
+        "currency": "USD",
+        "reporting_values": {
+            "currency": "USD",
+            "total_incl_tax": "84.98",
+            "total_excl_tax": "84.98",
+            "shipping_incl_tax": "4.99",
+            "shipping_excl_tax": "4.99",
+            "total_discount": "0.00"
+        },
+        "attribution": {
+            ...
+            "metadata": {
+                "your_platform_id": "your_value",
+                "your_click_id": "your_value",
+                "your_browser_id": "your_value"
+            }
+        },
+        ...
+    }
+}
+```
+
+<Callout type="info">
+View the full [order.created webhook payload](/docs/webhooks/reference/orders/order.created) for all available fields including user, lines, shipping address, and transaction data.
+</Callout>

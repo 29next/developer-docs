@@ -46,6 +46,9 @@ function MermaidContent({ chart }: { chart: string }) {
       titleColor: textColor,
       edgeLabelBackground: isDark ? '#1a1a1a' : '#ffffff',
       tertiaryColor: 'transparent',
+      noteBkgColor: isDark ? 'hsl(217, 91%, 60%, 0.15)' : 'hsl(217, 91%, 60%, 0.1)',
+      noteTextColor: textColor,
+      noteBorderColor: 'hsl(217, 91%, 60%)',
     },
   });
 
