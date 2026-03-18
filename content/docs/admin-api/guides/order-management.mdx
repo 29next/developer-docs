@@ -15,7 +15,7 @@ Below are best practices and guides for common scenarios merchants and partners 
 
 ### Order Items Editing
 
-Editing items on an order is common practice, such as swapping products purchased for a different size or color with the same value without needing to collect payment or create a refund. 
+Editing items on an order is common practice, such as swapping products purchased for a different size or color with the same value without needing to collect payment or create a refund.
 
 <Callout type="info" title="Only Available on 2024-04-01 API Version">
 Order editing APIs are only available on 2024-04-01 API Version and above, if you are still using older versions we recommend you upgrade your integration.
@@ -24,7 +24,7 @@ Order editing APIs also do not affect order payment within each request. To remo
 </Callout>
 #### Line Item Quantities Explained
 
-Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle. 
+Order line items have 4 quantity attributes that represent quantities at different states in an order life cycle.
 
  - `quantity` - Item quantity total ever added to the order in this line.
  - `current_quantity` - Current item quantity that have not yet been removed.
@@ -37,7 +37,7 @@ Order line items have 4 quantity attributes that represent quantities at differe
     ...
     "quantity": 3, // quantity of items ever added
     "current_quantity": 2, // current quantity that have not been removed
-    "fulfillable_quantity": 1, // quantity that have not yet been fulfilled 
+    "fulfillable_quantity": 1, // quantity that have not yet been fulfilled
     "editable_quantity": 1, // quantity that can be edited
     ...
   }
@@ -62,18 +62,15 @@ Swapping Items on an order is a 4 step process:
 
 1. Retrieve order line items using the [ordersRetrieve](/docs/admin-api/reference/orders/ordersRetrieve) endpoint and check `editable_quantity` is > 0.
 2. Update/Remove line items using the [ordersLinesPartialUpdate](/docs/admin-api/reference/orders/ordersLinesPartialUpdate) or [ordersLinesDestroy](/docs/admin-api/reference/orders/ordersLinesDestroy) endpoint.
-3. Create new line item [ordersLinesCreate](/docs/admin-api/reference/orders/ordersLinesCreate) endpoint. 
+3. Create new line item [ordersLinesCreate](/docs/admin-api/reference/orders/ordersLinesCreate) endpoint.
 4.  [Collect payment for an outstanding](#collect-payment-for-outstanding-balance) balance using the [ordersCollectPaymentCreate](/docs/admin-api/reference/orders/ordersCollectPaymentCreate) endpoint.
 
 
 #### Update Existing Line Item
 
-Below is an example API call to change the quantity of a line item to 1. If the existing quantity was 2, this would remove 1 quantity, can also be used to increase line item quantity. This endpoint only accepts quantity changes, to change the product or price, see [ordersLinesCreate](/docs/admin-api/reference/orders/ordersLinesCreate) endpoint. 
+Below is an example API call to change the quantity of a line item to 1. If the existing quantity was 2, this would remove 1 quantity, can also be used to increase line item quantity. This endpoint only accepts quantity changes, to change the product or price, see [ordersLinesCreate](/docs/admin-api/reference/orders/ordersLinesCreate) endpoint.
 
-```json title="Update Existing Line Item"
-// PATCH https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Update Existing Line Item" http-method="PATCH" http-target="https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/"
 {
   "quantity": 1, // change quantity to 1
   "reason": "product swap" // optional
@@ -82,27 +79,23 @@ Below is an example API call to change the quantity of a line item to 1. If the 
 
 #### Remove Full Line Item
 
-Below is an example DELETE request to the [ordersLinesDestroy](/docs/admin-api/reference/orders/ordersLinesDestroy) endpoint to remove a line item. 
+Below is an example DELETE request to the [ordersLinesDestroy](/docs/admin-api/reference/orders/ordersLinesDestroy) endpoint to remove a line item.
 
-```json title="Remove Line Item"
-// DELETE https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
+```json title="Remove Line Item" http-method="DELETE" http-target="https://{store}.29next.store/api/admin/orders/{number}/lines/{lineID}/"
+{}
 ```
 
 
 <Callout type="info" title="Check Line Item Editable Quantity">
-Line items have `editable_quantity` which represents the item quantity not already in process of being fulfilled, already fulfilled, or  already removed from the order. 
+Line items have `editable_quantity` which represents the item quantity not already in process of being fulfilled, already fulfilled, or  already removed from the order.
 
 **If `editable_quantity` is `0`, the line item cannot be edited.**
 </Callout>
 #### Create New Line Item
 
-Below is an example POST request to the [ordersLinesCreate](/docs/admin-api/reference/orders/ordersLinesCreate) endpoint to create a new line item. 
+Below is an example POST request to the [ordersLinesCreate](/docs/admin-api/reference/orders/ordersLinesCreate) endpoint to create a new line item.
 
-```json title="Create New Line Item"
-// POST https://{store}.29next.store/api/admin/orders/{number}/lines/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Create New Line Item" http-method="POST" http-target="https://{store}.29next.store/api/admin/orders/{number}/lines/"
 {
   "product_id": 184, // product variant id
   "quantity": 1,
@@ -111,16 +104,13 @@ Below is an example POST request to the [ordersLinesCreate](/docs/admin-api/refe
 }
 ```
 
-#### Collect Payment for Outstanding Balance 
+#### Collect Payment for Outstanding Balance
 
-Orders can have an outstanding balance owed by the customer as a result of changing items on the order. To collect the outstanding balance, use the [ordersCollectPaymentCreate](/docs/admin-api/reference/orders/ordersCollectPaymentCreate) endpoint to initate a payment transaction with the order's initial payment method. 
+Orders can have an outstanding balance owed by the customer as a result of changing items on the order. To collect the outstanding balance, use the [ordersCollectPaymentCreate](/docs/admin-api/reference/orders/ordersCollectPaymentCreate) endpoint to initate a payment transaction with the order's initial payment method.
 
-```json title="Collect Payment for Outstanding Balance"
-// POST https://{store}.29next.store/api/admin/orders/{number}/collect-payment/ 
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Collect Payment for Outstanding Balance" http-method="POST" http-target="https://{store}.29next.store/api/admin/orders/{number}/collect-payment/"
 {
-  "send_payment_notification": true // optionally send notificaiton to customer 
+  "send_payment_notification": true // optionally send notificaiton to customer
 }
 ```
 
@@ -152,8 +142,7 @@ Order Refund Calculate APIs are only available on `2024-04-01` version and newer
 
 Below is an abreviated example request to [ordersRetrieve](/docs/admin-api/reference/orders/ordersRetrieve) endpoint to get the line items of the order.
 
-```json title="Retrieve Order Details"
-// GET https://{store}.29next.store/api/admin/orders/{number}/
+```json title="Retrieve Order Details" http-method="GET" http-target="https://{store}.29next.store/api/admin/orders/{number}/"
 {
   "lines": [
     {
@@ -171,8 +160,7 @@ Order payments must be captured in order to create partial refunds, uncaptured p
 
 Call the [ordersRefundCalculateCreate](/docs/admin-api/reference/orders/ordersRefundCalculateCreate) endpoint with your line items to calculate the refund and see which initial payment transactions will be refunded.
 
-```json title="Refund Calculate Request"
-// POST https://{store}.29next.store/api/admin/orders/{number}/refund/calculate/
+```json title="Refund Calculate Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/orders/{number}/refund/calculate/"
 {
   "refund_lines": [
     {
@@ -226,8 +214,7 @@ Below is the response from the [ordersRefundCalculateCreate](/docs/admin-api/ref
 
 We're now ready to create a refund using the [ordersRefundCreate](/docs/admin-api/reference/orders/ordersRefundCreate) endpoint, see request details below.
 
-```json title="Order Create Refund Request"
-// POST https://{store}.29next.store/api/admin/orders/{number}/refund/
+```json title="Order Create Refund Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/orders/{number}/refund/"
 {
   "note": "Example reason for the refund",
   "refund_lines": [
@@ -266,10 +253,7 @@ Depending on the product type and status of the line items being refunded, there
 Updating an order shipping address is a common task that can be done with a PATCH request to the [ordersUpdate](/docs/admin-api/reference/orders/ordersUpdate) endpoint.
 
 
-```json title="Update Order Shipping Address"
-// PATCH https://{store}.29next.store/api/admin/orders/{number}/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Update Order Shipping Address" http-method="PATCH" http-target="https://{store}.29next.store/api/admin/orders/{number}/"
 {
   "shipping_address": {
     "line1": "4765 Test Lane West", // new shipping address line 1
@@ -282,17 +266,14 @@ Updating an order shipping address is a common task that can be done with a PATC
 ```
 <Callout type="info" title="Before Fulfillment Processing">
 
-Updating an order shipping address should be done **before** the order is sent to a fulfillment location for fulfillment. If the order has already been accepted and processing, send a a [cancellationRequestSend](/docs/admin-api/reference/fulfillment/cancellationRequestSend) request and then [fulfillmentRequestSend](/docs/admin-api/reference/fulfillment/fulfillmentRequestSend) after you've updated the shipping address. 
+Updating an order shipping address should be done **before** the order is sent to a fulfillment location for fulfillment. If the order has already been accepted and processing, send a a [cancellationRequestSend](/docs/admin-api/reference/fulfillment/cancellationRequestSend) request and then [fulfillmentRequestSend](/docs/admin-api/reference/fulfillment/fulfillmentRequestSend) after you've updated the shipping address.
 </Callout>
 ### Request Fulfillment
 
-Fulfillment can be requested immediately through the [fulfillmentRequestSend](/docs/admin-api/reference/fulfillment/fulfillmentRequestSend) for cases that you'd like to immediately send the fulfillment order to the fulfillment location for fulfillment. 
+Fulfillment can be requested immediately through the [fulfillmentRequestSend](/docs/admin-api/reference/fulfillment/fulfillmentRequestSend) for cases that you'd like to immediately send the fulfillment order to the fulfillment location for fulfillment.
 
 
-```json title="Fulfillment Request"
-// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Fulfillment Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillment-request/"
 {
   "fulfillment_order_line_items": [  // will split the fulfillment order into a new fulfillment order
     {
@@ -319,10 +300,7 @@ stateDiagram-v2
 1. Retrieve all fulfillment Orders using the [ordersFulfillmentOrdersRetrieve](/docs/admin-api/reference/orders/ordersFulfillmentOrdersRetrieve) endpoint.
 2. Send a [fulfillmentOrdersHold](/docs/admin-api/reference/fulfillment/fulfillmentOrdersHold) request for each fulfillment order to hold.
 
-```json title="Hold Fulfillment Order Request"
-// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Hold Fulfillment Order Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/fulfillment-orders/{id}/hold/"
 {
   "reason": "address_incorrect", // see available reasons in api reference
   "reason_message": "Additional relevant detail." // provide additional relevant detail
@@ -331,7 +309,7 @@ stateDiagram-v2
 
 ### Cancel Fulfillment
 
-Canceling a fulfillment order that is already accepted and processing with a fuflillment location is a common order management task to stop fulfillment or as a prerequisite step to moving a fulfillment order to a new location. 
+Canceling a fulfillment order that is already accepted and processing with a fuflillment location is a common order management task to stop fulfillment or as a prerequisite step to moving a fulfillment order to a new location.
 
 ```mermaid
 stateDiagram-v2
@@ -345,12 +323,9 @@ stateDiagram-v2
 2. Send a [cancellationRequestSend](/docs/admin-api/reference/fulfillment/cancellationRequestSend) request for each fulfillment order to request fulfillment cancellation.
 
 
-```json titl="Fulfillment Order Cancellation Request"
-// POST https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Fulfillment Order Cancellation Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/fulfillment-orders/{id}/cancellation-request/"
 {
-  "message": "Reason why canceling fulfillment" // message sent to the fulfillment location regarding the cancellation
+  "message": "Reason why canceling fulfillment" // message sent to the fulfillment location
 }
 ```
 
@@ -360,20 +335,12 @@ stateDiagram-v2
 
 ### Cancel Order
 
-Canceling an order is a common order management task when you need to cancel the entire order and refund all payment transactions. To cancel an order, send a request to the [ordersCancelCreate](/docs/admin-api/reference/orders/ordersCancelCreate) endpoint. 
+Canceling an order is a common order management task when you need to cancel the entire order and refund all payment transactions. To cancel an order, send a request to the [ordersCancelCreate](/docs/admin-api/reference/orders/ordersCancelCreate) endpoint.
 
-```json title="Cacenl Order Request"
-// POST https://{store}.29next.store/api/admin/orders/{number}/cancel/
-// -H "Authorization: Bearer <API ACCESS TOKEN>" -H "X-29Next-Api-Version: 2024-04-01"
-
+```json title="Cancel Order Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/orders/{number}/cancel/"
 {
   "cancel_reason": "Customer wants to cancel", // Appropiate cancel reason message
   "full_refund": true, // Refund all remainaing payments or not
   "send_cancel_notification": true // Send the customer a notification or not
 }
 ```
-
-
-
-
-

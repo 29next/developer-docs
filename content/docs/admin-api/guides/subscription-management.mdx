@@ -16,7 +16,7 @@ Subscription management actions most often times will only affect future renewal
 
 Subscriptions can be created directly through the [subscriptionsCreate](/docs/admin-api/reference/subscriptions/subscriptionsCreate) Admin API endpoint for scenarios such as custom order flows or importing subcriptions from another platform.
 
-```json title="Create Subscription"
+```json title="Create Subscription" http-method="POST" http-target="https://{store}.29next.store/api/admin/subscriptions/"
 {
     "lines": [ // subscription line item products and pricing
         {
@@ -53,9 +53,7 @@ Updating subscription recurring items and pricing can be done through [subscript
 
 To add a new product to a subscription, use the [subscriptionLinesCreate](/docs/admin-api/reference/subscriptions/subscriptionsLinesCreate) Admin API endpoint with the product, price, and quanity details.
 
-```json title="Adding an Additional Product"
-// POST https://{store}.29next.store/api/admin/subscriptions/{id}/lines/
-
+```json title="Adding an Additional Product" http-method="POST" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/lines/"
 {
   "price": "9.99", // recurring price for the product
   "product_id": 100, // product ID
@@ -67,9 +65,7 @@ To add a new product to a subscription, use the [subscriptionLinesCreate](/docs/
 
 To update and existing product price and quantity on a subscription line, use the [subscriptionsLinesUpdate](/docs/admin-api/reference/subscriptions/subscriptionsLinesUpdate) Admin API endpoint with the new price, and new quanity details.
 
-```json title="Updating an Existing Product"
-// PUT https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/
-
+```json title="Updating an Existing Product" http-method="PUT" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/"
 {
   "price": "9.99", // new recurring price for the product
   "quantity": 1 // new quantity of the product
@@ -80,8 +76,8 @@ To update and existing product price and quantity on a subscription line, use th
 
 To remove a product from a subscription, send a DELETE request to the [subscriptionsLinesDestroy](/docs/admin-api/reference/subscriptions/subscriptionsLinesDestroy) endpoint to remove the line item (ie the product) from future renewal orders created from the subscription.
 
-```json title="Remove an Existing Product"
-// DELETE https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/
+```json title="Remove an Existing Product" http-method="DELETE" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/lines/{lineId}/"
+{}
 ```
 
 <Callout type="warn">
@@ -91,8 +87,7 @@ Subscriptions must have at least one line item with a product, you can alternati
 
 Changing the renewal schedule of a subscription can be achived with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptions/subscriptionsPartialUpdate) endpoint with a new `interval` and `interval_count`, ie 30 days.
 
-```json title="Update Subscription Renewal Schedule"
-// PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
+```json title="Update Subscription Renewal Schedule" http-method="PATCH" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/"
 {
     "interval": "day",
     "interval_count": 30,
@@ -104,8 +99,7 @@ Changing the renewal schedule of a subscription can be achived with a PATCH requ
 
 Changing the next renewal date of a subscription can be achieved through updating the `next_renewal_date` key on the subscription object with a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptions/subscriptionsPartialUpdate) endpoint with your new renewal date and time.
 
-```json title="Update Next Renewal Date"
-// PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
+```json title="Update Next Renewal Date" http-method="PATCH" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/"
 {
     "next_renewal_date": "2025-06-29T03:28:59.193252-05:00" // next renewal date & time
 }
@@ -114,6 +108,21 @@ Changing the next renewal date of a subscription can be achieved through updatin
 <Callout type="idea">
 If you would like to immediately renew the subscription, you can pass a date from the past and the subscription will process a renewal attempt within the next 30 minutes.
 </Callout>
+
+### Triggering a Renewal
+
+To immediately trigger a renewal order for an active subscription, use the [subscriptionsRenewCreate](/docs/admin-api/reference/subscriptions/subscriptionsRenewCreate) endpoint. This creates a new renewal order on demand without waiting for the next scheduled renewal date.
+
+```json title="Trigger Subscription Renewal" http-method="POST" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/renew/"
+{}
+```
+
+The endpoint returns the full subscription object with updated renewal details on success.
+
+<Callout type="warn">
+The subscription must be in an `active` status to trigger a renewal. For subscriptions in `past_due` status, use the [subscriptionsRetryCreate](/docs/admin-api/reference/subscriptions/subscriptionsRetryCreate) endpoint instead.
+</Callout>
+
 ### Updating Payment Details
 
 Updating the Payment Gateway of a subscription can done through the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptions/subscriptionsPartialUpdate) endpoint.
@@ -122,8 +131,7 @@ Updating the Payment Gateway of a subscription can done through the [subscriptio
 
 To change the payment gateway used for bankcard payments of a subscription, send a PATCH request to the [subscriptionsPartialUpdate](/docs/admin-api/reference/subscriptions/subscriptionsPartialUpdate) endpoint with the new `payment_gateway`.
 
-```json title="Update Payment Gateway"
-// PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
+```json title="Update Payment Gateway" http-method="PATCH" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/"
 {
     "payment_details": {
         "payment_gateway": 23 // new payment gateway to be used on the next renewal
@@ -153,8 +161,7 @@ stateDiagram-v2
     verify --> updated
 ```
 
-```json title="New Bankcard Payment Method"
-// PATCH https://{store}.29next.store/api/admin/subscriptions/{id}/
+```json title="New Bankcard Payment Method" http-method="PATCH" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/"
 {
     "payment_details": {
         "card_token": "<New Card Token>", // new card token
@@ -176,9 +183,7 @@ stateDiagram-v2
 
 Subscriptions that are `past_due` status can be attemted to retry the renewal, often combined with a new `payment_gateway`, by using the [subscriptionsRetryCreate](/docs/admin-api/reference/subscriptions/subscriptionsRetryCreate) endpoint.
 
-```json title="Retry Subscription Renewal"
-// POST https://{store}.29next.store/api/admin/subscriptions/{id}/retry/
-
+```json title="Retry Subscription Renewal" http-method="POST" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/retry/"
 {
   "payment_gateway": 122 // optional new payment gateway to retry with
 }
@@ -192,13 +197,10 @@ The subscription retry endpoint is useful for custom recovery logic when attempt
 To cancel a subscription, use the [subscriptionsCancelCreate](/docs/admin-api/reference/subscriptions/subscriptionsCancelCreate) endpoint to stop all future renewals.
 
 
-```json title="Cancel Subscription"
-// https://{store}.29next.store/api/admin/subscriptions/{id}/cancel/
-
+```json title="Cancel Subscription" http-method="POST" http-target="https://{store}.29next.store/api/admin/subscriptions/{id}/cancel/"
 {
   "cancel_reason": "not_satisfied_with_product", // required
   "cancel_reason_other_message": "Wasn't happy with result", // optional
   "send_cancel_notification": true // to send the cancelation email or not
 }
 ```
-

@@ -30,6 +30,16 @@ function remarkDocusaurusCompat() {
           node.lang = LANG_ALIASES[firstWord] ?? firstWord;
         }
       }
+      if (node.meta) {
+        const methodMatch = node.meta.match(/http-method="([^"]*)"/);
+        const targetMatch = node.meta.match(/http-target="([^"]*)"/);
+        if (methodMatch || targetMatch) {
+          const method = methodMatch?.[1] ?? "";
+          const target = targetMatch?.[1] ?? "";
+          node.meta = node.meta.replace(/http-method="[^"]*"/, "").replace(/http-target="[^"]*"/, "").replace(/title="[^"]*"/, "").trim();
+          node.meta = `title="__http:${method}:${target}" ${node.meta}`.trim();
+        }
+      }
     });
   };
 }

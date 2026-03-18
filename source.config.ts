@@ -15,6 +15,7 @@ const LANG_ALIASES: Record<string, string> = {
  * - Unwraps `mdx-code-block` fences into raw MDX
  * - Strips meta from language field (title="…", showLineNumbers, etc.)
  * - Maps language aliases (django → jinja, shell → bash)
+ * - Encodes http-method/http-target into a special title format for the pre component
  */
 function remarkDocusaurusCompat(): Transformer<Root> {
   return (tree) => {
@@ -38,6 +39,24 @@ function remarkDocusaurusCompat(): Transformer<Root> {
         } else {
           node.meta = node.lang.slice(firstWord.length).trim() || node.meta;
           node.lang = LANG_ALIASES[firstWord] ?? firstWord;
+        }
+      }
+
+      // Encode http-method/http-target into title so it survives Shiki.
+      // Format: title="__http:METHOD:target_url" — decoded in the pre component.
+      if (node.meta) {
+        const methodMatch = node.meta.match(/http-method="([^"]*)"/);
+        const targetMatch = node.meta.match(/http-target="([^"]*)"/);
+        if (methodMatch || targetMatch) {
+          const method = methodMatch?.[1] ?? '';
+          const target = targetMatch?.[1] ?? '';
+          // Remove http-method/http-target from meta and inject as title
+          node.meta = node.meta
+            .replace(/http-method="[^"]*"/, '')
+            .replace(/http-target="[^"]*"/, '')
+            .replace(/title="[^"]*"/, '') // remove any existing title
+            .trim();
+          node.meta = `title="__http:${method}:${target}" ${node.meta}`.trim();
         }
       }
     });
