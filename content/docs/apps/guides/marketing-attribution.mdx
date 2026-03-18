@@ -7,7 +7,7 @@ tags:
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Marketing attribution apps enable ad platforms to attribute orders across all commerce channels — storefront, campaigns, Admin API, and subscription renewals — back to the ads and campaigns that drove them.
+Marketing attribution apps enable marketing attribution platforms to attribute orders across all commerce channels — storefront, campaigns, Admin API, and subscription renewals — back to the ads and campaigns that drove them.
 
 To provide full attribution coverage, apps need to handle two complementary flows:
 
@@ -77,15 +77,11 @@ Your app's [manifest](/docs/apps/manifest) defines the storefront integration. M
 Apps can programmatically manage the merchant's settings values (e.g. Pixel ID) through the [appsSettingsUpdate](/docs/admin-api/reference/apps/appsSettingsUpdate) Admin API endpoint, allowing you to populate configuration from your own app dashboard.
 </Callout>
 
-The `global_header` snippet is where you load the ad platform's pixel script so that it sets the necessary browser cookies (e.g. `_fbp` for Facebook). The event tracker then reads these cookies and stores them on the cart.
+The `global_header` snippet is where you load the ad platform's pixel script so that it sets the necessary browser cookies. The event tracker then reads these cookies and stores them on the cart.
 
 ```html title="snippets/global_header.html"
 {% if app.settings.pixel_id %}
-<!-- Ad Platform Pixel Script -->
-<script>
-  // Load your ad platform's pixel script here
-  // This sets cookies like _fbp, _fbc that the event tracker will capture
-</script>
+<script async src="https://platform.example.com/pixel.js?id={{ app.settings.pixel_id }}"></script>
 {% endif %}
 ```
 
@@ -93,7 +89,7 @@ The `global_header` snippet is where you load the ad platform's pixel script so 
 
 When your app is installed, the event tracker is automatically created with the content of `tracking.js`. The merchant's settings are accessible via `app.settings` and the [GraphQL Storefront API](/docs/storefront/graphql) is available at `/api/graphql/`.
 
-Below is a complete example event tracker that captures platform identifiers, stores them as cart attribution metadata via the `createCart` and `updateCartAttribution` GraphQL mutations, and subscribes to storefront events for client-side pixel tracking.
+Below is an example event tracker that captures platform identifiers, stores them as cart attribution metadata via the `createCart` and `updateCartAttribution` GraphQL mutations, and subscribes to storefront events for client-side pixel tracking.
 
 <Callout type="info" title="Cookie Timing">
 Ad platform pixel scripts set cookies asynchronously after page load. Your event tracker should wait for the relevant cookies to be set before attempting to read them. A timeout of ~5 seconds is typically sufficient.
