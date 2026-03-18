@@ -5,6 +5,9 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[build.processing.html]
+  pretty_urls = false
+
 [[redirects]]
   from = "/"
   to = "/docs"
