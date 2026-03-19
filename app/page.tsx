@@ -9,6 +9,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { siteConfig } from '@/lib/config';
+import { AlgoliaDocSearch, AlgoliaDocSearchMobile } from '@/components/search';
 import { HeroFlow } from '@/components/hero-flow';
 import type { ReactNode } from 'react';
 
@@ -149,7 +150,8 @@ export default function HomePage() {
     <div className="relative flex flex-col min-h-screen bg-fd-background">
       {/* Nav */}
       <header className="sticky top-0 z-50 border-b border-fd-border bg-fd-background/80 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+        <div className="mx-auto grid h-14 max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-6">
+          {/* Left: Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img src="/logo-light.png" alt={siteConfig.companyName} width={105} height={21} className="dark:hidden" />
             <img src="/logo-dark.png" alt={siteConfig.companyName} width={105} height={21} className="hidden dark:block" />
@@ -157,7 +159,15 @@ export default function HomePage() {
               Developers
             </span>
           </Link>
+          {/* Center: Search */}
+          <div className="hidden sm:flex justify-center max-w-sm mx-auto w-full">
+            <AlgoliaDocSearch />
+          </div>
+          {/* Right: Nav links + CTA */}
           <nav className="flex items-center gap-1">
+            <div className="sm:hidden">
+              <AlgoliaDocSearchMobile />
+            </div>
             <Link
               href="/docs/campaigns"
               className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors"
