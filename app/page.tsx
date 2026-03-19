@@ -7,13 +7,19 @@ import {
   Webhook,
   ArrowRight,
   BookOpen,
+  Zap,
+  Globe,
+  Code2,
+  Activity,
 } from 'lucide-react';
 import { siteConfig } from '@/lib/config';
 import { AlgoliaDocSearch, AlgoliaDocSearchMobile } from '@/components/search';
 import { HeroFlow } from '@/components/hero-flow';
-import type { ReactNode } from 'react';
+import { MouseSpotlight } from '@/components/mouse-spotlight';
+import { SpotlightCard, type SectionData } from '@/components/spotlight-card';
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
 
-const sections = [
+const sections: SectionData[] = [
   {
     title: 'Campaigns',
     description: 'Build high-converting funnels with custom checkout flows, upsells, and A/B testing.',
@@ -23,6 +29,12 @@ const sections = [
     bg: 'bg-orange-500/10',
     border: 'border-orange-500/20',
     hoverBorder: 'hover:border-orange-500/40',
+    features: [
+      'Custom checkout flows & upsells',
+      'A/B testing & conversion optimization',
+      'Campaign Cart SDK integration',
+    ],
+    wide: true,
   },
   {
     title: 'Admin API',
@@ -93,49 +105,34 @@ const resources = [
   },
 ];
 
-function SectionCard({
-  title,
-  description,
-  href,
-  icon,
-  color,
-  bg,
-  border,
-  hoverBorder,
-}: (typeof sections)[0]) {
-  return (
-    <Link
-      href={href}
-      className={`group relative flex flex-col gap-4 rounded-xl border ${border} ${hoverBorder} bg-fd-card p-6 transition-all duration-200 hover:shadow-sm`}
-    >
-      <div className={`flex size-10 items-center justify-center rounded-md ${bg} ${color}`}>
-        {icon}
-      </div>
-      <div className="flex flex-col gap-1.5">
-        <h3 className="font-semibold text-fd-foreground flex items-center gap-2">
-          {title}
-          <ArrowRight
-            size={14}
-            className="opacity-0 -translate-x-1 transition-all duration-200 group-hover:opacity-70 group-hover:translate-x-0"
-          />
-        </h3>
-        <p className="text-sm text-fd-muted-foreground leading-relaxed">{description}</p>
-      </div>
-    </Link>
-  );
-}
+const QUICK_START_CODE = `# Fetch orders from the Admin API
+import requests
+
+response = requests.get(
+  'https://{store}.29next.store/api/admin/orders/',
+  headers={
+    'Authorization': 'Bearer {api_key}',
+    'X-29next-API-Version': '2024-04-01',
+    'Content-Type': 'application/json',
+  }
+)
+
+orders = response.json()['results']
+
+# Filter and process pending orders
+pending = [o for o in orders if o['status'] == 'pending']`;
 
 function ResourceCard({ title, description, href, icon }: (typeof resources)[0]) {
   return (
     <Link
       href={href}
-      className="group flex items-start gap-3 rounded-md border border-fd-border p-4 transition-colors duration-200 hover:bg-fd-accent/50"
+      className="group flex items-start gap-3 rounded-lg border border-fd-border p-4 transition-colors duration-200 hover:bg-fd-accent/50"
     >
       <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-fd-muted text-fd-muted-foreground">
         {icon}
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-medium text-fd-foreground group-hover:text-fd-primary transition-colors">
+        <span className="text-sm font-medium text-fd-foreground transition-colors duration-200 group-hover:text-fd-primary">
           {title}
         </span>
         <span className="text-xs text-fd-muted-foreground">{description}</span>
@@ -143,7 +140,6 @@ function ResourceCard({ title, description, href, icon }: (typeof resources)[0])
     </Link>
   );
 }
-
 
 export default function HomePage() {
   return (
@@ -170,25 +166,25 @@ export default function HomePage() {
             </div>
             <Link
               href="/docs/campaigns"
-              className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+              className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors duration-150"
             >
               Campaigns
             </Link>
             <Link
               href="/docs/admin-api"
-              className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+              className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors duration-150"
             >
               Admin API
             </Link>
             <Link
               href="/docs/storefront"
-              className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+              className="hidden sm:inline-flex px-3 py-1.5 text-sm text-fd-muted-foreground hover:text-fd-foreground transition-colors duration-150"
             >
               Storefront
             </Link>
             <Link
               href="/docs"
-              className="ml-2 inline-flex items-center gap-1.5 rounded-md border border-fd-border px-3.5 py-1.5 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors"
+              className="ml-2 inline-flex items-center gap-1.5 rounded-md border border-fd-border px-3.5 py-1.5 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors duration-150"
             >
               Get Started
             </Link>
@@ -198,10 +194,9 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden">
-          {/* Dot grid + floating orbs — hero only */}
-          <div className="pointer-events-none absolute inset-0 z-0">
-            {/* Gray dots — visible at edges, fading toward center */}
+        <MouseSpotlight className="relative overflow-hidden">
+          {/* Dot grid + floating orbs */}
+          <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
             <div
               className="absolute inset-0 mask-[radial-gradient(ellipse_at_center,transparent_20%,black_70%)]"
               style={{
@@ -210,7 +205,6 @@ export default function HomePage() {
                 opacity: 0.2,
               }}
             />
-            {/* Blue dots — visible at center, fading toward edges */}
             <div
               className="absolute inset-0 mask-[radial-gradient(ellipse_at_center,black_10%,transparent_60%)]"
               style={{
@@ -223,32 +217,68 @@ export default function HomePage() {
             <div className="absolute -bottom-40 -right-40 w-150 h-150 rounded-full bg-purple-500/3 blur-[120px]" style={{ animation: 'float2 25s ease-in-out infinite' }} />
             <div className="absolute top-1/3 left-1/2 w-100 h-100 rounded-full bg-orange-500/2 blur-[100px]" style={{ animation: 'float3 22s ease-in-out infinite' }} />
           </div>
+
           <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-12 md:pt-28 md:pb-16 flex flex-col items-center text-center gap-6">
-            <h1 className="text-4xl font-bold tracking-tight text-fd-foreground md:text-5xl lg:text-[3.25rem] lg:leading-[1.15]">
-              Build on Next Commerce
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/5 px-3.5 py-1.5 text-xs font-medium text-blue-400">
+              <span className="size-1.5 rounded-full bg-blue-400" aria-hidden="true" style={{ animation: 'pulse-ring 2s ease-out infinite' }} />
+              REST · GraphQL · Webhooks
+            </div>
+
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-[3.25rem] lg:leading-[1.15]">
+              Build on{' '}
+              <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Next Commerce
+              </span>
             </h1>
-            <p className="text-lg text-fd-foreground leading-relaxed max-w-2xl">
-              Build custom campaign funnels, high-converting checkout flows, and scalable integrations on the performance ecommerce platform.
+
+            <p className="text-lg text-fd-muted-foreground leading-relaxed max-w-2xl">
+              APIs, SDKs, and webhooks for building AI-powered commerce experiences — from headless storefronts to automated fulfillment pipelines.
             </p>
-            <div className="pt-1">
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
               <Link
                 href="/docs"
-                className="inline-flex items-center gap-2 rounded-md border border-fd-border px-5 py-2.5 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors"
+                className="inline-flex items-center gap-2 rounded-md bg-fd-primary px-5 py-2.5 text-sm font-medium text-fd-primary-foreground hover:opacity-90 transition-opacity duration-150"
               >
                 Start Building
-                <ArrowRight size={14} />
+                <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+              <Link
+                href="/docs/admin-api/reference"
+                className="inline-flex items-center gap-2 rounded-md border border-fd-border px-5 py-2.5 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors duration-150"
+              >
+                API Reference
               </Link>
             </div>
-            <div className="w-full max-w-130 pt-4">
+
+            {/* Stats row */}
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs text-fd-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Code2 size={13} className="text-blue-400" aria-hidden="true" />
+                <span>50+ REST endpoints</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Zap size={13} className="text-orange-400" aria-hidden="true" />
+                <span>22 webhook events</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Globe size={13} className="text-green-400" aria-hidden="true" />
+                <span>GraphQL storefront API</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Activity size={13} className="text-purple-400" aria-hidden="true" />
+                <span>Real-time event streaming</span>
+              </div>
+            </div>
+
+            <div className="w-full max-w-130 pt-2">
               <HeroFlow />
             </div>
           </div>
-        </section>
 
-        {/* Section Cards */}
-        <section className="relative overflow-hidden pb-16 md:pb-20">
-          {/* Dot grid background */}
-          <div className="pointer-events-none absolute inset-0 z-0">
+          {/* Section Cards — bento grid */}
+          <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
             <div
               className="absolute inset-0"
               style={{
@@ -258,7 +288,7 @@ export default function HomePage() {
               }}
             />
           </div>
-          <div className="relative mx-auto max-w-6xl px-6">
+          <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-20">
             <div className="flex flex-col gap-8">
               <div>
                 <h2 className="text-xl font-semibold text-fd-foreground">Explore the Platform</h2>
@@ -268,9 +298,54 @@ export default function HomePage() {
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {sections.map((section) => (
-                  <SectionCard key={section.title} {...section} />
+                  <SpotlightCard key={section.title} {...section} />
                 ))}
               </div>
+            </div>
+          </div>
+        </MouseSpotlight>
+
+        {/* Quick Start */}
+        <section className="border-t border-fd-border">
+          <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+            <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+              {/* Left */}
+              <div className="flex flex-col gap-6">
+                <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-fd-border px-3 py-1 text-xs font-medium text-fd-muted-foreground">
+                  <Code2 size={12} aria-hidden="true" />
+                  Quick Start
+                </span>
+                <div className="flex flex-col gap-3">
+                  <h2 className="text-2xl font-bold tracking-tight text-fd-foreground md:text-3xl">
+                    Start integrating in minutes
+                  </h2>
+                  <p className="text-fd-muted-foreground leading-relaxed">
+                    Authenticate with an API key and start making requests. Full REST and GraphQL support with comprehensive reference docs.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/docs/admin-api/reference"
+                    className="inline-flex items-center gap-2 rounded-md bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground hover:opacity-90 transition-opacity duration-150"
+                  >
+                    API Reference
+                    <ArrowRight size={14} aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href="/docs"
+                    className="inline-flex items-center gap-2 rounded-md border border-fd-border px-4 py-2 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors duration-150"
+                  >
+                    Read the Docs
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right: Code block */}
+              <DynamicCodeBlock
+                lang="python"
+                code={QUICK_START_CODE}
+                codeblock={{ title: 'orders.py' }}
+              />
             </div>
           </div>
         </section>
@@ -279,7 +354,12 @@ export default function HomePage() {
         <section className="border-t border-fd-border">
           <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
             <div className="flex flex-col gap-8">
-              <h2 className="text-xl font-semibold text-fd-foreground">Resources</h2>
+              <div>
+                <h2 className="text-xl font-semibold text-fd-foreground">Resources</h2>
+                <p className="mt-1.5 text-sm text-fd-muted-foreground">
+                  Guides and references to help you build faster.
+                </p>
+              </div>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {resources.map((resource) => (
                   <ResourceCard key={resource.title} {...resource} />
@@ -297,7 +377,7 @@ export default function HomePage() {
             © {new Date().getFullYear()} {siteConfig.companyName}
           </span>
           <div className="flex items-center gap-4">
-            <Link href="https://www.nextcommerce.com" className="text-xs text-fd-muted-foreground hover:text-fd-foreground transition-colors">
+            <Link href="https://www.nextcommerce.com" className="text-xs text-fd-muted-foreground hover:text-fd-foreground transition-colors duration-150">
               nextcommerce.com
             </Link>
           </div>
