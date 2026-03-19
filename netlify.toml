@@ -9,12 +9,6 @@
   pretty_urls = false
 
 [[redirects]]
-  from = "/"
-  to = "/docs"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/api/admin"
   to = "/docs/admin-api"
   status = 301
