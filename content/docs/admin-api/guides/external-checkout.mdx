@@ -121,7 +121,6 @@ The `ordersAddLineItemsCreate` API requires that the order initial **payment met
 Cart, Order, and Upsell line items represent the products the customer is purchasing. When an order is created, the product fulfillment location will be automatically chosen based on product stock records and inventory availability.
 
 ```json title="Specify Line Items and Currency"
-
 {
     "lines": [
         {
@@ -130,7 +129,7 @@ Cart, Order, and Upsell line items represent the products the customer is purcha
             "quantity": 1,
             "price": "33.44" // optional custom price
         }
-]
+    ]
 }
 ```
 <Callout type="idea">
@@ -141,7 +140,6 @@ Ensure you use the variant product ID for order line items. **Single variant pro
 Lines also accept an optional `subscription` object to specify a subscription that will be automatically created after the initial order is successfully created.
 
 ```json title="Subscription Line Items"
-
 "lines": [
     {
         "product_id": 1,

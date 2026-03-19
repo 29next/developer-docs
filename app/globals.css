@@ -6,13 +6,36 @@
 @source "../lib/source.ts";
 
 :root {
-  --color-fd-primary: hsl(217, 91%, 60%);
+  --color-fd-primary: #3C7DFF;
   --color-fd-primary-foreground: hsl(0, 0%, 100%);
   --color-fd-idea: oklch(65% 0.2 145);
+  --font-sans: var(--font-sans);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(80px, 60px); }
+  66% { transform: translate(-40px, 30px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-60px, -80px); }
+  66% { transform: translate(50px, -40px); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(50px, -50px); }
+  66% { transform: translate(-70px, 40px); }
 }
 
 .dark {
-  --color-fd-primary: hsl(217, 91%, 60%);
+  --color-fd-primary: #3C7DFF;
   --color-fd-primary-foreground: hsl(0, 0%, 100%);
   --color-fd-idea: oklch(65% 0.2 145);
 }
@@ -161,8 +184,8 @@ div[style*="--callout-color"] {
   --docsearch-text-color: #e5e5e5 !important;
   --docsearch-secondary-text-color: #a3a3a3 !important;
   --docsearch-subtle-color: #333 !important;
-  --docsearch-highlight-color: hsl(217, 91%, 60%) !important;
-  --docsearch-focus-color: hsl(217, 91%, 60%) !important;
+  --docsearch-highlight-color: #3C7DFF !important;
+  --docsearch-focus-color: #3C7DFF !important;
   --docsearch-icon-color: #a3a3a3 !important;
   --docsearch-container-background: rgba(0, 0, 0, 0.6) !important;
   --docsearch-modal-background: #0a0a0a !important;
@@ -217,7 +240,7 @@ div[style*="--callout-color"] {
 
 .dark .DocSearch-Hit[aria-selected="true"] a {
   background: #1a1a1a !important;
-  border-left: 2px solid hsl(217, 91%, 60%) !important;
+  border-left: 2px solid #3C7DFF !important;
 }
 
 .dark .DocSearch-Footer {

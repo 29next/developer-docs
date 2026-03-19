@@ -1,0 +1,144 @@
+/**
+ * Hero flow diagram: left nodes → center logo → right nodes
+ * with colored curved connector lines. Pure SVG, server-rendered.
+ */
+
+const LEFT_NODES = [
+  { label: 'Campaigns', color: '#f97316' },
+  { label: 'Storefront', color: '#22c55e' },
+  { label: 'Admin API', color: '#3b82f6' },
+];
+
+const RIGHT_NODES = [
+  { label: 'Fulfillment', color: '#22c55e' },
+  { label: 'Payments', color: '#3b82f6' },
+  { label: 'Attribution', color: '#a855f7' },
+];
+
+// Layout constants
+const W = 520;
+const H = 220;
+const CX = W / 2;
+const CY = H / 2;
+const NODE_W = 110;
+const NODE_H = 34;
+const LOGO_R = 28;
+const LEFT_X = 10;
+const RIGHT_X = W - NODE_W - 10;
+const SPACING = 70;
+
+function nodeY(index: number): number {
+  return CY + (index - 1) * SPACING;
+}
+
+export function HeroFlow() {
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className="w-full max-w-130 h-auto"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Connector lines — left to center */}
+      {LEFT_NODES.map((node, i) => {
+        const sy = nodeY(i);
+        const ex = CX - LOGO_R - 2;
+        return (
+          <path
+            key={`l-${i}`}
+            d={`M ${LEFT_X + NODE_W} ${sy} C ${LEFT_X + NODE_W + 60} ${sy}, ${ex - 60} ${CY}, ${ex} ${CY}`}
+            stroke={node.color}
+            strokeWidth={1.5}
+            strokeOpacity={0.5}
+          />
+        );
+      })}
+
+      {/* Connector lines — center to right */}
+      {RIGHT_NODES.map((node, i) => {
+        const sy = nodeY(i);
+        const sx = CX + LOGO_R + 2;
+        return (
+          <path
+            key={`r-${i}`}
+            d={`M ${sx} ${CY} C ${sx + 60} ${CY}, ${RIGHT_X - 60} ${sy}, ${RIGHT_X} ${sy}`}
+            stroke={node.color}
+            strokeWidth={1.5}
+            strokeOpacity={0.5}
+          />
+        );
+      })}
+
+      {/* Center logo */}
+      <image
+        href="/icon.png"
+        x={CX - 20}
+        y={CY - 20}
+        width={40}
+        height={40}
+      />
+
+      {/* Left node pills */}
+      {LEFT_NODES.map((node, i) => {
+        const y = nodeY(i);
+        return (
+          <g key={`ln-${i}`}>
+            <rect
+              x={LEFT_X}
+              y={y - NODE_H / 2}
+              width={NODE_W}
+              height={NODE_H}
+              rx={8}
+              className="fill-fd-card stroke-fd-border"
+              strokeWidth={1}
+            />
+            <text
+              x={LEFT_X + NODE_W / 2}
+              y={y + 1}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="fill-fd-foreground"
+              fontSize={12}
+              fontWeight={500}
+              fontFamily="var(--font-sans, system-ui)"
+            >
+              {node.label}
+            </text>
+            <circle cx={LEFT_X + 14} cy={y} r={3.5} fill={node.color} fillOpacity={0.7} />
+          </g>
+        );
+      })}
+
+      {/* Right node pills */}
+      {RIGHT_NODES.map((node, i) => {
+        const y = nodeY(i);
+        return (
+          <g key={`rn-${i}`}>
+            <rect
+              x={RIGHT_X}
+              y={y - NODE_H / 2}
+              width={NODE_W}
+              height={NODE_H}
+              rx={8}
+              className="fill-fd-card stroke-fd-border"
+              strokeWidth={1}
+            />
+            <text
+              x={RIGHT_X + NODE_W / 2}
+              y={y + 1}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="fill-fd-foreground"
+              fontSize={12}
+              fontWeight={500}
+              fontFamily="var(--font-sans, system-ui)"
+            >
+              {node.label}
+            </text>
+            <circle cx={RIGHT_X + NODE_W - 14} cy={y} r={3.5} fill={node.color} fillOpacity={0.7} />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
