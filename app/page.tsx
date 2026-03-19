@@ -245,7 +245,7 @@ export default function HomePage() {
                 <ArrowRight size={14} aria-hidden="true" />
               </Link>
               <Link
-                href="/docs/admin-api/reference"
+                href="/docs/admin-api"
                 className="inline-flex items-center gap-2 rounded-md border border-fd-border px-5 py-2.5 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors duration-150"
               >
                 API Reference
@@ -325,7 +325,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-wrap gap-3">
                   <Link
-                    href="/docs/admin-api/reference"
+                    href="/docs/admin-api"
                     className="inline-flex items-center gap-2 rounded-md bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground hover:opacity-90 transition-opacity duration-150"
                   >
                     API Reference
