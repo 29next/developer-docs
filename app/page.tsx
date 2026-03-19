@@ -150,12 +150,12 @@ export default function HomePage() {
     <div className="relative flex flex-col min-h-screen bg-fd-background">
       {/* Nav */}
       <header className="sticky top-0 z-50 border-b border-fd-border bg-fd-background/80 backdrop-blur-md">
-        <div className="mx-auto grid h-14 max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-6">
+        <div className="mx-auto flex sm:grid h-14 max-w-6xl sm:grid-cols-[auto_1fr_auto] items-center justify-between gap-4 px-6">
           {/* Left: Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img src="/logo-light.png" alt={siteConfig.companyName} width={105} height={21} className="dark:hidden" />
             <img src="/logo-dark.png" alt={siteConfig.companyName} width={105} height={21} className="hidden dark:block" />
-            <span className="text-xs font-medium text-fd-muted-foreground border-l border-fd-border pl-3">
+            <span className="hidden sm:inline text-xs font-medium text-fd-muted-foreground border-l border-fd-border pl-3">
               Developers
             </span>
           </Link>
