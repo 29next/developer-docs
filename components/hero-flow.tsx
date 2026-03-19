@@ -1,6 +1,6 @@
 /**
  * Hero flow diagram: left nodes → center logo → right nodes
- * with colored curved connector lines. Pure SVG, server-rendered.
+ * with colored curved connector lines and animated flowing dots.
  */
 
 const LEFT_NODES = [
@@ -31,6 +31,18 @@ function nodeY(index: number): number {
   return CY + (index - 1) * SPACING;
 }
 
+function leftPath(i: number): string {
+  const sy = nodeY(i);
+  const ex = CX - LOGO_R - 2;
+  return `M ${LEFT_X + NODE_W} ${sy} C ${LEFT_X + NODE_W + 60} ${sy}, ${ex - 60} ${CY}, ${ex} ${CY}`;
+}
+
+function rightPath(i: number): string {
+  const sy = nodeY(i);
+  const sx = CX + LOGO_R + 2;
+  return `M ${sx} ${CY} C ${sx + 60} ${CY}, ${RIGHT_X - 60} ${sy}, ${RIGHT_X} ${sy}`;
+}
+
 export function HeroFlow() {
   return (
     <svg
@@ -40,34 +52,54 @@ export function HeroFlow() {
       xmlns="http://www.w3.org/2000/svg"
     >
       {/* Connector lines — left to center */}
-      {LEFT_NODES.map((node, i) => {
-        const sy = nodeY(i);
-        const ex = CX - LOGO_R - 2;
-        return (
+      {LEFT_NODES.map((node, i) => (
+        <g key={`l-${i}`}>
           <path
-            key={`l-${i}`}
-            d={`M ${LEFT_X + NODE_W} ${sy} C ${LEFT_X + NODE_W + 60} ${sy}, ${ex - 60} ${CY}, ${ex} ${CY}`}
+            id={`lp-${i}`}
+            d={leftPath(i)}
             stroke={node.color}
             strokeWidth={1.5}
             strokeOpacity={0.5}
           />
-        );
-      })}
+          {/* Animated dot 1 */}
+          <circle r={2.5} fill={node.color} fillOpacity={0.9}>
+            <animateMotion dur={`${2.5 + i * 0.4}s`} repeatCount="indefinite">
+              <mpath href={`#lp-${i}`} />
+            </animateMotion>
+          </circle>
+          {/* Animated dot 2 (staggered) */}
+          <circle r={2} fill={node.color} fillOpacity={0.5}>
+            <animateMotion dur={`${2.5 + i * 0.4}s`} begin={`${1.2 + i * 0.2}s`} repeatCount="indefinite">
+              <mpath href={`#lp-${i}`} />
+            </animateMotion>
+          </circle>
+        </g>
+      ))}
 
       {/* Connector lines — center to right */}
-      {RIGHT_NODES.map((node, i) => {
-        const sy = nodeY(i);
-        const sx = CX + LOGO_R + 2;
-        return (
+      {RIGHT_NODES.map((node, i) => (
+        <g key={`r-${i}`}>
           <path
-            key={`r-${i}`}
-            d={`M ${sx} ${CY} C ${sx + 60} ${CY}, ${RIGHT_X - 60} ${sy}, ${RIGHT_X} ${sy}`}
+            id={`rp-${i}`}
+            d={rightPath(i)}
             stroke={node.color}
             strokeWidth={1.5}
             strokeOpacity={0.5}
           />
-        );
-      })}
+          {/* Animated dot 1 */}
+          <circle r={2.5} fill={node.color} fillOpacity={0.9}>
+            <animateMotion dur={`${2.5 + i * 0.4}s`} repeatCount="indefinite">
+              <mpath href={`#rp-${i}`} />
+            </animateMotion>
+          </circle>
+          {/* Animated dot 2 (staggered) */}
+          <circle r={2} fill={node.color} fillOpacity={0.5}>
+            <animateMotion dur={`${2.5 + i * 0.4}s`} begin={`${1.2 + i * 0.2}s`} repeatCount="indefinite">
+              <mpath href={`#rp-${i}`} />
+            </animateMotion>
+          </circle>
+        </g>
+      ))}
 
       {/* Center logo */}
       <image
