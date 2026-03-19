@@ -274,7 +274,7 @@ Shows element only when specific profile is active.
 Applies a profile on page load (preserves existing cart).
 
 **Example:**
-```
+```text
 https://example.com/checkout?profile=black_friday
 ```
 
@@ -283,7 +283,7 @@ https://example.com/checkout?profile=black_friday
 Applies a profile on page load (clears cart first).
 
 **Example:**
-```
+```text
 https://example.com/checkout?forceProfile=vip
 ```
 
@@ -292,7 +292,7 @@ https://example.com/checkout?forceProfile=vip
 Alternative parameter name for profile activation.
 
 **Example:**
-```
+```text
 https://example.com/checkout?packageProfile=sale_20
 ```
 

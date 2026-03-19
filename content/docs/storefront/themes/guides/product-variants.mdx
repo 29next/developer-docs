@@ -35,7 +35,7 @@ With the variant choices now available in the template, it is now necessary to m
 
 Use the `product.data` object in your template to generate a detailed json object of the product images, variant attributes, variant prices, and variant availability.
 
-```django
+```django title="Map Choices to Variants"
 {{ product.data|json_script:"product-data" }}
 ```
 

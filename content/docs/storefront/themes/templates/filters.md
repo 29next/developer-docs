@@ -6,16 +6,16 @@ title: 'Filter Reference'
 
 ### dictsort
 Takes a list of dictionaries and returns that list sorted by the key given in the argument.
-```django
+```django title="dictsort"
 {{ value|dictsort:"name" }}
 ```
 For example:
-```django
+```django title="dictsort"
 {{ value|dictsort:"category" }}
 ```
 If value is:
 
-```json
+```json title="dictsort"
 [
     {'category': 'B', 'count': 4},
     {'category': 'C', 'count': 22},
@@ -23,7 +23,7 @@ If value is:
 ]
 ```
 then the output would be:
-```json
+```json title="dictsort Output"
 [
     {'category': 'A', 'count': 12},
     {'category': 'B', 'count': 4},
@@ -36,7 +36,7 @@ Takes a list of dictionaries and returns that list sorted in reverse order by th
 ### first
 Returns the first item in a list.
 
-```django
+```django title="first"
 {{ value|first }}
 ```
 
@@ -46,7 +46,7 @@ For example, if value is the list ['a', 'b', 'c'], the output will be 'a'.
 
 Joins a list with a string.
 
-```django
+```django title="join"
 {{ value|join:" - " }}
 ```
 
@@ -56,7 +56,7 @@ For example, if value is the list ['a', 'b', 'c'], the output will be the string
 
 Returns the last item in a list.
 
-```django
+```django title="last"
 {{ value|last }}
 ```
 For example, if value is the list ['a', 'b', 'c', 'd'], the output will be the string "d".
@@ -65,7 +65,7 @@ For example, if value is the list ['a', 'b', 'c', 'd'], the output will be the s
 
 Returns a slice of the list.
 
-```django
+```django title="slice"
 {{ some_list|slice:":2" }}
 ```
 For example, if some_list is ['a', 'b', 'c'], and slice to first 2, the output will be ['a', 'b'].
@@ -75,13 +75,13 @@ For example, if some_list is ['a', 'b', 'c'], and slice to first 2, the output w
 
 Recursively takes a self-nested list and returns an HTML unordered list – WITHOUT opening and closing  `<ul>` tags. The list is assumed to be in the proper format.
 
-```django
+```django title="unordered_list"
 {{ value|unordered_list }}
 ```
 
 For example, if var contains `['States', ['Kansas', ['Lawrence', 'Topeka'], 'Illinois']]`, then `{{ var|unordered_list }}` would return:
 
-```django
+```django title="unordered_list"
 <li>States
     <ul>
         <li>Kansas
@@ -101,14 +101,14 @@ For example, if var contains `['States', ['Kansas', ['Lawrence', 'Topeka'], 'Ill
 
 ### default
 If value evaluates to False, uses the given default. Otherwise, uses the value.
-```django
+```django title="default"
 {{ value|default:"something" }}
 ```
 For example, If value is "" (an empty string), the output will be something.
 
 ### default_if_none
 If (and only if) value is None, uses the given default. Otherwise, uses the value. Note that if an empty string is given, the default value will not be used. Use the default filter if you want to fallback for empty strings.
-```django
+```django title="default_if_none"
 {{ value|default_if_none:"something" }}
 ```
 For example, if value is None, the output will be something.
@@ -118,7 +118,7 @@ For example, if value is None, the output will be something.
 
 ### date
 Formats a date according to the given format.
-```django
+```django title="date"
 {{ value|date:"D d M Y" }}
 ```
 
@@ -127,13 +127,13 @@ For example, `{{ value|date:"D d M Y" }}` this would convert a date to this form
 ### escape
 Escapes a string’s HTML. Specifically, it makes these replacements:
 < is converted to &lt;> is converted to &gt;' (single quote) is converted to &#x27;" (double quote) is converted to &quot;& is converted to &amp;
-```django
+```django title="escape"
 {{ title|escape }}
 ```
 
 ### escapejs
 Escapes characters for use in JavaScript strings. This does not make the string safe for use in HTML or JavaScript template literals, but does protect you from syntax errors when using templates to generate JavaScript/JSON.
-```django
+```django title="escapejs"
 {{ value|escapejs }}
 ```
 For example, if value is <b>escaping</b>, the output will be \\u003Cb\\u003Eescaping\\u003C/b\\u003E
@@ -143,13 +143,13 @@ For example, if value is <b>escaping</b>, the output will be \\u003Cb\\u003Eesca
 
 Safely outputs a variable object as JSON, wrapped in a `<script>` tag, ready for Javascript.
 
-```django
+```django title="json_script"
 {{ value|json_script:"my-data" }}
 ```
 
 For example, if value is the dictionary `{'hello': 'world'}`, the output will be:
 
-```html
+```html title="json_script"
 <script id="my-data" type="application/json">{"hello": "world"}</script>
 ```
 
@@ -157,7 +157,7 @@ For example, if value is the dictionary `{'hello': 'world'}`, the output will be
 
 Returns the value turned into a list. For a string, it’s a list of characters. For an integer, the argument is cast to a string before creating a list.
 
-```django
+```django title="make_list"
 {{ value|make_list }}
 ```
 
@@ -167,7 +167,7 @@ Returns the value turned into a list. For a string, it’s a list of characters.
 
 ### language_name_local
 Returns a localized name of the language.
-```django
+```django title="language_name_local"
 {{ LANGUAGE_CODE|language_name_local }}
 ```
 For example, if the value is `fr`, the output would be `Français`.
@@ -177,7 +177,7 @@ For example, if the value is `fr`, the output would be `Français`.
 
 ### divisibleby
 Returns True if the value is divisible by the argument.
-```django
+```django title="divisibleby"
 {{ value|divisibleby:"3" }}
 ```
 For example, if value is 21, the output would be True.
@@ -187,7 +187,7 @@ For example, if value is 21, the output would be True.
 
 Allows you to specify the number of decimal places to format a float to.
 
-```django
+```django title="floatformat"
 {{ value|floatformat:2 }}
 ```
 
@@ -198,7 +198,7 @@ For example, if value is 34.2342 and use floatformat:2, the output will be 34.23
 
 ### linebreaks
 Replaces line breaks in plain text with appropriate HTML; a single newline becomes an HTML line break `<br>` and a new line followed by a blank line becomes a paragraph break `</p>`.
-```django
+```django title="linebreaks"
 {{ value|linebreaks }}
 ```
 For example, if value is Joel\nis a slug, the output will be `<p>Joel<br>is a slug</p>`.
@@ -207,14 +207,14 @@ For example, if value is Joel\nis a slug, the output will be `<p>Joel<br>is a sl
 
 Converts all newlines in a piece of plain text to HTML line breaks `<br>`. If value is Sandy is a slug, the output will be ```Sandy<br>is a slug```.
 
-```django
+```django title="linebreaksbr"
 {{ value|linebreaksbr }}
 ```
 
 ### truncatewords_html
 Similar to truncatechars, except that it is aware of HTML tags. Any tags that are opened in the string and not closed before the truncation point are closed immediately after the truncation.
 
-```django
+```django title="truncatewords_html"
 {{ value|truncatechars_html:7 }}
 ```
 For example, if value is `<p>Sandy is a slug</p>`, the output will be `<p>Sandy i…</p>`.
@@ -225,7 +225,7 @@ For example, if value is `<p>Sandy is a slug</p>`, the output will be `<p>Sandy 
 
 ### capfirst
 Capitalizes the first character of the value.
-```django
+```django title="capfirst"
 {{ value|capfirst }}
 ```
 For example,  if the first character is not a letter, this filter has no effect. For example, if value is chicago, the output will be Chicago.
@@ -233,7 +233,7 @@ For example,  if the first character is not a letter, this filter has no effect.
 
 ### cut
 Removes all values of arg from the given string.
-```django
+```django title="cut"
 {{ value|cut:" " }}
 ```
 For example, if value is String with spaces, the output will be Stringwithspaces.
@@ -244,7 +244,7 @@ For example, if value is String with spaces, the output will be Stringwithspaces
 
 Returns the length of the value. This works for both strings and lists.
 
-```django
+```django title="length"
 {{ value|length }}
 ```
 For example, if value is `['a', 'b', 'c', 'd']` or "abcd", the output will be 4.
@@ -253,7 +253,7 @@ For example, if value is `['a', 'b', 'c', 'd']` or "abcd", the output will be 4.
 
 Returns True if the value’s length is the argument, or False otherwise.
 
-```django
+```django title="length_is"
 {{ value|length_is:"4" }}
 ```
 For example, if value is ['a', 'b', 'c', 'd'] or "abcd", the output will be True.
@@ -263,18 +263,18 @@ For example, if value is ['a', 'b', 'c', 'd'] or "abcd", the output will be True
 
 Displays text with line numbers.
 
-```django
+```django title="linenumbers"
 {{ value|linenumbers }}
 ```
 For example, if value is:
-```django
+```django title="linenumbers"
 one
 two
 three
 ```
 the output will be:
 
-```django
+```django title="linenumbers Output"
 1. one
 2. two
 3. three
@@ -284,7 +284,7 @@ the output will be:
 
 ### lower
 Converts a string into all lowercase.
-```django
+```django title="lower"
 {{ value|lower }}
 ```
 For example, if value is Totally LOVING this Product!, the output will be totally loving this product!.
@@ -296,7 +296,7 @@ For example, if value is the string "Sandy", the output would be the list ['S', 
 ### pluralize
 Returns a plural suffix if the value is not 1, '1', or an object of length 1. By default, this suffix is 's'.
 
-```
+```jinja title="pluralize"
 You have { num_messages }} message {{ num_messages|pluralize }}
 ```
 
@@ -305,7 +305,7 @@ You have { num_messages }} message {{ num_messages|pluralize }}
 Converts to ASCII. Converts spaces to hyphens. Removes characters that aren’t alphanumerics, underscores, or hyphens. Converts to lowercase. Also strips
 leading and trailing whitespace.
 
-```django
+```django title="slugify"
 {{ value|slugify }}
 ```
 
@@ -315,7 +315,7 @@ For example, if value is "Sandy is a slug", the output will be "sandy-is-a-slug"
 
 Converts a string into titlecase by making words start with an uppercase character and the remaining characters lowercase. This tag makes no effort to keep “trivial words” in lowercase.
 
-```django
+```django title="title"
 {{ value|title }}
 ```
 For example, if value is "my FIRST post", the output will be "My First Post".
@@ -324,7 +324,7 @@ For example, if value is "my FIRST post", the output will be "My First Post".
 ### truncatewords
 Truncates a string after a certain number of words based on the argument.
 
-```django
+```django title="truncatewords"
 {{ value|truncatewords:2 }}
 ```
 For example, if value is "Sandy is a slug", the output will be "Sandy is …".
@@ -332,14 +332,14 @@ For example, if value is "Sandy is a slug", the output will be "Sandy is …".
 
 ### upper
 Converts a string into all uppercase.
-```django
+```django title="upper"
 {{ value|upper }}
 ```
 For example, if value is "Sandy is a slug", the output will be "SANDY IS A SLUG".
 
 ### urlencode
 Escapes a value for use in a URL.
-```django
+```django title="urlencode"
 {{ value|urlencode }}
 ```
 For example, if value is "https://www.example.org/", the output will be "https%3A%2F%2Fwww.example.org%2F".
@@ -349,7 +349,7 @@ For example, if value is "https://www.example.org/", the output will be "https%3
 
 Returns the number of words.
 
-```django
+```django title="wordcount"
 {{ value|wordcount }}
 ```
 
@@ -359,7 +359,7 @@ For example, if value is "Joel is a slug", the output will be 4.
 
 ### asset_url
 The asset_url filter can be applied to theme asset files to generate CDN link to the asset for loading in the template HTML. The file argument is relative to the assets directory of the theme.
-```django
+```django title="asset_url"
 {{ 'style.css'|asset_url }}
 ```
 
@@ -368,56 +368,56 @@ The asset_url filter can be applied to theme asset files to generate CDN link to
 
 ### add
 Adds the argument to the value.
-```django
+```django title="add"
 {{ value|add:2 }}
 ```
 For example, if value is 4, then the output will be 6. The filter will try to force both values to integers. If this fails, it’ll attempt to add the values together anyway. If it fails, the result will be an empty string.
 
 ### abs
 Returns the absolute value of a number.
-```django
+```django title="abs"
 {{ value|abs }}
 ```
 For example, if value is -3, the output would be 3. The filter will return the absolute value.
 
 ### atleast
 Limits a number to a minimum value.
-```django
+```django title="atleast"
 {{ value|atleast:5 }}
 ```
 For example, if the value is 3, the filter would return 5.
 
 ### atmost
 Limits a number to a maximum value.
-```django
+```django title="atmost"
 {{ value|atmost:5 }}
 ```
 For example, if the value is 7, the filter would return 5.
 
 ### ceil
 Rounds a number up to the nearest integer.
-```django
+```django title="ceil"
 {{ value|ceil }}
 ```
 For example, if the value was 1.2, the filter would return 2.
 
 ### dividedby
 Divides a number by a given number.
-```django
+```django title="dividedby"
 {{ value|dividedby:3 }}
 ```
 For example, if the value was 9, the filter would return 3.
 
 ### floor
 Rounds a number down to the nearest integer.
-```django
+```django title="floor"
 {{ value|floor }}
 ```
 For example, if the value was 1.2, the filter would return 1.
 
 ### minus
 Subtracts a given number from another number.
-```django
+```django title="minus"
 {{ value|minus:2.5 }}
 ```
 
@@ -425,14 +425,14 @@ For example, if the value was 5, the filter would return 2.5.
 
 ### modulo
 Returns the remainder of dividing a number by a given number.
-```django
+```django title="modulo"
 {{ value|modulo:5 }}
 ```
 For example, if the value was 12, the filter would return 2.
 
 ### plus
 Adds two numbers.
-```django
+```django title="plus"
 {{ value|plus:5 }}
 ```
 
@@ -440,14 +440,14 @@ For example, if the value was 5, the filter would return 10.
 
 ### round
 Rounds a number to the nearest integer.
-```django
+```django title="round"
 {{ value|round }}
 ```
 For example, if the value was 2.7, the filter would return 3.
 
 ### times
 Multiplies a number by a given number.
-```django
+```django title="times"
 {{ value|times:3 }}
 ```
 For example if the value was 2, the filter would return 9.

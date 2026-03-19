@@ -406,7 +406,7 @@ function updateTierComparison(variantKey) {
 
 Users can link directly to specific tiers:
 
-```
+```text
 https://yoursite.com/product?profile=buy_2
 https://yoursite.com/product?forceProfile=buy_3  // Clears cart first
 ```

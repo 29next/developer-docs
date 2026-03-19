@@ -132,7 +132,7 @@ To send Campaign Cart analytics events to Google Analytics 4:
 
 ### Complete GA4 Configuration Example
 
-```
+```text
 Tag Type: Google Analytics: GA4 Event
 Measurement ID: G-XXXXXXXXXX
 Event Name: {{DL - Event}}

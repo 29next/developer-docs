@@ -19,14 +19,14 @@ Variables look like this: `{{ variable }}`  and contain the content the template
 <Tabs items={['Template', 'Result']}>
 <Tab value="Template">
 
-```django
+```django title="Variables"
 <h1>Hello {{ customer.name }} !</h1>
 ```
 
 </Tab>
 <Tab value="Result">
 
-```html
+```html title="Variables"
 <h1>Hello John!</h1>
 ```
 
@@ -41,14 +41,14 @@ Filters allow you to modify the output of a variables and look like this `{{ cus
 <Tabs items={['Template', 'Result']}>
 <Tab value="Template">
 
-```django
+```django title="Filters"
 <h1>Hello {{ customer.name|title }}!</h1>
 ```
 
 </Tab>
 <Tab value="Result">
 
-```html
+```html title="Result"
 <h1>Hello John!</h1>
 ```
 
@@ -63,7 +63,7 @@ Tags can do many things such as control flow, iterations, template inheritance, 
 <Tabs items={['Template', 'Result']}>
 <Tab value="Template">
 
-```django
+```django title="Tags"
 <ul>
 {% if products %}
     {% for product in products %}
@@ -78,7 +78,7 @@ Tags can do many things such as control flow, iterations, template inheritance, 
 </Tab>
 <Tab value="Result">
 
-```html
+```html title="Result"
 <ul>
     <li>Product A</li>
     <li>Product B</li>

@@ -3,6 +3,7 @@ title: Apps
 sidebar_title: Apps
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
+import { Cards, Card } from 'fumadocs-ui/components/card';
 
 <Callout type="info">
 Apps and supporting tools are in Public Beta, if you have questions or run into any issues, don't hesitate to reach out to support@29next.com. More documentation, more examples, and more tools are on the way.
@@ -37,4 +38,30 @@ import DevelopmentStore from '../../_snippets/_offer-development-store.mdx';
 
 ### App Developer Reference Guides
 
-
+<Cards>
+  <Card
+    title="Server to Server Apps"
+    description="Use OAuth, Admin APIs, and Webhooks to build fully external integrations."
+    href="/docs/apps/guides/server-to-server-apps"
+  />
+  <Card
+    title="Storefront Extension Apps"
+    description="Extend storefront themes with event tracking and app snippets."
+    href="/docs/apps/guides/storefront-extension"
+  />
+  <Card
+    title="Dispute Service Apps"
+    description="Manage payment disputes and chargebacks on behalf of merchants."
+    href="/docs/apps/guides/dispute-service"
+  />
+  <Card
+    title="Fulfillment Service Apps"
+    description="Manage fulfillment of physical products between providers and merchants."
+    href="/docs/apps/guides/fulfillment-service"
+  />
+  <Card
+    title="Marketing Attribution Apps"
+    description="Connect conversion events with sales channels across storefront, campaigns, and API."
+    href="/docs/apps/guides/marketing-attribution"
+  />
+</Cards>

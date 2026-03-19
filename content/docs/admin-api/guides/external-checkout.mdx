@@ -140,7 +140,7 @@ Ensure you use the variant product ID for order line items. **Single variant pro
 
 Lines also accept an optional `subscription` object to specify a subscription that will be automatically created after the initial order is successfully created.
 
-```json
+```json title="Subscription Line Items"
 
 "lines": [
     {
@@ -169,7 +169,7 @@ The `user` object on carts/orders represents the **customer** which includes the
 <Callout type="info">
 Users are first checked for an existing user by `email` before creating a new user. Successive `cartsCreate` and `ordersCreate` API requests with the same user details will reference the same user.
 </Callout>
-```json
+```json title="User Detail"
 "user":{
     "first_name": "John",
     "last_name": "Doe",
@@ -187,7 +187,7 @@ Users are first checked for an existing user by `email` before creating a new us
 ### Cart / Order Attribution Detail
 Cart and Order `attribution` object sets the [marketing attribution](https://docs.29next.com/features/marketing-attribution) on the order for tracking the source of orders and use in orders reporting. You can also pass in [metadata](https://docs.29next.com/start-here/technical-settings/metadata-fields) fields that are configured on the store to track custom attribution parameters and integrate external tracking platforms.
 
-```json
+```json title="Attribution Detail"
 "attribution": {
     "funnel": "Funnel Offer V2",
     "metadata": {
@@ -198,7 +198,7 @@ Cart and Order `attribution` object sets the [marketing attribution](https://doc
 
 ### Order Shipping Detail
 
-```json
+```json title="Shipping Detail"
 "shipping_code": "default",
 "shipping_price": "5.48",
 ```
@@ -210,7 +210,7 @@ The `shipping_address` object on the order represents the address where the orde
 <Callout type="idea">
 Use `billing_same_as_shipping_address` to forego having to pass a full duplicate address for `billing_address`.
 </Callout>
-```json
+```json title="Address Detail"
 "shipping_address": {
     "first_name": "John",
     "last_name": "Doe",
@@ -234,7 +234,7 @@ The order `payment_method` and `payment_details` objects work in tandem to speci
 The example below uses a [Test Card Token](/docs/admin-api/guides/testing-guide) to create a **Test Order**.
 
 
-```json
+```json title="Payment Detail"
 "payment_method": "card_token",
 "payment_details": {
     "card_token": "test_card", // See iFrame Payment Form Guide

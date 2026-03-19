@@ -204,21 +204,21 @@ console.log(QuantityPackageSwapper.maps);
 ## Example Workflow
 
 ### Initial State
-```
+```text
 HTML:     package 2, quantity 1
 Cart:     empty
 Display:  Shows package 2 data
 ```
 
 ### User Action: Click + (3 times)
-```
+```text
 Quantity: 1 → 2 → 3 → 4
 Package:  2 → 3 → 4 → 20 (auto-swapped)
 Cart:     Updates to package 20, quantity 4
 ```
 
 ### Page Refresh
-```
+```text
 HTML:     package 2, quantity 1 (static)
 Cart:     package 20, quantity 4 (from session)
 ↓ Script runs ↓

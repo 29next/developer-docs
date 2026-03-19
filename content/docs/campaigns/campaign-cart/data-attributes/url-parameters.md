@@ -233,7 +233,7 @@ Track campaigns with URLs like:
 
 Parameters persist throughout the entire session:
 
-```
+```text
 Page 1: ?banner=n&theme=dark
   → Stores: banner=n, theme=dark
 

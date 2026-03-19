@@ -165,7 +165,7 @@ When a meta tag like `<meta name="next-analytics-view-item" content="123">` is p
 
 ### Event Control Hierarchy
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────┐
 │  LEVEL 1: Provider-Specific blockedEvents (Most Granular)          │
 │  Blocks event for THAT PROVIDER ONLY                               │

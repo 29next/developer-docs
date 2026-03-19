@@ -9,7 +9,7 @@ All apps start in a `private` state while the app developer is building and test
 
 You may also want to trigger the install flow from your app's UI, to do this you can add a form to build the install link for your user to start the install flow on their store.
 
-```python title="Install Link"
+```bash title="Install Link"
 https://{store_subdomain}.29next.store/dashboard/apps/install-app/?client_id={client_id}
 ```
 

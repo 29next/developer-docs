@@ -8,7 +8,7 @@ The Next Commerce JS SDK includes a comprehensive debug overlay system that help
 
 Add the `?debugger=true` parameter to any page URL:
 
-```
+```text
 https://yoursite.com/checkout?debugger=true
 ```
 
@@ -300,7 +300,7 @@ window.dispatchEvent(new CustomEvent('debug:update-content'));
 This happens when debug mode is not enabled. Solutions:
 
 1. **Add the URL parameter:**
-   ```
+   ```text
    https://yoursite.com?debugger=true
    ```
 

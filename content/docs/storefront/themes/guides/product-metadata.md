@@ -12,7 +12,7 @@ Product metadata lets you add custom data for products to use in theme templates
 
 Product metadata values are accessible in theme templates through their metadata `key`.
 
-```django
+```django title="Template Access"
 {{ product.metadata.<key> }}
 ```
 
@@ -30,7 +30,7 @@ In your store Metadata settings, create a new Metadata Definition for your tagli
 
 In your theme's product template, add the code below to render the tagline by accessing it with a template variable.
 
-```django
+```django title="Example"
 {{ product.metadata.tagline }}
 ```
 
