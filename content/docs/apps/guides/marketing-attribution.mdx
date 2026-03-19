@@ -7,9 +7,7 @@ tags:
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Marketing attribution apps enable marketing attribution platforms to attribute orders across all commerce channels — storefront, campaigns, Admin API, and subscription renewals — back to the ads and campaigns that drove them.
-
-To provide full attribution coverage, apps need to handle two complementary flows:
+Marketing attribution apps connect conversion events with sales channels across storefront, campaigns, and API.
 
 1. **Storefront Order Attribution** — Use [Event Tracking](/docs/apps/event-tracking) and the [GraphQL Storefront API](/docs/storefront/graphql) to capture platform-specific identifiers from the visitor's browser and store them as attribution metadata on the cart.
 2. **Campaigns & API Order Attribution** — Subscribe to [Webhooks](/docs/webhooks) to receive order events server-side and extract the stored attribution metadata for conversion tracking.
