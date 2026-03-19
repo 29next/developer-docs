@@ -14,10 +14,6 @@ Global objects are available across all templates and pages enabling theme devel
 
 Returns a list of active storefront currencies you can iterate over, see [currency](#currency).
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
 ```django title="Example Storefront Change Currency Form"
 {% if currencies and currencies|length > 1 %}
 <li>
@@ -35,18 +31,11 @@ Returns a list of active storefront currencies you can iterate over, see [curren
 {% endif %}
 ```
 
-  </div>
-</details>
-
 
 ### languages_active_storefront
 
 Returns a list of active storefront languages you can iterate over, see [language](#language).
 
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Storefront Change Language Form"
 {% if languages_active_storefront %}
@@ -66,18 +55,11 @@ Returns a list of active storefront languages you can iterate over, see [languag
 {% endif %}
 ```
 
-  </div>
-</details>
-
 ### menus
 
 
 Allows you to access a menu's items by it's code to iterate over to generate a menu from the backend, see [menu items](#items-menu).
 
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Dynamic Menu"
 {% for item in menus.header_menu.items %}
@@ -120,16 +102,10 @@ Allows you to access a menu's items by it's code to iterate over to generate a m
 <Callout type="idea">
 Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 nested menu item levels, see child and grandchild above.
 </Callout>
-  </div>
-</details>
 
 
 ### products
 Returns a list of products you can iterate over, see [product](#product).
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Storefront Products Query and Loop"
 {% where products 'title' 'contains' 'featured' as products_filtered %}
@@ -160,16 +136,9 @@ Returns a list of products you can iterate over, see [product](#product).
 {% endfor %}
 ```
 
-  </div>
-</details>
-
 
 ### product_categories
 Returns a list of product categories you can iterate over, see [product_category](#product_category).
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Storefront Product Categories Query and Loop"
 {% where product_categories 'id' 'exact' 1 as homepage_categories %}
@@ -194,15 +163,8 @@ Returns a list of product categories you can iterate over, see [product_category
 {% endfor %}
 ```
 
-  </div>
-</details>
-
 ### posts
 Returns a list of blog posts you can iterate over, see [post](#post).
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Storefront Recent Blog Posts Query and Loop"
 {% for post in posts|slice:"3" %}
@@ -224,17 +186,10 @@ Returns a list of blog posts you can iterate over, see [post](#post).
 {% endfor %}
 ```
 
-  </div>
-</details>
-
 ### post_categories
 
 Returns a list of post categories you can iterate over, see [post_category](#post_category).
 
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Storefront Post Categories Query and Loop"
 <ul>
@@ -244,35 +199,21 @@ Returns a list of post categories you can iterate over, see [post_category](#pos
 </ul>
 ```
 
-  </div>
-</details>
-
 
 ### privacy_policy
 
 Content from store Privacy Policy settings, typically used in a "Privacy Policy" page to automatically pull content in from settings.
 
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
+```django title="privacy_policy"
 {{ privacy_policy }}
 ```
-
-  </div>
-</details>
 
 
 
 ### request
 
 The current session active request context.
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Request Object Usage"
 <!DOCTYPE html>
@@ -282,9 +223,6 @@ The current session active request context.
     <link rel="alternate" hreflang="{{ request.LANGUAGE_CODE }}" href="https://{{ request.get_host }}{{ request.path }}" />
 </head>
 ```
-
-  </div>
-</details>
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -298,10 +236,6 @@ The current session active request context.
 
 Theme settings object with stored theme settings values as properties. See [theme settings](/docs/storefront/themes/settings) docs.
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
 ```django title="Example Colors Styles From Theme Settings"
 <style>
 :root {
@@ -311,16 +245,9 @@ Theme settings object with stored theme settings values as properties. See [them
 </style>
 ```
 
-  </div>
-</details>
-
 ### store
 
 Returns the store object with general information about the store and the contact details.
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Store Object Usage"
 <address>
@@ -332,8 +259,6 @@ Returns the store object with general information about the store and the contac
 </address>
 <p><a href="mailto:{{ store.email }}">Email Support</a></p>
 ```
-</div>
-</details>
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -352,10 +277,6 @@ Returns the store object with general information about the store and the contac
 ### storefront_geos
 
 Returns a list of configured markets, see [geos](#geo).
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Storefront Geo Switcher"
 {% if storefront_geos and storefront_geos|length > 1 %}
@@ -384,38 +305,22 @@ Returns a list of configured markets, see [geos](#geo).
 {% endif %}
 ```
 
-  </div>
-</details>
-
 
 ### subscription_terms_and_conditions
 
 Content from store subscription terms and conditions settings, typically used in a "Subscription Terms & Conditions" page to automatically pull content in from settings.
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
+```django title="subscription_terms_and_conditions"
 {{ subscription_terms_and_conditions }}
 ```
-
-</div>
-</details>
 
 ### terms_and_conditions
 
 Content from store terms and conditions settings, typically used in a "Terms & Conditions" page to automatically pull content in from settings.
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
+```django title="terms_and_conditions"
 {{ terms_and_conditions }}
 ```
-</div>
-</details>
 
 ## Objects
 
@@ -478,11 +383,7 @@ A `geo` is a combination of a language and currency typically associated with a 
 
 Product images, see example usage below.
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
+```django title="image"
 {% with all_images=product.get_all_images %}
 {% for image in all_images %}{% image_thumbnail image.original "100x100" crop="center" as thumb %}
     <div id="{{ image.id }}">
@@ -494,9 +395,6 @@ Product images, see example usage below.
 {% endwith %}
 ```
 
-</div>
-</details>
-
 | Property | Type | Description |
 | ----- | ------ | ------ |
 | `original` | File | The original image file, typically used when creating a thumbnail. |
@@ -506,10 +404,6 @@ Product images, see example usage below.
 ### items (menu)
 
 A menu `item` has properties to support creating dynamic menus configured through the dashboard menu editor.
-
-<details>
-  <summary>Example Usage</summary>
-  <div>
 
 ```django title="Example Dynamic Menu"
 {% for item in menus.header_menu.items %}
@@ -552,8 +446,6 @@ A menu `item` has properties to support creating dynamic menus configured throug
 <Callout type="idea">
 Storefront Menus can be up to 3 levels, ensure your custom menu supports 2 nested menu item levels, see child and grandchild above.
 </Callout>
-  </div>
-</details>
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -584,11 +476,7 @@ Storefront Page object details available in the `pages/page.html` template and c
 
 The `paginator` object is available on "list views" where the items to display are paginated from the backend, works in tandem with [page_obj](#page_obj).
 
-<details>
-  <summary>Example Usage</summary>
-  <div>
-
-```django
+```django title="paginator"
 {% if paginator.num_pages > 1 %}
 <div class="my-3">
     <nav class="store_pagination" role="navigation" aria-label="store pagination">
@@ -606,8 +494,6 @@ The `paginator` object is available on "list views" where the items to display a
 </div>
 {% endif %}
 ```
-</div>
-</details>
 
 | Property | Type | Description |
 | ----- | ------ | ------ |

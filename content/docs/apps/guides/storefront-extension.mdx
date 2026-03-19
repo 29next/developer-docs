@@ -30,7 +30,7 @@ import DevelopmentStore from '../../../_snippets/_offer-development-store.mdx';
 
 Let's take a look at the basic file structure of apps to understand how to get started creating our first app.
 
-```title="Example App Structure"
+```bash title="Example App Structure"
 your-app
  ├── assets
  │   └──  my-app.js
@@ -52,7 +52,7 @@ Now that you have your app files, it's time to configure your app on your local 
 
 
 
-```
+```bash title="Setup App Kit Authentication"
 App Client ID:  // your app client id
 accounts.29next.com Email: your user account email
 accounts.29next.com Password: your user account password
@@ -60,17 +60,19 @@ accounts.29next.com Password: your user account password
 ```
 
 
-
-
 ## Build Your App Bundle
 
 Using App Kit, create a build of your app using the command line from your app directory.
 
-```
+```bash title="Build App"
 nak build
 ```
+
 
 ## Push App
 Now, push your app to your our platform using your username and password credentials for your account at `accounts.29next.com`.
 
 
+```bash title="Push App"
+nak pash
+```

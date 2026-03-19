@@ -398,7 +398,7 @@ Identifies the marketing funnel or campaign flow.
 **Parameter:** `funnel`
 
 **Example:**
-```
+```text
 https://yoursite.com/checkout?funnel=summer-sale-2024
 ```
 
@@ -420,7 +420,7 @@ Tracks affiliate or partner referrals.
 **Parameters:** `affid` or `aff` (both accepted)
 
 **Example:**
-```
+```text
 https://yoursite.com/product?affid=partner123
 https://yoursite.com/product?aff=affiliate-xyz
 ```
@@ -437,7 +437,7 @@ Google Ads click identifier for conversion tracking.
 **Parameter:** `gclid`
 
 **Example:**
-```
+```text
 https://yoursite.com/landing?gclid=EAIaIQobChMI7...
 ```
 
@@ -459,7 +459,7 @@ Standard UTM tracking parameters for campaign analytics.
 | `utm_term` | Identifies paid search keywords | `?utm_term=weight+loss+supplement` |
 
 **Complete UTM Example:**
-```
+```text
 https://yoursite.com/product?utm_source=facebook&utm_medium=cpc&utm_campaign=summer-2024&utm_content=carousel-ad-1&utm_term=fitness
 ```
 
@@ -472,7 +472,7 @@ Track up to 5 levels of sub-affiliate data for multi-tier affiliate programs.
 **Character Limit:** Each subaffiliate value is limited to 225 characters (automatically truncated with a warning)
 
 **Examples:**
-```
+```text
 https://yoursite.com/product?subaffiliate1=region-west&subaffiliate2=agent-123
 https://yoursite.com/product?sub1=tier1&sub2=tier2&sub3=tier3
 ```
@@ -499,7 +499,7 @@ Facebook Ads click identifier for conversion tracking.
 **Parameter:** `fbclid`
 
 **Example:**
-```
+```text
 https://yoursite.com/landing?fbclid=IwAR1X...
 ```
 
@@ -515,7 +515,7 @@ Everflow affiliate network tracking identifier.
 **Parameter:** `evclid`
 
 **Example:**
-```
+```text
 https://yoursite.com/offer?evclid=123456789
 ```
 
@@ -531,7 +531,7 @@ Generic click tracking for various platforms.
 **Parameter:** `clickid`
 
 **Example:**
-```
+```text
 https://yoursite.com/product?clickid=abc123xyz
 ```
 
@@ -546,7 +546,7 @@ https://yoursite.com/product?clickid=abc123xyz
 
 When a user visits any page with attribution parameters:
 
-```
+```text
 https://yoursite.com/landing?funnel=summer-sale&affid=partner123&utm_source=facebook
 ```
 
@@ -559,7 +559,7 @@ The SDK automatically:
 
 Once captured, attribution data persists throughout the session:
 
-```
+```text
 Page 1: /landing?funnel=summer-sale&affid=partner123
 Page 2: /products (no params)
 Page 3: /checkout (no params)
@@ -571,7 +571,7 @@ All attribution data from Page 1 remains available on Pages 2 and 3.
 
 URL parameters **always override** existing persisted values:
 
-```
+```text
 Visit 1: ?funnel=spring-sale
   → Sets funnel to "spring-sale"
 
@@ -591,7 +591,7 @@ All captured attribution data is automatically included in:
 ### Common Use Cases
 
 #### Affiliate Marketing Campaign
-```
+```text
 https://yoursite.com/offer?affid=partner123&subaffiliate1=region-west&subaffiliate2=agent-456
 ```
 
@@ -601,7 +601,7 @@ Tracks:
 - Individual sales agent
 
 #### Facebook Ad Campaign
-```
+```text
 https://yoursite.com/product?funnel=fb-summer-campaign&utm_source=facebook&utm_medium=cpc&utm_campaign=summer-2024&fbclid=IwAR1X...
 ```
 
@@ -611,7 +611,7 @@ Tracks:
 - Facebook click ID for conversion tracking
 
 #### Google Ads Campaign
-```
+```text
 https://yoursite.com/landing?funnel=google-search&utm_source=google&utm_medium=cpc&utm_campaign=brand-terms&gclid=EAIaIQobChMI7...
 ```
 
@@ -621,7 +621,7 @@ Tracks:
 - Google click ID for conversion API
 
 #### Email Marketing
-```
+```text
 https://yoursite.com/exclusive?funnel=vip-email&utm_source=newsletter&utm_medium=email&utm_campaign=monthly-2024-06&utm_content=hero-cta
 ```
 
@@ -632,7 +632,7 @@ Tracks:
 - Which CTA was clicked
 
 #### Multi-Tier Affiliate Program
-```
+```text
 https://yoursite.com/product?affid=network1&sub1=master-affiliate&sub2=sub-affiliate&sub3=sales-rep&sub4=region&sub5=channel
 ```
 

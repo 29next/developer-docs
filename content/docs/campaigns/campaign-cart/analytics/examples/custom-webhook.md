@@ -62,7 +62,7 @@ providers: {
 
 Events are sent as POST requests in batches to your endpoint:
 
-```
+```text
 POST https://api.yourapp.com/analytics
 Content-Type: application/json
 Authorization: Bearer YOUR_TOKEN
@@ -156,7 +156,7 @@ Events are batched to reduce network requests and server load. Batches are sent 
 
 With `batchSize: 10` and `batchIntervalMs: 5000`:
 
-```
+```text
 Time    Event              Batch Status
 0ms     Event 1 arrives    Queue: [1] → Start 5s timer
 100ms   Event 2 arrives    Queue: [1, 2]
@@ -187,7 +187,7 @@ After `maxRetries` attempts, events are dropped and logged.
 
 ### Example with Default Settings
 
-```
+```text
 Time    Event                Status
 0ms     Send batch          Fails (500 error)
 0ms     Schedule retry 1
@@ -561,7 +561,7 @@ analytics.track('dl_purchase', {
    ```
 
 2. **Verify CORS headers**: Ensure your endpoint allows requests from your domain
-   ```
+   ```text
    Access-Control-Allow-Origin: *
    Access-Control-Allow-Methods: POST, OPTIONS
    Access-Control-Allow-Headers: Content-Type, Authorization
@@ -765,7 +765,7 @@ analytics.track('dl_purchase', {
 
 2. **Verify CORS headers** (for browser requests):
    - `Access-Control-Allow-Headers` must include custom header names
-   ```
+   ```text
    Access-Control-Allow-Headers: Authorization, Content-Type, X-Custom-Header
    ```
 

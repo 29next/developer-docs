@@ -12,7 +12,7 @@ Use selection attributes to show real-time pricing, savings, and product informa
 
 Selection data is accessed using the pattern:
 
-```
+```text
 selection.{selectorId}.{property}
 ```
 

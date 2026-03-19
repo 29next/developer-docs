@@ -35,7 +35,7 @@ Settings are passed to templates settings context variable allowing you to acces
 <Tabs items={['Settings Schema', 'Template']}>
 <Tab value="Settings Schema">
 
-```json
+```json title="Using Settings in Templates"
 {
     "General": {
         "Settings": [
@@ -73,7 +73,7 @@ Settings are passed to templates settings context variable allowing you to acces
 </Tab>
 <Tab value="Template">
 
-```html
+```html title="Template"
 <div class="{% if settings.layout == 'boxed' %}container{% endif %}">
     <h1>Welcome to {{ settings.store_name }}!</h1>
     <div>Conditionally boxed or full width content</div>

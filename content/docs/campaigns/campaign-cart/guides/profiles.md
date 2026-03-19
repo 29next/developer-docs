@@ -156,7 +156,7 @@ profiles: {
 
 The simplest way to activate profiles is through URL parameters:
 
-```
+```javascript
 // Apply profile (preserves cart)
 https://example.com/checkout?profile=black_friday
 

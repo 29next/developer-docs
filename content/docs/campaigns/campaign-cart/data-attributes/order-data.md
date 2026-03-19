@@ -12,7 +12,7 @@ The order data is automatically loaded when the URL contains `?ref_id=ORDER_ID` 
 
 Orders automatically load when the URL contains the `ref_id` parameter:
 
-```
+```text
 https://example.com/confirmation?ref_id=ORDER_123
 ```
 

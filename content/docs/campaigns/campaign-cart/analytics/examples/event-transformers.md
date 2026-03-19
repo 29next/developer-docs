@@ -25,7 +25,7 @@ The transformer pattern:
 
 ### Basic Flow
 
-```
+```text
 Campaign Cart SDK
        ↓
 window.NextDataLayer.push()
@@ -539,7 +539,7 @@ console.log(window.NextDataLayer);
 
 Add `?debug=true` to your URL to see console logs:
 
-```
+```text
 https://yoursite.com?debug=true
 ```
 

@@ -21,7 +21,7 @@ Your app should redirect the user back to the store authorization view configure
 <Callout type="info">
 At every stage in the Oauth flow you'll receive a querystring variable `store` with the network domain of the store that is installing the app. **You should use this in your app logic as the unique identifier for the store.**
 </Callout>
-``` title="Authorization Link Format"
+```bash title="Authorization Link Format"
 https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scopes}
 ```
 
@@ -38,7 +38,7 @@ https://{network_domain}/oauth2/authorize/?response_type=code&client_id={client_
 
 After user click's Authorize to confirm App installation, it will redirect to the `redirect_uri` with `?store={network_domain}&code={authorize_code}` appended.
 
-``` title="Example"
+```bash title="Example"
 https://yourapp.com/setup/authorize/?store={network_domain}&code={authorization_code}
 ```
 

@@ -3,7 +3,8 @@ import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import { APIPage } from '@/components/api-page';
 import { GraphQLOperation } from '@/components/graphql-operation';
 import { Mermaid } from '@/components/mdx/mermaid';
-import { HttpRequestRow, parseHttpTitle } from '@/components/http-code-block';
+import { HttpRequestRow } from '@/components/http-code-block';
+import { parseHttpTitle } from '@/components/parse-http-title';
 import type { MDXComponents } from 'mdx/types';
 import { Children, isValidElement, type ReactNode } from 'react';
 
