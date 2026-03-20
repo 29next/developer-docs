@@ -57,8 +57,7 @@ Returns a list of active storefront languages you can iterate over, see [languag
 
 ### menus
 
-
-Allows you to access a menu's items by it's code to iterate over to generate a menu from the backend, see [menu items](#items-menu).
+Allows you to access a menu's items by its code to iterate over to generate a menu from the backend, see [menu items](#items-menu). Menus are configured in the dashboard at **Storefront > Navigation**.
 
 
 ```django title="Example Dynamic Menu"
@@ -204,6 +203,9 @@ Returns a list of post categories you can iterate over, see [post_category](#pos
 
 Content from store Privacy Policy settings, typically used in a "Privacy Policy" page to automatically pull content in from settings.
 
+<Callout type="idea">
+Store policies are configured in the dashboard at **Settings > Policies**. The content entered there is automatically available as global template variables.
+</Callout>
 
 ```django title="privacy_policy"
 {{ privacy_policy }}
@@ -340,7 +342,7 @@ Object have many properties that can be accessed in templates.
 
 ### branding
 
-Store branding properties accessed through the [store](#store) object to leverage within templates.
+Store branding properties accessed through the [store](#store) object to leverage within templates. Branding values are configured in the dashboard at **Settings > Branding**.
 
 | Property | Type | Description |
 | ----- | ------ | ------ |
@@ -599,6 +601,24 @@ Product review object.
 | `user` | Object | The customer that created the review, see [user](#user). |
 
 
+### user
+
+The current user/customer object available when a customer is authenticated.
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `is_authenticated` | Boolean | Whether the user is logged in. |
+| `is_staff` | Boolean | Whether the user is an admin/staff member. |
+
+```django title="Example Conditional Auth Links"
+{% if user.is_authenticated %}
+    <a href="{% url 'customer:summary' %}">My Account</a>
+    <a href="{% url 'customer:logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'customer:login' %}">Login</a>
+{% endif %}
+```
+
 ### voucher
 
 Voucher object.
@@ -607,3 +627,310 @@ Voucher object.
 | ----- | ------ | ------ |
 | `title` | String | Voucher title. |
 | `code` | String | Voucher code. |
+
+
+## View-Specific Objects
+
+View-specific objects are available in the templates rendered by their corresponding views. See [Template Contexts](#template-contexts) below for which objects are available in each template.
+
+
+### cart
+
+The cart object represents the current user's shopping cart and is available in cart templates.
+
+```django title="Example Cart Summary"
+{% if not cart.is_empty %}
+<div class="cart-summary">
+    <span>{{ cart.num_items }} item{{ cart.num_items|pluralize }}</span>
+    <span>{{ cart.total_incl_tax|currency:cart.currency }}</span>
+</div>
+{% endif %}
+```
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `is_empty` | Boolean | Whether the cart has any items. |
+| `num_items` | Integer | Total number of items in the cart. |
+| `total_incl_tax` | Decimal | Cart total including tax. |
+| `total_excl_tax` | Decimal | Cart total excluding tax. |
+| `total_excl_tax_excl_discounts` | Decimal | Cart subtotal before discounts and tax. |
+| `currency` | String | The cart's currency code, eg `USD`. |
+| `is_tax_known` | Boolean | Whether tax has been calculated. |
+| `display_taxes` | String | Tax display label. |
+| `offer_discounts` | List | List of applied offer discounts. |
+| `grouped_voucher_discounts` | List | List of applied voucher discounts. |
+| `subscription_rebill_quantity` | Integer | Number of subscription items in the cart. |
+
+
+### line
+
+A cart line item object representing a single product entry in the cart. Available when iterating over cart lines in cart templates.
+
+```django title="Example Cart Line Items"
+{% for form in formset %}
+    {% with line=form.instance %}
+    <div class="cart-line">
+        <span>{{ line.description }}</span>
+        <span>{{ line.unit_price_incl_tax|currency:line.price_currency }}</span>
+        <span>Qty: {{ line.quantity }}</span>
+        {% if line.discount_value %}
+            <span class="text-success">-{{ line.discount_value|currency:line.price_currency }}</span>
+        {% endif %}
+        <span>{{ line.line_price_incl_tax_incl_discounts|currency:line.price_currency }}</span>
+    </div>
+    {% endwith %}
+{% endfor %}
+```
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `description` | String | Product title/description in the cart. |
+| `product` | Object | The [product](#product) object for this line. |
+| `quantity` | Integer | Quantity of this item in the cart. |
+| `unit_price_incl_tax` | Decimal | Unit price including tax. |
+| `unit_price_excl_tax` | Decimal | Unit price excluding tax. |
+| `is_tax_known` | Boolean | Whether tax is calculated for this line. |
+| `price_currency` | String | Currency code for this line item. |
+| `discount_value` | Decimal | Discount amount applied to this line. |
+| `line_price_incl_tax_incl_discounts` | Decimal | Total line price after discounts and tax. |
+| `subscription_range` | Field | Subscription frequency selector field, if applicable. |
+
+
+### session
+
+The session object is returned by the [`purchase_info_for_product`](/docs/storefront/themes/templates/tags#purchase_info_for_product) and [`purchase_info_for_line`](/docs/storefront/themes/templates/tags#purchase_info_for_line) template tags. It contains pricing and availability information for a product in the current user's currency.
+
+```django title="Example Product Price with Session"
+{% purchase_info_for_product request product as session %}
+{% if session.price.exists %}
+    {% if session.price.price_retail %}
+        <span class="text-muted text-decoration-line-through">
+            {{ session.price.price_retail|currency:session.price.currency }}
+        </span>
+    {% endif %}
+    <span class="price">{{ session.price.price|currency:session.price.currency }}</span>
+{% endif %}
+
+{% if not session.availability.is_available_to_buy %}
+    <span class="text-danger">Out of Stock</span>
+{% endif %}
+```
+
+**session.price**
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `exists` | Boolean | Whether a price exists for this product. |
+| `price` | Decimal | The current selling price. |
+| `price_retail` | Decimal | The retail/compare-at price, if set. |
+| `currency` | String | The currency code for this price. |
+| `excl_tax` | Decimal | The price excluding tax. |
+
+**session.availability**
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `is_available_to_buy` | Boolean | Whether the product can be purchased. |
+
+
+### variant_form
+
+The variant selection form object available on product detail pages (`catalogue/product.html`). Used to render variant attribute selectors (size, color, etc.) for products with variants.
+
+```django title="Example Variant Selection"
+{% if variant_form %}
+<div class="variant-options">
+    {% for field in variant_form %}
+        <div class="mb-3">
+            <label>{{ field.label }}</label>
+            {% render_field field class+="form-select" %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+```
+
+### filters
+
+The `filters` object is a list of product filter/facet objects available on category pages (`catalogue/category.html`). Filters allow customers to narrow product listings by attributes like price, color, size, etc. The `has_active_filter` boolean indicates whether any filter is currently applied.
+
+There are three filter types: `price_range`, `boolean`, and `list`. Each type has different properties for rendering the appropriate UI.
+
+```django title="Example Category Filters"
+{% if filters %}
+<div class="filters">
+    {% for filter in filters %}
+    <div class="filter-group">
+        <h6>{{ filter.label }}</h6>
+
+        {% if filter.type == 'price_range' %}
+            <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="{{ filter.min_value.label }}">
+            <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.max_value.label }}">
+
+        {% elif filter.type == 'boolean' %}
+            <label>
+                <input type="checkbox" name="{{ filter.true_value.param_name }}" {% if filter.true_value.active %}checked{% endif %}>
+                Yes ({{ filter.true_value.count }})
+            </label>
+
+        {% else %}
+            {% for value in filter.values %}
+                <label>
+                    <input type="checkbox" name="{{ value.param_name }}" {% if value.active %}checked{% endif %}>
+                    {{ value.label }} ({{ value.count }})
+                </label>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    {% if has_active_filter %}
+        {% for filter in filters %}
+            {% for active in filter.active_values %}
+                <a href="{{ active.url_to_remove }}">Remove {{ active }}</a>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+</div>
+{% endif %}
+```
+
+**Common filter properties:**
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `type` | String | Filter type: `'price_range'`, `'boolean'`, or `'list'`. |
+| `label` | String | Display label for the filter. |
+| `active_values` | List | List of currently selected filter values. |
+| `url_to_remove` | String | URL to remove this active filter. |
+
+**Price range filter properties:**
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `min_value.value` | Decimal | Current minimum price value. |
+| `min_value.param_name` | String | Query parameter name for the minimum. |
+| `min_value.label` | String | Display label for the minimum input. |
+| `max_value.value` | Decimal | Current maximum price value. |
+| `max_value.param_name` | String | Query parameter name for the maximum. |
+| `max_value.label` | String | Display label for the maximum input. |
+| `range_max` | Decimal | Maximum possible range value. |
+
+**Boolean filter properties:**
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `true_value.param_name` | String | Query parameter name for true selection. |
+| `true_value.active` | Boolean | Whether true is currently selected. |
+| `true_value.count` | Integer | Number of results matching true. |
+| `false_value.param_name` | String | Query parameter name for false selection. |
+| `false_value.active` | Boolean | Whether false is currently selected. |
+| `false_value.count` | Integer | Number of results matching false. |
+
+**List filter value properties:**
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `param_name` | String | Query parameter name for this value. |
+| `active` | Boolean | Whether this value is currently selected. |
+| `count` | Integer | Number of results matching this value. |
+| `value` | String | The filter value. |
+| `label` | String | Display label for this value. |
+
+
+### subscription_group
+
+Subscription group object available in cart summary templates when the cart contains subscription products. Accessed through the `subscription_groups` list.
+
+```django title="Example Subscription Summary"
+{% if subscription_groups %}
+{% for group in subscription_groups %}
+<div class="subscription-group">
+    <h6>Subscription - {{ group.frequency }}</h6>
+    {% for line in group.lines %}
+        <div>{{ line.description }} - {{ line.unit_price_incl_tax|currency:group.currency }}</div>
+    {% endfor %}
+    <div>Shipping: {{ group.shipping_price.excl_tax|currency:group.currency }}</div>
+    <div>Tax: {{ group.total_tax|currency:group.currency }}</div>
+    <div>Total: {{ group.total_incl_tax|currency:group.currency }}</div>
+</div>
+{% endfor %}
+{% endif %}
+```
+
+| Property | Type | Description |
+| ----- | ------ | ------ |
+| `lines` | List | List of cart [line](#line) items in this subscription group. |
+| `currency` | String | Currency code for this group. |
+| `frequency` | String | Subscription frequency label (eg "Monthly"). |
+| `shipping_price.excl_tax` | Decimal | Shipping cost before tax. |
+| `total_tax` | Decimal | Total tax for this group. |
+| `display_taxes` | String | Tax display label. |
+| `total_incl_tax` | Decimal | Group total including tax. |
+
+
+## Cart Template Context
+
+The following additional context variables are available in cart templates (`templates/cart.html`).
+
+| Variable | Type | Description |
+| ----- | ------ | ------ |
+| `cart` | Object | The [cart](#cart) object. |
+| `formset` | FormSet | Form set for editing cart line quantities and removing items. |
+| `saved_formset` | FormSet | Form set for saved/wishlist items. |
+| `cart_warnings` | List | List of warning messages about cart state. |
+| `upsell_messages` | List | List of upsell offer messages. |
+| `voucher_form` | Form | Coupon/voucher code entry form. |
+| `max_cart_quantity_per_line` | Integer | Maximum allowed quantity per line item. |
+| `subscription_groups` | List | List of [subscription_group](#subscription_group) objects. |
+| `subscription_total_incl_tax` | Decimal | Total for all subscriptions including tax. |
+| `subscription_total_excl_tax` | Decimal | Total for all subscriptions excluding tax. |
+| `interval_count_choices` | List | Subscription frequency choices for product forms. |
+| `editable` | Boolean | Whether the cart is in editable mode. |
+| `modal_open` | Boolean | Whether the side cart modal should be open. |
+
+
+## Template Contexts
+
+All templates receive the [Global Objects](#global-objects) (`store`, `settings`, `currencies`, `languages_active_storefront`, `menus`, `products`, `product_categories`, `posts`, `post_categories`, `privacy_policy`, `terms_and_conditions`, `subscription_terms_and_conditions`, `request`, `storefront_geos`). The table below lists additional view-specific context variables passed to each template.
+
+| Template | View-Specific Context |
+| ----- | ------ |
+| `templates/index.html` | Global objects only. Use the [`where`](/docs/storefront/themes/templates/tags#where) tag to query products and categories. |
+| `templates/cart.html` | `cart`, `formset`, `saved_formset`, `cart_warnings`, `upsell_messages`, `voucher_form`, `max_cart_quantity_per_line`, `subscription_groups`, `editable`, `modal_open` |
+| `templates/catalogue/product.html` | `product`, `variant_form`, `interval_count_choices` |
+| `templates/catalogue/index.html` | `products` (paginated), `paginator`, `page_obj` |
+| `templates/catalogue/category.html` | `category`, `products` (paginated), `filters`, `has_active_filter`, `paginator`, `page_obj` |
+| `templates/search.html` | `query`, `products` (paginated), `paginator`, `page_obj` |
+| `templates/blog/index.html` | `posts` (paginated), `paginator`, `page_obj` |
+| `templates/blog/post.html` | `post` |
+| `templates/pages/page.html` | `page` |
+| `templates/support/index.html` | `categories` |
+| `templates/support/category.html` | `category`, `articles` |
+| `templates/support/article.html` | `article` |
+| `templates/reviews/index.html` | `product`, `reviews` (paginated), `paginator`, `page_obj` |
+| `templates/reviews/form.html` | `product`, `form` |
+| `templates/reviews/review.html` | `product`, `review` |
+
+<Callout type="idea">
+Use the [`purchase_info_for_product`](/docs/storefront/themes/templates/tags#purchase_info_for_product) tag in any template to get pricing and availability for a product. Use [`cart_form`](/docs/storefront/themes/templates/tags#cart_form) on product pages to generate add-to-cart forms.
+</Callout>
+
+
+## Dashboard Cross-Reference
+
+Some template variables are populated from dashboard settings. Use this reference to understand where data originates when building or debugging templates.
+
+| Template Variable | Dashboard Path | Description |
+| ----- | ------ | ------ |
+| `store.branding.logo` | Settings > Branding | Store logo image. |
+| `store.branding.icon` | Settings > Branding | Store icon/favicon image. |
+| `store.branding.primary_color` | Settings > Branding | Primary brand color (HEX). |
+| `store.branding.accent_color` | Settings > Branding | Accent brand color (HEX). |
+| `store.name`, `store.tagline` | Settings > General | Store name and tagline. |
+| `store.legal_name`, `store.address` | Settings > General | Legal details and address. |
+| `menus.{menu_key}.items` | Storefront > Navigation | Navigation menu items (up to 3 levels). |
+| `privacy_policy` | Settings > Policies | Privacy policy content. |
+| `terms_and_conditions` | Settings > Policies | Terms and conditions content. |
+| `subscription_terms_and_conditions` | Settings > Policies | Subscription T&C content. |
+| `settings.*` | Storefront > Themes > Customize | Theme settings from `settings_schema.json`. |

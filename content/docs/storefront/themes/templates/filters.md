@@ -300,6 +300,13 @@ Returns a plural suffix if the value is not 1, '1', or an object of length 1. By
 You have { num_messages }} message {{ num_messages|pluralize }}
 ```
 
+### split
+Splits a string by the given delimiter and returns a list.
+```django title="split"
+{{ value|split:"," }}
+```
+For example, if value is `"red,green,blue"`, the output will be the list `['red', 'green', 'blue']`.
+
 ### slugify
 
 Converts to ASCII. Converts spaces to hyphens. Removes characters that aren’t alphanumerics, underscores, or hyphens. Converts to lowercase. Also strips
@@ -354,6 +361,29 @@ Returns the number of words.
 ```
 
 For example, if value is "Joel is a slug", the output will be 4.
+
+## Currency
+
+### currency
+Formats a decimal value as a currency string using the provided currency code. This is the primary filter for displaying prices throughout a theme.
+```django title="currency"
+{{ session.price.price|currency:session.price.currency }}
+```
+For example, if the price is `29.99` and the currency is `USD`, the output will be `$29.99`. The filter handles currency symbol placement and formatting based on the currency code.
+
+```django title="Example Product Price Display"
+{% purchase_info_for_product request product as session %}
+{% if session.price.exists %}
+    {% if session.price.price_retail %}
+        <span class="text-muted text-decoration-line-through">
+            {{ session.price.price_retail|currency:session.price.currency }}
+        </span>
+    {% endif %}
+    <span class="fw-bold">
+        {{ session.price.price|currency:session.price.currency }}
+    </span>
+{% endif %}
+```
 
 ## Files
 
