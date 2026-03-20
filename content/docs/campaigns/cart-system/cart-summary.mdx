@@ -1,0 +1,623 @@
+---
+title: Cart Summary
+sidebar_label: Cart Summary
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The Cart Summary enhancer renders a reactive price breakdown block that stays in sync with the cart automatically. It supports a zero-config default layout and a fully custom template system with variable substitution, conditional CSS classes, and repeating list containers for discount lines and per-item breakdowns.
+
+## Activation
+
+Add `data-next-cart-summary` to any container element. No other configuration is required — the enhancer subscribes to the cart store and re-renders whenever totals change.
+
+```html title="Activation"
+<div data-next-cart-summary></div>
+```
+
+## Default Layout
+
+When no `<template>` child is present the enhancer renders a built-in layout:
+
+- **Subtotal** — always shown
+- **Discounts** — shown only when discounts > 0
+- **Shipping** — shows "Free" when shipping cost is zero
+- **Tax** — shown only when tax > 0
+- **Total** — always shown
+
+Each row uses the CSS classes `next-summary-row`, `next-summary-label`, `next-summary-value`, and a row-specific modifier (`next-row-subtotal`, `next-row-discounts`, `next-row-shipping`, `next-row-tax`, `next-row-total`).
+
+---
+
+## Custom Template
+
+Place a `<template>` element as a **direct child** of the container. Its `innerHTML` becomes the custom layout. Scalar values are substituted with `{variableName}` placeholders.
+
+```html title="Custom Template"
+<div data-next-cart-summary>
+  <template>
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+    <div class="row"><span>Discounts</span><span>-{discounts}</span></div>
+    <div class="row"><span>Shipping</span><span>{shipping}</span></div>
+    <div class="row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+```
+
+### Template Variables
+
+| Variable | Description |
+|----------|-------------|
+| `{subtotal}` | Sum of all line item prices at their base (campaign) rates — before promotions, shipping, and tax |
+| `{total}` | Final amount due: subtotal + shipping + tax − discounts. Use this as the checkout total |
+| `{shipping}` | Shipping charge for this order; displays `Free` when no shipping cost applies |
+| `{shippingOriginal}` | Pre-discount shipping rate — only rendered when a shipping promotion is active, empty string otherwise. Pair with `{shipping}` to show the original price with a strike-through |
+| `{tax}` | Tax collected on this order (formatted currency) |
+| `{discounts}` | Combined monetary reduction from offer promotions and coupon codes |
+| `{savings}` | Total customer savings — the gap between full retail (compare-at) pricing and what the customer actually pays, including both sale pricing and applied promotions. Use this for a "You save" line |
+| `{compareTotal}` | What the cart would cost at full retail (compare-at) prices — empty if no compare-at prices are configured |
+| `{itemCount}` | Number of distinct package lines in the cart (not total units). Example: 2× Package A + 3× Package B → `{itemCount}` is `2` |
+
+<Callout type="info" title="How the totals relate">
+- `{compareTotal}` → full retail price
+- `{subtotal}` → after sale pricing, before promotions and shipping
+- `{total}` → `{subtotal}` + `{shipping}` + `{tax}` − `{discounts}`
+- `{savings}` → `{compareTotal}` − `{total}` (everything the customer didn't pay)
+</Callout>
+
+---
+
+## State CSS Classes
+
+The enhancer adds and removes classes on the host element to reflect current cart state. Use these to show or hide rows with CSS instead of duplicating logic in templates.
+
+| Class | When applied |
+|-------|-------------|
+| `next-cart-empty` | Cart has no items |
+| `next-cart-has-items` | Cart has one or more items |
+| `next-has-discounts` | Discounts > 0 |
+| `next-no-discounts` | Discounts = 0 |
+| `next-has-shipping` | Shipping cost > 0 |
+| `next-free-shipping` | Shipping cost = 0 |
+| `next-has-shipping-discount` | A shipping discount is applied |
+| `next-no-shipping-discount` | No shipping discount |
+| `next-has-tax` | Tax > 0 |
+| `next-no-tax` | Tax = 0 |
+| `next-has-savings` | Retail or discount savings are available |
+| `next-no-savings` | No savings |
+
+### Hiding rows conditionally with CSS
+
+```html title="Conditional Row Visibility"
+<div data-next-cart-summary>
+  <template>
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+    <div class="row discount-row"><span>Discounts</span><span>-{discounts}</span></div>
+    <div class="row shipping-row"><span>Shipping</span><span>{shipping}</span></div>
+    <div class="row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+
+<style>
+  .next-no-discounts .discount-row { display: none }
+  .next-free-shipping .shipping-row { display: none }
+</style>
+```
+
+---
+
+## Summary Lists
+
+Inside a custom `<template>` you can include list containers with dedicated summary attributes. The enhancer populates these after each render.
+
+Each list container must include its own `<template>` child that defines the markup for a single item.
+
+### Discount Lists
+
+Use `data-summary-offer-discounts` or `data-summary-voucher-discounts` to render one row per applied discount.
+
+**Discount item variables:**
+
+| Variable | Description |
+|----------|-------------|
+| `{discount.name}` | Discount / offer name |
+| `{discount.amount}` | Formatted discount amount |
+| `{discount.description}` | Optional description |
+
+```html title="Discount Lists"
+<div data-next-cart-summary>
+  <template>
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+
+    <ul data-summary-offer-discounts>
+      <template><li>{discount.name} — -{discount.amount}</li></template>
+    </ul>
+
+    <ul data-summary-voucher-discounts>
+      <template><li>Coupon {discount.name}: -{discount.amount}</li></template>
+    </ul>
+
+    <div class="row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+```
+
+### Line Items List
+
+Use `data-summary-lines` to render one row per cart line with full pricing detail sourced from the API summary.
+
+```html title="Line Items List"
+<ul data-summary-lines>
+  <template>
+    <li>
+      <img src="{line.image}" alt="{line.name}" />
+      <span>{line.name}</span>
+      <span>{line.qty} × {line.unitPrice}</span>
+      <span>{line.total}</span>
+    </li>
+  </template>
+</ul>
+```
+
+**Line item variables:**
+
+| Variable | Description |
+|----------|-------------|
+| `{line.packageId}` | Package `ref_id` |
+| `{line.quantity}` | Number of packages on this line (integer, from the API) |
+| `{line.qty}` | Same value as `{line.quantity}` — preferred alias for templates |
+| `{line.name}` | Package display name |
+| `{line.image}` | Product image URL |
+| `{line.productName}` | Product name |
+| `{line.variantName}` | Variant name (e.g. `"Black / Small"`) |
+| `{line.sku}` | Product SKU |
+
+**Base prices (campaign catalog)** — before any runtime promotions:
+
+| Variable | Description |
+|----------|-------------|
+| `{line.price}` | Per-unit price as configured in the campaign |
+| `{line.priceTotal}` | `{line.price}` × quantity for this line |
+| `{line.priceRetail}` | Full retail (compare-at) price per unit |
+| `{line.priceRetailTotal}` | Retail price × quantity |
+| `{line.priceRecurring}` | Per-unit recurring billing price (subscriptions only) |
+| `{line.priceRecurringTotal}` | Recurring price × quantity (subscriptions only) |
+| `{line.isRecurring}` | `"true"` if this line bills on a recurring schedule |
+
+**Checkout prices (after promotions)** — values from the live cart calculation:
+
+| Variable | Description |
+|----------|-------------|
+| `{line.unitPrice}` | Per-unit price after all discounts |
+| `{line.originalUnitPrice}` | Per-unit price before discounts — pair with `{line.unitPrice}` for before/after display |
+| `{line.packagePrice}` | Line total after discounts (unit price × quantity) |
+| `{line.originalPackagePrice}` | Line total before discounts |
+| `{line.subtotal}` | Line subtotal as calculated by the API |
+| `{line.totalDiscount}` | Total discount applied to this line |
+| `{line.total}` | Final line amount after all discounts |
+
+**Conditional helpers** — resolve to `"show"` or `"hide"` for use as CSS class names:
+
+| Variable | Values | Description |
+|----------|--------|-------------|
+| `{line.hasDiscount}` | `"show"` / `"hide"` | `"show"` when any promotion reduces this line's price |
+| `{line.hasSavings}` | `"show"` / `"hide"` | `"show"` when the unit price is below the retail (compare-at) price |
+
+```html title="Conditional Helpers"
+<!-- Show a "Sale" badge only when a discount is applied to this line -->
+<span class="badge {line.hasDiscount}">Sale</span>
+```
+
+```css
+.hide { display: none; }
+```
+
+### Per-Line Discount List
+
+Each line item can have its own list of individual discounts. Place a `data-line-discounts` container **inside** the `data-summary-lines` item template:
+
+```html title="Per-Line Discounts"
+<ul data-summary-lines>
+  <template>
+    <li class="line-item">
+      <span>{line.quantity}× {line.name}</span>
+      <span>{line.total}</span>
+
+      <ul data-line-discounts>
+        <template>
+          <li class="line-discount">{discount.name} — -{discount.amount}</li>
+        </template>
+      </ul>
+    </li>
+  </template>
+</ul>
+```
+
+**Line discount variables:**
+
+| Variable | Description |
+|----------|-------------|
+| `{discount.name}` | Offer name applied to this line |
+| `{discount.amount}` | Formatted discount amount |
+| `{discount.description}` | Optional description |
+
+`data-line-discounts` also receives `next-summary-empty` / `next-summary-has-items` — use `.next-summary-empty { display: none }` to hide it when no discounts apply to the line.
+
+### List State Classes
+
+| Class | When |
+|-------|------|
+| `next-summary-empty` | No items in the list |
+| `next-summary-has-items` | One or more items in the list |
+
+---
+
+## Examples
+
+### Minimal — default layout
+
+```html title="Minimal"
+<div data-next-cart-summary></div>
+```
+
+### Custom template with conditional discount row
+
+```html title="Conditional Discount Row"
+<div data-next-cart-summary>
+  <template>
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+    <div class="row discount-row"><span>Discounts</span><span>-{discounts}</span></div>
+    <div class="row"><span>Shipping</span><span>{shipping}</span></div>
+    <div class="row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+
+<style>
+  .next-no-discounts .discount-row { display: none }
+</style>
+```
+
+### Full breakdown with per-item lines and discount lists
+
+```html title="Full Breakdown"
+<div data-next-cart-summary>
+  <template>
+    <!-- Per-item breakdown -->
+    <ul class="line-items" data-summary-lines>
+      <template>
+        <li class="line-item">
+          <img src="{line.image}" alt="{line.name}" />
+          <div>
+            <strong>{line.name}</strong>
+            <span>{line.variantName}</span>
+          </div>
+          <div class="prices">
+            <s class="{line.hasSavings}">{line.priceRetail}</s>
+            <span>{line.unitPrice} × {line.qty}</span>
+            <strong>{line.total}</strong>
+          </div>
+        </li>
+      </template>
+    </ul>
+
+    <!-- Totals -->
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+
+    <!-- Offer discounts -->
+    <ul class="discount-list" data-summary-offer-discounts>
+      <template>
+        <li class="discount-item">{discount.name} — -{discount.amount}</li>
+      </template>
+    </ul>
+
+    <!-- Voucher discounts -->
+    <ul class="discount-list" data-summary-voucher-discounts>
+      <template>
+        <li class="discount-item">Coupon {discount.name}: -{discount.amount}</li>
+      </template>
+    </ul>
+
+    <div class="row shipping-row">
+      <span>Shipping</span>
+      <span>{shipping}</span>
+    </div>
+    <div class="row savings-row">
+      <span>You save</span>
+      <span>{savings}</span>
+    </div>
+    <div class="row total-row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+
+<style>
+  .next-free-shipping .shipping-row { display: none }
+  .next-no-savings .savings-row { display: none }
+</style>
+```
+
+### Shipping discount with strikethrough
+
+```html title="Shipping Discount"
+<div data-next-cart-summary>
+  <template>
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+    <div class="row">
+      <span>Shipping</span>
+      <span>
+        <s class="original-shipping">{shippingOriginal}</s>
+        {shipping}
+      </span>
+    </div>
+    <div class="row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+
+<style>
+  /* Hide strikethrough when no shipping discount is active */
+  .next-no-shipping-discount .original-shipping { display: none }
+</style>
+```
+
+---
+
+## Cart Display Attributes Reference
+
+Use `data-next-display` on any element to bind it to a live cart value.
+
+### Cart Status
+
+| Attribute value | Description | Example output |
+|-----------------|-------------|----------------|
+| `cart.isEmpty` | Cart has no items | `"true"` / `"false"` |
+| `cart.hasItems` | Cart has at least one item | `"true"` / `"false"` |
+| `cart.itemCount` | Number of distinct line items | `"3"` |
+| `cart.quantity` | Total quantity across all items | `"5"` |
+| `cart.count` | Alias for `cart.quantity` | `"5"` |
+| `cart.currency` | Active currency for the cart | `"USD"` |
+| `cart.discountCode` | First/single discount code | `"SAVE10"` |
+| `cart.discountCodes` | All discount codes | `"SAVE10, EXTRA"` |
+| `cart.couponCount` | Number of coupons applied | `"1"` |
+
+### Cart Financial Totals
+
+| Attribute value | Description | Example output |
+|-----------------|-------------|----------------|
+| `cart.subtotal` | Subtotal (before shipping/tax) | `"$89.99"` |
+| `cart.subtotal` + `data-include-discounts` | Subtotal after discount codes | `"$80.99"` |
+| `cart.total` | Cart total | `"$99.99"` |
+| `cart.totalExclShipping` | Total excluding shipping | `"$94.99"` |
+| `cart.shipping` | Shipping cost | `"$5.00"` |
+| `cart.discounts` | Discount amount from coupons | `"-$9.00"` |
+| `cart.savingsAmount` | Savings (retail only, no coupons) | `"$20.00"` |
+| `cart.savingsPercentage` | Savings % (retail only) | `"25%"` |
+| `cart.totalSavingsAmount` | Total savings (retail + coupons) | `"$29.00"` |
+| `cart.totalSavingsPercentage` | Total savings % | `"30%"` |
+| `cart.compareTotal` | Compare-at total | `"$119.99"` |
+
+### Raw Values (for calculations)
+
+Append `.raw` for unformatted numbers. Use in expressions or with `data-format`.
+
+| Attribute value | Description |
+|-----------------|-------------|
+| `cart.subtotal.raw` | Numeric subtotal |
+| `cart.total.raw` | Numeric total |
+| `cart.totalExclShipping.raw` | Numeric total excluding shipping |
+| `cart.shipping.raw` | Numeric shipping |
+| `cart.discounts.raw` | Numeric discount amount |
+| `cart.savingsAmount.raw` | Numeric savings |
+| `cart.compareTotal.raw` | Numeric compare total |
+
+### Per-Item Quantity
+
+| Attribute value | Description | Example |
+|-----------------|-------------|---------|
+| `cart.items[2].quantity` | Quantity of package ID 2 in cart | `"2"` |
+
+---
+
+## Cart Conditional Attributes
+
+Show or hide blocks based on cart state using `data-next-show` or `data-next-hide`.
+
+| Expression | When true |
+|------------|-----------|
+| `cart.isEmpty` | Cart has no items |
+| `cart.hasItems` | Cart has at least one item |
+| `cart.hasItem(2)` | Package ID 2 is in cart |
+| `cart.hasSavings` | Cart has retail savings |
+| `cart.hasCoupon` | A discount code is applied |
+| `cart.total > 50` | Cart total greater than 50 |
+| `cart.total >= 100` | Cart total ≥ 100 |
+| `cart.shipping > 0` | Shipping cost > 0 |
+| `cart.quantity >= 3` | Total quantity ≥ 3 |
+
+---
+
+## Cart Formatting Options
+
+Use on the same element as `data-next-display`.
+
+| Attribute | Description | Example |
+|-----------|-------------|---------|
+| `data-format` | Output format | `currency`, `number`, `integer`, `percentage` |
+| `data-hide-zero-cents` | Hide `.00` for whole numbers | `"true"` → `$99` |
+| `data-hide-if-zero` | Hide element when value is 0 | `"true"` |
+| `data-hide-if-false` | Hide element when value is false | `"true"` |
+| `data-divide-by` | Divide displayed value | `"2"` |
+| `data-multiply-by` | Multiply displayed value | `"0.1"` |
+
+---
+
+## Cart Items List
+
+Use `data-next-cart-items` on a container to render cart line items from a template.
+
+| Attribute | Description | Example |
+|-----------|-------------|---------|
+| `data-next-cart-items` | Container where cart line items are rendered | On wrapper `<div>` |
+| `data-item-template-id` | ID of `<template>` used for each item | `"cart-item-template"` |
+| `data-item-template-selector` | CSS selector for template node | `"#custom-template"` |
+| `data-item-template` | Inline HTML template string | `'<div>{item.name}</div>'` |
+| `data-empty-template` | HTML when cart is empty | `'<p>Your cart is empty</p>'` |
+| `data-title-map` | JSON: package ID → custom title | `'{"2": "Premium", "3": "Starter"}'` |
+| `data-group-items` | Group identical items into one line | Present = on |
+| `data-include-discounts` | Include discount codes in subtotal | On same element as `data-next-display="cart.subtotal"` |
+
+---
+
+## Item Template Variables
+
+Used inside the template referenced by `data-next-cart-items`. Replace `{item.xyz}` with the value for each cart line.
+
+### Basic Item
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `{item.id}` | Unique cart item ID | Auto-generated |
+| `{item.packageId}` | Package/product ID | `"123"` |
+| `{item.name}` | Product/package name | `"Grounded Sheets"` |
+| `{item.title}` | Alias for name | Same as name |
+| `{item.quantity}` | Quantity in cart | `"2"` |
+| `{item.image}` | Product image URL | `"https://..."` |
+| `{item.sku}` | Product SKU/external ID | `"GRS-001"` |
+| `{item.frequency}` | Purchase frequency | `"One time"` / `"Every month"` |
+
+### Product & Variant
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `{item.productName}` | Base product name | `"Grounded Sheets"` |
+| `{item.variantName}` | Full variant name | `"Grounded Sheets - Obsidian Grey / Twin"` |
+| `{item.variantSku}` | Variant SKU | `"BE-GRS-TWN-GR"` |
+| `{item.variantAttributesFormatted}` | Comma-separated attributes | `"Color: Obsidian Grey, Size: Twin"` |
+| `{item.variantAttributesList}` | HTML spans | `<span class="variant-attr">...</span>` |
+| `{item.variantColor}` | Color attribute | `"Obsidian Grey"` |
+| `{item.variantSize}` | Size attribute | `"Twin"` |
+
+### Pricing
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `{item.price}` | Package price | Currency |
+| `{item.unitPrice}` | Price per unit | Currency |
+| `{item.comparePrice}` | Original package price | Currency |
+| `{item.unitComparePrice}` | Original unit price | Currency |
+| `{item.lineTotal}` | price × quantity | Currency |
+| `{item.lineCompare}` | Original line total | Currency |
+| `{item.recurringPrice}` | Recurring price (subscription) | Currency |
+
+### Savings
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `{item.savingsAmount}` | Total savings (retail) | Currency |
+| `{item.unitSavings}` | Per-unit savings | Currency |
+| `{item.savingsPct}` | Savings percentage | `"50%"` |
+
+### Coupon Discount
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `{item.discountAmount}` | Coupon discount for this item | Currency |
+| `{item.discountedPrice}` | Price after coupon | Currency |
+| `{item.discountedLineTotal}` | Line total after coupon | Currency |
+| `{item.finalPrice}` | Final price to show | Currency |
+| `{item.finalLineTotal}` | Final line total | Currency |
+
+### Conditional Classes (use as class names)
+
+| Variable | Value | Use when |
+|----------|--------|----------|
+| `{item.showCompare}` | `"show"` / `"hide"` | Compare price exists |
+| `{item.showSavings}` | `"show"` / `"hide"` | Has savings |
+| `{item.showRecurring}` | `"show"` / `"hide"` | Recurring product |
+| `{item.showDiscount}` | `"show"` / `"hide"` | Coupon applied |
+| `{item.showOriginalPrice}` | `"show"` / `"hide"` | Price is discounted |
+
+### Item Action Attributes
+
+Use on buttons inside an item template to control quantity or remove an item.
+
+| Attribute | Description | Example |
+|-----------|-------------|---------|
+| `data-next-quantity` | Change quantity | `"increase"` or `"decrease"` |
+| `data-next-remove-item` | Remove this package from cart | No value |
+| `data-package-id` | Package ID for the action | `"{item.packageId}"` |
+| `data-cart-item-id` | Cart line ID (in template) | `"{item.id}"` |
+
+---
+
+## Full Checkout Example
+
+A complete cart summary UI wiring up all cart and item attributes:
+
+```html
+<div class="cart-summary" data-next-show="cart.hasItems">
+  <h3>Cart Summary</h3>
+
+  <!-- Cart item list with full template -->
+  <template id="cart-item-full-template">
+    <div class="cart-item" data-cart-item-id="{item.id}" data-package-id="{item.packageId}">
+      <img src="{item.image}" alt="{item.name}">
+      <h4>{item.name}</h4>
+      <p>{item.productName} – {item.variantName}</p>
+      <p>{item.variantAttributesFormatted}</p>
+      <p class="price">{item.price} × {item.quantity} = {item.lineTotal}</p>
+      <s class="{item.showCompare}">{item.comparePrice}</s>
+      <span class="{item.showSavings}">Save {item.savingsAmount} ({item.savingsPct})</span>
+      <span class="{item.showDiscount}">Coupon: -{item.discountAmount}</span>
+      <span class="{item.showRecurring}">{item.recurringPrice}</span>
+      <button data-next-quantity="decrease" data-package-id="{item.packageId}">−</button>
+      <span>{item.quantity}</span>
+      <button data-next-quantity="increase" data-package-id="{item.packageId}">+</button>
+      <button data-next-remove-item data-package-id="{item.packageId}">Remove</button>
+    </div>
+  </template>
+
+  <div data-next-cart-items
+       data-item-template-id="cart-item-full-template"
+       data-empty-template='<p class="empty-msg">Your cart is empty</p>'
+       class="cart-items-list">
+  </div>
+
+  <!-- Cart totals -->
+  <div class="cart-totals">
+    <div><span>Subtotal:</span><span data-next-display="cart.subtotal">$0.00</span></div>
+    <div data-next-show="cart.shipping > 0">
+      <span>Shipping:</span>
+      <span data-next-display="cart.shipping" data-hide-if-zero="true">$0.00</span>
+    </div>
+    <div data-next-show="cart.hasCoupon">
+      <span>Discount (<span data-next-display="cart.discountCode">-</span>):</span>
+      <span data-next-display="cart.discounts">-$0.00</span>
+    </div>
+    <div class="total">
+      <span>Total (<span data-next-display="cart.currency">USD</span>):</span>
+      <span data-next-display="cart.total" data-format="currency">$0.00</span>
+    </div>
+    <div data-next-show="cart.hasSavings">
+      <span>You save:</span>
+      <span data-next-display="cart.totalSavingsAmount">$0.00</span>
+      (<span data-next-display="cart.totalSavingsPercentage" data-format="percentage">0%</span>)
+    </div>
+  </div>
+
+  <!-- Free shipping threshold -->
+  <div data-next-show="cart.total < 100">
+    <p>Add $<span data-next-display="100 - cart.total.raw">0</span> more for free shipping!</p>
+  </div>
+  <div data-next-show="cart.total >= 100">
+    <p>✓ Free shipping!</p>
+  </div>
+
+  <div data-next-hide="cart.isEmpty">
+    <button type="button">Proceed to Checkout</button>
+  </div>
+</div>
+
+<div class="cart-empty-state" data-next-show="cart.isEmpty">
+  <p>Your cart is empty</p>
+  <a href="/shop">Continue Shopping</a>
+</div>
+```

@@ -1,9 +1,9 @@
 ---
+title: Introduction
 sidebar_label: Campaigns
-sidebar_position: 1
-title: Introduction to Campaigns
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
+import { CampaignFunnelFlow, CampaignAnatomy } from '@/components/campaign-concepts-flow';
 
 Campaigns enable developers to build fully custom external checkout experiences using HTML and JavaScript — **no backend server-side integration required**. Each campaign is backed by a headless, CORS-enabled API that handles products, pricing, payments, and order creation.
 
@@ -23,6 +23,8 @@ A **campaign** is the top-level configuration that ties together everything need
 
 Each campaign has a unique **API Key** used to authenticate all API requests. Campaigns are created and managed in the Next Commerce dashboard via the **Campaigns App**.
 
+<CampaignAnatomy />
+
 ### Packages
 
 A **package** is a virtual link to a **product variant** (SKU) in your store catalog with a custom quantity and custom pricing. Packages are what customers actually purchase in a campaign — they let you create different purchasing options for the same product without changing the product itself.
@@ -39,12 +41,6 @@ Packages can also be configured as **recurring** for subscription products, with
 
 **Offers** control pricing discounts based on how many packages a customer adds to their order. Packages in an order can be any mix of variants — for example, 1 white and 1 black of the same product both count toward the offer condition.
 
-For example, a campaign selling t-shirts might have offers like:
-
-- **Buy 1 package** — regular price
-- **Buy 2 packages** — 10% off (any mix of packages allowed on the offer)
-- **Buy 3 packages** — 20% off (any mix of packages allowed on the offer)
-
 There are two types of offers:
 
 - **Offer** — automatically applies when the order meets the condition
@@ -56,61 +52,140 @@ Offers can also be stacked — for example, an automatic quantity discount and a
 
 A campaign funnel guides customers through a series of pages, each backed by the Campaigns API:
 
-```mermaid
-graph LR
-    A[Landing] --> C[Checkout] --> D[Upsell 1] --> E[Upsell 2] --> F[Receipt]
-```
+<CampaignFunnelFlow />
 
 - **Landing** — Marketing page that drives traffic to the campaign
 - **Checkout** — Customer selects package, enters shipping, billing, and payment details
 - **Upsells** — Post-purchase offers to increase order value
 - **Receipt** — Order confirmation with details
 
-Session tracking is available to monitor performance across all these steps — page views, cart creation, orders, and upsells all flow into real-time campaign performance reports.
-
 <Callout type="info">
-
 This is a simplified example of a campaign flow. You can customize the flow to meet your specific needs.
-
 </Callout>
-### How It All Fits Together
 
-Each campaign is an isolated sales channel with its own packages, offers, and checkout flow. Traffic sources drive customers into campaign funnels, and all resulting orders flow into the merchant's Next Commerce store.
-
-```mermaid
-graph TD
-    TA[Traffic Channel] --> CA
-    TB[Traffic Channel] --> CB
-    TC[Traffic Channel] --> CC
-    subgraph "Campaigns App"
-        CA["Campaign A"]
-        CB["Campaign B"]
-        CC["Campaign C"]
-    end
-    CA -->|orders| Store[Next Commerce Store]
-    CB -->|orders| Store
-    CC -->|orders| Store
-```
-
-## Getting Started
-
-### 1. Create a Campaign
-
-In the Next Commerce dashboard, install the **Campaigns App** and create a new campaign. Add packages mapped to products in your store.
-
-### 2. Get Your API Key
-
-Each campaign has a unique API key found on the campaign's **Integration** tab. This key authenticates all API requests.
-
-### 3. Integration Options
+## Integration Options
 
 There are two ways to build your campaign frontend:
 
 | Approach | Best For | Description |
 | --- | --- | --- |
-| [**Campaign Cart SDK**](/docs/campaigns/campaign-cart) | Fastest development | An attribute-driven HTML/JS SDK. Build cart, checkout, and upsell flows using `data-next-*` attributes — no custom JavaScript required. |
+| [**Campaign Cart SDK**](/docs/campaigns/cart-system) | Fastest development | An attribute-driven HTML/JS SDK. Build cart, checkout, and upsell flows using `data-next-*` attributes — no custom JavaScript required. |
 | [**Campaigns API**](/docs/campaigns/api) | Full control | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
 
 <Callout type="idea" title="Starter Template">
 The fastest way to get started is with the [Campaign Cart Starter Template](https://github.com/NextCommerceCo/campaign-cart-example) — a ready-to-use campaign flow with landing page, checkout, upsell, and receipt pages pre-configured.
 </Callout>
+
+## Quick Start
+
+### Option 1: Use Starter Template (Recommended)
+
+Get started quickly with our pre-configured starter template:
+
+**[🚀 Download Starter Template](https://github.com/NextCommerceCo/campaign-cart-example)** — Clone or download a ready-to-use campaign flow (landing → checkout → upsell → receipt) with Campaign Cart integrated.
+
+### Option 2: Manual Setup
+
+1. **Get Your API Key**
+
+   Go to Next Commerce Dashboard, open the Campaigns app, select your campaign, click on Integration, and copy your API key.
+
+2. **Add SDK Script**
+
+   Add these two lines to your HTML `<head>` section:
+
+   ```html
+   <!-- Path to Your Campaign Cart Configuration -->
+   <script src="js/config.js"></script>
+
+   <!-- Campaign Cart SDK -->
+   <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
+   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.10/dist/loader.js" type="module"></script>
+   ```
+
+   <Callout type="idea" title="Latest Version">
+   Check the [GitHub releases](https://github.com/NextCommerceCo/campaign-cart/releases) for the latest stable version. For development, you can use `@latest`, but we recommend pinning to a specific version (e.g., `@v0.3.10`) in production for stability.
+   </Callout>
+
+3. **Start Building**
+
+   You can now use Campaign Cart attributes in your HTML!
+
+## HTML Page Setup
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- 1. Set configuration -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.nextReady = window.nextReady || [];
+
+    window.nextConfig = {
+      apiKey: "your-api-key-here",
+    };
+  </script>
+
+  <!-- 2. Meta tag configuration -->
+  <!-- Page Type: product, checkout, upsell, or receipt -->
+  <meta name="next-page-type" content="product">
+
+  <!-- Next URL: Redirect after order completion (for checkout pages) -->
+  <meta name="next-success-url" content="/upsell">
+
+  <!-- 3. Load the SDK -->
+  <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
+  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.10/dist/loader.js" type="module"></script>
+</head>
+<body>
+  <!-- Your content here -->
+</body>
+</html>
+```
+
+## Quick Examples
+
+### Add to Cart Button
+```html
+<button data-next-action="add-to-cart"
+        data-next-package-id="1"
+        data-next-quantity="1">
+  Add to Cart
+</button>
+```
+
+### Product Selector
+```html
+<div data-next-cart-selector data-next-selection-mode="swap">
+  <div data-next-selector-card data-next-package-id="1">Option 1</div>
+  <div data-next-selector-card data-next-package-id="2">Option 2</div>
+</div>
+```
+
+### Display Cart Total
+```html
+<span data-next-display="cart.total">$0.00</span>
+```
+
+### Conditional Display
+```html
+<div data-next-show="cart.hasItems">
+  <button onclick="checkout()">Proceed to Checkout</button>
+</div>
+```
+
+## Verify the SDK Loaded
+
+Open your browser console and run:
+
+```javascript
+console.log(window.next ? 'SDK Loaded' : 'SDK Not Found');
+
+if (window.next) {
+  console.log('SDK Version:', next.version);
+  console.log('Config:', next.getConfig());
+}
+```
+
+The SDK supports all modern browsers: Chrome, Firefox, Safari, and Edge.

@@ -1,0 +1,161 @@
+---
+title: Configuration
+---
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The SDK is configured via `window.nextConfig` before the SDK script loads, and via meta tags in your HTML `<head>`.
+
+<Callout type="idea">
+Replace `your-api-key-here` with your actual Campaign API key from the dashboard.
+</Callout>
+
+## JavaScript Configuration
+
+### Minimal Setup
+
+```javascript
+// Configure before SDK loads
+window.dataLayer = window.dataLayer || [];
+window.nextReady = window.nextReady || [];
+
+window.nextConfig = {
+  apiKey: "your-api-key-here"
+};
+```
+
+### Full Configuration Reference
+
+```javascript
+window.nextConfig = {
+  // Required: Your Campaign Cart API key
+  apiKey: "your-api-key-here",
+
+  // Currency behavior when country changes
+  currencyBehavior: 'auto', // 'auto' | 'manual'
+
+  // Payment and checkout configuration
+  paymentConfig: {
+    expressCheckout: {
+      enabled: true,
+      requireValidation: false, // Require form validation before express checkout
+      requiredFields: ['email', 'fname', 'lname'],
+      methodOrder: ['paypal', 'apple_pay', 'google_pay']
+    }
+  },
+
+  // Address and country configuration
+  addressConfig: {
+    defaultCountry: "US",
+    showCountries: ["US", "CA", "GB", "AU", "DE", "FR"],
+    dontShowStates: ["AS", "GU", "PR", "VI"]
+  },
+
+  // Discount codes configuration
+  discounts: {
+    // SAVE10: {
+    //     code: "SAVE10",
+    //     type: "percentage", // 'percentage' | 'fixed'
+    //     value: 10,
+    //     scope: "order", // 'package' | 'order'
+    //     description: "10% off entire order",
+    //     combinable: true,
+    //     // Optional: packageIds: [1, 2],
+    //     // Optional: minOrderValue: 50,
+    //     // Optional: maxDiscount: 20
+    // }
+  },
+
+  // Profile-based pricing
+  profiles: {
+    // "regular": {
+    //     name: "Regular Pricing",
+    // },
+    // "SAVE_5": {
+    //     name: "Exit Save 5",
+    //     packageMappings: {
+    //         1: 9,
+    //         2: 10,
+    //     }
+    // },
+  },
+
+  // Default profile to use (defaults to "regular" if not specified)
+  defaultProfile: "regular",
+
+  // Google Maps integration (address autocomplete)
+  googleMaps: {
+    apiKey: "your-google-maps-api-key",
+    region: "US",
+    enableAutocomplete: true
+  },
+
+  // Analytics providers
+  analytics: {
+    enabled: true,
+    mode: 'auto', // 'auto' | 'manual' | 'disabled'
+    providers: {
+      nextCampaign: {
+        enabled: true
+      },
+      gtm: {
+        enabled: false,
+        settings: {
+          containerId: "GTM-XXXXXX",
+          dataLayerName: "dataLayer"
+        },
+      },
+      facebook: {
+        enabled: false,
+        settings: {
+          pixelId: "YOUR_PIXEL_ID"
+        },
+      },
+      rudderstack: {
+        enabled: false,
+        settings: {},
+      },
+      custom: {
+        enabled: false,
+        settings: {
+          endpoint: "https://your-analytics.com/track",
+          apiKey: "your-api-key"
+        }
+      }
+    }
+  },
+
+  // UTM parameter transfer (preserve tracking params across pages)
+  utmTransfer: {
+    enabled: true,
+    applyToExternalLinks: false,
+    debug: false,
+    // Optional: excludedDomains: ['example.com'],
+    // Optional: paramsToCopy: ['utm_source', 'utm_medium', 'utm_campaign', 'gclid', 'fbclid']
+  }
+};
+```
+
+## Meta Tag Configuration
+
+Configure the SDK on a per-page basis using meta tags in your HTML `<head>`:
+
+```html
+<!-- Campaign API Key: Optional override -->
+<meta name="next-api-key" content="your-api-key-here">
+
+<!-- Funnel Name -->
+<meta name="next-funnel" content="Example Funnel">
+
+<!-- Page Type: product, checkout, upsell, or receipt -->
+<meta name="next-page-type" content="product">
+
+<!-- Next URL: Redirect after order completion (checkout pages) -->
+<meta name="next-success-url" content="/upsell">
+
+<!-- Prevent Back Navigation: Usually on first upsell page -->
+<meta name="next-prevent-back-navigation" content="true">
+
+<!-- Upsell URLs: For upsell pages -->
+<meta name="next-upsell-accept-url" content="/receipt">
+<meta name="next-upsell-decline-url" content="/receipt">
+```

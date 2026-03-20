@@ -5,6 +5,7 @@ import { GraphQLOperation } from '@/components/graphql-operation';
 import { Mermaid } from '@/components/mdx/mermaid';
 import { HttpRequestRow } from '@/components/http-code-block';
 import { parseHttpTitle } from '@/components/parse-http-title';
+import { CampaignFunnelFlow, CampaignAnatomy } from '@/components/campaign-concepts-flow';
 import type { MDXComponents } from 'mdx/types';
 import { Children, isValidElement, type ReactNode } from 'react';
 
@@ -40,6 +41,8 @@ export function getMDXComponents(components?: MDXComponents) {
     APIPage,
     GraphQLOperation,
     Mermaid,
+    CampaignFunnelFlow,
+    CampaignAnatomy,
     pre: (props: React.ComponentProps<typeof CodeBlock>) => {
       const title = props.title as string | undefined;
       const http = title ? parseHttpTitle(title) : null;

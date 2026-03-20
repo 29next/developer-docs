@@ -1,0 +1,4 @@
+{
+  "title": "Cart System",
+  "pages": ["index", "selectors", "package-toggle", "bundle-selector", "buttons", "quantity", "cart-summary", "state"]
+}

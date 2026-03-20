@@ -1,1 +1,22 @@
-{ "root": true, "title": "Campaigns", "icon": "Megaphone", "description": "Campaign funnels & checkout", "pages": ["index", "campaign-cart", "api"] }
+{
+    "root": true,
+    "title": "Campaigns",
+    "icon": "Megaphone",
+    "description": "Campaign funnels & checkout",
+    "pages": [
+        "---Guide---",
+        "index",
+        "guides",
+        "---Configuration---",
+        "configuration",
+        "---Features---",
+        "cart-system",
+        "upsells",
+        "analytics",
+        "utilities",
+        "---API References---",
+        "data-attributes",
+        "javascript-api",
+        "api"
+    ]
+}
