@@ -65,33 +65,40 @@ export function usePlaygroundState(
 
     // Resolve config from localStorage + query-string overrides
     try {
-      const stored = localStorage.getItem('next-playground-config');
-      const base: Config = stored ? JSON.parse(stored) : DEFAULT_CONFIG;
+      const isDebug = params.get('debug') === 'true';
 
-      const qs: Partial<Config> = {};
-      if (params.has('apiKey')) qs.apiKey = params.get('apiKey')!;
-      if (params.has('apiHost')) qs.apiHost = normalizeApiHost(params.get('apiHost')!);
-      if (params.has('sdkHost')) qs.sdkHost = normalizeApiHost(params.get('sdkHost')!);
-      if (params.has('sdkVersion')) qs.sdkVersion = params.get('sdkVersion')!;
-      if (params.has('debugger')) qs.debugger = params.get('debugger') === 'true';
+      // No debug=true → production mode, reset to defaults and clear any stored config
+      if (!isDebug) {
+        localStorage.removeItem('next-playground-config');
+        setConfig(DEFAULT_CONFIG);
+      } else {
+        const stored = localStorage.getItem('next-playground-config');
+        const base: Config = stored ? JSON.parse(stored) : DEFAULT_CONFIG;
 
-      // ?debug=true → enable debug and default sdkHost to localhost:3000 if not set
-      if (params.get('debug') === 'true') {
-        if (!qs.sdkHost && !base.sdkHost) qs.sdkHost = 'http://localhost:3000/';
-      }
+        const qs: Partial<Config> = {};
+        if (params.has('apiKey')) qs.apiKey = params.get('apiKey')!;
+        if (params.has('apiHost')) qs.apiHost = normalizeApiHost(params.get('apiHost')!);
+        if (params.has('sdkVersion')) qs.sdkVersion = params.get('sdkVersion')!;
+        if (params.has('debugger')) qs.debugger = params.get('debugger') === 'true';
 
-      const resolvedConfig = { ...base, ...qs };
-      setConfig(resolvedConfig);
-      localStorage.setItem('next-playground-config', JSON.stringify(resolvedConfig));
+        // sdkHost only applies in debug mode; defaults to localhost:3000
+        if (params.has('sdkHost')) qs.sdkHost = normalizeApiHost(params.get('sdkHost')!);
+        else if (!qs.sdkHost) qs.sdkHost = 'http://localhost:3000/';
 
-      // Remove config params from URL after applying them
-      if (Object.keys(qs).length > 0) {
-        const clean = new URL(window.location.href);
-        for (const key of ['apiKey', 'apiHost', 'sdkHost', 'sdkVersion', 'debugger', 'debug']) {
-          clean.searchParams.delete(key);
+        const resolvedConfig = { ...base, ...qs };
+        setConfig(resolvedConfig);
+        localStorage.setItem('next-playground-config', JSON.stringify(resolvedConfig));
+
+        // Remove config params from URL after applying them
+        if (Object.keys(qs).length > 0) {
+          const clean = new URL(window.location.href);
+          for (const key of ['apiKey', 'apiHost', 'sdkHost', 'sdkVersion', 'debugger']) {
+            clean.searchParams.delete(key);
+          }
+          window.history.replaceState({}, '', clean.toString());
         }
-        window.history.replaceState({}, '', clean.toString());
       }
+
     } catch {
       // fallback to default
     }
