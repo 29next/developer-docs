@@ -86,7 +86,7 @@ layout: center
     currencies while building — no code changes required.
 
   ── CART SUMMARY WITH LINE ITEMS ─────────────────────────────────────────────
-    data-summary-list="lines" inside a data-next-cart-summary <template>
+    data-summary-lines inside a data-next-cart-summary <template>
     renders one row per SummaryLine from the API, enriched with package data.
 
     Line template variables:
@@ -354,15 +354,15 @@ layout: center
 
     <!--
     ── SHIPPING INSURANCE TOGGLE ────────────────────────────────────
-    data-next-toggle adds/removes package 64 on click.
-    The SDK adds .next-in-cart / .next-not-in-cart to this element,
+    data-next-package-toggle (single-element mode) adds/removes package 10
+    on click. The SDK adds .next-in-cart / .next-not-in-cart to this element,
     which drives the checkbox visual via CSS (no real <input> needed —
     using a CSS-driven indicator means cart state always wins).
   -->
   <div class="insurance-row"
         role="checkbox"
         aria-checked="false"
-        data-next-toggle
+        data-next-package-toggle
         data-next-package-id="10"
         data-next-is-upsell="true"
         data-next-selected="true"
@@ -377,7 +377,7 @@ layout: center
         <small>Protect your order against loss or damage</small>
       </span>
     </span>
-    <span class="insurance-price" data-next-display="package.price" data-next-package-id="10"></span>
+    <span class="insurance-price" data-next-toggle-price></span>
   </div>
 
   <!--
@@ -413,7 +413,7 @@ layout: center
       <template>
         <!--
           ── LINE ITEMS ──────────────────────────────────────────────────────
-          data-summary-list="lines" renders one <li> per SummaryLine returned
+          data-summary-lines renders one <li> per SummaryLine returned
           by the API calculate response, enriched with local package data.
 
           Available variables on each line:
@@ -442,7 +442,7 @@ layout: center
             {line.hasDiscount}          — "show" / "hide"
             {line.hasSavings}           — "show" / "hide"
         -->
-        <ul class="cart-lines" data-summary-list="lines">
+        <ul class="cart-lines" data-summary-lines>
           <template>
             <li class="cart-item">
               <!--
@@ -477,11 +477,11 @@ layout: center
           </div>
 
           <!--
-            data-summary-list="offer_discounts" renders one <li> per offer discount
+            data-summary-offer-discounts renders one <li> per offer discount
             (e.g. "10% off"). The SDK adds .next-summary-empty when the list is
             empty, which hides the <ul> via CSS.
           -->
-          <ul class="discount-list" data-summary-list="offer_discounts">
+          <ul class="discount-list" data-summary-offer-discounts>
             <template>
               <li class="discount-item">
                 <span class="discount-name">{discount.name}</span>
@@ -491,11 +491,11 @@ layout: center
           </ul>
 
           <!--
-            data-summary-list="voucher_discounts" renders coupon/voucher discounts
+            data-summary-voucher-discounts renders coupon/voucher discounts
             in a distinct color (.discount-item--voucher) to differentiate from
             automatic offer discounts above.
           -->
-          <ul class="discount-list" data-summary-list="voucher_discounts">
+          <ul class="discount-list" data-summary-voucher-discounts>
             <template>
               <li class="discount-item discount-item--voucher">
                 <span class="discount-name">{discount.name}</span>
@@ -1040,7 +1040,7 @@ layout: center
     border-bottom: 1px solid var(--color-border);
   }
 
-  /* -- Line items (rendered by data-summary-list="lines") -- */
+  /* -- Line items (rendered by data-summary-lines) -- */
   .cart-lines {
     list-style: none; margin: 0; padding: 0;
     background: var(--color-bg-white); border-bottom: 1px solid var(--color-border);

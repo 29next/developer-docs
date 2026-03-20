@@ -70,7 +70,7 @@ layout: full
       data-next-display="package.priceRetail" — retail / compare-at price
     Pair with data-next-package-id to target a specific package by ref_id.
 
-  ── CART TOGGLE (data-next-toggle) ───────────────────────────────────────────
+  ── PACKAGE TOGGLE (data-next-package-toggle, single-element mode) ──────────
     Clicking the element adds the package to the cart; clicking again removes it.
     data-next-is-upsell="true" marks it as an optional add-on (not a main item).
     data-next-selected="true" pre-adds the package on page load.
@@ -225,13 +225,14 @@ layout: full
 
             <!--
               Shipping insurance toggle — adds/removes packageId 10 on click.
+              Single-element mode: data-next-package-toggle on the card itself.
               Pre-selected by default to maximise attach rate.
               SDK adds .next-in-cart to drive the checkbox visual via CSS.
             -->
             <div class="addon-card"
                  role="checkbox"
                  aria-checked="true"
-                 data-next-toggle
+                 data-next-package-toggle
                  data-next-package-id="10"
                  data-next-is-upsell="true"
                  data-next-selected="true">
@@ -254,9 +255,7 @@ layout: full
               </div>
 
               <div class="addon-price-col">
-                <span class="addon-price"
-                      data-next-display="package.price"
-                      data-next-package-id="10"></span>
+                <span class="addon-price" data-next-toggle-price></span>
               </div>
             </div>
 
@@ -303,10 +302,10 @@ layout: full
           </div>
 
           <div class="payment-row">
-            <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae6161337052a5_cc_visa.svg" alt="Visa" class="pay-icon">
-            <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae61ca777052a4_cc_master.svg" alt="Mastercard" class="pay-icon">
-            <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae6128807052a3_cc_amex.svg" alt="Amex" class="pay-icon">
-            <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae61e8567052ad_cc_discover.svg" alt="Discover" class="pay-icon">
+            <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/visa.svg" alt="Visa" class="pay-icon">
+            <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/master.svg" alt="Mastercard" class="pay-icon">
+            <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/amex.svg" alt="Amex" class="pay-icon">
+            <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/discover.svg" alt="Discover" class="pay-icon">
           </div>
 
           <div class="checkout-guarantee">
@@ -334,7 +333,7 @@ layout: full
       <div data-next-cart-summary>
         <template>
 
-          <ul class="summary-lines" data-summary-list="lines">
+          <ul class="summary-lines" data-summary-lines>
             <template>
               <li class="summary-line">
                 <img class="summary-img"
@@ -359,7 +358,7 @@ layout: full
               <span>{subtotal}</span>
             </div>
 
-            <ul class="discount-list" data-summary-list="offer_discounts">
+            <ul class="discount-list" data-summary-offer-discounts>
               <template>
                 <li class="discount-item">
                   <span class="discount-name">{discount.name}</span>
@@ -368,7 +367,7 @@ layout: full
               </template>
             </ul>
 
-            <ul class="discount-list" data-summary-list="voucher_discounts">
+            <ul class="discount-list" data-summary-voucher-discounts>
               <template>
                 <li class="discount-item discount-item--voucher">
                   <span class="discount-name">{discount.name}</span>

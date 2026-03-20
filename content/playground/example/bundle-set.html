@@ -1,6 +1,6 @@
 <!--
 title: Drone Bundle Set
-description: Two-step layout — pick a drone model, then customize with optional add-on bundles (extra battery, spare parts kit, 2-year guarantee). Drone selection uses BundleSelectorEnhancer; add-ons use data-next-toggle for independent cart control.
+description: Two-step layout — pick a drone model, then customize with optional add-on bundles (extra battery, spare parts kit, 2-year guarantee). Drone selection uses BundleSelectorEnhancer; add-ons use PackageToggleEnhancer for independent cart control.
 order: 4
 layout: center
 -->
@@ -18,17 +18,17 @@ layout: center
       "drone-standard" — Drone + 1 Extra Battery          (packageId: 1, 2)
       "drone-pro"      — Drone + 2 Batteries + Parts Kit  (packageId: 1, 2 x2, 3)
 
-  STEP 2 — ACCESSORY ADD-ONS  (data-next-toggle per item)
-    Three toggle cards that independently add/remove a single package.
-    These are unaffected by the drone bundle swap — selecting a new drone
-    model keeps any active add-ons in the cart.
+  STEP 2 — ACCESSORY ADD-ONS  (data-next-package-toggle)
+    Three toggle cards managed by PackageToggleEnhancer. Each card
+    independently adds/removes its package — any combination can be active.
+    Unaffected by the drone bundle swap above.
 
-    Toggles:
-      Extra Battery Pack  (packageId: 2)   — data-next-is-upsell="true"
-      Spare Parts Kit     (packageId: 3)   — data-next-is-upsell="true"
-      2-Year Guarantee    (packageId: 8)   — data-next-is-upsell="true"
+    Cards:
+      Extra Battery Pack  (packageId: 2)   — off by default
+      Spare Parts Kit     (packageId: 3)   — off by default
+      2-Year Guarantee    (packageId: 8)   — pre-selected (data-next-selected="true")
 
-  SHIPPING INSURANCE  (data-next-toggle)
+  SHIPPING INSURANCE  (data-next-package-toggle, single-element mode)
     Pre-selected row below the add-ons. Adds packageId 9 to the cart by
     default (data-next-selected="true"). Toggle removes it.
 
@@ -252,16 +252,20 @@ layout: center
 
     <!-- ───────────────────────────────────────────────────────────────────
       STEP 2: BUILD YOUR BUNDLE — ACCESSORY ADD-ONS
-      Each addon uses data-next-toggle which adds/removes a single package
-      independently of the drone bundle selection above.
+      data-next-package-toggle activates PackageToggleEnhancer on the list.
+      Each card inside gets data-next-toggle-card + data-next-package-id.
 
-      data-next-is-upsell="true" marks these as upsell items so the SDK
-      tracks them separately from the main bundle packages.
+      Any combination of cards can be active simultaneously — each toggles
+      its package independently. Unaffected by the drone bundle swap above.
 
-      SDK adds:
+      SDK adds to each card:
         .next-in-cart      — package is currently in the cart
         .next-not-in-cart  — package is not in the cart
+        .next-selected     — alias for next-in-cart (styling convenience)
       These drive the toggle checkbox visual via CSS without a real <input>.
+
+      data-next-toggle-price fetches the backend-calculated price (reflects
+      any active offers/coupons). Use "compare" for the retail/original price.
     ──────────────────────────────────────────────────────────────────── -->
     <div class="section-block">
       <div class="section-label">
@@ -270,153 +274,65 @@ layout: center
         <span class="section-hint">Optional — add more to save more</span>
       </div>
 
-      <div class="addon-list">
+      <!--
+        data-next-packages — JSON array drives auto-render; one card per entry.
+        Custom keys (desc, badge) are exposed as {toggle.desc}, {toggle.badge}
+        in the template alongside SDK built-ins (name, image, price, …).
+        "selected": true pre-adds that package on load.
+      -->
+      <div class="addon-list"
+           data-next-package-toggle
+           data-next-toggle-template-id="addon-toggle-tpl"
+           data-next-packages='[
+             { "packageId": 2, "desc": "Add 38 min flight time · Fast-charge in 60 min" },
+             { "packageId": 3, "desc": "4× propeller blades · Guards · Landing gear" },
+             { "packageId": 8, "selected": true, "badge": "Recommended",
+               "desc": "Full replacement · Crash damage · No questions asked" }
+           ]'>
+      </div><!-- /.addon-list / data-next-package-toggle -->
 
-        <!--
-          ── ADDON: Extra Battery Pack ──────────────────────────────────
-          data-next-selected="false" — off by default; set to "true" to
-          pre-select this addon in the cart on page load.
-        -->
-        <div class="addon-card"
-             role="checkbox"
-             aria-checked="false"
-             data-next-toggle
-             data-next-package-id="2"
+      <template id="addon-toggle-tpl">
+        <div class="addon-card" role="checkbox" aria-checked="false"
+             data-next-toggle-card
              data-next-is-upsell="true">
-
           <span class="addon-check" aria-hidden="true"></span>
-
-          <div class="addon-icon addon-icon--battery" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="18" height="10" rx="2" ry="2"/>
-              <line x1="22" y1="11" x2="22" y2="13"/>
-              <line x1="7" y1="11" x2="11" y2="11"/>
-              <line x1="9" y1="9" x2="9" y2="13"/>
-            </svg>
-          </div>
-
-          <div class="addon-info">
-            <p class="addon-name">Drone Extra Battery</p>
-            <p class="addon-desc">Add 38 min flight time · Fast-charge in 60 min</p>
-          </div>
-
-          <div class="addon-price-col">
-            <!--
-              data-next-display="package.price" pulls the live campaign price
-              for packageId 2. Updates automatically with currency changes.
-            -->
-            <span class="addon-price"
-                  data-next-display="package.price"
-                  data-next-package-id="2"></span>
-            <span class="addon-price-retail"
-                  data-next-display="package.priceRetail"
-                  data-next-package-id="2"></span>
-          </div>
-        </div>
-
-        <!--
-          ── ADDON: Spare Parts Kit ────────────────────────────────────
-        -->
-        <div class="addon-card"
-             role="checkbox"
-             aria-checked="false"
-             data-next-toggle
-             data-next-package-id="3"
-             data-next-is-upsell="true">
-
-          <span class="addon-check" aria-hidden="true"></span>
-
-          <div class="addon-icon addon-icon--parts" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
-              <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-            </svg>
-          </div>
-
-          <div class="addon-info">
-            <p class="addon-name">Drone Extra Propeller Set</p>
-            <p class="addon-desc">4× propeller blades · Guards · Landing gear</p>
-          </div>
-
-          <div class="addon-price-col">
-            <span class="addon-price"
-                  data-next-display="package.price"
-                  data-next-package-id="3"></span>
-            <span class="addon-price-retail"
-                  data-next-display="package.priceRetail"
-                  data-next-package-id="3"></span>
-          </div>
-        </div>
-
-        <!--
-          ── ADDON: 2-Year Guarantee ───────────────────────────────────
-          Pre-selected by default (data-next-selected="true") to maximise
-          attach rate — customer must actively deselect to remove it.
-        -->
-        <div class="addon-card addon-card--guarantee"
-             role="checkbox"
-             aria-checked="true"
-             data-next-toggle
-             data-next-package-id="8"
-             data-next-is-upsell="true"
-             data-next-selected="true">
-
-          <span class="addon-check" aria-hidden="true"></span>
-
-          <div class="addon-icon addon-icon--guarantee" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <polyline points="9 12 11 14 15 10"/>
-            </svg>
-          </div>
-
+          <img class="addon-icon" data-next-toggle-image alt="" aria-hidden="true">
           <div class="addon-info">
             <p class="addon-name">
-              Extended Warranty - 2 Years
-              <span class="addon-badge">Recommended</span>
+              {toggle.name}
+              <span class="addon-badge">{toggle.badge}</span>
             </p>
-            <p class="addon-desc">Full replacement · Crash damage · No questions asked</p>
+            <p class="addon-desc">{toggle.desc}</p>
           </div>
-
           <div class="addon-price-col">
-            <span class="addon-price"
-                  data-next-display="package.price"
-                  data-next-package-id="8"></span>
-            <span class="addon-price-retail"
-                  data-next-display="package.priceRetail"
-                  data-next-package-id="8"></span>
+            <span class="addon-price" data-next-toggle-price></span>
+            <span class="addon-price-retail" data-next-toggle-price="compare"></span>
           </div>
         </div>
-
-      </div><!-- /.addon-list -->
+      </template>
     </div><!-- /.section-block (step 2) -->
 
 
     <!-- ───────────────────────────────────────────────────────────────────
       SHIPPING INSURANCE TOGGLE
       Sits outside the step sections as a secondary, lower-prominence row.
+      Single-element mode: data-next-package-toggle on the element itself.
       data-next-is-upsell="true" + data-next-selected="true" pre-adds it.
     ──────────────────────────────────────────────────────────────────── -->
     <div class="insurance-row"
          role="checkbox"
          aria-checked="true"
-         data-next-toggle
+         data-next-package-toggle
          data-next-package-id="9"
          data-next-is-upsell="true"
          data-next-selected="true">
       <span class="insurance-check" aria-hidden="true"></span>
-      <svg class="insurance-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
+      <img class="insurance-icon" data-next-toggle-image alt="" aria-hidden="true">
       <span class="insurance-text">
         <strong>Shipping Insurance</strong>
         <small>Covers loss, theft, or transit damage</small>
       </span>
-      <span class="insurance-price"
-            data-next-display="package.price"
-            data-next-package-id="9"></span>
+      <span class="insurance-price" data-next-toggle-price></span>
     </div>
 
 
@@ -461,10 +377,10 @@ layout: center
       </div>
 
       <div class="payment-row">
-        <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae6161337052a5_cc_visa.svg" alt="Visa" class="pay-icon">
-        <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae61ca777052a4_cc_master.svg" alt="Mastercard" class="pay-icon">
-        <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae6128807052a3_cc_amex.svg" alt="Amex" class="pay-icon">
-        <img loading="lazy" src="https://uploads-ssl.webflow.com/61f98dd058ae6109cf705231/61f98dd058ae61e8567052ad_cc_discover.svg" alt="Discover" class="pay-icon">
+        <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/visa.svg" alt="Visa" class="pay-icon">
+        <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/master.svg" alt="Mastercard" class="pay-icon">
+        <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/amex.svg" alt="Amex" class="pay-icon">
+        <img loading="lazy" src="https://developers.29next.com/assets/pm/cards/discover.svg" alt="Discover" class="pay-icon">
       </div>
 
     </div><!-- /.drone-footer -->
@@ -489,12 +405,12 @@ layout: center
         <template>
 
           <!-- LINE ITEMS
-            data-summary-list="lines" renders one <li> per cart line.
+            data-summary-lines renders one <li> per cart line.
             Available variables: {line.image}, {line.quantity},
             {line.productName}, {line.variantName}, {line.total},
             {line.hasSavings} ("show" / "next-hide"), {line.totalDiscount}.
           -->
-          <ul class="summary-lines" data-summary-list="lines">
+          <ul class="summary-lines" data-summary-lines>
             <template>
               <li class="summary-line">
                 <img class="summary-img"
@@ -520,7 +436,7 @@ layout: center
             </div>
 
             <!-- Offer discounts (e.g. bundle discount, flash sale) -->
-            <ul class="discount-list" data-summary-list="offer_discounts">
+            <ul class="discount-list" data-summary-offer-discounts>
               <template>
                 <li class="discount-item">
                   <span class="discount-name">{discount.name}</span>
@@ -530,7 +446,7 @@ layout: center
             </ul>
 
             <!-- Coupon / voucher discounts (purple accent) -->
-            <ul class="discount-list" data-summary-list="voucher_discounts">
+            <ul class="discount-list" data-summary-voucher-discounts>
               <template>
                 <li class="discount-item discount-item--voucher">
                   <span class="discount-name">{discount.name}</span>
@@ -954,13 +870,9 @@ layout: center
   /* Addon icon circle */
   .addon-icon {
     width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    object-fit: cover;
     flex-shrink: 0;
   }
-  .addon-icon svg { width: 18px; height: 18px; }
-  .addon-icon--battery   { background: #fef3c7; color: #d97706; }
-  .addon-icon--parts     { background: #e0f2fe; color: #0369a1; }
-  .addon-icon--guarantee { background: #ecfdf5; color: var(--color-success); }
 
   .addon-info { min-width: 0; }
   .addon-name {
@@ -975,6 +887,7 @@ layout: center
     padding: 2px 7px; border-radius: 20px;
     background: #ecfdf5; color: var(--color-success);
   }
+  .addon-badge:empty { display: none; }
 
   .addon-price-col { text-align: right; white-space: nowrap; }
   .addon-price       { display: block; font-size: 14px; font-weight: 700; color: var(--color-text); }
@@ -1002,22 +915,24 @@ layout: center
   .insurance-row.next-in-cart { border-color: var(--color-primary); background: var(--color-primary-light); }
 
   .insurance-check {
-    width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
+    width: 20px; height: 20px; border-radius: var(--radius-check); flex-shrink: 0;
     border: 2px solid var(--color-border); background: var(--color-bg-white);
+    display: flex; align-items: center; justify-content: center;
     position: relative; transition: border-color .15s, background .15s;
   }
   .insurance-row.next-in-cart .insurance-check {
     border-color: var(--color-primary); background: var(--color-primary);
   }
   .insurance-check::after {
-    content: ''; display: block; position: absolute;
-    left: 3px; top: 0px; width: 4px; height: 7px;
+    content: ''; display: block;
+    width: 5px; height: 9px;
     border: 2px solid #fff; border-top: none; border-left: none;
-    transform: rotate(45deg); opacity: 0; transition: opacity .15s;
+    transform: rotate(45deg) translateY(-1px);
+    opacity: 0; transition: opacity .15s;
   }
   .insurance-row.next-in-cart .insurance-check::after { opacity: 1; }
 
-  .insurance-icon { width: 16px; height: 16px; color: var(--color-muted); flex-shrink: 0; }
+  .insurance-icon { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
   .insurance-text { flex: 1; min-width: 0; }
   .insurance-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--color-text); }
   .insurance-text small  { display: block; font-size: 11px; color: var(--color-muted); }
