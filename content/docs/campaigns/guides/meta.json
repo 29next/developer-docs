@@ -1,4 +1,4 @@
 {
   "title": "Guides",
-  "pages": ["index", "tier-selector-implementation", "quantity-package-swapper", "profiles", "advanced-customization"]
+  "pages": ["index", "bundle-set-sale", "selling-addons", "package-selector-with-button", "cart-summary", "checkout-form", "checkout-multi-step"]
 }
