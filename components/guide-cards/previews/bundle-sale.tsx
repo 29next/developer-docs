@@ -6,36 +6,36 @@ import { ShoppingCart, Check } from 'lucide-react';
 const BUNDLE_TIERS = [
   {
     id: 0,
-    name: 'Buy 1',
-    itemCount: 1,
-    price: 39,
-    originalPrice: 39,
-    discount: 0,
+    name: 'Essential Duo',
+    itemCount: 2,
+    price: 49,
+    originalPrice: 52,
+    discount: 5,
     badge: null as string | null,
     freeShipping: false,
-    items: [{ name: 'Glow Serum', qty: 1 }],
+    items: [{ name: 'Cleanser', qty: 1 }, { name: 'Moisturizer', qty: 1 }],
   },
   {
     id: 1,
-    name: 'Buy 2',
-    itemCount: 2,
-    price: 69,
-    originalPrice: 78,
-    discount: 12,
+    name: 'Complete Glow',
+    itemCount: 4,
+    price: 89,
+    originalPrice: 99,
+    discount: 10,
     badge: 'Most Popular',
     freeShipping: true,
-    items: [{ name: 'Glow Serum', qty: 2 }],
+    items: [{ name: 'Cleanser', qty: 2 }, { name: 'Serum', qty: 1 }, { name: 'Moisturizer', qty: 1 }],
   },
   {
     id: 2,
-    name: 'Buy 3',
-    itemCount: 3,
-    price: 89,
-    originalPrice: 117,
-    discount: 24,
+    name: 'Luxury Care',
+    itemCount: 7,
+    price: 149,
+    originalPrice: 175,
+    discount: 15,
     badge: 'Best Value',
     freeShipping: true,
-    items: [{ name: 'Glow Serum', qty: 3 }],
+    items: [{ name: 'Cleanser', qty: 3 }, { name: 'Serum', qty: 2 }, { name: 'Moisturizer', qty: 2 }],
   },
 ];
 
@@ -79,8 +79,8 @@ export function BundleSalePreview() {
     <div className="flex flex-col gap-2 p-4">
       <div className="flex items-center gap-2.5 mb-0.5">
         <div className="text-xs font-semibold text-fd-foreground leading-tight">
-          Bundle Selector
-          <span className="block text-[10px] font-normal text-fd-muted-foreground">Choose your quantity</span>
+          Skincare Bundles
+          <span className="block text-[10px] font-normal text-fd-muted-foreground">Choose your set</span>
         </div>
       </div>
 
