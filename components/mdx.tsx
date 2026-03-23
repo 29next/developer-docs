@@ -6,6 +6,8 @@ import { Mermaid } from '@/components/mdx/mermaid';
 import { HttpRequestRow } from '@/components/http-code-block';
 import { parseHttpTitle } from '@/components/parse-http-title';
 import { CampaignFunnelFlow, CampaignAnatomy } from '@/components/campaign-concepts-flow';
+import { CampaignGuidesGrid } from '@/components/guide-cards';
+import { CodePlayground } from '@/components/CodePlayground';
 import type { MDXComponents } from 'mdx/types';
 import { Children, isValidElement, type ReactNode } from 'react';
 
@@ -43,6 +45,8 @@ export function getMDXComponents(components?: MDXComponents) {
     Mermaid,
     CampaignFunnelFlow,
     CampaignAnatomy,
+    CampaignGuidesGrid,
+    CodePlayground,
     pre: (props: React.ComponentProps<typeof CodeBlock>) => {
       const title = props.title as string | undefined;
       const http = title ? parseHttpTitle(title) : null;

@@ -8,15 +8,16 @@ import type { Viewport, Config } from '@/lib/playground/types';
 
 interface PreviewPanelProps {
   iframeSrc: string;
-  isDark: boolean;
-  isDragging: boolean;
+  isDark?: boolean;
+  isDragging?: boolean;
   viewport: Viewport;
   onViewportChange: (vp: Viewport) => void;
-  onExpandToggle: () => void;
-  expanded: boolean;
-  config: Config;
-  code: string;
-  layout: string;
+  onExpandToggle?: () => void;
+  expanded?: boolean;
+  config?: Config;
+  code?: string;
+  layout?: string;
+  floatingViewports?: boolean;
 }
 
 const VIEWPORT_ICONS: Record<Viewport, React.ReactNode> = {
@@ -24,6 +25,41 @@ const VIEWPORT_ICONS: Record<Viewport, React.ReactNode> = {
   tablet: <Tablet size={13} />,
   desktop: <Monitor size={13} />,
 };
+
+const ViewportToggle = ({
+  viewport,
+  onViewportChange,
+}: {
+  viewport: Viewport;
+  onViewportChange: (vp: Viewport) => void;
+}) => (
+  <div className="flex items-center rounded-md border border-fd-border bg-fd-background p-0.5">
+    {(Object.keys(VIEWPORTS) as Viewport[]).map((vp, i) => {
+      const { label } = VIEWPORTS[vp];
+      return (
+        <React.Fragment key={vp}>
+          {i > 0 && (
+            <span className="text-fd-border select-none px-0.5">|</span>
+          )}
+          <button
+            type="button"
+            title={label}
+            onClick={() => onViewportChange(vp)}
+            className={`px-2 py-0.5 text-xs rounded transition-colors ${
+              viewport === vp
+                ? 'bg-blue-600 text-white'
+                : 'text-fd-muted-foreground hover:text-fd-foreground'
+            }`}
+          >
+            <span className="flex items-center gap-1">
+              {VIEWPORT_ICONS[vp]} {label}
+            </span>
+          </button>
+        </React.Fragment>
+      );
+    })}
+  </div>
+);
 
 export function PreviewPanel({
   iframeSrc,
@@ -36,71 +72,59 @@ export function PreviewPanel({
   config,
   code,
   layout,
+  floatingViewports = false,
 }: PreviewPanelProps) {
   return (
     <div className="flex-1 min-w-0 flex flex-col bg-fd-muted/20">
-      <div className="px-3 py-1.5 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2">
-        {/* Left: label */}
-        <span className="text-xs text-fd-muted-foreground font-mono w-16">Preview</span>
-        {/* Center: viewport toggles */}
-        <div className="flex-1 flex justify-center">
-          <div className="flex items-center gap-1 rounded-md border border-fd-border bg-fd-background p-0.5">
-            {(Object.keys(VIEWPORTS) as Viewport[]).map((vp) => {
-              const { label } = VIEWPORTS[vp];
-              return (
-                <button
-                  key={vp}
-                  type="button"
-                  title={label}
-                  onClick={() => onViewportChange(vp)}
-                  className={`px-2 py-0.5 text-xs rounded transition-colors ${
-                    viewport === vp
-                      ? 'bg-blue-600 text-white'
-                      : 'text-fd-muted-foreground hover:text-fd-foreground'
-                  }`}
-                >
-                  <span className="flex items-center gap-1">{VIEWPORT_ICONS[vp]} {label}</span>
-                </button>
-              );
-            })}
+      {!floatingViewports && (
+        <div className="px-3 py-1.5 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2">
+          {/* Left: label */}
+          <span className="text-xs text-fd-muted-foreground font-mono w-16">Preview</span>
+          {/* Center: viewport toggles */}
+          <div className="flex-1 flex justify-center">
+            <ViewportToggle viewport={viewport} onViewportChange={onViewportChange} />
+          </div>
+          {/* Right: actions */}
+          <div className="flex items-center gap-2 justify-end">
+            {config?.sdkHost && (
+              <span
+                title={`SDK Host: ${config.sdkHost}`}
+                className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-mono hidden xl:inline truncate max-w-[6rem]"
+              >
+                {sdkHostLabel(config.sdkHost)}
+              </span>
+            )}
+            {code != null && config != null && (
+              <button
+                type="button"
+                title="Open preview in new tab"
+                onClick={() => {
+                  const html = buildIframeHtml(code, config, layout ?? '');
+                  const blob = new Blob([html], { type: 'text/html' });
+                  const url = URL.createObjectURL(blob);
+                  window.open(url, '_blank');
+                }}
+                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+              >
+                <ExternalLink size={14} />
+              </button>
+            )}
+            {onExpandToggle && (
+              <button
+                type="button"
+                title="Expand preview"
+                onClick={onExpandToggle}
+                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+              >
+                {expanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+              </button>
+            )}
           </div>
         </div>
-        {/* Right: expand toggle */}
-        <div className="flex items-center gap-2 justify-end">
-          {config.sdkHost && (
-            <span
-              title={`SDK Host: ${config.sdkHost}`}
-              className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-mono hidden xl:inline truncate max-w-[6rem]"
-            >
-              {sdkHostLabel(config.sdkHost)}
-            </span>
-          )}
-          <button
-            type="button"
-            title="Open preview in new tab"
-            onClick={() => {
-              const html = buildIframeHtml(code, config, layout);
-              const blob = new Blob([html], { type: 'text/html' });
-              const url = URL.createObjectURL(blob);
-              window.open(url, '_blank');
-            }}
-            className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-          >
-            <ExternalLink size={14} />
-          </button>
-          <button
-            type="button"
-            title="Expand preview"
-            onClick={onExpandToggle}
-            className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-          >
-            {expanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-          </button>
-        </div>
-      </div>
+      )}
       {/* Scrollable container that centres a constrained iframe */}
       <div
-        className="flex-1 min-h-0 overflow-auto flex justify-center"
+        className="group relative flex-1 min-h-0 overflow-auto flex justify-center"
         style={{
           backgroundColor: isDark ? '#0f1117' : '#f1f5f9',
           backgroundImage: isDark
@@ -109,6 +133,11 @@ export function PreviewPanel({
           backgroundSize: '20px 20px',
         }}
       >
+        {floatingViewports && (
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+            <ViewportToggle viewport={viewport} onViewportChange={onViewportChange} />
+          </div>
+        )}
         <div
           className="h-full transition-all duration-200 rounded overflow-hidden"
           style={{
