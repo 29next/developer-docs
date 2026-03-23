@@ -74,6 +74,10 @@ When disputes are identified as belonging to a store, the dispute service should
 
 Disputes created in the store need to be matched to the transaction in the store to associate it with the order/customer. Disputes can be matched by passing the `transaction` parameter when creating or with update using the [disputesUpdate](/docs/admin-api/reference/payments/disputesUpdate) Admin API. See example below in [Match a Dispute](#matching-disputes).
 
+<Callout type="info" title="Tokenized payment methods may require auth_code matching">
+Apple Pay, Google Pay, and other tokenized payment methods use virtualized card numbers that alert services like Ethoca may not match. See [Matching Tokenized Payments](#matching-tokenized-payments) for fallback strategies using `auth_code`.
+</Callout>
+
 
 ### Step 6 - Customer is added to block lists
 
@@ -82,7 +86,11 @@ Merchants can configure their store to automatically add customers to block list
 
 ### Step 7 - Dispute service creates refund
 
-Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/admin-api/reference/payments/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-disputes) detail below.
+Depending on the type of dispute, the dispute service may need to create a refund using the [transactionsRefundCreate](/docs/admin-api/reference/payments/transactionsRefundCreate) Admin API to resolve the dispute. See [Create a Refund](#creating-refunds) detail below.
+
+<Callout type="info" title="RDR Alerts — use external refunds">
+For RDR alerts, the refund is already processed by the gateway. Your app should log it as an external refund with `is_external: true` to keep the store's transaction record accurate. See [RDR Alerts](#rdr-alerts) below.
+</Callout>
 
 
 ### Step 8 - Cancel Order / Cancel Fulfillment 
@@ -120,6 +128,23 @@ To match a dispute to a transaction, pass the `transaction` id to the [disputesU
 }
 ```
 
+### Matching Tokenized Payments
+
+Apple Pay, Google Pay, and other tokenized payment methods present a **virtualized card number** (BIN and last 4 digits) to the payment network. Because the virtual card number differs from the cardholder's physical card, pre-chargeback alert services like Ethoca often cannot match the dispute to the transaction using the partial card number alone — these cases typically come back as "not found."
+
+When a card-based lookup returns no match, use the `auth_code` field as a fallback to search for the originating transaction. The authorization code is issued by the card issuer and remains consistent regardless of whether the payment was tokenized, making it a reliable secondary identifier.
+
+Use the [transactionsList](/docs/admin-api/reference/payments/transactionsList#query-parameters) API to search transactions by `auth_code`:
+
+```json title="Search by auth_code" http-method="GET" http-target="https://{store}.29next.store/api/admin/transactions/?auth_code={auth_code}"
+```
+
+<Callout type="info" title="auth_code availability">
+The `auth_code` field is not supported by all payment gateways. Your app should implement a lookup strategy that falls back gracefully — for example, try card-based matching first and fall back to `auth_code`, or vice versa depending on the payment method.
+
+The `auth_code` and `network_transaction_id` fields were added to the Transactions API and webhook events to assist with dispute mapping. See the [changelog](https://changelog.nextcommerce.com/blog/detail/18032026/) for details.
+</Callout>
+
 ## Creating Refunds
 
 To create a refund for a transaction as part of the dispute resolution process, you can use the [transactionsRefundCreate](/docs/admin-api/reference/payments/transactionsRefundCreate) Admin API.
@@ -129,6 +154,10 @@ To create a refund for a transaction as part of the dispute resolution process, 
     "amount": "XX.XX", // refund amount
 }
 ```
+
+<Callout type="info" title="RDR Alerts — external refunds">
+RDR alerts are automatically refunded by the gateway before your app is notified. To keep the store's transaction record in sync, create the refund with `is_external: true` so the platform logs the refund without attempting to process it again. See [RDR Alerts](#rdr-alerts) for the full pattern.
+</Callout>
 
 ## Canceling Fulfillment
 
