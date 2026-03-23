@@ -598,26 +598,8 @@ Product review object.
 | `id` | String | Review ID. |
 | `title` | String | Review title. |
 | `score` | Integer | Review score. |
-| `user` | Object | The customer that created the review, see [user](#user). |
+| `user` | Object | The customer that created the review. |
 
-
-### user
-
-The current user/customer object available when a customer is authenticated.
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `is_authenticated` | Boolean | Whether the user is logged in. |
-| `is_staff` | Boolean | Whether the user is an admin/staff member. |
-
-```django title="Example Conditional Auth Links"
-{% if user.is_authenticated %}
-    <a href="{% url 'customer:summary' %}">My Account</a>
-    <a href="{% url 'customer:logout' %}">Logout</a>
-{% else %}
-    <a href="{% url 'customer:login' %}">Login</a>
-{% endif %}
-```
 
 ### voucher
 
@@ -632,68 +614,6 @@ Voucher object.
 ## View-Specific Objects
 
 View-specific objects are available in the templates rendered by their corresponding views. See [Template Contexts](#template-contexts) below for which objects are available in each template.
-
-
-### cart
-
-The cart object represents the current user's shopping cart and is available in cart templates.
-
-```django title="Example Cart Summary"
-{% if not cart.is_empty %}
-<div class="cart-summary">
-    <span>{{ cart.num_items }} item{{ cart.num_items|pluralize }}</span>
-    <span>{{ cart.total_incl_tax|currency:cart.currency }}</span>
-</div>
-{% endif %}
-```
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `is_empty` | Boolean | Whether the cart has any items. |
-| `num_items` | Integer | Total number of items in the cart. |
-| `total_incl_tax` | Decimal | Cart total including tax. |
-| `total_excl_tax` | Decimal | Cart total excluding tax. |
-| `total_excl_tax_excl_discounts` | Decimal | Cart subtotal before discounts and tax. |
-| `currency` | String | The cart's currency code, eg `USD`. |
-| `is_tax_known` | Boolean | Whether tax has been calculated. |
-| `display_taxes` | String | Tax display label. |
-| `offer_discounts` | List | List of applied offer discounts. |
-| `grouped_voucher_discounts` | List | List of applied voucher discounts. |
-| `subscription_rebill_quantity` | Integer | Number of subscription items in the cart. |
-
-
-### line
-
-A cart line item object representing a single product entry in the cart. Available when iterating over cart lines in cart templates.
-
-```django title="Example Cart Line Items"
-{% for form in formset %}
-    {% with line=form.instance %}
-    <div class="cart-line">
-        <span>{{ line.description }}</span>
-        <span>{{ line.unit_price_incl_tax|currency:line.price_currency }}</span>
-        <span>Qty: {{ line.quantity }}</span>
-        {% if line.discount_value %}
-            <span class="text-success">-{{ line.discount_value|currency:line.price_currency }}</span>
-        {% endif %}
-        <span>{{ line.line_price_incl_tax_incl_discounts|currency:line.price_currency }}</span>
-    </div>
-    {% endwith %}
-{% endfor %}
-```
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `description` | String | Product title/description in the cart. |
-| `product` | Object | The [product](#product) object for this line. |
-| `quantity` | Integer | Quantity of this item in the cart. |
-| `unit_price_incl_tax` | Decimal | Unit price including tax. |
-| `unit_price_excl_tax` | Decimal | Unit price excluding tax. |
-| `is_tax_known` | Boolean | Whether tax is calculated for this line. |
-| `price_currency` | String | Currency code for this line item. |
-| `discount_value` | Decimal | Discount amount applied to this line. |
-| `line_price_incl_tax_incl_discounts` | Decimal | Total line price after discounts and tax. |
-| `subscription_range` | Field | Subscription frequency selector field, if applicable. |
 
 
 ### session
@@ -838,58 +758,6 @@ There are three filter types: `price_range`, `boolean`, and `list`. Each type ha
 | `label` | String | Display label for this value. |
 
 
-### subscription_group
-
-Subscription group object available in cart summary templates when the cart contains subscription products. Accessed through the `subscription_groups` list.
-
-```django title="Example Subscription Summary"
-{% if subscription_groups %}
-{% for group in subscription_groups %}
-<div class="subscription-group">
-    <h6>Subscription - {{ group.frequency }}</h6>
-    {% for line in group.lines %}
-        <div>{{ line.description }} - {{ line.unit_price_incl_tax|currency:group.currency }}</div>
-    {% endfor %}
-    <div>Shipping: {{ group.shipping_price.excl_tax|currency:group.currency }}</div>
-    <div>Tax: {{ group.total_tax|currency:group.currency }}</div>
-    <div>Total: {{ group.total_incl_tax|currency:group.currency }}</div>
-</div>
-{% endfor %}
-{% endif %}
-```
-
-| Property | Type | Description |
-| ----- | ------ | ------ |
-| `lines` | List | List of cart [line](#line) items in this subscription group. |
-| `currency` | String | Currency code for this group. |
-| `frequency` | String | Subscription frequency label (eg "Monthly"). |
-| `shipping_price.excl_tax` | Decimal | Shipping cost before tax. |
-| `total_tax` | Decimal | Total tax for this group. |
-| `display_taxes` | String | Tax display label. |
-| `total_incl_tax` | Decimal | Group total including tax. |
-
-
-## Cart Template Context
-
-The following additional context variables are available in cart templates (`templates/cart.html`).
-
-| Variable | Type | Description |
-| ----- | ------ | ------ |
-| `cart` | Object | The [cart](#cart) object. |
-| `formset` | FormSet | Form set for editing cart line quantities and removing items. |
-| `saved_formset` | FormSet | Form set for saved/wishlist items. |
-| `cart_warnings` | List | List of warning messages about cart state. |
-| `upsell_messages` | List | List of upsell offer messages. |
-| `voucher_form` | Form | Coupon/voucher code entry form. |
-| `max_cart_quantity_per_line` | Integer | Maximum allowed quantity per line item. |
-| `subscription_groups` | List | List of [subscription_group](#subscription_group) objects. |
-| `subscription_total_incl_tax` | Decimal | Total for all subscriptions including tax. |
-| `subscription_total_excl_tax` | Decimal | Total for all subscriptions excluding tax. |
-| `interval_count_choices` | List | Subscription frequency choices for product forms. |
-| `editable` | Boolean | Whether the cart is in editable mode. |
-| `modal_open` | Boolean | Whether the side cart modal should be open. |
-
-
 ## Template Contexts
 
 All templates receive the [Global Objects](#global-objects) (`store`, `settings`, `currencies`, `languages_active_storefront`, `menus`, `products`, `product_categories`, `posts`, `post_categories`, `privacy_policy`, `terms_and_conditions`, `subscription_terms_and_conditions`, `request`, `storefront_geos`). The table below lists additional view-specific context variables passed to each template.
@@ -897,7 +765,6 @@ All templates receive the [Global Objects](#global-objects) (`store`, `settings`
 | Template | View-Specific Context |
 | ----- | ------ |
 | `templates/index.html` | Global objects only. Use the [`where`](/docs/storefront/themes/templates/tags#where) tag to query products and categories. |
-| `templates/cart.html` | `cart`, `formset`, `saved_formset`, `cart_warnings`, `upsell_messages`, `voucher_form`, `max_cart_quantity_per_line`, `subscription_groups`, `editable`, `modal_open` |
 | `templates/catalogue/product.html` | `product`, `variant_form`, `interval_count_choices` |
 | `templates/catalogue/index.html` | `products` (paginated), `paginator`, `page_obj` |
 | `templates/catalogue/category.html` | `category`, `products` (paginated), `filters`, `has_active_filter`, `paginator`, `page_obj` |
@@ -914,6 +781,10 @@ All templates receive the [Global Objects](#global-objects) (`store`, `settings`
 
 <Callout type="idea">
 Use the [`purchase_info_for_product`](/docs/storefront/themes/templates/tags#purchase_info_for_product) tag in any template to get pricing and availability for a product. Use [`cart_form`](/docs/storefront/themes/templates/tags#cart_form) on product pages to generate add-to-cart forms.
+</Callout>
+
+<Callout type="warn">
+**Cart and user data must use the [Storefront GraphQL API](/docs/storefront/graphql).** All storefront pages are fully cached per language and currency combination. Per-user data (cart contents, authentication state, wishlists) rendered in server-side templates would be cached and served to other visitors. Use client-side JavaScript with the GraphQL API for all cart and user interactions.
 </Callout>
 
 
