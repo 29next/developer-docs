@@ -15,6 +15,13 @@ import IntroTheme from '../../../../_snippets/_view-intro-theme.mdx';
 <Callout type="warn">
 Ensure your template paths match with expected template paths for built-in storefront views. Use the public themes on [Github](https://github.com/NextCommerceCo/) as a reference guide and starting point. All URL paths are automatically localized to the users language following your store's Localization settings.
 </Callout>
+
+### Homepage
+
+| URL Name | URL Path | Template Path |
+| --- | --- | --- |
+| N/A | / | templates/index.html |
+
 ### Blog
 
 | URL Name | URL Path & Arguments | Template Path |
@@ -27,6 +34,10 @@ Ensure your template paths match with expected template paths for built-in store
 | URL Name | URL Path | Template Path |
 | --- | --- | --- |
 | cart:summary | /cart/ | templates/cart.html |
+| cart:add | POST /cart/add/:product_slug/ | N/A (action endpoint) |
+| cart:saved | /cart/saved/ | templates/cart.html (saved items) |
+| cart:vouchers-add | POST /cart/vouchers/add/ | N/A (action endpoint) |
+| cart:vouchers-remove | POST /cart/vouchers/remove/:voucher_id/ | N/A (action endpoint) |
 
 ### Catalogue
 
@@ -68,9 +79,34 @@ Ensure your template paths match with expected template paths for built-in store
 
 | URL Name | URL Path | Template Path |
 | --- | --- | --- |
-| support:cateogry-list | /support/categories/ | templates/support/index.html |
+| support:category-list | /support/categories/ | templates/support/index.html |
 | support:article-list | /support/categories/:category_slug/ | templates/support/category.html |
 | support:article-detail | /support/articles/:article_slug/ | templates/support/article.html |
+
+### Customer / Authentication
+
+| URL Name | URL Path | Template Path |
+| --- | --- | --- |
+| customer:login | /accounts/login/ | N/A (platform-managed) |
+| customer:logout | /accounts/logout/ | N/A (platform-managed) |
+| customer:summary | /accounts/ | N/A (platform-managed) |
+| customer:support-ticket-create | /accounts/support/create/ | N/A (platform-managed) |
+
+### Localization
+
+These are POST action endpoints used in forms for switching language, currency, or storefront geo.
+
+| URL Name | Method | Description |
+| --- | --- | --- |
+| set_language | POST | Change the active language. |
+| core:set-currency | POST | Change the active currency. |
+| core:set-storefront | POST | Change the active storefront geo (country, language, currency). |
+
+### API
+
+| URL Name | URL Path | Description |
+| --- | --- | --- |
+| storefrontapi:graphql | /api/graphql/ | [Storefront GraphQL API](/docs/storefront/graphql) endpoint. |
 
 ### Error Pages
 

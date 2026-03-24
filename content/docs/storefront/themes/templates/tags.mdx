@@ -32,6 +32,47 @@ import AppHookLocations from '../../../../_snippets/_app-hook-locations.mdx';
 <AppHookLocations />
 
 
+### add_query_param
+
+The `add_query_param` tag appends or updates a query parameter on the current URL. Commonly used for building pagination links and filter URLs while preserving existing query parameters.
+
+```django title="add_query_param"
+{% add_query_param request 'page' page_obj.next_page_number %}
+```
+
+```django title="Example Pagination with add_query_param"
+{% if paginator.num_pages > 1 %}
+<nav aria-label="pagination">
+    <ul class="pagination">
+        {% with ''|center:paginator.num_pages as range %}
+            {% for _ in range %}
+                <li class="page-item {% if forloop.counter == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="{% add_query_param request 'page' forloop.counter %}">
+                        {{ forloop.counter }}
+                    </a>
+                </li>
+            {% endfor %}
+        {% endwith %}
+    </ul>
+</nav>
+{% endif %}
+```
+
+| Argument | Description |
+| --- | --- |
+| request | The current `request` context object. |
+| param_name | The query parameter name to set, eg `'page'`. |
+| value | The value to assign to the parameter. |
+
+### annotate_form_field
+
+The `annotate_form_field` tag adds HTML attributes to a form field based on its Django form field properties (required, type, etc.). Useful for adding client-side validation and accessibility attributes.
+
+```django title="annotate_form_field"
+{% annotate_form_field field %}
+{{ field }}
+```
+
 ### boolean operators
 If tags may be used in combination with boolean operators for conditional control flow.
 
@@ -51,6 +92,32 @@ If tags may be used in combination with boolean operators for conditional contro
 | `<=`      | less than or equal to |
 | `>=`      | greater than or equal to |
 
+### cart_form
+
+The `cart_form` tag generates an add-to-cart form for a product. Required on every product page to enable purchasing.
+
+```django title="cart_form"
+{% cart_form request product 'single' as cart_form %}
+```
+
+```django title="Example Product Add to Cart Form"
+{% cart_form request product 'single' as cart_form %}
+<form method="post" action="{% url 'cart:add' product.slug %}">
+    {% csrf_token %}
+    {{ cart_form }}
+    <button type="submit" class="btn btn-primary">
+        Add to Cart
+    </button>
+</form>
+```
+
+| Argument | Description |
+| --- | --- |
+| request | The current `request` context object. |
+| product | The `product` context object. |
+| form_type | The form type, typically `'single'`. |
+| variable | Assigned template variable name for the form. |
+
 ### comment
 
 Ignores everything between `{% comment %}` and `{% endcomment %}`. An optional note may be inserted in the first tag. For example, this is useful when commenting out code for documenting why the code was disabled.
@@ -61,6 +128,27 @@ Ignores everything between `{% comment %}` and `{% endcomment %}`. An optional n
     <p>Commented out text with {{ create_date|date:"c" }}</p>
 {% endcomment %}
 ```
+
+### core_js
+
+The `core_js` tag outputs the platform's core JavaScript bundle. This is required in every theme's base layout and powers cart functionality, AJAX form submissions, CSRF token handling, and other platform features.
+
+```django title="core_js"
+{% core_js %}
+```
+
+```django title="Example Placement in Base Layout"
+    {# jQuery must be loaded before core_js #}
+    <script src="{{ 'jquery.min.js'|asset_url }}"></script>
+    {% core_js %}
+    <script src="{{ 'main.js'|asset_url }}"></script>
+</body>
+</html>
+```
+
+<Callout type="warn">
+jQuery must be loaded before `{% core_js %}`. The platform's core JavaScript depends on jQuery being available in the global scope.
+</Callout>
 
 ### csrf_token
 
@@ -210,6 +298,48 @@ The `purchase_info_for_product` tag is used to retrieve the price of a product i
 | request | Must pass the current `request` context object. |
 | product | Must pass the current `product` context object. |
 
+
+### purchase_info_for_line
+
+The `purchase_info_for_line` tag retrieves the price and availability of a cart line item in the current session's currency. Works the same as `purchase_info_for_product` but accepts a cart line object.
+
+```django title="purchase_info_for_line"
+{% purchase_info_for_line request line as session %}
+{% if session.price.exists %}
+    {{ session.price.price|currency:session.price.currency }}
+{% endif %}
+```
+
+| Argument | Description |
+| --- | --- |
+| request | Must pass the current `request` context object. |
+| line | Must pass a cart `line` context object. |
+
+### render_field
+
+The `render_field` tag renders a form field with additional HTML attributes. Use it to add CSS classes, placeholders, and other attributes to Django form fields in templates.
+
+```django title="render_field"
+{% render_field field class+="form-control" placeholder="Enter your email" %}
+```
+
+```django title="Example Form with render_field"
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% render_field field class+="form-control" %}
+        {% if field.errors %}
+            <div class="invalid-feedback d-block">{{ field.errors.0 }}</div>
+        {% endif %}
+    </div>
+</form>
+```
+
+| Argument | Description |
+| --- | --- |
+| field | The form field object to render. |
+| attributes | HTML attributes to add, using `attr="value"` or `attr+="value"` (append) syntax. |
 
 ### seo
 The `seo` tag generates SEO meta data for products in standardized format for consumption by 3rd party systems.

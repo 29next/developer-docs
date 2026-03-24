@@ -166,7 +166,7 @@ It's desirable to cancel fulfillment for orders that have not shipped yet when t
 <Callout type="info">
 To retrieve a list of all fulfillment orders and their status, use the [ordersFulfillmentOrdersRetrieve](/docs/admin-api/reference/orders/ordersFulfillmentOrdersRetrieve) endpoint.
 </Callout>
-<Tabs items={['Fulfillment Status - Unfulfilled', 'Fulifllment Status - Processing']}>
+<Tabs items={['Fulfillment Status - Unfulfilled', 'Fulfillment Status - Processing']}>
 <Tab value="Fulfillment Status - Unfulfilled">
 
 If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fulfillment using the [fulfillmentOrdersHold](/docs/admin-api/reference/fulfillment/fulfillmentOrdersHold) endpoint.
@@ -180,7 +180,7 @@ If order `fulfilmlent_status` is `unfulfilled`, your dispute service can stop fu
 ```
 
 </Tab>
-<Tab value="Fulifllment Status - Processing">
+<Tab value="Fulfillment Status - Processing">
 
 If order `fulfilmlent_status` is `processing` your dispute service can request processing fulfillment orders be canceled with the fulfillment locations with the [cancellationRequestSend](/docs/admin-api/reference/fulfillment/cancellationRequestSend) endpoint.
 

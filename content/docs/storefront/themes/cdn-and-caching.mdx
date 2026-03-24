@@ -39,5 +39,5 @@ Updating a template through the dashboard or [Theme Kit](/docs/storefront/themes
 <Callout type="warn">
 There are a few cases wherein a form on the frontend needs to use a `{% csrf_token %}` field to secure submission to the backend. The platform core JS will automatically replace `{% csrf_token %}` that are in cached versions of pages to ensure the forms still work. 
 
-**It is advisable to not implement custom templates that require `{% csrf_token %}`, we recommend to [Storefront API](/docs/storefront/api) instead.**
+**It is advisable to not implement custom templates that require `{% csrf_token %}`, we recommend the [Storefront GraphQL API](/docs/storefront/graphql) instead.**
 </Callout>
