@@ -297,7 +297,7 @@ For example, if value is the string "Sandy", the output would be the list ['S', 
 Returns a plural suffix if the value is not 1, '1', or an object of length 1. By default, this suffix is 's'.
 
 ```jinja title="pluralize"
-You have { num_messages }} message {{ num_messages|pluralize }}
+You have {{ num_messages }} message{{ num_messages|pluralize }}
 ```
 
 ### split
