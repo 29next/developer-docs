@@ -288,7 +288,7 @@ Fulfillment can be requested immediately through the [fulfillmentRequestSend](/d
 
 ### Hold Fulfillment
 
-Holding fulfillment for an order while waiting for additional review or making adments to the order before sending to the fulfillment location for shipping.
+Holding fulfillment for an order while waiting for additional review or making adjustments to the order before sending to the fulfillment location for shipping.
 
 ```mermaid
 stateDiagram-v2
@@ -309,7 +309,7 @@ stateDiagram-v2
 
 ### Cancel Fulfillment
 
-Canceling a fulfillment order that is already accepted and processing with a fuflillment location is a common order management task to stop fulfillment or as a prerequisite step to moving a fulfillment order to a new location.
+Canceling a fulfillment order that is already accepted and processing with a fulfillment location is a common order management task to stop fulfillment or as a prerequisite step to moving a fulfillment order to a new location.
 
 ```mermaid
 stateDiagram-v2
@@ -333,6 +333,26 @@ stateDiagram-v2
 
 <MoveFulfillmentOrders />
 
+### Add Fulfillment Tracking
+
+Adding tracking information to a fulfillment order marks it as fulfilled and optionally notifies the customer with shipment tracking details. Use the [fulfillmentsCreate](/docs/admin-api/reference/fulfillment/fulfillmentsCreate) endpoint to create a fulfillment with tracking info.
+
+```json title="Add Fulfillment Tracking" http-method="POST" http-target="https://{store}.29next.store/api/admin/fulfillment-orders/{id}/fulfillments/"
+{
+  "notify": true, // send the customer an order shipped notification email
+  "tracking_info": [
+    {
+      "tracking_code": "EXAMPLECODE",
+      "carrier": "dhl_ecommerce"
+    }
+  ]
+}
+```
+
+<Callout type="info" title="Multiple Tracking Numbers">
+The `tracking_info` field accepts an array, allowing you to add multiple tracking numbers for a single fulfillment order when a shipment is split across multiple packages.
+</Callout>
+
 ### Cancel Order
 
 Canceling an order is a common order management task when you need to cancel the entire order and refund all payment transactions. To cancel an order, send a request to the [ordersCancelCreate](/docs/admin-api/reference/orders/ordersCancelCreate) endpoint.
@@ -340,7 +360,7 @@ Canceling an order is a common order management task when you need to cancel the
 ```json title="Cancel Order Request" http-method="POST" http-target="https://{store}.29next.store/api/admin/orders/{number}/cancel/"
 {
   "cancel_reason": "Customer wants to cancel", // Appropiate cancel reason message
-  "full_refund": true, // Refund all remainaing payments or not
+  "full_refund": true, // Refund all remaining payments or not
   "send_cancel_notification": true // Send the customer a notification or not
 }
 ```
