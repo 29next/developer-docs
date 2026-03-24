@@ -47,36 +47,8 @@ window.nextConfig = {
   addressConfig: {
     defaultCountry: "US",
     showCountries: ["US", "CA", "GB", "AU", "DE", "FR"],
-    dontShowStates: ["AS", "GU", "PR", "VI"]
-  },
-
-  // Discount codes configuration
-  discounts: {
-    // SAVE10: {
-    //     code: "SAVE10",
-    //     type: "percentage", // 'percentage' | 'fixed'
-    //     value: 10,
-    //     scope: "order", // 'package' | 'order'
-    //     description: "10% off entire order",
-    //     combinable: true,
-    //     // Optional: packageIds: [1, 2],
-    //     // Optional: minOrderValue: 50,
-    //     // Optional: maxDiscount: 20
-    // }
-  },
-
-  // Profile-based pricing
-  profiles: {
-    // "regular": {
-    //     name: "Regular Pricing",
-    // },
-    // "SAVE_5": {
-    //     name: "Exit Save 5",
-    //     packageMappings: {
-    //         1: 9,
-    //         2: 10,
-    //     }
-    // },
+    dontShowStates: ["AS", "GU", "PR", "VI"],
+    enableAutocomplete: true, // NEXT Address Autocomplete
   },
 
   // Default profile to use (defaults to "regular" if not specified)
@@ -86,7 +58,7 @@ window.nextConfig = {
   googleMaps: {
     apiKey: "your-google-maps-api-key",
     region: "US",
-    enableAutocomplete: true
+    enableAutocomplete: false 
   },
 
   // Analytics providers
