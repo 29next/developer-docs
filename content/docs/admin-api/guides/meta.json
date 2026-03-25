@@ -12,6 +12,7 @@
     "google-pay",
     "paypal",
     "klarna",
+    "link",
     "bancontact",
     "ideal",
     "sepa-debit",
