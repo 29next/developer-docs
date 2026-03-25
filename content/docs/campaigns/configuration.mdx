@@ -104,6 +104,33 @@ window.nextConfig = {
 };
 ```
 
+## Domains
+
+Domains are configured in your store's global **Campaign Settings** and apply across all campaigns for that store. They control which domains are authorized to use your campaign API keys.
+
+There are two domain types:
+
+| Type | SDK Access | Analytics Tracking |
+| --- | --- | --- |
+| **Production** | Yes | Yes — analytics events are automatically tracked |
+| **Development** | Yes | No — analytics events are suppressed |
+
+### Production Domains
+
+Production domains are your live, customer-facing domains. When the SDK runs on a production domain, all configured [analytics providers](/docs/campaigns/analytics) automatically track events (page views, add to cart, purchases, etc.).
+
+### Development Domains
+
+Development domains are for local development and staging environments (e.g., `localhost`, `staging.example.com`). The SDK is fully functional on development domains — cart, checkout, and payment flows all work — but analytics events are suppressed to keep your production data clean.
+
+<Callout type="idea">
+Add `localhost` and any staging domains as development domains so you can test the full checkout flow without polluting analytics data.
+</Callout>
+
+<Callout type="warn">
+API requests from domains not listed in either production or development will be rejected. Make sure all environments where the SDK runs have their domain added in your store's campaign settings.
+</Callout>
+
 ## Meta Tag Configuration
 
 Configure the SDK on a per-page basis using meta tags in your HTML `<head>`:
