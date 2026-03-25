@@ -134,7 +134,7 @@ Apple Pay, Google Pay, and other tokenized payment methods present a **virtualiz
 
 When a card-based lookup returns no match, use the `auth_code` field as a fallback to search for the originating transaction. The authorization code is issued by the card issuer and remains consistent regardless of whether the payment was tokenized, making it a reliable secondary identifier.
 
-Use the [transactionsList](/docs/admin-api/reference/payments/transactionsList#query-parameters) API to search transactions by `auth_code`:
+Use the [transactionsList](/docs/admin-api/reference/payments/transactionsList) API to search transactions by `auth_code`:
 
 ```json title="Search by auth_code" http-method="GET" http-target="https://{store}.29next.store/api/admin/transactions/?auth_code={auth_code}"
 ```

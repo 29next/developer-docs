@@ -227,7 +227,7 @@ Track campaigns with URLs like:
 - `?special=vip`
 - `?member=gold`
 
-**Pre-populate Cart:** Use `forcePackageId` to automatically add packages to the cart on page load. This is useful for direct marketing links and quick-buy flows. See [Force Package ID](/docs/campaigns/cart-system#force-package-id) for details.
+**Pre-populate Cart:** Use `forcePackageId` to automatically add packages to the cart on page load. This is useful for direct marketing links and quick-buy flows. See [Force Package ID](/docs/campaigns/cart-system/state#force-package-id) for details.
 
 ## Session Persistence
 

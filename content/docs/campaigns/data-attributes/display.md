@@ -285,7 +285,7 @@ Timer format options:
 </div>
 ```
 
-For a complete list of cart and item attributes plus a full checkout summary example, see [Cart Summary Checkout](/docs/campaigns/guides/cart-summary-checkout).
+For a complete list of cart and item attributes plus a full checkout summary example, see [Cart Summary Checkout](/docs/campaigns/guides/cart-summary).
 
 ### Product Card with Dynamic Pricing
 
@@ -979,7 +979,7 @@ Enable debug mode to see:
 
 ## Related Documentation
 
-- [Cart Summary Checkout](/docs/campaigns/guides/cart-summary-checkout) - Full cart and item attributes reference with checkout example
+- [Cart Summary Checkout](/docs/campaigns/guides/cart-summary) - Full cart and item attributes reference with checkout example
 - [Actions](/docs/campaigns/data-attributes/actions) - Interactive elements
 - [State Management](/docs/campaigns/data-attributes/state) - Conditional logic
 - [Events](/docs/campaigns/javascript-api/events) - React to data changes
