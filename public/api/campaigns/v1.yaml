@@ -1861,6 +1861,13 @@ paths:
     post:
       description: Calculate cart summary.
       operationId: cartsCalculate
+      parameters:
+      - description: Set to true when calculating from an upsell page; skips site-wide
+          offers.
+        in: query
+        name: upsell
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
