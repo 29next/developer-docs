@@ -220,9 +220,19 @@ export default function HomePage() {
 
           <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-12 md:pt-28 md:pb-16 flex flex-col items-center text-center gap-6">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/5 px-3.5 py-1.5 text-xs font-medium text-blue-400">
-              <span className="size-1.5 rounded-full bg-blue-400" aria-hidden="true" style={{ animation: 'pulse-ring 2s ease-out infinite' }} />
-              REST · GraphQL · Webhooks
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs text-fd-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Code2 size={13} className="text-blue-400" aria-hidden="true" />
+                <span>175+ REST Endpoints</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Zap size={13} className="text-orange-400" aria-hidden="true" />
+                <span>22 Webhook Events</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Globe size={13} className="text-green-400" aria-hidden="true" />
+                <span>GraphQL Storefront API</span>
+              </div>
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-[3.25rem] lg:leading-[1.15]">
@@ -251,26 +261,7 @@ export default function HomePage() {
                 API Reference
               </Link>
             </div>
-
-            {/* Stats row */}
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs text-fd-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <Code2 size={13} className="text-blue-400" aria-hidden="true" />
-                <span>50+ REST endpoints</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Zap size={13} className="text-orange-400" aria-hidden="true" />
-                <span>22 webhook events</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Globe size={13} className="text-green-400" aria-hidden="true" />
-                <span>GraphQL storefront API</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Activity size={13} className="text-purple-400" aria-hidden="true" />
-                <span>Real-time event streaming</span>
-              </div>
-            </div>
+            
 
             <div className="w-full max-w-130 pt-2">
               <HeroFlow />
