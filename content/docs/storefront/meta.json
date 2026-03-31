@@ -1,1 +1,1 @@
-{ "root": true, "title": "Storefront", "icon": "ShoppingBag", "description": "Themes & storefronts", "pages": ["index", "api", "graphql", "checkout-links", "event-tracking", "themes"] }
+{ "root": true, "title": "Storefront", "icon": "ShoppingBag", "description": "Themes & storefronts", "pages": ["index", "graphql", "checkout-links", "event-tracking", "themes"] }
