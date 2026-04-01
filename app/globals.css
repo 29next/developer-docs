@@ -281,3 +281,7 @@ div[style*="--callout-color"] {
 .dark .DocSearch-Label {
   color: #737373 !important;
 }
+
+td:first-child {
+  white-space: nowrap;
+}

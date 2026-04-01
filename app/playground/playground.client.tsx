@@ -1,19 +1,26 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import type { PlaygroundExample } from '@/lib/playground';
 import { ConfigModal } from '@/components/Playground/ConfigModal';
 import { Sidebar } from '@/components/Playground/Sidebar';
 import { TopBar } from '@/components/Playground/TopBar';
 import { EditorPanel } from '@/components/Playground/EditorPanel';
 import { PreviewPanel } from '@/components/Playground/PreviewPanel';
-import { encodeCode, pushPresetParam } from '@/lib/playground/utils';
+import {
+  encodeCode,
+  pushPresetParam,
+} from '@/lib/playground/utils';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { usePlaygroundState } from '@/hooks/usePlaygroundState';
 import { usePreviewUpdater } from '@/hooks/usePreviewUpdater';
 import type { Config } from '@/lib/playground/types';
 
-export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }) {
+export function PlaygroundClient({
+  examples,
+}: {
+  examples: PlaygroundExample[];
+}) {
   const isDark = useDarkMode();
   const [state, actions] = usePlaygroundState(examples);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -23,7 +30,6 @@ export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }
 
   // Preview updater with debouncing
   const { runPreview, handleCodeChange } = usePreviewUpdater((url) => {
-    // Revoke previous blob URL if exists
     if (prevIframeSrcRef.current) {
       URL.revokeObjectURL(prevIframeSrcRef.current);
     }
@@ -31,7 +37,13 @@ export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }
     actions.setIframeSrc(url);
   });
 
-  // Handle code changes with debouncing
+  // Run preview when code/config/layout changes
+  useEffect(() => {
+    runPreview(state.code, state.config, state.layout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.code, state.config, state.layout]);
+
+  // Single page editor change
   const handleEditorChange = useCallback(
     (value: string | undefined) => {
       actions.setCode(value ?? '');
@@ -52,7 +64,7 @@ export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }
     [state.config, actions, runPreview],
   );
 
-  // Handle share button
+  // Share button
   const handleShare = useCallback(() => {
     const url = new URL(window.location.href);
     url.searchParams.set('preset', state.currentExample.id);
@@ -69,7 +81,7 @@ export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }
       actions.setCopied(true);
       setTimeout(() => actions.setCopied(false), 2000);
     });
-  }, [state.currentExample, state.code, state.config, actions]);
+  }, [state, actions]);
 
   // Handle config save
   const handleSaveConfig = useCallback(
@@ -78,14 +90,8 @@ export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }
       localStorage.setItem('next-playground-config', JSON.stringify(newConfig));
       runPreview(state.code, newConfig, state.layout);
     },
-    [state.code, state.layout, actions, runPreview],
+    [state, actions, runPreview],
   );
-
-  // Run preview when code/config/layout changes
-  useEffect(() => {
-    runPreview(state.code, state.config, state.layout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.code, state.config, state.layout]);
 
   // Drag handle for editor/preview splitter
   const handleDragStart = useCallback(() => {
@@ -118,7 +124,15 @@ export function PlaygroundClient({ examples }: { examples: PlaygroundExample[] }
       {/* Top bar */}
       <TopBar
         onRun={() => runPreview(state.code, state.config, state.layout)}
-        onReset={() => handleSelectExample(state.currentExample)}
+        onReset={() => {
+          // Clear all next-* session keys
+          Object.keys(sessionStorage).forEach((key) => {
+            if (key.startsWith('next-')) {
+              sessionStorage.removeItem(key);
+            }
+          });
+          handleSelectExample(state.currentExample);
+        }}
         onShare={handleShare}
         onConfigOpen={() => actions.setShowConfig(true)}
         copied={state.copied}

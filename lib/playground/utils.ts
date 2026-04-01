@@ -73,8 +73,8 @@ export function buildIframeHtml(userHtml: string, config: Config, layout = ''): 
   </style>
   <script>
     window.nextConfig = ${JSON.stringify(nextConfig, null, 2)};
-  </script>
-  <script type="module" src="${sdkUrl}"></script>
+  <\/script>
+  <script type="module" src="${sdkUrl}"><\/script>
 </head>
 <body data-next-sdk-loading="true">
   ${wrapLayout(userHtml, layout)}

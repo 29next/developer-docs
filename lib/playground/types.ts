@@ -7,3 +7,4 @@ export interface Config {
 }
 
 export type Viewport = 'mobile' | 'tablet' | 'desktop';
+

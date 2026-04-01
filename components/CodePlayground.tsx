@@ -8,14 +8,13 @@ interface CodePlaygroundProps {
 }
 
 export async function CodePlayground({ src, layout, height }: CodePlaygroundProps) {
-  const { html, css, js, meta } = parsePlaygroundFile(src);
+  const { content, meta } = parsePlaygroundFile(src);
   return (
     <CodePlaygroundUI
-      html={html}
-      css={css}
-      js={js}
+      content={content}
       layout={layout ?? meta.layout ?? ''}
       height={height ?? 420}
+      src={src}
     />
   );
 }

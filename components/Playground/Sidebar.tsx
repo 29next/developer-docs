@@ -31,7 +31,11 @@ export function Sidebar({ examples, selected, onSelect }: SidebarProps) {
                 className="w-full flex items-center justify-between px-3 py-1.5 text-sm font-medium text-fd-foreground hover:bg-fd-muted transition-colors"
               >
                 {cat}
-                {isOpen ? <ChevronDown size={14} className="text-fd-muted-foreground" /> : <ChevronRight size={14} className="text-fd-muted-foreground" />}
+                {isOpen ? (
+                  <ChevronDown size={14} className="text-fd-muted-foreground" />
+                ) : (
+                  <ChevronRight size={14} className="text-fd-muted-foreground" />
+                )}
               </button>
               {isOpen && (
                 <div className="mb-1">

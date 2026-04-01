@@ -44,13 +44,13 @@ function parseFrontmatter(raw: string): {
   return { meta, code };
 }
 
-/** Load all .html files under content/playground/<category>/ */
+/** Load all .html files under content/playground/<category>/ (skips flows/) */
 export function loadPlaygroundExamples(): PlaygroundExample[] {
   const examples: PlaygroundExample[] = [];
 
   const categories = fs
     .readdirSync(PLAYGROUND_DIR, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
+    .filter((d) => d.isDirectory() && d.name !== "flows")
     .map((d) => d.name);
 
   for (const category of categories) {
@@ -87,6 +87,7 @@ export function loadPlaygroundExamples(): PlaygroundExample[] {
 
   return examples;
 }
+
 
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
