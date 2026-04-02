@@ -5,15 +5,18 @@
 
 @source "../lib/source.ts";
 
+/* Canonical token source: design-system/tokens/ + fumadocs-bridge.css */
+
 :root {
-  --color-fd-primary: #3C7DFF;
-  --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-primary: #3c7dff;
+  --color-fd-primary-foreground: #ffffff;
   --color-fd-idea: oklch(65% 0.2 145);
   --font-sans: var(--font-sans);
 }
 
 @theme inline {
   --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 @keyframes float1 {
@@ -49,9 +52,14 @@
   }
 }
 
+a,
+button {
+  outline-color: var(--color-fd-primary);
+}
+
 .dark {
-  --color-fd-primary: #3C7DFF;
-  --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-primary: #3c7dff;
+  --color-fd-primary-foreground: #ffffff;
   --color-fd-idea: oklch(65% 0.2 145);
 }
 
