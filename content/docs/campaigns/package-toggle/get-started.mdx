@@ -3,7 +3,7 @@ title: Get Started
 sidebar_label: Get Started
 ---
 
-Add `data-next-package-toggle` to a container element. The enhancer scans for child `[data-next-toggle-card]` elements and registers each one.
+Add `data-next-package-toggle` to a container element. It scans for child `[data-next-toggle-card]` elements and activates each one automatically.
 
 ```html
 <div data-next-package-toggle>
@@ -25,7 +25,7 @@ Write toggle cards directly in HTML. This is the simplest approach when you have
        data-add-text="Add Warranty"
        data-remove-text="✓ Warranty Added">
     2-Year Warranty
-    <span data-next-toggle-price></span>
+    <span data-next-toggle-display="price"></span>
   </div>
 
   <div data-next-toggle-card
@@ -34,8 +34,8 @@ Write toggle cards directly in HTML. This is the simplest approach when you have
        data-add-text="Add Insurance"
        data-remove-text="✓ Insurance Added">
     Shipping Insurance
-    <span data-next-toggle-price></span>
-    <del data-next-toggle-price="compare"></del>
+    <span data-next-toggle-display="price"></span>
+    <del data-next-toggle-display="originalPrice"></del>
   </div>
 
 </div>
@@ -68,7 +68,7 @@ The text target is resolved as follows:
 
 ## Package Images
 
-Add `data-next-toggle-image` to any `<img>` inside a card. The enhancer sets its `src` (and `alt`, if blank) from the campaign package data on initialization.
+Add `data-next-toggle-image` to any `<img>` inside a card. The `src` (and `alt`, if blank) is set automatically from the campaign package data on page load.
 
 ```html
 <div data-next-toggle-card data-next-package-id="201">
@@ -99,6 +99,6 @@ In single-element mode the element's `textContent` is replaced directly with the
 ## Next Steps
 
 - Show prices inside cards: [Prices](./prices)
-- Render cards from a JSON array: [Auto-Render Mode](./auto-render)
+- Generate cards from a template: [Card Templates](./card-templates)
 - Mirror quantity to the main product: [Quantity Sync](./quantity-sync)
 - See all attributes: [Attributes](./reference/attributes)

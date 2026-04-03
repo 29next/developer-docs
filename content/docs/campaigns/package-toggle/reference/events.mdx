@@ -24,7 +24,21 @@ sidebar_label: Events
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `selected` | `number[]` | Array of `packageId` values currently in the cart for cards managed by this enhancer instance |
+| `selected` | `number[]` | Array of `packageId` values currently in the cart for all cards in this toggle |
+
+---
+
+## `toggle:price-updated`
+
+**When:** After price data is fetched and applied to a card — on init, after cart changes, after currency or voucher changes.
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `packageId` | `number` | The `ref_id` of the card whose price was updated |
+
+This event bubbles to `document`. It is used internally by the external display system (`data-next-display="toggle.{packageId}.{property}"`) to update bound elements. You can also listen to it to react to price updates for a specific card.
 
 ---
 

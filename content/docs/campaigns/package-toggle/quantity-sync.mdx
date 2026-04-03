@@ -19,7 +19,7 @@ Use `data-next-package-sync` when an add-on's quantity should automatically mirr
        data-next-package-id="201"
        data-next-package-sync="10,11,12">
     Add Warranty (quantity matches your order)
-    <span data-next-toggle-price></span>
+    <span data-next-toggle-display="price"></span>
   </div>
 </div>
 ```
@@ -42,7 +42,7 @@ When synced packages use per-package quantities greater than 1 (e.g. a 3-pack), 
 
 ## Attribute Location
 
-`data-next-package-sync` can be placed on either the card element or its state container. The enhancer checks both.
+`data-next-package-sync` can be placed on either the card element or its state container — both locations are checked.
 
 ```html
 <!-- on the card -->
