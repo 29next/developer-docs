@@ -1,0 +1,55 @@
+---
+title: Quantity Sync
+sidebar_label: Quantity Sync
+---
+
+Use `data-next-package-sync` when an add-on's quantity should automatically mirror the main product quantity. A common case is one warranty unit per product unit.
+
+```html
+<!-- Main product selector -->
+<div data-next-package-selector data-next-selector-id="qty-picker">
+  <div data-next-selector-card data-next-package-id="10" data-next-selected="true">1 Bottle</div>
+  <div data-next-selector-card data-next-package-id="11">3 Bottles</div>
+  <div data-next-selector-card data-next-package-id="12">6 Bottles</div>
+</div>
+
+<!-- Warranty quantity mirrors packages 10, 11, or 12 in the cart -->
+<div data-next-package-toggle>
+  <div data-next-toggle-card
+       data-next-package-id="201"
+       data-next-package-sync="10,11,12">
+    Add Warranty (quantity matches your order)
+    <span data-next-toggle-price></span>
+  </div>
+</div>
+```
+
+`data-next-package-sync` accepts a comma-separated list of package IDs. The toggle card's quantity is set to the **sum of quantities** of those packages currently in the cart.
+
+---
+
+## Behavior
+
+| Cart state | Toggle behavior |
+|------------|----------------|
+| One or more synced packages in cart | Toggle quantity matches the sum of their quantities |
+| All synced packages removed | Toggle item is automatically removed from the cart |
+| Toggle card clicked | Quantity is calculated from current cart before the add is sent |
+
+When synced packages use per-package quantities greater than 1 (e.g. a 3-pack), that multiplier is included in the sum.
+
+---
+
+## Attribute Location
+
+`data-next-package-sync` can be placed on either the card element or its state container. The enhancer checks both.
+
+```html
+<!-- on the card -->
+<div data-next-toggle-card data-next-package-id="201" data-next-package-sync="10,11,12">...</div>
+
+<!-- or on the state container -->
+<div data-next-toggle-container data-next-package-sync="10,11,12">
+  <div data-next-toggle-card data-next-package-id="201">...</div>
+</div>
+```

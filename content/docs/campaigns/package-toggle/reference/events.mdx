@@ -1,0 +1,43 @@
+---
+title: Events
+sidebar_label: Events
+---
+
+## `toggle:toggled`
+
+**When:** A card is clicked and the cart operation completes (either add or remove).
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `packageId` | `number` | The `ref_id` of the package that was toggled |
+| `added` | `boolean` | `true` when the package was added; `false` when it was removed |
+
+---
+
+## `toggle:selection-changed`
+
+**When:** After every cart sync — on init and whenever the cart changes.
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `selected` | `number[]` | Array of `packageId` values currently in the cart for cards managed by this enhancer instance |
+
+---
+
+## Listening to Events
+
+```javascript
+window.nextReady.push(() => {
+  window.next.on('toggle:toggled', ({ packageId, added }) => {
+    console.log(added ? 'Added:' : 'Removed:', packageId);
+  });
+
+  window.next.on('toggle:selection-changed', ({ selected }) => {
+    console.log('Active packages:', selected);
+  });
+});
+```

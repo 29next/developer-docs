@@ -1,0 +1,71 @@
+---
+title: Displaying Prices
+sidebar_label: Prices
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Inside Toggle Cards
+
+Place `[data-next-toggle-price]` inside a card or its template. Prices are fetched automatically and these elements are populated with formatted values.
+
+```html
+<span data-next-toggle-price></span>                     <!-- total price (default) -->
+<span data-next-toggle-price="compare"></span>           <!-- retail / compare-at price -->
+<span data-next-toggle-price="savings"></span>           <!-- savings amount -->
+<span data-next-toggle-price="savingsPercentage"></span> <!-- savings percentage -->
+<span data-next-toggle-price="subtotal"></span>          <!-- formatted subtotal -->
+```
+
+Prices for in-cart items are read directly from the cart summary — no extra API call. Prices for not-in-cart items are fetched via `/calculate` with the item simulated in the cart, so offer discounts that depend on cart total are correctly reflected.
+
+A `next-loading` class and `data-next-loading="true"` are set on the card element while a fetch is in progress.
+
+Prices are re-fetched automatically when:
+- The cart changes (items added, removed, or quantity updated)
+- Applied vouchers change
+- The active currency changes
+
+---
+
+## External Price Display
+
+Use `data-next-display="toggle.{packageId}.{property}"` on any element in the document to bind it to a specific toggle card's current state. `{packageId}` must match `data-next-package-id` on the card.
+
+```html
+<span data-next-display="toggle.201.price"></span>
+<span data-next-display="toggle.201.compare"></span>
+<span data-next-display="toggle.201.savings" data-hide-if-zero="true"></span>
+<span data-next-display="toggle.201.isInCart"></span>
+```
+
+**Supported properties:**
+
+| Property | Format | Description |
+|----------|--------|-------------|
+| `price` | currency | Total price after discounts |
+| `compare` | currency | Retail / compare-at price |
+| `savings` | currency | Discount amount |
+| `savingsPercentage` | percentage | Discount as a percentage of the compare price |
+| `isInCart` | boolean | `true` when this package is in the cart |
+| `hasSavings` | boolean | `true` when a discount is applied |
+
+Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.
+
+<Callout type="info">
+External display elements update when the toggle card's price is fetched (`toggle:price-updated`) or when the toggle state changes (`toggle:toggled`). The card must be present in the DOM before the display element resolves.
+</Callout>
+
+---
+
+## Include Shipping in Prices
+
+Add `data-next-include-shipping="true"` to the container to include shipping costs in the price totals shown via `data-next-toggle-price`.
+
+```html
+<div data-next-package-toggle data-next-include-shipping="true">
+  <div data-next-toggle-card data-next-package-id="201">
+    <span data-next-toggle-price></span>
+  </div>
+</div>
+```

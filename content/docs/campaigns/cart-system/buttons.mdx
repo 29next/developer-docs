@@ -7,9 +7,9 @@ Various button types for managing cart items.
 
 ## Add to Cart
 
-Buttons that add specific packages directly without a selector.
+Buttons that add a specific package directly, without a selector.
 
-**Basic Add to Cart:**
+**Basic add:**
 
 ```html
 <button data-next-action="add-to-cart"
@@ -19,7 +19,7 @@ Buttons that add specific packages directly without a selector.
 </button>
 ```
 
-**Add and Redirect:**
+**Add and redirect:**
 
 ```html
 <button data-next-action="add-to-cart"
@@ -30,7 +30,7 @@ Buttons that add specific packages directly without a selector.
 </button>
 ```
 
-**Clear Cart, Add, and Redirect:**
+**Clear cart, add, and redirect:**
 
 ```html
 <button data-next-action="add-to-cart"
@@ -46,17 +46,19 @@ Buttons that add specific packages directly without a selector.
 
 | Attribute | Description |
 |-----------|-------------|
-| `data-next-action="add-to-cart"` | Action type |
+| `data-next-action="add-to-cart"` | Activates the add-to-cart button |
 | `data-next-package-id` | Package to add |
 | `data-next-quantity` | Quantity to add |
-| `data-next-url` | Redirect after add |
-| `data-next-clear-cart` | Clear cart before adding |
+| `data-next-url` | Redirect URL after adding |
+| `data-next-clear-cart` | Clear the cart before adding |
+
+---
 
 ## Toggle Buttons
 
-Toggle items in and out of the cart with dynamic states.
+Toggle items in and out of the cart. The button reflects cart state automatically.
 
-**Basic Toggle:**
+**Basic toggle:**
 
 ```html
 <button data-next-toggle
@@ -66,7 +68,7 @@ Toggle items in and out of the cart with dynamic states.
 </button>
 ```
 
-**Toggle with Quantity:**
+**Toggle with quantity:**
 
 ```html
 <button data-next-toggle
@@ -76,7 +78,7 @@ Toggle items in and out of the cart with dynamic states.
 </button>
 ```
 
-**Dynamic Text Toggle:**
+**Dynamic text:**
 
 ```html
 <button data-next-toggle
@@ -91,33 +93,37 @@ Toggle items in and out of the cart with dynamic states.
 
 | Attribute | Description |
 |-----------|-------------|
-| `data-next-toggle` | Enable toggle functionality |
+| `data-next-toggle` | Activates toggle functionality |
 | `data-next-package-id` | Package to toggle |
 | `data-next-quantity` | Quantity when toggled on |
-| `data-add-text` | Text when item not in cart |
-| `data-remove-text` | Text when item is in cart |
+| `data-add-text` | Button text when item is not in cart |
+| `data-remove-text` | Button text when item is in cart |
 | `data-next-is-upsell` | Mark as upsell item |
-| `data-next-package-sync` | Sync quantity with other packages |
+| `data-next-package-sync` | Sync quantity to other packages in the cart |
 
-## State Container Pattern
+---
 
-Apply the package ID to a container element. The container receives state classes when the item is in the cart, letting all child elements react to cart state via CSS.
+## State Container
+
+Apply `data-next-package-id` to a container element instead of directly to a button. The container receives state classes when the package is in the cart — all child elements can react via CSS.
 
 ```html
 <div class="product-container"
      data-next-package-id="9"
      data-next-quantity="2">
-  <!-- Container gets .next-in-cart, .next-active -->
+  <!-- Container gets .next-in-cart when package is in cart -->
   <button data-next-toggle>Toggle Bundle</button>
 </div>
 ```
 
+---
+
 ## Quantity Sync
 
-Sync a toggle item's quantity to match other packages in the cart — useful for warranties and accessories that should track the main product.
+Sync a toggle item's quantity to the combined quantity of other packages in the cart. Useful for warranties and accessories that should track the main product.
 
 ```html
-<!-- Warranty syncs with drone quantity -->
+<!-- Warranty syncs its quantity to match the total drone quantity -->
 <button data-next-toggle
         data-next-package-id="10"
         data-next-package-sync="2,3,4">
@@ -125,12 +131,6 @@ Sync a toggle item's quantity to match other packages in the cart — useful for
 </button>
 ```
 
-When all synced packages are removed, the toggle item is also removed automatically.
+When all synced packages are removed from the cart, the toggle item is also removed automatically.
 
-## CSS Classes
-
-| Class | When applied |
-|-------|-------------|
-| `.next-in-cart` | Item is in cart |
-| `.next-active` | Toggle is active |
-| `.next-disabled` | Button is disabled |
+See [CSS classes](./reference/css) for the full list of state classes applied to buttons and containers.

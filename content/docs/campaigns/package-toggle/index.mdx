@@ -1,0 +1,48 @@
+---
+title: Addon Toggle
+sidebar_label: Addon Toggle
+---
+
+import { Play, Tag, Layers, RefreshCw, Box } from 'lucide-react';
+
+The Addon Toggle lets visitors independently add or remove individual packages — add-ons, warranties, insurance, upgrades, or any optional item. Unlike the Package Selector (pick one), any number of toggles can be active at the same time.
+
+## How It Works
+
+1. Add `data-next-package-toggle` to a container and place `[data-next-toggle-card]` children with `data-next-package-id`
+2. Clicking a card that is **not** in the cart adds it; clicking one that **is** in the cart removes it
+3. Mark a card `data-next-selected="true"` to auto-add it on page load (deduped across page refreshes)
+4. Prices are fetched with the full current cart as context so offer discounts that depend on cart total are reflected correctly
+
+<Cards>
+  <Card
+    href="/docs/campaigns/package-toggle/get-started"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-blue-500/15 text-blue-500"><Play className="size-4" /></div>}
+    title="Get Started"
+    description="Add toggle cards to your page and configure your first toggleable package."
+  />
+  <Card
+    href="/docs/campaigns/package-toggle/prices"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-green-500/15 text-green-500"><Tag className="size-4" /></div>}
+    title="Displaying Prices"
+    description="Show backend prices inside cards and bind external elements to a toggle's state."
+  />
+  <Card
+    href="/docs/campaigns/package-toggle/auto-render"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-purple-500/15 text-purple-500"><Layers className="size-4" /></div>}
+    title="Auto-Render Mode"
+    description="Supply a JSON array of packages and a card template — the enhancer renders the cards for you."
+  />
+  <Card
+    href="/docs/campaigns/package-toggle/quantity-sync"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-orange-500/15 text-orange-500"><RefreshCw className="size-4" /></div>}
+    title="Quantity Sync"
+    description="Mirror an add-on's quantity to match the main product quantity automatically."
+  />
+  <Card
+    href="/docs/campaigns/package-toggle/state-containers"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-pink-500/15 text-pink-500"><Box className="size-4" /></div>}
+    title="State Containers"
+    description="Apply state classes to a wrapper element rather than the card itself."
+  />
+</Cards>

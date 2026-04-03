@@ -1,0 +1,71 @@
+---
+title: Auto-Render Mode
+sidebar_label: Auto-Render
+---
+
+Provide a JSON array via `data-next-packages` and a card template via `data-next-toggle-template-id`. The enhancer renders one card per definition, enriching template variables with campaign package data.
+
+```html
+<div data-next-package-toggle
+     data-next-packages='[
+       {"packageId": 201, "label": "2-Year Warranty"},
+       {"packageId": 202, "label": "Shipping Insurance", "selected": true}
+     ]'
+     data-next-toggle-template-id="toggle-tpl">
+</div>
+
+<template id="toggle-tpl">
+  <div data-next-toggle-card
+       data-add-text="Add {toggle.label}"
+       data-remove-text="✓ {toggle.label} Added">
+    <strong>{toggle.label}</strong>
+    <span data-next-toggle-price></span>
+    <del data-next-toggle-price="compare"></del>
+  </div>
+</template>
+```
+
+---
+
+## Package Definition Format
+
+```json
+[
+  { "packageId": 201, "label": "2-Year Warranty" },
+  { "packageId": 202, "label": "Shipping Insurance", "selected": true }
+]
+```
+
+Set `"selected": true` to auto-add that package on load — equivalent to `data-next-selected="true"` on a static card.
+
+Any field other than `selected` is available as `{toggle.<fieldName>}` in the template.
+
+---
+
+## Template Variables
+
+**Built-in variables** (enriched from the campaign store):
+
+| Variable | Source | Description |
+|----------|--------|-------------|
+| `{toggle.packageId}` | JSON / campaign | Package `ref_id` |
+| `{toggle.name}` | Campaign store | Package name |
+| `{toggle.image}` | Campaign store | Package image URL |
+| `{toggle.price}` | Campaign store | Per-unit price (campaign default) |
+| `{toggle.priceRetail}` | Campaign store | Retail / compare-at price |
+| `{toggle.priceRetailTotal}` | Campaign store | Retail total price |
+
+**Custom variables** — any other field from the JSON definition is available as `{toggle.<fieldName>}`.
+
+---
+
+## Inline Template
+
+Use `data-next-toggle-template` with an HTML string as an alternative to referencing a `<template>` element by ID.
+
+```html
+<div data-next-package-toggle
+     data-next-packages='[{"packageId":201,"label":"Warranty"}]'
+     data-next-toggle-template='<div data-next-toggle-card><strong>{toggle.label}</strong><span data-next-toggle-price></span></div>'>
+</div>
+```

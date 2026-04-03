@@ -1,0 +1,78 @@
+---
+title: Attributes
+sidebar_label: Attributes
+---
+
+## Container Attributes
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-package-toggle` | Marks the container (or the toggle element itself in single-element mode); required to activate the enhancer |
+| `data-next-include-shipping` | `true` / `false` — include shipping costs in price totals shown via `data-next-toggle-price` |
+| `data-next-packages` | JSON array of package definitions for auto-render mode; renders one card per entry when a template is also set |
+| `data-next-toggle-template-id` | ID of a `<template>` element whose `innerHTML` is the card template |
+| `data-next-toggle-template` | Inline card template string (alternative to `data-next-toggle-template-id`) |
+
+---
+
+## Card Attributes
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-toggle-card` | Marks an element as a toggleable card |
+| `data-next-package-id` | Package `ref_id` — required per card |
+| `data-next-selected="true"` | Auto-adds this package on page load; deduped so the package is not added again if already in the cart |
+| `data-next-quantity` | Quantity to add when toggling on (default `1`); ignored when `data-next-package-sync` is set |
+| `data-next-package-sync` | Comma-separated list of package IDs — quantity mirrors the sum of those packages currently in the cart |
+| `data-next-is-upsell="true"` | Marks the item as an upsell/bump for order tracking |
+| `data-add-text` | Text shown in the button text slot when the package is **not** in the cart |
+| `data-remove-text` | Text shown in the button text slot when the package **is** in the cart |
+
+---
+
+## State Container Attribute
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-toggle-container` | Marks an ancestor element as the state container for cards inside it. The enhancer applies state classes and attributes to this element rather than to each card. See [State Containers](../state-containers) |
+
+---
+
+## Attributes Set by the Enhancer
+
+**On each card element:**
+
+| Attribute | Values | When set |
+|-----------|--------|----------|
+| `data-next-in-cart` | `"true"` / `"false"` | Updated on every cart sync |
+| `data-next-loading` | `"true"` / `"false"` | Set while a cart operation or price fetch is in progress |
+| `data-toggle-price-total` | numeric string | Raw total price for use by `data-next-display` |
+| `data-toggle-price-compare` | numeric string | Raw compare-at price for use by `data-next-display` |
+| `data-toggle-price-savings` | numeric string | Raw savings amount for use by `data-next-display` |
+| `data-toggle-price-savings-pct` | numeric string | Raw savings percentage for use by `data-next-display` |
+
+**On the state container (when one is found):**
+
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-in-cart` | `"true"` / `"false"` | Whether the package is in the cart |
+| `data-next-active` | `"true"` / `"false"` | Alias for `data-in-cart` |
+
+---
+
+## Display System Integration
+
+Use `data-next-display="toggle.{packageId}.{property}"` on any element to bind it to a specific card's price or state. `{packageId}` must match `data-next-package-id` on the card.
+
+**Supported properties:**
+
+| Property | Format | Description |
+|----------|--------|-------------|
+| `price` | currency | Total price after discounts |
+| `compare` | currency | Retail / compare-at price |
+| `savings` | currency | Discount amount |
+| `savingsPercentage` | percentage | Discount as a percentage of the compare price |
+| `isInCart` | boolean | `true` when this package is in the cart |
+| `hasSavings` | boolean | `true` when a discount is applied |
+
+Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.

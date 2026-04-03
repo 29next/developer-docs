@@ -1,0 +1,12 @@
+{
+  "title": "Addon Toggle",
+  "pages": [
+    "index",
+    "get-started",
+    "prices",
+    "auto-render",
+    "quantity-sync",
+    "state-containers",
+    "reference"
+  ]
+}

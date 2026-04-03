@@ -1,0 +1,14 @@
+{
+  "title": "Bundle Selector",
+  "pages": [
+    "index",
+    "get-started",
+    "prices",
+    "slots",
+    "variants",
+    "vouchers",
+    "select-mode",
+    "mechanics",
+    "reference"
+  ]
+}

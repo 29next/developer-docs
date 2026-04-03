@@ -1,0 +1,104 @@
+---
+title: Get Started
+sidebar_label: Get Started
+---
+
+Add `data-next-package-toggle` to a container element. The enhancer scans for child `[data-next-toggle-card]` elements and registers each one.
+
+```html
+<div data-next-package-toggle>
+  <!-- toggle cards go here -->
+</div>
+```
+
+---
+
+## Static Card Mode
+
+Write toggle cards directly in HTML. This is the simplest approach when you have a fixed set of add-ons.
+
+```html
+<div data-next-package-toggle>
+
+  <div data-next-toggle-card
+       data-next-package-id="201"
+       data-add-text="Add Warranty"
+       data-remove-text="✓ Warranty Added">
+    2-Year Warranty
+    <span data-next-toggle-price></span>
+  </div>
+
+  <div data-next-toggle-card
+       data-next-package-id="202"
+       data-next-selected="true"
+       data-add-text="Add Insurance"
+       data-remove-text="✓ Insurance Added">
+    Shipping Insurance
+    <span data-next-toggle-price></span>
+    <del data-next-toggle-price="compare"></del>
+  </div>
+
+</div>
+```
+
+`data-next-selected="true"` on a card auto-adds that package on page load. Auto-adds are deduped — if the package is already in the cart from a previous page load, it is not added again.
+
+---
+
+## Button Text
+
+Use `data-add-text` and `data-remove-text` to update the label when the cart state changes.
+
+The text target is resolved as follows:
+
+- If the card contains a `[data-next-button-text]` child, only that element's `textContent` is updated
+- If the card has no child elements at all, the card's own `textContent` is replaced
+
+```html
+<div data-next-toggle-card
+     data-next-package-id="201"
+     data-add-text="Add Warranty"
+     data-remove-text="✓ Added">
+  <img data-next-toggle-image />
+  <span data-next-button-text>Add Warranty</span>
+</div>
+```
+
+---
+
+## Package Images
+
+Add `data-next-toggle-image` to any `<img>` inside a card. The enhancer sets its `src` (and `alt`, if blank) from the campaign package data on initialization.
+
+```html
+<div data-next-toggle-card data-next-package-id="201">
+  <img data-next-toggle-image alt="Warranty" />
+  <span>2-Year Warranty</span>
+</div>
+```
+
+---
+
+## Single-Element Toggle
+
+Place `data-next-package-toggle` directly on a button or any single element when no card container is needed. The element acts as both the container and the card — all state classes are applied to it directly.
+
+```html
+<button data-next-package-toggle
+        data-next-package-id="201"
+        data-add-text="Add Warranty — $9.99"
+        data-remove-text="✓ Warranty Added">
+  Add Warranty — $9.99
+</button>
+```
+
+In single-element mode the element's `textContent` is replaced directly with the add/remove text on each cart state change.
+
+---
+
+## Next Steps
+
+- Show prices inside cards: [Prices](./prices)
+- Render cards from a JSON array: [Auto-Render Mode](./auto-render)
+- Mirror quantity to the main product: [Quantity Sync](./quantity-sync)
+- See all attributes: [Attributes](./reference/attributes)
