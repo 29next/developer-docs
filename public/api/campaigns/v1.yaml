@@ -936,6 +936,8 @@ components:
 
             * `link` - Link
 
+            * `affirm` - Affirm
+
             * `external` - External'
           nullable: true
           oneOf:
@@ -1348,6 +1350,8 @@ components:
 
             * `link` - Link
 
+            * `affirm` - Affirm
+
             * `external` - External'
       required:
       - payment_method
@@ -1398,6 +1402,8 @@ components:
 
         * `link` - Link
 
+        * `affirm` - Affirm
+
         * `external` - External'
       enum:
       - apple_pay
@@ -1412,6 +1418,7 @@ components:
       - sepa_debit
       - twint
       - link
+      - affirm
       - external
       type: string
     ProductInventoryAvailabilityEnum:
@@ -1788,12 +1795,14 @@ paths:
       description: Autocomplete address suggestions based on partial input.
       operationId: addressAutocomplete
       parameters:
-      - description: Optional country code to filter results.
+      - description: Optional ISO 3166-1 country code(s) to filter results, e.g. 'US'
+          or 'US,CA,MX'.
         in: query
         name: country
         schema:
           type: string
-      - description: Optional language code for the results.
+      - description: Optional BCP47 language code(s) for the results, e.g. 'en' or
+          'en,th'.
         in: query
         name: language
         schema:
