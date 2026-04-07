@@ -7,20 +7,20 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ### Getting Started
 
-At the core of Next Commerce is the Admin API, developers can manage store resources, integrate third-party services and build seamless external order flows.
+At the core of Next Commerce, the Admin API lets developers manage store resources, integrate third-party services, and build seamless external order flows.
 
 
 ### Authentication
 
-The Admin API uses Oauth 2 authorization protocol to manage access to your store's resources. Oauth Apps (and associated access tokens) can be tailored with object-level permission to ensure that each integrated service only has access to necessary objects.
+The Admin API uses the OAuth 2 authorization protocol to manage access to your store's resources. OAuth apps and associated access tokens can be tailored with object-level permissions to ensure that each integrated service only has access to the objects it needs.
 
-Before using the Admin API, you'll need to create a store and create an OAuth App necessary for API access. To create an OAuth App, navigate to **Settings > API Access** and create a new Oauth App with applicable [permissions](/docs/admin-api/permissions) to retrieve your **Access Token**.  It is recommended to create unique Oauth Apps per external system so that you can revoke as needed.
+Before using the Admin API, you'll need to create a store and an OAuth app for API access. To create an OAuth app, navigate to **Settings > API Access** and create a new OAuth app with the applicable [permissions](/docs/admin-api/permissions) to retrieve your **Access Token**. It is recommended to create unique OAuth apps for each external system so you can revoke access as needed.
 
 ```shell title="Admin API Path"
 https://{store}.29next.store/api/admin/
 ```
 
-**Use your Oauth App Access Token in the request headers to access the API.**
+**Use your OAuth app access token in the request headers to access the API.**
 
 ```shell title="Example Request"
 curl -X GET "https://{store}.29next.store/api/admin/" \
@@ -64,4 +64,4 @@ Admin APIs are rate-limited to maintain the stability and equity of our platform
 <Callout type="info">
 Once you reach API rate limits you'll then receive a 429 Too Many Requests response, and a message that a throttle has been applied.
 </Callout>
-We recommend API users to appropriately limit calls, cache results, and retry requests using strategies that are considered industry best practices,to avoid hitting getting rate limit errors
+We recommend that API users limit calls appropriately, cache results, and retry requests using industry best practices to avoid rate-limit errors.
