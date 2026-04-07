@@ -2,7 +2,7 @@
 title: FOMO Script
 ---
 
-Create social proof with customer purchase notifications.
+Create social proof with fake purchase notifications.
 
 ## Basic Usage
 
