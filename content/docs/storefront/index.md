@@ -2,13 +2,13 @@
 title: Storefront
 ---
 
-The Next Commerce storefront is a flexible, customizable front-end layer for your ecommerce business. Whether you're building a completely custom storefront or enhancing an existing theme, this section will guide you through the tools and features available for developers.
+The Next Commerce storefront is a flexible, customizable front-end layer for your ecommerce business. Whether you're building a completely custom storefront or enhancing an existing theme, this section will guide you through the tools and features available to developers.
 
 ### Themes
 
 Themes allow you to fully control the look and feel of your storefront using modern front-end technologies. Each theme includes layouts, templates, stylesheets, and scripts, giving you full creative freedom to build a branded customer experience.
 
-- Customize homepage, products, catalogue and pages
+- Customize homepage, products, catalog, and pages
 - Easily manage theme assets (CSS, JS, images)
 - Customize themes via the dashboard or CLI (Theme Kit)
 
@@ -21,7 +21,7 @@ Capture user behavior, conversion events, and key storefront interactions with b
 
 - Track add-to-cart, purchases, and other standard ecommerce events
 - Hook into page views, checkout events, and custom triggers
-- Integrate storefronte events with external platforms
+- Integrate storefront events with external platforms
 
 Learn how to [implement tracking for your storefront →](/docs/storefront/event-tracking)
 
@@ -31,6 +31,6 @@ Learn how to [implement tracking for your storefront →](/docs/storefront/event
 Power deeper customizations, dynamic content loading, and headless experiences using our Storefront GraphQL API.
 
 - Fetch products, cart data, and more in real-time.
-- Create custom funcationality such as cart upsells.
+- Create custom functionality such as cart upsells.
 
 Learn how to [query your storefront data →](/docs/storefront/graphql)

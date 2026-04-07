@@ -10,7 +10,7 @@ Stores can send webhooks that notify your application anytime an event happens. 
 
 ### Why Webhooks
 
-Webhooks are an efficient way to sync data from from a store in near real-time so that your app is up to date with the latest data in the store and are much more efficient than traditional polling. See example below for subscribing to `order.created` events.
+Webhooks are an efficient way to sync data from a store in near real time, keeping your app up to date without the overhead of traditional polling. See the example below for subscribing to `order.created` events.
 
 ``` mermaid
 sequenceDiagram
@@ -22,7 +22,7 @@ sequenceDiagram
 
 ### Use Cases
 
-Common use cases include but not limited to:
+Common use cases include, but are not limited to:
 
 - Integrating with external marketing platforms
 - Collecting data for external reporting applications
@@ -32,12 +32,12 @@ Common use cases include but not limited to:
 
 ### Setting Up Webhooks
 
-You can register new Webhooks through **Settings > Webhooks** or on the Admin API to send event data to your application endpoint. For each webhook, you can subscribe to All Events or select specific events to send to your endpoint. See a list of all events and example event data below.
+You can register new webhooks through **Settings > Webhooks** or the Admin API to send event data to your application endpoint. For each webhook, you can subscribe to all events or select specific events to send to your endpoint. See a list of all events and example event data below.
 
 <Callout type="warn">
-Webhook target endpoints must accept JSON data and respond with a `200` response code. If we do not receive a `200` response, we will retry up to 10 times over a several day period on an exponential back off schedule.
+Webhook target endpoints must accept JSON data and respond with a `200` response code. If we do not receive a `200` response, we will retry up to 10 times over a several-day period on an exponential backoff schedule.
 
-**Failing webhooks will trigger email notifications to all store admins and will be eventually deactivated.**
+**Failing webhooks will trigger email notifications to all store admins and will eventually be deactivated.**
 
 Returning a `410` response code indicates the target resource is no longer available and will automatically disable the webhook.
 </Callout>
@@ -70,7 +70,7 @@ Returning a `410` response code indicates the target resource is no longer avail
 
 ### Webhook Data Structure
 
-Webhook data structure follows our Admin API data structures (serializers) making them predictable. As a general rule of thumb, data available in a webhook payload data is the same as retrieving the specific data. You can setup test webhooks and view the webhook logs in the dashboard to assist in building your webhook receiver.
+Webhook payloads follow the same structure as Admin API data serializers, which makes them predictable. In general, the data in a webhook payload matches the data you would get by retrieving the same resource through the API. You can set up test webhooks and view the webhook logs in the dashboard to help build and verify your receiver.
 
 ```json title="Webhook Event Payload Structure"
 {
@@ -79,7 +79,7 @@ Webhook data structure follows our Admin API data structures (serializers) makin
     "event_id": "<unique event id>",
     "event_type": "<event type>",
     "webhook": "<webhook info>",
-    "api_version": "<webhook api version"
+    "api_version": "<webhook api version>"
 }
 
 ```
