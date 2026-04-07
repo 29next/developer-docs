@@ -1,0 +1,96 @@
+---
+title: Displaying Prices
+sidebar_label: Prices
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Inside Toggle Cards
+
+Place `[data-next-toggle-display]` inside a card or its template. Prices are fetched automatically and these elements are populated with formatted values.
+
+```html
+<span data-next-toggle-display="price"></span>                        <!-- total price -->
+<span data-next-toggle-display="unitPrice"></span>            <!-- per-unit price -->
+<span data-next-toggle-display="originalPrice"></span>        <!-- retail / compare-at total price -->
+<span data-next-toggle-display="originalUnitPrice"></span>    <!-- retail / compare-at per-unit price -->
+<span data-next-toggle-display="discountAmount"></span>       <!-- savings amount -->
+<span data-next-toggle-display="discountPercentage"></span>   <!-- savings percentage -->
+<span data-next-toggle-display="name"></span>                 <!-- package display name -->
+<span data-next-toggle-display="isSelected"></span>           <!-- shown when the package is in the cart; hidden otherwise -->
+<span data-next-toggle-display="hasDiscount"></span>          <!-- shown when a discount applies; hidden otherwise -->
+<span data-next-toggle-display="isRecurring"></span>          <!-- shown when recurring; hidden otherwise -->
+<span data-next-toggle-display="recurringPrice"></span>       <!-- recurring charge total -->
+<span data-next-toggle-display="interval"></span>             <!-- "day" or "month" -->
+<span data-next-toggle-display="intervalCount"></span>        <!-- number of intervals between billing cycles -->
+<span data-next-toggle-display="frequency"></span>            <!-- "Per month", "Every 3 months", "One time" -->
+<span data-next-toggle-display="currency"></span>             <!-- ISO currency code -->
+```
+
+Boolean fields (`hasDiscount`, `isRecurring`, `isSelected`) show or hide the element via `display` — they do not write text. All other fields set `textContent`. Unrecognized values leave the element unchanged.
+
+<Callout type="info">
+`data-next-toggle-price` is still supported and accepts the same field names. Prefer `data-next-toggle-display` in new markup.
+</Callout>
+
+Prices for in-cart items are read directly from the cart summary — no extra API call. Prices for not-in-cart items are fetched via `/calculate` with the item simulated in the cart, so offer discounts that depend on cart total are correctly reflected.
+
+A `next-loading` class and `data-next-loading="true"` are set on the card element while a fetch is in progress.
+
+Prices are re-fetched automatically when:
+- The cart changes (items added, removed, or quantity updated)
+- Applied vouchers change
+- The active currency changes
+
+---
+
+## External Price Display
+
+Use `data-next-display="toggle.{packageId}.{property}"` on any element in the document to bind it to a specific toggle card's current state. `{packageId}` must match `data-next-package-id` on the card.
+
+```html
+<span data-next-display="toggle.201.price"></span>
+<span data-next-display="toggle.201.originalPrice"></span>
+<span data-next-display="toggle.201.discountAmount" data-hide-if-zero="true"></span>
+<span data-next-display="toggle.201.isSelected"></span>
+```
+
+**Supported properties:**
+
+| Property | Format | Description |
+|----------|--------|-------------|
+| `isSelected` | boolean | `true` when this package is in the cart |
+| `name` | text | Display name from the campaign package |
+| `price` | currency | Total price for the card's quantity (unit price × quantity) |
+| `unitPrice` | currency | Per-unit price |
+| `originalPrice` | currency | Retail / compare-at total price |
+| `originalUnitPrice` | currency | Retail / compare-at per-unit price |
+| `discountAmount` | currency | Savings amount (compare minus total) |
+| `discountPercentage` | percentage | Discount as a percentage of the compare price |
+| `hasDiscount` | boolean | `true` when a discount is applied |
+| `isRecurring` | boolean | `true` when the package bills on a recurring schedule |
+| `recurringPrice` | currency | Recurring charge total (quantity-scaled) |
+| `interval` | text | Billing interval: `"day"` or `"month"` |
+| `intervalCount` | auto | Number of intervals between billing cycles |
+| `frequency` | text | Human-readable billing cadence: `"Per month"`, `"Every 3 months"`, `"One time"` |
+| `currency` | text | ISO 4217 currency code |
+
+Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.
+
+<Callout type="info">
+External display elements update when the toggle card's price is fetched (`toggle:price-updated`) or when the cart selection changes (`toggle:selection-changed`). The card must be present in the DOM before the display element resolves.
+</Callout>
+
+---
+
+## Include Shipping in Prices
+
+Add `data-next-include-shipping="true"` to the container to include shipping costs in the price totals shown via `data-next-toggle-display`.
+
+```html
+<div data-next-package-toggle data-next-include-shipping="true">
+  <div data-next-toggle-card data-next-package-id="201">
+    <span data-next-toggle-display="price"></span>
+  </div>
+</div>
+```

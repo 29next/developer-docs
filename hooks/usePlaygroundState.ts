@@ -52,7 +52,8 @@ export function usePlaygroundState(
     const params = new URLSearchParams(window.location.search);
 
     // Resolve example + code from URL
-    const preset = params.get('preset');
+    const rawPreset = params.get('preset');
+    const preset = rawPreset ? rawPreset.split('?')[0] : null;
     const found = preset ? examples.find((e) => e.id === preset) : null;
     const example = found ?? examples[0];
     const encoded = params.get('code');

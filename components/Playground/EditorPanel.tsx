@@ -33,6 +33,7 @@ export function EditorPanel({
           <span className="text-xs text-fd-muted-foreground">{example.description}</span>
         )}
       </div>
+
       <div className="flex-1 min-h-0">
         <Editor
           height="100%"
@@ -52,6 +53,10 @@ export function EditorPanel({
           }}
         />
       </div>
+      {/* Suppress isDragging prop warning — used for pointer-events only */}
+      {isDragging && (
+        <div className="absolute inset-0 pointer-events-none" />
+      )}
     </div>
   );
 }

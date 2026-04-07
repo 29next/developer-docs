@@ -1,0 +1,36 @@
+---
+title: CSS Classes & State Attributes
+sidebar_label: CSS
+---
+
+## CSS Classes
+
+These classes are applied to each card element automatically.
+
+| Class | Applied to | When |
+|-------|-----------|------|
+| `next-toggle-card` | Each registered card | Always, on registration |
+| `next-in-cart` | A card | The package is in the cart |
+| `next-not-in-cart` | A card | The package is not in the cart |
+| `next-selected` | A card | Alias for `next-in-cart` |
+| `next-loading` | A card | During an async cart operation or price fetch |
+
+The same `next-in-cart`, `next-not-in-cart`, `next-active`, and `os--active` classes are also applied to the card's nearest **state container** when one is found. See [State Containers](../state-containers).
+
+---
+
+## Attributes Set Automatically
+
+**On each card element:**
+
+| Attribute | Values | When set |
+|-----------|--------|----------|
+| `data-next-in-cart` | `"true"` / `"false"` | Updated on every cart sync |
+| `data-next-loading` | `"true"` / `"false"` | Set while a cart write or price fetch is in progress |
+
+**On the state container (when one is found):**
+
+| Attribute | Values | When set |
+|-----------|--------|----------|
+| `data-in-cart` | `"true"` / `"false"` | Updated on every cart sync |
+| `data-next-active` | `"true"` / `"false"` | Alias for `data-in-cart` |

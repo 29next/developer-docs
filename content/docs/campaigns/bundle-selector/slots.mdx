@@ -1,0 +1,130 @@
+---
+title: Slot Templates
+sidebar_label: Slots
+---
+
+Add `data-next-bundle-slot-template-id` to the container and place a `[data-next-bundle-slots]` placeholder inside each card to render one row per bundle item with variant selectors.
+
+```html
+<div data-next-bundle-selector
+     data-next-bundle-slot-template-id="slot-tpl">
+
+  <div data-next-bundle-card
+       data-next-bundle-id="duo"
+       data-next-bundle-items='[{"packageId":10,"quantity":1},{"packageId":20,"quantity":1}]'>
+    <h3>Duo Bundle</h3>
+    <div data-next-bundle-slots></div>
+    <p>Total: <span data-next-bundle-display="price"></span></p>
+  </div>
+
+</div>
+
+<template id="slot-tpl">
+  <div class="slot-row">
+    <img src="{item.image}" alt="{item.name}" />
+    <strong>{item.name}</strong>
+    <span>{item.price}</span>
+  </div>
+</template>
+```
+
+---
+
+## Slot Template Variables
+
+**Slot position:**
+
+| Variable | Description |
+|----------|-------------|
+| `{slot.index}` | 1-based slot number |
+| `{slot.unitNumber}` | 1-based unit index within a configurable item |
+| `{slot.unitIndex}` | 0-based unit index within a configurable item |
+
+**Package identity:**
+
+| Variable | Description |
+|----------|-------------|
+| `{item.packageId}` | Package ID |
+| `{item.name}` | Package name |
+| `{item.image}` | Package image URL |
+| `{item.quantity}` | Quantity for this slot (number of units added to cart) |
+| `{item.variantName}` | Variant display name (e.g. "Black / Small") |
+| `{item.productName}` | Product name |
+| `{item.sku}` | Product SKU |
+| `{item.isRecurring}` | `"true"` / `"false"` |
+
+**Prices:**
+
+All values are pre-formatted currency strings (e.g. `$10.00`). `{item.price}` is the per-slot total — for a slot with `quantity: 3`, it is three times the unit price. Use `{item.unitPrice}` for the single-unit price. Currency is determined by the code returned from the bundle price fetch API; before the first fetch, the campaign's active currency is used.
+
+| Variable | Description |
+|----------|-------------|
+| `{item.price}` | Slot price after discounts |
+| `{item.originalPrice}` | Slot price before discounts |
+| `{item.unitPrice}` | Single-unit price after discounts |
+| `{item.originalUnitPrice}` | Single-unit price before discounts |
+| `{item.discountAmount}` | Slot discount amount |
+| `{item.discountPercentage}` | Discount percentage (e.g. `20.00%`) |
+| `{item.recurringPrice}` | Recurring slot price |
+| `{item.originalRecurringPrice}` | Recurring slot price before discounts |
+| `{item.interval}` | Billing interval — `"day"`, `"week"`, `"month"`, or `""` for one-time |
+| `{item.intervalCount}` | Intervals between billing cycles (e.g. `3`), or `""` for one-time |
+| `{item.frequency}` | Human-readable billing frequency (e.g. `"Every 3 months"`, `"One time"`) |
+
+**Conditional helpers:**
+
+| Variable | Values | Description |
+|----------|--------|-------------|
+| `{item.hasDiscount}` | `show` / `hide` | Whether a discount is applied to this item |
+| `{item.currency}` | ISO 4217 code | Currency code for this slot's prices (e.g. `USD`) |
+
+---
+
+## External Slot Rendering
+
+Use `data-next-bundle-slots-for` on an element outside the selector container to receive the slot rows for the currently selected bundle. The value must match `data-next-selector-id` on the container.
+
+```html
+<div data-next-bundle-selector data-next-selector-id="my-selector" ...>
+  <!-- bundle cards -->
+</div>
+
+<!-- Slots rendered here, outside the selector -->
+<div data-next-bundle-slots-for="my-selector"></div>
+```
+
+---
+
+## Per-Unit Configuration (Configurable Items)
+
+By default, a quantity-3 item renders as a single slot. Add `"configurable": true` to expand it into individual per-unit slots — one per unit — each with its own variant selectors.
+
+```json
+[
+  {
+    "id": "pick3",
+    "name": "Pick Your 3",
+    "items": [
+      { "packageId": 101, "quantity": 3, "configurable": true }
+    ]
+  }
+]
+```
+
+This renders three slot rows, each with independent variant dropdowns. The cart is updated with the aggregated package quantities after all selections.
+
+---
+
+## Silent Add-Ons (`noSlot`)
+
+Set `"noSlot": true` on any bundle item to suppress its slot row. Useful for free gifts or invisible add-ons you want to include in the cart but not show in the slot list.
+
+```json
+{
+  "id": "premium",
+  "items": [
+    { "packageId": 10, "quantity": 1 },
+    { "packageId": 99, "quantity": 1, "noSlot": true }
+  ]
+}
+```

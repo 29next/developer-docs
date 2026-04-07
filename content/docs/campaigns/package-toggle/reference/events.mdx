@@ -1,0 +1,57 @@
+---
+title: Events
+sidebar_label: Events
+---
+
+## `toggle:toggled`
+
+**When:** A card is clicked and the cart operation completes (either add or remove).
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `packageId` | `number` | The `ref_id` of the package that was toggled |
+| `added` | `boolean` | `true` when the package was added; `false` when it was removed |
+
+---
+
+## `toggle:selection-changed`
+
+**When:** After every cart sync — on init and whenever the cart changes.
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `selected` | `number[]` | Array of `packageId` values currently in the cart for all cards in this toggle |
+
+---
+
+## `toggle:price-updated`
+
+**When:** After price data is fetched and applied to a card — on init, after cart changes, after currency or voucher changes.
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `packageId` | `number` | The `ref_id` of the card whose price was updated |
+
+This event bubbles to `document`. It is used internally by the external display system (`data-next-display="toggle.{packageId}.{property}"`) to update bound elements. You can also listen to it to react to price updates for a specific card.
+
+---
+
+## Listening to Events
+
+```javascript
+window.nextReady.push(() => {
+  window.next.on('toggle:toggled', ({ packageId, added }) => {
+    console.log(added ? 'Added:' : 'Removed:', packageId);
+  });
+
+  window.next.on('toggle:selection-changed', ({ selected }) => {
+    console.log('Active packages:', selected);
+  });
+});
+```

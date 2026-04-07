@@ -77,19 +77,21 @@ export function PreviewPanel({
   return (
     <div className="flex-1 min-w-0 flex flex-col bg-fd-muted/20">
       {!floatingViewports && (
-        <div className="px-3 py-1.5 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2">
+        <div className="px-3 py-1.5 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2 min-w-0">
           {/* Left: label */}
-          <span className="text-xs text-fd-muted-foreground font-mono w-16">Preview</span>
+          <span className="text-xs text-fd-muted-foreground font-mono w-16 shrink-0">Preview</span>
+
           {/* Center: viewport toggles */}
           <div className="flex-1 flex justify-center">
             <ViewportToggle viewport={viewport} onViewportChange={onViewportChange} />
           </div>
+
           {/* Right: actions */}
-          <div className="flex items-center gap-2 justify-end">
+          <div className="flex items-center gap-2 justify-end shrink-0">
             {config?.sdkHost && (
               <span
                 title={`SDK Host: ${config.sdkHost}`}
-                className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-mono hidden xl:inline truncate max-w-[6rem]"
+                className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-mono hidden xl:inline truncate max-w-24"
               >
                 {sdkHostLabel(config.sdkHost)}
               </span>

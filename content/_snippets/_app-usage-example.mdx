@@ -1,6 +1,6 @@
 import { Callout } from 'fumadocs-ui/components/callout';
 
-In the example below, our app uses `my-app.js` to add custom funcationality on the storefront that should be loaded on every page of the store.
+In the example below, our app uses `my-app.js` to add custom functionality on the storefront that should be loaded on every page of the store.
 
 
 ```shell title="Example App Structure"
@@ -12,17 +12,17 @@ your-app
  └── manifest.json
 ```
 
-In order to add `my-app.js` to every page of the store, we'll add it to a snippet that uses the `app_asset_url` tag to reference the file source in a script tag.
+To add `my-app.js` to every page of the store, add it to a snippet that uses the `app_asset_url` tag to reference the file source in a script tag.
 
 
 ```django title="Example Asset Usage in Snippet"
-<script src=="{% app_asset_url 'assets/my-app.js' %}"></script>
+<script src="{% app_asset_url 'assets/my-app.js' %}"></script>
 ```
 
 <Callout type="warn">
-All assets are loaded from a CDN which does not support local file imports from another file. It's a best practice to compile and minify your assets into self contained single files.
+All assets are loaded from a CDN, which does not support local file imports from another file. It's best to compile and minify your assets into self-contained files.
 </Callout>
-In order to configure the snippet to load into a theme `app_hook` we'll add it to the app manifest `locations:storefront` configured with the desired location.
+To configure the snippet to load into a theme `app_hook`, add it to the app manifest `locations:storefront` with the desired location.
 
 ```json title="Example Manifest.json"
 {
@@ -34,4 +34,4 @@ In order to configure the snippet to load into a theme `app_hook` we'll add it t
 }
 ```
 
-Once you've done this, you should now see that `my-app.js` is being loaded on every page on the storefront globally in the footer. :clap:
+Once you've done this, you should see `my-app.js` loading on every storefront page in the footer. :clap:

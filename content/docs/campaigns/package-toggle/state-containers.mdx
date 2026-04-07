@@ -1,0 +1,65 @@
+---
+title: State Containers
+sidebar_label: State Containers
+---
+
+The Addon Toggle walks up the DOM from each card looking for a wrapper element that should receive state classes and attributes. This lets you style an outer section rather than the card element itself.
+
+---
+
+## Container Detection
+
+State container detection checks these attributes and classes in order, walking up from the card element:
+
+1. `data-next-toggle-container`
+2. `data-next-bump`
+3. `data-next-upsell-item`
+4. `.upsell` CSS class
+5. `.bump` CSS class
+6. The element itself (fallback when no wrapper matches)
+
+---
+
+## State Applied to the Container
+
+When a state container is found, the following are applied to it on every cart sync:
+
+**Attributes:**
+
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-in-cart` | `"true"` / `"false"` | Whether the package is in the cart |
+| `data-next-active` | `"true"` / `"false"` | Alias for `data-in-cart` |
+
+**CSS classes:**
+
+| Class | When applied |
+|-------|-------------|
+| `next-in-cart` | Package is in the cart |
+| `next-not-in-cart` | Package is not in the cart |
+| `next-active` | Package is in the cart (alias) |
+| `os--active` | Package is in the cart (legacy alias) |
+
+---
+
+## Example
+
+```html
+<div data-next-toggle-container>
+  <!-- state classes and data-in-cart are applied to this element -->
+
+  <div data-next-toggle-card data-next-package-id="201">
+    <img data-next-toggle-image />
+    <span>2-Year Warranty</span>
+    <span data-next-toggle-display="price"></span>
+  </div>
+</div>
+```
+
+---
+
+## Notes
+
+- State classes are applied to **both** the card element and its state container when a container is found
+- `data-next-package-sync` can be read from either the card or its state container
+- `data-next-selected="true"` on the state container is treated the same as on the card element

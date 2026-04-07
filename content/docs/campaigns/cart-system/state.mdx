@@ -1,24 +1,25 @@
 ---
-title: State & Initialization
-sidebar_label: State
+title: State & Display
+sidebar_label: State & Display
 ---
 
 ## Automatic State Sync
 
-All elements displaying cart data automatically update when the cart changes — no extra configuration needed:
+All elements displaying cart data update automatically when the cart changes — no extra configuration needed:
 
 ```html
-<!-- All these update automatically -->
 <span data-next-display="cart.total">$0.00</span>
-<span data-next-display="cart.quantity">0</span>
+<span data-next-display="cart.totalQuantity">0</span>
 <div data-next-show="cart.hasItems">Cart has items!</div>
 ```
 
+---
+
 ## CSS State Classes
 
-Elements automatically receive CSS classes based on state.
+Elements automatically receive CSS classes based on cart state.
 
-**Toggle Button States:**
+**Toggle buttons:**
 
 ```html
 <button data-next-toggle data-next-package-id="5">
@@ -28,7 +29,7 @@ Elements automatically receive CSS classes based on state.
 </button>
 ```
 
-**Container States:**
+**Containers:**
 
 ```html
 <div data-next-package-id="5">
@@ -38,7 +39,7 @@ Elements automatically receive CSS classes based on state.
 </div>
 ```
 
-**Selector States:**
+**Selector cards:**
 
 ```html
 <div data-next-selector-card data-next-package-id="1">
@@ -47,36 +48,37 @@ Elements automatically receive CSS classes based on state.
 </div>
 ```
 
-## State-Based Styling
+Use these classes in CSS to style selected, active, and in-cart states:
 
 ```css
-/* Style selected cards */
 .next-selected {
   border: 2px solid blue;
   background: #f0f0ff;
 }
 
-/* Style items in cart */
 .next-in-cart {
   opacity: 0.6;
 }
 
-/* Style active toggle buttons */
 button.next-active {
   background: green;
   color: white;
 }
 ```
 
+See [Reference → CSS](./reference/css) for the full list of state classes.
+
+---
+
 ## Conditional Display
 
-Show or hide elements based on cart state:
+Show or hide elements based on cart state using `data-next-show` or `data-next-hide`:
 
 ```html
 <!-- Cart status -->
 <div data-next-show="cart.isEmpty">Your cart is empty</div>
 <div data-next-show="cart.hasItems">
-  You have <span data-next-display="cart.quantity">0</span> items
+  You have <span data-next-display="cart.totalQuantity">0</span> items
 </div>
 
 <!-- Specific item checks -->
@@ -86,32 +88,13 @@ Show or hide elements based on cart state:
 <div data-next-show="cart.total > 100">Free shipping unlocked!</div>
 ```
 
-## Events
-
-Listen to cart state changes:
-
-```javascript
-// Cart updated
-next.on('cart:updated', (data) => {
-  console.log('Cart updated:', data);
-});
-
-// Item added
-next.on('cart:item-added', (data) => {
-  console.log('Item added:', data);
-});
-
-// Item removed
-next.on('cart:item-removed', (data) => {
-  console.log('Item removed:', data);
-});
-```
+See [Reference → Attributes](./reference/attributes#cart-conditional-attributes) for all supported expressions.
 
 ---
 
 ## Force Package ID
 
-The `forcePackageId` parameter pre-populates the cart with specific packages. Useful for direct marketing links, quick-buy buttons, and A/B testing.
+The `forcePackageId` parameter pre-populates the cart with specific packages on page load. Useful for direct marketing links, quick-buy buttons, and A/B testing.
 
 **Important:** `forcePackageId` is processed during SDK initialization. To use it programmatically, either set it before the page loads or reload after setting it.
 
@@ -125,14 +108,9 @@ The `forcePackageId` parameter pre-populates the cart with specific packages. Us
 
 ### URL Parameter
 
-```html
-<!-- Single package -->
+```
 https://yoursite.com/?forcePackageId=1
-
-<!-- Single package with quantity -->
 https://yoursite.com/?forcePackageId=1:3
-
-<!-- Multiple packages -->
 https://yoursite.com/?forcePackageId=1:2,3:1,5:3
 ```
 
@@ -151,17 +129,34 @@ window.location.reload();
 ### Use Cases
 
 **Direct marketing links:**
+
 ```html
 <a href="/checkout?forcePackageId=5:1">Buy Now – Special Offer</a>
 ```
 
 **Quick-buy buttons:**
+
 ```html
 <a href="/checkout?forcePackageId=2:3">Buy 3× Package</a>
 ```
 
 **A/B testing:**
+
 ```html
 <a href="/?forcePackageId=1&variant=a">Variant A</a>
 <a href="/?forcePackageId=2&variant=b">Variant B</a>
+```
+
+---
+
+## Events
+
+Listen to cart state changes with `next.on()`. See [Reference → Events](./reference/events) for the full event reference.
+
+```javascript
+window.nextReady.push(() => {
+  window.next.on('cart:updated', (data) => {
+    console.log('Cart updated:', data);
+  });
+});
 ```

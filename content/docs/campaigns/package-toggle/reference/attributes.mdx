@@ -1,0 +1,114 @@
+---
+title: Attributes
+sidebar_label: Attributes
+---
+
+## Container Attributes
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-package-toggle` | Marks the container (or the toggle element itself in single-element mode); required to activate the Addon Toggle |
+| `data-next-include-shipping` | `true` / `false` — include shipping costs in price totals shown via `data-next-toggle-display` |
+| `data-next-packages` | JSON array of package definitions for auto-render mode; renders one card per entry when a template is also set |
+| `data-next-toggle-template-id` | ID of a `<template>` element whose `innerHTML` is the card template |
+| `data-next-toggle-template` | Inline card template string (alternative to `data-next-toggle-template-id`) |
+
+---
+
+## Card Attributes
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-toggle-card` | Marks an element as a toggleable card |
+| `data-next-package-id` | Package `ref_id` — required per card |
+| `data-next-selected="true"` | Auto-adds this package on page load; deduped so the package is not added again if already in the cart |
+| `data-next-quantity` | Quantity to add when toggling on (default `1`); ignored when `data-next-package-sync` is set |
+| `data-next-package-sync` | Comma-separated list of package IDs — quantity mirrors the sum of those packages currently in the cart |
+| `data-next-is-upsell="true"` | Marks the item as an upsell/bump for order tracking |
+| `data-add-text` | Text shown in the button text slot when the package is **not** in the cart |
+| `data-remove-text` | Text shown in the button text slot when the package **is** in the cart |
+
+---
+
+## Display Slot Attributes
+
+Place these on elements **inside** a card (or card template) to populate them with price and state data.
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-toggle-display` | Primary display slot. Value is a field name (see table below). |
+| `data-next-toggle-price` | **Deprecated.** Accepts the same field names as `data-next-toggle-display`. Supported for backward compatibility. |
+
+**Supported field names** (work with both attributes):
+
+| Field | Effect |
+|-------|--------|
+| `price` | Formatted total price for the card's quantity |
+| `unitPrice` | Per-unit price |
+| `originalPrice` | Retail / compare-at total price |
+| `originalUnitPrice` | Retail / compare-at per-unit price |
+| `discountAmount` | Savings amount; empty if no discount |
+| `discountPercentage` | Savings as a percentage; empty if no discount |
+| `name` | Package display name |
+| `isSelected` | Shown when the package is in the cart; hidden otherwise |
+| `hasDiscount` | Shown when a discount applies; hidden otherwise |
+| `isRecurring` | Shown when the package bills on a recurring schedule; hidden otherwise |
+| `recurringPrice` | Recurring charge total (quantity-scaled) |
+| `interval` | Billing interval: `"day"` or `"month"` |
+| `intervalCount` | Number of intervals between billing cycles |
+| `frequency` | Human-readable cadence: `"Per month"`, `"Every 3 months"`, `"One time"` |
+| `currency` | ISO 4217 currency code |
+
+---
+
+## State Container Attribute
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-toggle-container` | Marks an ancestor element as the state container for cards inside it. State classes and attributes are applied to this element rather than to each card. See [State Containers](../state-containers) |
+
+---
+
+## Attributes Set Automatically
+
+**On each card element:**
+
+| Attribute | Values | When set |
+|-----------|--------|----------|
+| `data-next-in-cart` | `"true"` / `"false"` | Updated on every cart sync |
+| `data-next-loading` | `"true"` / `"false"` | Set while a cart operation or price fetch is in progress |
+
+**On the state container (when one is found):**
+
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-in-cart` | `"true"` / `"false"` | Whether the package is in the cart |
+| `data-next-active` | `"true"` / `"false"` | Alias for `data-in-cart` |
+
+---
+
+## Display System Integration
+
+Use `data-next-display="toggle.{packageId}.{property}"` on any element to bind it to a specific card's price or state. `{packageId}` must match `data-next-package-id` on the card.
+
+**Supported properties:**
+
+| Property | Format | Description |
+|----------|--------|-------------|
+| `isSelected` | boolean | `true` when this package is in the cart |
+| `name` | text | Display name from the campaign package |
+| `price` | currency | Total price for the card's quantity (unit price × quantity) |
+| `unitPrice` | currency | Per-unit price |
+| `originalPrice` | currency | Retail / compare-at total price |
+| `originalUnitPrice` | currency | Retail / compare-at per-unit price |
+| `discountAmount` | currency | Savings amount (compare minus total) |
+| `discountPercentage` | percentage | Discount as a percentage of the compare price |
+| `hasDiscount` | boolean | `true` when a discount is applied |
+| `isRecurring` | boolean | `true` when the package bills on a recurring schedule |
+| `recurringPrice` | currency | Recurring charge total (quantity-scaled) |
+| `interval` | text | Billing interval: `"day"` or `"month"` |
+| `intervalCount` | auto | Number of intervals between billing cycles |
+| `frequency` | text | Human-readable billing cadence: `"Per month"`, `"Every 3 months"`, `"One time"` |
+| `currency` | text | ISO 4217 currency code |
+
+Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.
