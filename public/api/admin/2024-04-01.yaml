@@ -1273,6 +1273,50 @@ components:
       required:
         - message
       type: object
+    CreateExport:
+      properties:
+        date_from:
+          format: date-time
+          type: string
+        date_to:
+          format: date-time
+          type: string
+        type:
+          description: |-
+            * `order_list` - Orders
+            * `order_line_items` - Order Line Items
+            * `customer_list` - Customers
+            * `transaction_list` - Transactions
+            * `dispute_list` - Disputes
+            * `subscription_list` - Subscriptions
+            * `subscription_line_items` - Subscription Line Items
+            * `open_cart_list` - Open Carts
+            * `open_cart_line_items` - Open Cart Line Items
+            * `return_list` - Returns
+            * `return_line_items` - Return Line Items
+            * `fulfillment_list` - Fulfillments
+            * `fulfillment_line_items` - Fulfillment Line Items
+          enum:
+            - order_list
+            - order_line_items
+            - customer_list
+            - transaction_list
+            - dispute_list
+            - subscription_list
+            - subscription_line_items
+            - open_cart_list
+            - open_cart_line_items
+            - return_list
+            - return_line_items
+            - fulfillment_list
+            - fulfillment_line_items
+          type: string
+          x-spec-enum-id: d018e10950f018b1
+      required:
+        - date_from
+        - date_to
+        - type
+      type: object
     CreateFulfillment:
       properties:
         fulfillment_order_line_items:
@@ -2613,6 +2657,104 @@ components:
         - id
         - message
         - updated_at
+      type: object
+    Export:
+      properties:
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        date_from:
+          format: date-time
+          type:
+            - string
+            - 'null'
+        date_to:
+          format: date-time
+          type:
+            - string
+            - 'null'
+        id:
+          readOnly: true
+          type: integer
+        status:
+          description: |-
+            * `available` - Available
+            * `pending` - Pending
+          enum:
+            - available
+            - pending
+          type: string
+          x-spec-enum-id: 97f0edd07d5d92b9
+        type:
+          description: |-
+            * `order_list` - Orders
+            * `order_line_items` - Order Line Items
+            * `customer_list` - Customers
+            * `transaction_list` - Transactions
+            * `dispute_list` - Disputes
+            * `subscription_list` - Subscriptions
+            * `subscription_line_items` - Subscription Line Items
+            * `open_cart_list` - Open Carts
+            * `open_cart_line_items` - Open Cart Line Items
+            * `return_list` - Returns
+            * `return_line_items` - Return Line Items
+            * `fulfillment_list` - Fulfillments
+            * `fulfillment_line_items` - Fulfillment Line Items
+          enum:
+            - order_list
+            - order_line_items
+            - customer_list
+            - transaction_list
+            - dispute_list
+            - subscription_list
+            - subscription_line_items
+            - open_cart_list
+            - open_cart_line_items
+            - return_list
+            - return_line_items
+            - fulfillment_list
+            - fulfillment_line_items
+          readOnly: true
+          type: string
+          x-spec-enum-id: d018e10950f018b1
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - id
+        - type
+        - url
+      type: object
+    ExportDownload:
+      properties:
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+        - url
+      type: object
+    ExportType:
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+      required:
+        - code
+        - name
+      type: object
+    ExportTypes:
+      properties:
+        types:
+          items:
+            $ref: '#/components/schemas/ExportType'
+          type: array
+      required:
+        - types
       type: object
     Fulfillment:
       properties:
@@ -4668,6 +4810,25 @@ components:
         results:
           items:
             $ref: '#/components/schemas/DisputeNote'
+          type: array
+      required:
+        - results
+      type: object
+    PaginatedExportList:
+      properties:
+        next:
+          example: http://api.example.org/accounts/?cursor=cD00ODY%3D"
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?cursor=cj0xJnA9NDg3
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/Export'
           type: array
       required:
         - results
@@ -10345,6 +10506,8 @@ components:
             content:write: Access to create and update storefront content related objects
             disputes:read: Access to list and view disputes
             disputes:write: Access to create and update disputes
+            exports:read: Access to list and view all exports
+            exports:write: Access to create and update exports
             fulfillment_orders:read: Access to list fulfillment order fulfillment requests
             fulfillment_orders:write: Access to update fulfillment order fulfillment requests
             fulfillment_service:read: Access to list assigned fulfillment orders and own locations
@@ -11537,6 +11700,205 @@ paths:
             - disputes:write
       tags:
         - payments
+  /exports/:
+    get:
+      description: Retrieve a list of exports.
+      operationId: exportsList
+      parameters:
+        - description: |-
+            * `order_list` - Orders
+            * `order_line_items` - Order Line Items
+            * `customer_list` - Customers
+            * `transaction_list` - Transactions
+            * `dispute_list` - Disputes
+            * `subscription_list` - Subscriptions
+            * `subscription_line_items` - Subscription Line Items
+            * `open_cart_list` - Open Carts
+            * `open_cart_line_items` - Open Cart Line Items
+            * `return_list` - Returns
+            * `return_line_items` - Return Line Items
+            * `fulfillment_list` - Fulfillments
+            * `fulfillment_line_items` - Fulfillment Line Items
+          in: query
+          name: type
+          schema:
+            enum:
+              - customer_list
+              - dispute_list
+              - fulfillment_line_items
+              - fulfillment_list
+              - open_cart_line_items
+              - open_cart_list
+              - order_line_items
+              - order_list
+              - return_line_items
+              - return_list
+              - subscription_line_items
+              - subscription_list
+              - transaction_list
+            type: string
+            x-spec-enum-id: 0ef8a3327896084c
+        - description: YYYY-MM-DD
+          in: query
+          name: date_created_from
+          schema:
+            format: date
+            type: string
+        - description: YYYY-MM-DD
+          in: query
+          name: date_created_to
+          schema:
+            format: date
+            type: string
+        - description: The pagination cursor value.
+          in: query
+          name: cursor
+          required: false
+          schema:
+            type: string
+        - in: header
+          name: X-29next-API-Version
+          required: true
+          schema:
+            default: '2024-04-01'
+            enum:
+              - '2024-04-01'
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedExportList'
+          description: ''
+      security:
+        - oauth2:
+            - exports:read
+      tags:
+        - exports
+    post:
+      description: Create a new export.
+      operationId: exportsCreate
+      parameters:
+        - in: header
+          name: X-29next-API-Version
+          required: true
+          schema:
+            default: '2024-04-01'
+            enum:
+              - '2024-04-01'
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExport'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateExport'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateExport'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Export'
+          description: ''
+      security:
+        - oauth2:
+            - exports:write
+      tags:
+        - exports
+  /exports/types/:
+    get:
+      description: Retrieve all available export types.
+      operationId: exportsTypesRetrieve
+      parameters:
+        - in: header
+          name: X-29next-API-Version
+          required: true
+          schema:
+            default: '2024-04-01'
+            enum:
+              - '2024-04-01'
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportTypes'
+          description: ''
+      security:
+        - oauth2:
+            - exports:read
+      tags:
+        - exports
+  /exports/{id}/:
+    get:
+      description: Retrieve an export.
+      operationId: exportsRetrieve
+      parameters:
+        - description: A unique integer value identifying this Export CSV.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: X-29next-API-Version
+          required: true
+          schema:
+            default: '2024-04-01'
+            enum:
+              - '2024-04-01'
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Export'
+          description: ''
+      security:
+        - oauth2:
+            - exports:read
+      tags:
+        - exports
+  /exports/{id}/download/:
+    get:
+      description: Retrieve the download URL for a completed export file.
+      operationId: exportsDownloadRetrieve
+      parameters:
+        - description: A unique integer value identifying this Export CSV.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: X-29next-API-Version
+          required: true
+          schema:
+            default: '2024-04-01'
+            enum:
+              - '2024-04-01'
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportDownload'
+          description: ''
+      security:
+        - oauth2:
+            - exports:read
+      tags:
+        - exports
   /fulfillment-orders/:
     get:
       description: Retrieve a list of fulfillment orders.
@@ -19864,6 +20226,146 @@ webhooks:
       security: []
       tags:
         - payments
+  export.created:
+    post:
+      description: Triggers when an export is created.
+      requestBody:
+        content:
+          application/json:
+            example:
+              api_version: '2024-04-01'
+              data:
+                created_at: '2024-01-01T00:00:00Z'
+                date_from: null
+                date_to: null
+                id: 0
+                status: string
+                type: string
+                url: https://example.com
+              event_id: a7a26ff2-e851-45b6-9634-d595f45458b7
+              event_type: export.created
+              object: export
+              webhook:
+                events:
+                  - export.created
+                id: 1
+                store: example
+                target: https://example.com/webhook/
+            schema:
+              properties:
+                api_version:
+                  description: API Version of the object data schema.
+                  examples:
+                    - '2024-04-01'
+                  type: string
+                data:
+                  properties:
+                    created_at:
+                      format: date-time
+                      type: string
+                    date_from:
+                      format: date-time
+                      type: string
+                    date_to:
+                      format: date-time
+                      type: string
+                    id:
+                      type: integer
+                    status:
+                      description: |-
+                        * `available` - Available
+                        * `pending` - Pending
+                      enum:
+                        - available
+                        - pending
+                      type: string
+                      x-spec-enum-id: 97f0edd07d5d92b9
+                    type:
+                      description: |-
+                        * `order_list` - Orders
+                        * `order_line_items` - Order Line Items
+                        * `customer_list` - Customers
+                        * `transaction_list` - Transactions
+                        * `dispute_list` - Disputes
+                        * `subscription_list` - Subscriptions
+                        * `subscription_line_items` - Subscription Line Items
+                        * `open_cart_list` - Open Carts
+                        * `open_cart_line_items` - Open Cart Line Items
+                        * `return_list` - Returns
+                        * `return_line_items` - Return Line Items
+                        * `fulfillment_list` - Fulfillments
+                        * `fulfillment_line_items` - Fulfillment Line Items
+                      enum:
+                        - order_list
+                        - order_line_items
+                        - customer_list
+                        - transaction_list
+                        - dispute_list
+                        - subscription_list
+                        - subscription_line_items
+                        - open_cart_list
+                        - open_cart_line_items
+                        - return_list
+                        - return_line_items
+                        - fulfillment_list
+                        - fulfillment_line_items
+                      type: string
+                      x-spec-enum-id: d018e10950f018b1
+                    url:
+                      format: uri
+                      type: string
+                  required:
+                    - created_at
+                    - id
+                    - type
+                    - url
+                  type: object
+                event_id:
+                  description: Unique id associated with this webhook event.
+                  format: uuid
+                  type: string
+                event_type:
+                  description: Webhook event type of the current event.
+                  examples:
+                    - export.created
+                  type: string
+                object:
+                  description: Object data type.
+                  examples:
+                    - export
+                  type: string
+                webhook:
+                  properties:
+                    events:
+                      description: See webhook docs for available events.
+                      items:
+                        type: string
+                      type: array
+                    id:
+                      description: The webhook sending the event.
+                      type: integer
+                    store:
+                      description: The store identifier.
+                      examples:
+                        - example
+                      nullable: true
+                      type: string
+                    target:
+                      description: Full url for your webhook receiver endpoint.
+                      format: uri
+                      maxLength: 255
+                      title: Webhook target
+                      type: string
+                  type: object
+              type: object
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully.
+        '410':
+          description: Indicates the webhook target is no longer available and will be disabled.
+      security: []
+      tags:
+        - exports
   fulfillment.created:
     post:
       description: Triggers when a fulfillment is created.

@@ -17,6 +17,8 @@ Admin API access is controlled granularly by Scopes that are associated with eac
 | `content:write` | Access to create and update storefront content related objects |
 | `disputes:read` | Access to list and view disputes |
 | `disputes:write` | Access to create and update disputes |
+| `exports:read` | Access to list and view all exports |
+| `exports:write` | Access to create and update exports |
 | `fulfillment_service:read` | Access to list assigned fulfillment orders and own locations |
 | `fulfillment_service:write` | Access to create fulfillment locations and fulfillments |
 | `fulfillment_orders:read` | Access to list fulfillment order fulfillment requests |

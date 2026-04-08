@@ -194,6 +194,13 @@ WEBHOOKS = [
         "description": "Triggers when a dispute is updated.",
     },
     {
+        "event": "export.created",
+        "object": "export",
+        "schema_ref": "#/components/schemas/Export",
+        "tag": "exports",
+        "description": "Triggers when an export is created.",
+    },
+    {
         "event": "fulfillment.created",
         "object": "fulfillment",
         "schema_ref": "#/components/schemas/FulfillmentResponse",

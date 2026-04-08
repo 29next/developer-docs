@@ -6,7 +6,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 Apps can install an [Event Tracker](/docs/storefront/event-tracking) to add storefront ecommerce Event Tracking as part of their integration.
 
-App installed event trackers simplifies the setup flow and makes using your app easy for merchants requiring fewer manual setup steps with easy configuration through the dashboard.
+An installed event tracker simplifies the setup flow and makes the app easier for merchants to use, with fewer manual setup steps and simple dashboard configuration.
 
 
 <Callout type="warn">
@@ -38,13 +38,13 @@ When building your app, map a javascript file to be installed as an [Event Track
   ]
 ```
 
-When your app is installed, an event tracker will be automatically created with the content of the javascrpt file mapped to the `storefront_event_tracker` key from your manifest.json.
+When your app is installed, an event tracker will be automatically created with the contents of the JavaScript file mapped to the `storefront_event_tracker` key in your manifest.json.
 
 ### Access App Settings Inside Event Tracker
 
-Apps also have [Settings](/docs/apps/settings) that can be used to control the configuration of how the app works, such as enabling or disabling some funcationality, or adding an ID into for the tracking script.
+Apps also have [Settings](/docs/apps/settings) that can be used to control how the app works, such as enabling or disabling functionality or adding an ID for the tracking script.
 
-Access the settings keys in your event tracker for configuration variables in your javascript.
+Access the settings keys in your event tracker to read configuration variables in your JavaScript.
 
 ```javascript title="Example Settings Usage in Snippet"
 // access your app settings through app.settings.<settings name>
@@ -58,4 +58,3 @@ if (app.settings.custom_app_id_enabled) {
 import GoogleAnalytics from '../../_snippets/_view-google-analytics.mdx';
 
 <GoogleAnalytics />
-

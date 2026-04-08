@@ -46,6 +46,10 @@ Add `localhost` and any staging domains as development domains so you can test t
 API requests from domains not listed in either production or development will be rejected. Make sure all environments where the SDK runs have their domain added in your store's campaign settings.
 </Callout>
 
+### Available Payment Methods
+
+Campaign responses include `available_payment_methods` and `available_express_payment_methods`, which you can use to render only the payment buttons supported by the campaign's gateway group, market, and configured payment methods.
+
 <CampaignAnatomy />
 
 ### Packages

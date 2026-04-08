@@ -1,14 +1,28 @@
-# 29 Next Developer Docs
+# Next Commerce Developer Docs
 
-Developer documentation for the 29 Next platform, built with [Fumadocs](https://fumadocs.vercel.app) and [Next.js](https://nextjs.org).
+Developer documentation for the Next Commerce platform, built with [Next.js](https://nextjs.org) and [Fumadocs](https://fumadocs.vercel.app).
 
-## Stack
+This repo powers the public developer docs site, including:
 
-- **[Fumadocs](https://fumadocs.vercel.app)** — docs framework (UI, MDX processing, OpenAPI rendering)
-- **[Next.js](https://nextjs.org)** — framework
-- **[Algolia DocSearch](https://docsearch.algolia.com)** — site search, indexed via GitHub Actions on push to `main`
+- product docs for Campaigns, Storefront, Apps, and Webhooks
+- generated Admin API, Campaigns API, and GraphQL reference docs
+- the docs homepage and shared MDX components
 
-## Development
+## Repository Layout
+
+- `content/docs/` - authored MDX docs and sidebar metadata
+- `content/docs/admin-api/`, `content/docs/campaigns/`, `content/docs/webhooks/`, `content/docs/storefront/graphql/` - generated reference docs
+- `app/` - Next.js app shell, homepage, layout, sitemap, and favicon
+- `components/` - shared MDX, page, and UI components
+- `scripts/` - doc generators and link validation
+- `public/` - logos, icons, and generated API specs
+
+## Requirements
+
+- Node.js 22+
+- npm
+
+## Local Development
 
 Install dependencies:
 
@@ -16,26 +30,42 @@ Install dependencies:
 npm install
 ```
 
-Run the dev server (also generates API reference docs from OpenAPI specs):
+Run the docs site locally:
 
 ```bash
 npm run dev
 ```
 
-## Validate Links
+`dev` runs the doc generators first, then starts Next.js with Turbopack.
+
+Preview a production build locally by serving the `out/` directory with any static file server after `npm run build`.
+
+## Content Workflow
+
+- Edit authored docs in `content/docs/`
+- Update section ordering and navigation with the relevant `meta.json` files
+- Use `content/docs/admin-api/`, `content/docs/campaigns/`, and `content/docs/webhooks/` for generated API reference content
+- Use `content/docs/storefront/graphql/` for generated GraphQL reference content
+
+The generated reference docs are created automatically by:
+
+- `npm run generate-api-docs`
+- `npm run generate-graphql-docs`
+
+Those scripts are already wired into `npm run dev` and `npm run build`.
+
+## Validation
 
 Check for broken internal links:
 
 ```bash
-node scripts/validate-links.mjs
+npm run validate-links
 ```
 
-## Search Index
+## Deployment
 
-The Algolia search index is updated automatically via the `Build Search Index` GitHub Actions workflow on every push to `main`. It uses the `algolia.json` config and requires `ALGOLIA_APPLICATION_ID` and `ALGOLIA_API_KEY` secrets.
+The site is built as a static export. Netlify runs `npm run build` and publishes the `out/` directory.
 
-## Build
+## Search
 
-```bash
-npm run build
-```
+Site search is powered by Algolia DocSearch. The search index is updated automatically on pushes to `main` through GitHub Actions.
