@@ -202,10 +202,12 @@ if (campaign) {
   console.log('Campaign:', campaign.name);
   console.log('Currency:', campaign.currency);
   console.log('Packages:', campaign.packages);
+  console.log('Available payment methods:', campaign.available_payment_methods);
+  console.log('Available express payment methods:', campaign.available_express_payment_methods);
 }
 ```
 
-**Returns:** `Campaign | null`
+**Returns:** `Campaign | null` including packages, settings, currency, and available payment method fields
 
 ### getPackage
 
@@ -866,4 +868,3 @@ const isVisible = nextDebug.overlay.isVisible();
 - **[Attribution API](/docs/campaigns/javascript-api/attribution)** - Attribution tracking
 - **[URL Parameters API](/docs/campaigns/javascript-api/url-parameters)** - URL parameter management
 - **[Data Attributes](/docs/campaigns/data-attributes)** - HTML attribute reference
-

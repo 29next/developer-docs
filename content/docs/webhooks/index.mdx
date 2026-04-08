@@ -37,6 +37,8 @@ You can register new webhooks through **Settings > Webhooks** or the Admin API t
 <Callout type="warn">
 Webhook target endpoints must accept JSON data and respond with a `200` response code. If we do not receive a `200` response, we will retry up to 10 times over a several-day period on an exponential backoff schedule.
 
+Webhook handlers should also complete within about 20 seconds. Longer-running endpoints can be treated as failed deliveries and retried.
+
 **Failing webhooks will trigger email notifications to all store admins and will eventually be deactivated.**
 
 Returning a `410` response code indicates the target resource is no longer available and will automatically disable the webhook.
