@@ -4,6 +4,7 @@
     "external-checkout",
     "order-management",
     "subscription-management",
+    "exports",
     "testing-guide",
     "iframe-payment-form",
     "3ds2",
