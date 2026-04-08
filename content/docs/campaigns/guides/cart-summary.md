@@ -2,7 +2,7 @@
 title: Cart Summary
 ---
 
-The Cart Summary displays the cart totals — subtotal, discounts, shipping, tax, and grand total — and updates automatically whenever the cart changes. Drop it anywhere on the page: a sidebar, a sticky footer, or an order review step.
+The Cart Summary displays the cart totals — subtotal, discounts, shipping, and grand total — and updates automatically whenever the cart changes. Drop it anywhere on the page: a sidebar, a sticky footer, or an order review step.
 
 ## What You're Building
 
@@ -19,7 +19,7 @@ One attribute is all you need. The enhancer renders a built-in Subtotal / Discou
 <div data-next-cart-summary></div>
 ```
 
-The built-in template only shows the discount row when discounts are greater than zero, and omits the tax row when tax is zero. No extra configuration needed.
+The built-in template only shows the discount row when discounts are greater than zero. No extra configuration needed.
 
 ## Step 2: Custom Template
 
@@ -34,7 +34,7 @@ Place a `<template>` inside the container to replace the default layout with you
     </div>
     <div class="summary-row discount-row">
       <span>Discounts</span>
-      <span>−{discounts}</span>
+      <span>−{totalDiscount}</span>
     </div>
     <div class="summary-row">
       <span>Shipping</span>
@@ -56,11 +56,21 @@ Place a `<template>` inside the container to replace the default layout with you
 | `{total}` | Grand total |
 | `{shipping}` | Shipping cost (formatted, or "Free" when zero) |
 | `{shippingOriginal}` | Original shipping before any shipping discount (empty if none) |
-| `{tax}` | Tax amount |
-| `{discounts}` | Total discount amount (offers + vouchers combined) |
-| `{savings}` | Total savings: retail (compare-at minus price) + applied discounts |
-| `{compareTotal}` | Compare-at total (before savings) |
-| `{itemCount}` | Number of items in cart |
+| `{shippingDiscountAmount}` | Absolute amount saved on shipping |
+| `{shippingDiscountPercentage}` | Shipping discount as a percentage (e.g. `"10%"`) |
+| `{shippingName}` | Display name of the selected shipping method |
+| `{shippingCode}` | Code of the selected shipping method |
+| `{totalDiscount}` | Total discount amount (offers + vouchers combined) |
+| `{totalDiscountPercentage}` | Total discount as a percentage of subtotal (e.g. `"20%"`) |
+| `{discounts}` | **Deprecated alias** for `{totalDiscount}` — still rendered |
+| `{currency}` | Active currency code (e.g. `"USD"`) |
+| `{itemCount}` | Number of distinct lines in the cart |
+| `{totalQuantity}` | Total unit quantity across all lines |
+| `{isEmpty}` | `"true"` or `"false"` |
+| `{hasDiscounts}` | `"true"` or `"false"` |
+| `{isFreeShipping}` | `"true"` or `"false"` |
+| `{hasShippingDiscount}` | `"true"` or `"false"` |
+| `{isCalculating}` | `"true"` or `"false"` |
 
 ## Step 3: Conditional Rows with CSS Classes
 
@@ -70,14 +80,13 @@ The enhancer applies state classes to the container element. Use them to show or
 <div data-next-cart-summary>
   <template>
     <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
-    <div class="row row-discounts"><span>Discounts</span><span>−{discounts}</span></div>
+    <div class="row row-discounts"><span>Discounts</span><span>−{totalDiscount}</span></div>
     <div class="row row-shipping-discount">
       <span>Shipping</span>
       <del>{shippingOriginal}</del>
       <span>{shipping}</span>
     </div>
     <div class="row row-shipping-free"><span>Shipping</span><span>Free</span></div>
-    <div class="row row-tax"><span>Tax</span><span>{tax}</span></div>
     <div class="row row-total"><span>Total</span><span>{total}</span></div>
   </template>
 </div>
@@ -85,15 +94,13 @@ The enhancer applies state classes to the container element. Use them to show or
 <style>
   /* Hide these rows by default */
   .row-discounts,
-  .row-shipping-discount,
-  .row-tax { display: none }
+  .row-shipping-discount { display: none }
 
   /* Show when state classes are present */
   .next-has-discounts .row-discounts    { display: flex }
   .next-has-shipping-discount .row-shipping-discount { display: flex }
   .next-has-shipping .row-shipping-free { display: none }
   .next-free-shipping .row-shipping-free { display: flex }
-  .next-has-tax .row-tax               { display: flex }
 </style>
 ```
 
@@ -109,10 +116,8 @@ The enhancer applies state classes to the container element. Use them to show or
 | `next-free-shipping` | Shipping cost = 0 |
 | `next-has-shipping-discount` | A shipping discount is applied |
 | `next-no-shipping-discount` | No shipping discount |
-| `next-has-tax` | Tax > 0 |
-| `next-no-tax` | Tax = 0 |
-| `next-has-savings` | Retail or discount savings available |
-| `next-no-savings` | No savings |
+| `next-calculating` | Totals recalculation is in progress |
+| `next-not-calculating` | Totals are up to date |
 
 ## Step 4: Itemised Line List
 
@@ -124,14 +129,14 @@ Show a breakdown of each cart line — useful for an order review section. Add a
     <ul class="line-items" data-summary-lines>
       <template>
         <li class="line-item">
-          <img src="{line.image}" alt="{line.name}" />
+          <img src="{item.image}" alt="{item.name}" />
           <div class="line-info">
-            <strong>{line.name}</strong>
-            <span>{line.variantName}</span>
+            <strong>{item.name}</strong>
+            <span>{item.variantName}</span>
           </div>
           <div class="line-pricing">
-            <span>{line.qty} × {line.unitPrice}</span>
-            <strong>{line.total}</strong>
+            <span>{item.quantity} × {item.unitPrice}</span>
+            <strong>{item.price}</strong>
           </div>
         </li>
       </template>
@@ -146,24 +151,32 @@ Show a breakdown of each cart line — useful for an order review section. Add a
 
 ### Line Item Variables
 
+Use the `{item.*}` token namespace inside `data-summary-lines` row templates.
+
 | Variable | Description |
 |----------|-------------|
-| `{line.name}` | Package display name |
-| `{line.image}` | Product image URL |
-| `{line.productName}` | Product name |
-| `{line.variantName}` | Variant name (e.g. "Black / Large") |
-| `{line.qty}` | Quantity |
-| `{line.unitPrice}` | Unit price after discounts |
-| `{line.originalUnitPrice}` | Unit price before discounts |
-| `{line.packagePrice}` | Package total after discounts |
-| `{line.originalPackagePrice}` | Package total before discounts |
-| `{line.total}` | Line total after all discounts |
-| `{line.totalDiscount}` | Total discount on this line |
-| `{line.hasDiscount}` | `"show"` or `"hide"` |
-| `{line.hasSavings}` | `"show"` or `"hide"` |
-| `{line.priceRetail}` | Retail (compare-at) unit price |
-| `{line.isRecurring}` | `"true"` or `"false"` |
-| `{line.sku}` | Product SKU |
+| `{item.packageId}` | Package `ref_id` |
+| `{item.name}` | Package display name |
+| `{item.image}` | Product image URL |
+| `{item.productName}` | Product name |
+| `{item.variantName}` | Variant name (e.g. "Black / Large") |
+| `{item.sku}` | Product SKU |
+| `{item.quantity}` | Quantity in cart |
+| `{item.unitPrice}` | Unit price after discounts |
+| `{item.originalUnitPrice}` | Unit price before discounts |
+| `{item.price}` | Package price after discounts |
+| `{item.originalPrice}` | Package price before discounts |
+| `{item.discountAmount}` | Total discount on this line |
+| `{item.discountPercentage}` | Discount as a percentage of original unit price |
+| `{item.hasDiscount}` | `"show"` or `"hide"` — useful as a CSS class |
+| `{item.isRecurring}` | `"true"` or `"false"` |
+| `{item.interval}` | Billing interval (`"day"`, `"month"`, or empty) |
+| `{item.intervalCount}` | Number of intervals per cycle |
+| `{item.frequency}` | Human-readable frequency (e.g. `"Monthly"`) |
+| `{item.recurringPrice}` | Recurring unit price (subscriptions) |
+| `{item.currency}` | Currency code for this line |
+
+> The legacy `{line.*}` token set is deprecated — those tokens render as empty strings and emit a console warning. Always use `{item.*}` in new templates.
 
 ## Step 5: Discount Breakdowns
 
@@ -215,14 +228,14 @@ A complete order review summary with line items, discount list, and conditional 
     <ul class="line-items" data-summary-lines>
       <template>
         <li class="line-item">
-          <img src="{line.image}" alt="{line.name}" />
+          <img src="{item.image}" alt="{item.name}" />
           <div class="line-info">
-            <strong>{line.name}</strong>
-            <span class="variant">{line.variantName}</span>
+            <strong>{item.name}</strong>
+            <span class="variant">{item.variantName}</span>
           </div>
           <div class="line-price">
-            <span>{line.qty} × {line.unitPrice}</span>
-            <strong>{line.total}</strong>
+            <span>{item.quantity} × {item.unitPrice}</span>
+            <strong>{item.price}</strong>
           </div>
         </li>
       </template>
@@ -251,14 +264,14 @@ A complete order review summary with line items, discount list, and conditional 
 
     <div class="divider"></div>
 
+    <div class="summary-row discount-row">
+      <span>You save ({totalDiscountPercentage})</span>
+      <span class="discount-amount">−{totalDiscount}</span>
+    </div>
+
     <div class="summary-row total-row">
       <span>Total</span>
       <strong>{total}</strong>
-    </div>
-
-    <div class="summary-row savings-row">
-      <span>You save</span>
-      <span class="savings-amount">{savings}</span>
     </div>
   </template>
 </div>
@@ -290,8 +303,8 @@ A complete order review summary with line items, discount list, and conditional 
   .discounts { list-style: none; padding: 0; color: #16a34a }
   .discounts li { display: flex; justify-content: space-between }
 
-  /* Hide savings row when there are none */
-  .next-no-savings .savings-row { display: none }
-  .savings-amount { color: #16a34a }
+  /* Hide discount row when no discount is applied */
+  .next-no-discounts .discount-row { display: none }
+  .discount-amount { color: #16a34a }
 </style>
 ```

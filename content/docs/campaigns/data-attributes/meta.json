@@ -1,4 +1,16 @@
 {
   "title": "Data Attributes",
-  "pages": ["index", "actions", "display", "state", "configuration", "order-data", "url-parameters", "checkout-review", "selection", "profile", "campaign", "css-classes"]
+  "pages": [
+    "index",
+    "actions",
+    "display",
+    "state",
+    "configuration",
+    "order-data",
+    "url-parameters",
+    "checkout-review",
+    "selection",
+    "campaign",
+    "css-classes"
+  ]
 }

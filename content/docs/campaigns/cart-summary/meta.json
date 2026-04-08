@@ -1,0 +1,11 @@
+{
+  "title": "Cart Summary",
+  "pages": [
+    "index",
+    "get-started",
+    "custom-template",
+    "summary-lists",
+    "cart-display",
+    "reference"
+  ]
+}

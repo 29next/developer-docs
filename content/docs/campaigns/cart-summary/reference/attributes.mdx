@@ -1,0 +1,148 @@
+---
+title: Attributes
+sidebar_label: Attributes
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Host Element
+
+### `data-next-cart-summary`
+
+| | |
+|---|---|
+| Type | boolean (presence) |
+| Required | yes |
+
+Marks the element as a cart summary block and triggers enhancer instantiation. Place on the outermost container element.
+
+```html
+<div data-next-cart-summary></div>
+```
+
+---
+
+## Template Tokens
+
+Place inside a `<template>` direct child of `data-next-cart-summary`. Unrecognized tokens are left unchanged.
+
+| Token | Type | Description |
+|-------|------|-------------|
+| `{subtotal}` | currency | Sum of all line item prices at campaign rates — after sale pricing, before promotions and shipping |
+| `{total}` | currency | Grand total: subtotal + shipping − discounts |
+| `{shipping}` | currency / text | Shipping charge; `"Free"` when zero |
+| `{shippingOriginal}` | currency | Original shipping before a discount; empty string when no shipping discount is active |
+| `{shippingDiscountAmount}` | currency | Absolute amount saved on shipping |
+| `{shippingDiscountPercentage}` | percentage | Shipping discount as a percentage (e.g. `"10%"`) |
+| `{shippingName}` | text | Display name of the selected shipping method |
+| `{shippingCode}` | text | Code of the selected shipping method |
+| `{totalDiscount}` | currency | Combined offer and voucher discount amount |
+| `{totalDiscountPercentage}` | percentage | Total discount as a percentage of subtotal (e.g. `"20%"`) |
+| `{discounts}` | currency | **Deprecated alias** for `{totalDiscount}` — still rendered |
+| `{currency}` | text | Active currency code (e.g. `"USD"`) |
+| `{itemCount}` | text | Number of distinct package lines in the cart (e.g. `"3"`) |
+| `{totalQuantity}` | text | Total unit quantity across all lines (e.g. `"5"`) |
+| `{isEmpty}` | text | `"true"` or `"false"` — whether the cart has no items |
+| `{hasDiscounts}` | text | `"true"` or `"false"` — whether any discount is applied |
+| `{isFreeShipping}` | text | `"true"` or `"false"` — whether shipping cost is zero |
+| `{hasShippingDiscount}` | text | `"true"` or `"false"` — whether a shipping discount is applied |
+| `{isCalculating}` | text | `"true"` or `"false"` — whether a totals recalculation is in progress |
+
+---
+
+## List Container Attributes
+
+Place these on elements **inside** a `<template>` child. Each container must also include a `<template>` child defining the row markup. A container without a `<template>` child is silently ignored.
+
+All list containers receive these state classes after each render:
+
+| Class | Condition |
+|-------|-----------|
+| `next-summary-empty` | No items in this list |
+| `next-summary-has-items` | One or more items in this list |
+
+### `data-summary-lines`
+
+Renders one row per cart line. Lines are sorted by `package_id` ascending.
+
+Row tokens: see [Object Attributes → SummaryLine](./object-attributes).
+
+### `data-summary-offer-discounts`
+
+Renders one row per offer (promotion) discount.
+
+Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
+
+### `data-summary-voucher-discounts`
+
+Renders one row per voucher (coupon) discount.
+
+Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
+
+### `data-line-discounts`
+
+Place **inside** a `data-summary-lines` row template to render per-line discount breakdowns.
+
+Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
+
+Receives `next-summary-empty` / `next-summary-has-items` classes.
+
+---
+
+## CartDisplayEnhancer — `data-next-display`
+
+| | |
+|---|---|
+| Type | string |
+| Required | yes |
+| Format | `cart.{property}` |
+
+Places a single reactive cart value on the element. Updates automatically on every cart change.
+
+```html
+<span data-next-display="cart.total"></span>
+```
+
+### Supported properties
+
+**Financial totals**
+
+| Property | Format | Description |
+|----------|--------|-------------|
+| `cart.subtotal` | currency | Subtotal before shipping and discounts |
+| `cart.total` | currency | Grand total after all discounts and shipping |
+| `cart.totalDiscount` | currency | Combined offer and voucher discount amount |
+| `cart.totalDiscountPercentage` | percentage | Total discount as a percentage of the subtotal |
+| `cart.shipping` | currency | Shipping cost |
+| `cart.shippingOriginal` | currency | Original shipping before a shipping discount; `$0.00` when no discount |
+| `cart.shippingDiscountAmount` | currency | Absolute shipping discount |
+| `cart.shippingDiscountPercentage` | percentage | Shipping discount percentage |
+| `cart.shippingName` | text | Display name of the selected shipping method |
+| `cart.shippingCode` | text | Code of the selected shipping method |
+
+**Cart status**
+
+| Property | Format | Description |
+|----------|--------|-------------|
+| `cart.itemCount` | number | Number of distinct line items |
+| `cart.totalQuantity` | number | Total unit quantity across all lines |
+| `cart.isEmpty` | boolean | `"Yes"` / `"No"` |
+| `cart.hasDiscounts` | boolean | `"Yes"` / `"No"` |
+| `cart.isFreeShipping` | boolean | `"Yes"` / `"No"` |
+| `cart.hasShippingDiscount` | boolean | `"Yes"` / `"No"` |
+| `cart.isCalculating` | boolean | `"Yes"` / `"No"` |
+| `cart.currency` | text | Active currency code (e.g. `USD`) |
+
+**Per-item quantity:**
+```html
+<span data-next-display="cart.items[2].quantity"></span>
+```
+
+### Optional modifiers
+
+| Attribute | Effect |
+|-----------|--------|
+| `data-hide-if-zero` | Hide the element when the value is `0` |
+| `data-hide-if-false` | Hide the element when the value is falsy |
+| `data-hide-zero-cents` | Omit `.00` from currency output |
+| `data-next-format` | Override format: `currency`, `number`, `boolean`, `percentage`, `text`, `auto` |

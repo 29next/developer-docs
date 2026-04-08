@@ -11,6 +11,7 @@
         "---Features---",
         "bundle-selector",
         "package-toggle",
+        "cart-summary",
         "cart-system",
         "upsells",
         "analytics",
