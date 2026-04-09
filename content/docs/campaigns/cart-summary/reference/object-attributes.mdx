@@ -28,8 +28,8 @@ Pricing fields come from the API calculate endpoint. Display fields (name, image
 | `{item.frequency}` | string | yes | Human-readable billing frequency (e.g. `"Monthly"`, `"Every 3 months"`, `"Daily"`). |
 | `{item.recurringPrice}` | string | yes* | Recurring unit price (subscriptions). Formatted. *campaign data* |
 | `{item.originalRecurringPrice}` | string | yes* | Original recurring price before any discount. Formatted. *campaign data* |
-| `{item.price}` | string | no | Package price after discounts (API). Formatted. |
-| `{item.originalPrice}` | string | no | Package price before discounts (API). Formatted. |
+| `{item.price}` | string | no | Line total after discounts — `quantity × unitPrice` (API `line.total`). Formatted. |
+| `{item.originalPrice}` | string | no | Line subtotal before discounts — `quantity × originalUnitPrice` (API `line.subtotal`). Formatted. |
 | `{item.unitPrice}` | string | no | Per-unit price after discounts (API). Formatted. |
 | `{item.originalUnitPrice}` | string | no | Per-unit price before discounts (API). Formatted. |
 | `{item.discountAmount}` | string | no | Total discount applied to this line. Formatted. |
@@ -39,33 +39,32 @@ Pricing fields come from the API calculate endpoint. Display fields (name, image
 
 ---
 
-### Deprecated `line.*` tokens
+### `line.*` tokens — alias
 
-<Callout type="warn" title="Deprecated">
-Templates containing `{line.*}` tokens trigger a console warning on every render that lists the equivalent `{item.*}` replacement for each token. **The tokens render as empty strings** — migrate to `{item.*}` to restore output.
+<Callout type="info" title="line.* is a 1:1 alias of item.*">
+Every `{item.X}` token above is also reachable as `{line.X}`. The two namespaces are 1:1 equivalents — pick whichever vocabulary fits your template:
+
+- **`item`** — the cart-shopper mental model (the same field names used elsewhere when rendering cart items).
+- **`line`** — the invoice / order-row mental model (matches the API field `summary.lines`).
+
+Don't mix them in the same template; pick one for consistency.
 </Callout>
 
-| Deprecated token | Replacement |
-|------------------|-------------|
-| `{line.packageId}` | `{item.packageId}` |
-| `{line.name}` | `{item.name}` |
-| `{line.image}` | `{item.image}` |
-| `{line.qty}` / `{line.quantity}` | `{item.quantity}` |
-| `{line.productName}` | `{item.productName}` |
-| `{line.variantName}` | `{item.variantName}` |
-| `{line.sku}` | `{item.sku}` |
-| `{line.isRecurring}` | `{item.isRecurring}` |
-| `{line.priceRecurring}` / `{line.priceRecurringTotal}` | `{item.recurringPrice}` |
-| `{line.unitPrice}` | `{item.unitPrice}` |
-| `{line.originalUnitPrice}` | `{item.originalUnitPrice}` |
-| `{line.packagePrice}` | `{item.price}` |
-| `{line.originalPackagePrice}` | `{item.originalPrice}` |
-| `{line.totalDiscount}` | `{item.discountAmount}` |
-| `{line.hasDiscount}` | `{item.hasDiscount}` |
-| `{line.subtotal}` / `{line.total}` | `{item.price}` |
-| `{line.price}` / `{line.priceTotal}` | `{item.unitPrice}` or `{item.price}` |
-| `{line.priceRetail}` / `{line.priceRetailTotal}` | `{item.originalUnitPrice}` or `{item.originalPrice}` |
-| `{line.hasSavings}` | derive from `{item.hasDiscount}` |
+#### Pre-v0.4.11 names that no longer exist
+
+The following pre-v0.4.11 token names were removed when the namespace was reorganized in v0.4.11. They render as **empty strings** — migrate to the current names.
+
+| Pre-v0.4.11 token | Current token |
+|---|---|
+| `{line.qty}` | `{item.quantity}` / `{line.quantity}` |
+| `{line.priceTotal}` / `{line.total}` | `{item.price}` / `{line.price}` *(now the line total — `{line.price}` was per-unit pre-v0.4.11)* |
+| `{line.subtotal}` | `{item.originalPrice}` / `{line.originalPrice}` |
+| `{line.priceRetail}` | `{item.originalUnitPrice}` / `{line.originalUnitPrice}` |
+| `{line.priceRetailTotal}` | `{item.originalPrice}` / `{line.originalPrice}` |
+| `{line.priceRecurring}` / `{line.priceRecurringTotal}` | `{item.recurringPrice}` / `{line.recurringPrice}` |
+| `{line.totalDiscount}` | `{item.discountAmount}` / `{line.discountAmount}` |
+| `{line.packagePrice}` / `{line.originalPackagePrice}` | no direct equivalent — use `{item.unitPrice}` for per-unit prices |
+| `{line.hasSavings}` | derive from `{item.hasDiscount}` / `{line.hasDiscount}` |
 
 ---
 
@@ -85,6 +84,8 @@ One discount entry in an offer, voucher, or per-line discount list.
 
 The raw-typed object exposed to `data-next-show` / `data-next-hide` conditions inside `data-summary-lines` and `data-line-discounts` row templates. Distinct from the `{item.*}` text tokens above — values here are unformatted (real numbers, real booleans) so comparison operators behave as expected.
 
+Conditions can use `line.X` interchangeably with `item.X` (e.g. `data-next-show="line.quantity > 1"` works identically to `data-next-show="item.quantity > 1"`). The `line` namespace is a 1:1 alias of `item` — see the [`line.*` tokens — alias](#line-tokens-alias) section above.
+
 | Field | Type | Nullable | Description |
 |-------|------|----------|-------------|
 | `item.packageId` | number | no | Package `ref_id` |
@@ -99,8 +100,8 @@ The raw-typed object exposed to `data-next-show` / `data-next-hide` conditions i
 | `item.intervalCount` | number \| null | yes | Subscription interval count. `null` for one-time purchases. |
 | `item.recurringPrice` | number \| null | yes | Recurring unit price as a raw number. `null` when not set. |
 | `item.originalRecurringPrice` | number \| null | yes | Original recurring price as a raw number. `null` when not set. |
-| `item.price` | number | no | Package price after discounts as a raw number |
-| `item.originalPrice` | number | no | Package price before discounts as a raw number |
+| `item.price` | number | no | Line total after discounts (`line.total`) as a raw number |
+| `item.originalPrice` | number | no | Line subtotal before discounts (`line.subtotal`) as a raw number |
 | `item.unitPrice` | number | no | Per-unit price after discounts as a raw number |
 | `item.originalUnitPrice` | number | no | Per-unit price before discounts as a raw number |
 | `item.discountAmount` | number | no | Total discount on this line as a raw number |

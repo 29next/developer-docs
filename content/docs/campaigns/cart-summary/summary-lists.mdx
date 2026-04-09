@@ -44,7 +44,12 @@ Use `data-summary-lines` to render one row per cart line with full pricing detai
 
 ### Line item tokens
 
-Use `item.*` tokens — they are the preferred set with cleaner names and additional fields.
+Use `item.*` tokens (canonical) or `line.*` (1:1 alias). Both vocabularies are 1:1 equivalents — pick whichever fits your mental model:
+
+- **`item.*`** — the cart-shopper view (the same field names used elsewhere when rendering cart items).
+- **`line.*`** — the invoice / order-row view (matches the API field `summary.lines`).
+
+Don't mix them in the same template. Every `{item.X}` token below is also reachable as `{line.X}`.
 
 | Token | Description |
 |-------|-------------|
@@ -55,8 +60,8 @@ Use `item.*` tokens — they are the preferred set with cleaner names and additi
 | `{item.productName}` | Product name |
 | `{item.variantName}` | Variant name, if applicable |
 | `{item.sku}` | Product SKU |
-| `{item.price}` | Package price after discounts |
-| `{item.originalPrice}` | Package price before discounts |
+| `{item.price}` | Line total after discounts (`quantity × unitPrice`) |
+| `{item.originalPrice}` | Line subtotal before discounts (`quantity × originalUnitPrice`) |
 | `{item.unitPrice}` | Per-unit price after discounts |
 | `{item.originalUnitPrice}` | Per-unit price before discounts |
 | `{item.discountAmount}` | Total discount applied to this line |
@@ -70,8 +75,8 @@ Use `item.*` tokens — they are the preferred set with cleaner names and additi
 | `{item.frequency}` | Human-readable billing frequency (e.g. `"Monthly"`, `"Every 3 months"`) |
 | `{item.currency}` | Active currency code for this line (e.g. `"USD"`) |
 
-<Callout type="warn" title="Deprecated: line.* tokens">
-The legacy `{line.*}` token set is **deprecated**. Templates containing `{line.*}` tokens trigger a console warning on every render and the tokens render as **empty strings**. Migrate to `{item.*}` — see the [migration table](./reference/object-attributes#deprecated-line-tokens).
+<Callout type="warn" title="Pre-v0.4.11 line.* names removed">
+Several pre-v0.4.11 `{line.*}` token names no longer exist and will render as empty strings: `{line.qty}`, `{line.priceTotal}`, `{line.packagePrice}`, `{line.originalPackagePrice}`, `{line.totalDiscount}`, `{line.priceRetail}`, `{line.priceRetailTotal}`, `{line.priceRecurring}`, `{line.priceRecurringTotal}`, `{line.hasSavings}`. Note also that `{line.price}` previously rendered the per-unit price; it now renders the **line total** (matching `{item.price}`). See the [migration table](./reference/object-attributes#line-tokens-alias).
 </Callout>
 
 <Callout type="info" title="Campaign data fields">
@@ -104,9 +109,9 @@ Inside any `data-summary-lines` row template (or any per-discount template), use
 - A bare property is treated as a truthy check: `data-next-show="item.isRecurring"`.
 - Function-call conditions (e.g. `item.hasFlag(x)`) are not handled.
 
-### `item.*` namespace
+### `item.*` namespace (or `line.*`)
 
-Available in `data-summary-lines` row templates and inside any nested `data-line-discounts` template.
+Available in `data-summary-lines` row templates and inside any nested `data-line-discounts` template. Conditions can use `line.X` interchangeably with `item.X` — e.g. `data-next-show="line.quantity > 1"` works identically to `data-next-show="item.quantity > 1"`.
 
 | Path | Type | Description |
 |------|------|-------------|
