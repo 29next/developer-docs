@@ -55,6 +55,12 @@ export function PlaygroundClient({
   // Handle example selection
   const handleSelectExample = useCallback(
     (example: PlaygroundExample) => {
+      // Clear all next-* session keys
+      Object.keys(sessionStorage).forEach((key) => {
+        if (key.startsWith('next-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
       actions.setCurrentExample(example);
       actions.setCode(example.code);
       actions.setLayout(example.layout);
@@ -124,15 +130,7 @@ export function PlaygroundClient({
       {/* Top bar */}
       <TopBar
         onRun={() => runPreview(state.code, state.config, state.layout)}
-        onReset={() => {
-          // Clear all next-* session keys
-          Object.keys(sessionStorage).forEach((key) => {
-            if (key.startsWith('next-')) {
-              sessionStorage.removeItem(key);
-            }
-          });
-          handleSelectExample(state.currentExample);
-        }}
+        onReset={() => handleSelectExample(state.currentExample)}
         onShare={handleShare}
         onConfigOpen={() => actions.setShowConfig(true)}
         copied={state.copied}
