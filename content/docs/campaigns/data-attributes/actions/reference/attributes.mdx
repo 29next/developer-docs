@@ -1,0 +1,93 @@
+---
+title: Attributes
+sidebar_label: Attributes
+---
+
+Every action attribute, grouped by purpose.
+
+---
+
+## Activation
+
+| Attribute | Required | Description |
+|---|---|---|
+| `data-next-action="<name>"` | yes (one of) | Activates the matching action enhancer. See action values below |
+| `data-next-toggle="cart"` | yes (one of) | Activates `CartToggleEnhancer` — the toggle pattern |
+| `data-next-quantity="increase\|decrease\|input"` | yes (one of) | Activates `QuantityControlEnhancer` |
+
+---
+
+## Action Values
+
+| `data-next-action=` | Enhancer | Description |
+|---|---|---|
+| `add-to-cart` | `AddToCartEnhancer` | Add a package to the cart |
+| `remove` | `RemoveItemEnhancer` | Remove a package from the cart |
+| `clear-cart` | `ClearCartEnhancer` | Empty the entire cart |
+| `swap` | `SwapPackageEnhancer` | Replace cart contents with one package atomically |
+| `accept-upsell` | `AcceptUpsellEnhancer` | Submit a post-purchase upsell. See [Upsells → Accept Button](/docs/campaigns/upsells/accept-button) |
+
+---
+
+## Package Targeting
+
+| Attribute | Used by | Description |
+|---|---|---|
+| `data-next-package-id` | All actions | Package `ref_id` to target |
+| `data-next-quantity` | `add-to-cart`, `swap` | Quantity to add or set. Default `1` |
+| `data-next-selector-id` | `add-to-cart`, `accept-upsell` | Read the package from a linked `PackageSelectorEnhancer` instead of using `data-next-package-id` |
+| `data-next-package-sync` | `data-next-toggle="cart"` | Comma-separated package IDs whose total quantity mirrors this toggle |
+
+---
+
+## Modifiers
+
+| Attribute | Description |
+|---|---|
+| `data-next-clear-cart` | When `true`, clear the cart before performing the action |
+| `data-next-url` | URL to navigate to after the action completes |
+| `data-step` | Step value for `data-next-quantity="increase"` / `"decrease"`. Default `1` |
+
+---
+
+## State Container
+
+| Attribute | Description |
+|---|---|
+| `data-next-state-container` | Marks an element as a state container. Children with `data-next-state="<state>"` are shown selectively |
+| `data-next-state="in-cart"` | Show this child when the bound package is in the cart |
+| `data-next-state="not-in-cart"` | Show this child when the bound package is **not** in the cart |
+| `data-next-state="loading"` | Show this child while an action is in flight |
+
+---
+
+## Text State
+
+| Attribute | When the text is shown |
+|---|---|
+| `data-add-text` | When the package is **not** in the cart |
+| `data-remove-text` | When the package **is** in the cart |
+| `data-loading-text` | While an async action is in flight |
+
+The SDK rewrites the element's text content when the state changes.
+
+---
+
+## CSS Classes Managed
+
+| Class | Applied when |
+|---|---|
+| `next-loading` | An async action is in flight on this element |
+| `next-in-cart` | The bound package is in the cart |
+| `next-disabled` | The action cannot be triggered (no order, no selection, processing, etc.) |
+| `next-active` | The toggle is in the "active" state (item in cart) |
+
+The native `disabled` attribute is also toggled alongside `next-disabled`.
+
+---
+
+## Related
+
+- [Cart System → Buttons](/docs/campaigns/cart-system/buttons) — full guide to building cart UIs
+- [Selection](/docs/campaigns/data-attributes/selection) — selector containers and cards
+- [Upsells](/docs/campaigns/upsells) — `data-next-action="accept-upsell"` patterns

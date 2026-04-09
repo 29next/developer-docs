@@ -66,6 +66,22 @@ A card only appears selected when its items are actually in the cart — the UI 
 
 ---
 
+## Shipping Method Apply
+
+When a bundle card has `data-next-shipping-id`, shipping is applied as part of the swap sequence:
+
+| Step | What happens |
+|------|-------------|
+| 1 | `swapCart` writes the new bundle items to the cart |
+| 2 | If the cart write **succeeds** and the card has a shipping ID, `cartStore.setShippingMethod(id)` is called |
+| 3 | `calculateTotals` fires once (debounced) with both the new items and the selected shipping method |
+
+If the cart write fails, shipping is not changed. If the shipping method itself fails (invalid ID, no shipping methods available), the error is logged and the cart items remain — only the shipping update is skipped.
+
+When switching from a card **with** a shipping ID to a card **without** one, the previously set shipping method persists.
+
+---
+
 ## Variant Change Apply
 
 When the visitor changes a variant on a slot in the currently selected bundle (swap mode):

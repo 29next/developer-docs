@@ -3,7 +3,7 @@ title: Bundle Selector
 sidebar_label: Bundle Selector
 ---
 
-import { BookOpen, Play, Tag, Layers, Sliders, Ticket, MousePointer2, Wrench } from 'lucide-react';
+import { BookOpen, Play, Tag, Layers, Sliders, Ticket, Ship, MousePointer2, Wrench } from 'lucide-react';
 
 The Bundle Selector lets visitors pick from a set of bundle options, such as "Starter", "Value Pack", or "Best Deal". Each bundle contains a fixed list of products and quantities. When a visitor selects a bundle, the cart updates instantly. The previous choice is replaced in one step, without affecting anything else in the cart.
 
@@ -44,6 +44,12 @@ The Bundle Selector lets visitors pick from a set of bundle options, such as "St
     icon={<div className="size-9 rounded-md flex items-center justify-center bg-yellow-500/15 text-yellow-500"><Ticket className="size-4" /></div>}
     title="Bundle Vouchers"
     description="Attach a coupon code to a bundle. The code is applied when the bundle is selected and removed when it is not."
+  />
+  <Card
+    href="/docs/campaigns/bundle-selector/shipping"
+    icon={<div className="size-9 rounded-md flex items-center justify-center bg-cyan-500/15 text-cyan-500"><Ship className="size-4" /></div>}
+    title="Bundle Shipping"
+    description="Assign a shipping method to a bundle. The method is applied automatically when the bundle is selected."
   />
   <Card
     href="/docs/campaigns/bundle-selector/select-mode"
