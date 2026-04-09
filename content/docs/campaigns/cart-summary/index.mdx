@@ -10,7 +10,7 @@ The Cart Summary renders a reactive price breakdown block that stays in sync wit
 ## How It Works
 
 1. Add `data-next-cart-summary` to any container element — no further configuration required
-2. The enhancer subscribes to the cart store and re-renders whenever totals change
+2. The block subscribes to the cart and re-renders whenever totals change
 3. Use a `<template>` child to control the layout; omit it to use the built-in rows
 4. Apply CSS rules against state classes (`next-has-discounts`, `next-free-shipping`, etc.) to show or hide rows without JavaScript
 
@@ -19,7 +19,7 @@ The Cart Summary renders a reactive price breakdown block that stays in sync wit
     href="/docs/campaigns/cart-summary/get-started"
     icon={<div className="size-9 rounded-md flex items-center justify-center bg-blue-500/15 text-blue-500"><Play className="size-4" /></div>}
     title="Get Started"
-    description="Activate the enhancer and render your first cart summary block."
+    description="Activate the cart summary and render your first totals block."
   />
   <Card
     href="/docs/campaigns/cart-summary/custom-template"

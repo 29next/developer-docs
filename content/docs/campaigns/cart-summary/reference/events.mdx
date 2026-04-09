@@ -3,9 +3,9 @@ title: Events
 sidebar_label: Events
 ---
 
-`CartSummaryEnhancer` emits no events. It is a read-only display component that reflects cart state without producing output on the EventBus.
+Cart Summary emits no events. It is a read-only display component that reflects cart state without producing output on the EventBus.
 
-To react to cart total changes from outside this enhancer, subscribe to `cartStore` directly:
+To react to cart total changes from outside the cart summary, subscribe to `cartStore` directly:
 
 ```ts
 import { useCartStore } from '@/stores/cartStore';

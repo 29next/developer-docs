@@ -5,7 +5,7 @@ sidebar_label: Cart Lines & Discounts
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Inside a [custom template](./custom-template) you can add list containers that the enhancer populates after each render. Each container must include its own `<template>` child that defines the markup for a single row.
+Inside a [custom template](./custom-template) you can add list containers that are populated after each render. Each container must include its own `<template>` child that defines the markup for a single row.
 
 Three types of list are supported:
 
@@ -80,26 +80,95 @@ Image, name, product name, SKU, and recurring price fields come from the cart st
 
 ---
 
+## Per-Line Conditional Rendering
+
+Inside any `data-summary-lines` row template (or any per-discount template), use **`data-next-show`** and **`data-next-hide`** to render elements conditionally per row. Conditions are evaluated synchronously at render time against raw line / discount data — real numbers, real booleans — so comparison operators work as expected. Hidden elements are removed from the DOM and the attributes are stripped, so global show/hide processing does not double-process them.
+
+```html
+<ul data-summary-lines>
+  <template>
+    <li>
+      <span>{item.name}</span>
+      <span data-next-show="item.quantity > 1">×{item.quantity}</span>
+      <span data-next-hide="item.hasDiscount">{item.price}</span>
+      <span data-next-show="item.isRecurring">Renews {item.frequency}</span>
+    </li>
+  </template>
+</ul>
+```
+
+### Syntax rules
+
+- Use the **no-braces** syntax. Write `item.quantity > 1`, not `{item.quantity} > 1` — the latter is substituted before evaluation and produces a malformed expression.
+- Supported operators: `>`, `>=`, `<`, `<=`, `==`, `===`, `!=`, `!==`, `&&`, `||`, `!`, parentheses.
+- A bare property is treated as a truthy check: `data-next-show="item.isRecurring"`.
+- Function-call conditions (e.g. `item.hasFlag(x)`) are not handled.
+
+### `item.*` namespace
+
+Available in `data-summary-lines` row templates and inside any nested `data-line-discounts` template.
+
+| Path | Type | Description |
+|------|------|-------------|
+| `item.packageId` | number | Package ref_id |
+| `item.name` | string | Package display name |
+| `item.image` | string | Product image URL |
+| `item.quantity` | number | Unit quantity for this line |
+| `item.productName` | string | Product name |
+| `item.variantName` | string | Variant name (empty when no variant) |
+| `item.sku` | string | Product SKU |
+| `item.isRecurring` | boolean | Whether the line is a subscription |
+| `item.interval` | `'day' \| 'month' \| null` | Subscription interval |
+| `item.intervalCount` | number \| null | Subscription interval count |
+| `item.frequency` | string | Human-readable frequency (e.g. `"Monthly"`, `"Every 7 days"`) |
+| `item.recurringPrice` | number \| null | Recurring unit price |
+| `item.originalRecurringPrice` | number \| null | Original recurring unit price |
+| `item.price` | number | Package price after discounts |
+| `item.originalPrice` | number | Package price before discounts |
+| `item.unitPrice` | number | Unit price after discounts |
+| `item.originalUnitPrice` | number | Unit price before discounts |
+| `item.discountAmount` | number | Total discount on the line |
+| `item.discountPercentage` | number | Discount as a percentage of original (e.g. `25` for 25%) |
+| `item.hasDiscount` | boolean | Whether the line has any discount applied |
+| `item.currency` | string | Active currency code (e.g. `"USD"`) |
+
+<Callout type="info" title="Raw values vs text tokens">
+The `item.*` paths used in conditions are **raw** types (numbers, booleans). The same paths used as `{item.*}` text tokens still render as currency-formatted strings or `"show"` / `"hide"` for backwards compatibility. So `data-next-show="item.hasDiscount"` evaluates a boolean, while `class="{item.hasDiscount}"` substitutes the literal string `show` or `hide`.
+</Callout>
+
+### `discount.*` namespace
+
+Available in `data-summary-offer-discounts`, `data-summary-voucher-discounts`, and `data-line-discounts` row templates.
+
+| Path | Type | Description |
+|------|------|-------------|
+| `discount.name` | string | Offer or voucher name |
+| `discount.amount` | number | Discount amount as a raw number (currency symbols stripped) |
+| `discount.amountFormatted` | string | Original currency-formatted amount string |
+| `discount.description` | string | Offer or voucher description |
+
+<Callout type="warn" title="Cart-wide conditions belong outside line templates">
+Conditions referencing other namespaces (e.g. `cart.hasItems`) inside a line template are passed through untouched and processed by the global show/hide system. Each line is destroyed and recreated on every cart re-render, so attaching global conditions to short-lived line elements thrashes. Place cart-wide conditions **outside** the `data-summary-lines` template.
+</Callout>
+
+---
+
 ## Cart Line Recipes
 
 Common patterns for displaying line item pricing. Every recipe assumes the markup lives inside a `data-summary-lines` row template.
 
 ### Show final price with strikethrough original
 
-`{item.price}` is the final per-line total after discounts. `{item.originalPrice}` is the same total before discounts.
+`{item.price}` is the final per-line total after discounts. `{item.originalPrice}` is the same total before discounts. Wrap the strikethrough in `data-next-show="item.hasDiscount"` so it only renders on discounted lines.
 
 ```html
 <div class="line-prices">
-  <s class="{item.hasDiscount}">{item.originalPrice}</s>
+  <s data-next-show="item.hasDiscount">{item.originalPrice}</s>
   <strong>{item.price}</strong>
 </div>
-
-<style>
-  .hide { display: none; }
-</style>
 ```
 
-`{item.hasDiscount}` resolves to `"show"` when there is a discount and `"hide"` otherwise. Hiding `.hide` with CSS makes the strikethrough disappear automatically when no discount is applied — no JavaScript and no extra markup.
+The `<s>` element is removed from the DOM entirely on full-priced lines — no CSS rule needed, and screen readers do not pick up an irrelevant original price.
 
 ### Show per-unit prices ("each")
 
@@ -107,12 +176,12 @@ Use `{item.unitPrice}` and `{item.originalUnitPrice}` for the per-unit value bef
 
 ```html
 <div class="unit-prices">
-  <s class="{item.hasDiscount}">{item.originalUnitPrice} ea</s>
+  <s data-next-show="item.hasDiscount">{item.originalUnitPrice} ea</s>
   <span>{item.unitPrice} ea</span>
 </div>
 ```
 
-The same `{item.hasDiscount}` show/hide pattern applies. Pair this with `{item.quantity}` to make the math obvious to the customer:
+Pair this with `{item.quantity}` to make the math obvious to the customer:
 
 ```html
 <span>{item.quantity} × {item.unitPrice} = {item.price}</span>
@@ -123,18 +192,46 @@ The same `{item.hasDiscount}` show/hide pattern applies. Pair this with `{item.q
 `{item.discountAmount}` is the formatted total discount for the line. `{item.discountPercentage}` is the formatted percentage (e.g., `"25%"`).
 
 ```html
-<div class="savings {item.hasDiscount}">
+<div class="savings" data-next-show="item.hasDiscount">
   Save {item.discountAmount} ({item.discountPercentage} off)
 </div>
 ```
 
-Place `{item.hasDiscount}` on the wrapper so the entire savings block hides via `.hide { display: none }` when there is no discount.
+Place `data-next-show="item.hasDiscount"` on the wrapper so the entire savings block is removed when there is no discount.
 
-For a discount badge:
+For a discount badge that only appears on meaningful discounts (not 1% rounding errors):
 
 ```html
-<span class="badge {item.hasDiscount}">-{item.discountPercentage}</span>
+<span class="badge" data-next-show="item.discountPercentage >= 20">
+  -{item.discountPercentage}
+</span>
 ```
+
+### Show recurring (subscription) line with frequency and one-time fallback
+
+Use `data-next-show="item.isRecurring"` and `data-next-hide="item.isRecurring"` together to render two mutually exclusive badges. Each line gets exactly one — the conditions are evaluated independently against the same boolean.
+
+```html
+<li class="line-item">
+  <img src="{item.image}" alt="{item.name}" />
+
+  <div class="line-details">
+    <strong>{item.name}</strong>
+    <span>×{item.quantity}</span>
+
+    <span class="recurring-badge" data-next-show="item.isRecurring">
+      🔁 {item.frequency} · then {item.recurringPrice}
+    </span>
+    <span class="one-time-badge" data-next-hide="item.isRecurring">
+      One-time purchase
+    </span>
+  </div>
+
+  <span class="line-total">{item.price}</span>
+</li>
+```
+
+`{item.frequency}` resolves to human-readable strings like `"Daily"`, `"Monthly"`, `"Every 7 days"`, `"Every 3 months"`. `{item.recurringPrice}` is currency-formatted and empty when the line is not recurring.
 
 ### Combine final, original, savings, and per-unit
 
@@ -145,29 +242,30 @@ For a discount badge:
   <div class="info">
     <strong>{item.name}</strong>
     <span class="variant">{item.variantName}</span>
+    <span class="qty-original" data-next-show="item.hasDiscount">
+      was {item.originalUnitPrice} per unit
+    </span>
   </div>
 
   <div class="prices">
-    <s class="{item.hasDiscount}">{item.originalUnitPrice}</s>
     <span class="unit">{item.unitPrice} × {item.quantity}</span>
     <strong class="total">{item.price}</strong>
+    <s class="line-original" data-next-show="item.hasDiscount">{item.originalPrice}</s>
   </div>
 
-  <div class="savings {item.hasDiscount}">
+  <div class="savings" data-next-show="item.hasDiscount">
     Save {item.discountAmount} ({item.discountPercentage})
   </div>
 </li>
-
-<style>
-  .hide { display: none; }
-</style>
 ```
+
+All seven `item.*` price tokens come from the same API summary calculation, so the numbers always add up. Both `data-next-show="item.hasDiscount"` blocks are evaluated and removed in a single per-line pass.
 
 ---
 
 ## Cart Line CSS Utilities
 
-Helpers exposed by the enhancer for line item layouts. Use these to drive show/hide and styling without JavaScript.
+Helpers exposed for line item layouts. Use these to drive show/hide and styling without JavaScript.
 
 | Selector | Where it lives | When applied |
 |----------|----------------|--------------|
@@ -175,14 +273,10 @@ Helpers exposed by the enhancer for line item layouts. Use these to drive show/h
 | `[data-summary-lines].next-summary-has-items` | line list container | cart has at least one line |
 | `[data-line-discounts].next-summary-empty` | per-line discount container | this line has no discounts |
 | `[data-line-discounts].next-summary-has-items` | per-line discount container | this line has at least one discount |
-| `.show` / `.hide` | any element with `class="{item.hasDiscount}"` | `show` if `discountAmount > 0`, `hide` otherwise |
 
-The `{item.hasDiscount}` token is the only per-line "utility" — it is designed to be dropped into a `class` attribute. All other show/hide for cart lines is driven by the two `next-summary-*` classes on the list containers.
+For per-element show/hide on individual rows, prefer `data-next-show` / `data-next-hide` over CSS classes — the elements are removed from the DOM at render time and the attributes are stripped, so there is no flash of unstyled content and no orphan markup.
 
 ```css
-/* hide the strikethrough/savings blocks when there is no discount */
-.hide { display: none; }
-
 /* hide the entire per-line discounts list when empty */
 [data-line-discounts].next-summary-empty { display: none; }
 
@@ -190,8 +284,12 @@ The `{item.hasDiscount}` token is the only per-line "utility" — it is designed
 [data-summary-lines].next-summary-empty { display: none; }
 ```
 
+<Callout type="info" title="Legacy CSS class pattern">
+The `{item.hasDiscount}` text token still renders as the literal string `"show"` or `"hide"`, so existing templates that drop it into a `class` attribute (`<s class="{item.hasDiscount}">…</s>` paired with a `.hide { display: none }` rule) continue to work. New templates should prefer `data-next-show` / `data-next-hide` — same behaviour, no global CSS rule required, and the element is fully removed instead of just hidden.
+</Callout>
+
 <Callout type="info" title="Want a single value outside a template?">
-If you only need one cart-level number (e.g., total discount, item count) and not a full per-line render, use [`CartDisplayEnhancer`](./cart-display) instead — it binds one element to one cart property without a `<template>`.
+If you only need one cart-level number (e.g., total discount, item count) and not a full per-line render, use [Cart Display](./cart-display) instead — it binds one element to one cart property without a `<template>`.
 </Callout>
 
 ---
@@ -283,9 +381,12 @@ Use `.next-summary-empty { display: none }` to hide an empty discount section au
           <div>
             <strong>{item.name}</strong>
             <span>{item.variantName}</span>
+            <span class="recurring" data-next-show="item.isRecurring">
+              Renews {item.frequency}
+            </span>
           </div>
           <div class="prices">
-            <s class="{item.hasDiscount}">{item.originalUnitPrice}</s>
+            <s data-next-show="item.hasDiscount">{item.originalUnitPrice}</s>
             <span>{item.unitPrice} × {item.quantity}</span>
             <strong>{item.price}</strong>
           </div>

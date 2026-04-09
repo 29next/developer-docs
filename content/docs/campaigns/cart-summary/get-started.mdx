@@ -5,7 +5,7 @@ sidebar_label: Get Started
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Add `data-next-cart-summary` to any container element. The enhancer subscribes to the cart store and re-renders the block automatically whenever totals change.
+Add `data-next-cart-summary` to any container element. The block subscribes to the cart and re-renders automatically whenever totals change.
 
 ```html
 <div data-next-cart-summary></div>
@@ -17,7 +17,7 @@ No JavaScript is required. The SDK wires everything up on page load.
 
 ## Default Layout
 
-When no `<template>` child is present the enhancer renders a built-in layout:
+When no `<template>` child is present, a built-in layout is rendered:
 
 - **Subtotal** — always shown
 - **Discounts** — shown only when discounts > 0

@@ -9,14 +9,14 @@ layout: center
   HOW THIS WORKS:
   ─────────────────────────────────────────────────────────────────────────────
   STEP 1 — DRONE SELECTOR  (data-next-bundle-selector)
-    Three cards, each defining a drone-only bundle. Selecting a card swaps
-    the previous drone package out of the cart (data-next-selection-mode="swap")
-    so only one drone model is ever active at a time.
+    Three cards auto-rendered from data-next-bundles + data-next-bundle-template-id.
+    Selecting a card swaps the previous drone package out of the cart
+    (data-next-selection-mode="swap") so only one drone model is ever active.
 
-    Cards:
-      "drone-solo"     — Drone only                       (packageId: 1)
-      "drone-standard" — Drone + 1 Extra Battery          (packageId: 1, 2)
-      "drone-pro"      — Drone + 2 Batteries + Parts Kit  (packageId: 1, 2 x2, 3)
+    Bundles:
+      "drone-solo"    — Drone only                       (packageId: 1)
+      "drone-battery" — Drone + 1 Extra Battery          (packageId: 1, 2)
+      "drone-pro"     — Drone + 2 Batteries + Parts Kit  (packageId: 1, 2 x2, 3)
 
   STEP 2 — ACCESSORY ADD-ONS  (data-next-package-toggle)
     Three toggle cards managed by PackageToggleEnhancer. Each card
@@ -33,11 +33,10 @@ layout: center
     default (data-next-selected="true"). Toggle removes it.
 
   PRICING
-    data-next-bundle-price reads from the currently selected bundle card.
-    It must sit inside the data-next-bundle-selector container (or a
-    descendant of the active bundle card) to resolve correctly.
-    Place it outside if you want a grand-total — use data-next-display
-    with cart totals instead.
+    data-next-bundle-display must sit inside a bundle card element — the
+    enhancer writes prices into it after each price fetch. For add-on cards,
+    use data-next-toggle-display inside the toggle card template.
+    For a grand-total outside any card, use data-next-display with cart totals.
 
   ORDER SUMMARY SIDEBAR  (data-next-cart-summary)
     Hidden until the cart has items (data-next-show="cart.hasItems").
@@ -50,7 +49,6 @@ layout: center
 -->
 
 <meta name="next-api-key" content="LLbBgtusfE2zopDcjnOY9NbrlN690zSjuedqQ04J">
-<meta name="next-clear-cart" content="true">
 
 <!-- ═══════════════════════════════════════════════════════ REAL CONTENT ══ -->
 <div class="drone-layout real-content">
@@ -82,9 +80,10 @@ layout: center
     <!-- ───────────────────────────────────────────────────────────────────
       STEP 1: CHOOSE YOUR DRONE
       data-next-bundle-selector activates BundleSelectorEnhancer.
-      data-next-selection-mode="swap" ensures only one drone bundle
-      is active in the cart at any time — selecting a new card removes
-      the previously selected drone's packages before adding the new ones.
+      Cards are auto-rendered from data-next-bundles + data-next-bundle-template-id.
+      data-next-selection-mode="swap" ensures only one drone bundle is active
+      at a time — selecting a new card atomically replaces the previous
+      bundle's packages in the cart before adding the new ones.
     ──────────────────────────────────────────────────────────────────── -->
     <div class="section-block">
       <div class="section-label">
@@ -92,183 +91,125 @@ layout: center
         <span class="section-title">Choose Your Drone</span>
       </div>
 
+      <!--
+        data-next-bundle-template-id — ID of <template> used to render each card.
+        data-next-bundles — JSON array of bundle definitions. Each entry is rendered
+          using the template. Required fields: "id", "items". All other keys are
+          available as {bundle.key} in the template.
+          "selected": "true" marks the default pre-selected card.
+      -->
       <div class="drone-cards"
            role="radiogroup"
            aria-label="Drone model options"
            data-next-bundle-selector
-           data-next-selection-mode="swap">
+           data-next-selection-mode="swap"
+           data-next-bundle-template-id="drone-bundle-tpl"
+           data-next-bundles='[
+             {
+               "id": "drone-solo",
+               "items": [{"packageId": 1, "quantity": 1}],
+               "title": "Drone Only",
+               "desc": "Drone Hawk · 4K camera · 38-min battery",
+               "specs": "<li>1\u00d7 Drone Hawk</li>"
+             },
+             {
+               "id": "drone-battery",
+               "items": [{"packageId": 1, "quantity": 1}, {"packageId": 2, "quantity": 1}],
+               "selected": "true",
+               "title": "Drone + Extra Battery",
+               "desc": "Double your flight time — fly up to 76 min",
+               "specs": "<li>1\u00d7 Drone Hawk</li><li>1\u00d7 Drone Extra Battery</li>",
+               "badge": "Most Popular",
+               "badgeClass": "badge--popular",
+               "ribbon": "Most Popular"
+             },
+             {
+               "id": "drone-pro",
+               "items": [{"packageId": 1, "quantity": 1}, {"packageId": 2, "quantity": 2}, {"packageId": 3, "quantity": 1}],
+               "title": "Pro Bundle",
+               "desc": "Everything you need to fly like a pro",
+               "specs": "<li>1\u00d7 Drone Hawk</li><li>2\u00d7 Drone Extra Battery</li><li>1\u00d7 Drone Extra Propeller Set</li>",
+               "badge": "Best Value",
+               "badgeClass": "badge--value"
+             }
+           ]'>
+      </div><!-- /.drone-cards / data-next-bundle-selector -->
 
-        <!--
-          ── CARD: Drone Only ────────────────────────────────────────────
-          Single drone, no accessories. Entry-level pick.
-        -->
+      <!--
+        Card template — rendered once per bundle def above.
+        {bundle.*} vars are replaced with values from the JSON.
+        .card-ribbon and .badge use :empty { display: none } in CSS so they
+        vanish when the def omits "ribbon" / "badge".
+        data-next-selected="{bundle.selected}" pre-selects the card when
+        the def contains "selected": "true".
+      -->
+      <template id="drone-bundle-tpl">
         <div class="drone-card"
              role="radio"
-             aria-checked="true"
+             aria-checked="false"
              data-next-bundle-card
-             data-next-bundle-id="drone-solo"
-             data-next-bundle-items='[
-               { "packageId": 1, "quantity": 1 }
-             ]'>
+             data-next-selected="{bundle.selected}">
 
-          <!-- Full-card click overlay. z-index:1 sits below any interactive
-               children (.card-pricing, buttons) which use z-index:2. -->
+          <!-- Full-card click overlay. z-index:1 sits below interactive children. -->
           <div class="card-click-overlay"></div>
+
+          <!-- Ribbon — hidden via .card-ribbon:empty when "ribbon" is not in def. -->
+          <div class="card-ribbon">{bundle.ribbon}</div>
 
           <div class="card-body">
             <div class="card-left" data-next-package-id="1">
               <div class="card-radio" aria-hidden="true"></div>
               <img class="card-drone-img"
                    loading="lazy"
-                   data-next-display="package.image" 
+                   data-next-display="package.image"
                    alt="Drone Hawk">
             </div>
 
             <div class="card-info">
               <p class="card-title">
-                Drone Only
+                {bundle.title}
+                <!-- Badge — hidden via .badge:empty when "badge" is not in def. -->
+                <span class="badge {bundle.badgeClass}">{bundle.badge}</span>
               </p>
-              <p class="card-desc">Drone Hawk · 4K camera · 38-min battery</p>
-              <ul class="card-specs">
-                <li>1× Drone Hawk</li>
-              </ul>
+              <p class="card-desc">{bundle.desc}</p>
+              <ul class="card-specs">{bundle.specs}</ul>
             </div>
 
             <div class="card-pricing">
               <!--
-                data-next-bundle-price targets:
-                  (no value) — discounted total
-                  "compare"  — retail/original price
-                  "savings"  — amount saved
+                data-next-bundle-display targets:
+                  "price"          — discounted total
+                  "originalPrice"  — retail/original price
+                  "discountAmount" — amount saved
                 Prices update automatically when currency or cart state changes.
                 :empty rules in CSS hide elements when the SDK leaves them blank.
               -->
-              <p class="price-original" data-next-bundle-price="compare"></p>
-              <p class="price-current"  data-next-bundle-price></p>
-              <p class="price-savings"  data-next-bundle-price="savings"></p>
+              <p class="price-original" data-next-bundle-display="originalPrice"></p>
+              <p class="price-current"  data-next-bundle-display="price"></p>
+              <p class="price-savings"  data-next-bundle-display="discountAmount"></p>
             </div>
           </div>
         </div>
-
-        <!--
-          ── CARD: Drone + Extra Battery ─────────────────────────────────
-          Most popular pick — adds an extra battery (packageId: 2).
-          Badge draws attention to it as the recommended option.
-        -->
-        <div class="drone-card"
-             role="radio"
-             aria-checked="false"
-             data-next-bundle-card
-             data-next-bundle-id="drone-battery"
-             data-next-bundle-items='[
-               { "packageId": 1, "quantity": 1 },
-               { "packageId": 2, "quantity": 1 }
-             ]'
-             data-next-selected="true">
-
-          <div class="card-click-overlay"></div>
-
-          <!-- Best-seller ribbon — positioned absolutely in top-right corner -->
-          <div class="card-ribbon">Most Popular</div>
-
-          <div class="card-body">
-            <div class="card-left" data-next-package-id="1">
-              <div class="card-radio" aria-hidden="true"></div>
-              <img class="card-drone-img"
-                   loading="lazy"
-                   data-next-display="package.image" 
-                   alt="Drone Hawk">
-            </div>
-
-            <div class="card-info">
-              <p class="card-title">
-                Drone + Extra Battery
-                <span class="badge badge--popular">Most Popular</span>
-              </p>
-              <p class="card-desc">Double your flight time — fly up to 76 min</p>
-              <ul class="card-specs">
-                <li>1× Drone Hawk</li>
-                <li>1× Drone Extra Battery</li>
-              </ul>
-            </div>
-
-            <div class="card-pricing">
-              <p class="price-original" data-next-bundle-price="compare"></p>
-              <p class="price-current"  data-next-bundle-price></p>
-              <p class="price-savings"  data-next-bundle-price="savings"></p>
-            </div>
-          </div>
-        </div>
-
-        <!--
-          ── CARD: Pro Bundle ────────────────────────────────────────────
-          Everything included — drone, two extra batteries, and a parts kit.
-          packageId 3 is the Spare Parts Kit (noSlot omitted so it shows
-          in the order summary as a line item).
-        -->
-        <div class="drone-card"
-             role="radio"
-             aria-checked="false"
-             data-next-bundle-card
-             data-next-bundle-id="drone-pro"
-             data-next-bundle-items='[
-               { "packageId": 1, "quantity": 1 },
-               { "packageId": 2, "quantity": 2 },
-               { "packageId": 3, "quantity": 1 }
-             ]'>
-
-          <div class="card-click-overlay"></div>
-
-          <div class="card-body">
-            <div class="card-left" data-next-package-id="1">
-              <div class="card-radio" aria-hidden="true"></div>
-              <img class="card-drone-img"
-                   loading="lazy"
-                   data-next-display="package.image" 
-                   alt="Drone Hawk">
-            </div>
-
-            <div class="card-info">
-              <p class="card-title">
-                Pro Bundle
-                <span class="badge badge--value">Best Value</span>
-              </p>
-              <p class="card-desc">Everything you need to fly like a pro</p>
-              <ul class="card-specs">
-                <li>1× Drone Hawk</li>
-                <li>2× Drone Extra Battery</li>
-                <li>1× Drone Extra Propeller Set</li>
-              </ul>
-            </div>
-
-            <div class="card-pricing">
-              <p class="price-original" data-next-bundle-price="compare"></p>
-              <p class="price-current"  data-next-bundle-price></p>
-              <p class="price-savings"  data-next-bundle-price="savings"></p>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /.drone-cards / data-next-bundle-selector -->
+      </template>
     </div><!-- /.section-block (step 1) -->
 
 
     <!-- ───────────────────────────────────────────────────────────────────
       STEP 2: BUILD YOUR BUNDLE — ACCESSORY ADD-ONS
       data-next-package-toggle activates PackageToggleEnhancer on the list.
-      Each card inside gets data-next-toggle-card + data-next-package-id.
+      Cards are auto-rendered from data-next-packages + data-next-toggle-template-id.
 
       Any combination of cards can be active simultaneously — each toggles
       its package independently. Unaffected by the drone bundle swap above.
 
-      SDK adds to each card:
-        .next-in-cart      — package is currently in the cart
-        .next-not-in-cart  — package is not in the cart
-        .next-selected     — alias for next-in-cart (styling convenience)
+      SDK adds to each rendered card:
+        .next-in-cart     — package is currently in the cart
+        .next-not-in-cart — package is not in the cart
       These drive the toggle checkbox visual via CSS without a real <input>.
 
-      data-next-toggle-price fetches the backend-calculated price (reflects
-      any active offers/coupons). Use "compare" for the retail/original price.
+      data-next-toggle-display on elements inside the template writes the
+      price field value after each price fetch. No value defaults to "price"
+      (discounted total). Use "originalPrice" for the retail/compare price.
     ──────────────────────────────────────────────────────────────────── -->
     <div class="section-block">
       <div class="section-label">
@@ -279,9 +220,10 @@ layout: center
 
       <!--
         data-next-packages — JSON array drives auto-render; one card per entry.
-        Custom keys (desc, badge) are exposed as {toggle.desc}, {toggle.badge}
-        in the template alongside SDK built-ins (name, image, price, …).
-        "selected": true pre-adds that package on load.
+        Each entry must include packageId. Custom keys (desc, badge) are exposed
+        as {toggle.desc}, {toggle.badge} in the template alongside SDK built-ins
+        (name, image, quantity, variantName, productName, sku, isRecurring, …).
+        "selected": true pre-adds that package to the cart on load.
       -->
       <div class="addon-list"
            data-next-package-toggle
@@ -308,8 +250,8 @@ layout: center
             <p class="addon-desc">{toggle.desc}</p>
           </div>
           <div class="addon-price-col">
-            <span class="addon-price" data-next-toggle-price></span>
-            <span class="addon-price-retail" data-next-toggle-price="compare"></span>
+            <span class="addon-price" data-next-toggle-display></span>
+            <span class="addon-price-retail" data-next-toggle-display="originalPrice"></span>
           </div>
         </div>
       </template>
@@ -335,7 +277,7 @@ layout: center
         <strong>Shipping Insurance</strong>
         <small>Covers loss, theft, or transit damage</small>
       </span>
-      <span class="insurance-price" data-next-toggle-price></span>
+      <span class="insurance-price" data-next-toggle-display></span>
     </div>
 
 
@@ -410,8 +352,11 @@ layout: center
           <!-- LINE ITEMS
             data-summary-lines renders one <li> per cart line.
             Available variables: {line.image}, {line.quantity},
-            {line.productName}, {line.variantName}, {line.total},
-            {line.hasSavings} ("show" / "next-hide"), {line.totalDiscount}.
+            {line.productName}, {line.variantName}, {line.sku},
+            {line.unitPrice}, {line.originalUnitPrice},
+            {line.packagePrice}, {line.originalPackagePrice},
+            {line.totalDiscount}, {line.total},
+            {line.hasSavings} ("show" / "hide").
           -->
           <ul class="summary-lines" data-summary-lines>
             <template>
@@ -818,6 +763,7 @@ layout: center
     border-radius: 0 calc(var(--radius-card) - 2px) 0 var(--radius-card);
     z-index: 2;
   }
+  .card-ribbon:empty { display: none; }
 
   /* ── Add-on toggle cards ──────────────────────────────────────────────── */
   .addon-list { display: flex; flex-direction: column; gap: 8px; }
