@@ -1,0 +1,181 @@
+<!--
+title: Cart Summary
+description: 
+layout: center
+-->
+
+<link
+  href="https://nextcommerce-campaign-templates.netlify.app/olympus-mv-two-step/css/next-core.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+<meta name="next-api-key" content="AfTBZD0hMflqyO3AMRdrnN7tldUzCzl0G5BCdfSj" />
+
+<div class="form-section form-section--last">
+  <div class="cart-box cart-box--card">
+    <div class="summary-wrapper" data-next-cart-summary>
+      <template>
+        <div class="order-summary">
+          <h4 class="order-summary__title">Order Summary</h4>
+          <div class="order-summary__content">
+            <div class="cart-items">
+              <div class="cart-summary__line pb--header">
+                <div class="cart-summary__line-item">
+                  <div>Item</div>
+                </div>
+                <div class="cart-summary__line-item">
+                  <div>Amount</div>
+                </div>
+              </div>
+
+              <!-- API summary lines -->
+              <div class="cart-items__list" data-summary-lines>
+                <template>
+                  <div class="cart-item" data-package-id="{item.packageId}">
+                    <div class="cart-item__wrapper">
+                      <div class="cart-item__image-container">
+                        <div class="cart-item__quantity-badge">
+                          <div class="cart-item__quantity">{item.quantity}</div>
+                        </div>
+                        <img src="{item.image}" class="cart-item__image" />
+                      </div>
+                      <div class="cart-item__details">
+                        <div class="cart-item__content">
+                          <div class="cart-item__description">
+                            <div class="cart-item__header">
+                              <div class="cart-item__title os-bold">
+                                {item.productName}
+                                <div>
+                                  <div
+                                    class="text-2xs text-muted text-weight-normal"
+                                    data-next-show="item.hasDiscount"
+                                  >
+                                    {item.variantName}
+                                  </div>
+                                  <div
+                                    class="text-2xs text-muted text-weight-normal"
+                                    data-next-show="item.isRecurring"
+                                  >
+                                    Then {item.recurringPrice}/ea
+                                    {item.frequency}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="cart-item__pricing">
+                            <div
+                              class="cart-price price--original text-2xs diagonal-strike"
+                              data-next-show="item.hasDiscount"
+                            >
+                              {item.originalPrice}
+                            </div>
+                            <div class="cart-price price--final">
+                              {item.price}
+                            </div>
+                            <div
+                              class="cart-price price--each text-muted text-2xs"
+                              data-next-show="item.hasDiscount"
+                            >
+                              {item.unitPrice}/ea
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+
+            <div>
+              <div class="shipping-note">
+                Tax will be settled upon checkout confirmation
+              </div>
+            </div>
+            <div class="order-totals">
+              <div
+                class="order-totals__section order-totals__section--inset discount-row"
+                data-next-show="cart.hasDiscounts"
+              >
+                <div class="order-totals__line">
+                  <div class="order-totals__label-group">
+                    <div class="order-totals__label ts-lg tw-600">
+                      Today you saved<br />
+                    </div>
+                    <div class="badge badge--small">
+                      <div class="label__wrapper cc-sm">
+                        <div class="badge__text">
+                          <span class="display-visible"
+                            >{totalDiscountPercentage}</span
+                          >OFF
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion__right">
+                    <div class="order-totals__label">Discount:<br /></div>
+                    <div class="order-totals__value ts-lg tw-600 cc-disc">
+                      {totalDiscount}<br />
+                    </div>
+                  </div>
+                </div>
+                <div class="coupon-tags"></div>
+              </div>
+
+              <div class="order-totals__section">
+                <div class="order-totals__line">
+                  <div class="accordion__right">
+                    <div class="order-totals__label">Shipping</div>
+                  </div>
+                  <div class="accordion__right">
+                    <div
+                      class="order-totals__value order-totals__value--free"
+                      data-next-show="cart.isFreeShipping"
+                    >
+                      Free
+                    </div>
+                    <div
+                      class="order-totals__value"
+                      data-next-hide="cart.isFreeShipping"
+                    >
+                      {shipping}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order-totals__section cc-total">
+                <div class="order-totals__line order-totals__line--total">
+                  <div class="order-totals__label order-totals__label--total">
+                    Grand Total:
+                  </div>
+                  <div class="order-totals__value-group">
+                    <div class="order-totals__value order-totals__value--total">
+                      {total}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>
+
+<!--
+  DEMO ONLY — pre-populates the cart so the summary renders with sample data
+  on page load. For real use, remove this <script> block.
+-->
+<script>
+  window.addEventListener("next:initialized", function () {
+    next.swapCart([
+      { packageId: 1, quantity: 1 },
+      { packageId: 2, quantity: 2 },
+      { packageId: 3, quantity: 3 },
+      { packageId: 10, quantity: 3 },
+    ]);
+  });
+</script>
