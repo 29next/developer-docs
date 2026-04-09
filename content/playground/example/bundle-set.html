@@ -1,6 +1,6 @@
 <!--
 title: Drone Bundle Set
-description: Two-step layout — pick a drone model, then customize with optional add-on bundles (extra battery, spare parts kit, 2-year guarantee). Drone selection uses BundleSelectorEnhancer; add-ons use PackageToggleEnhancer for independent cart control.
+description: Two-step layout — pick a drone model, then customize with optional add-on bundles (extra battery, spare parts kit, 2-year guarantee). Drone selection uses Bundle Selector with swap mode; add-ons use Addon Toggle for independent cart control.
 order: 4
 layout: center
 -->
@@ -19,9 +19,9 @@ layout: center
       "drone-pro"     — Drone + 2 Batteries + Parts Kit  (packageId: 1, 2 x2, 3)
 
   STEP 2 — ACCESSORY ADD-ONS  (data-next-package-toggle)
-    Three toggle cards managed by PackageToggleEnhancer. Each card
-    independently adds/removes its package — any combination can be active.
-    Unaffected by the drone bundle swap above.
+    Three addon toggle cards. Each card independently adds/removes its
+    package — any combination can be active. Unaffected by the drone
+    bundle swap above.
 
     Cards:
       Extra Battery Pack  (packageId: 2)   — off by default
@@ -34,7 +34,7 @@ layout: center
 
   PRICING
     data-next-bundle-display must sit inside a bundle card element — the
-    enhancer writes prices into it after each price fetch. For add-on cards,
+    SDK writes prices into it after each price fetch. For add-on cards,
     use data-next-toggle-display inside the toggle card template.
     For a grand-total outside any card, use data-next-display with cart totals.
 
@@ -79,7 +79,7 @@ layout: center
 
     <!-- ───────────────────────────────────────────────────────────────────
       STEP 1: CHOOSE YOUR DRONE
-      data-next-bundle-selector activates BundleSelectorEnhancer.
+      data-next-bundle-selector activates the bundle selector.
       Cards are auto-rendered from data-next-bundles + data-next-bundle-template-id.
       data-next-selection-mode="swap" ensures only one drone bundle is active
       at a time — selecting a new card atomically replaces the previous
@@ -196,7 +196,7 @@ layout: center
 
     <!-- ───────────────────────────────────────────────────────────────────
       STEP 2: BUILD YOUR BUNDLE — ACCESSORY ADD-ONS
-      data-next-package-toggle activates PackageToggleEnhancer on the list.
+      data-next-package-toggle activates the addon toggle on the list.
       Cards are auto-rendered from data-next-packages + data-next-toggle-template-id.
 
       Any combination of cards can be active simultaneously — each toggles
@@ -335,7 +335,7 @@ layout: center
 
   <!-- ── RIGHT COLUMN: sticky order summary ─────────────────────────────── -->
   <!--
-    Hidden until the cart has at least one item.
+    Hidden until the cart has at least one line.
     data-next-show="cart.hasItems" — SDK toggles visibility automatically.
   -->
   <div class="drone-sidebar" data-next-show="cart.hasItems">
@@ -351,12 +351,12 @@ layout: center
 
           <!-- LINE ITEMS
             data-summary-lines renders one <li> per cart line.
-            Available variables: {line.image}, {line.quantity},
+            Available variables: {line.image}, {line.name}, {line.quantity},
             {line.productName}, {line.variantName}, {line.sku},
             {line.unitPrice}, {line.originalUnitPrice},
-            {line.packagePrice}, {line.originalPackagePrice},
-            {line.totalDiscount}, {line.total},
-            {line.hasSavings} ("show" / "hide").
+            {line.price}, {line.originalPrice}, {line.discountAmount}.
+            Use data-next-show="line.hasDiscount" to render elements only on
+            discounted lines (e.g. a strikethrough original price).
           -->
           <ul class="summary-lines" data-summary-lines>
             <template>
@@ -370,8 +370,9 @@ layout: center
                   <p class="summary-line-meta">{line.variantName}</p>
                 </div>
                 <div class="summary-line-price">
-                  <span class="summary-line-original {line.hasSavings}">{line.originalPackagePrice}</span>
-                  <span class="summary-line-total">{line.total}</span>
+                  <span class="summary-line-original" data-next-show="line.hasDiscount">{line.originalPrice}</span>
+                  <span class="summary-line-total">{line.price}</span>
+                  <span class="summary-line-original" data-next-show="line.quantity > 1">{line.unitPrice}/ea</span>
                 </div>
               </li>
             </template>
@@ -557,12 +558,6 @@ layout: center
     margin: 0; padding: 32px 16px;
     color: var(--color-text);
   }
-
-  /*
-    .next-hide is emitted by SDK template variables (e.g. {line.hasSavings})
-    when the condition is false. Prefixed to avoid collisions with frameworks.
-  */
-  .next-hide { display: none !important; }
 
   /* ── Page layout ──────────────────────────────────────────────────────── */
   .drone-layout {
@@ -958,8 +953,9 @@ layout: center
     display: block; font-size: 11px; color: var(--color-muted-light);
     text-decoration: line-through;
   }
-  /* .next-hide hides the strikethrough when no savings exist */
-  .summary-line-original.next-hide { display: none; }
+  /* The strikethrough span uses data-next-show="line.hasDiscount" — the SDK
+     removes the element entirely on full-priced lines, so no display rule is
+     needed here. */
   .summary-line-total { display: block; font-size: 13px; font-weight: 700; color: var(--color-text); }
 
   .summary-totals { border-top: 1px solid var(--color-border-light); padding-top: 10px; }
