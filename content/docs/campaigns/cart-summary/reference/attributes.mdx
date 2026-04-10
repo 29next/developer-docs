@@ -79,6 +79,29 @@ Renders one row per voucher (coupon) discount.
 
 Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
 
+### `data-next-discounts`
+
+Unified discount list container. Place inside the cart summary template to render discount rows. Accepts an optional filter value:
+
+| Value | Renders |
+|-------|---------|
+| *(empty or omitted)* | All discounts (offers + vouchers combined) |
+| `"offer"` | Only offer/promotion discounts |
+| `"voucher"` | Only voucher/coupon discounts |
+
+Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
+
+State classes on the container:
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts in the list |
+| `next-discounts-has-items` | One or more discounts |
+
+When placed inside a `data-summary-lines` row template, renders per-line discounts. The offer/voucher filter is not available at line level — all line discounts are rendered regardless of the filter value.
+
+See [Cart Lines & Discounts → Discount Lists](../summary-lists#discount-lists) for usage examples.
+
 ### `data-line-discounts`
 
 Place **inside** a `data-summary-lines` row template to render per-line discount breakdowns.

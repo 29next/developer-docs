@@ -94,3 +94,42 @@ Add `data-next-include-shipping="true"` to the container to include shipping cos
   </div>
 </div>
 ```
+
+---
+
+## Discount Lists Inside Toggle Cards
+
+Use `data-next-discounts` inside a toggle card to render one row per discount applied to the package. Each container needs a `<template>` child that defines the markup for a single discount row.
+
+```html
+<div data-next-toggle-card data-next-package-id="201">
+  <span data-next-toggle-display="price"></span>
+
+  <div data-next-discounts>
+    <template>
+      <span class="badge">{discount.name}: -{discount.amount}</span>
+    </template>
+  </div>
+</div>
+```
+
+### Discount row tokens
+
+| Token | Description |
+|-------|-------------|
+| `{discount.name}` | Discount or offer name |
+| `{discount.amount}` | Formatted discount amount (e.g. `"$10.00"`) |
+| `{discount.description}` | Human-readable description; empty when absent |
+
+### State classes
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts for this package |
+| `next-discounts-has-items` | One or more discounts |
+
+Discount lists are populated after each price fetch. Before the first fetch, the containers are empty and carry the `next-discounts-empty` class.
+
+<Callout type="info">
+Per-package discounts come from the per-line breakdown in the price calculation. The offer/voucher filter (`data-next-discounts="offer"` / `="voucher"`) is not available at toggle level — per-line discounts from the API are not split by type. Use the unfiltered `data-next-discounts` attribute.
+</Callout>

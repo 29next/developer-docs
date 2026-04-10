@@ -112,3 +112,24 @@ Use `data-next-display="toggle.{packageId}.{property}"` on any element to bind i
 | `currency` | text | ISO 4217 currency code |
 
 Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.
+
+---
+
+## Discount Lists — `data-next-discounts`
+
+Place inside a toggle card to render one row per discount applied to the package. Each container needs a `<template>` child defining the row markup.
+
+Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
+
+State classes on the container:
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts for this package |
+| `next-discounts-has-items` | One or more discounts |
+
+Populated after each price fetch. Before the first fetch, the containers are empty and carry the `next-discounts-empty` class.
+
+The offer/voucher filter (`data-next-discounts="offer"` / `="voucher"`) is not available at toggle level — per-line discounts from the API are not split by type. Use the unfiltered `data-next-discounts` attribute.
+
+See [Displaying Prices → Discount Lists](../prices#discount-lists-inside-toggle-cards) for usage examples.

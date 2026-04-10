@@ -100,6 +100,60 @@ Elements inside bundle cards (including template-rendered cards) are picked up b
 
 `data-hide-if-zero` is supported on `data-next-display` elements (see [External Price Display](#external-price-display)).
 
+---
+
+## Discount Lists Inside Bundle Cards
+
+Use `data-next-discounts` inside a bundle card to render one row per discount applied to the bundle. Each container needs a `<template>` child that defines the markup for a single discount row.
+
+```html
+<div data-next-bundle-card data-next-bundle-id="premium" ...>
+  <span data-next-bundle-display="price"></span>
+
+  <!-- All discounts (offers + vouchers) -->
+  <div data-next-discounts>
+    <template>
+      <span class="badge badge-secondary">{discount.name}</span>
+    </template>
+  </div>
+</div>
+```
+
+Filter by discount type using the attribute value:
+
+| Attribute | Renders |
+|-----------|---------|
+| `data-next-discounts` | All discounts (offers + vouchers combined) |
+| `data-next-discounts="offer"` | Only offer/promotion discounts |
+| `data-next-discounts="voucher"` | Only voucher/coupon discounts |
+
+```html
+<!-- Separate lists for offers and vouchers -->
+<div data-next-discounts="offer">
+  <template><span class="badge">{discount.name}: -{discount.amount}</span></template>
+</div>
+<div data-next-discounts="voucher">
+  <template><span class="badge">Coupon: {discount.name}</span></template>
+</div>
+```
+
+### Discount row tokens
+
+| Token | Description |
+|-------|-------------|
+| `{discount.name}` | Discount or offer name |
+| `{discount.amount}` | Formatted discount amount (e.g. `"$10.00"`) |
+| `{discount.description}` | Human-readable description; empty when absent |
+
+### State classes
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts in the list |
+| `next-discounts-has-items` | One or more discounts |
+
+Discount lists are populated after each bundle price fetch. Before the first fetch, the containers are empty and carry the `next-discounts-empty` class.
+
 <Callout type="warn">
 Do not put `data-next-show` or `data-next-hide` on the same element as `data-next-bundle-display="isSelected"` or `data-next-bundle-display="hasDiscount"`. Both the conditional display enhancer and the bundle display renderer control `style.display` on the same element — the last write wins and produces unpredictable visibility. Use a wrapper element instead:
 

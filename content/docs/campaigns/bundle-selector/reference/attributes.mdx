@@ -132,6 +132,33 @@ Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`
 
 ---
 
+## Discount Lists — `data-next-discounts`
+
+Place inside a bundle card to render one row per discount applied to the bundle. Each container needs a `<template>` child defining the row markup.
+
+| Value | Renders |
+|-------|---------|
+| *(empty or omitted)* | All discounts (offers + vouchers combined) |
+| `"offer"` | Only offer/promotion discounts |
+| `"voucher"` | Only voucher/coupon discounts |
+
+Row tokens: `{discount.name}`, `{discount.amount}`, `{discount.description}`.
+
+State classes on the container:
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts in the list |
+| `next-discounts-has-items` | One or more discounts |
+
+Populated after each bundle price fetch. Before the first fetch, the containers are empty and carry the `next-discounts-empty` class.
+
+When placed inside a slot template (`data-next-bundle-slot-template-id`), renders per-slot discounts. The offer/voucher filter is not available at slot level — all slot discounts are rendered regardless of the filter value.
+
+See [Displaying Prices → Discount Lists](../prices#discount-lists-inside-bundle-cards) and [Slot Templates → Per-Slot Discount List](../slots#per-slot-discount-list) for usage examples.
+
+---
+
 ## Attributes Set by the Enhancer on Variant Option Elements
 
 When using a custom variant option template (`data-next-variant-option-template-id`), the enhancer sets these attributes on each rendered option element:

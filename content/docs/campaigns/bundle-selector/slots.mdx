@@ -76,9 +76,89 @@ All values are pre-formatted currency strings (e.g. `$10.00`). `{item.price}` is
 | Variable | Values | Description |
 |----------|--------|-------------|
 | `{item.hasDiscount}` | `show` / `hide` | Whether a discount is applied to this item |
+| `{item.isRecurring}` | `true` / `false` | Whether the item has recurring billing |
 | `{item.currency}` | ISO 4217 code | Currency code for this slot's prices (e.g. `USD`) |
 
 ---
+
+## Conditional Display in Slots
+
+Use `data-next-show` and `data-next-hide` on elements inside a slot template to toggle visibility based on slot variables.
+
+- `data-next-show="item.hasDiscount"` — visible when the item has a discount, hidden otherwise
+- `data-next-hide="item.isRecurring"` — hidden when the item is recurring, visible otherwise
+
+**Truthy values:** `"show"`, `"true"`, or any non-empty string that is not `"hide"` or `"false"`.
+
+```html
+<template id="slot-tpl">
+  <div class="slot-row">
+    <img src="{item.image}" alt="{item.name}" />
+    <strong>{item.name}</strong>
+    <span>{item.price}</span>
+
+    <div data-next-show="item.hasDiscount">
+      Save {item.discountPercentage}!
+      <del>{item.originalPrice}</del>
+    </div>
+
+    <div data-next-show="item.isRecurring">
+      Billed {item.frequency} — {item.recurringPrice}
+    </div>
+
+    <div data-next-hide="item.isRecurring">
+      One-time purchase
+    </div>
+  </div>
+</template>
+```
+
+Any `data-next-show` / `data-next-hide` value that matches a slot variable (e.g. `item.*`, `slot.*`) is evaluated locally at render time. Store-based conditions like `data-next-show="cart.itemCount > 0"` still work inside slot templates — they are handled by the global `ConditionalDisplayEnhancer` after the slot enters the DOM.
+
+---
+
+---
+
+## Per-Slot Discount List
+
+Place a `data-next-discounts` container inside the slot template to render discounts applied to each individual package in the bundle.
+
+```html
+<template id="slot-tpl">
+  <div class="slot-row">
+    <img src="{item.image}" alt="{item.name}" />
+    <strong>{item.name}</strong>
+    <span>{item.price}</span>
+
+    <div data-next-discounts>
+      <template>
+        <span class="badge">{discount.name}: -{discount.amount}</span>
+      </template>
+    </div>
+  </div>
+</template>
+```
+
+### Discount row tokens
+
+| Token | Description |
+|-------|-------------|
+| `{discount.name}` | Discount or offer name |
+| `{discount.amount}` | Formatted discount amount (e.g. `"$10.00"`) |
+| `{discount.description}` | Human-readable description; empty when absent |
+
+### State classes
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts for this slot |
+| `next-discounts-has-items` | One or more discounts |
+
+Per-slot discounts come from the per-line breakdown in the bundle price calculation. They are populated after each price fetch and cleared when the bundle is deselected.
+
+<Callout type="info">
+The offer/voucher filter (`data-next-discounts="offer"` / `="voucher"`) is not available at slot level — per-line discounts from the API are not split by type. Use the unfiltered `data-next-discounts` attribute.
+</Callout>
 
 ## External Slot Rendering
 

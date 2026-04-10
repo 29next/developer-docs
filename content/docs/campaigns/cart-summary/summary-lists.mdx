@@ -301,6 +301,75 @@ If you only need one cart-level number (e.g., total discount, item count) and no
 
 ## Discount Lists
 
+### Unified Discount Container
+
+Use `data-next-discounts` to render discount rows with built-in filtering. This is the recommended approach for new templates.
+
+| Attribute | Renders |
+|-----------|---------|
+| `data-next-discounts` | All discounts (offers + vouchers combined) |
+| `data-next-discounts="offer"` | Only offer/promotion discounts |
+| `data-next-discounts="voucher"` | Only voucher/coupon discounts |
+
+```html
+<div data-next-cart-summary>
+  <template>
+    <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
+
+    <ul data-next-discounts>
+      <template><li>{discount.name} — -{discount.amount}</li></template>
+    </ul>
+
+    <div class="row"><span>Total</span><span>{total}</span></div>
+  </template>
+</div>
+```
+
+Separate offer and voucher lists:
+
+```html
+<ul data-next-discounts="offer">
+  <template><li>{discount.name} — -{discount.amount}</li></template>
+</ul>
+
+<ul data-next-discounts="voucher">
+  <template><li>Coupon {discount.name}: -{discount.amount}</li></template>
+</ul>
+```
+
+State classes on the container:
+
+| Class | When |
+|-------|------|
+| `next-discounts-empty` | No discounts in the list |
+| `next-discounts-has-items` | One or more discounts |
+
+### Per-Line Discounts
+
+Place `data-next-discounts` inside a `data-summary-lines` row template to render discounts for each individual line item:
+
+```html
+<ul data-summary-lines>
+  <template>
+    <li>
+      <span>{item.name}</span>
+      <span>{item.price}</span>
+      <ul data-next-discounts>
+        <template>
+          <li class="line-discount">{discount.name}: -{discount.amount}</li>
+        </template>
+      </ul>
+    </li>
+  </template>
+</ul>
+```
+
+<Callout type="info">
+At line level, the offer/voucher filter is not available — per-line discounts from the API are not split by type. The `data-next-discounts` attribute renders all line discounts regardless of the filter value.
+</Callout>
+
+### Legacy Discount Containers
+
 Use `data-summary-offer-discounts` or `data-summary-voucher-discounts` to render one row per applied discount.
 
 ```html
