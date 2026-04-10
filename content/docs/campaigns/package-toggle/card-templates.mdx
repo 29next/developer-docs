@@ -3,6 +3,8 @@ title: Card Templates
 sidebar_label: Card Templates
 ---
 
+import { Callout } from 'fumadocs-ui/components/callout';
+
 Instead of writing a separate HTML card for each add-on, you can give the toggle a list of packages and one reusable card template. The toggle repeats the template once for each package in the list, filling in the details automatically.
 
 This is useful when the set of add-ons is decided by campaign configuration rather than hardcoded in the page HTML.
@@ -69,12 +71,35 @@ Any field you include in the package list entry is available. For example, `{"la
 | `{toggle.variantName}` | Product variant name |
 | `{toggle.variantId}` | Product variant ID (empty if no variant) |
 | `{toggle.sku}` | Product SKU (empty if not set) |
+
+**Price fields (provisional values from campaign data):**
+
+| Placeholder | What it shows |
+|-------------|---------------|
+| `{toggle.price}` | Formatted total price |
+| `{toggle.unitPrice}` | Formatted per-unit price |
+| `{toggle.originalPrice}` | Retail / compare-at total price |
+| `{toggle.originalUnitPrice}` | Retail / compare-at per-unit price |
+| `{toggle.discountAmount}` | Savings amount (empty when no discount) |
+| `{toggle.discountPercentage}` | Discount percentage (e.g. `20.00%`) |
+| `{toggle.hasDiscount}` | `"true"` / `"false"` |
+| `{toggle.recurringPrice}` | Recurring charge total |
+| `{toggle.originalRecurringPrice}` | Original recurring price before discounts |
 | `{toggle.isRecurring}` | `"true"` / `"false"` — whether the package bills on a recurring schedule |
 | `{toggle.interval}` | Billing interval: `"day"` or `"month"` (empty for one-time) |
 | `{toggle.intervalCount}` | Number of intervals between billing cycles (empty for one-time) |
 | `{toggle.frequency}` | Human-readable cadence: `"Per month"`, `"Every 3 months"`, `"One time"` |
+| `{toggle.currency}` | ISO 4217 currency code |
 
-For prices, use `[data-next-toggle-display]` slots inside the card — they receive formatted, cart-aware values after the price fetch. Template placeholders do not carry price data.
+**Selection state:**
+
+| Placeholder | What it shows |
+|-------------|---------------|
+| `{toggle.isSelected}` | `"true"` / `"false"` — whether the package is in the cart |
+
+<Callout type="info">
+Price placeholders are filled with **provisional values** from the campaign package data at render time. For live, cart-aware prices that update after each price fetch, use `[data-next-toggle-display]` slots inside the card — see [Displaying Prices](./prices).
+</Callout>
 
 ---
 
@@ -90,3 +115,40 @@ If the template is short, you can write it directly in the attribute instead of 
 ```
 
 For anything beyond a single line, the `<template>` approach is easier to read and maintain.
+
+---
+
+## Conditional Display in Templates
+
+Use `data-next-show` and `data-next-hide` on elements inside a card template to toggle visibility based on template variables.
+
+- `data-next-show="hasDiscount"` — visible when the item has a discount, hidden otherwise
+- `data-next-hide="isRecurring"` — hidden when the item is recurring, visible otherwise
+
+**Truthy values:** `"show"`, `"true"`, or any non-empty string that is not `"hide"` or `"false"`.
+
+```html
+<template id="toggle-tpl">
+  <div data-next-toggle-card
+       data-add-text="Add {toggle.label}"
+       data-remove-text="Remove {toggle.label}">
+    <strong>{toggle.label}</strong>
+    <span data-next-toggle-display="price"></span>
+
+    <div data-next-show="hasDiscount">
+      Save {toggle.discountPercentage}!
+      <del data-next-toggle-display="originalPrice"></del>
+    </div>
+
+    <div data-next-show="isRecurring">
+      Billed {toggle.frequency} — <span data-next-toggle-display="recurringPrice"></span>
+    </div>
+
+    <div data-next-hide="isRecurring">
+      One-time purchase
+    </div>
+  </div>
+</template>
+```
+
+Any `data-next-show` / `data-next-hide` value that matches a template variable (e.g. `hasDiscount`, `isRecurring`, `isSelected`) is evaluated locally at render time. Store-based conditions like `data-next-show="cart.itemCount > 0"` still work inside card templates — they are handled by the global Conditional Display enhancer after the card enters the DOM.

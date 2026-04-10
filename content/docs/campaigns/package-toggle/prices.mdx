@@ -10,24 +10,31 @@ import { Callout } from 'fumadocs-ui/components/callout';
 Place `[data-next-toggle-display]` inside a card or its template. Prices are fetched automatically and these elements are populated with formatted values.
 
 ```html
-<span data-next-toggle-display="price"></span>                        <!-- total price -->
-<span data-next-toggle-display="unitPrice"></span>            <!-- per-unit price -->
-<span data-next-toggle-display="originalPrice"></span>        <!-- retail / compare-at total price -->
-<span data-next-toggle-display="originalUnitPrice"></span>    <!-- retail / compare-at per-unit price -->
-<span data-next-toggle-display="discountAmount"></span>       <!-- savings amount -->
-<span data-next-toggle-display="discountPercentage"></span>   <!-- savings percentage -->
-<span data-next-toggle-display="name"></span>                 <!-- package display name -->
-<span data-next-toggle-display="isSelected"></span>           <!-- shown when the package is in the cart; hidden otherwise -->
-<span data-next-toggle-display="hasDiscount"></span>          <!-- shown when a discount applies; hidden otherwise -->
-<span data-next-toggle-display="isRecurring"></span>          <!-- shown when recurring; hidden otherwise -->
-<span data-next-toggle-display="recurringPrice"></span>       <!-- recurring charge total -->
-<span data-next-toggle-display="interval"></span>             <!-- "day" or "month" -->
-<span data-next-toggle-display="intervalCount"></span>        <!-- number of intervals between billing cycles -->
-<span data-next-toggle-display="frequency"></span>            <!-- "Per month", "Every 3 months", "One time" -->
-<span data-next-toggle-display="currency"></span>             <!-- ISO currency code -->
+<span data-next-toggle-display="packageId"></span>             <!-- package ref_id -->
+<span data-next-toggle-display="name"></span>                  <!-- package display name -->
+<img  data-next-toggle-display="image" />                      <!-- package image (sets src on <img>) -->
+<span data-next-toggle-display="quantity"></span>              <!-- package quantity -->
+<span data-next-toggle-display="variantName"></span>           <!-- product variant name -->
+<span data-next-toggle-display="productName"></span>           <!-- product name -->
+<span data-next-toggle-display="sku"></span>                   <!-- product SKU -->
+<span data-next-toggle-display="price"></span>                 <!-- total price -->
+<span data-next-toggle-display="unitPrice"></span>             <!-- per-unit price -->
+<span data-next-toggle-display="originalPrice"></span>         <!-- retail / compare-at total price -->
+<span data-next-toggle-display="originalUnitPrice"></span>     <!-- retail / compare-at per-unit price -->
+<span data-next-toggle-display="discountAmount"></span>        <!-- savings amount -->
+<span data-next-toggle-display="discountPercentage"></span>    <!-- savings percentage -->
+<span data-next-toggle-display="isSelected"></span>            <!-- shown when the package is in the cart; hidden otherwise -->
+<span data-next-toggle-display="hasDiscount"></span>           <!-- shown when a discount applies; hidden otherwise -->
+<span data-next-toggle-display="isRecurring"></span>           <!-- shown when recurring; hidden otherwise -->
+<span data-next-toggle-display="recurringPrice"></span>        <!-- recurring charge total -->
+<span data-next-toggle-display="originalRecurringPrice"></span><!-- original recurring price before discounts -->
+<span data-next-toggle-display="interval"></span>              <!-- "day" or "month" -->
+<span data-next-toggle-display="intervalCount"></span>         <!-- number of intervals between billing cycles -->
+<span data-next-toggle-display="frequency"></span>             <!-- "Per month", "Every 3 months", "One time" -->
+<span data-next-toggle-display="currency"></span>              <!-- ISO currency code -->
 ```
 
-Boolean fields (`hasDiscount`, `isRecurring`, `isSelected`) show or hide the element via `display` — they do not write text. All other fields set `textContent`. Unrecognized values leave the element unchanged.
+Boolean fields (`hasDiscount`, `isRecurring`, `isSelected`) show or hide the element via `display` — they do not write text. The `image` field sets `src` on `<img>` elements (and `alt` if not already set). All other fields set `textContent`. Unrecognized values leave the element unchanged.
 
 <Callout type="info">
 `data-next-toggle-price` is still supported and accepts the same field names. Prefer `data-next-toggle-display` in new markup.
@@ -59,17 +66,24 @@ Use `data-next-display="toggle.{packageId}.{property}"` on any element in the do
 
 | Property | Format | Description |
 |----------|--------|-------------|
-| `isSelected` | boolean | `true` when this package is in the cart |
+| `packageId` | text | Package `ref_id` |
 | `name` | text | Display name from the campaign package |
+| `image` | image | Package image URL (sets `src` on `<img>` elements) |
+| `quantity` | text | Package quantity |
+| `variantName` | text | Product variant name |
+| `productName` | text | Product name |
+| `sku` | text | Product SKU (empty if not set) |
 | `price` | currency | Total price for the card's quantity (unit price × quantity) |
 | `unitPrice` | currency | Per-unit price |
 | `originalPrice` | currency | Retail / compare-at total price |
 | `originalUnitPrice` | currency | Retail / compare-at per-unit price |
 | `discountAmount` | currency | Savings amount (compare minus total) |
 | `discountPercentage` | percentage | Discount as a percentage of the compare price |
+| `isSelected` | boolean | `true` when this package is in the cart |
 | `hasDiscount` | boolean | `true` when a discount is applied |
 | `isRecurring` | boolean | `true` when the package bills on a recurring schedule |
 | `recurringPrice` | currency | Recurring charge total (quantity-scaled) |
+| `originalRecurringPrice` | currency | Original recurring price before discounts |
 | `interval` | text | Billing interval: `"day"` or `"month"` |
 | `intervalCount` | auto | Number of intervals between billing cycles |
 | `frequency` | text | Human-readable billing cadence: `"Per month"`, `"Every 3 months"`, `"One time"` |
