@@ -1,8 +1,8 @@
 <!--
-title: Next T-Shirt
-description: Single T-Shirt with variant + quantity selection
+title: Next T-Shirt Bundle
+description: Next T-Shirt Bundle with Multi Variants
 layout: center
-order: 1
+order: 2
 -->
 
 <meta name="next-api-key" content="Lj41tZAXbaw9H6ZEruZ36w8ExL5sdhkCznBsS5mq" />
@@ -27,152 +27,135 @@ order: 1
     </button>
   </div>
 
-  <!--
-    A single-bundle BundleSelector in `select` mode powers the variant +
-    pricing UI without writing to the cart. The container itself is hidden
-    because there is no multi-bundle choice to make — we just need the
-    enhancer to render the slot (variants + price) and expose
-    `_getSelectedBundleItems()` for the Add-to-Cart button.
-  -->
-  <div
-    hidden
-    data-next-selector-id="main"
-    data-next-bundle-selector
-    data-next-selection-mode="select"
-    data-next-bundle-template-id="mv-bundle-template"
-    data-next-bundle-slot-template-id="mv-slot-template"
-    data-next-variant-selector-template-id="mv-variant-selector-template"
-    data-next-variant-option-template-id="mv-variant-option-template"
-    data-next-bundles='[
-      {
-        "id": "tshirt",
-        "shippingId": "2",
-        "items": [{"packageId":1,"quantity":1,"configurable":true}],
-        "vouchers": [],
-        "selected": true
-      }
-    ]'
-  ></div>
+  <section class="shop__section">
+    <h2 class="shop__section-title">Choose your package</h2>
+
+    <div
+      class="bundle-grid"
+      data-next-selector-id="main"
+      data-next-bundle-selector
+      data-next-selection-mode="swap"
+      data-next-bundle-template-id="mv-bundle-template"
+      data-next-bundle-slot-template-id="mv-slot-template"
+      data-next-variant-selector-template-id="mv-variant-selector-template"
+      data-next-variant-option-template-id="mv-variant-option-template"
+      data-next-bundles='[
+        {
+          "id": "basic-set",
+          "shippingId": "2",
+          "title": "2x Unit",
+          "subtitle": "Next Commerce Shirts",
+          "hasSavings": "has-savings",
+          "items": [{"packageId":1,"quantity":2,"configurable":true}],
+          "vouchers": []
+        },
+        {
+          "id": "duo-set",
+          "shippingId": "2",
+          "title": "3x Unit",
+          "subtitle": "Next Commerce Shirts",
+          "badge": "Most Popular",
+          "hasSavings": "has-savings",
+          "items": [{"packageId":1,"quantity":3,"configurable":true}],
+          "vouchers": [],
+          "selected": true
+        },
+        {
+          "id": "special-set",
+          "shippingId": "2",
+          "title": "4x Unit",
+          "subtitle": "Next Commerce Shirts",
+          "badge": "Best Deal",
+          "badgeClass": "bundle-card__badge--success",
+          "hasSavings": "has-savings",
+          "items": [{"packageId":1,"quantity":4,"configurable":true}],
+          "vouchers": []
+        }
+      ]'
+    ></div>
+
+    <template id="mv-bundle-template">
+      <div
+        data-next-bundle-card
+        data-next-bundle-id="{bundle.id}"
+        role="button"
+        tabindex="0"
+        class="bundle-card"
+      >
+        <div class="bundle-card__badge {bundle.badgeClass}" data-badge="{bundle.badge}">
+          <svg class="bundle-card__badge-icon" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="currentColor"/>
+          </svg>
+          <span>{bundle.badge}</span>
+        </div>
+
+        <div class="bundle-card__header">
+          <div class="radio">
+            <span class="radio__dot"></span>
+          </div>
+          <div class="bundle-card__title" data-next-display="package.name">
+            {bundle.title}
+          </div>
+        </div>
+
+        <div class="bundle-card__footer">
+          <div class="bundle-card__subtitle">{bundle.subtitle}</div>
+          <div class="bundle-card__savings {bundle.hasSavings}">
+            Save <span data-next-bundle-price="savingsPercentage">0%</span> OFF
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="mv-slot-template">
+      <div class="slot">
+        <div class="slot__hero">
+          <span class="slot__badge">Unit {slot.unitNumber}</span>
+          <img loading="lazy" alt="" src="{item.image}" />
+        </div>
+        <div class="slot__content">
+          <div class="slot__pricing">
+            <div class="price-row">
+              <span class="price price--current">{item.unitPrice}</span>
+              <span class="price price--suffix">/ea</span>
+            </div>
+            <div class="price-meta">
+              <span class="price--was">Was</span>
+              <span class="price price--strike">{item.originalUnitPrice}</span>
+              <span class="price__savings {item.hasDiscount}">
+                Save <span>{item.discountPercentage}</span>
+              </span>
+            </div>
+          </div>
+          <div class="slot__variants">
+            <div data-next-variant-selectors></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="mv-variant-selector-template">
+      <div class="variant-group">
+        <div class="variant-group__label">{attr.name}</div>
+        <div class="variant-group__options" data-next-variant-options></div>
+      </div>
+    </template>
+
+    <template id="mv-variant-option-template">
+      <button type="button" class="variant-pill" aria-pressed="{option.selected}">
+        {option.value}
+      </button>
+    </template>
+  </section>
 
   <section class="shop__section">
-    <!-- Product card: image, pricing, variant pills rendered by slot template -->
+    <h2 class="shop__section-title">Select your color and size</h2>
     <div
       id="bundle-slots-stage"
       class="slot-stage"
       data-next-bundle-slots-for="main"
     ></div>
-
-    <!-- Quantity + Add-to-Cart live under the slot -->
-    <div class="buy-row">
-      <div class="qty">
-        <span class="qty__label">Quantity</span>
-        <div class="qty__stepper">
-          <button
-            type="button"
-            class="qty__btn"
-            aria-label="Decrease quantity"
-            onclick="(function(b){var i=b.parentNode.querySelector('input');i.value=Math.max(parseInt(i.min,10)||1,(parseInt(i.value,10)||1)-1);})(this)"
-          >−</button>
-          <input
-            type="number"
-            class="qty__input"
-            id="tshirt-qty"
-            value="1"
-            min="1"
-            max="10"
-            inputmode="numeric"
-          />
-          <button
-            type="button"
-            class="qty__btn"
-            aria-label="Increase quantity"
-            onclick="(function(b){var i=b.parentNode.querySelector('input');i.value=Math.min(parseInt(i.max,10)||99,(parseInt(i.value,10)||1)+1);})(this)"
-          >+</button>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class="btn-cta"
-        id="tshirt-add"
-        onclick="(async function(btn){
-          var selector = document.querySelector('[data-next-selector-id=\'main\']');
-          var items = selector && selector._getSelectedBundleItems && selector._getSelectedBundleItems();
-          if (!items || !items.length) { btn.animate([{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:220}); return; }
-          var qtyInput = document.getElementById('tshirt-qty');
-          var qty = Math.max(1, Math.min(parseInt(qtyInput.max,10)||99, parseInt(qtyInput.value,10)||1));
-          var sdk = window.next;
-          if (!sdk) return;
-          btn.disabled = true;
-          btn.dataset.loading = 'true';
-          try {
-            await sdk.addItem({ packageId: items[0].packageId, quantity: qty });
-            window.location.href = '/checkout';
-          } catch (e) {
-            btn.disabled = false;
-            btn.dataset.loading = 'false';
-          }
-        })(this)"
-      >
-        <span class="btn-cta__label">Add to Cart</span>
-        <span class="btn-cta__spinner" aria-hidden="true"></span>
-      </button>
-    </div>
   </section>
-
-  <!--
-    Minimal bundle-card template. The selector container is hidden, so
-    this card never shows on screen — it only exists so the enhancer has
-    a registered card to auto-select, which in turn causes the slot to
-    render into `[data-next-bundle-slots-for="main"]`.
-  -->
-  <template id="mv-bundle-template">
-    <div
-      data-next-bundle-card
-      data-next-bundle-id="{bundle.id}"
-      hidden
-    ></div>
-  </template>
-
-  <template id="mv-slot-template">
-    <div class="slot">
-      <div class="slot__hero">
-        <img loading="lazy" alt="" src="{item.image}" />
-      </div>
-      <div class="slot__content">
-        <div class="slot__title">Next Commerce T-Shirt</div>
-        <div class="slot__pricing">
-          <div class="price-row">
-            <span class="price price--current">{item.unitPrice}</span>
-            <span class="price price--suffix">/ea</span>
-          </div>
-          <div class="price-meta">
-            <span class="price--was">Was</span>
-            <span class="price price--strike">{item.originalUnitPrice}</span>
-            <span class="price__savings {item.hasDiscount}">
-              Save <span>{item.discountPercentage}</span>
-            </span>
-          </div>
-        </div>
-        <div class="slot__variants">
-          <div data-next-variant-selectors></div>
-        </div>
-      </div>
-    </div>
-  </template>
-
-  <template id="mv-variant-selector-template">
-    <div class="variant-group">
-      <div class="variant-group__label">{attr.name}</div>
-      <div class="variant-group__options" data-next-variant-options></div>
-    </div>
-  </template>
-
-  <template id="mv-variant-option-template">
-    <button type="button" class="variant-pill" aria-pressed="{option.selected}">
-      {option.value}
-    </button>
-  </template>
 </div>
 
 <style>
@@ -243,27 +226,159 @@ order: 1
     background: var(--color-bg);
     padding: var(--space-6);
     border-radius: var(--radius-lg);
-    max-width: 720px;
+    max-width: 920px;
     margin: 0 auto;
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-8);
   }
 
-  .shop__section { display: grid; gap: var(--space-5); }
+  .shop__section { display: grid; gap: var(--space-4); }
+
+  .shop__section-title {
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
 
   /* ==========================================================================
-     Slot stage — image on left, details on right; stacks on narrow viewports.
+     Bundle grid + card
+     ========================================================================== */
+  .bundle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  @media (max-width: 640px) {
+    .bundle-grid { grid-template-columns: 1fr; }
+  }
+
+  .bundle-card {
+    position: relative;
+    display: grid;
+    gap: var(--space-3);
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    cursor: pointer;
+    transition:
+      border-color var(--transition),
+      transform var(--transition),
+      box-shadow var(--transition);
+  }
+  .bundle-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .bundle-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+  .bundle-card.next-selected {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-soft);
+  }
+
+  /* Badge */
+  .bundle-card__badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    color: var(--color-accent-contrast);
+    background: var(--color-accent);
+    box-shadow: var(--shadow-sm);
+  }
+  .bundle-card__badge[data-badge=''] { display: none; }
+  .bundle-card__badge--success {
+    background: var(--color-success);
+  }
+  .bundle-card__badge-icon { width: 12px; height: 12px; }
+
+  /* Header: radio + title */
+  .bundle-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border-strong);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: var(--color-surface);
+    transition: border-color var(--transition);
+  }
+  .radio__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: transparent;
+    transition: background var(--transition);
+  }
+  .bundle-card.next-selected .radio { border-color: var(--color-primary); }
+  .bundle-card.next-selected .radio__dot { background: var(--color-primary); }
+
+  .bundle-card__title {
+    font-weight: 650;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  /* Footer: subtitle + savings */
+  .bundle-card__footer { display: grid; gap: var(--space-1); }
+  .bundle-card__subtitle {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+  .bundle-card__savings {
+    justify-self: start;
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-success);
+    background: var(--color-success-soft);
+    border-radius: var(--radius-full);
+    line-height: 1.4;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  /* Hide the savings pill when the bundle has no savings.
+     `{bundle.hasSavings}` resolves to `has-savings` for discounted bundles,
+     empty string otherwise. */
+  .bundle-card__savings:not(.has-savings) { display: none; }
+
+  /* ==========================================================================
+     Slot stage — horizontal layout: hero on left, price + variants on right.
+     On narrow viewports, stacks vertically.
      ========================================================================== */
   .slot-stage {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 560px));
     gap: var(--space-4);
     justify-content: center;
   }
 
   .slot {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 220px 1fr;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -273,11 +388,28 @@ order: 1
     position: relative;
     width: 100%;
     height: 100%;
-    min-height: 260px;
     background: white;
     display: grid;
     place-items: center;
     overflow: hidden;
+  }
+  .slot__badge {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-variant-numeric: tabular-nums;
   }
   .slot__hero img {
     width: 100%;
@@ -289,22 +421,15 @@ order: 1
   .slot__content {
     padding: var(--space-5);
     display: grid;
-    gap: var(--space-4);
+    gap: var(--space-5);
     align-content: start;
   }
-  .slot__title {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-  }
 
-  @media (max-width: 560px) {
+  @media (max-width: 480px) {
     .slot { grid-template-columns: 1fr; }
     .slot__hero {
       aspect-ratio: 4 / 3;
-      max-height: 280px;
-      min-height: 0;
+      max-height: 260px;
     }
     .slot__hero img { padding: var(--space-2); }
   }
@@ -312,21 +437,26 @@ order: 1
   @media (max-width: 640px) {
     .shop {
       padding: var(--space-4);
-      gap: var(--space-5);
+      gap: var(--space-6);
       border-radius: var(--radius-md);
     }
-    .shop__section { gap: var(--space-4); }
+    .shop__section { gap: var(--space-3); }
+    .shop__section-title { font-size: 16px; }
+    .bundle-card { padding: var(--space-4); }
+    .bundle-card__title { font-size: 15px; }
     .slot__content {
       padding: var(--space-4);
-      gap: var(--space-3);
+      gap: var(--space-4);
     }
-    .slot__title { font-size: 16px; }
     .price--current { font-size: 30px; }
   }
 
   /* Pricing hierarchy
      ------------------------------------------------------------------
      Row 1 — dominant current price. Row 2 — "was" anchor + savings badge.
+     Splitting the rows gives the discounted price full visual weight and
+     makes the anchor + savings read as supporting evidence, not clutter.
+     Tabular numerals keep digits column-aligned across sizes/quantities.
      ------------------------------------------------------------------ */
   .slot__pricing {
     display: grid;
@@ -373,6 +503,7 @@ order: 1
     font-size: 14px;
     font-weight: 500;
   }
+  /* Punchy filled badge — the "you save" signal is the CTA driver. */
   .price__savings {
     display: inline-flex;
     align-items: center;
@@ -482,128 +613,6 @@ order: 1
   .variant-pill[data-next-variant-value='Yellow' i] { --swatch: #eab308; }
   .variant-pill[data-next-variant-value='Orange' i] { --swatch: #f97316; }
   .variant-pill[data-next-variant-value='Red'    i] { --swatch: #dc2626; }
-
-  /* ==========================================================================
-     Buy row — quantity stepper + primary CTA
-     ========================================================================== */
-  .buy-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: end;
-    gap: var(--space-3);
-  }
-  @media (max-width: 560px) {
-    .buy-row { grid-template-columns: 1fr; gap: var(--space-3); }
-    .qty { width: 100%; }
-    .qty__stepper { display: flex; width: 100%; }
-    .qty__btn { flex: 0 0 56px; }
-    .qty__input { flex: 1 1 auto; width: auto; }
-    .btn-cta { width: 100%; }
-  }
-
-  .qty { display: grid; gap: 6px; }
-  .qty__label {
-    font-size: 11px;
-    color: var(--color-text-muted);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .qty__stepper {
-    display: inline-flex;
-    align-items: stretch;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-    height: 48px;
-  }
-  .qty__btn {
-    font: inherit;
-    width: 40px;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--color-text);
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    transition: background var(--transition);
-  }
-  .qty__btn:hover { background: var(--color-surface-alt); }
-  .qty__btn:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: -2px;
-  }
-  .qty__input {
-    font: inherit;
-    font-size: 16px;
-    font-weight: 600;
-    width: 44px;
-    text-align: center;
-    background: transparent;
-    border: 0;
-    border-left: 1px solid var(--color-border);
-    border-right: 1px solid var(--color-border);
-    color: var(--color-text);
-    font-variant-numeric: tabular-nums;
-    -moz-appearance: textfield;
-    appearance: textfield;
-  }
-  .qty__input::-webkit-outer-spin-button,
-  .qty__input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
-  }
-  .qty__input:focus { outline: none; }
-
-  .btn-cta {
-    position: relative;
-    font: inherit;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: var(--color-primary-contrast);
-    background: var(--color-primary);
-    border: 0;
-    border-radius: var(--radius-full);
-    height: 48px;
-    padding: 0 var(--space-5);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    transition:
-      transform var(--transition),
-      box-shadow var(--transition),
-      background var(--transition);
-  }
-  .btn-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-  .btn-cta:active { transform: translateY(0); }
-  .btn-cta:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 3px;
-  }
-  .btn-cta[disabled] { opacity: 0.7; cursor: progress; }
-
-  .btn-cta__spinner {
-    display: none;
-    width: 14px;
-    height: 14px;
-    border: 2px solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: btn-cta-spin 700ms linear infinite;
-  }
-  .btn-cta[data-loading='true'] .btn-cta__spinner { display: inline-block; }
-  .btn-cta[data-loading='true'] .btn-cta__label { opacity: 0.85; }
-  @keyframes btn-cta-spin {
-    to { transform: rotate(360deg); }
-  }
 
   /* Theme toggle — demonstrates theme configurability */
   .shop__toolbar {
