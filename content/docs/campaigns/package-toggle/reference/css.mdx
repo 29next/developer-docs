@@ -3,9 +3,9 @@ title: CSS Classes & State Attributes
 sidebar_label: CSS
 ---
 
-## CSS Classes
+The system automatically adds and removes CSS classes on each card as the cart changes. Use these classes in your stylesheet to control how cards look in each state.
 
-These classes are applied to each card element automatically.
+## CSS Classes
 
 | Class | Applied to | When |
 |-------|-----------|------|
@@ -13,24 +13,46 @@ These classes are applied to each card element automatically.
 | `next-in-cart` | A card | The package is in the cart |
 | `next-not-in-cart` | A card | The package is not in the cart |
 | `next-selected` | A card | Alias for `next-in-cart` |
-| `next-loading` | A card | During an async cart operation or price fetch |
+| `next-loading` | A card | During a cart operation or price fetch |
 
-The same `next-in-cart`, `next-not-in-cart`, `next-active`, and `os--active` classes are also applied to the card's nearest **state container** when one is found. See [State Containers](../state-containers).
+The same `next-in-cart`, `next-not-in-cart`, and `next-active` classes are also applied to the card's nearest **state container** when one is found. See [State Containers](../state-containers).
+
+### Example
+
+```css
+/* Default card style */
+[data-next-toggle-card] {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+/* Card is in the cart */
+.next-in-cart {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+/* Card is not in the cart */
+.next-not-in-cart {
+  opacity: 0.85;
+}
+
+/* Dim price text while loading */
+.next-loading [data-next-toggle-display] {
+  opacity: 0.4;
+}
+```
 
 ---
 
 ## Attributes Set Automatically
 
-**On each card element:**
+For the full list of attributes set on card elements and state containers (`data-next-in-cart`, `data-next-loading`, `data-in-cart`, `data-next-active`), see the [Attributes reference](./attributes#attributes-set-automatically).
 
-| Attribute | Values | When set |
-|-----------|--------|----------|
-| `data-next-in-cart` | `"true"` / `"false"` | Updated on every cart sync |
-| `data-next-loading` | `"true"` / `"false"` | Set while a cart write or price fetch is in progress |
+---
 
-**On the state container (when one is found):**
+## Legacy Class Names
 
-| Attribute | Values | When set |
-|-----------|--------|----------|
-| `data-in-cart` | `"true"` / `"false"` | Updated on every cart sync |
-| `data-next-active` | `"true"` / `"false"` | Alias for `data-in-cart` |
+You may see `os--active` in older templates. It still works and is applied alongside `next-in-cart`, but use `next-in-cart` or `next-active` in new stylesheets.

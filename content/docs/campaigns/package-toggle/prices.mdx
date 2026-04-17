@@ -5,101 +5,100 @@ sidebar_label: Prices
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## Inside Toggle Cards
+Add display fields inside your card to show prices, product names, images, and other details. The system fills them in with real data from your campaign and keeps them up to date as the cart changes.
 
-Place `[data-next-toggle-display]` inside a card or its template. Prices are fetched automatically and these elements are populated with formatted values.
+## Show Data Inside a Card
+
+Place elements with `data-next-toggle-display` inside a card. Each element shows a different piece of information based on the field name you provide.
+
+The most common fields:
 
 ```html
-<span data-next-toggle-display="packageId"></span>             <!-- package ref_id -->
-<span data-next-toggle-display="name"></span>                  <!-- package display name -->
-<img  data-next-toggle-display="image" />                      <!-- package image (sets src on <img>) -->
-<span data-next-toggle-display="quantity"></span>              <!-- package quantity -->
-<span data-next-toggle-display="variantName"></span>           <!-- product variant name -->
-<span data-next-toggle-display="productName"></span>           <!-- product name -->
-<span data-next-toggle-display="sku"></span>                   <!-- product SKU -->
-<span data-next-toggle-display="price"></span>                 <!-- total price -->
-<span data-next-toggle-display="unitPrice"></span>             <!-- per-unit price -->
-<span data-next-toggle-display="originalPrice"></span>         <!-- retail / compare-at total price -->
-<span data-next-toggle-display="originalUnitPrice"></span>     <!-- retail / compare-at per-unit price -->
-<span data-next-toggle-display="discountAmount"></span>        <!-- savings amount -->
-<span data-next-toggle-display="discountPercentage"></span>    <!-- savings percentage -->
-<span data-next-toggle-display="isSelected"></span>            <!-- shown when the package is in the cart; hidden otherwise -->
-<span data-next-toggle-display="hasDiscount"></span>           <!-- shown when a discount applies; hidden otherwise -->
-<span data-next-toggle-display="isRecurring"></span>           <!-- shown when recurring; hidden otherwise -->
-<span data-next-toggle-display="recurringPrice"></span>        <!-- recurring charge total -->
-<span data-next-toggle-display="originalRecurringPrice"></span><!-- original recurring price before discounts -->
-<span data-next-toggle-display="interval"></span>              <!-- "day" or "month" -->
-<span data-next-toggle-display="intervalCount"></span>         <!-- number of intervals between billing cycles -->
-<span data-next-toggle-display="frequency"></span>             <!-- "Per month", "Every 3 months", "One time" -->
-<span data-next-toggle-display="currency"></span>              <!-- ISO currency code -->
+<div data-next-toggle-card data-next-package-id="201">
+  <span data-next-toggle-display="name"></span>
+  <img  data-next-toggle-display="image" />
+  <span data-next-toggle-display="price"></span>
+  <del  data-next-toggle-display="originalPrice"></del>
+</div>
 ```
-
-Boolean fields (`hasDiscount`, `isRecurring`, `isSelected`) show or hide the element via `display` — they do not write text. The `image` field sets `src` on `<img>` elements (and `alt` if not already set). All other fields set `textContent`. Unrecognized values leave the element unchanged.
-
-<Callout type="info">
-`data-next-toggle-price` is still supported and accepts the same field names. Prefer `data-next-toggle-display` in new markup.
-</Callout>
-
-Prices for in-cart items are read directly from the cart summary — no extra API call. Prices for not-in-cart items are fetched via `/calculate` with the item simulated in the cart, so offer discounts that depend on cart total are correctly reflected.
-
-A `next-loading` class and `data-next-loading="true"` are set on the card element while a fetch is in progress.
-
-Prices are re-fetched automatically when:
-- The cart changes (items added, removed, or quantity updated)
-- Applied vouchers change
-- The active currency changes
 
 ---
 
-## External Price Display
+## All Available Fields
 
-Use `data-next-display="toggle.{packageId}.{property}"` on any element in the document to bind it to a specific toggle card's current state. `{packageId}` must match `data-next-package-id` on the card.
+### Basic Info
 
-```html
-<span data-next-display="toggle.201.price"></span>
-<span data-next-display="toggle.201.originalPrice"></span>
-<span data-next-display="toggle.201.discountAmount" data-hide-if-zero="true"></span>
-<span data-next-display="toggle.201.isSelected"></span>
-```
+| Field | What it shows |
+|-------|---------------|
+| `packageId` | Package `ref_id` |
+| `name` | Package display name |
+| `image` | Package image — sets `src` on `<img>` elements |
+| `quantity` | Package quantity |
+| `productName` | Product name |
+| `variantName` | Product variant name (e.g. "Black / Large") |
+| `sku` | Product SKU |
 
-**Supported properties:**
+### Prices
 
-| Property | Format | Description |
-|----------|--------|-------------|
-| `packageId` | text | Package `ref_id` |
-| `name` | text | Display name from the campaign package |
-| `image` | image | Package image URL (sets `src` on `<img>` elements) |
-| `quantity` | text | Package quantity |
-| `variantName` | text | Product variant name |
-| `productName` | text | Product name |
-| `sku` | text | Product SKU (empty if not set) |
-| `price` | currency | Total price for the card's quantity (unit price × quantity) |
-| `unitPrice` | currency | Per-unit price |
-| `originalPrice` | currency | Retail / compare-at total price |
-| `originalUnitPrice` | currency | Retail / compare-at per-unit price |
-| `discountAmount` | currency | Savings amount (compare minus total) |
-| `discountPercentage` | percentage | Discount as a percentage of the compare price |
-| `isSelected` | boolean | `true` when this package is in the cart |
-| `hasDiscount` | boolean | `true` when a discount is applied |
-| `isRecurring` | boolean | `true` when the package bills on a recurring schedule |
-| `recurringPrice` | currency | Recurring charge total (quantity-scaled) |
-| `originalRecurringPrice` | currency | Original recurring price before discounts |
-| `interval` | text | Billing interval: `"day"` or `"month"` |
-| `intervalCount` | auto | Number of intervals between billing cycles |
-| `frequency` | text | Human-readable billing cadence: `"Per month"`, `"Every 3 months"`, `"One time"` |
-| `currency` | text | ISO 4217 currency code |
+| Field | What it shows |
+|-------|---------------|
+| `price` | Total price for the card's quantity |
+| `unitPrice` | Per-unit price |
+| `originalPrice` | Retail / compare-at total price |
+| `originalUnitPrice` | Retail / compare-at per-unit price |
 
-Supports all standard display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.
+### Savings
+
+| Field | What it shows |
+|-------|---------------|
+| `discountAmount` | How much the visitor saves |
+| `discountPercentage` | Savings as a percentage |
+| `hasDiscount` | Shows or hides the element — visible only when a discount applies |
+
+### Subscriptions
+
+| Field | What it shows |
+|-------|---------------|
+| `isRecurring` | Shows or hides the element — visible only when the package bills on a recurring schedule |
+| `recurringPrice` | Recurring charge total |
+| `originalRecurringPrice` | Original recurring price before discounts |
+| `frequency` | Human-readable billing cadence: "Per month", "Every 3 months", "One time" |
+| `interval` | Billing interval: "day" or "month" |
+| `intervalCount` | Number of intervals between billing cycles |
+
+### Other
+
+| Field | What it shows |
+|-------|---------------|
+| `currency` | ISO currency code (e.g. "USD") |
+| `isSelected` | Shows or hides the element — visible only when the package is in the cart |
 
 <Callout type="info">
-External display elements update when the toggle card's price is fetched (`toggle:price-updated`) or when the cart selection changes (`toggle:selection-changed`). The card must be present in the DOM before the display element resolves.
+Fields like `hasDiscount`, `isRecurring`, and `isSelected` are yes/no flags. Instead of displaying text, they **show or hide** the element. For example, a "Save!" badge inside an element with `data-next-toggle-display="hasDiscount"` only appears when there is a discount.
 </Callout>
+
+<Callout type="info">
+The older `data-next-toggle-price` attribute still works and accepts the same field names. Use `data-next-toggle-display` in new markup.
+</Callout>
+
+---
+
+## How Prices Are Fetched
+
+Prices for items already in the cart are read directly from the cart — no extra request is needed. Prices for items **not** in the cart are fetched by simulating the item in the cart, so offer discounts that depend on cart total are reflected correctly.
+
+A `next-loading` class and `data-next-loading="true"` are set on the card while a price is being fetched.
+
+Prices update automatically when:
+- The cart changes (items added, removed, or quantity updated)
+- Applied coupon codes change (works in both normal and upsell contexts)
+- The active currency changes
 
 ---
 
 ## Include Shipping in Prices
 
-Add `data-next-include-shipping="true"` to the container to include shipping costs in the price totals shown via `data-next-toggle-display`.
+To include shipping costs in the displayed price totals, add `data-next-include-shipping="true"` to the container:
 
 ```html
 <div data-next-package-toggle data-next-include-shipping="true">
@@ -111,9 +110,39 @@ Add `data-next-include-shipping="true"` to the container to include shipping cos
 
 ---
 
-## Discount Lists Inside Toggle Cards
+## Show an Add-on's Data Outside Its Card
 
-Use `data-next-discounts` inside a toggle card to render one row per discount applied to the package. Each container needs a `<template>` child that defines the markup for a single discount row.
+Sometimes you want to show an add-on's price or status outside of the card itself — for example, in a sidebar or a summary section.
+
+Use `data-next-display` with three parts separated by dots: the word `toggle`, the package ID number, and the field name.
+
+```html
+<!-- Show Package 201's price anywhere on the page -->
+<span data-next-display="toggle.201.price"></span>
+
+<!-- Show the original price with a strikethrough -->
+<del data-next-display="toggle.201.originalPrice"></del>
+
+<!-- Show savings (hidden automatically when there is no discount) -->
+<span data-next-display="toggle.201.discountAmount" data-hide-if-zero="true"></span>
+
+<!-- Show or hide based on cart state -->
+<span data-next-display="toggle.201.isSelected"></span>
+```
+
+The package ID must match the `data-next-package-id` on the card. The card must be present on the page for external display elements to work.
+
+**All fields from the tables above are supported.** You can also use these display modifiers: `data-next-format`, `data-hide-if-zero`, `data-hide-if-false`.
+
+<Callout type="info">
+External display elements update when the card's price is fetched or when the cart selection changes. The card must be in the page before the external display element can show data.
+</Callout>
+
+---
+
+## Discount Lists Inside Cards
+
+If your campaign applies discounts to individual add-ons, you can show each discount as a separate line inside the card. Add a `data-next-discounts` container with a `<template>` child that defines the markup for each discount row.
 
 ```html
 <div data-next-toggle-card data-next-package-id="201">
@@ -127,23 +156,23 @@ Use `data-next-discounts` inside a toggle card to render one row per discount ap
 </div>
 ```
 
-### Discount row tokens
+### Discount row placeholders
 
-| Token | Description |
-|-------|-------------|
+| Placeholder | What it shows |
+|-------------|---------------|
 | `{discount.name}` | Discount or offer name |
-| `{discount.amount}` | Formatted discount amount (e.g. `"$10.00"`) |
-| `{discount.description}` | Human-readable description; empty when absent |
+| `{discount.amount}` | Formatted discount amount (e.g. "$10.00") |
+| `{discount.description}` | Human-readable description (empty when not available) |
 
-### State classes
+### Discount list CSS classes
 
-| Class | When |
-|-------|------|
+| Class | When applied |
+|-------|-------------|
 | `next-discounts-empty` | No discounts for this package |
 | `next-discounts-has-items` | One or more discounts |
 
 Discount lists are populated after each price fetch. Before the first fetch, the containers are empty and carry the `next-discounts-empty` class.
 
 <Callout type="info">
-Per-package discounts come from the per-line breakdown in the price calculation. The offer/voucher filter (`data-next-discounts="offer"` / `="voucher"`) is not available at toggle level — per-line discounts from the API are not split by type. Use the unfiltered `data-next-discounts` attribute.
+Per-package discounts come from the per-line breakdown in the price calculation. The offer/voucher filter (`data-next-discounts="offer"` / `="voucher"`) is not available at the toggle level — use the unfiltered `data-next-discounts` attribute.
 </Callout>

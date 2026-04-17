@@ -3,6 +3,8 @@ title: Events
 sidebar_label: Events
 ---
 
+Events let you run custom code when something happens — for example, when a visitor adds an add-on or when prices update. This is an advanced feature; most setups do not need custom event handling.
+
 ## `toggle:toggled`
 
 **When:** A card is clicked and the cart operation completes (either add or remove).
@@ -18,7 +20,7 @@ sidebar_label: Events
 
 ## `toggle:selection-changed`
 
-**When:** After every cart sync — on init and whenever the cart changes.
+**When:** After every cart sync — on page load and whenever the cart changes.
 
 **Payload:**
 
@@ -30,7 +32,7 @@ sidebar_label: Events
 
 ## `toggle:price-updated`
 
-**When:** After price data is fetched and applied to a card — on init, after cart changes, after currency or voucher changes.
+**When:** After price data is fetched and applied to a card — on page load, after cart changes, after currency or coupon changes.
 
 **Payload:**
 
@@ -38,11 +40,13 @@ sidebar_label: Events
 |-------|------|-------------|
 | `packageId` | `number` | The `ref_id` of the card whose price was updated |
 
-This event bubbles to `document`. It is used internally by the external display system (`data-next-display="toggle.{packageId}.{property}"`) to update bound elements. You can also listen to it to react to price updates for a specific card.
+This event is used internally by the external display system (`data-next-display="toggle.{packageId}.{property}"`) to update bound elements. You can also listen to it to react to price updates for a specific card.
 
 ---
 
 ## Listening to Events
+
+To listen to these events, paste the following code into a `<script>` tag at the bottom of your page. The code runs after the page is ready.
 
 ```javascript
 window.nextReady.push(() => {
@@ -52,6 +56,19 @@ window.nextReady.push(() => {
 
   window.next.on('toggle:selection-changed', ({ selected }) => {
     console.log('Active packages:', selected);
+  });
+});
+```
+
+### Example: Track add-on selections in analytics
+
+```javascript
+window.nextReady.push(() => {
+  window.next.on('toggle:toggled', ({ packageId, added }) => {
+    // Send to Google Analytics
+    gtag('event', added ? 'addon_added' : 'addon_removed', {
+      package_id: packageId
+    });
   });
 });
 ```

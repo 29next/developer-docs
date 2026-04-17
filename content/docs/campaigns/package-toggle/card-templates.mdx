@@ -5,9 +5,11 @@ sidebar_label: Card Templates
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Instead of writing a separate HTML card for each add-on, you can give the toggle a list of packages and one reusable card template. The toggle repeats the template once for each package in the list, filling in the details automatically.
+Instead of writing a separate HTML card for each add-on, you can give the toggle a list of packages and one reusable card template. The toggle creates a card for each package in the list, filling in the details automatically.
 
-This is useful when the set of add-ons is decided by campaign configuration rather than hardcoded in the page HTML.
+<Callout type="info">
+Use card templates when your add-ons are set up in campaign configuration and you do not want to write a separate HTML card for each one.
+</Callout>
 
 ```html
 <!-- The container holds the package list and points to the template -->
@@ -37,6 +39,14 @@ This is useful when the set of add-ons is decided by campaign configuration rath
 
 `data-next-packages` holds a list of packages in JSON format. Each entry needs at least a `packageId` — the `ref_id` of the package from your campaign.
 
+The smallest possible list:
+
+```json
+[{ "packageId": 201 }]
+```
+
+A list with extra fields:
+
 ```json
 [
   { "packageId": 201, "label": "2-Year Warranty" },
@@ -44,9 +54,9 @@ This is useful when the set of add-ons is decided by campaign configuration rath
 ]
 ```
 
-Set `"selected": true` on an entry to auto-add that package when the page loads — same effect as `data-next-selected="true"` on a static card.
+Set `"selected": true` on an entry to add that package automatically when the page loads — same effect as `data-next-selected="true"` on a static card.
 
-Any extra fields you add (like `label` above) become available as `{toggle.<fieldName>}` placeholders in the template.
+Any extra fields you add (like `label` above) become available as `{toggle.<fieldName>}` placeholders in the template. For example, `{"label": "Warranty"}` becomes `{toggle.label}` in the card.
 
 ---
 
@@ -54,9 +64,9 @@ Any extra fields you add (like `label` above) become available as `{toggle.<fiel
 
 Use `{toggle.<name>}` anywhere in your template HTML to insert a value.
 
-**Fields pulled from your package list:**
+**Your custom fields:**
 
-Any field you include in the package list entry is available. For example, `{"label": "Warranty"}` → `{toggle.label}`.
+Any field you include in the package list entry is available as a placeholder. For example, `{"label": "Warranty", "description": "Full coverage"}` gives you `{toggle.label}` and `{toggle.description}`.
 
 **Fields filled in automatically from the campaign:**
 
@@ -66,13 +76,13 @@ Any field you include in the package list entry is available. For example, `{"la
 | `{toggle.name}` | Package name |
 | `{toggle.image}` | Package image URL |
 | `{toggle.quantity}` | Package quantity |
-| `{toggle.productId}` | Product ID (empty if not set) |
+| `{toggle.productId}` | Product ID |
 | `{toggle.productName}` | Product name |
 | `{toggle.variantName}` | Product variant name |
-| `{toggle.variantId}` | Product variant ID (empty if no variant) |
-| `{toggle.sku}` | Product SKU (empty if not set) |
+| `{toggle.variantId}` | Product variant ID |
+| `{toggle.sku}` | Product SKU |
 
-**Price fields (provisional values from campaign data):**
+**Price fields (estimated values from campaign data):**
 
 | Placeholder | What it shows |
 |-------------|---------------|
@@ -98,14 +108,14 @@ Any field you include in the package list entry is available. For example, `{"la
 | `{toggle.isSelected}` | `"true"` / `"false"` — whether the package is in the cart |
 
 <Callout type="info">
-Price placeholders are filled with **provisional values** from the campaign package data at render time. For live, cart-aware prices that update after each price fetch, use `[data-next-toggle-display]` slots inside the card — see [Displaying Prices](./prices).
+Price placeholders show estimated values when the card first appears. For live prices that update as the cart changes, use `data-next-toggle-display` fields inside the card — see [Displaying Prices](./prices).
 </Callout>
 
 ---
 
 ## Embedding the Template in the Attribute
 
-If the template is short, you can write it directly in the attribute instead of using a `<template>` element.
+If the template is very short, you can write it directly in the attribute instead of using a separate `<template>` element:
 
 ```html
 <div data-next-package-toggle
@@ -114,13 +124,13 @@ If the template is short, you can write it directly in the attribute instead of 
 </div>
 ```
 
-For anything beyond a single line, the `<template>` approach is easier to read and maintain.
+For most cases, use the `<template>` element approach. The inline attribute is only practical for very short one-line cards.
 
 ---
 
 ## Conditional Display in Templates
 
-Use `data-next-show` and `data-next-hide` on elements inside a card template to toggle visibility based on template variables.
+Use `data-next-show` and `data-next-hide` on elements inside a card template to show or hide content based on the card's data.
 
 - `data-next-show="hasDiscount"` — visible when the item has a discount, hidden otherwise
 - `data-next-hide="isRecurring"` — hidden when the item is recurring, visible otherwise
@@ -151,4 +161,4 @@ Use `data-next-show` and `data-next-hide` on elements inside a card template to 
 </template>
 ```
 
-Any `data-next-show` / `data-next-hide` value that matches a template variable (e.g. `hasDiscount`, `isRecurring`, `isSelected`) is evaluated locally at render time. Store-based conditions like `data-next-show="cart.itemCount > 0"` still work inside card templates — they are handled by the global Conditional Display enhancer after the card enters the DOM.
+Any `data-next-show` / `data-next-hide` value that matches a template variable (e.g. `hasDiscount`, `isRecurring`, `isSelected`) is evaluated when the card is created. Store-based conditions like `data-next-show="cart.itemCount > 0"` still work inside card templates — they are handled by the global Conditional Display system after the card enters the page.
