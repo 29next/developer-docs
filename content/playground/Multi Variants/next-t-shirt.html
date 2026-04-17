@@ -1,149 +1,644 @@
 <!--
 title: Next T-Shirt
-description: 
+description:
 layout: center
 -->
 
-<link
-  href="https://developers.nextcommerce.com/assets/css/next-core.css"
-  rel="stylesheet"
-  type="text/css"
-/>
-<meta name="next-api-key" content="AfTBZD0hMflqyO3AMRdrnN7tldUzCzl0G5BCdfSj" />
+<meta name="next-api-key" content="Lj41tZAXbaw9H6ZEruZ36w8ExL5sdhkCznBsS5mq" />
 
-<div class="checkout-selectors cart-box cart-box--card">
-  <div class="form-section form-section--first">
-    <h2 class="form-section__title">Choose your package</h2>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  /* ==========================================================================
+     Theme tokens
+     --------------------------------------------------------------------------
+     Reskin the whole component by overriding these variables.
+     Switch theme by setting `data-theme="dark"` on the `.shop` wrapper.
+     ========================================================================== */
+  .shop {
+    --color-bg: #f7f7f5;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f3f2ef;
+    --color-border: #e7e5e0;
+    --color-border-strong: #cfccc3;
+    --color-text: #141413;
+    --color-text-muted: #6b6b66;
+
+    --color-primary: #ff6b2c;
+    --color-primary-soft: #fff1e9;
+    --color-primary-contrast: #ffffff;
+
+    --color-accent: #1f6feb;
+    --color-accent-contrast: #ffffff;
+
+    --color-success: #1e8a4a;
+    --color-success-soft: #e6f4ec;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-full: 999px;
+
+    --shadow-sm: 0 1px 2px rgba(20, 20, 19, 0.06);
+    --shadow-md: 0 8px 22px rgba(20, 20, 19, 0.09);
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+
+    --font-sans: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-numeric: 'Inter', system-ui, sans-serif;
+    --transition: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .shop[data-theme='dark'] {
+    --color-bg: #0f0f0e;
+    --color-surface: #1a1a18;
+    --color-surface-alt: #141413;
+    --color-border: #2a2a27;
+    --color-border-strong: #3a3a36;
+    --color-text: #f7f7f5;
+    --color-text-muted: #9a9a93;
+    --color-primary-soft: #3a1f10;
+    --color-success-soft: #0f2a1a;
+  }
+
+  /* ==========================================================================
+     Layout
+     ========================================================================== */
+  .shop {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-bg);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    max-width: 920px;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .shop__section { display: grid; gap: var(--space-4); }
+
+  .shop__section-title {
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  /* ==========================================================================
+     Bundle grid + card
+     ========================================================================== */
+  .bundle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  @media (max-width: 640px) {
+    .bundle-grid { grid-template-columns: 1fr; }
+  }
+
+  .bundle-card {
+    position: relative;
+    display: grid;
+    gap: var(--space-3);
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    cursor: pointer;
+    transition:
+      border-color var(--transition),
+      transform var(--transition),
+      box-shadow var(--transition);
+  }
+  .bundle-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .bundle-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+  .bundle-card.next-selected {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-soft);
+  }
+
+  /* Badge */
+  .bundle-card__badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    color: var(--color-accent-contrast);
+    background: var(--color-accent);
+    box-shadow: var(--shadow-sm);
+  }
+  .bundle-card__badge[data-badge=''] { display: none; }
+  .bundle-card__badge--success {
+    background: var(--color-success);
+  }
+  .bundle-card__badge-icon { width: 12px; height: 12px; }
+
+  /* Header: radio + title */
+  .bundle-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border-strong);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: var(--color-surface);
+    transition: border-color var(--transition);
+  }
+  .radio__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: transparent;
+    transition: background var(--transition);
+  }
+  .bundle-card.next-selected .radio { border-color: var(--color-primary); }
+  .bundle-card.next-selected .radio__dot { background: var(--color-primary); }
+
+  .bundle-card__title {
+    font-weight: 650;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  /* Footer: subtitle + savings */
+  .bundle-card__footer { display: grid; gap: var(--space-1); }
+  .bundle-card__subtitle {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+  .bundle-card__savings {
+    justify-self: start;
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-success);
+    background: var(--color-success-soft);
+    border-radius: var(--radius-full);
+    line-height: 1.4;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  /* Hide the savings pill when the bundle has no savings.
+     `{bundle.hasSavings}` resolves to `has-savings` for discounted bundles,
+     empty string otherwise. */
+  .bundle-card__savings:not(.has-savings) { display: none; }
+
+  /* ==========================================================================
+     Slot stage — horizontal layout: hero on left, price + variants on right.
+     On narrow viewports, stacks vertically.
+     ========================================================================== */
+  .slot-stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 560px));
+    gap: var(--space-4);
+    justify-content: center;
+  }
+
+  .slot {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .slot__hero {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .slot__badge {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-variant-numeric: tabular-nums;
+  }
+  .slot__hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: var(--space-3);
+  }
+  .slot__content {
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+
+  @media (max-width: 480px) {
+    .slot { grid-template-columns: 1fr; }
+    .slot__hero {
+      aspect-ratio: 4 / 3;
+      max-height: 260px;
+    }
+    .slot__hero img { padding: var(--space-2); }
+  }
+
+  @media (max-width: 640px) {
+    .shop {
+      padding: var(--space-4);
+      gap: var(--space-6);
+      border-radius: var(--radius-md);
+    }
+    .shop__section { gap: var(--space-3); }
+    .shop__section-title { font-size: 16px; }
+    .bundle-card { padding: var(--space-4); }
+    .bundle-card__title { font-size: 15px; }
+    .slot__content {
+      padding: var(--space-4);
+      gap: var(--space-4);
+    }
+    .price--current { font-size: 30px; }
+  }
+
+  /* Pricing hierarchy
+     ------------------------------------------------------------------
+     Row 1 — dominant current price. Row 2 — "was" anchor + savings badge.
+     Splitting the rows gives the discounted price full visual weight and
+     makes the anchor + savings read as supporting evidence, not clutter.
+     Tabular numerals keep digits column-aligned across sizes/quantities.
+     ------------------------------------------------------------------ */
+  .slot__pricing {
+    display: grid;
+    gap: 6px;
+    font-family: var(--font-numeric);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum', 'lnum', 'ss01';
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .price-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .price--current {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-text);
+  }
+  .price--suffix {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+  .price--was {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .price--strike {
+    text-decoration: line-through;
+    color: var(--color-text-muted);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  /* Punchy filled badge — the "you save" signal is the CTA driver. */
+  .price__savings {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--color-success);
+    border-radius: var(--radius-full);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .price__savings::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+  }
+
+  /* ==========================================================================
+     Variant pills — SDK injects grouped pill options into `.slot__variants`.
+     ========================================================================== */
+  .slot__variants { display: grid; gap: var(--space-3); }
+
+  .variant-group { display: grid; gap: 6px; }
+  .variant-group__label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .variant-group__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  [data-next-variant-selectors] {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .variant-pill {
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 5px 12px;
+    cursor: pointer;
+    transition:
+      border-color var(--transition),
+      background var(--transition),
+      color var(--transition),
+      transform var(--transition);
+  }
+  .variant-pill:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-1px);
+  }
+  .variant-pill:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .variant-pill.next-variant-selected {
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+  .variant-pill.next-variant-unavailable {
+    opacity: 0.45;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
+  /* Color swatches — turn Color pills into dot + label */
+  .variant-pill[data-next-variant-option='color' i] {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 6px;
+  }
+  .variant-pill[data-next-variant-option='color' i]::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--swatch, currentColor);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+  }
+  .variant-pill[data-next-variant-value='Gray'   i] { --swatch: #a1a1aa; }
+  .variant-pill[data-next-variant-value='White'  i] { --swatch: #ffffff; }
+  .variant-pill[data-next-variant-value='Black'  i] { --swatch: #111111; }
+  .variant-pill[data-next-variant-value='Green'  i] { --swatch: #16a34a; }
+  .variant-pill[data-next-variant-value='Blue'   i] { --swatch: #2563eb; }
+  .variant-pill[data-next-variant-value='Pink'   i] { --swatch: #ec4899; }
+  .variant-pill[data-next-variant-value='Violet' i] { --swatch: #8b5cf6; }
+  .variant-pill[data-next-variant-value='Yellow' i] { --swatch: #eab308; }
+  .variant-pill[data-next-variant-value='Orange' i] { --swatch: #f97316; }
+  .variant-pill[data-next-variant-value='Red'    i] { --swatch: #dc2626; }
+
+  /* Theme toggle — demonstrates theme configurability */
+  .shop__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: calc(var(--space-4) * -1);
+  }
+  .theme-toggle {
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 6px 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color var(--transition), color var(--transition);
+  }
+  .theme-toggle:hover { border-color: var(--color-border-strong); color: var(--color-text); }
+  .theme-toggle__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-text);
+  }
+</style>
+
+<div class="shop" data-theme="light">
+  <div class="shop__toolbar">
+    <button
+      type="button"
+      class="theme-toggle"
+      onclick="(function(b){var s=b.closest('.shop');s.dataset.theme=s.dataset.theme==='dark'?'light':'dark';})(this)"
+      aria-label="Toggle theme"
+    >
+      <span class="theme-toggle__dot"></span>
+      Theme
+    </button>
+  </div>
+
+  <section class="shop__section">
+    <h2 class="shop__section-title">Choose your package</h2>
+
     <div
-      class="os-cards__grid os--three"
+      class="bundle-grid"
       data-next-selector-id="main"
       data-next-bundle-selector
       data-next-selection-mode="swap"
       data-next-bundle-template-id="mv-bundle-template"
       data-next-bundle-slot-template-id="mv-slot-template"
+      data-next-variant-selector-template-id="mv-variant-selector-template"
+      data-next-variant-option-template-id="mv-variant-option-template"
       data-next-bundles='[
         {
           "id": "basic-set",
           "shippingId": "2",
-          "title": "1x Unit",
-          "subtitle": "Next Commerce Shirts",
-          "items": [{"packageId":1,"quantity":1,"configurable":true}],
-          "vouchers": [],
-          "selected": true
-        },
-        {
-          "id": "duo-set",
-          "shippingId": "2",
           "title": "2x Unit",
           "subtitle": "Next Commerce Shirts",
-          "badge": "Most Popular",
-          "badgeClass": "os-card__label--pill-primary",
+          "hasSavings": "has-savings",
           "items": [{"packageId":1,"quantity":2,"configurable":true}],
           "vouchers": []
         },
         {
-          "id": "spacial-set",
+          "id": "duo-set",
           "shippingId": "2",
           "title": "3x Unit",
           "subtitle": "Next Commerce Shirts",
-          "badge": "Best Deal",
-          "badgeClass": "os-card__label--pill-secondary",
+          "badge": "Most Popular",
+          "hasSavings": "has-savings",
           "items": [{"packageId":1,"quantity":3,"configurable":true}],
+          "vouchers": [],
+          "selected": true
+        },
+        {
+          "id": "special-set",
+          "shippingId": "2",
+          "title": "4x Unit",
+          "subtitle": "Next Commerce Shirts",
+          "badge": "Best Deal",
+          "badgeClass": "bundle-card__badge--success",
+          "hasSavings": "has-savings",
+          "items": [{"packageId":1,"quantity":4,"configurable":true}],
           "vouchers": []
         }
       ]'
-      class="os-option"
     ></div>
+
     <template id="mv-bundle-template">
       <div
         data-next-bundle-card
         data-next-bundle-id="{bundle.id}"
         role="button"
-        class="os-card"
+        tabindex="0"
+        class="bundle-card"
       >
-        <div class="os-card__header-slot">
-          <div os-label-position="top-right" data-badge="{bundle.badge}" class="os-card__label-2 os-card__label--middle-center {bundle.badgeClass}">
-            <div class="card-icons"><svg width="100%" height="100%" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="#FF9425"></path>
-            </svg></div>
-            <div class="os-card__label-text-2">{bundle.badge}</div>
+        <div class="bundle-card__badge {bundle.badgeClass}" data-badge="{bundle.badge}">
+          <svg class="bundle-card__badge-icon" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="currentColor"/>
+          </svg>
+          <span>{bundle.badge}</span>
+        </div>
+
+        <div class="bundle-card__header">
+          <div class="radio">
+            <span class="radio__dot"></span>
+          </div>
+          <div class="bundle-card__title" data-next-display="package.name">
+            {bundle.title}
           </div>
         </div>
-        <div class="os-card__wrapper cc-sm">
-          <div class="os-card__content os-wrap">
-            <div class="os-card__radio">
-              <div data-selected="true" class="radio-style-1">
-                <div class="radio-inner"></div>
-              </div>
-            </div>
-            <div class="os-card__main-slot">
-              <div class="os-card__title-section">
-                <div class="os-card__title-wrapper">
-                  <div
-                    data-next-display="package.name"
-                    class="os-card__title-2 os-bold"
-                  >
-                    {bundle.title}
-                  </div>
-                </div>
-              </div>
-            </div>
+
+        <div class="bundle-card__footer">
+          <div class="bundle-card__subtitle">{bundle.subtitle}</div>
+          <div class="bundle-card__savings {bundle.hasSavings}">
+            Save <span data-next-bundle-price="savingsPercentage">0%</span> OFF
           </div>
-          <div os-slot="bottom" class="os-card__bottom-slot cc-gap">
-            <div class="card-sup">{bundle.subtitle}</div>
-            <div class="os-card__subtitle-text-2">
-              Save
-              <span data-next-bundle-price="savingsPercentage">XX%</span> OFF
-            </div>
-          </div>
-        </div>
-        <div os-slot="footer" class="os-card__footer-slot"></div>
-        <div class="os-slots bundle-slots-source" style="display: none">
-          <div data-next-bundle-slots></div>
         </div>
       </div>
     </template>
+
     <template id="mv-slot-template">
-      <div class="next-slot">
-        <div class="next-slot__step">
-          <div># {slot.unitNumber}</div>
+      <div class="slot">
+        <div class="slot__hero">
+          <span class="slot__badge">Unit {slot.unitNumber}</span>
+          <img loading="lazy" alt="" src="{item.image}" />
         </div>
-        <div class="slot__right">
-          <div class="step__wrap">
-            <div class="next-slot__image">
-              <img loading="lazy" alt="" src="{item.image}" />
+        <div class="slot__content">
+          <div class="slot__pricing">
+            <div class="price-row">
+              <span class="price price--current">{item.unitPrice}</span>
+              <span class="price price--suffix">/ea</span>
             </div>
-            <div class="os-card__pricing">
-              <div class="os-card__price-container os--stacked">
-                <div class="os-card__price diagonal-strike">
-                  {item.originalUnitPrice}
-                </div>
-                <div class="os-card__price os--current">
-                  {item.unitPrice}/ea
-                </div>
-                <div class="os-card__subtitle-text-2 {item.hasDiscount}">
-                  Save <span>{item.discountPercentage}</span> OFF
-                </div>
-              </div>
+            <div class="price-meta">
+              <span class="price--was">Was</span>
+              <span class="price price--strike">{item.originalUnitPrice}</span>
+              <span class="price__savings {item.hasDiscount}">
+                Save <span>{item.discountPercentage}</span>
+              </span>
             </div>
           </div>
-          <div class="os-slot__selection cc-big">
-            <div class="os-card__variant-options">
-              <div class="os-card__variant-grid cc-horiz">
-                <div data-next-variant-selectors></div>
-              </div>
-            </div>
+          <div class="slot__variants">
+            <div data-next-variant-selectors></div>
           </div>
         </div>
       </div>
     </template>
-  </div>
-  <div class="form-section form-section--first">
-    <h2 class="form-section__title">Select your color and size</h2>
+
+    <template id="mv-variant-selector-template">
+      <div class="variant-group">
+        <div class="variant-group__label">{attr.name}</div>
+        <div class="variant-group__options" data-next-variant-options></div>
+      </div>
+    </template>
+
+    <template id="mv-variant-option-template">
+      <button type="button" class="variant-pill" aria-pressed="{option.selected}">
+        {option.value}
+      </button>
+    </template>
+  </section>
+
+  <section class="shop__section">
+    <h2 class="shop__section-title">Select your color and size</h2>
     <div
       id="bundle-slots-stage"
-      class="os-slots"
+      class="slot-stage"
       data-next-bundle-slots-for="main"
     ></div>
-  </div>
+  </section>
 </div>
