@@ -4,7 +4,7 @@ sidebar_position: 3
 ---
 import { Callout } from 'fumadocs-ui/components/callout';
 
-The Next Commerce JS SDK emits events that you can listen to for tracking and custom functionality. The SDK has 34 internal events that can be listened to via `next.on()`.
+The Next Commerce JS SDK emits events that you can listen to for tracking and custom functionality. The SDK has 35 internal events that can be listened to via `next.on()`.
 
 ## Event Categories
 
@@ -165,12 +165,28 @@ next.on('checkout:form-initialized', () => {
 
 ### `order:completed`
 
-Fired when order is successfully completed:
+Fired when the order has been successfully created, just before the SDK redirects to the success URL:
 
 ```javascript
 next.on('order:completed', (order) => {
   console.log('Order completed:', order);
   // order includes: ref_id, total, lines, customer info
+});
+```
+
+<Callout type="info">
+  After this event fires, the SDK automatically clears the cart and checkout state (items, vouchers, shipping method, form data, payment token, billing address) and then navigates to the resolved success URL. If you need to read cart or voucher data for analytics or custom cleanup, do it inside the `order:completed` handler — the stores are reset immediately afterward.
+</Callout>
+
+### `order:redirect-missing`
+
+Fired when the order was created but no redirect URL could be resolved (no `payment_complete_url`, no `os-next-page` meta tag, no `order_status_url`, and the fallback confirmation URL was rejected):
+
+```javascript
+next.on('order:redirect-missing', ({ order }) => {
+  // Cart and checkout state are NOT auto-reset in this branch, so the
+  // merchant can retry or recover. Clear manually after your own redirect:
+  window.location.href = `/thank-you?ref_id=${order.ref_id}`;
 });
 ```
 
@@ -476,7 +492,7 @@ next.on('error:occurred', (error) => {
 
 ## Complete Event List
 
-Here are all 34 available events organized by category:
+Here are all 35 available events organized by category:
 
 ### Cart (5 events)
 - `cart:updated` - Cart state changed
@@ -485,10 +501,11 @@ Here are all 34 available events organized by category:
 - `cart:quantity-changed` - Item quantity changed
 - `cart:package-swapped` - Package swapped for another
 
-### Checkout & Order (3 events)
+### Checkout & Order (4 events)
 - `checkout:started` - Checkout process began
 - `checkout:form-initialized` - Checkout form ready
 - `order:completed` - Order successfully completed
+- `order:redirect-missing` - Order created but no redirect URL resolved
 
 ### Payment (3 events)
 - `payment:tokenized` - Payment token created
@@ -656,7 +673,7 @@ if (window.location.search.includes('debug=true')) {
     // Cart
     'cart:updated', 'cart:item-added', 'cart:item-removed', 'cart:quantity-changed', 'cart:package-swapped',
     // Checkout & Order
-    'checkout:started', 'checkout:form-initialized', 'order:completed',
+    'checkout:started', 'checkout:form-initialized', 'order:completed', 'order:redirect-missing',
     // Payment
     'payment:tokenized', 'payment:error', 'express-checkout:started',
     // Campaign & Config
