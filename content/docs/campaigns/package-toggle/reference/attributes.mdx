@@ -14,6 +14,7 @@ Complete reference of all Addon Toggle attributes. For guided explanations with 
 | `data-next-packages` | JSON array of package definitions for generating cards from a list; creates one card per entry when a template is also set |
 | `data-next-toggle-template-id` | ID of a `<template>` element whose `innerHTML` is the card template |
 | `data-next-toggle-template` | Inline card template string (alternative to `data-next-toggle-template-id`) |
+| `data-next-upsell-context` | Switches the toggle to post-purchase upsell mode — clicks call the order API instead of the cart. Used on upsell/thank-you pages |
 
 ---
 
@@ -27,8 +28,20 @@ Complete reference of all Addon Toggle attributes. For guided explanations with 
 | `data-next-quantity` | Quantity to add when toggling on (default `1`); ignored when `data-next-package-sync` is set |
 | `data-next-package-sync` | Comma-separated list of package IDs — quantity mirrors the sum of those packages currently in the cart |
 | `data-next-is-upsell="true"` | Marks the item as an upsell/bump for order tracking |
+| `data-next-url` | Navigation URL after a successful upsell add; only used when `data-next-upsell-context` is set on the container. Falls back to a `<meta name="next-upsell-url">` tag if not provided |
 | `data-add-text` | Text shown in the button text target when the package is **not** in the cart |
 | `data-remove-text` | Text shown in the button text target when the package **is** in the cart |
+
+---
+
+## Card Helper Attributes
+
+Place these on elements **inside** a card to bind specific behaviors.
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-next-button-text` | Marks a child element as the text target for `data-add-text` / `data-remove-text`. When present, the button text is updated on this element instead of the card's own `textContent` |
+| `data-next-toggle-image` | Shorthand for `data-next-toggle-display="image"` on `<img>` elements — sets the `src` from the package image automatically |
 
 ---
 

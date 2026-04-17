@@ -44,6 +44,22 @@ This event is used internally by the external display system (`data-next-display
 
 ---
 
+## `upsell:added`
+
+**When:** A card inside a `data-next-upsell-context` container is clicked and the upsell is successfully added to the order.
+
+**Payload:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `packageId` | `number` | The `ref_id` of the package that was added as an upsell |
+| `quantity` | `number` | The quantity that was added |
+| `order` | `object` | The updated order object returned by the API |
+
+After this event, the page navigates to the URL specified by `data-next-url` on the card (or the `<meta name="next-upsell-url">` fallback).
+
+---
+
 ## Listening to Events
 
 To listen to these events, paste the following code into a `<script>` tag at the bottom of your page. The code runs after the page is ready.

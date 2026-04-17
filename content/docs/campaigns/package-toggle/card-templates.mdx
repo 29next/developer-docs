@@ -54,9 +54,26 @@ A list with extra fields:
 ]
 ```
 
-Set `"selected": true` on an entry to add that package automatically when the page loads — same effect as `data-next-selected="true"` on a static card.
+### Reserved fields
 
-Any extra fields you add (like `label` above) become available as `{toggle.<fieldName>}` placeholders in the template. For example, `{"label": "Warranty"}` becomes `{toggle.label}` in the card.
+| Field | Type | Description |
+|-------|------|-------------|
+| `packageId` | `number` | **Required.** Package `ref_id` from your campaign |
+| `selected` | `boolean` | Add this package to the cart automatically on page load — same effect as `data-next-selected="true"` on a static card |
+| `quantity` | `number` | Quantity to add when toggling on (default `1`); ignored when `packageSync` is set |
+| `packageSync` | `string` | Comma-separated list of package IDs — quantity mirrors the sum of those packages in the cart. Same effect as `data-next-package-sync` on a static card |
+
+Any extra fields you add (like `label` below) become available as `{toggle.<fieldName>}` placeholders in the template. For example, `{"label": "Warranty"}` becomes `{toggle.label}` in the card.
+
+### Example with all reserved fields
+
+```json
+[
+  { "packageId": 201, "label": "2-Year Warranty", "selected": true },
+  { "packageId": 202, "label": "Shipping Insurance", "quantity": 2 },
+  { "packageId": 203, "label": "Extended Coverage", "packageSync": "10,11,12" }
+]
+```
 
 ---
 
