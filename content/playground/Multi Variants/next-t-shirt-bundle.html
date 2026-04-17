@@ -10,35 +10,36 @@ order: 2
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap"
   rel="stylesheet"
 />
 
 <div class="shop" data-theme="light">
-  <div class="shop__toolbar">
-    <button
-      type="button"
-      class="theme-toggle"
-      onclick="(function(b){var s=b.closest('.shop');s.dataset.theme=s.dataset.theme==='dark'?'light':'dark';})(this)"
-      aria-label="Toggle theme"
-    >
-      <span class="theme-toggle__dot"></span>
-      Theme
+  <div class="shop-toolbar">
+    <label class="currency-switcher" hidden data-currency-switcher-wrap>
+      <span class="currency-switcher-label">Currency</span>
+      <select
+        class="currency-switcher-select"
+        data-currency-switcher
+        aria-label="Change currency"
+      ></select>
+    </label>
+    <button type="button" class="theme-toggle" data-theme-toggle>
+      <span class="theme-toggle-dot" aria-hidden="true"></span>
+      Toggle theme
     </button>
   </div>
 
-  <section class="shop__section">
-    <h2 class="shop__section-title">Choose your package</h2>
+  <section class="shop-section">
+    <h2 class="section-title">Choose your package</h2>
 
     <div
       class="bundle-grid"
+      role="group"
+      aria-label="Choose your bundle"
       data-next-selector-id="main"
       data-next-bundle-selector
       data-next-selection-mode="swap"
-      data-next-bundle-template-id="mv-bundle-template"
-      data-next-bundle-slot-template-id="mv-slot-template"
-      data-next-variant-selector-template-id="mv-variant-selector-template"
-      data-next-variant-option-template-id="mv-variant-option-template"
       data-next-bundles='[
         {
           "id": "basic-set",
@@ -66,97 +67,160 @@ order: 2
           "title": "4x Unit",
           "subtitle": "Next Commerce Shirts",
           "badge": "Best Deal",
-          "badgeClass": "bundle-card__badge--success",
+          "badgeClass": "bundle-badge-success",
           "hasSavings": "has-savings",
           "items": [{"packageId":1,"quantity":4,"configurable":true}],
           "vouchers": []
         }
       ]'
-    ></div>
-
-    <template id="mv-bundle-template">
-      <div
-        data-next-bundle-card
-        data-next-bundle-id="{bundle.id}"
-        role="button"
-        tabindex="0"
-        class="bundle-card"
-      >
-        <div class="bundle-card__badge {bundle.badgeClass}" data-badge="{bundle.badge}">
-          <svg class="bundle-card__badge-icon" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z" fill="currentColor"/>
-          </svg>
-          <span>{bundle.badge}</span>
-        </div>
-
-        <div class="bundle-card__header">
-          <div class="radio">
-            <span class="radio__dot"></span>
+    >
+      <template>
+        <div
+          data-next-bundle-card
+          data-next-bundle-id="{bundle.id}"
+          role="button"
+          tabindex="0"
+          class="bundle-card"
+        >
+          <div
+            class="bundle-badge {bundle.badgeClass}"
+            data-badge="{bundle.badge}"
+          >
+            <svg
+              class="bundle-badge-icon"
+              viewBox="0 0 13 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M6.49512 0.5L8.40542 4.37069L12.677 4.99139L9.58605 8.00431L10.3157 12.2586L6.49512 10.25L2.67451 12.2586L3.40418 8.00431L0.31325 4.99139L4.58482 4.37069L6.49512 0.5Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>{bundle.badge}</span>
           </div>
-          <div class="bundle-card__title" data-next-display="package.name">
-            {bundle.title}
-          </div>
-        </div>
 
-        <div class="bundle-card__footer">
-          <div class="bundle-card__subtitle">{bundle.subtitle}</div>
-          <div class="bundle-card__savings {bundle.hasSavings}">
-            Save <span data-next-bundle-price="savingsPercentage">0%</span> OFF
-          </div>
-        </div>
-      </div>
-    </template>
-
-    <template id="mv-slot-template">
-      <div class="slot">
-        <div class="slot__hero">
-          <span class="slot__badge">Unit {slot.unitNumber}</span>
-          <img loading="lazy" alt="" src="{item.image}" />
-        </div>
-        <div class="slot__content">
-          <div class="slot__pricing">
-            <div class="price-row">
-              <span class="price price--current">{item.unitPrice}</span>
-              <span class="price price--suffix">/ea</span>
+          <div class="bundle-header">
+            <div class="radio" aria-hidden="true">
+              <span class="radio-dot"></span>
             </div>
-            <div class="price-meta">
-              <span class="price--was">Was</span>
-              <span class="price price--strike">{item.originalUnitPrice}</span>
-              <span class="price__savings {item.hasDiscount}">
-                Save <span>{item.discountPercentage}</span>
-              </span>
+            <div class="bundle-title">{bundle.title}</div>
+          </div>
+
+          <div class="bundle-footer">
+            <div class="bundle-subtitle">{bundle.subtitle}</div>
+            <div class="bundle-savings" data-next-discounts="offer">
+              <template>
+                <span>{discount.name}</span>
+              </template>
+            </div>
+            <div class="bundle-savings" data-next-discounts="voucher">
+              <template>
+                <span>{discount.name}</span>
+              </template>
             </div>
           </div>
-          <div class="slot__variants">
-            <div data-next-variant-selectors></div>
-          </div>
         </div>
-      </div>
-    </template>
-
-    <template id="mv-variant-selector-template">
-      <div class="variant-group">
-        <div class="variant-group__label">{attr.name}</div>
-        <div class="variant-group__options" data-next-variant-options></div>
-      </div>
-    </template>
-
-    <template id="mv-variant-option-template">
-      <button type="button" class="variant-pill" aria-pressed="{option.selected}">
-        {option.value}
-      </button>
-    </template>
+      </template>
+    </div>
   </section>
 
-  <section class="shop__section">
-    <h2 class="shop__section-title">Select your color and size</h2>
+  <section class="shop-section">
+    <h2 class="section-title">Select your color and size</h2>
     <div
       id="bundle-slots-stage"
       class="slot-stage"
       data-next-bundle-slots-for="main"
-    ></div>
+    >
+      <template>
+        <div class="slot" data-next-package-id="{item.packageId}">
+          <div class="slot-hero">
+            <span class="slot-badge">Unit {slot.unitNumber}</span>
+            <img alt="{item.name}" src="{item.image}" />
+          </div>
+          <div class="slot-content">
+            <div class="slot-pricing">
+              <div class="price-row">
+                <span class="price price-current">{item.unitPrice}</span>
+                <span class="price price-suffix">/ea</span>
+              </div>
+              <div class="price-meta" data-next-show="item.hasDiscount">
+                <span class="price-was">Was</span>
+                <span class="price price-strike"
+                  >{item.originalUnitPrice}</span
+                >
+                <span class="price-savings">
+                  Save <span>{item.discountPercentage}</span>
+                </span>
+              </div>
+            </div>
+            <div class="slot-variants">
+              <div data-next-variant-selectors>
+                <template>
+                  <div class="variant-group">
+                    <div class="variant-label">{attr.name}</div>
+                    <div
+                      class="variant-options"
+                      data-next-variant-options
+                    >
+                      <template>
+                        <button
+                          type="button"
+                          class="variant-pill"
+                          aria-pressed="{option.selected}"
+                        >
+                          {option.value}
+                        </button>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
   </section>
 </div>
+
+<script>
+  window.addEventListener('next:initialized', function () {
+    next.exitIntent({
+      image: 'https://placehold.co/600x400',
+      action: async () => {
+        const result = await next.applyCoupon('SP10D');
+        if (result.success) {
+          console.log('Coupon applied:', result.message);
+        } else {
+          console.log('Coupon failed:', result.message);
+        }
+      },
+    });
+
+    // Currency switcher — populate from campaign data and reload with ?currency=<code>
+    const campaign = next.getCampaignData && next.getCampaignData();
+    const currencies = (campaign && campaign.available_currencies) || [];
+    const select = document.querySelector('[data-currency-switcher]');
+    const wrap = document.querySelector('[data-currency-switcher-wrap]');
+    if (select && wrap && currencies.length > 1) {
+      const active = (campaign && campaign.currency) || 'USD';
+      select.innerHTML = currencies
+        .map(function (c) {
+          const selected = c.code === active ? ' selected' : '';
+          return '<option value="' + c.code + '"' + selected + '>' + c.label + '</option>';
+        })
+        .join('');
+      wrap.hidden = false;
+      select.addEventListener('change', function (e) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('currency', e.target.value);
+        window.location.href = url.toString();
+      });
+    }
+  });
+</script>
 
 <style>
   /* ==========================================================================
@@ -200,12 +264,14 @@ order: 2
     --space-6: 24px;
     --space-8: 32px;
 
-    --font-sans: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    --font-numeric: 'Inter', system-ui, sans-serif;
+    --font-sans:
+      "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+      sans-serif;
+    --font-numeric: "Inter", system-ui, sans-serif;
     --transition: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .shop[data-theme='dark'] {
+  .shop[data-theme="dark"] {
     --color-bg: #0f0f0e;
     --color-surface: #1a1a18;
     --color-surface-alt: #141413;
@@ -232,11 +298,14 @@ order: 2
     gap: var(--space-8);
   }
 
-  .shop__section { display: grid; gap: var(--space-4); }
+  .shop-section {
+    display: grid;
+    gap: var(--space-4);
+  }
 
-  .shop__section-title {
+  .section-title {
     font-size: 18px;
-    font-weight: 650;
+    font-weight: 600;
     letter-spacing: -0.01em;
     margin: 0;
   }
@@ -250,7 +319,9 @@ order: 2
     gap: var(--space-3);
   }
   @media (max-width: 640px) {
-    .bundle-grid { grid-template-columns: 1fr; }
+    .bundle-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .bundle-card {
@@ -282,7 +353,7 @@ order: 2
   }
 
   /* Badge */
-  .bundle-card__badge {
+  .bundle-badge {
     position: absolute;
     top: -10px;
     left: 50%;
@@ -301,14 +372,19 @@ order: 2
     background: var(--color-accent);
     box-shadow: var(--shadow-sm);
   }
-  .bundle-card__badge[data-badge=''] { display: none; }
-  .bundle-card__badge--success {
+  .bundle-badge[data-badge=""] {
+    display: none;
+  }
+  .bundle-badge-success {
     background: var(--color-success);
   }
-  .bundle-card__badge-icon { width: 12px; height: 12px; }
+  .bundle-badge-icon {
+    width: 12px;
+    height: 12px;
+  }
 
   /* Header: radio + title */
-  .bundle-card__header {
+  .bundle-header {
     display: flex;
     align-items: center;
     gap: var(--space-3);
@@ -325,45 +401,75 @@ order: 2
     background: var(--color-surface);
     transition: border-color var(--transition);
   }
-  .radio__dot {
+  .radio-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: transparent;
     transition: background var(--transition);
   }
-  .bundle-card.next-selected .radio { border-color: var(--color-primary); }
-  .bundle-card.next-selected .radio__dot { background: var(--color-primary); }
+  .bundle-card.next-selected .radio {
+    border-color: var(--color-primary);
+  }
+  .bundle-card.next-selected .radio-dot {
+    background: var(--color-primary);
+  }
 
-  .bundle-card__title {
-    font-weight: 650;
+  .bundle-title {
+    font-weight: 600;
     font-size: 16px;
     line-height: 1.2;
   }
 
   /* Footer: subtitle + savings */
-  .bundle-card__footer { display: grid; gap: var(--space-1); }
-  .bundle-card__subtitle {
+  .bundle-footer {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .bundle-subtitle {
     font-size: 12px;
     color: var(--color-text-muted);
   }
-  .bundle-card__savings {
+  .bundle-savings {
     justify-self: start;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 3px 10px;
     font-size: 12px;
     font-weight: 600;
-    color: var(--color-success);
-    background: var(--color-success-soft);
     border-radius: var(--radius-full);
     line-height: 1.4;
     white-space: nowrap;
     font-variant-numeric: tabular-nums lining-nums;
   }
-  /* Hide the savings pill when the bundle has no savings.
-     `{bundle.hasSavings}` resolves to `has-savings` for discounted bundles,
-     empty string otherwise. */
-  .bundle-card__savings:not(.has-savings) { display: none; }
+  /* Offer — automatic discount (earned). Green = positive/automatic. */
+  .bundle-savings[data-next-discounts="offer"] {
+    color: var(--color-success);
+    background: var(--color-success-soft);
+  }
+  .bundle-savings[data-next-discounts="offer"]::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  /* Voucher — applied code (redeemed). Primary = action-driven. */
+  .bundle-savings[data-next-discounts="voucher"] {
+    color: var(--color-primary);
+    background: var(--color-primary-soft);
+  }
+  .bundle-savings[data-next-discounts="voucher"]::before {
+    content: "%";
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  /* Hide discount containers with no matching items — toggled by the SDK. */
+  .bundle-savings.next-discounts-empty {
+    display: none;
+  }
 
   /* ==========================================================================
      Slot stage — horizontal layout: hero on left, price + variants on right.
@@ -384,7 +490,7 @@ order: 2
     border-radius: var(--radius-md);
     overflow: hidden;
   }
-  .slot__hero {
+  .slot-hero {
     position: relative;
     width: 100%;
     height: 100%;
@@ -393,7 +499,7 @@ order: 2
     place-items: center;
     overflow: hidden;
   }
-  .slot__badge {
+  .slot-badge {
     position: absolute;
     top: var(--space-2);
     left: var(--space-2);
@@ -411,14 +517,14 @@ order: 2
     border-radius: var(--radius-full);
     font-variant-numeric: tabular-nums;
   }
-  .slot__hero img {
+  .slot-hero img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
     padding: var(--space-3);
   }
-  .slot__content {
+  .slot-content {
     padding: var(--space-5);
     display: grid;
     gap: var(--space-5);
@@ -426,12 +532,16 @@ order: 2
   }
 
   @media (max-width: 480px) {
-    .slot { grid-template-columns: 1fr; }
-    .slot__hero {
+    .slot {
+      grid-template-columns: 1fr;
+    }
+    .slot-hero {
       aspect-ratio: 4 / 3;
       max-height: 260px;
     }
-    .slot__hero img { padding: var(--space-2); }
+    .slot-hero img {
+      padding: var(--space-2);
+    }
   }
 
   @media (max-width: 640px) {
@@ -440,15 +550,25 @@ order: 2
       gap: var(--space-6);
       border-radius: var(--radius-md);
     }
-    .shop__section { gap: var(--space-3); }
-    .shop__section-title { font-size: 16px; }
-    .bundle-card { padding: var(--space-4); }
-    .bundle-card__title { font-size: 15px; }
-    .slot__content {
+    .shop-section {
+      gap: var(--space-3);
+    }
+    .section-title {
+      font-size: 16px;
+    }
+    .bundle-card {
+      padding: var(--space-4);
+    }
+    .bundle-title {
+      font-size: 15px;
+    }
+    .slot-content {
       padding: var(--space-4);
       gap: var(--space-4);
     }
-    .price--current { font-size: 30px; }
+    .price-current {
+      font-size: 30px;
+    }
   }
 
   /* Pricing hierarchy
@@ -458,12 +578,12 @@ order: 2
      makes the anchor + savings read as supporting evidence, not clutter.
      Tabular numerals keep digits column-aligned across sizes/quantities.
      ------------------------------------------------------------------ */
-  .slot__pricing {
+  .slot-pricing {
     display: grid;
     gap: 6px;
     font-family: var(--font-numeric);
     font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: 'tnum', 'lnum', 'ss01';
+    font-feature-settings: "tnum", "lnum", "ss01";
   }
 
   .price-row {
@@ -478,33 +598,33 @@ order: 2
     gap: var(--space-2);
   }
 
-  .price--current {
+  .price-current {
     font-size: 36px;
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1;
     color: var(--color-text);
   }
-  .price--suffix {
+  .price-suffix {
     font-size: 14px;
     font-weight: 500;
     color: var(--color-text-muted);
   }
-  .price--was {
+  .price-was {
     font-size: 12px;
     font-weight: 600;
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
-  .price--strike {
+  .price-strike {
     text-decoration: line-through;
     color: var(--color-text-muted);
     font-size: 14px;
     font-weight: 500;
   }
   /* Punchy filled badge — the "you save" signal is the CTA driver. */
-  .price__savings {
+  .price-savings {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -519,8 +639,8 @@ order: 2
     letter-spacing: 0.04em;
     white-space: nowrap;
   }
-  .price__savings::before {
-    content: '';
+  .price-savings::before {
+    content: "";
     width: 0;
     height: 0;
     border-left: 4px solid transparent;
@@ -529,19 +649,25 @@ order: 2
   }
 
   /* ==========================================================================
-     Variant pills — SDK injects grouped pill options into `.slot__variants`.
+     Variant pills — SDK injects grouped pill options into `.slot-variants`.
      ========================================================================== */
-  .slot__variants { display: grid; gap: var(--space-3); }
+  .slot-variants {
+    display: grid;
+    gap: var(--space-3);
+  }
 
-  .variant-group { display: grid; gap: 6px; }
-  .variant-group__label {
+  .variant-group {
+    display: grid;
+    gap: 6px;
+  }
+  .variant-label {
     font-size: 11px;
     color: var(--color-text-muted);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
-  .variant-group__options {
+  .variant-options {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
@@ -588,14 +714,14 @@ order: 2
   }
 
   /* Color swatches — turn Color pills into dot + label */
-  .variant-pill[data-next-variant-option='color' i] {
+  .variant-pill[data-next-variant-option="color" i] {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding-left: 6px;
   }
-  .variant-pill[data-next-variant-option='color' i]::before {
-    content: '';
+  .variant-pill[data-next-variant-option="color" i]::before {
+    content: "";
     width: 14px;
     height: 14px;
     border-radius: 50%;
@@ -603,23 +729,94 @@ order: 2
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
     flex-shrink: 0;
   }
-  .variant-pill[data-next-variant-value='Gray'   i] { --swatch: #a1a1aa; }
-  .variant-pill[data-next-variant-value='White'  i] { --swatch: #ffffff; }
-  .variant-pill[data-next-variant-value='Black'  i] { --swatch: #111111; }
-  .variant-pill[data-next-variant-value='Green'  i] { --swatch: #16a34a; }
-  .variant-pill[data-next-variant-value='Blue'   i] { --swatch: #2563eb; }
-  .variant-pill[data-next-variant-value='Pink'   i] { --swatch: #ec4899; }
-  .variant-pill[data-next-variant-value='Violet' i] { --swatch: #8b5cf6; }
-  .variant-pill[data-next-variant-value='Yellow' i] { --swatch: #eab308; }
-  .variant-pill[data-next-variant-value='Orange' i] { --swatch: #f97316; }
-  .variant-pill[data-next-variant-value='Red'    i] { --swatch: #dc2626; }
+  .variant-pill[data-next-variant-value="Gray" i] {
+    --swatch: #a1a1aa;
+  }
+  .variant-pill[data-next-variant-value="White" i] {
+    --swatch: #ffffff;
+    --swatch-ring: rgba(0, 0, 0, 0.35);
+  }
+  .variant-pill[data-next-variant-value="White" i]::before {
+    box-shadow: inset 0 0 0 1px var(--swatch-ring);
+  }
+  .variant-pill[data-next-variant-value="Black" i] {
+    --swatch: #111111;
+  }
+  .variant-pill[data-next-variant-value="Green" i] {
+    --swatch: #16a34a;
+  }
+  .variant-pill[data-next-variant-value="Blue" i] {
+    --swatch: #2563eb;
+  }
+  .variant-pill[data-next-variant-value="Pink" i] {
+    --swatch: #ec4899;
+  }
+  .variant-pill[data-next-variant-value="Violet" i] {
+    --swatch: #8b5cf6;
+  }
+  .variant-pill[data-next-variant-value="Yellow" i] {
+    --swatch: #eab308;
+  }
+  .variant-pill[data-next-variant-value="Orange" i] {
+    --swatch: #f97316;
+  }
+  .variant-pill[data-next-variant-value="Red" i] {
+    --swatch: #dc2626;
+  }
 
-  /* Theme toggle — demonstrates theme configurability */
-  .shop__toolbar {
+  /* Toolbar — currency switcher + theme toggle */
+  .shop-toolbar {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-2);
     margin-bottom: calc(var(--space-4) * -1);
   }
+
+  .currency-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 4px 4px 4px 12px;
+    transition:
+      border-color var(--transition),
+      color var(--transition);
+  }
+  .currency-switcher:hover,
+  .currency-switcher:focus-within {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+  .currency-switcher-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+  }
+  .currency-switcher-select {
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: inherit;
+    background: var(--color-surface-alt);
+    border: 0;
+    border-radius: var(--radius-full);
+    padding: 4px 10px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .currency-switcher-select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
   .theme-toggle {
     font: inherit;
     font-size: 12px;
@@ -633,13 +830,28 @@ order: 2
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: border-color var(--transition), color var(--transition);
+    transition:
+      border-color var(--transition),
+      color var(--transition);
   }
-  .theme-toggle:hover { border-color: var(--color-border-strong); color: var(--color-text); }
-  .theme-toggle__dot {
+  .theme-toggle:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+  .theme-toggle-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: var(--color-text);
   }
 </style>
+
+<script>
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-theme-toggle]');
+    if (!btn) return;
+    var shop = btn.closest('.shop');
+    if (!shop) return;
+    shop.dataset.theme = shop.dataset.theme === 'dark' ? 'light' : 'dark';
+  });
+</script>

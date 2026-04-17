@@ -10,83 +10,137 @@ order: 1
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap"
   rel="stylesheet"
 />
 
 <div class="shop" data-theme="light">
-  <div class="shop__toolbar">
-    <button
-      type="button"
-      class="theme-toggle"
-      onclick="(function(b){var s=b.closest('.shop');s.dataset.theme=s.dataset.theme==='dark'?'light':'dark';})(this)"
-      aria-label="Toggle theme"
-    >
-      <span class="theme-toggle__dot"></span>
-      Theme
+  <div class="shop-toolbar">
+    <label class="currency-switcher" hidden data-currency-switcher-wrap>
+      <span class="currency-switcher-label">Currency</span>
+      <select
+        class="currency-switcher-select"
+        data-currency-switcher
+        aria-label="Change currency"
+      ></select>
+    </label>
+    <button type="button" class="theme-toggle" data-theme-toggle>
+      <span class="theme-toggle-dot" aria-hidden="true"></span>
+      Toggle theme
     </button>
   </div>
 
-  <!--
-    A single-bundle BundleSelector in `select` mode powers the variant +
-    pricing UI without writing to the cart. The container itself is hidden
-    because there is no multi-bundle choice to make — we just need the
-    enhancer to render the slot (variants + price) and expose
-    `_getSelectedBundleItems()` for the Add-to-Cart button.
-  -->
   <div
     hidden
     data-next-selector-id="main"
     data-next-bundle-selector
     data-next-selection-mode="select"
-    data-next-bundle-template-id="mv-bundle-template"
-    data-next-bundle-slot-template-id="mv-slot-template"
-    data-next-variant-selector-template-id="mv-variant-selector-template"
-    data-next-variant-option-template-id="mv-variant-option-template"
     data-next-bundles='[
       {
         "id": "tshirt",
         "shippingId": "2",
-        "items": [{"packageId":1,"quantity":1,"configurable":true}],
+        "items": [{"packageId":1,"quantity":1}],
+        "quantity": 1,
+        "minQuantity": 1,
+        "maxQuantity": 10,
         "vouchers": [],
         "selected": true
       }
     ]'
-  ></div>
+  >
+    <template>
+      <div data-next-bundle-card data-next-bundle-id="{bundle.id}" hidden></div>
+    </template>
+  </div>
 
-  <section class="shop__section">
-    <!-- Product card: image, pricing, variant pills rendered by slot template -->
+  <section class="shop-section">
     <div
       id="bundle-slots-stage"
       class="slot-stage"
       data-next-bundle-slots-for="main"
-    ></div>
+    >
+      <template>
+        <div class="slot" data-next-package-id="{item.packageId}">
+          <div class="slot-hero">
+            <img alt="{item.name}" src="{item.image}" />
+          </div>
+          <div class="slot-content">
+            <div class="slot-title">Next Commerce T-Shirt</div>
+            <div class="slot-pricing">
+              <div class="price-row">
+                <span class="price price-current">{item.unitPrice}</span>
+                <span class="price price-suffix">/ea</span>
+              </div>
+              <div class="price-meta" data-next-show="item.hasDiscount">
+                <span class="price-was">Was</span>
+                <span class="price price-strike">{item.originalUnitPrice}</span>
+                <span class="price-savings">
+                  Save <span>{item.discountPercentage}</span>
+                </span>
+              </div>
+            </div>
+            <div class="slot-variants">
+              <div data-next-variant-selectors>
+                <template>
+                  <div class="variant-group">
+                    <div class="variant-label">{attr.name}</div>
+                    <div class="variant-options" data-next-variant-options>
+                      <template>
+                        <button
+                          type="button"
+                          class="variant-pill"
+                          aria-pressed="{option.selected}"
+                        >
+                          {option.value}
+                        </button>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
 
-    <!-- Quantity + Add-to-Cart live under the slot -->
+    <div class="order-summary">
+      <div class="order-summary-lines">
+        <div class="order-summary-row">
+          <span class="order-summary-label">
+            <span data-next-display="bundle.main.unitPrice"></span> /ea
+          </span>
+          <span
+            class="order-summary-value"
+            data-next-display="bundle.main.originalPrice"
+          ></span>
+        </div>
+      </div>
+      <div class="order-summary-total">
+        <span class="order-summary-total-label">Total</span>
+        <span
+          class="order-summary-total-value"
+          data-next-display="bundle.main.price"
+        ></span>
+      </div>
+    </div>
+
     <div class="buy-row">
-      <div class="qty">
-        <span class="qty__label">Quantity</span>
-        <div class="qty__stepper">
+      <div class="qty" data-next-bundle-qty-for="main">
+        <span class="qty-label">Quantity</span>
+        <div class="qty-stepper">
           <button
             type="button"
-            class="qty__btn"
+            class="qty-btn"
             aria-label="Decrease quantity"
-            onclick="(function(b){var i=b.parentNode.querySelector('input');i.value=Math.max(parseInt(i.min,10)||1,(parseInt(i.value,10)||1)-1);})(this)"
+            data-next-quantity-decrease
           >−</button>
-          <input
-            type="number"
-            class="qty__input"
-            id="tshirt-qty"
-            value="1"
-            min="1"
-            max="10"
-            inputmode="numeric"
-          />
+          <span class="qty-display" data-next-quantity-display>1</span>
           <button
             type="button"
-            class="qty__btn"
+            class="qty-btn"
             aria-label="Increase quantity"
-            onclick="(function(b){var i=b.parentNode.querySelector('input');i.value=Math.min(parseInt(i.max,10)||99,(parseInt(i.value,10)||1)+1);})(this)"
+            data-next-quantity-increase
           >+</button>
         </div>
       </div>
@@ -94,94 +148,17 @@ order: 1
       <button
         type="button"
         class="btn-cta"
-        id="tshirt-add"
-        onclick="(async function(btn){
-          var selector = document.querySelector('[data-next-selector-id=\'main\']');
-          var items = selector && selector._getSelectedBundleItems && selector._getSelectedBundleItems();
-          if (!items || !items.length) { btn.animate([{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:220}); return; }
-          var qtyInput = document.getElementById('tshirt-qty');
-          var qty = Math.max(1, Math.min(parseInt(qtyInput.max,10)||99, parseInt(qtyInput.value,10)||1));
-          var sdk = window.next;
-          if (!sdk) return;
-          btn.disabled = true;
-          btn.dataset.loading = 'true';
-          try {
-            await sdk.addItem({ packageId: items[0].packageId, quantity: qty });
-            window.location.href = '/checkout';
-          } catch (e) {
-            btn.disabled = false;
-            btn.dataset.loading = 'false';
-          }
-        })(this)"
+        data-next-action="add-to-cart"
+        data-next-selector-id="main"
       >
-        <span class="btn-cta__label">Add to Cart</span>
-        <span class="btn-cta__spinner" aria-hidden="true"></span>
+        <span class="btn-cta-label">Add to Cart</span>
       </button>
     </div>
   </section>
-
-  <!--
-    Minimal bundle-card template. The selector container is hidden, so
-    this card never shows on screen — it only exists so the enhancer has
-    a registered card to auto-select, which in turn causes the slot to
-    render into `[data-next-bundle-slots-for="main"]`.
-  -->
-  <template id="mv-bundle-template">
-    <div
-      data-next-bundle-card
-      data-next-bundle-id="{bundle.id}"
-      hidden
-    ></div>
-  </template>
-
-  <template id="mv-slot-template">
-    <div class="slot">
-      <div class="slot__hero">
-        <img loading="lazy" alt="" src="{item.image}" />
-      </div>
-      <div class="slot__content">
-        <div class="slot__title">Next Commerce T-Shirt</div>
-        <div class="slot__pricing">
-          <div class="price-row">
-            <span class="price price--current">{item.unitPrice}</span>
-            <span class="price price--suffix">/ea</span>
-          </div>
-          <div class="price-meta">
-            <span class="price--was">Was</span>
-            <span class="price price--strike">{item.originalUnitPrice}</span>
-            <span class="price__savings {item.hasDiscount}">
-              Save <span>{item.discountPercentage}</span>
-            </span>
-          </div>
-        </div>
-        <div class="slot__variants">
-          <div data-next-variant-selectors></div>
-        </div>
-      </div>
-    </div>
-  </template>
-
-  <template id="mv-variant-selector-template">
-    <div class="variant-group">
-      <div class="variant-group__label">{attr.name}</div>
-      <div class="variant-group__options" data-next-variant-options></div>
-    </div>
-  </template>
-
-  <template id="mv-variant-option-template">
-    <button type="button" class="variant-pill" aria-pressed="{option.selected}">
-      {option.value}
-    </button>
-  </template>
 </div>
 
+
 <style>
-  /* ==========================================================================
-     Theme tokens
-     --------------------------------------------------------------------------
-     Reskin the whole component by overriding these variables.
-     Switch theme by setting `data-theme="dark"` on the `.shop` wrapper.
-     ========================================================================== */
   .shop {
     --color-bg: #f7f7f5;
     --color-surface: #ffffff;
@@ -234,9 +211,6 @@ order: 1
     --color-success-soft: #0f2a1a;
   }
 
-  /* ==========================================================================
-     Layout
-     ========================================================================== */
   .shop {
     font-family: var(--font-sans);
     color: var(--color-text);
@@ -249,11 +223,8 @@ order: 1
     gap: var(--space-6);
   }
 
-  .shop__section { display: grid; gap: var(--space-5); }
+  .shop-section { display: grid; gap: var(--space-5); }
 
-  /* ==========================================================================
-     Slot stage — image on left, details on right; stacks on narrow viewports.
-     ========================================================================== */
   .slot-stage {
     display: grid;
     grid-template-columns: 1fr;
@@ -269,30 +240,30 @@ order: 1
     border-radius: var(--radius-md);
     overflow: hidden;
   }
-  .slot__hero {
+  .slot-hero {
     position: relative;
     width: 100%;
     height: 100%;
     min-height: 260px;
-    background: white;
+    background: var(--color-surface-alt);
     display: grid;
     place-items: center;
     overflow: hidden;
   }
-  .slot__hero img {
+  .slot-hero img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
     padding: var(--space-3);
   }
-  .slot__content {
+  .slot-content {
     padding: var(--space-5);
     display: grid;
     gap: var(--space-4);
     align-content: start;
   }
-  .slot__title {
+  .slot-title {
     font-size: 18px;
     font-weight: 700;
     letter-spacing: -0.01em;
@@ -301,12 +272,12 @@ order: 1
 
   @media (max-width: 560px) {
     .slot { grid-template-columns: 1fr; }
-    .slot__hero {
+    .slot-hero {
       aspect-ratio: 4 / 3;
       max-height: 280px;
       min-height: 0;
     }
-    .slot__hero img { padding: var(--space-2); }
+    .slot-hero img { padding: var(--space-2); }
   }
 
   @media (max-width: 640px) {
@@ -315,20 +286,16 @@ order: 1
       gap: var(--space-5);
       border-radius: var(--radius-md);
     }
-    .shop__section { gap: var(--space-4); }
-    .slot__content {
+    .shop-section { gap: var(--space-4); }
+    .slot-content {
       padding: var(--space-4);
       gap: var(--space-3);
     }
-    .slot__title { font-size: 16px; }
-    .price--current { font-size: 30px; }
+    .slot-title { font-size: 16px; }
+    .price-current { font-size: 30px; }
   }
 
-  /* Pricing hierarchy
-     ------------------------------------------------------------------
-     Row 1 — dominant current price. Row 2 — "was" anchor + savings badge.
-     ------------------------------------------------------------------ */
-  .slot__pricing {
+  .slot-pricing {
     display: grid;
     gap: 6px;
     font-family: var(--font-numeric);
@@ -348,32 +315,32 @@ order: 1
     gap: var(--space-2);
   }
 
-  .price--current {
+  .price-current {
     font-size: 36px;
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1;
     color: var(--color-text);
   }
-  .price--suffix {
+  .price-suffix {
     font-size: 14px;
     font-weight: 500;
     color: var(--color-text-muted);
   }
-  .price--was {
+  .price-was {
     font-size: 12px;
     font-weight: 600;
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
-  .price--strike {
+  .price-strike {
     text-decoration: line-through;
     color: var(--color-text-muted);
     font-size: 14px;
     font-weight: 500;
   }
-  .price__savings {
+  .price-savings {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -388,7 +355,7 @@ order: 1
     letter-spacing: 0.04em;
     white-space: nowrap;
   }
-  .price__savings::before {
+  .price-savings::before {
     content: '';
     width: 0;
     height: 0;
@@ -397,20 +364,17 @@ order: 1
     border-top: 5px solid currentColor;
   }
 
-  /* ==========================================================================
-     Variant pills — SDK injects grouped pill options into `.slot__variants`.
-     ========================================================================== */
-  .slot__variants { display: grid; gap: var(--space-3); }
+  .slot-variants { display: grid; gap: var(--space-3); }
 
   .variant-group { display: grid; gap: 6px; }
-  .variant-group__label {
+  .variant-label {
     font-size: 11px;
     color: var(--color-text-muted);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
-  .variant-group__options {
+  .variant-options {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
@@ -456,7 +420,6 @@ order: 1
     cursor: not-allowed;
   }
 
-  /* Color swatches — turn Color pills into dot + label */
   .variant-pill[data-next-variant-option='color' i] {
     display: inline-flex;
     align-items: center;
@@ -474,6 +437,9 @@ order: 1
   }
   .variant-pill[data-next-variant-value='Gray'   i] { --swatch: #a1a1aa; }
   .variant-pill[data-next-variant-value='White'  i] { --swatch: #ffffff; }
+  .variant-pill[data-next-variant-value='White' i]::before {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  }
   .variant-pill[data-next-variant-value='Black'  i] { --swatch: #111111; }
   .variant-pill[data-next-variant-value='Green'  i] { --swatch: #16a34a; }
   .variant-pill[data-next-variant-value='Blue'   i] { --swatch: #2563eb; }
@@ -483,9 +449,48 @@ order: 1
   .variant-pill[data-next-variant-value='Orange' i] { --swatch: #f97316; }
   .variant-pill[data-next-variant-value='Red'    i] { --swatch: #dc2626; }
 
-  /* ==========================================================================
-     Buy row — quantity stepper + primary CTA
-     ========================================================================== */
+  .order-summary {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-variant-numeric: tabular-nums lining-nums;
+    transition: opacity var(--transition);
+  }
+  .order-summary-lines { display: grid; gap: var(--space-1); }
+  .order-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+  .order-summary-value { color: var(--color-text); font-weight: 500; }
+  .order-summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--color-border);
+  }
+  .order-summary-total-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .order-summary-total-value {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
   .buy-row {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -495,21 +500,21 @@ order: 1
   @media (max-width: 560px) {
     .buy-row { grid-template-columns: 1fr; gap: var(--space-3); }
     .qty { width: 100%; }
-    .qty__stepper { display: flex; width: 100%; }
-    .qty__btn { flex: 0 0 56px; }
-    .qty__input { flex: 1 1 auto; width: auto; }
+    .qty-stepper { display: flex; width: 100%; }
+    .qty-btn { flex: 0 0 56px; }
+    .qty-display { flex: 1 1 auto; width: auto; }
     .btn-cta { width: 100%; }
   }
 
   .qty { display: grid; gap: 6px; }
-  .qty__label {
+  .qty-label {
     font-size: 11px;
     color: var(--color-text-muted);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
-  .qty__stepper {
+  .qty-stepper {
     display: inline-flex;
     align-items: stretch;
     background: var(--color-surface);
@@ -518,7 +523,7 @@ order: 1
     overflow: hidden;
     height: 48px;
   }
-  .qty__btn {
+  .qty-btn {
     font: inherit;
     width: 40px;
     font-size: 18px;
@@ -529,33 +534,25 @@ order: 1
     cursor: pointer;
     transition: background var(--transition);
   }
-  .qty__btn:hover { background: var(--color-surface-alt); }
-  .qty__btn:focus-visible {
+  .qty-btn:hover { background: var(--color-surface-alt); }
+  .qty-btn:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: -2px;
   }
-  .qty__input {
-    font: inherit;
+  .qty-display {
+    display: grid;
+    place-items: center;
     font-size: 16px;
     font-weight: 600;
-    width: 44px;
+    min-width: 44px;
+    padding: 0 var(--space-2);
     text-align: center;
-    background: transparent;
-    border: 0;
     border-left: 1px solid var(--color-border);
     border-right: 1px solid var(--color-border);
     color: var(--color-text);
     font-variant-numeric: tabular-nums;
-    -moz-appearance: textfield;
-    appearance: textfield;
+    user-select: none;
   }
-  .qty__input::-webkit-outer-spin-button,
-  .qty__input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
-  }
-  .qty__input:focus { outline: none; }
 
   .btn-cta {
     position: relative;
@@ -588,29 +585,59 @@ order: 1
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
   }
-  .btn-cta[disabled] { opacity: 0.7; cursor: progress; }
+  .btn-cta[disabled],
+  .btn-cta.next-disabled { opacity: 0.7; cursor: progress; }
 
-  .btn-cta__spinner {
-    display: none;
-    width: 14px;
-    height: 14px;
-    border: 2px solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: btn-cta-spin 700ms linear infinite;
-  }
-  .btn-cta[data-loading='true'] .btn-cta__spinner { display: inline-block; }
-  .btn-cta[data-loading='true'] .btn-cta__label { opacity: 0.85; }
-  @keyframes btn-cta-spin {
-    to { transform: rotate(360deg); }
-  }
-
-  /* Theme toggle — demonstrates theme configurability */
-  .shop__toolbar {
+  .shop-toolbar {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-2);
     margin-bottom: calc(var(--space-4) * -1);
   }
+
+  .currency-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 4px 4px 4px 12px;
+    transition: border-color var(--transition), color var(--transition);
+  }
+  .currency-switcher:hover,
+  .currency-switcher:focus-within {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+  .currency-switcher-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+  }
+  .currency-switcher-select {
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: inherit;
+    background: var(--color-surface-alt);
+    border: 0;
+    border-radius: var(--radius-full);
+    padding: 4px 10px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .currency-switcher-select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
   .theme-toggle {
     font: inherit;
     font-size: 12px;
@@ -627,10 +654,43 @@ order: 1
     transition: border-color var(--transition), color var(--transition);
   }
   .theme-toggle:hover { border-color: var(--color-border-strong); color: var(--color-text); }
-  .theme-toggle__dot {
+  .theme-toggle-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: var(--color-text);
   }
 </style>
+
+<script>
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-theme-toggle]');
+    if (!btn) return;
+    var shop = btn.closest('.shop');
+    if (!shop) return;
+    shop.dataset.theme = shop.dataset.theme === 'dark' ? 'light' : 'dark';
+  });
+
+  window.addEventListener('next:initialized', function () {
+    // Currency switcher — populate from campaign data, reload with ?currency=<code>
+    var campaign = next.getCampaignData && next.getCampaignData();
+    var currencies = (campaign && campaign.available_currencies) || [];
+    var select = document.querySelector('[data-currency-switcher]');
+    var wrap = document.querySelector('[data-currency-switcher-wrap]');
+    if (select && wrap && currencies.length > 1) {
+      var active = (campaign && campaign.currency) || 'USD';
+      select.innerHTML = currencies
+        .map(function (c) {
+          var selected = c.code === active ? ' selected' : '';
+          return '<option value="' + c.code + '"' + selected + '>' + c.label + '</option>';
+        })
+        .join('');
+      wrap.hidden = false;
+      select.addEventListener('change', function (e) {
+        var url = new URL(window.location.href);
+        url.searchParams.set('currency', e.target.value);
+        window.location.href = url.toString();
+      });
+    }
+  });
+</script>
