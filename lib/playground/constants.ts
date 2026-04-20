@@ -4,7 +4,7 @@ import type { Config } from './types';
 
 export const DEFAULT_CONFIG: Config = {
   sdkHost: '',
-  sdkVersion: 'latest',
+  sdkVersion: '0.4.18',
   debugger: false,
   debug: false,
 };

@@ -76,10 +76,13 @@ export function usePlaygroundState(
     try {
       const isDebug = params.get('debug') === 'true';
 
-      // No debug=true → production mode, reset to defaults and clear any stored config
+      // No debug=true → production mode, reset to defaults and clear any stored config.
+      // sdkVersion is still honoured from the URL so share links can pin a version.
       if (!isDebug) {
         localStorage.removeItem('next-playground-config');
-        setConfig(DEFAULT_CONFIG);
+        const base: Config = { ...DEFAULT_CONFIG };
+        if (params.has('sdkVersion')) base.sdkVersion = params.get('sdkVersion')!;
+        setConfig(base);
       } else {
         const stored = localStorage.getItem('next-playground-config');
         const base: Config = stored ? JSON.parse(stored) : DEFAULT_CONFIG;
@@ -100,7 +103,7 @@ export function usePlaygroundState(
         // Remove config params from URL after applying them
         if (Object.keys(qs).length > 0) {
           const clean = new URL(window.location.href);
-          for (const key of ['apiKey', 'apiHost', 'sdkHost', 'sdkVersion', 'debugger']) {
+          for (const key of ['sdkHost', 'sdkVersion', 'debugger']) {
             clean.searchParams.delete(key);
           }
           window.history.replaceState({}, '', clean.toString());
