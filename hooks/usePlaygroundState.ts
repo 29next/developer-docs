@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { decodeCode, normalizeApiHost } from '@/lib/playground/utils';
 import { DEFAULT_CONFIG } from '@/lib/playground/constants';
-import type { Config, Viewport } from '@/lib/playground/types';
+import type { Config } from '@/lib/playground/types';
 import type { PlaygroundExample } from '@/lib/playground';
 
 export interface PlaygroundState {
@@ -11,7 +11,7 @@ export interface PlaygroundState {
   config: Config;
   showConfig: boolean;
   iframeSrc: string;
-  viewport: Viewport;
+  previewWidth: number | null;
   previewExpanded: boolean;
   editorWidthPct: number;
   isDragging: boolean;
@@ -25,7 +25,7 @@ export interface PlaygroundStateActions {
   setConfig: (c: Config) => void;
   setShowConfig: (s: boolean) => void;
   setIframeSrc: (s: string) => void;
-  setViewport: (v: Viewport) => void;
+  setPreviewWidth: (w: number | null) => void;
   setPreviewExpanded: (e: boolean) => void;
   setEditorWidthPct: (p: number) => void;
   setIsDragging: (d: boolean) => void;
@@ -41,7 +41,7 @@ export function usePlaygroundState(
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
   const [showConfig, setShowConfig] = useState(false);
   const [iframeSrc, setIframeSrc] = useState('');
-  const [viewport, setViewport] = useState<Viewport>('desktop');
+  const [previewWidth, setPreviewWidth] = useState<number | null>(null);
   const [previewExpanded, setPreviewExpanded] = useState(false);
   const [editorWidthPct, setEditorWidthPct] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -54,6 +54,14 @@ export function usePlaygroundState(
     // Resolve example + code from URL
     const rawPreset = params.get('preset');
     const preset = rawPreset ? rawPreset.split('?')[0] : null;
+    // Forgive `?preset=foo?debug=true` typos (second `?` instead of `&`) —
+    // recover the trailing params into the main set.
+    if (rawPreset && rawPreset.includes('?')) {
+      const extra = new URLSearchParams(rawPreset.slice(rawPreset.indexOf('?') + 1));
+      extra.forEach((v, k) => {
+        if (!params.has(k)) params.set(k, v);
+      });
+    }
     const found = preset ? examples.find((e) => e.id === preset) : null;
     const example = found ?? examples[0];
     const encoded = params.get('code');
@@ -81,10 +89,11 @@ export function usePlaygroundState(
         if (params.has('apiHost')) qs.apiHost = normalizeApiHost(params.get('apiHost')!);
         if (params.has('sdkVersion')) qs.sdkVersion = params.get('sdkVersion')!;
         if (params.has('debugger')) qs.debugger = params.get('debugger') === 'true';
+        // ?debug=true is the gate and also flips the SDK debug flag on
+        qs.debug = true;
 
-        // sdkHost only applies in debug mode; defaults to localhost:3000
+        // sdkHost only applies in debug mode; opt-in, no auto-default to localhost
         if (params.has('sdkHost')) qs.sdkHost = normalizeApiHost(params.get('sdkHost')!);
-        else if (!qs.sdkHost) qs.sdkHost = 'http://localhost:3000/';
 
         const resolvedConfig = { ...base, ...qs };
         setConfig(resolvedConfig);
@@ -113,7 +122,7 @@ export function usePlaygroundState(
     config,
     showConfig,
     iframeSrc,
-    viewport,
+    previewWidth,
     previewExpanded,
     editorWidthPct,
     isDragging,
@@ -127,7 +136,7 @@ export function usePlaygroundState(
     setConfig,
     setShowConfig,
     setIframeSrc,
-    setViewport,
+    setPreviewWidth,
     setPreviewExpanded,
     setEditorWidthPct,
     setIsDragging,

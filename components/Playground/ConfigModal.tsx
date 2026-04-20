@@ -31,20 +31,6 @@ export function ConfigModal({ config, onSave, onClose }: ConfigModalProps) {
 
         <div className="space-y-4">
           <label className="block">
-            <span className="text-sm font-medium text-fd-foreground">API Key</span>
-            <input
-              type="text"
-              className="mt-1 w-full px-3 py-2 bg-fd-background border border-fd-border rounded-lg text-sm text-fd-foreground focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="your-api-key"
-              value={draft.apiKey}
-              onChange={(e) => setDraft({ ...draft, apiKey: e.target.value })}
-            />
-            <p className="mt-1 text-xs text-fd-muted-foreground">
-              Sets <code>window.nextConfig.apiKey</code> in the preview.
-            </p>
-          </label>
-
-          <label className="block">
             <span className="text-sm font-medium text-fd-foreground">SDK Version</span>
             <input
               type="text"
@@ -120,6 +106,28 @@ export function ConfigModal({ config, onSave, onClose }: ConfigModalProps) {
                     Override the SDK loader host. Leave blank to use the CDN.
                   </p>
                 </label>
+
+                <div className="flex items-center justify-between py-1">
+                  <div>
+                    <span className="text-sm font-medium text-fd-foreground">Debug</span>
+                    <p className="text-xs text-fd-muted-foreground">
+                      Sets <code>window.nextConfig.debug = true</code> in the preview regardless of SDK Host.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setDraft((d) => ({ ...d, debug: !d.debug }))}
+                    className={`relative inline-flex h-5 w-9 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none ${
+                      draft.debug ? 'bg-blue-600' : 'bg-fd-muted'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transform transition-transform ${
+                        draft.debug ? 'translate-x-4' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
             )}
           </div>

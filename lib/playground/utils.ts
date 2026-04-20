@@ -1,6 +1,52 @@
 import LZString from 'lz-string';
 import type { Config } from './types';
-import { LAYOUT_STYLES } from './constants';
+import { LAYOUT_STYLES, DEFAULT_CONFIG } from './constants';
+
+function slugCategory(category: string): string {
+  return category
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-/]/g, '');
+}
+
+/**
+ * Build the URL of the static preview page for an example, with non-default
+ * config values and optional edited code encoded as query params.
+ *
+ * Mirrors scripts/build-preview.mjs — the generated HTML reads these params at runtime.
+ */
+export function buildPreviewUrl(
+  exampleId: string,
+  exampleCode: string,
+  userHtml: string,
+  config: Config,
+): string {
+  const slashIdx = exampleId.indexOf('/');
+  const category = slashIdx === -1 ? '' : exampleId.slice(0, slashIdx);
+  const name = slashIdx === -1 ? exampleId : exampleId.slice(slashIdx + 1);
+  const path = category
+    ? `/preview/${slugCategory(category)}/${name}.html`
+    : `/preview/${name}.html`;
+
+  const params = new URLSearchParams();
+  if (userHtml !== exampleCode) params.set('code', encodeCode(userHtml));
+  if (config.apiHost && config.apiHost !== DEFAULT_CONFIG.apiHost)
+    params.set('apiHost', config.apiHost);
+  if (config.sdkHost) params.set('sdkHost', config.sdkHost);
+  if (config.sdkVersion && config.sdkVersion !== DEFAULT_CONFIG.sdkVersion)
+    params.set('sdkVersion', config.sdkVersion);
+  if (config.debugger) params.set('debugger', 'true');
+  if (config.debug) params.set('debug', 'true');
+
+  // Also mirror the playground's own ?debug=true URL param (backward compat).
+  if (!config.debug && typeof window !== 'undefined') {
+    const playgroundParams = new URLSearchParams(window.location.search);
+    if (playgroundParams.get('debug') === 'true') params.set('debug', 'true');
+  }
+
+  const qs = params.toString();
+  return qs ? `${path}?${qs}` : path;
+}
 
 export function normalizeApiHost(value: string): string {
   const trimmed = value.trim();
@@ -56,7 +102,7 @@ export function buildIframeHtml(userHtml: string, config: Config, layout = ''): 
 
   const nextConfig = {
     sdkHost: config.sdkHost,
-    debug: !!config.sdkHost,
+    debug: config.debug || !!config.sdkHost,
     debugger: config.debugger,
     ...(config.apiKey ? { apiKey: config.apiKey } : {}),
     ...(config.apiHost ? { apiHost: config.apiHost } : {}),

@@ -4,7 +4,6 @@ export interface Config {
   sdkHost: string;
   sdkVersion: string;
   debugger: boolean;
+  debug: boolean;
 }
-
-export type Viewport = 'mobile' | 'tablet' | 'desktop';
 

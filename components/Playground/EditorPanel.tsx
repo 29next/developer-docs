@@ -1,6 +1,7 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
+import { Play } from 'lucide-react';
 import React from 'react';
 import type { PlaygroundExample } from '@/lib/playground';
 
@@ -11,7 +12,9 @@ interface EditorPanelProps {
   isDragging: boolean;
   editorWidthPct: number;
   expanded: boolean;
+  hasPendingChanges: boolean;
   onCodeChange: (value: string | undefined) => void;
+  onApplyChanges: () => void;
 }
 
 export function EditorPanel({
@@ -21,16 +24,29 @@ export function EditorPanel({
   isDragging,
   editorWidthPct,
   expanded,
+  hasPendingChanges,
   onCodeChange,
+  onApplyChanges,
 }: EditorPanelProps) {
   if (expanded) return null;
 
   return (
-    <div className="flex flex-col border-r border-fd-border min-w-0" style={{ width: `${editorWidthPct}%` }}>
-      <div className="px-3 py-2 border-b border-fd-border bg-fd-muted/30 flex flex-col min-w-0">
-        <span className="text-xs font-medium text-fd-foreground truncate">{example.title}</span>
-        {example.description && (
-          <span className="text-xs text-fd-muted-foreground">{example.description}</span>
+    <div className="hidden lg:flex flex-col border-r border-fd-border min-w-0" style={{ width: `${editorWidthPct}%` }}>
+      <div className="px-3 py-2 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2 min-w-0">
+        <div className="flex flex-col min-w-0 flex-1">
+          <span className="text-xs font-medium text-fd-foreground truncate">{example.title}</span>
+          {example.description && (
+            <span className="text-xs text-fd-muted-foreground">{example.description}</span>
+          )}
+        </div>
+        {hasPendingChanges && (
+          <button
+            type="button"
+            onClick={onApplyChanges}
+            className="shrink-0 flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+          >
+            <Play size={11} /> Update Preview
+          </button>
         )}
       </div>
 

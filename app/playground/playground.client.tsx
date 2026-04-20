@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { PlaygroundExample } from '@/lib/playground';
 import { ConfigModal } from '@/components/Playground/ConfigModal';
 import { Sidebar } from '@/components/Playground/Sidebar';
@@ -26,33 +26,46 @@ export function PlaygroundClient({
   const contentRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
 
-  const prevIframeSrcRef = useRef<string>('');
+  const { runPreview } = usePreviewUpdater(
+    actions.setIframeSrc,
+    state.currentExample,
+  );
 
-  // Preview updater with debouncing
-  const { runPreview, handleCodeChange } = usePreviewUpdater((url) => {
-    if (prevIframeSrcRef.current) {
-      URL.revokeObjectURL(prevIframeSrcRef.current);
-    }
-    prevIframeSrcRef.current = url;
-    actions.setIframeSrc(url);
-  });
+  // Track the code currently rendered in the preview so we can detect
+  // unapplied edits and show an "Update Preview" button.
+  const [appliedCode, setAppliedCode] = useState(state.code);
+  // Forces the iframe to remount even if the URL is unchanged (e.g. Reset).
+  const [reloadNonce, setReloadNonce] = useState(0);
+  // Mobile sidebar drawer state (below md).
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  // Run preview when code/config/layout changes
+  const applyPreview = useCallback(
+    (html: string, cfg: Config, lyt: string) => {
+      runPreview(html, cfg, lyt);
+      setAppliedCode(html);
+    },
+    [runPreview],
+  );
+
+  // Run preview on mount and whenever the example/config/layout changes.
+  // Code edits no longer auto-trigger — the user clicks "Update Preview".
   useEffect(() => {
-    runPreview(state.code, state.config, state.layout);
+    applyPreview(state.code, state.config, state.layout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.code, state.config, state.layout]);
+  }, [state.currentExample.id, state.config, state.layout]);
 
-  // Single page editor change
   const handleEditorChange = useCallback(
     (value: string | undefined) => {
       actions.setCode(value ?? '');
-      handleCodeChange(value, state.config, state.layout);
     },
-    [state.config, state.layout, actions, handleCodeChange],
+    [actions],
   );
 
-  // Handle example selection
+  const handleApplyChanges = useCallback(() => {
+    applyPreview(state.code, state.config, state.layout);
+  }, [state.code, state.config, state.layout, applyPreview]);
+
+  // Handle example selection (also used by Reset with the current example)
   const handleSelectExample = useCallback(
     (example: PlaygroundExample) => {
       // Clear all next-* session keys
@@ -64,10 +77,11 @@ export function PlaygroundClient({
       actions.setCurrentExample(example);
       actions.setCode(example.code);
       actions.setLayout(example.layout);
-      runPreview(example.code, state.config, example.layout);
+      applyPreview(example.code, state.config, example.layout);
+      setReloadNonce((n) => n + 1);
       pushPresetParam(example.id);
     },
-    [state.config, actions, runPreview],
+    [state.config, actions, applyPreview],
   );
 
   // Share button
@@ -94,9 +108,8 @@ export function PlaygroundClient({
     (newConfig: Config) => {
       actions.setConfig(newConfig);
       localStorage.setItem('next-playground-config', JSON.stringify(newConfig));
-      runPreview(state.code, newConfig, state.layout);
     },
-    [state, actions, runPreview],
+    [actions],
   );
 
   // Drag handle for editor/preview splitter
@@ -129,7 +142,7 @@ export function PlaygroundClient({
     <div className="flex flex-col h-screen bg-fd-background text-fd-foreground">
       {/* Top bar */}
       <TopBar
-        onRun={() => runPreview(state.code, state.config, state.layout)}
+        onMenuOpen={() => setMobileSidebarOpen(true)}
         onReset={() => handleSelectExample(state.currentExample)}
         onShare={handleShare}
         onConfigOpen={() => actions.setShowConfig(true)}
@@ -143,6 +156,8 @@ export function PlaygroundClient({
           examples={examples}
           selected={state.currentExample}
           onSelect={handleSelectExample}
+          mobileOpen={mobileSidebarOpen}
+          onMobileClose={() => setMobileSidebarOpen(false)}
         />
 
         {/* Editor + Drag + Preview wrapper */}
@@ -155,13 +170,15 @@ export function PlaygroundClient({
             isDragging={state.isDragging}
             editorWidthPct={state.editorWidthPct}
             expanded={state.previewExpanded}
+            hasPendingChanges={state.code !== appliedCode}
             onCodeChange={handleEditorChange}
+            onApplyChanges={handleApplyChanges}
           />
 
-          {/* Drag handle */}
+          {/* Drag handle — desktop only */}
           {!state.previewExpanded && (
             <div
-              className="w-1 shrink-0 cursor-col-resize hover:bg-blue-500 active:bg-blue-600 transition-colors bg-fd-border"
+              className="hidden lg:block w-1 shrink-0 cursor-col-resize hover:bg-blue-500 active:bg-blue-600 transition-colors bg-fd-border"
               onMouseDown={(e) => {
                 e.preventDefault();
                 handleDragStart();
@@ -172,10 +189,11 @@ export function PlaygroundClient({
           {/* Preview */}
           <PreviewPanel
             iframeSrc={state.iframeSrc}
+            reloadNonce={reloadNonce}
             isDark={isDark}
             isDragging={state.isDragging}
-            viewport={state.viewport}
-            onViewportChange={actions.setViewport}
+            previewWidth={state.previewWidth}
+            onPreviewWidthChange={actions.setPreviewWidth}
             onExpandToggle={() => actions.setPreviewExpanded(!state.previewExpanded)}
             expanded={state.previewExpanded}
             config={state.config}

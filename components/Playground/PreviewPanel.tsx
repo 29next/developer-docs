@@ -1,132 +1,139 @@
 'use client';
 
-import { ExternalLink, Maximize2, Minimize2, Smartphone, Tablet, Monitor } from 'lucide-react';
-import React from 'react';
-import { buildIframeHtml, sdkHostLabel } from '@/lib/playground/utils';
-import { VIEWPORTS } from '@/lib/playground/constants';
-import type { Viewport, Config } from '@/lib/playground/types';
+import { ExternalLink, Maximize2, Minimize2, RotateCcw } from 'lucide-react';
+import React, { useCallback, useRef, useState } from 'react';
+import { sdkHostLabel } from '@/lib/playground/utils';
+import { MIN_PREVIEW_WIDTH } from '@/lib/playground/constants';
+import type { Config } from '@/lib/playground/types';
 
 interface PreviewPanelProps {
   iframeSrc: string;
+  reloadNonce?: number;
   isDark?: boolean;
   isDragging?: boolean;
-  viewport: Viewport;
-  onViewportChange: (vp: Viewport) => void;
+  previewWidth: number | null;
+  onPreviewWidthChange: (w: number | null) => void;
   onExpandToggle?: () => void;
   expanded?: boolean;
   config?: Config;
   code?: string;
   layout?: string;
-  floatingViewports?: boolean;
 }
-
-const VIEWPORT_ICONS: Record<Viewport, React.ReactNode> = {
-  mobile: <Smartphone size={13} />,
-  tablet: <Tablet size={13} />,
-  desktop: <Monitor size={13} />,
-};
-
-const ViewportToggle = ({
-  viewport,
-  onViewportChange,
-}: {
-  viewport: Viewport;
-  onViewportChange: (vp: Viewport) => void;
-}) => (
-  <div className="flex items-center rounded-md border border-fd-border bg-fd-background p-0.5">
-    {(Object.keys(VIEWPORTS) as Viewport[]).map((vp, i) => {
-      const { label } = VIEWPORTS[vp];
-      return (
-        <React.Fragment key={vp}>
-          {i > 0 && (
-            <span className="text-fd-border select-none px-0.5">|</span>
-          )}
-          <button
-            type="button"
-            title={label}
-            onClick={() => onViewportChange(vp)}
-            className={`px-2 py-0.5 text-xs rounded transition-colors ${
-              viewport === vp
-                ? 'bg-blue-600 text-white'
-                : 'text-fd-muted-foreground hover:text-fd-foreground'
-            }`}
-          >
-            <span className="flex items-center gap-1">
-              {VIEWPORT_ICONS[vp]} {label}
-            </span>
-          </button>
-        </React.Fragment>
-      );
-    })}
-  </div>
-);
 
 export function PreviewPanel({
   iframeSrc,
+  reloadNonce = 0,
   isDark,
   isDragging,
-  viewport,
-  onViewportChange,
+  previewWidth,
+  onPreviewWidthChange,
   onExpandToggle,
   expanded,
   config,
-  code,
-  layout,
-  floatingViewports = false,
 }: PreviewPanelProps) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [resizing, setResizing] = useState(false);
+  const [liveWidth, setLiveWidth] = useState<number | null>(null);
+
+  const startResize = useCallback(
+    (side: 'left' | 'right', startEvent: React.PointerEvent) => {
+      const stage = stageRef.current;
+      if (!stage) return;
+      startEvent.preventDefault();
+      (startEvent.target as Element).setPointerCapture?.(startEvent.pointerId);
+
+      const stageRect = stage.getBoundingClientRect();
+      const stageWidth = stageRect.width;
+      const center = stageRect.left + stageWidth / 2;
+      setResizing(true);
+
+      const onMove = (ev: PointerEvent) => {
+        // Symmetric resize: width = 2 * distance from center to the dragged edge.
+        const distance = side === 'right' ? ev.clientX - center : center - ev.clientX;
+        const next = Math.max(
+          MIN_PREVIEW_WIDTH,
+          Math.min(stageWidth, Math.round(distance * 2)),
+        );
+        setLiveWidth(next);
+        onPreviewWidthChange(next >= stageWidth ? null : next);
+      };
+
+      const onUp = () => {
+        setResizing(false);
+        setLiveWidth(null);
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+        window.removeEventListener('pointercancel', onUp);
+      };
+
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+      window.addEventListener('pointercancel', onUp);
+    },
+    [onPreviewWidthChange],
+  );
+
+  const resetWidth = useCallback(() => {
+    onPreviewWidthChange(null);
+  }, [onPreviewWidthChange]);
+
+  const displayWidth = liveWidth ?? previewWidth;
+  const widthLabel = displayWidth ? `${displayWidth}px` : 'Full';
+
   return (
     <div className="flex-1 min-w-0 flex flex-col bg-fd-muted/20">
-      {!floatingViewports && (
-        <div className="px-3 py-1.5 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2 min-w-0">
-          {/* Left: label */}
-          <span className="text-xs text-fd-muted-foreground font-mono w-16 shrink-0">Preview</span>
+      <div className="px-3 py-1.5 border-b border-fd-border bg-fd-muted/30 flex items-center gap-2 min-w-0">
+        <span className="text-xs text-fd-muted-foreground font-mono shrink-0">Preview</span>
+        <span className="text-[11px] text-fd-muted-foreground font-mono shrink-0 tabular-nums">
+          {widthLabel}
+        </span>
 
-          {/* Center: viewport toggles */}
-          <div className="flex-1 flex justify-center">
-            <ViewportToggle viewport={viewport} onViewportChange={onViewportChange} />
-          </div>
-
-          {/* Right: actions */}
-          <div className="flex items-center gap-2 justify-end shrink-0">
-            {config?.sdkHost && (
-              <span
-                title={`SDK Host: ${config.sdkHost}`}
-                className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-mono hidden xl:inline truncate max-w-24"
-              >
-                {sdkHostLabel(config.sdkHost)}
-              </span>
-            )}
-            {code != null && config != null && (
-              <button
-                type="button"
-                title="Open preview in new tab"
-                onClick={() => {
-                  const html = buildIframeHtml(code, config, layout ?? '');
-                  const blob = new Blob([html], { type: 'text/html' });
-                  const url = URL.createObjectURL(blob);
-                  window.open(url, '_blank');
-                }}
-                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-              >
-                <ExternalLink size={14} />
-              </button>
-            )}
-            {onExpandToggle && (
-              <button
-                type="button"
-                title="Expand preview"
-                onClick={onExpandToggle}
-                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-              >
-                {expanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-              </button>
-            )}
-          </div>
+        <div className="ml-auto flex items-center gap-2 justify-end shrink-0">
+          {config?.sdkHost && (
+            <span
+              title={`SDK Host: ${config.sdkHost}`}
+              className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-mono hidden xl:inline truncate max-w-24"
+            >
+              {sdkHostLabel(config.sdkHost)}
+            </span>
+          )}
+          {previewWidth !== null && (
+            <button
+              type="button"
+              title="Reset preview width"
+              onClick={resetWidth}
+              className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+            >
+              <RotateCcw size={14} />
+            </button>
+          )}
+          {iframeSrc && (
+            <button
+              type="button"
+              title="Open preview in new tab"
+              onClick={() => window.open(iframeSrc, '_blank')}
+              className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+            >
+              <ExternalLink size={14} />
+            </button>
+          )}
+          {onExpandToggle && (
+            <button
+              type="button"
+              title="Expand preview"
+              onClick={onExpandToggle}
+              className="hidden lg:inline-flex text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+            >
+              {expanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+            </button>
+          )}
         </div>
-      )}
-      {/* Scrollable container that centres a constrained iframe */}
+      </div>
+
+      {/* Stage — iframe centred with drag handles sitting on its inner edges */}
       <div
-        className="group relative flex-1 min-h-0 overflow-auto flex justify-center"
+        ref={stageRef}
+        className="relative flex-1 min-h-0 overflow-hidden flex justify-center items-stretch"
         style={{
           backgroundColor: isDark ? '#0f1117' : '#f1f5f9',
           backgroundImage: isDark
@@ -135,28 +142,58 @@ export function PreviewPanel({
           backgroundSize: '20px 20px',
         }}
       >
-        {floatingViewports && (
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-            <ViewportToggle viewport={viewport} onViewportChange={onViewportChange} />
-          </div>
-        )}
         <div
-          className="h-full transition-all duration-200 rounded overflow-hidden"
+          className="relative h-full transition-[width] duration-75 ease-out"
           style={{
-            width: VIEWPORTS[viewport].width ? `${VIEWPORTS[viewport].width}px` : '100%',
+            width: displayWidth ? `${displayWidth}px` : '100%',
+            maxWidth: '100%',
             minWidth: 0,
+            background: '#0a1f4933',
           }}
         >
           {iframeSrc && (
             <iframe
-              key={iframeSrc}
+              key={`${iframeSrc}#${reloadNonce}`}
               src={iframeSrc}
               title="Preview"
               className="w-full h-full border-0 rounded"
-              // sandbox="allow-same-origin allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals"
-              style={isDragging ? { pointerEvents: 'none' } : undefined}
+              style={isDragging || resizing ? { pointerEvents: 'none' } : undefined}
             />
           )}
+
+          {/* Left drag handle — sits on iframe's left edge */}
+          <button
+            type="button"
+            aria-label="Resize preview from left"
+            onPointerDown={(e) => startResize('left', e)}
+            onDoubleClick={resetWidth}
+            className="group absolute left-0 top-0 h-full w-3 z-10 cursor-col-resize select-none touch-none hidden md:flex items-center justify-center"
+          >
+            <span
+              className={`block h-12 w-1.5 rounded-full transition-colors ${
+                resizing
+                  ? 'bg-blue-500'
+                  : 'bg-fd-border group-hover:bg-blue-500'
+              }`}
+            />
+          </button>
+
+          {/* Right drag handle — sits on iframe's right edge */}
+          <button
+            type="button"
+            aria-label="Resize preview from right"
+            onPointerDown={(e) => startResize('right', e)}
+            onDoubleClick={resetWidth}
+            className="group absolute right-0 top-0 h-full w-3 z-10 cursor-col-resize select-none touch-none hidden md:flex items-center justify-center"
+          >
+            <span
+              className={`block h-12 w-1.5 rounded-full transition-colors ${
+                resizing
+                  ? 'bg-blue-500'
+                  : 'bg-fd-border group-hover:bg-blue-500'
+              }`}
+            />
+          </button>
         </div>
       </div>
     </div>

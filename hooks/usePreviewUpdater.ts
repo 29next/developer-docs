@@ -1,33 +1,26 @@
-import { useCallback, useRef } from 'react';
-import { buildIframeHtml } from '@/lib/playground/utils';
+import { useCallback } from 'react';
+import { buildPreviewUrl } from '@/lib/playground/utils';
 import type { Config } from '@/lib/playground/types';
+import type { PlaygroundExample } from '@/lib/playground';
 
 export function usePreviewUpdater(
   onIframeSrcChange: (src: string) => void,
+  currentExample: PlaygroundExample,
 ): {
   runPreview: (html: string, cfg: Config, lyt: string) => void;
-  handleCodeChange: (value: string | undefined, cfg: Config, lyt: string) => void;
 } {
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const runPreview = useCallback(
-    (html: string, cfg: Config, lyt: string) => {
-      const full = buildIframeHtml(html, cfg, lyt);
-      const blob = new Blob([full], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
+    (html: string, cfg: Config, _lyt: string) => {
+      const url = buildPreviewUrl(
+        currentExample.id,
+        currentExample.code,
+        html,
+        cfg,
+      );
       onIframeSrcChange(url);
     },
-    [onIframeSrcChange],
+    [onIframeSrcChange, currentExample],
   );
 
-  const handleCodeChange = useCallback(
-    (value: string | undefined, cfg: Config, lyt: string) => {
-      const html = value ?? '';
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(() => runPreview(html, cfg, lyt), 600);
-    },
-    [runPreview],
-  );
-
-  return { runPreview, handleCodeChange };
+  return { runPreview };
 }

@@ -14,7 +14,7 @@ order: 2
   rel="stylesheet"
 />
 
-<div class="shop" data-theme="light">
+<div class="shop" data-theme="light" data-next-await>
   <div class="shop-toolbar">
     <label class="currency-switcher" hidden data-currency-switcher-wrap>
       <span class="currency-switcher-label">Currency</span>
@@ -151,7 +151,7 @@ order: 2
                   >{item.originalUnitPrice}</span
                 >
                 <span class="price-savings">
-                  Save <span>{item.discountPercentage}</span>
+                  Save <span>{item.discountAmount}</span>
                 </span>
               </div>
             </div>
@@ -489,6 +489,7 @@ order: 2
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     overflow: hidden;
+    width: 100%;
   }
   .slot-hero {
     position: relative;
