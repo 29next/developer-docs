@@ -30,8 +30,6 @@ export function buildPreviewUrl(
 
   const params = new URLSearchParams();
   if (userHtml !== exampleCode) params.set('code', encodeCode(userHtml));
-  if (config.apiHost && config.apiHost !== DEFAULT_CONFIG.apiHost)
-    params.set('apiHost', config.apiHost);
   if (config.sdkHost) params.set('sdkHost', config.sdkHost);
   if (config.sdkVersion && config.sdkVersion !== DEFAULT_CONFIG.sdkVersion)
     params.set('sdkVersion', config.sdkVersion);
@@ -104,8 +102,6 @@ export function buildIframeHtml(userHtml: string, config: Config, layout = ''): 
     sdkHost: config.sdkHost,
     debug: config.debug || !!config.sdkHost,
     debugger: config.debugger,
-    ...(config.apiKey ? { apiKey: config.apiKey } : {}),
-    ...(config.apiHost ? { apiHost: config.apiHost } : {}),
   };
 
   return `<!DOCTYPE html>

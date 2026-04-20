@@ -78,21 +78,6 @@ export function ConfigModal({ config, onSave, onClose }: ConfigModalProps) {
             {showAdvanced && (
               <div className="mt-3 space-y-4 border-l-2 border-fd-border pl-4">
                 <label className="block">
-                  <span className="text-sm font-medium text-fd-foreground">API Host</span>
-                  <input
-                    type="text"
-                    className="mt-1 w-full px-3 py-2 bg-fd-background border border-fd-border rounded-lg text-sm text-fd-foreground focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://campaigns.apps.29next.com/"
-                    value={draft.apiHost}
-                    onChange={(e) => setDraft({ ...draft, apiHost: e.target.value })}
-                    onBlur={(e) => setDraft((d) => ({ ...d, apiHost: normalizeApiHost(e.target.value) }))}
-                  />
-                  <p className="mt-1 text-xs text-fd-muted-foreground">
-                    Any path will be stripped automatically.
-                  </p>
-                </label>
-
-                <label className="block">
                   <span className="text-sm font-medium text-fd-foreground">SDK Host</span>
                   <input
                     type="text"

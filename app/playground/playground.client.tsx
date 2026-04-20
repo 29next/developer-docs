@@ -93,8 +93,6 @@ export function PlaygroundClient({
     } else {
       url.searchParams.delete('code');
     }
-    if (state.config.apiKey) url.searchParams.set('apiKey', state.config.apiKey);
-    if (state.config.apiHost) url.searchParams.set('apiHost', state.config.apiHost);
     if (state.config.sdkHost) url.searchParams.set('sdkHost', state.config.sdkHost);
     if (state.config.sdkVersion) url.searchParams.set('sdkVersion', state.config.sdkVersion);
     navigator.clipboard.writeText(url.toString()).then(() => {

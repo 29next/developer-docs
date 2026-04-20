@@ -85,8 +85,6 @@ export function usePlaygroundState(
         const base: Config = stored ? JSON.parse(stored) : DEFAULT_CONFIG;
 
         const qs: Partial<Config> = {};
-        if (params.has('apiKey')) qs.apiKey = params.get('apiKey')!;
-        if (params.has('apiHost')) qs.apiHost = normalizeApiHost(params.get('apiHost')!);
         if (params.has('sdkVersion')) qs.sdkVersion = params.get('sdkVersion')!;
         if (params.has('debugger')) qs.debugger = params.get('debugger') === 'true';
         // ?debug=true is the gate and also flips the SDK debug flag on

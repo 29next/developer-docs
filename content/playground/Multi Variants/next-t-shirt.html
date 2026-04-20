@@ -104,27 +104,6 @@ order: 1
       </template>
     </div>
 
-    <div class="order-summary">
-      <div class="order-summary-lines">
-        <div class="order-summary-row">
-          <span class="order-summary-label">
-            <span data-next-display="bundle.main.unitPrice"></span> /ea
-          </span>
-          <span
-            class="order-summary-value"
-            data-next-display="bundle.main.originalPrice"
-          ></span>
-        </div>
-      </div>
-      <div class="order-summary-total">
-        <span class="order-summary-total-label">Total</span>
-        <span
-          class="order-summary-total-value"
-          data-next-display="bundle.main.price"
-        ></span>
-      </div>
-    </div>
-
     <div class="buy-row">
       <div class="qty" data-next-bundle-qty-for="main">
         <span class="qty-label">Quantity</span>
@@ -448,48 +427,6 @@ order: 1
   .variant-pill[data-next-variant-value='Yellow' i] { --swatch: #eab308; }
   .variant-pill[data-next-variant-value='Orange' i] { --swatch: #f97316; }
   .variant-pill[data-next-variant-value='Red'    i] { --swatch: #dc2626; }
-
-  .order-summary {
-    display: grid;
-    gap: var(--space-2);
-    padding: var(--space-4);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-variant-numeric: tabular-nums lining-nums;
-    transition: opacity var(--transition);
-  }
-  .order-summary-lines { display: grid; gap: var(--space-1); }
-  .order-summary-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--space-3);
-    font-size: 13px;
-    color: var(--color-text-muted);
-  }
-  .order-summary-value { color: var(--color-text); font-weight: 500; }
-  .order-summary-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--space-3);
-    padding-top: var(--space-3);
-    border-top: 1px dashed var(--color-border);
-  }
-  .order-summary-total-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-  .order-summary-total-value {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--color-text);
-  }
 
   .buy-row {
     display: grid;

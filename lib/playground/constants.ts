@@ -3,8 +3,6 @@
 import type { Config } from './types';
 
 export const DEFAULT_CONFIG: Config = {
-  apiKey: 'kLGpgEfCX3iUZG16hpI5zrCH9qxcOdahDY1im6ud',
-  apiHost: 'https://campaigns.apps.29next.com/',
   sdkHost: '',
   sdkVersion: 'latest',
   debugger: false,

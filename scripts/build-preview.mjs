@@ -104,10 +104,6 @@ function renderPreview(userHtml, layout) {
         debug: debugFlag || !!sdkHost,
         debugger: params.has('debugger') ? params.get('debugger') === 'true' : !!defaults.debugger,
       };
-      var apiKey = pick('apiKey');
-      var apiHost = pick('apiHost');
-      if (apiKey) cfg.apiKey = apiKey;
-      if (apiHost) cfg.apiHost = apiHost;
       window.nextConfig = cfg;
 
       var sdkVersion = pick('sdkVersion');
