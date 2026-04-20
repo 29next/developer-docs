@@ -1,8 +1,8 @@
 'use client';
 
-import Editor from '@monaco-editor/react';
+import Editor, { type OnMount } from '@monaco-editor/react';
 import { Play } from 'lucide-react';
-import React from 'react';
+import React, { useRef } from 'react';
 import type { PlaygroundExample } from '@/lib/playground';
 
 interface EditorPanelProps {
@@ -28,6 +28,16 @@ export function EditorPanel({
   onCodeChange,
   onApplyChanges,
 }: EditorPanelProps) {
+  const onApplyChangesRef = useRef(onApplyChanges);
+  onApplyChangesRef.current = onApplyChanges;
+
+  const handleEditorMount: OnMount = (editor, monaco) => {
+    editor.addCommand(
+      monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+      () => onApplyChangesRef.current(),
+    );
+  };
+
   if (expanded) return null;
 
   return (
@@ -57,6 +67,7 @@ export function EditorPanel({
           theme={isDark ? 'vs-dark' : 'vs-light'}
           value={code}
           onChange={onCodeChange}
+          onMount={handleEditorMount}
           options={{
             minimap: { enabled: false },
             fontSize: 13,
