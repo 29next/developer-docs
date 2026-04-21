@@ -14,7 +14,7 @@ order: 2
   rel="stylesheet"
 />
 
-<div class="shop" data-theme="light" data-next-await>
+<div class="shop real-content" data-theme="light" data-next-await>
 
   <!-- Toolbar -->
   <div class="shop-toolbar">
@@ -161,12 +161,81 @@ order: 2
         <p class="item-name">{item.productName}</p>
       </div>
       <div class="item-price-block">
-        <span class="item-price-now">{item.unitPrice}</span>
-        <span class="item-price-strike" data-next-show="item.hasDiscount">{item.originalPrice}</span>
+        <span class="item-price-now">{item.unitPrice}/ea</span>
+        <span class="item-price-strike" data-next-show="item.hasDiscount">{item.originalPrice}/ea</span>
       </div>
     </div>
   </template>
 
+</div>
+
+<!-- ═══════════════════════════════════════════════════ SKELETON PAGE ════ -->
+<!--
+  Shown while body[data-next-sdk-loading="true"].
+  Mirrors the layout of .shop so there is no layout shift on init.
+  aria-hidden="true" removes it from the accessibility tree.
+-->
+<div class="shop skeleton-page" aria-hidden="true">
+  <div class="skel-head">
+    <div class="skel-line skel-line--title"></div>
+    <div class="skel-line skel-line--sub"></div>
+  </div>
+  <div class="skel-grid">
+    <div class="skel-card">
+      <div class="skel-media"></div>
+      <div class="skel-body">
+        <div class="skel-line skel-line--lg"></div>
+        <div class="skel-line skel-line--xs"></div>
+        <div class="skel-price">
+          <div class="skel-line skel-line--price"></div>
+          <div class="skel-line skel-line--xs"></div>
+        </div>
+        <div class="skel-items">
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+        </div>
+        <div class="skel-cta"></div>
+      </div>
+    </div>
+    <div class="skel-card">
+      <div class="skel-media"></div>
+      <div class="skel-body">
+        <div class="skel-line skel-line--lg"></div>
+        <div class="skel-line skel-line--xs"></div>
+        <div class="skel-price">
+          <div class="skel-line skel-line--price"></div>
+          <div class="skel-line skel-line--xs"></div>
+        </div>
+        <div class="skel-items">
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+        </div>
+        <div class="skel-cta"></div>
+      </div>
+    </div>
+    <div class="skel-card">
+      <div class="skel-media"></div>
+      <div class="skel-body">
+        <div class="skel-line skel-line--lg"></div>
+        <div class="skel-line skel-line--xs"></div>
+        <div class="skel-price">
+          <div class="skel-line skel-line--price"></div>
+          <div class="skel-line skel-line--xs"></div>
+        </div>
+        <div class="skel-items">
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+          <div class="skel-item"><div class="skel-thumb"></div><div class="skel-item-lines"><div class="skel-line skel-line--sm"></div><div class="skel-line skel-line--xs"></div></div></div>
+        </div>
+        <div class="skel-cta"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -203,6 +272,15 @@ order: 2
         window.location.href = url.toString();
       });
     }
+  });
+</script>
+<script>
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-theme-toggle]');
+    if (!btn) return;
+    var shop = btn.closest('.shop');
+    if (!shop) return;
+    shop.dataset.theme = shop.dataset.theme === 'dark' ? 'light' : 'dark';
   });
 </script>
 
@@ -674,5 +752,108 @@ order: 2
   .bundle-card.next-selected .cta:hover {
     background: var(--primary-dark);
     border-color: var(--primary-dark);
+  }
+
+  /* ─── Skeleton loading ────────────────────────────────── */
+  /*
+    body[data-next-sdk-loading="true"] is set by the SDK while initialising.
+    Show .skeleton-page, hide .real-content. Matches the bundle-set example.
+  */
+  body[data-next-sdk-loading="true"]        .real-content  { display: none; }
+  body:not([data-next-sdk-loading="true"])  .skeleton-page { display: none; }
+
+  /* Skeleton has no intrinsic-width content (no <img> tags), so force it to
+     fill its parent up to the .shop max-width — otherwise a flex parent
+     shrinks it to ~min-content. */
+  .shop.skeleton-page { width: 100%; box-sizing: border-box; }
+
+  @keyframes skel-shimmer {
+    from { background-position: -400px 0; }
+    to   { background-position:  400px 0; }
+  }
+  .skel-line,
+  .skel-media,
+  .skel-thumb,
+  .skel-cta,
+  .skel-card {
+    background: linear-gradient(90deg,
+      var(--surface-alt) 25%,
+      var(--border) 50%,
+      var(--surface-alt) 75%
+    );
+    background-size: 800px 100%;
+    animation: skel-shimmer 1.4s infinite;
+    border-radius: var(--r-sm);
+  }
+
+  .skeleton-page .skel-head {
+    display: grid; gap: 8px; justify-items: center;
+    padding: 8px 0 0;
+  }
+  .skeleton-page .skel-line--title { height: 32px; width: 260px; }
+  .skeleton-page .skel-line--sub   { height: 14px; width: 320px; }
+
+  .skeleton-page .skel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+  @media (max-width: 820px) {
+    .skeleton-page .skel-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .skeleton-page .skel-card {
+    display: flex; flex-direction: column;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--surface);
+    animation: none; /* parent doesn't shimmer — children do */
+  }
+  .skeleton-page .skel-media {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 0;
+  }
+  .skeleton-page .skel-body {
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 14px;
+    flex: 1;
+  }
+  .skeleton-page .skel-line--lg    { height: 22px; width: 55%; }
+  .skeleton-page .skel-line--xs    { height: 12px; width: 70%; }
+  .skeleton-page .skel-line--sm    { height: 14px; width: 85%; }
+  .skeleton-page .skel-line--price { height: 28px; width: 50%; }
+
+  .skeleton-page .skel-price {
+    display: grid; gap: 6px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skeleton-page .skel-items {
+    display: grid; gap: 10px;
+    padding: 2px 0;
+  }
+  .skeleton-page .skel-item {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+  }
+  .skeleton-page .skel-thumb {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+  }
+  .skeleton-page .skel-item-lines {
+    display: grid; gap: 6px; min-width: 0;
+  }
+
+  .skeleton-page .skel-cta {
+    margin-top: auto;
+    height: 48px;
+    border-radius: var(--r-full);
   }
 </style>
