@@ -124,11 +124,11 @@ order: 2
             </div>
             <span class="price-save" data-next-bundle-display="discountAmount"></span>
             <div class="chips">
-              <div class="chip chip--offer" data-next-discounts="offer">
-                <template><span>{discount.name}</span></template>
+              <div class="chips-group" data-next-discounts="offer">
+                <template><span class="chip chip--offer">{discount.name}</span></template>
               </div>
-              <div class="chip chip--voucher" data-next-discounts="voucher">
-                <template><span>{discount.name}</span></template>
+              <div class="chips-group" data-next-discounts="voucher">
+                <template><span class="chip chip--voucher">{discount.name}</span></template>
               </div>
             </div>
           </div>
@@ -678,15 +678,21 @@ order: 2
   .chips {
     display: flex; flex-wrap: wrap;
     gap: 6px;
+    margin-top: 6px;
   }
+  /* Group wrapper for [data-next-discounts] — one chip element is rendered
+     per discount inside. `display: contents` lets each chip participate
+     directly in the parent .chips flex layout. */
+  .chips-group { display: contents; }
   .chip {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 11px; font-weight: 700;
     letter-spacing: 0.01em;
     padding: 4px 10px 4px 4px;
     border-radius: var(--r-full);
-    width: fit-content;
+    max-width: 100%;
     line-height: 1.2;
+    white-space: nowrap;
   }
   .chip::before {
     content: '';
@@ -714,7 +720,7 @@ order: 2
     background: var(--accent);
     font-size: 9px;
   }
-  .chip.next-discounts-empty { display: none; }
+  .chips-group.next-discounts-empty { display: none; }
 
   /* ─── CTA — pinned to card bottom via margin-top: auto ── */
   .cta {
