@@ -109,6 +109,7 @@ layout: center
                "id": "drone-solo",
                "items": [{"packageId": 1, "quantity": 1}],
                "title": "Drone Only",
+               "image": "/assets/mockup/drone.jpg",
                "desc": "Drone Hawk · 4K camera · 38-min battery",
                "specs": "<li>1\u00d7 Drone Hawk</li>"
              },
@@ -117,6 +118,7 @@ layout: center
                "items": [{"packageId": 1, "quantity": 1}, {"packageId": 2, "quantity": 1}],
                "selected": "true",
                "title": "Drone + Extra Battery",
+               "image": "/assets/mockup/drone.jpg",
                "desc": "Double your flight time — fly up to 76 min",
                "specs": "<li>1\u00d7 Drone Hawk</li><li>1\u00d7 Drone Extra Battery</li>",
                "badge": "Most Popular",
@@ -127,6 +129,7 @@ layout: center
                "id": "drone-pro",
                "items": [{"packageId": 1, "quantity": 1}, {"packageId": 2, "quantity": 2}, {"packageId": 3, "quantity": 1}],
                "title": "Pro Bundle",
+               "image": "/assets/mockup/drone.jpg",
                "desc": "Everything you need to fly like a pro",
                "specs": "<li>1\u00d7 Drone Hawk</li><li>2\u00d7 Drone Extra Battery</li><li>1\u00d7 Drone Extra Propeller Set</li>",
                "badge": "Best Value",
@@ -161,8 +164,8 @@ layout: center
               <div class="card-radio" aria-hidden="true"></div>
               <img class="card-drone-img"
                    loading="lazy"
-                   data-next-display="package.1.image"
-                   alt="Drone Hawk">
+                   src="{bundle.image}"
+                   alt="{bundle.title}">
             </div>
 
             <div class="card-info">
