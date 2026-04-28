@@ -250,6 +250,9 @@ components:
             campaign currency if not provided
           readOnly: true
           type: string
+        id:
+          readOnly: true
+          type: integer
         language:
           description: Preferred language for customers of this campaign
           maxLength: 3
@@ -285,6 +288,7 @@ components:
       - available_payment_methods
       - available_shipping_countries
       - currency
+      - id
       - language
       - name
       - offers
@@ -1207,12 +1211,14 @@ components:
           readOnly: true
           type: string
         price_retail:
+          deprecated: true
           description: Retail price per product unit in the package
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
           readOnly: true
           type: string
         price_retail_total:
+          deprecated: true
           description: Total retail price of the package when purchased
           format: decimal
           pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
@@ -1266,6 +1272,7 @@ components:
           description: Product variant name
           type: string
         qty:
+          deprecated: true
           description: Quantity of product variant in the package
           maximum: 2147483647
           minimum: 0
