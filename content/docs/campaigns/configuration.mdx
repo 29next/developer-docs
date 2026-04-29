@@ -6,7 +6,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 The SDK is configured via `window.nextConfig` before the SDK script loads, and via meta tags in your HTML `<head>`.
 
 <Callout type="idea">
-Replace `your-api-key-here` with your actual Campaign API key from the dashboard.
+Replace `your-api-key-here` with your actual Campaign API key from the dashboard. If you're using [campaign-page-kit](https://github.com/NextCommerceCo/next-campaign-page-kit), run `npm run config` to set the API key interactively.
 </Callout>
 
 ## JavaScript Configuration
@@ -14,12 +14,9 @@ Replace `your-api-key-here` with your actual Campaign API key from the dashboard
 ### Minimal Setup
 
 ```javascript
-// Configure before SDK loads
-window.dataLayer = window.dataLayer || [];
-window.nextReady = window.nextReady || [];
-
 window.nextConfig = {
-  apiKey: "your-api-key-here"
+  apiKey: "your-api-key-here",
+  storeName: "your-store-name",
 };
 ```
 
@@ -29,6 +26,9 @@ window.nextConfig = {
 window.nextConfig = {
   // Required: Your Campaign Cart API key
   apiKey: "your-api-key-here",
+
+  // Required for Facebook purchase deduplication
+  storeName: "your-store-name",
 
   // Currency behavior when country changes
   currencyBehavior: 'auto', // 'auto' | 'manual'
@@ -45,17 +45,22 @@ window.nextConfig = {
 
   // Address and country configuration
   addressConfig: {
+    // Low-priority fallback when the campaign API returns no country list
     defaultCountry: "US",
-    showCountries: ["US", "CA", "GB", "AU", "DE", "FR"],
+    // Deprecated — the campaign API now provides the country list. Use as a fallback only.
+    // showCountries: ["US", "CA", "GB", "AU", "DE", "FR"],
     dontShowStates: ["AS", "GU", "PR", "VI"],
-    enableAutocomplete: true, // NEXT Address Autocomplete
+    // Address autocomplete — choose one:
+    // Option 1 (NextCommerce): enableAutocomplete: true, leave googleMaps.apiKey empty
+    // Option 2 (Google Maps): set googleMaps.apiKey below — takes priority when non-empty
+    // Option 3 (Disabled): remove enableAutocomplete and leave googleMaps.apiKey empty
+    enableAutocomplete: true,
   },
 
-  // Google Maps integration (address autocomplete)
+  // Google Maps API key — leave empty to use NextCommerce autocomplete
   googleMaps: {
-    apiKey: "your-google-maps-api-key",
+    apiKey: "",
     region: "US",
-    enableAutocomplete: false 
   },
 
   // Analytics providers
@@ -70,7 +75,6 @@ window.nextConfig = {
         enabled: false,
         settings: {
           containerId: "GTM-XXXXXX",
-          dataLayerName: "dataLayer"
         },
       },
       facebook: {
@@ -97,16 +101,24 @@ window.nextConfig = {
   utmTransfer: {
     enabled: true,
     applyToExternalLinks: false,
-    debug: false,
-    // Optional: excludedDomains: ['example.com'],
-    // Optional: paramsToCopy: ['utm_source', 'utm_medium', 'utm_campaign', 'gclid', 'fbclid']
-  }
+  },
+
+  // Optional: discount/promo codes
+  // discounts: {
+  //   SAVE10: { code: 'SAVE10', type: 'percentage', value: 10, scope: 'order' }
+  // },
+
+  // Optional: profiles for dynamic package mapping (e.g. exit intent pricing)
+  // profiles: {
+  //   SAVE_5: { name: 'Exit Save 5', packageMappings: { 1: 9, 2: 10 } }
+  // },
 };
 ```
 
+
 ## Meta Tag Configuration
 
-Configure the SDK on a per-page basis using meta tags in your HTML `<head>`:
+Configure the SDK on a per-page basis using meta tags in your HTML `<head>`. If you're using campaign-page-kit, these are set automatically from page frontmatter via `base.html`.
 
 ```html
 <!-- Campaign API Key: Optional override -->
@@ -121,7 +133,7 @@ Configure the SDK on a per-page basis using meta tags in your HTML `<head>`:
 <!-- Next URL: Redirect after order completion (checkout pages) -->
 <meta name="next-success-url" content="/upsell">
 
-<!-- Prevent Back Navigation: Usually on first upsell page -->
+<!-- Prevent Back Navigation: Usually on the first upsell page -->
 <meta name="next-prevent-back-navigation" content="true">
 
 <!-- Upsell URLs: For upsell pages -->

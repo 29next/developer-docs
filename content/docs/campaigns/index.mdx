@@ -56,11 +56,11 @@ Campaign responses include `available_payment_methods` and `available_express_pa
 
 A **package** is a virtual link to a **product variant** (SKU) in your store catalog with a custom quantity and custom pricing. Packages are what customers actually purchase in a campaign — they let you create different purchasing options for the same product without changing the product itself.
 
-For example, a single product could have multiple packages offering different quantities at different price points:
+In SDK 0.4.x, the recommended pattern is **one package with a base price**, using **Campaign Offers** to define quantity-tier discounts automatically. For example:
 
-- **1x Widget** — 1 unit at $10.00
-- **3x Widget Bundle** — 3 units at $7.00 each ($21.00 total)
-- **5x Widget Best Value** — 5 units at $6.00 each ($30.00 total)
+- **1x Widget** — 1 unit at base price
+- **2x Widget** — 2 units, 20% off via Campaign Offer
+- **3x Widget** — 3 units, 35% off via Campaign Offer
 
 Packages can also be configured as **recurring** for subscription products, with a custom interval (e.g. every 30 days).
 
@@ -96,47 +96,82 @@ There are two ways to build your campaign frontend:
 
 | Approach | Best For | Description |
 | --- | --- | --- |
-| [**Campaign Cart SDK**](/docs/campaigns/cart-system) | Fastest development | An attribute-driven HTML/JS SDK. Build cart, checkout, and upsell flows using `data-next-*` attributes — no custom JavaScript required. |
-| [**Campaigns API**](/docs/campaigns/api) | Full control | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
+| [**Campaign Cart SDK**](/docs/campaigns/cart-system) | Full control | A headless SDK driven by `data-next-*` HTML attributes. Build cart, checkout, and upsell flows without writing custom cart logic. |
+| [**Campaigns API**](/docs/campaigns/api) | Custom integrations | A headless REST API for developers who want complete control over the checkout experience with custom JavaScript. |
 
-<Callout type="idea" title="Starter Template">
-The fastest way to get started is with the [Campaign Cart Starter Template](https://github.com/NextCommerceCo/campaign-cart-example) — a ready-to-use campaign flow with landing page, checkout, upsell, and receipt pages pre-configured.
+<Callout type="idea" title="Starter Templates">
+The fastest way to get started is with the [Campaign Cart Starter Templates](https://github.com/NextCommerceCo/campaign-cart-starter-templates) — a collection of ready-to-use campaign templates (checkout, upsell, receipt) built on [next-campaign-page-kit](https://github.com/NextCommerceCo/next-campaign-page-kit), the official build tool for Campaign Cart projects.
 </Callout>
 
 ## Quick Start
 
-### Option 1: Use Starter Template (Recommended)
+### Option 1: Use Starter Templates (Recommended)
 
-Get started quickly with our pre-configured starter template:
+The starter templates use [next-campaign-page-kit](https://github.com/NextCommerceCo/next-campaign-page-kit) — a build tool that handles Liquid templating, per-campaign asset isolation, a dev server, and CLI scripts.
 
-**[Download Starter Template](https://github.com/NextCommerceCo/campaign-cart-example)** — Clone or download a ready-to-use campaign flow (landing → checkout → upsell → receipt) with Campaign Cart integrated.
+```bash
+git clone https://github.com/NextCommerceCo/campaign-cart-starter-templates.git
+cd campaign-cart-starter-templates
+npm install
+npm run dev
+```
+
+Select a campaign from the interactive prompt. Available templates include single-step checkouts (`demeter`, `limos`, `olympus`), multi-variant flows, and shop-style variants.
+
+<div className="grid grid-cols-2 gap-4 not-prose mt-4 mb-2">
+  <a href="https://nextcommerce-campaign-templates.netlify.app/olympus/checkout/" target="_blank" rel="noopener noreferrer" className="block rounded-lg overflow-hidden border border-fd-border hover:border-fd-primary transition-colors">
+    <img src="/assets/campaigns/template-olympus.png" alt="Olympus checkout template preview" className="w-full" />
+    <div className="p-3">
+      <div className="font-medium text-sm text-fd-foreground">Olympus</div>
+      <div className="text-xs text-fd-muted-foreground mt-0.5">Single-step checkout — Preview →</div>
+    </div>
+  </a>
+  <a href="https://nextcommerce-campaign-templates.netlify.app/olympus-mv-single-step/checkout/" target="_blank" rel="noopener noreferrer" className="block rounded-lg overflow-hidden border border-fd-border hover:border-fd-primary transition-colors">
+    <img src="/assets/campaigns/template-olympus-mv.png" alt="Olympus MV checkout template preview" className="w-full" />
+    <div className="p-3">
+      <div className="font-medium text-sm text-fd-foreground">Olympus MV</div>
+      <div className="text-xs text-fd-muted-foreground mt-0.5">Single-step with multi-variant support — Preview →</div>
+    </div>
+  </a>
+</div>
 
 ### Option 2: Manual Setup
 
+For standalone HTML pages without the campaign-page-kit build tool:
+
 1. **Get Your API Key**
 
-   Go to Next Commerce Dashboard, open the Campaigns app, select your campaign, click on Integration, and copy your API key.
+   Go to Next Commerce Dashboard, open the Campaigns App, select your campaign, click on Integration, and copy your API key.
 
 2. **Add SDK Script**
 
    Add these two lines to your HTML `<head>` section:
 
    ```html
-   <!-- Path to Your Campaign Cart Configuration -->
+   <!-- Campaign Cart Configuration -->
    <script src="js/config.js"></script>
 
-   <!-- Campaign Cart SDK -->
-   <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
-   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.10/dist/loader.js" type="module"></script>
+   <!-- Campaign Cart SDK — pin to a specific version from GitHub releases -->
+   <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.18/dist/loader.js" type="module"></script>
    ```
 
-   <Callout type="idea" title="Latest Version">
-   Check the [GitHub releases](https://github.com/NextCommerceCo/campaign-cart/releases) for the latest stable version. For development, you can use `@latest`, but we recommend pinning to a specific version (e.g., `@v0.3.10`) in production for stability.
+   <Callout type="idea" title="SDK Version">
+   Always pin to a specific version (e.g. `@v0.4.18`). Check [GitHub releases](https://github.com/NextCommerceCo/campaign-cart/releases) for the latest stable version. Using `@latest` in production can cause unexpected behaviour when the SDK updates.
    </Callout>
 
-3. **Start Building**
+3. **Configure the SDK**
 
-   You can now use Campaign Cart attributes in your HTML!
+   Set `window.nextConfig` before the SDK loads. See [Configuration](/docs/campaigns/configuration) for the full reference.
+
+   ```javascript
+   window.nextConfig = {
+     apiKey: "your-api-key-here",
+   };
+   ```
+
+4. **Start Building**
+
+   You can now use Campaign Cart attributes in your HTML.
 
 ## HTML Page Setup
 
@@ -144,26 +179,18 @@ Get started quickly with our pre-configured starter template:
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- 1. Set configuration -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    window.nextReady = window.nextReady || [];
+  <!-- 1. SDK configuration — must load before the SDK -->
+  <script src="js/config.js"></script>
 
-    window.nextConfig = {
-      apiKey: "your-api-key-here",
-    };
-  </script>
-
-  <!-- 2. Meta tag configuration -->
+  <!-- 2. Page type and flow meta tags -->
   <!-- Page Type: product, checkout, upsell, or receipt -->
-  <meta name="next-page-type" content="product">
+  <meta name="next-page-type" content="checkout">
 
-  <!-- Next URL: Redirect after order completion (for checkout pages) -->
+  <!-- Redirect after order completion (checkout pages) -->
   <meta name="next-success-url" content="/upsell">
 
-  <!-- 3. Load the SDK -->
-  <!-- Replace @v0.3.10 with the latest version from GitHub releases -->
-  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.3.10/dist/loader.js" type="module"></script>
+  <!-- 3. Campaign Cart SDK -->
+  <script src="https://cdn.jsdelivr.net/gh/NextCommerceCo/campaign-cart@v0.4.18/dist/loader.js" type="module"></script>
 </head>
 <body>
   <!-- Your content here -->
@@ -173,21 +200,37 @@ Get started quickly with our pre-configured starter template:
 
 ## Quick Examples
 
+### Bundle Selector (0.4.x — recommended)
+
+Uses one package with Campaign Offers driving tier pricing automatically:
+
+```html
+<div data-next-bundle-selector data-next-selector-id="main" data-next-selection-mode="swap">
+  <div data-next-bundle-card data-next-bundle-id="buy1"
+       data-next-bundle-items='[{"packageId":1,"quantity":1}]'
+       data-next-selected="true">
+    1x — <span data-next-bundle-display="total"></span>
+  </div>
+  <div data-next-bundle-card data-next-bundle-id="buy2"
+       data-next-bundle-items='[{"packageId":1,"quantity":2}]'>
+    2x — Save <span data-next-bundle-display="discountPercentage"></span>
+    <span data-next-bundle-display="total"></span>
+  </div>
+  <div data-next-bundle-card data-next-bundle-id="buy3"
+       data-next-bundle-items='[{"packageId":1,"quantity":3}]'>
+    3x — <span data-next-bundle-display="total"></span>
+  </div>
+</div>
+```
+
 ### Add to Cart Button
 ```html
 <button data-next-action="add-to-cart"
         data-next-package-id="1"
-        data-next-quantity="1">
-  Add to Cart
+        data-next-quantity="1"
+        data-next-url="/checkout">
+  Buy Now
 </button>
-```
-
-### Product Selector
-```html
-<div data-next-cart-selector data-next-selection-mode="swap">
-  <div data-next-selector-card data-next-package-id="1">Option 1</div>
-  <div data-next-selector-card data-next-package-id="2">Option 2</div>
-</div>
 ```
 
 ### Display Cart Total
@@ -211,7 +254,6 @@ console.log(window.next ? 'SDK Loaded' : 'SDK Not Found');
 
 if (window.next) {
   console.log('SDK Version:', next.version);
-  console.log('Config:', next.getConfig());
 }
 ```
 
